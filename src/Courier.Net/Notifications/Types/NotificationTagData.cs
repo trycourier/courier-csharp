@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class NotificationTagData
+public record NotificationTagData
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }

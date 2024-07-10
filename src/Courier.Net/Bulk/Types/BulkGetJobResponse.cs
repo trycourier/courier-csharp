@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BulkGetJobResponse
+public record BulkGetJobResponse
 {
     [JsonPropertyName("job")]
-    public JobDetails Job { get; init; }
+    public required JobDetails Job { get; init; }
 }

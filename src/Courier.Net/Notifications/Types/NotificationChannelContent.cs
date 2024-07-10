@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class NotificationChannelContent
+public record NotificationChannelContent
 {
     [JsonPropertyName("subject")]
     public string? Subject { get; init; }

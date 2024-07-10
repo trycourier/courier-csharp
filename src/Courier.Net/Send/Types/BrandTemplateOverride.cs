@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BrandTemplateOverride
+public record BrandTemplateOverride
 {
     [JsonPropertyName("mjml")]
-    public BrandTemplate Mjml { get; init; }
+    public required BrandTemplate Mjml { get; init; }
 
     [JsonPropertyName("footerBackgroundColor")]
     public string? FooterBackgroundColor { get; init; }
@@ -21,7 +23,7 @@ public class BrandTemplateOverride
     public string? BlocksBackgroundColor { get; init; }
 
     [JsonPropertyName("enabled")]
-    public bool Enabled { get; init; }
+    public required bool Enabled { get; init; }
 
     [JsonPropertyName("footer")]
     public string? Footer { get; init; }

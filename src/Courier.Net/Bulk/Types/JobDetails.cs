@@ -1,22 +1,24 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class JobDetails
+public record JobDetails
 {
     [JsonPropertyName("definition")]
-    public InboundBulkMessage Definition { get; init; }
+    public required InboundBulkMessage Definition { get; init; }
 
     [JsonPropertyName("enqueued")]
-    public int Enqueued { get; init; }
+    public required int Enqueued { get; init; }
 
     [JsonPropertyName("failures")]
-    public int Failures { get; init; }
+    public required int Failures { get; init; }
 
     [JsonPropertyName("received")]
-    public int Received { get; init; }
+    public required int Received { get; init; }
 
     [JsonPropertyName("status")]
-    public BulkJobStatus Status { get; init; }
+    public required BulkJobStatus Status { get; init; }
 }

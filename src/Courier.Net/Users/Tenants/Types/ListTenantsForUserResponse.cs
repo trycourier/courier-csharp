@@ -1,24 +1,26 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class ListTenantsForUserResponse
+public record ListTenantsForUserResponse
 {
     [JsonPropertyName("items")]
-    public List<UserTenantAssociation>? Items { get; init; }
+    public IEnumerable<UserTenantAssociation>? Items { get; init; }
 
     /// <summary>
     /// Set to true when there are more pages that can be retrieved.
     /// </summary>
     [JsonPropertyName("has_more")]
-    public bool HasMore { get; init; }
+    public required bool HasMore { get; init; }
 
     /// <summary>
     /// A url that may be used to generate these results.
     /// </summary>
     [JsonPropertyName("url")]
-    public string Url { get; init; }
+    public required string Url { get; init; }
 
     /// <summary>
     /// A url that may be used to generate fetch the next set of results.
@@ -38,5 +40,5 @@ public class ListTenantsForUserResponse
     /// Always set to `list`. Represents the type of this object.
     /// </summary>
     [JsonPropertyName("type")]
-    public string Type { get; init; }
+    public required string Type { get; init; }
 }

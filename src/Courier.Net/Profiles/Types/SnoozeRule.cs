@@ -1,16 +1,18 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SnoozeRule
+public record SnoozeRule
 {
     [JsonPropertyName("type")]
-    public SnoozeRuleType Type { get; init; }
+    public required SnoozeRuleType Type { get; init; }
 
     [JsonPropertyName("start")]
-    public string Start { get; init; }
+    public required string Start { get; init; }
 
     [JsonPropertyName("until")]
-    public string Until { get; init; }
+    public required string Until { get; init; }
 }

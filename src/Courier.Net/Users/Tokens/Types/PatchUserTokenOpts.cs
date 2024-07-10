@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net.Users;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class PatchUserTokenOpts
+public record PatchUserTokenOpts
 {
     [JsonPropertyName("patch")]
-    public List<PatchOperation> Patch { get; init; }
+    public IEnumerable<PatchOperation> Patch { get; init; } = new List<PatchOperation>();
 }

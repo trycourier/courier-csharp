@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class UserRecipient
+public record UserRecipient
 {
     /// <summary>
     /// Use `tenant_id` instad.

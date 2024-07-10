@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BulkIngestError
+public record BulkIngestError
 {
     [JsonPropertyName("user")]
-    public object User { get; init; }
+    public required object User { get; init; }
 
     [JsonPropertyName("error")]
-    public object Error { get; init; }
+    public required object Error { get; init; }
 }

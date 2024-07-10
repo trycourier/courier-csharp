@@ -1,13 +1,15 @@
 using System.Text.Json.Serialization;
 using Courier.Net.Users;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class PutUserTokenOpts
+public record PutUserTokenOpts
 {
     [JsonPropertyName("user_id")]
-    public string UserId { get; init; }
+    public required string UserId { get; init; }
 
     [JsonPropertyName("token")]
-    public UserToken Token { get; init; }
+    public required UserToken Token { get; init; }
 }

@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ListPatternRecipient
+public record ListPatternRecipient
 {
     [JsonPropertyName("list_pattern")]
     public string? ListPattern { get; init; }

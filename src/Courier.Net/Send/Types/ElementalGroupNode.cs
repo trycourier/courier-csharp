@@ -1,19 +1,19 @@
 using System.Text.Json.Serialization;
-using OneOf;
-using Courier.Net;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class ElementalGroupNode
+public record ElementalGroupNode
 {
     /// <summary>
     /// Sub elements to render.
     /// </summary>
     [JsonPropertyName("elements")]
-    public List<OneOf<ElementalNode._Text, ElementalNode._Meta, ElementalNode._Channel, ElementalNode._Image, ElementalNode._Action, ElementalNode._Divider, ElementalNode._Group, ElementalNode._Quote>> Elements { get; init; }
+    public IEnumerable<object> Elements { get; init; } = new List<object>();
 
     [JsonPropertyName("channels")]
-    public List<string>? Channels { get; init; }
+    public IEnumerable<string>? Channels { get; init; }
 
     [JsonPropertyName("ref")]
     public string? Ref { get; init; }

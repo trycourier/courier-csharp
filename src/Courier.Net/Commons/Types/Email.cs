@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Email
+public record Email
 {
     [JsonPropertyName("footer")]
-    public object Footer { get; init; }
+    public required object Footer { get; init; }
 
     [JsonPropertyName("header")]
-    public object Header { get; init; }
+    public required object Header { get; init; }
 }

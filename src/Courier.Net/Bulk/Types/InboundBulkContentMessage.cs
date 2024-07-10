@@ -1,17 +1,21 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class InboundBulkContentMessage
+public record InboundBulkContentMessage
 {
     /// <summary>
     /// Describes the content of the message in a way that will work for email, push,
     /// chat, or any channel. Either this or template must be specified.
     /// </summary>
     [JsonPropertyName("content")]
-    public OneOf<ElementalContent, ElementalContentSugar> Content { get; init; }
+    [JsonConverter(typeof(OneOfSerializer<OneOf<ElementalContent, ElementalContentSugar>>))]
+    public required OneOf<ElementalContent, ElementalContentSugar> Content { get; init; }
 
     /// <summary>
     /// An arbitrary object that includes any data you want to pass to the message.

@@ -1,14 +1,16 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationInvokeStep
+public record AutomationInvokeStep
 {
     [JsonPropertyName("action")]
-    public string Action { get; init; }
+    public required string Action { get; init; }
 
     [JsonPropertyName("template")]
-    public string Template { get; init; }
+    public required string Template { get; init; }
 
     [JsonPropertyName("if")]
     public string? If { get; init; }

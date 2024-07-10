@@ -1,11 +1,31 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class MsTeamsRecipient
+public record MsTeamsRecipient
 {
     [JsonPropertyName("ms_teams")]
-    public OneOf<SendToMsTeamsUserId, SendToMsTeamsEmail, SendToMsTeamsChannelId, SendToMsTeamsConversationId, SendToMsTeamsChannelName> MsTeams { get; init; }
+    [JsonConverter(
+        typeof(OneOfSerializer<
+            OneOf<
+                SendToMsTeamsUserId,
+                SendToMsTeamsEmail,
+                SendToMsTeamsChannelId,
+                SendToMsTeamsConversationId,
+                SendToMsTeamsChannelName
+            >
+        >)
+    )]
+    public required OneOf<
+        SendToMsTeamsUserId,
+        SendToMsTeamsEmail,
+        SendToMsTeamsChannelId,
+        SendToMsTeamsConversationId,
+        SendToMsTeamsChannelName
+    > MsTeams { get; init; }
 }

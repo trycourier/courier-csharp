@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class MessageContext
+public record MessageContext
 {
     /// <summary>
     /// An id of a tenant, see [tenants api docs](https://www.courier.com/docs/reference/tenants/).

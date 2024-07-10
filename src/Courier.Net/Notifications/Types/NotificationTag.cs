@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class NotificationTag
+public record NotificationTag
 {
     [JsonPropertyName("data")]
-    public List<NotificationTagData> Data { get; init; }
+    public IEnumerable<NotificationTagData> Data { get; init; } = new List<NotificationTagData>();
 }

@@ -1,34 +1,38 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class AutomationAddToBatchStep
+public record AutomationAddToBatchStep
 {
     [JsonPropertyName("action")]
-    public string Action { get; init; }
+    public required string Action { get; init; }
 
     /// <summary>
     /// Defines the period of inactivity before the batch is released. Specified as an [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations)
     /// </summary>
     [JsonPropertyName("wait_period")]
-    public string WaitPeriod { get; init; }
+    public required string WaitPeriod { get; init; }
 
     /// <summary>
     /// Defines the maximum wait time before the batch should be released. Must be less than wait period. Maximum of 60 days. Specified as an [ISO 8601 duration](https://en.wikipedia.org/wiki/ISO_8601#Durations)
     /// </summary>
     [JsonPropertyName("max_wait_period")]
-    public string MaxWaitPeriod { get; init; }
+    public required string MaxWaitPeriod { get; init; }
 
     /// <summary>
     /// If specified, the batch will release as soon as this number is reached
     /// </summary>
     [JsonPropertyName("max_items")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, int>>))]
     public OneOf<string, int>? MaxItems { get; init; }
 
     [JsonPropertyName("retain")]
-    public AutomationAddToBatchRetain Retain { get; init; }
+    public required AutomationAddToBatchRetain Retain { get; init; }
 
     /// <summary>
     /// Determine the scope of the batching. If user, chosen in this order: recipient, profile.user_id, data.user_id, data.userId.

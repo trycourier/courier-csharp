@@ -1,11 +1,13 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationInvokeTemplateParams
+public record AutomationInvokeTemplateParams
 {
     [JsonPropertyName("templateId")]
-    public string TemplateId { get; init; }
+    public required string TemplateId { get; init; }
 
     [JsonPropertyName("brand")]
     public string? Brand { get; init; }

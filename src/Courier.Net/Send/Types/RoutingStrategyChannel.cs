@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class RoutingStrategyChannel
+public record RoutingStrategyChannel
 {
     [JsonPropertyName("channel")]
-    public string Channel { get; init; }
+    public required string Channel { get; init; }
 
     [JsonPropertyName("config")]
     public Dictionary<string, object>? Config { get; init; }

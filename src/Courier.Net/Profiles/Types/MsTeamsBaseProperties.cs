@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class MsTeamsBaseProperties
+public record MsTeamsBaseProperties
 {
     [JsonPropertyName("tenant_id")]
-    public string TenantId { get; init; }
+    public required string TenantId { get; init; }
 
     [JsonPropertyName("service_url")]
-    public string ServiceUrl { get; init; }
+    public required string ServiceUrl { get; init; }
 }

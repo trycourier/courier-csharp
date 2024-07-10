@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class TrackingOverride
+public record TrackingOverride
 {
     [JsonPropertyName("open")]
-    public bool Open { get; init; }
+    public required bool Open { get; init; }
 }

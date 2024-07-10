@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class UserTenantAssociation
+public record UserTenantAssociation
 {
     /// <summary>
     /// User ID for the assocation between tenant and user
@@ -17,7 +19,7 @@ public class UserTenantAssociation
     /// Tenant ID for the assocation between tenant and user
     /// </summary>
     [JsonPropertyName("tenant_id")]
-    public string TenantId { get; init; }
+    public required string TenantId { get; init; }
 
     /// <summary>
     /// Additional metadata to be applied to a user profile when used in a tenant context

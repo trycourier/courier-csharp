@@ -1,14 +1,64 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class BaseMessageSendTo
+public record BaseMessageSendTo
 {
     /// <summary>
     /// The recipient or a list of recipients of the message
     /// </summary>
     [JsonPropertyName("to")]
-    public OneOf<OneOf<AudienceRecipient, ListRecipient, ListPatternRecipient, UserRecipient, SlackRecipient, MsTeamsRecipient, Dictionary<string, object>>, List<OneOf<AudienceRecipient, ListRecipient, ListPatternRecipient, UserRecipient, SlackRecipient, MsTeamsRecipient, Dictionary<string, object>>>>? To { get; init; }
+    [JsonConverter(
+        typeof(OneOfSerializer<
+            OneOf<
+                OneOf<
+                    AudienceRecipient,
+                    ListRecipient,
+                    ListPatternRecipient,
+                    UserRecipient,
+                    SlackRecipient,
+                    MsTeamsRecipient,
+                    Dictionary<string, object>
+                >,
+                IEnumerable<
+                    OneOf<
+                        AudienceRecipient,
+                        ListRecipient,
+                        ListPatternRecipient,
+                        UserRecipient,
+                        SlackRecipient,
+                        MsTeamsRecipient,
+                        Dictionary<string, object>
+                    >
+                >
+            >
+        >)
+    )]
+    public OneOf<
+        OneOf<
+            AudienceRecipient,
+            ListRecipient,
+            ListPatternRecipient,
+            UserRecipient,
+            SlackRecipient,
+            MsTeamsRecipient,
+            Dictionary<string, object>
+        >,
+        IEnumerable<
+            OneOf<
+                AudienceRecipient,
+                ListRecipient,
+                ListPatternRecipient,
+                UserRecipient,
+                SlackRecipient,
+                MsTeamsRecipient,
+                Dictionary<string, object>
+            >
+        >
+    >? To { get; init; }
 }

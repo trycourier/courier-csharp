@@ -1,15 +1,17 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ElementalQuoteNode
+public record ElementalQuoteNode
 {
     /// <summary>
     /// The text value of the quote.
     /// </summary>
     [JsonPropertyName("content")]
-    public string Content { get; init; }
+    public required string Content { get; init; }
 
     /// <summary>
     /// Alignment of the quote.
@@ -24,7 +26,7 @@ public class ElementalQuoteNode
     public string? BorderColor { get; init; }
 
     [JsonPropertyName("text_style")]
-    public TextStyle TextStyle { get; init; }
+    public required TextStyle TextStyle { get; init; }
 
     /// <summary>
     /// Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
@@ -33,7 +35,7 @@ public class ElementalQuoteNode
     public Dictionary<string, Locale>? Locales { get; init; }
 
     [JsonPropertyName("channels")]
-    public List<string>? Channels { get; init; }
+    public IEnumerable<string>? Channels { get; init; }
 
     [JsonPropertyName("ref")]
     public string? Ref { get; init; }

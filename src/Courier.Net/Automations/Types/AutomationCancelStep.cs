@@ -1,11 +1,13 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationCancelStep
+public record AutomationCancelStep
 {
     [JsonPropertyName("action")]
-    public string Action { get; init; }
+    public required string Action { get; init; }
 
     [JsonPropertyName("cancelation_token")]
     public string? CancelationToken { get; init; }

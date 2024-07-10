@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class InboundBulkMessageV1
+public record InboundBulkMessageV1
 {
     /// <summary>
     /// A unique identifier that represents the brand that should be used

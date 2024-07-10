@@ -1,12 +1,18 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class InboundBulkMessage
+public record InboundBulkMessage
 {
     [JsonPropertyName("message")]
+    [JsonConverter(
+        typeof(OneOfSerializer<OneOf<InboundBulkTemplateMessage, InboundBulkContentMessage>>)
+    )]
     public OneOf<InboundBulkTemplateMessage, InboundBulkContentMessage>? Message { get; init; }
 
     /// <summary>

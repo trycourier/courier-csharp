@@ -1,10 +1,13 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SubscribeToListsRequest
+public record SubscribeToListsRequest
 {
     [JsonPropertyName("lists")]
-    public List<SubscribeToListsRequestListObject> Lists { get; init; }
+    public IEnumerable<SubscribeToListsRequestListObject> Lists { get; init; } =
+        new List<SubscribeToListsRequestListObject>();
 }

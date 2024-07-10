@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SubscribeToListsRequestListObject
+public record SubscribeToListsRequestListObject
 {
     [JsonPropertyName("listId")]
-    public string ListId { get; init; }
+    public required string ListId { get; init; }
 
     [JsonPropertyName("preferences")]
     public RecipientPreferences? Preferences { get; init; }

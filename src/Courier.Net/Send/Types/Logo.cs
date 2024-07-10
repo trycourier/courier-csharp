@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Logo
+public record Logo
 {
     [JsonPropertyName("href")]
     public string? Href { get; init; }

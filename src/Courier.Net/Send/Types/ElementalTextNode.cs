@@ -1,22 +1,24 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ElementalTextNode
+public record ElementalTextNode
 {
     /// <summary>
     /// The text content displayed in the notification. Either this
     /// field must be specified, or the elements field
     /// </summary>
     [JsonPropertyName("content")]
-    public string Content { get; init; }
+    public required string Content { get; init; }
 
     /// <summary>
     /// Text alignment.
     /// </summary>
     [JsonPropertyName("align")]
-    public TextAlign Align { get; init; }
+    public required TextAlign Align { get; init; }
 
     /// <summary>
     /// Allows the text to be rendered as a heading level.
@@ -64,7 +66,7 @@ public class ElementalTextNode
     public string? Format { get; init; }
 
     [JsonPropertyName("channels")]
-    public List<string>? Channels { get; init; }
+    public IEnumerable<string>? Channels { get; init; }
 
     [JsonPropertyName("ref")]
     public string? Ref { get; init; }

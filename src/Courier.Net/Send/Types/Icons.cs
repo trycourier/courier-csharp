@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Icons
+public record Icons
 {
     [JsonPropertyName("bell")]
     public string? Bell { get; init; }

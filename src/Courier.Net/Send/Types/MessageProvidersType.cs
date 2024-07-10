@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class MessageProvidersType
+public record MessageProvidersType
 {
     /// <summary>
     /// Provider specific overrides.

@@ -1,5 +1,3 @@
 namespace Courier.Net;
 
-public class ListPatternRecipientType
-{
-}
+public record ListPatternRecipientType { }

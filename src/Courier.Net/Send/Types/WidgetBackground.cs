@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class WidgetBackground
+public record WidgetBackground
 {
     [JsonPropertyName("topColor")]
     public string? TopColor { get; init; }

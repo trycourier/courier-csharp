@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Locale
+public record Locale
 {
     [JsonPropertyName("content")]
-    public string Content { get; init; }
+    public required string Content { get; init; }
 }

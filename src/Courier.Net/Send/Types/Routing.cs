@@ -1,13 +1,16 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
+using Courier.Net.Core;
 using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class Routing
+public record Routing
 {
     [JsonPropertyName("method")]
-    public RoutingMethod Method { get; init; }
+    public required RoutingMethod Method { get; init; }
 
     /// <summary>
     /// A list of channels or providers to send the message through. Can also recursively define
@@ -15,5 +18,14 @@ public class Routing
     /// delivery strategies.
     /// </summary>
     [JsonPropertyName("channels")]
-    public List<OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>> Channels { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>,
+            OneOfSerializer<OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>>
+        >)
+    )]
+    public IEnumerable<
+        OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>
+    > Channels { get; init; } =
+        new List<OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>>();
 }

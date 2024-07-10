@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationAdHocInvokeParams
+public record AutomationAdHocInvokeParams
 {
     [JsonPropertyName("automation")]
-    public Automation Automation { get; init; }
+    public required Automation Automation { get; init; }
 
     [JsonPropertyName("brand")]
     public string? Brand { get; init; }

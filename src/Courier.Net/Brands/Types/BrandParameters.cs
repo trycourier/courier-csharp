@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BrandParameters
+public record BrandParameters
 {
     [JsonPropertyName("id")]
     public string? Id { get; init; }
@@ -12,10 +14,10 @@ public class BrandParameters
     /// The name of the brand.
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("settings")]
-    public BrandSettings Settings { get; init; }
+    public required BrandSettings Settings { get; init; }
 
     [JsonPropertyName("snippets")]
     public BrandSnippets? Snippets { get; init; }

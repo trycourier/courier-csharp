@@ -1,13 +1,15 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BulkIngestUsersResponse
+public record BulkIngestUsersResponse
 {
     [JsonPropertyName("total")]
-    public int Total { get; init; }
+    public required int Total { get; init; }
 
     [JsonPropertyName("errors")]
-    public List<BulkIngestError>? Errors { get; init; }
+    public IEnumerable<BulkIngestError>? Errors { get; init; }
 }

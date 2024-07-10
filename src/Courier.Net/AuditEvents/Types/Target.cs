@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Target
+public record Target
 {
     [JsonPropertyName("id")]
     public string? Id { get; init; }

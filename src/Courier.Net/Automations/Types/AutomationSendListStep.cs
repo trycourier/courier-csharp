@@ -1,11 +1,13 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationSendListStep
+public record AutomationSendListStep
 {
     [JsonPropertyName("action")]
-    public string Action { get; init; }
+    public required string Action { get; init; }
 
     [JsonPropertyName("brand")]
     public string? Brand { get; init; }
@@ -14,7 +16,7 @@ public class AutomationSendListStep
     public Dictionary<string, object>? Data { get; init; }
 
     [JsonPropertyName("list")]
-    public string List { get; init; }
+    public required string List { get; init; }
 
     [JsonPropertyName("override")]
     public Dictionary<string, object>? Override { get; init; }

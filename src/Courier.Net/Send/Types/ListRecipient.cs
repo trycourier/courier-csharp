@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ListRecipient
+public record ListRecipient
 {
     [JsonPropertyName("list_id")]
     public string? ListId { get; init; }
@@ -12,5 +14,5 @@ public class ListRecipient
     public Dictionary<string, object>? Data { get; init; }
 
     [JsonPropertyName("filters")]
-    public List<ListFilter>? Filters { get; init; }
+    public IEnumerable<ListFilter>? Filters { get; init; }
 }

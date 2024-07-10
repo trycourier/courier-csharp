@@ -1,11 +1,21 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class SlackRecipient
+public record SlackRecipient
 {
     [JsonPropertyName("slack")]
-    public OneOf<SendToSlackChannel, SendToSlackEmail, SendToSlackUserId> Slack { get; init; }
+    [JsonConverter(
+        typeof(OneOfSerializer<OneOf<SendToSlackChannel, SendToSlackEmail, SendToSlackUserId>>)
+    )]
+    public required OneOf<
+        SendToSlackChannel,
+        SendToSlackEmail,
+        SendToSlackUserId
+    > Slack { get; init; }
 }

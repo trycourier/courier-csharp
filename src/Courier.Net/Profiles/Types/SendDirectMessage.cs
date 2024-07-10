@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SendDirectMessage
+public record SendDirectMessage
 {
     [JsonPropertyName("user_id")]
-    public string UserId { get; init; }
+    public required string UserId { get; init; }
 }

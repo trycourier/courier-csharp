@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BaseSocialPresence
+public record BaseSocialPresence
 {
     [JsonPropertyName("url")]
-    public string Url { get; init; }
+    public required string Url { get; init; }
 }

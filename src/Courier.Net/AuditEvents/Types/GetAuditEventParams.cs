@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class GetAuditEventParams
+public record GetAuditEventParams
 {
     [JsonPropertyName("auditEventId")]
-    public string AuditEventId { get; init; }
+    public required string AuditEventId { get; init; }
 }

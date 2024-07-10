@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Utm
+public record Utm
 {
     [JsonPropertyName("source")]
     public string? Source { get; init; }

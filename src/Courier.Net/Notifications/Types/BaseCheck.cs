@@ -1,16 +1,18 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BaseCheck
+public record BaseCheck
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("status")]
-    public CheckStatus Status { get; init; }
+    public required CheckStatus Status { get; init; }
 
     [JsonPropertyName("type")]
-    public string Type { get; init; }
+    public required string Type { get; init; }
 }

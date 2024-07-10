@@ -1,11 +1,13 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BulkGetJobUsersParams
+public record BulkGetJobUsersParams
 {
     [JsonPropertyName("jobId")]
-    public string JobId { get; init; }
+    public required string JobId { get; init; }
 
     [JsonPropertyName("cursor")]
     public string? Cursor { get; init; }

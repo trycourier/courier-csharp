@@ -1,21 +1,23 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Tenant
+public record Tenant
 {
     /// <summary>
     /// Id of the tenant.
     /// </summary>
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     /// <summary>
     /// Name of the tenant.
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     /// <summary>
     /// Tenant's parent id (if any).

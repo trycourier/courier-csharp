@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Channel
+public record Channel
 {
     /// <summary>
     /// Id of the brand that should be used for rendering the message.
@@ -17,7 +19,7 @@ public class Channel
     /// one provider to send through unless routing_method is set to all.
     /// </summary>
     [JsonPropertyName("providers")]
-    public List<string>? Providers { get; init; }
+    public IEnumerable<string>? Providers { get; init; }
 
     /// <summary>
     /// The method for selecting the providers to send the message with.

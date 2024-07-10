@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BrandColors
+public record BrandColors
 {
     [JsonPropertyName("primary")]
     public string? Primary { get; init; }

@@ -1,35 +1,39 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class Audience
+public record Audience
 {
     /// <summary>
     /// A unique identifier representing the audience_id
     /// </summary>
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     /// <summary>
     /// The name of the audience
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     /// <summary>
     /// A description of the audience
     /// </summary>
     [JsonPropertyName("description")]
-    public string Description { get; init; }
+    public required string Description { get; init; }
 
     [JsonPropertyName("filter")]
-    public OneOf<SingleFilterConfig, NestedFilterConfig> Filter { get; init; }
+    [JsonConverter(typeof(OneOfSerializer<OneOf<SingleFilterConfig, NestedFilterConfig>>))]
+    public required OneOf<SingleFilterConfig, NestedFilterConfig> Filter { get; init; }
 
     [JsonPropertyName("created_at")]
-    public string CreatedAt { get; init; }
+    public required string CreatedAt { get; init; }
 
     [JsonPropertyName("updated_at")]
-    public string UpdatedAt { get; init; }
+    public required string UpdatedAt { get; init; }
 }

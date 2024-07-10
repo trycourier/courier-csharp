@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BrandTemplate
+public record BrandTemplate
 {
     [JsonPropertyName("backgroundColor")]
     public string? BackgroundColor { get; init; }
@@ -11,7 +13,7 @@ public class BrandTemplate
     public string? BlocksBackgroundColor { get; init; }
 
     [JsonPropertyName("enabled")]
-    public bool Enabled { get; init; }
+    public required bool Enabled { get; init; }
 
     [JsonPropertyName("footer")]
     public string? Footer { get; init; }

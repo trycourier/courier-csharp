@@ -1,10 +1,13 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
+using Courier.Net.Core;
 using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class NotificationBlock
+public record NotificationBlock
 {
     [JsonPropertyName("alias")]
     public string? Alias { get; init; }
@@ -13,12 +16,13 @@ public class NotificationBlock
     public string? Context { get; init; }
 
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("type")]
-    public BlockType Type { get; init; }
+    public required BlockType Type { get; init; }
 
     [JsonPropertyName("content")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, NotificationContentHierarchy>>))]
     public OneOf<string, NotificationContentHierarchy>? Content { get; init; }
 
     [JsonPropertyName("locales")]

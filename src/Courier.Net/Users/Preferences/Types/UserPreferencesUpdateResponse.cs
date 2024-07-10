@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class UserPreferencesUpdateResponse
+public record UserPreferencesUpdateResponse
 {
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; init; }
 }

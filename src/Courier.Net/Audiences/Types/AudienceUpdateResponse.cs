@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AudienceUpdateResponse
+public record AudienceUpdateResponse
 {
     [JsonPropertyName("audience")]
-    public Audience Audience { get; init; }
+    public required Audience Audience { get; init; }
 }

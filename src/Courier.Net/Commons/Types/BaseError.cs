@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BaseError
+public record BaseError
 {
     /// <summary>
     /// A message describing the error that occurred.
     /// </summary>
     [JsonPropertyName("message")]
-    public string Message { get; init; }
+    public required string Message { get; init; }
 }

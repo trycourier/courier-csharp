@@ -1,24 +1,26 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Address
+public record Address
 {
     [JsonPropertyName("formatted")]
-    public string Formatted { get; init; }
+    public required string Formatted { get; init; }
 
     [JsonPropertyName("street_address")]
-    public string StreetAddress { get; init; }
+    public required string StreetAddress { get; init; }
 
     [JsonPropertyName("locality")]
-    public string Locality { get; init; }
+    public required string Locality { get; init; }
 
     [JsonPropertyName("region")]
-    public string Region { get; init; }
+    public required string Region { get; init; }
 
     [JsonPropertyName("postal_code")]
-    public string PostalCode { get; init; }
+    public required string PostalCode { get; init; }
 
     [JsonPropertyName("country")]
-    public string Country { get; init; }
+    public required string Country { get; init; }
 }

@@ -1,14 +1,24 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
+using Courier.Net.Core;
 using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class MessageRouting
+public record MessageRouting
 {
     [JsonPropertyName("method")]
-    public MessageRoutingMethod Method { get; init; }
+    public required MessageRoutingMethod Method { get; init; }
 
     [JsonPropertyName("channels")]
-    public List<OneOf<string, MessageRouting>> Channels { get; init; }
+    [JsonConverter(
+        typeof(CollectionItemSerializer<
+            OneOf<string, MessageRouting>,
+            OneOfSerializer<OneOf<string, MessageRouting>>
+        >)
+    )]
+    public IEnumerable<OneOf<string, MessageRouting>> Channels { get; init; } =
+        new List<OneOf<string, MessageRouting>>();
 }

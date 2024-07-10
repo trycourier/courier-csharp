@@ -1,15 +1,17 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Brand
+public record Brand
 {
     /// <summary>
     /// The date/time of when the brand was created. Represented in milliseconds since Unix epoch.
     /// </summary>
     [JsonPropertyName("created")]
-    public int Created { get; init; }
+    public required int Created { get; init; }
 
     /// <summary>
     /// Brand Identifier
@@ -21,22 +23,22 @@ public class Brand
     /// Brand name
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     /// <summary>
     /// The date/time of when the brand was published. Represented in milliseconds since Unix epoch.
     /// </summary>
     [JsonPropertyName("published")]
-    public int Published { get; init; }
+    public required int Published { get; init; }
 
     [JsonPropertyName("settings")]
-    public BrandSettings Settings { get; init; }
+    public required BrandSettings Settings { get; init; }
 
     /// <summary>
     /// The date/time of when the brand was updated. Represented in milliseconds since Unix epoch.
     /// </summary>
     [JsonPropertyName("updated")]
-    public int Updated { get; init; }
+    public required int Updated { get; init; }
 
     [JsonPropertyName("snippets")]
     public BrandSnippets? Snippets { get; init; }
@@ -45,5 +47,5 @@ public class Brand
     /// The version identifier for the brand
     /// </summary>
     [JsonPropertyName("version")]
-    public string Version { get; init; }
+    public required string Version { get; init; }
 }

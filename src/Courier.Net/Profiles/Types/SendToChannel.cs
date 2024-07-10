@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SendToChannel
+public record SendToChannel
 {
     [JsonPropertyName("channel_id")]
-    public string ChannelId { get; init; }
+    public required string ChannelId { get; init; }
 }

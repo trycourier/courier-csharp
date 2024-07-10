@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SlackBaseProperties
+public record SlackBaseProperties
 {
     [JsonPropertyName("access_token")]
-    public string AccessToken { get; init; }
+    public required string AccessToken { get; init; }
 }

@@ -1,15 +1,17 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SendToMsTeamsEmail
+public record SendToMsTeamsEmail
 {
     [JsonPropertyName("email")]
-    public string Email { get; init; }
+    public required string Email { get; init; }
 
     [JsonPropertyName("tenant_id")]
-    public string TenantId { get; init; }
+    public required string TenantId { get; init; }
 
     [JsonPropertyName("service_url")]
-    public string ServiceUrl { get; init; }
+    public required string ServiceUrl { get; init; }
 }

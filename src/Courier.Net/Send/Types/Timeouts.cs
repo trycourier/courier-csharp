@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Timeouts
+public record Timeouts
 {
     [JsonPropertyName("provider")]
     public int? Provider { get; init; }

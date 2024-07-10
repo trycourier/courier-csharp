@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class InvalidUserRecipient
+public record InvalidUserRecipient
 {
     [JsonPropertyName("list_id")]
-    public string ListId { get; init; }
+    public required string ListId { get; init; }
 
     [JsonPropertyName("list_pattern")]
-    public string ListPattern { get; init; }
+    public required string ListPattern { get; init; }
 }

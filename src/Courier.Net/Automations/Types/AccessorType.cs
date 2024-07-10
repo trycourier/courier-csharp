@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AccessorType
+public record AccessorType
 {
     [JsonPropertyName("$ref")]
-    public string Ref { get; init; }
+    public required string Ref { get; init; }
 }

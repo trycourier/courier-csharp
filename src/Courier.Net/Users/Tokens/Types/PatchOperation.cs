@@ -1,20 +1,22 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class PatchOperation
+public record PatchOperation
 {
     /// <summary>
     /// The operation to perform.
     /// </summary>
     [JsonPropertyName("op")]
-    public string Op { get; init; }
+    public required string Op { get; init; }
 
     /// <summary>
     /// The JSON path specifying the part of the profile to operate on.
     /// </summary>
     [JsonPropertyName("path")]
-    public string Path { get; init; }
+    public required string Path { get; init; }
 
     /// <summary>
     /// The value for the operation.

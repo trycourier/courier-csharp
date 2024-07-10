@@ -1,15 +1,17 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class NotificationGetContentResponse
+public record NotificationGetContentResponse
 {
     [JsonPropertyName("blocks")]
-    public List<NotificationBlock>? Blocks { get; init; }
+    public IEnumerable<NotificationBlock>? Blocks { get; init; }
 
     [JsonPropertyName("channels")]
-    public List<NotificationChannel>? Channels { get; init; }
+    public IEnumerable<NotificationChannel>? Channels { get; init; }
 
     [JsonPropertyName("checksum")]
     public string? Checksum { get; init; }

@@ -1,15 +1,17 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BrandSnippet
+public record BrandSnippet
 {
     [JsonPropertyName("format")]
-    public string Format { get; init; }
+    public required string Format { get; init; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
 
     [JsonPropertyName("value")]
-    public string Value { get; init; }
+    public required string Value { get; init; }
 }

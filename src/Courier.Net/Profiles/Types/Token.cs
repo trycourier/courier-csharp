@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Token
+public record Token
 {
     [JsonPropertyName("token")]
-    public string Token_ { get; init; }
+    public required string Token_ { get; init; }
 }

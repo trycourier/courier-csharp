@@ -1,10 +1,13 @@
 using System.Text.Json.Serialization;
+using Courier.Net.Core;
 using Courier.Net.Users;
 using OneOf;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class UserToken
+public record UserToken
 {
     /// <summary>
     /// Full body of the token. Must match token in URL.
@@ -13,12 +16,13 @@ public class UserToken
     public string? Token { get; init; }
 
     [JsonPropertyName("provider_key")]
-    public ProviderKey ProviderKey { get; init; }
+    public required ProviderKey ProviderKey { get; init; }
 
     /// <summary>
     /// ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to disable expiration.
     /// </summary>
     [JsonPropertyName("expiry_date")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<string, bool>>))]
     public OneOf<string, bool>? ExpiryDate { get; init; }
 
     /// <summary>

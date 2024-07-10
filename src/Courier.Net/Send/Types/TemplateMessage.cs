@@ -1,17 +1,20 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
+using Courier.Net.Core;
 using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class TemplateMessage
+public record TemplateMessage
 {
     /// <summary>
     /// The id of the notification template to be rendered and sent to the recipient(s).
     /// This field or the content field must be supplied.
     /// </summary>
     [JsonPropertyName("template")]
-    public string Template { get; init; }
+    public required string Template { get; init; }
 
     /// <summary>
     /// An arbitrary object that includes any data you want to pass to the message.
@@ -73,5 +76,52 @@ public class TemplateMessage
     /// The recipient or a list of recipients of the message
     /// </summary>
     [JsonPropertyName("to")]
-    public OneOf<OneOf<AudienceRecipient, ListRecipient, ListPatternRecipient, UserRecipient, SlackRecipient, MsTeamsRecipient, Dictionary<string, object>>, List<OneOf<AudienceRecipient, ListRecipient, ListPatternRecipient, UserRecipient, SlackRecipient, MsTeamsRecipient, Dictionary<string, object>>>>? To { get; init; }
+    [JsonConverter(
+        typeof(OneOfSerializer<
+            OneOf<
+                OneOf<
+                    AudienceRecipient,
+                    ListRecipient,
+                    ListPatternRecipient,
+                    UserRecipient,
+                    SlackRecipient,
+                    MsTeamsRecipient,
+                    Dictionary<string, object>
+                >,
+                IEnumerable<
+                    OneOf<
+                        AudienceRecipient,
+                        ListRecipient,
+                        ListPatternRecipient,
+                        UserRecipient,
+                        SlackRecipient,
+                        MsTeamsRecipient,
+                        Dictionary<string, object>
+                    >
+                >
+            >
+        >)
+    )]
+    public OneOf<
+        OneOf<
+            AudienceRecipient,
+            ListRecipient,
+            ListPatternRecipient,
+            UserRecipient,
+            SlackRecipient,
+            MsTeamsRecipient,
+            Dictionary<string, object>
+        >,
+        IEnumerable<
+            OneOf<
+                AudienceRecipient,
+                ListRecipient,
+                ListPatternRecipient,
+                UserRecipient,
+                SlackRecipient,
+                MsTeamsRecipient,
+                Dictionary<string, object>
+            >
+        >
+    >? To { get; init; }
 }

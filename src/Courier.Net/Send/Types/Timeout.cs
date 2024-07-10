@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Timeout
+public record Timeout
 {
     [JsonPropertyName("provider")]
     public Dictionary<string, int>? Provider { get; init; }

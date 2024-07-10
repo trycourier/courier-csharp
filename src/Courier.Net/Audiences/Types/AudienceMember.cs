@@ -1,21 +1,23 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AudienceMember
+public record AudienceMember
 {
     [JsonPropertyName("added_at")]
-    public string AddedAt { get; init; }
+    public required string AddedAt { get; init; }
 
     [JsonPropertyName("audience_id")]
-    public string AudienceId { get; init; }
+    public required string AudienceId { get; init; }
 
     [JsonPropertyName("audience_version")]
-    public int AudienceVersion { get; init; }
+    public required int AudienceVersion { get; init; }
 
     [JsonPropertyName("member_id")]
-    public string MemberId { get; init; }
+    public required string MemberId { get; init; }
 
     [JsonPropertyName("reason")]
-    public string Reason { get; init; }
+    public required string Reason { get; init; }
 }

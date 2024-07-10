@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Paging
+public record Paging
 {
     [JsonPropertyName("cursor")]
     public string? Cursor { get; init; }
 
     [JsonPropertyName("more")]
-    public bool More { get; init; }
+    public required bool More { get; init; }
 }

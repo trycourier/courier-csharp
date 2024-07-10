@@ -1,16 +1,18 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class InboundBulkTemplateMessage
+public record InboundBulkTemplateMessage
 {
     /// <summary>
     /// The id of the notification template to be rendered and sent to the recipient(s).
     /// This field or the content field must be supplied.
     /// </summary>
     [JsonPropertyName("template")]
-    public string Template { get; init; }
+    public required string Template { get; init; }
 
     /// <summary>
     /// An arbitrary object that includes any data you want to pass to the message.

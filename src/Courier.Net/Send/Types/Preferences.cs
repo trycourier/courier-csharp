@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Preferences
+public record Preferences
 {
     [JsonPropertyName("templateIds")]
-    public List<string> TemplateIds { get; init; }
+    public IEnumerable<string> TemplateIds { get; init; } = new List<string>();
 }

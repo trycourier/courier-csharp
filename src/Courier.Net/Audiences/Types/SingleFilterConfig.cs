@@ -1,28 +1,30 @@
 using System.Text.Json.Serialization;
-using System;
-using Courier.Net.Utilities;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class SingleFilterConfig
+public record SingleFilterConfig
 {
     /// <summary>
     /// The value to use for filtering
     /// </summary>
     [JsonPropertyName("value")]
-    public string Value { get; init; }
+    public required string Value { get; init; }
 
     /// <summary>
     /// The attribe name from profile whose value will be operated against the filter value
     /// </summary>
     [JsonPropertyName("path")]
-    public string Path { get; init; }
+    public required string Path { get; init; }
 
     /// <summary>
     /// The operator to use for filtering
     /// </summary>
-    [JsonPropertyName("operator")JsonConverter(typeof(OneOfJsonConverter))]
-    public OneOf<ComparisonOperator, LogicalOperator> Operator { get; init; }
+    [JsonPropertyName("operator")]
+    [JsonConverter(typeof(OneOfSerializer<OneOf<ComparisonOperator, LogicalOperator>>))]
+    public required OneOf<ComparisonOperator, LogicalOperator> Operator { get; init; }
 }

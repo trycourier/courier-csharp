@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class IssueTokenResponse
+public record IssueTokenResponse
 {
     [JsonPropertyName("token")]
     public string? Token { get; init; }

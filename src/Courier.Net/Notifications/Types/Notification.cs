@@ -1,21 +1,23 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Notification
+public record Notification
 {
     [JsonPropertyName("created_at")]
-    public long CreatedAt { get; init; }
+    public required long CreatedAt { get; init; }
 
     [JsonPropertyName("updated_at")]
-    public long UpdatedAt { get; init; }
+    public required long UpdatedAt { get; init; }
 
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("routing")]
-    public MessageRouting Routing { get; init; }
+    public required MessageRouting Routing { get; init; }
 
     [JsonPropertyName("tags")]
     public NotificationTag? Tags { get; init; }
@@ -24,5 +26,5 @@ public class Notification
     public string? Title { get; init; }
 
     [JsonPropertyName("topic_id")]
-    public string TopicId { get; init; }
+    public required string TopicId { get; init; }
 }

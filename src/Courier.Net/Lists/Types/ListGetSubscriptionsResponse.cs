@@ -1,13 +1,16 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ListGetSubscriptionsResponse
+public record ListGetSubscriptionsResponse
 {
     [JsonPropertyName("paging")]
-    public Paging Paging { get; init; }
+    public required Paging Paging { get; init; }
 
     [JsonPropertyName("items")]
-    public List<ListSubscriptionRecipient> Items { get; init; }
+    public IEnumerable<ListSubscriptionRecipient> Items { get; init; } =
+        new List<ListSubscriptionRecipient>();
 }

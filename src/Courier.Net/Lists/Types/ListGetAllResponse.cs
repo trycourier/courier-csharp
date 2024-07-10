@@ -1,13 +1,15 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ListGetAllResponse
+public record ListGetAllResponse
 {
     [JsonPropertyName("paging")]
-    public Paging Paging { get; init; }
+    public required Paging Paging { get; init; }
 
     [JsonPropertyName("items")]
-    public List<List> Items { get; init; }
+    public IEnumerable<List> Items { get; init; } = new List<List>();
 }

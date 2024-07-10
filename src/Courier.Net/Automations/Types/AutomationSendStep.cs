@@ -1,11 +1,13 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationSendStep
+public record AutomationSendStep
 {
     [JsonPropertyName("action")]
-    public string Action { get; init; }
+    public required string Action { get; init; }
 
     [JsonPropertyName("brand")]
     public string? Brand { get; init; }

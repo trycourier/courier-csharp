@@ -1,14 +1,18 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class BaseFilterConfig
+public record BaseFilterConfig
 {
     /// <summary>
     /// The operator to use for filtering
     /// </summary>
     [JsonPropertyName("operator")]
-    public OneOf<ComparisonOperator, LogicalOperator> Operator { get; init; }
+    [JsonConverter(typeof(OneOfSerializer<OneOf<ComparisonOperator, LogicalOperator>>))]
+    public required OneOf<ComparisonOperator, LogicalOperator> Operator { get; init; }
 }

@@ -1,16 +1,20 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class AutomationV2SendStep
+public record AutomationV2SendStep
 {
     [JsonPropertyName("action")]
-    public string Action { get; init; }
+    public required string Action { get; init; }
 
     [JsonPropertyName("message")]
-    public OneOf<ContentMessage, TemplateMessage> Message { get; init; }
+    [JsonConverter(typeof(OneOfSerializer<OneOf<ContentMessage, TemplateMessage>>))]
+    public required OneOf<ContentMessage, TemplateMessage> Message { get; init; }
 
     [JsonPropertyName("if")]
     public string? If { get; init; }

@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net.Users;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class UserPreferencesGetResponse
+public record UserPreferencesGetResponse
 {
     [JsonPropertyName("topic")]
-    public TopicPreference Topic { get; init; }
+    public required TopicPreference Topic { get; init; }
 }

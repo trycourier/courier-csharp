@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ElementalMetaNode
+public record ElementalMetaNode
 {
     /// <summary>
     /// The title to be displayed by supported channels. For example, the email subject.
@@ -11,7 +13,7 @@ public class ElementalMetaNode
     public string? Title { get; init; }
 
     [JsonPropertyName("channels")]
-    public List<string>? Channels { get; init; }
+    public IEnumerable<string>? Channels { get; init; }
 
     [JsonPropertyName("ref")]
     public string? Ref { get; init; }

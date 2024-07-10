@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BrandSettingsEmail
+public record BrandSettingsEmail
 {
     [JsonPropertyName("templateOverride")]
     public BrandTemplateOverride? TemplateOverride { get; init; }

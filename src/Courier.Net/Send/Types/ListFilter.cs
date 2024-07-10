@@ -1,18 +1,20 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ListFilter
+public record ListFilter
 {
     /// <summary>
     /// Send to users only if they are member of the account
     /// </summary>
     [JsonPropertyName("operator")]
-    public string Operator { get; init; }
+    public required string Operator { get; init; }
 
     [JsonPropertyName("path")]
-    public string Path { get; init; }
+    public required string Path { get; init; }
 
     [JsonPropertyName("value")]
-    public string Value { get; init; }
+    public required string Value { get; init; }
 }

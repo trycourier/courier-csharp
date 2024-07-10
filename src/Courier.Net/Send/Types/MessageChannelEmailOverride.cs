@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class MessageChannelEmailOverride
+public record MessageChannelEmailOverride
 {
     [JsonPropertyName("attachments")]
-    public List<Dictionary<string, object>>? Attachments { get; init; }
+    public IEnumerable<Dictionary<string, object>>? Attachments { get; init; }
 
     [JsonPropertyName("bcc")]
     public string? Bcc { get; init; }
@@ -33,5 +35,5 @@ public class MessageChannelEmailOverride
     public string? Text { get; init; }
 
     [JsonPropertyName("tracking")]
-    public TrackingOverride Tracking { get; init; }
+    public required TrackingOverride Tracking { get; init; }
 }

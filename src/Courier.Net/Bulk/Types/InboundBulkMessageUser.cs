@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class InboundBulkMessageUser
+public record InboundBulkMessageUser
 {
     [JsonPropertyName("preferences")]
     public RecipientPreferences? Preferences { get; init; }

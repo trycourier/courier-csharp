@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class EmailHeader
+public record EmailHeader
 {
     [JsonPropertyName("inheritDefault")]
     public bool? InheritDefault { get; init; }
@@ -12,5 +14,5 @@ public class EmailHeader
     public string? BarColor { get; init; }
 
     [JsonPropertyName("logo")]
-    public Logo Logo { get; init; }
+    public required Logo Logo { get; init; }
 }

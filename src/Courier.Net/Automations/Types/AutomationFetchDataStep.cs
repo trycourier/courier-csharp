@@ -1,18 +1,20 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationFetchDataStep
+public record AutomationFetchDataStep
 {
     [JsonPropertyName("action")]
-    public string Action { get; init; }
+    public required string Action { get; init; }
 
     [JsonPropertyName("webhook")]
-    public AutomationFetchDataWebhook Webhook { get; init; }
+    public required AutomationFetchDataWebhook Webhook { get; init; }
 
     [JsonPropertyName("merge_strategy")]
-    public MergeAlgorithm MergeStrategy { get; init; }
+    public required MergeAlgorithm MergeStrategy { get; init; }
 
     [JsonPropertyName("idempotency_expiry")]
     public string? IdempotencyExpiry { get; init; }

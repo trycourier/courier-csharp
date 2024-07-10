@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SubmissionChecksReplaceResponse
+public record SubmissionChecksReplaceResponse
 {
     [JsonPropertyName("checks")]
-    public List<Check> Checks { get; init; }
+    public IEnumerable<Check> Checks { get; init; } = new List<Check>();
 }

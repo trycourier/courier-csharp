@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class MultipleTokens
+public record MultipleTokens
 {
     [JsonPropertyName("tokens")]
-    public List<Token> Tokens { get; init; }
+    public IEnumerable<Token> Tokens { get; init; } = new List<Token>();
 }

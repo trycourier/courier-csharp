@@ -1,21 +1,23 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ElementalActionNode
+public record ElementalActionNode
 {
     /// <summary>
     /// The text content of the action shown to the user.
     /// </summary>
     [JsonPropertyName("content")]
-    public string Content { get; init; }
+    public required string Content { get; init; }
 
     /// <summary>
     /// The target URL of the action.
     /// </summary>
     [JsonPropertyName("href")]
-    public string Href { get; init; }
+    public required string Href { get; init; }
 
     /// <summary>
     /// A unique id used to identify the action when it is executed.
@@ -48,7 +50,7 @@ public class ElementalActionNode
     public Dictionary<string, Locale>? Locales { get; init; }
 
     [JsonPropertyName("channels")]
-    public List<string>? Channels { get; init; }
+    public IEnumerable<string>? Channels { get; init; }
 
     [JsonPropertyName("ref")]
     public string? Ref { get; init; }

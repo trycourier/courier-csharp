@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class Tracking
+public record Tracking
 {
     /// <summary>
     /// The operating system version

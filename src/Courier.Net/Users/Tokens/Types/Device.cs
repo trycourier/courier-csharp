@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class Device
+public record Device
 {
     /// <summary>
     /// Id of the application the token is used for

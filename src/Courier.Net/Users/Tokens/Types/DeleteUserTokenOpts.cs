@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net.Users;
 
-public class DeleteUserTokenOpts
+public record DeleteUserTokenOpts
 {
     [JsonPropertyName("user_id")]
-    public string UserId { get; init; }
+    public required string UserId { get; init; }
 
     [JsonPropertyName("token")]
-    public string Token { get; init; }
+    public required string Token { get; init; }
 }

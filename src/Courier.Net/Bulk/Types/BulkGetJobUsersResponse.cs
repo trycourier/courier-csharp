@@ -1,13 +1,16 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BulkGetJobUsersResponse
+public record BulkGetJobUsersResponse
 {
     [JsonPropertyName("items")]
-    public List<BulkMessageUserResponse> Items { get; init; }
+    public IEnumerable<BulkMessageUserResponse> Items { get; init; } =
+        new List<BulkMessageUserResponse>();
 
     [JsonPropertyName("paging")]
-    public Paging Paging { get; init; }
+    public required Paging Paging { get; init; }
 }

@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ChannelPreference
+public record ChannelPreference
 {
     [JsonPropertyName("channel")]
-    public ChannelClassification Channel { get; init; }
+    public required ChannelClassification Channel { get; init; }
 }

@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AirshipProfileAudience
+public record AirshipProfileAudience
 {
     [JsonPropertyName("named_user")]
-    public string NamedUser { get; init; }
+    public required string NamedUser { get; init; }
 }

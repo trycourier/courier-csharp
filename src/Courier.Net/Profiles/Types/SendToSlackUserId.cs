@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class SendToSlackUserId
+public record SendToSlackUserId
 {
     [JsonPropertyName("user_id")]
-    public string UserId { get; init; }
+    public required string UserId { get; init; }
 
     [JsonPropertyName("access_token")]
-    public string AccessToken { get; init; }
+    public required string AccessToken { get; init; }
 }

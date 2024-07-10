@@ -1,19 +1,21 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class RoutingStrategy
+public record RoutingStrategy
 {
     /// <summary>
     /// The method for selecting channels to send the message with. Value can be either 'single' or 'all'. If not provided will default to 'single'
     /// </summary>
     [JsonPropertyName("method")]
-    public RoutingStrategyMethod Method { get; init; }
+    public required RoutingStrategyMethod Method { get; init; }
 
     /// <summary>
     /// An array of valid channel identifiers (like email, push, sms, etc.) and additional routing nodes.
     /// </summary>
     [JsonPropertyName("channels")]
-    public List<string> Channels { get; init; }
+    public IEnumerable<string> Channels { get; init; } = new List<string>();
 }

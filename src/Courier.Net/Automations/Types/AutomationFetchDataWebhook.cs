@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationFetchDataWebhook
+public record AutomationFetchDataWebhook
 {
     [JsonPropertyName("body")]
     public Dictionary<string, object>? Body { get; init; }
@@ -15,8 +17,8 @@ public class AutomationFetchDataWebhook
     public Dictionary<string, object>? Params { get; init; }
 
     [JsonPropertyName("method")]
-    public AutomationFetchDataWebhookMethod Method { get; init; }
+    public required AutomationFetchDataWebhookMethod Method { get; init; }
 
     [JsonPropertyName("url")]
-    public string Url { get; init; }
+    public required string Url { get; init; }
 }

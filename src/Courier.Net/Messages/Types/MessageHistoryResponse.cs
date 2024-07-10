@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
-using Courier.Net;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class MessageHistoryResponse
+public record MessageHistoryResponse
 {
     [JsonPropertyName("results")]
-    public List<MessageDetails> Results { get; init; }
+    public IEnumerable<Dictionary<string, object>> Results { get; init; } =
+        new List<Dictionary<string, object>>();
 }

@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationRunContext
+public record AutomationRunContext
 {
     [JsonPropertyName("brand")]
     public string? Brand { get; init; }

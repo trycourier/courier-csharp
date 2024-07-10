@@ -1,11 +1,13 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class EmailHead
+public record EmailHead
 {
     [JsonPropertyName("inheritDefault")]
-    public bool InheritDefault { get; init; }
+    public required bool InheritDefault { get; init; }
 
     [JsonPropertyName("content")]
     public string? Content { get; init; }

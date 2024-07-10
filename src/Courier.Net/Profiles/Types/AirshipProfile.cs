@@ -1,13 +1,15 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AirshipProfile
+public record AirshipProfile
 {
     [JsonPropertyName("audience")]
-    public AirshipProfileAudience Audience { get; init; }
+    public required AirshipProfileAudience Audience { get; init; }
 
     [JsonPropertyName("device_types")]
-    public List<object> DeviceTypes { get; init; }
+    public IEnumerable<object> DeviceTypes { get; init; } = new List<object>();
 }

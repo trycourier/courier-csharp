@@ -1,8 +1,10 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class NotificationContentHierarchy
+public record NotificationContentHierarchy
 {
     [JsonPropertyName("parent")]
     public string? Parent { get; init; }

@@ -1,19 +1,21 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationUpdateProfileStep
+public record AutomationUpdateProfileStep
 {
     [JsonPropertyName("action")]
-    public string Action { get; init; }
+    public required string Action { get; init; }
 
     [JsonPropertyName("recipient_id")]
-    public string RecipientId { get; init; }
+    public required string RecipientId { get; init; }
 
     [JsonPropertyName("profile")]
-    public object Profile { get; init; }
+    public required object Profile { get; init; }
 
     [JsonPropertyName("merge")]
-    public MergeAlgorithm Merge { get; init; }
+    public required MergeAlgorithm Merge { get; init; }
 }

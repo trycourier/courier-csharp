@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BrandSettingsInApp
+public record BrandSettingsInApp
 {
     [JsonPropertyName("borderRadius")]
     public string? BorderRadius { get; init; }
@@ -18,14 +20,14 @@ public class BrandSettingsInApp
     public InAppPlacement? Placement { get; init; }
 
     [JsonPropertyName("widgetBackground")]
-    public WidgetBackground WidgetBackground { get; init; }
+    public required WidgetBackground WidgetBackground { get; init; }
 
     [JsonPropertyName("colors")]
-    public BrandColors Colors { get; init; }
+    public required BrandColors Colors { get; init; }
 
     [JsonPropertyName("icons")]
-    public Icons Icons { get; init; }
+    public required Icons Icons { get; init; }
 
     [JsonPropertyName("preferences")]
-    public Preferences Preferences { get; init; }
+    public required Preferences Preferences { get; init; }
 }

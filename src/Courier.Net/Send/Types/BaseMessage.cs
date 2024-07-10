@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BaseMessage
+public record BaseMessage
 {
     /// <summary>
     /// An arbitrary object that includes any data you want to pass to the message.

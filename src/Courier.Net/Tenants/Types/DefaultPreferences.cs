@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class DefaultPreferences
+public record DefaultPreferences
 {
     [JsonPropertyName("items")]
-    public List<SubscriptionTopic>? Items { get; init; }
+    public IEnumerable<SubscriptionTopic>? Items { get; init; }
 }

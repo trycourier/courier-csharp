@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class BulkMessageUserResponse
+public record BulkMessageUserResponse
 {
     [JsonPropertyName("status")]
-    public BulkJobUserStatus Status { get; init; }
+    public required BulkJobUserStatus Status { get; init; }
 
     [JsonPropertyName("messageId")]
     public string? MessageId { get; init; }

@@ -1,19 +1,21 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Check
+public record Check
 {
     [JsonPropertyName("updated")]
-    public long Updated { get; init; }
+    public required long Updated { get; init; }
 
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; init; }
 
     [JsonPropertyName("status")]
-    public CheckStatus Status { get; init; }
+    public required CheckStatus Status { get; init; }
 
     [JsonPropertyName("type")]
-    public string Type { get; init; }
+    public required string Type { get; init; }
 }

@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Rule
+public record Rule
 {
     [JsonPropertyName("start")]
     public string? Start { get; init; }
 
     [JsonPropertyName("until")]
-    public string Until { get; init; }
+    public required string Until { get; init; }
 }

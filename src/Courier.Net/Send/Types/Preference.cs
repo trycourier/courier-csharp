@@ -1,18 +1,20 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class Preference
+public record Preference
 {
     [JsonPropertyName("status")]
-    public PreferenceStatus Status { get; init; }
+    public required PreferenceStatus Status { get; init; }
 
     [JsonPropertyName("rules")]
-    public List<Rule>? Rules { get; init; }
+    public IEnumerable<Rule>? Rules { get; init; }
 
     [JsonPropertyName("channel_preferences")]
-    public List<ChannelPreference>? ChannelPreferences { get; init; }
+    public IEnumerable<ChannelPreference>? ChannelPreferences { get; init; }
 
     [JsonPropertyName("source")]
     public ChannelSource? Source { get; init; }

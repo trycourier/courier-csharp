@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ProfileGetParameters
+public record ProfileGetParameters
 {
     [JsonPropertyName("recipientId")]
-    public string RecipientId { get; init; }
+    public required string RecipientId { get; init; }
 }

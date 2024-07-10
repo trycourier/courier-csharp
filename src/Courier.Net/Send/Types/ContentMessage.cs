@@ -1,17 +1,21 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using Courier.Net;
+using Courier.Net.Core;
+using OneOf;
+
+#nullable enable
 
 namespace Courier.Net;
 
-public class ContentMessage
+public record ContentMessage
 {
     /// <summary>
     /// Describes the content of the message in a way that will work for email, push,
     /// chat, or any channel. Either this or template must be specified.
     /// </summary>
     [JsonPropertyName("content")]
-    public OneOf<ElementalContent, ElementalContentSugar> Content { get; init; }
+    [JsonConverter(typeof(OneOfSerializer<OneOf<ElementalContent, ElementalContentSugar>>))]
+    public required OneOf<ElementalContent, ElementalContentSugar> Content { get; init; }
 
     /// <summary>
     /// An arbitrary object that includes any data you want to pass to the message.
@@ -73,5 +77,52 @@ public class ContentMessage
     /// The recipient or a list of recipients of the message
     /// </summary>
     [JsonPropertyName("to")]
-    public OneOf<OneOf<AudienceRecipient, ListRecipient, ListPatternRecipient, UserRecipient, SlackRecipient, MsTeamsRecipient, Dictionary<string, object>>, List<OneOf<AudienceRecipient, ListRecipient, ListPatternRecipient, UserRecipient, SlackRecipient, MsTeamsRecipient, Dictionary<string, object>>>>? To { get; init; }
+    [JsonConverter(
+        typeof(OneOfSerializer<
+            OneOf<
+                OneOf<
+                    AudienceRecipient,
+                    ListRecipient,
+                    ListPatternRecipient,
+                    UserRecipient,
+                    SlackRecipient,
+                    MsTeamsRecipient,
+                    Dictionary<string, object>
+                >,
+                IEnumerable<
+                    OneOf<
+                        AudienceRecipient,
+                        ListRecipient,
+                        ListPatternRecipient,
+                        UserRecipient,
+                        SlackRecipient,
+                        MsTeamsRecipient,
+                        Dictionary<string, object>
+                    >
+                >
+            >
+        >)
+    )]
+    public OneOf<
+        OneOf<
+            AudienceRecipient,
+            ListRecipient,
+            ListPatternRecipient,
+            UserRecipient,
+            SlackRecipient,
+            MsTeamsRecipient,
+            Dictionary<string, object>
+        >,
+        IEnumerable<
+            OneOf<
+                AudienceRecipient,
+                ListRecipient,
+                ListPatternRecipient,
+                UserRecipient,
+                SlackRecipient,
+                MsTeamsRecipient,
+                Dictionary<string, object>
+            >
+        >
+    >? To { get; init; }
 }

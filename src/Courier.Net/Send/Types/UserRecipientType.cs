@@ -1,5 +1,3 @@
 namespace Courier.Net;
 
-public class UserRecipientType
-{
-}
+public record UserRecipientType { }

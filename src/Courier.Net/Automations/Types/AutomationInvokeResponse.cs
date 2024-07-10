@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class AutomationInvokeResponse
+public record AutomationInvokeResponse
 {
     [JsonPropertyName("runId")]
-    public string RunId { get; init; }
+    public required string RunId { get; init; }
 }

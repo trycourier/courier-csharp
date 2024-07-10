@@ -1,16 +1,19 @@
 using System.Text.Json.Serialization;
 using Courier.Net;
 
+#nullable enable
+
 namespace Courier.Net;
 
-public class ListTemplatesResponse
+public record ListTemplatesResponse
 {
     [JsonPropertyName("paging")]
-    public Paging Paging { get; init; }
+    public required Paging Paging { get; init; }
 
     /// <summary>
     /// An array of Notification Templates
     /// </summary>
     [JsonPropertyName("results")]
-    public List<NotificationTemplates> Results { get; init; }
+    public IEnumerable<NotificationTemplates> Results { get; init; } =
+        new List<NotificationTemplates>();
 }

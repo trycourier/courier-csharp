@@ -1,5 +1,3 @@
 namespace Courier.Net.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }
