@@ -1,4 +1,4 @@
-
+ 
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
@@ -7,7 +7,7 @@
         <NuGetAudit>false</NuGetAudit>
         <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
-        <Version>0.0.0</Version>
+        <Version>0.0.1</Version>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>MIT</PackageLicenseFile>
         <PackageProjectUrl>https://github.com/trycourier/courier-csharp</PackageProjectUrl>
@@ -34,6 +34,7 @@
 
     <ItemGroup>
         <PackageReference Include="OneOf" Version="3.0.263" />
+        <PackageReference Include="OneOf.Extended" Version="3.0.263" />
         <PackageReference Include="System.Text.Json" Version="8.0.3" />
     </ItemGroup>
 

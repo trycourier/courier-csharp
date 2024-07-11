@@ -24,7 +24,7 @@ public partial class Courier
                 { "Authorization", $"Bearer {authorizationToken}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Courier.Net" },
-                { "X-Fern-SDK-Version", "0.0.0" },
+                { "X-Fern-SDK-Version", "0.0.1" },
             },
             clientOptions ?? new ClientOptions()
         );

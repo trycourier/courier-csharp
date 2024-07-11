@@ -60,7 +60,7 @@ public record ElementalTextNode
     /// Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
     /// </summary>
     [JsonPropertyName("locales")]
-    public Dictionary<string, Locale>?? Locales { get; init; }
+    public Dictionary<string, Locale>? Locales { get; init; }
 
     [JsonPropertyName("format")]
     public string? Format { get; init; }

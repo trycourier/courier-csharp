@@ -44,7 +44,7 @@ public record Channel
     /// Channel specific overrides.
     /// </summary>
     [JsonPropertyName("override")]
-    public Override? Override { get; init; }
+    public Dictionary<string, object>? Override { get; init; }
 
     [JsonPropertyName("metadata")]
     public ChannelMetadata? Metadata { get; init; }
