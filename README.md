@@ -33,7 +33,7 @@ using Courier.Net;
 
 Courier courier = new Courier("YOUR_API_KEY")
 Agent agent = courier.SendAsync(
-    new SendMessageRequest{
+    new SendMessageRequest {
         ...
     }
 );
@@ -62,7 +62,7 @@ retried twice with exponential backoff. You can override this behavior
 globally or per-request.
 
 ```csharp
-var courier = new Courier("...", new ClientOptions{
+var courier = new Courier("...", new ClientOptions {
     MaxRetries = 1 // Only retry once
 });
 ```
@@ -72,7 +72,7 @@ The SDK defaults to a 60s timeout. You can override this behaviour
 globally or per-request.
 
 ```csharp
-var courier = new Courier("...", new ClientOptions{
+var courier = new Courier("...", new ClientOptions {
     TimeoutInSeconds = 20 // Lower timeout
 });
 ```
@@ -81,7 +81,7 @@ var courier = new Courier("...", new ClientOptions{
 You can override the HttpClient by passing in `ClientOptions`.
 
 ```csharp
-var courier = new Courier("YOUR_API_KEY", new ClientOptions{
+var courier = new Courier("YOUR_API_KEY", new ClientOptions {
     HttpClient = ... // Override the Http Client
     BaseURL = ... // Override the Base URL
 })
