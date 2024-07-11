@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courier.Net", "Courier.Net\Courier.Net.csproj", "{037C2B13-A626-4EE1-B4BE-02225BCDB608}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courier.Net", "Courier.Net\Courier.Net.csproj", "{8231E3B1-B499-47C0-81BE-67BBBBD8DB5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courier.Net.Test", "Courier.Net.Test\Courier.Net.Test.csproj", "{3B3A3F0D-82E0-4773-9BCC-7D40C1E8EF49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courier.Net.Test", "Courier.Net.Test\Courier.Net.Test.csproj", "{1423926C-7497-422C-8EE0-9C771FAE7576}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{037C2B13-A626-4EE1-B4BE-02225BCDB608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{037C2B13-A626-4EE1-B4BE-02225BCDB608}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{037C2B13-A626-4EE1-B4BE-02225BCDB608}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{037C2B13-A626-4EE1-B4BE-02225BCDB608}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B3A3F0D-82E0-4773-9BCC-7D40C1E8EF49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B3A3F0D-82E0-4773-9BCC-7D40C1E8EF49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B3A3F0D-82E0-4773-9BCC-7D40C1E8EF49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B3A3F0D-82E0-4773-9BCC-7D40C1E8EF49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8231E3B1-B499-47C0-81BE-67BBBBD8DB5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8231E3B1-B499-47C0-81BE-67BBBBD8DB5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8231E3B1-B499-47C0-81BE-67BBBBD8DB5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8231E3B1-B499-47C0-81BE-67BBBBD8DB5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1423926C-7497-422C-8EE0-9C771FAE7576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1423926C-7497-422C-8EE0-9C771FAE7576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1423926C-7497-422C-8EE0-9C771FAE7576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1423926C-7497-422C-8EE0-9C771FAE7576}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
