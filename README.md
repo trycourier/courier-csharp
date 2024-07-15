@@ -1,7 +1,7 @@
 # Courier .NET Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
-![NuGet Version](https://img.shields.io/nuget/v/Courier.Net)
+![NuGet Version](https://img.shields.io/nuget/v/Courier.Client)
 
 
 The official Courier C# library, supporting .NET Standard, .NET Core, and .NET Framework.
@@ -11,13 +11,13 @@ The official Courier C# library, supporting .NET Standard, .NET Core, and .NET F
 Using the .NET Core command-line interface (CLI) tools:
 
 ```sh
-dotnet add package Courier.Net
+dotnet add package Courier.Client
 ```
 
 Using the NuGet Command Line Interface (CLI):
 
 ```sh
-nuget install Courier.Net
+nuget install Courier.Client
 ```
 
 ## Documentation
@@ -29,7 +29,7 @@ API reference documentation is available [here](https://courier.com/docs/rest).
 Below are code snippets of how you can use the C# SDK.
 
 ```csharp
-using Courier.Net;
+using Courier.Client;
 
 Courier courier = new Courier("YOUR_API_KEY")
 Agent agent = courier.SendAsync(
@@ -44,7 +44,7 @@ When the API returns a non-zero status code, (4xx or 5xx response),
 a subclass of CourierException will be thrown:
 
 ```csharp
-using Courier.Net;
+using Courier.Client;
 
 try {
   courier.SendAsync(...);
