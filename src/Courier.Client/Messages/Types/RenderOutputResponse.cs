@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -11,5 +11,10 @@ public record RenderOutputResponse
     /// An array of render output of a previously sent message.
     /// </summary>
     [JsonPropertyName("results")]
-    public IEnumerable<RenderOutput> Results { get; init; } = new List<RenderOutput>();
+    public IEnumerable<RenderOutput> Results { get; set; } = new List<RenderOutput>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

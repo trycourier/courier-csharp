@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -8,5 +8,10 @@ namespace Courier.Client;
 public record SubmissionChecksReplaceResponse
 {
     [JsonPropertyName("checks")]
-    public IEnumerable<Check> Checks { get; init; } = new List<Check>();
+    public IEnumerable<Check> Checks { get; set; } = new List<Check>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

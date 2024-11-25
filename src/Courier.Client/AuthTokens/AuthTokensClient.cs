@@ -1,17 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
-using Courier.Client;
+using System.Threading;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-public class AuthTokensClient
+public partial class AuthTokensClient
 {
     private RawClient _client;
 
-    public AuthTokensClient(RawClient client)
+    internal AuthTokensClient(RawClient client)
     {
         _client = client;
     }
@@ -19,21 +19,47 @@ public class AuthTokensClient
     /// <summary>
     /// Returns a new access token.
     /// </summary>
-    public async Task<IssueTokenResponse> IssueTokenAsync(IssueTokenParams request)
+    /// <example>
+    /// <code>
+    /// await client.AuthTokens.IssueTokenAsync(
+    ///     new IssueTokenParams { Scope = "scope", ExpiresIn = "expires_in" }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<IssueTokenResponse> IssueTokenAsync(
+        IssueTokenParams request,
+        IdempotentRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/auth/issue-token",
-                Body = request
-            }
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IssueTokenResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<IssueTokenResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new CourierException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new CourierApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

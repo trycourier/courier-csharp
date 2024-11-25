@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<TextAlign>))]
+[JsonConverter(typeof(EnumSerializer<TextAlign>))]
 public enum TextAlign
 {
     [EnumMember(Value = "left")]
@@ -17,5 +16,5 @@ public enum TextAlign
     Center,
 
     [EnumMember(Value = "right")]
-    Right
+    Right,
 }

@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<MergeAlgorithm>))]
+[JsonConverter(typeof(EnumSerializer<MergeAlgorithm>))]
 public enum MergeAlgorithm
 {
     [EnumMember(Value = "replace")]
@@ -20,5 +19,5 @@ public enum MergeAlgorithm
     Overwrite,
 
     [EnumMember(Value = "soft-merge")]
-    SoftMerge
+    SoftMerge,
 }

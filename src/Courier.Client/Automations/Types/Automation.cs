@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 using OneOf;
 
@@ -10,41 +9,9 @@ namespace Courier.Client;
 public record Automation
 {
     [JsonPropertyName("cancelation_token")]
-    public string? CancelationToken { get; init; }
+    public string? CancelationToken { get; set; }
 
     [JsonPropertyName("steps")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<
-                AutomationAddToDigestStep,
-                AutomationAddToBatchStep,
-                AutomationThrottleStep,
-                AutomationCancelStep,
-                AutomationDelayStep,
-                AutomationFetchDataStep,
-                AutomationInvokeStep,
-                AutomationSendStep,
-                AutomationV2SendStep,
-                AutomationSendListStep,
-                AutomationUpdateProfileStep
-            >,
-            OneOfSerializer<
-                OneOf<
-                    AutomationAddToDigestStep,
-                    AutomationAddToBatchStep,
-                    AutomationThrottleStep,
-                    AutomationCancelStep,
-                    AutomationDelayStep,
-                    AutomationFetchDataStep,
-                    AutomationInvokeStep,
-                    AutomationSendStep,
-                    AutomationV2SendStep,
-                    AutomationSendListStep,
-                    AutomationUpdateProfileStep
-                >
-            >
-        >)
-    )]
     public IEnumerable<
         OneOf<
             AutomationAddToDigestStep,
@@ -59,7 +26,7 @@ public record Automation
             AutomationSendListStep,
             AutomationUpdateProfileStep
         >
-    > Steps { get; init; } =
+    > Steps { get; set; } =
         new List<
             OneOf<
                 AutomationAddToDigestStep,
@@ -75,4 +42,9 @@ public record Automation
                 AutomationUpdateProfileStep
             >
         >();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

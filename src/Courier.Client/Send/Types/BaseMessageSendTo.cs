@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 using OneOf;
 
@@ -13,32 +12,6 @@ public record BaseMessageSendTo
     /// The recipient or a list of recipients of the message
     /// </summary>
     [JsonPropertyName("to")]
-    [JsonConverter(
-        typeof(OneOfSerializer<
-            OneOf<
-                OneOf<
-                    AudienceRecipient,
-                    ListRecipient,
-                    ListPatternRecipient,
-                    UserRecipient,
-                    SlackRecipient,
-                    MsTeamsRecipient,
-                    Dictionary<string, object>
-                >,
-                IEnumerable<
-                    OneOf<
-                        AudienceRecipient,
-                        ListRecipient,
-                        ListPatternRecipient,
-                        UserRecipient,
-                        SlackRecipient,
-                        MsTeamsRecipient,
-                        Dictionary<string, object>
-                    >
-                >
-            >
-        >)
-    )]
     public OneOf<
         OneOf<
             AudienceRecipient,
@@ -47,7 +20,9 @@ public record BaseMessageSendTo
             UserRecipient,
             SlackRecipient,
             MsTeamsRecipient,
-            Dictionary<string, object>
+            Dictionary<string, object?>,
+            PagerdutyRecipient,
+            WebhookRecipient
         >,
         IEnumerable<
             OneOf<
@@ -57,8 +32,15 @@ public record BaseMessageSendTo
                 UserRecipient,
                 SlackRecipient,
                 MsTeamsRecipient,
-                Dictionary<string, object>
+                Dictionary<string, object?>,
+                PagerdutyRecipient,
+                WebhookRecipient
             >
         >
-    >? To { get; init; }
+    >? To { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

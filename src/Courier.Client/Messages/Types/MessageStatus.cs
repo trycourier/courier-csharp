@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<MessageStatus>))]
+[JsonConverter(typeof(EnumSerializer<MessageStatus>))]
 public enum MessageStatus
 {
     [EnumMember(Value = "CLICKED")]
@@ -38,5 +37,5 @@ public enum MessageStatus
     Unmapped,
 
     [EnumMember(Value = "UNROUTABLE")]
-    Unroutable
+    Unroutable,
 }

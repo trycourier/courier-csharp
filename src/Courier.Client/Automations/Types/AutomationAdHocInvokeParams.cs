@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -8,20 +8,25 @@ namespace Courier.Client;
 public record AutomationAdHocInvokeParams
 {
     [JsonPropertyName("automation")]
-    public required Automation Automation { get; init; }
+    public required Automation Automation { get; set; }
 
     [JsonPropertyName("brand")]
-    public string? Brand { get; init; }
+    public string? Brand { get; set; }
 
     [JsonPropertyName("data")]
-    public Dictionary<string, object>? Data { get; init; }
+    public Dictionary<string, object?>? Data { get; set; }
 
     [JsonPropertyName("profile")]
-    public object? Profile { get; init; }
+    public object? Profile { get; set; }
 
     [JsonPropertyName("recipient")]
-    public string? Recipient { get; init; }
+    public string? Recipient { get; set; }
 
     [JsonPropertyName("template")]
-    public string? Template { get; init; }
+    public string? Template { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

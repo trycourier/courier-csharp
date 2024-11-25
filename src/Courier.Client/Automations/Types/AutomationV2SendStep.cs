@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 using OneOf;
 
@@ -10,15 +9,19 @@ namespace Courier.Client;
 public record AutomationV2SendStep
 {
     [JsonPropertyName("action")]
-    public required string Action { get; init; }
+    public required string Action { get; set; }
 
     [JsonPropertyName("message")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<ContentMessage, TemplateMessage>>))]
-    public required OneOf<ContentMessage, TemplateMessage> Message { get; init; }
+    public required OneOf<ContentMessage, TemplateMessage> Message { get; set; }
 
     [JsonPropertyName("if")]
-    public string? If { get; init; }
+    public string? If { get; set; }
 
     [JsonPropertyName("ref")]
-    public string? Ref { get; init; }
+    public string? Ref { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

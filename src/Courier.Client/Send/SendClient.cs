@@ -4,11 +4,11 @@ using Courier.Client.Core;
 
 namespace Courier.Client;
 
-public class SendClient
+public partial class SendClient
 {
     private RawClient _client;
 
-    public SendClient(RawClient client)
+    internal SendClient(RawClient client)
     {
         _client = client;
     }

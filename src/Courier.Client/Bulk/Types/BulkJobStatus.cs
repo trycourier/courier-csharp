@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<BulkJobStatus>))]
+[JsonConverter(typeof(EnumSerializer<BulkJobStatus>))]
 public enum BulkJobStatus
 {
     [EnumMember(Value = "CREATED")]
@@ -20,5 +19,5 @@ public enum BulkJobStatus
     Completed,
 
     [EnumMember(Value = "ERROR")]
-    Error
+    Error,
 }

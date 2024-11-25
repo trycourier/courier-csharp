@@ -1,15 +1,14 @@
 using Courier.Client.Core;
-using Courier.Client.Users;
 
 #nullable enable
 
 namespace Courier.Client.Users;
 
-public class UsersClient
+public partial class UsersClient
 {
     private RawClient _client;
 
-    public UsersClient(RawClient client)
+    internal UsersClient(RawClient client)
     {
         _client = client;
         Preferences = new PreferencesClient(_client);

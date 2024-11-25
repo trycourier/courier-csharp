@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -14,5 +15,10 @@ public record SendMessageResponse
     /// For send requests that have multiple recipients (accounts, audiences, lists, etc.), Courier assigns a unique id to each derived message as its `message_id`. Therefore the `requestId` cannot be supplied to the Message's API for single-recipient messages.
     /// </summary>
     [JsonPropertyName("requestId")]
-    public required string RequestId { get; init; }
+    public required string RequestId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

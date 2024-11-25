@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<InAppPlacement>))]
+[JsonConverter(typeof(EnumSerializer<InAppPlacement>))]
 public enum InAppPlacement
 {
     [EnumMember(Value = "top")]
@@ -20,5 +19,5 @@ public enum InAppPlacement
     Left,
 
     [EnumMember(Value = "right")]
-    Right
+    Right,
 }

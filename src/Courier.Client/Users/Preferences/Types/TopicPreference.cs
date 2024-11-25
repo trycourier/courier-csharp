@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Courier.Client;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -11,20 +12,25 @@ public record TopicPreference
     /// The Channels a user has chosen to receive notifications through for this topic
     /// </summary>
     [JsonPropertyName("custom_routing")]
-    public IEnumerable<ChannelClassification>? CustomRouting { get; init; }
+    public IEnumerable<ChannelClassification>? CustomRouting { get; set; }
 
     [JsonPropertyName("default_status")]
-    public required PreferenceStatus DefaultStatus { get; init; }
+    public required PreferenceStatus DefaultStatus { get; set; }
 
     [JsonPropertyName("has_custom_routing")]
-    public bool? HasCustomRouting { get; init; }
+    public bool? HasCustomRouting { get; set; }
 
     [JsonPropertyName("status")]
-    public required PreferenceStatus Status { get; init; }
+    public required PreferenceStatus Status { get; set; }
 
     [JsonPropertyName("topic_id")]
-    public required string TopicId { get; init; }
+    public required string TopicId { get; set; }
 
     [JsonPropertyName("topic_name")]
-    public required string TopicName { get; init; }
+    public required string TopicName { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -11,5 +12,10 @@ public record MessageContext
     /// Will load brand, default preferences and any other base context data associated with this tenant.
     /// </summary>
     [JsonPropertyName("tenant_id")]
-    public string? TenantId { get; init; }
+    public string? TenantId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

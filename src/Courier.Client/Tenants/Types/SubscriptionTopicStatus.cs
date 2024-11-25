@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<SubscriptionTopicStatus>))]
+[JsonConverter(typeof(EnumSerializer<SubscriptionTopicStatus>))]
 public enum SubscriptionTopicStatus
 {
     [EnumMember(Value = "OPTED_OUT")]
@@ -17,5 +16,5 @@ public enum SubscriptionTopicStatus
     OptedIn,
 
     [EnumMember(Value = "REQUIRED")]
-    Required
+    Required,
 }

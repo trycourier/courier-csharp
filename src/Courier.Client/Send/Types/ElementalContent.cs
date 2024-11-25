@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -10,11 +11,16 @@ public record ElementalContent
     /// For example, "2022-01-01"
     /// </summary>
     [JsonPropertyName("version")]
-    public required string Version { get; init; }
+    public required string Version { get; set; }
 
     [JsonPropertyName("brand")]
-    public object? Brand { get; init; }
+    public object? Brand { get; set; }
 
     [JsonPropertyName("elements")]
-    public IEnumerable<object> Elements { get; init; } = new List<object>();
+    public IEnumerable<object> Elements { get; set; } = new List<object>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

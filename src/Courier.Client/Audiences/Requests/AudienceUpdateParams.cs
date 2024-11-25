@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 using OneOf;
 
@@ -13,15 +12,19 @@ public record AudienceUpdateParams
     /// The name of the audience
     /// </summary>
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// A description of the audience
     /// </summary>
     [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 
     [JsonPropertyName("filter")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<SingleFilterConfig, NestedFilterConfig>>))]
-    public OneOf<SingleFilterConfig, NestedFilterConfig>? Filter { get; init; }
+    public OneOf<SingleFilterConfig, NestedFilterConfig>? Filter { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

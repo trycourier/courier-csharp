@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -11,7 +11,7 @@ public record MessageProvidersType
     /// Provider specific overrides.
     /// </summary>
     [JsonPropertyName("override")]
-    public Dictionary<string, object>? Override { get; init; }
+    public Dictionary<string, object?>? Override { get; set; }
 
     /// <summary>
     /// A JavaScript conditional expression to determine if the message should be sent
@@ -19,11 +19,16 @@ public record MessageProvidersType
     /// `data.name === profile.name`
     /// </summary>
     [JsonPropertyName("if")]
-    public string? If { get; init; }
+    public string? If { get; set; }
 
     [JsonPropertyName("timeouts")]
-    public int? Timeouts { get; init; }
+    public int? Timeouts { get; set; }
 
     [JsonPropertyName("metadata")]
-    public Metadata? Metadata { get; init; }
+    public Metadata? Metadata { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

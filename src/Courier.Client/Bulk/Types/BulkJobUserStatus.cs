@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<BulkJobUserStatus>))]
+[JsonConverter(typeof(EnumSerializer<BulkJobUserStatus>))]
 public enum BulkJobUserStatus
 {
     [EnumMember(Value = "PENDING")]
@@ -17,5 +16,5 @@ public enum BulkJobUserStatus
     Enqueued,
 
     [EnumMember(Value = "ERROR")]
-    Error
+    Error,
 }

@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<CheckStatus>))]
+[JsonConverter(typeof(EnumSerializer<CheckStatus>))]
 public enum CheckStatus
 {
     [EnumMember(Value = "RESOLVED")]
@@ -17,5 +16,5 @@ public enum CheckStatus
     Failed,
 
     [EnumMember(Value = "PENDING")]
-    Pending
+    Pending,
 }

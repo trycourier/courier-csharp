@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<BlockType>))]
+[JsonConverter(typeof(EnumSerializer<BlockType>))]
 public enum BlockType
 {
     [EnumMember(Value = "action")]
@@ -35,5 +34,5 @@ public enum BlockType
     Template,
 
     [EnumMember(Value = "text")]
-    Text
+    Text,
 }

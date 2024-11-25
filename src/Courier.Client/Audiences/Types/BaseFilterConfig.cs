@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 using OneOf;
 
@@ -13,6 +12,10 @@ public record BaseFilterConfig
     /// The operator to use for filtering
     /// </summary>
     [JsonPropertyName("operator")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<ComparisonOperator, LogicalOperator>>))]
-    public required OneOf<ComparisonOperator, LogicalOperator> Operator { get; init; }
+    public required OneOf<ComparisonOperator, LogicalOperator> Operator { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

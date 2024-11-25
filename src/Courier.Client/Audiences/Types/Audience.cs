@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 using OneOf;
 
@@ -13,27 +12,31 @@ public record Audience
     /// A unique identifier representing the audience_id
     /// </summary>
     [JsonPropertyName("id")]
-    public required string Id { get; init; }
+    public required string Id { get; set; }
 
     /// <summary>
     /// The name of the audience
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// A description of the audience
     /// </summary>
     [JsonPropertyName("description")]
-    public required string Description { get; init; }
+    public required string Description { get; set; }
 
     [JsonPropertyName("filter")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<SingleFilterConfig, NestedFilterConfig>>))]
-    public required OneOf<SingleFilterConfig, NestedFilterConfig> Filter { get; init; }
+    public required OneOf<SingleFilterConfig, NestedFilterConfig> Filter { get; set; }
 
     [JsonPropertyName("created_at")]
-    public required string CreatedAt { get; init; }
+    public required string CreatedAt { get; set; }
 
     [JsonPropertyName("updated_at")]
-    public required string UpdatedAt { get; init; }
+    public required string UpdatedAt { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<AutomationAddToBatchScope>))]
+[JsonConverter(typeof(EnumSerializer<AutomationAddToBatchScope>))]
 public enum AutomationAddToBatchScope
 {
     [EnumMember(Value = "user")]
@@ -17,5 +16,5 @@ public enum AutomationAddToBatchScope
     Global,
 
     [EnumMember(Value = "dynamic")]
-    Dynamic
+    Dynamic,
 }

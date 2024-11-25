@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<RuleType>))]
+[JsonConverter(typeof(EnumSerializer<RuleType>))]
 public enum RuleType
 {
     [EnumMember(Value = "snooze")]
@@ -17,5 +16,5 @@ public enum RuleType
     ChannelPreferences,
 
     [EnumMember(Value = "status")]
-    Status
+    Status,
 }

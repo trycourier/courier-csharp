@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 using OneOf;
 
@@ -13,6 +12,10 @@ public record SendMessageRequest
     /// Defines the message to be delivered
     /// </summary>
     [JsonPropertyName("message")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<ContentMessage, TemplateMessage>>))]
-    public required OneOf<ContentMessage, TemplateMessage> Message { get; init; }
+    public required OneOf<ContentMessage, TemplateMessage> Message { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

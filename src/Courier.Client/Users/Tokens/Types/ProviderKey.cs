@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
-using Courier.Client.Users;
 
 #nullable enable
 
 namespace Courier.Client.Users;
 
-[JsonConverter(typeof(StringEnumSerializer<ProviderKey>))]
+[JsonConverter(typeof(EnumSerializer<ProviderKey>))]
 public enum ProviderKey
 {
     [EnumMember(Value = "firebase-fcm")]
@@ -20,5 +19,5 @@ public enum ProviderKey
     Expo,
 
     [EnumMember(Value = "onesignal")]
-    Onesignal
+    Onesignal,
 }

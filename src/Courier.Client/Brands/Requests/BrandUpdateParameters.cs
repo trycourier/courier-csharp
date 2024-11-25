@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -11,11 +11,16 @@ public record BrandUpdateParameters
     /// The name of the brand.
     /// </summary>
     [JsonPropertyName("name")]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("settings")]
-    public BrandSettings? Settings { get; init; }
+    public BrandSettings? Settings { get; set; }
 
     [JsonPropertyName("snippets")]
-    public BrandSnippets? Snippets { get; init; }
+    public BrandSnippets? Snippets { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

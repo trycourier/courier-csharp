@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -7,17 +8,22 @@ namespace Courier.Client;
 public record AutomationRunContext
 {
     [JsonPropertyName("brand")]
-    public string? Brand { get; init; }
+    public string? Brand { get; set; }
 
     [JsonPropertyName("data")]
-    public object? Data { get; init; }
+    public object? Data { get; set; }
 
     [JsonPropertyName("profile")]
-    public object? Profile { get; init; }
+    public object? Profile { get; set; }
 
     [JsonPropertyName("template")]
-    public string? Template { get; init; }
+    public string? Template { get; set; }
 
     [JsonPropertyName("recipient")]
-    public string? Recipient { get; init; }
+    public string? Recipient { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

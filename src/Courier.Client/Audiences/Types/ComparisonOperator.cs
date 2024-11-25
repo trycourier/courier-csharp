@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<ComparisonOperator>))]
+[JsonConverter(typeof(EnumSerializer<ComparisonOperator>))]
 public enum ComparisonOperator
 {
     [EnumMember(Value = "ENDS_WITH")]
@@ -47,5 +46,5 @@ public enum ComparisonOperator
     Omit,
 
     [EnumMember(Value = "STARTS_WITH")]
-    StartsWith
+    StartsWith,
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -11,31 +12,36 @@ public record ElementalChannelNode
     /// `push`, `direct_message`, `sms` or a provider such as slack
     /// </summary>
     [JsonPropertyName("channel")]
-    public required string Channel { get; init; }
+    public required string Channel { get; set; }
 
     /// <summary>
     /// An array of elements to apply to the channel. If `raw` has not been
     /// specified, `elements` is `required`.
     /// </summary>
     [JsonPropertyName("elements")]
-    public IEnumerable<object>? Elements { get; init; }
+    public IEnumerable<object>? Elements { get; set; }
 
     /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been
     /// specified, `raw` is `required`.
     /// </summary>
     [JsonPropertyName("raw")]
-    public Dictionary<string, object>? Raw { get; init; }
+    public Dictionary<string, object?>? Raw { get; set; }
 
     [JsonPropertyName("channels")]
-    public IEnumerable<string>? Channels { get; init; }
+    public IEnumerable<string>? Channels { get; set; }
 
     [JsonPropertyName("ref")]
-    public string? Ref { get; init; }
+    public string? Ref { get; set; }
 
     [JsonPropertyName("if")]
-    public string? If { get; init; }
+    public string? If { get; set; }
 
     [JsonPropertyName("loop")]
-    public string? Loop { get; init; }
+    public string? Loop { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

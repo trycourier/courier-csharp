@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<AutomationAddToBatchRetainType>))]
+[JsonConverter(typeof(EnumSerializer<AutomationAddToBatchRetainType>))]
 public enum AutomationAddToBatchRetainType
 {
     [EnumMember(Value = "first")]
@@ -20,5 +19,5 @@ public enum AutomationAddToBatchRetainType
     Highest,
 
     [EnumMember(Value = "lowest")]
-    Lowest
+    Lowest,
 }

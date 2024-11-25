@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<ChannelClassification>))]
+[JsonConverter(typeof(EnumSerializer<ChannelClassification>))]
 public enum ChannelClassification
 {
     [EnumMember(Value = "direct_message")]
@@ -26,5 +25,5 @@ public enum ChannelClassification
     Webhook,
 
     [EnumMember(Value = "inbox")]
-    Inbox
+    Inbox,
 }

@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Courier.Client;
+using Courier.Client.Core;
 
 #nullable enable
 
@@ -11,11 +11,16 @@ public record AudienceRecipient
     /// A unique identifier associated with an Audience. A message will be sent to each user in the audience.
     /// </summary>
     [JsonPropertyName("audience_id")]
-    public required string AudienceId { get; init; }
+    public required string AudienceId { get; set; }
 
     [JsonPropertyName("data")]
-    public Dictionary<string, object>? Data { get; init; }
+    public Dictionary<string, object?>? Data { get; set; }
 
     [JsonPropertyName("filters")]
-    public IEnumerable<AudienceFilter>? Filters { get; init; }
+    public IEnumerable<AudienceFilter>? Filters { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

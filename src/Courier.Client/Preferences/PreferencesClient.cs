@@ -4,11 +4,11 @@ using Courier.Client.Core;
 
 namespace Courier.Client;
 
-public class PreferencesClient
+public partial class PreferencesClient
 {
     private RawClient _client;
 
-    public PreferencesClient(RawClient client)
+    internal PreferencesClient(RawClient client)
     {
         _client = client;
     }

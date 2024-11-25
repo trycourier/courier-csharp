@@ -1,13 +1,12 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Courier.Client;
 using Courier.Client.Core;
 
 #nullable enable
 
 namespace Courier.Client;
 
-[JsonConverter(typeof(StringEnumSerializer<TextStyle>))]
+[JsonConverter(typeof(EnumSerializer<TextStyle>))]
 public enum TextStyle
 {
     [EnumMember(Value = "text")]
@@ -20,5 +19,5 @@ public enum TextStyle
     H2,
 
     [EnumMember(Value = "subtext")]
-    Subtext
+    Subtext,
 }
