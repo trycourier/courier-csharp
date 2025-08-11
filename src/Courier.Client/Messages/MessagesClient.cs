@@ -118,7 +118,7 @@ public partial class MessagesClient
     /// await client.Messages.GetAsync("message_id");
     /// </code>
     /// </example>
-    public async Task<MessageDetails> GetAsync(
+    public async Task<MessageDetailsExtended> GetAsync(
         string messageId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -139,7 +139,7 @@ public partial class MessagesClient
         {
             try
             {
-                return JsonUtils.Deserialize<MessageDetails>(responseBody)!;
+                return JsonUtils.Deserialize<MessageDetailsExtended>(responseBody)!;
             }
             catch (JsonException e)
             {

@@ -9,6 +9,12 @@ namespace Courier.Client;
 [JsonConverter(typeof(EnumSerializer<Reason>))]
 public enum Reason
 {
+    [EnumMember(Value = "BOUNCED")]
+    Bounced,
+
+    [EnumMember(Value = "FAILED")]
+    Failed,
+
     [EnumMember(Value = "FILTERED")]
     Filtered,
 
@@ -17,6 +23,9 @@ public enum Reason
 
     [EnumMember(Value = "NO_PROVIDERS")]
     NoProviders,
+
+    [EnumMember(Value = "OPT_IN_REQUIRED")]
+    OptInRequired,
 
     [EnumMember(Value = "PROVIDER_ERROR")]
     ProviderError,

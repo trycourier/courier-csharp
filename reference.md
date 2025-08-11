@@ -31,38 +31,21 @@ await client.SendAsync(
     {
         Message = new ContentMessage
         {
-            Content = new ElementalContent
+            To = new UserRecipient { Email = "email@example.com" },
+            Content = new ElementalContentSugar
             {
-                Version = "version",
-                Brand = null,
-                Elements = new List<object>()
+                Title = "Welcome!",
+                Body = "Thanks for signing up, {{name}}",
+            },
+            Data = new Dictionary<string, object>() { { "name", "Peter Parker" } },
+            Routing = new Routing
+            {
+                Method = RoutingMethod.Single,
+                Channels = new List<
+                    OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>
+                >()
                 {
-                    new ElementalTextNode
-                    {
-                        Content = "content",
-                        Align = TextAlign.Left,
-                        TextStyle = null,
-                        Color = null,
-                        Bold = null,
-                        Italic = null,
-                        Strikethrough = null,
-                        Underline = null,
-                        Locales = null,
-                        Format = null,
-                    },
-                    new ElementalTextNode
-                    {
-                        Content = "content",
-                        Align = TextAlign.Left,
-                        TextStyle = null,
-                        Color = null,
-                        Bold = null,
-                        Italic = null,
-                        Strikethrough = null,
-                        Underline = null,
-                        Locales = null,
-                        Format = null,
-                    },
+                    "email",
                 },
             },
         },
@@ -1017,7 +1000,18 @@ await client.Brands.ReplaceAsync(
 
 ```csharp
 await client.Bulk.CreateJobAsync(
-    new BulkCreateJobParams { Message = new InboundBulkMessage { Message = null } }
+    new BulkCreateJobParams
+    {
+        Message = new InboundBulkMessage
+        {
+            Brand = null,
+            Data = null,
+            Event = null,
+            Locale = null,
+            Override = null,
+            Message = null,
+        },
+    }
 );
 ```
 </dd>
@@ -1465,7 +1459,7 @@ await client.Lists.GetAsync("list_id");
 </dl>
 </details>
 
-<details><summary><code>client.Lists.<a href="/src/Courier.Client/Lists/ListsClient.cs">UpdateAsync</a>(listId, ListPutParams { ... }) -> List</code></summary>
+<details><summary><code>client.Lists.<a href="/src/Courier.Client/Lists/ListsClient.cs">UpdateAsync</a>(listId, ListPutParams { ... })</code></summary>
 <dl>
 <dd>
 
@@ -1581,7 +1575,7 @@ await client.Lists.DeleteAsync("list_id");
 </dl>
 </details>
 
-<details><summary><code>client.Lists.<a href="/src/Courier.Client/Lists/ListsClient.cs">RestoreAsync</a>(listId)</code></summary>
+<details><summary><code>client.Lists.<a href="/src/Courier.Client/Lists/ListsClient.cs">RestoreAsync</a>(listId, RestoreListRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -1608,7 +1602,7 @@ Restore a previously deleted list.
 <dd>
 
 ```csharp
-await client.Lists.RestoreAsync("list_id");
+await client.Lists.RestoreAsync("list_id", new RestoreListRequest());
 ```
 </dd>
 </dl>
@@ -1624,6 +1618,14 @@ await client.Lists.RestoreAsync("list_id");
 <dd>
 
 **listId:** `string` — A unique identifier representing the list you wish to retrieve.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `RestoreListRequest` 
     
 </dd>
 </dl>
@@ -2032,7 +2034,7 @@ await client.Messages.ListAsync(new ListMessagesRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Messages.<a href="/src/Courier.Client/Messages/MessagesClient.cs">GetAsync</a>(messageId) -> MessageDetails</code></summary>
+<details><summary><code>client.Messages.<a href="/src/Courier.Client/Messages/MessagesClient.cs">GetAsync</a>(messageId) -> MessageDetailsExtended</code></summary>
 <dl>
 <dd>
 
@@ -2717,9 +2719,9 @@ await client.Profiles.CreateAsync(
 <dl>
 <dd>
 
-When using `PUT`, be sure to include all the key-value pairs required by the recipient's profile.
-Any key-value pairs that exist in the profile but fail to be included in the `PUT` request will be
-removed from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates,
+When using `PUT`, be sure to include all the key-value pairs required by the recipient's profile. 
+Any key-value pairs that exist in the profile but fail to be included in the `PUT` request will be 
+removed from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates, 
 use the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request.
 </dd>
 </dl>
@@ -2782,7 +2784,7 @@ await client.Profiles.ReplaceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Profiles.<a href="/src/Courier.Client/Profiles/ProfilesClient.cs">MergeProfileAsync</a>(userId, IEnumerable<UserProfilePatch> { ... })</code></summary>
+<details><summary><code>client.Profiles.<a href="/src/Courier.Client/Profiles/ProfilesClient.cs">MergeProfileAsync</a>(userId, ProfileUpdateRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -2797,19 +2799,22 @@ await client.Profiles.ReplaceAsync(
 ```csharp
 await client.Profiles.MergeProfileAsync(
     "user_id",
-    new List<UserProfilePatch>()
+    new ProfileUpdateRequest
     {
-        new UserProfilePatch
+        Patch = new List<UserProfilePatch>()
         {
-            Op = "op",
-            Path = "path",
-            Value = "value",
-        },
-        new UserProfilePatch
-        {
-            Op = "op",
-            Path = "path",
-            Value = "value",
+            new UserProfilePatch
+            {
+                Op = "op",
+                Path = "path",
+                Value = "value",
+            },
+            new UserProfilePatch
+            {
+                Op = "op",
+                Path = "path",
+                Value = "value",
+            },
         },
     }
 );
@@ -2835,7 +2840,7 @@ await client.Profiles.MergeProfileAsync(
 <dl>
 <dd>
 
-**request:** `IEnumerable<UserProfilePatch>` 
+**request:** `ProfileUpdateRequest` 
     
 </dd>
 </dl>
@@ -3485,6 +3490,102 @@ await client.Tenants.RemoveDefaultPreferencesForTopicAsync("tenant_id", "topic_i
 </dl>
 </details>
 
+<details><summary><code>client.Tenants.<a href="/src/Courier.Client/Tenants/TenantsClient.cs">GetTemplateByTenantAsync</a>(tenantId, templateId) -> GetTemplateByTenantResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Tenants.GetTemplateByTenantAsync("tenant_id", "template_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` — Id of the tenant for which to retrieve the template.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**templateId:** `string` — Id of the template to be retrieved.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Tenants.<a href="/src/Courier.Client/Tenants/TenantsClient.cs">GetTemplateListByTenantAsync</a>(tenantId, GetTemplateListByTenantParams { ... }) -> ListTemplatesByTenantResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Tenants.GetTemplateListByTenantAsync("tenant_id", new GetTemplateListByTenantParams());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` — Id of the tenant for which to retrieve the templates.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetTemplateListByTenantParams` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Translations
 <details><summary><code>client.Translations.<a href="/src/Courier.Client/Translations/TranslationsClient.cs">GetAsync</a>(domain, locale) -> string</code></summary>
 <dl>
@@ -3852,8 +3953,8 @@ await client.Users.Preferences.UpdateAsync(
 
 This endpoint is used to add a user to
 multiple tenants in one call.
-A custom profile can also be supplied for each tenant.
-This profile will be merged with the user's main
+A custom profile can also be supplied for each tenant. 
+This profile will be merged with the user's main 
 profile when sending to the user with that tenant.
 </dd>
 </dl>
@@ -3940,8 +4041,8 @@ await client.Users.Tenants.AddMultpleAsync(
 
 This endpoint is used to add a single tenant.
 
-A custom profile can also be supplied with the tenant.
-This profile will be merged with the user's main profile
+A custom profile can also be supplied with the tenant. 
+This profile will be merged with the user's main profile 
 when sending to the user with that tenant.
 </dd>
 </dl>

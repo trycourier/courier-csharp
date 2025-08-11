@@ -1,0 +1,47 @@
+using System.Text.Json.Serialization;
+using Courier.Client.Core;
+
+#nullable enable
+
+namespace Courier.Client;
+
+public record GetTemplateByTenantResponse
+{
+    [JsonPropertyName("data")]
+    public required TenantTemplateData Data { get; set; }
+
+    /// <summary>
+    /// The template's id
+    /// </summary>
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
+
+    /// <summary>
+    /// The timestamp at which the template was created
+    /// </summary>
+    [JsonPropertyName("created_at")]
+    public required string CreatedAt { get; set; }
+
+    /// <summary>
+    /// The timestamp at which the template was last updated
+    /// </summary>
+    [JsonPropertyName("updated_at")]
+    public required string UpdatedAt { get; set; }
+
+    /// <summary>
+    /// The timestamp at which the template was published
+    /// </summary>
+    [JsonPropertyName("published_at")]
+    public required string PublishedAt { get; set; }
+
+    /// <summary>
+    /// The version of the template
+    /// </summary>
+    [JsonPropertyName("version")]
+    public required string Version { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

@@ -220,19 +220,22 @@ public partial class ProfilesClient
     /// <code>
     /// await client.Profiles.MergeProfileAsync(
     ///     "user_id",
-    ///     new List&lt;UserProfilePatch&gt;()
+    ///     new ProfileUpdateRequest
     ///     {
-    ///         new UserProfilePatch
+    ///         Patch = new List&lt;UserProfilePatch&gt;()
     ///         {
-    ///             Op = "op",
-    ///             Path = "path",
-    ///             Value = "value",
-    ///         },
-    ///         new UserProfilePatch
-    ///         {
-    ///             Op = "op",
-    ///             Path = "path",
-    ///             Value = "value",
+    ///             new UserProfilePatch
+    ///             {
+    ///                 Op = "op",
+    ///                 Path = "path",
+    ///                 Value = "value",
+    ///             },
+    ///             new UserProfilePatch
+    ///             {
+    ///                 Op = "op",
+    ///                 Path = "path",
+    ///                 Value = "value",
+    ///             },
     ///         },
     ///     }
     /// );
@@ -240,7 +243,7 @@ public partial class ProfilesClient
     /// </example>
     public async Task MergeProfileAsync(
         string userId,
-        IEnumerable<UserProfilePatch> request,
+        ProfileUpdateRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

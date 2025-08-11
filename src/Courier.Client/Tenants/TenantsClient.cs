@@ -366,4 +366,122 @@ public partial class TenantsClient
             responseBody
         );
     }
+
+    /// <example>
+    /// <code>
+    /// await client.Tenants.GetTemplateByTenantAsync("tenant_id", "template_id");
+    /// </code>
+    /// </example>
+    public async Task<GetTemplateByTenantResponse> GetTemplateByTenantAsync(
+        string tenantId,
+        string templateId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/tenants/{tenantId}/templates/{templateId}",
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<GetTemplateByTenantResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new CourierException("Failed to deserialize response", e);
+            }
+        }
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 400:
+                    throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new CourierApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.Tenants.GetTemplateListByTenantAsync("tenant_id", new GetTemplateListByTenantParams());
+    /// </code>
+    /// </example>
+    public async Task<ListTemplatesByTenantResponse> GetTemplateListByTenantAsync(
+        string tenantId,
+        GetTemplateListByTenantParams request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.Limit != null)
+        {
+            _query["limit"] = request.Limit.ToString();
+        }
+        if (request.Cursor != null)
+        {
+            _query["cursor"] = request.Cursor;
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/tenants/{tenantId}/templates",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<ListTemplatesByTenantResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new CourierException("Failed to deserialize response", e);
+            }
+        }
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 400:
+                    throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new CourierApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
 }

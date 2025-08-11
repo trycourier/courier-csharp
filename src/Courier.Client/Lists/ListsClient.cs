@@ -147,7 +147,7 @@ public partial class ListsClient
     /// await client.Lists.UpdateAsync("list_id", new ListPutParams { Name = "name", Preferences = null });
     /// </code>
     /// </example>
-    public async Task<List> UpdateAsync(
+    public async Task UpdateAsync(
         string listId,
         ListPutParams request,
         RequestOptions? options = null,
@@ -165,19 +165,11 @@ public partial class ListsClient
             },
             cancellationToken
         );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            try
-            {
-                return JsonUtils.Deserialize<List>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new CourierException("Failed to deserialize response", e);
-            }
+            return;
         }
-
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new CourierApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
@@ -226,11 +218,12 @@ public partial class ListsClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Lists.RestoreAsync("list_id");
+    /// await client.Lists.RestoreAsync("list_id", new RestoreListRequest());
     /// </code>
     /// </example>
     public async Task RestoreAsync(
         string listId,
+        RestoreListRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -241,6 +234,7 @@ public partial class ListsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/lists/{listId}/restore",
+                Body = request,
                 Options = options,
             },
             cancellationToken

@@ -20,7 +20,18 @@ public partial class BulkClient
     /// <example>
     /// <code>
     /// await client.Bulk.CreateJobAsync(
-    ///     new BulkCreateJobParams { Message = new InboundBulkMessage { Message = null } }
+    ///     new BulkCreateJobParams
+    ///     {
+    ///         Message = new InboundBulkMessage
+    ///         {
+    ///             Brand = null,
+    ///             Data = null,
+    ///             Event = null,
+    ///             Locale = null,
+    ///             Override = null,
+    ///             Message = null,
+    ///         },
+    ///     }
     /// );
     /// </code>
     /// </example>

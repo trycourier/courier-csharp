@@ -14,10 +14,10 @@ public record List
     public required string Name { get; set; }
 
     [JsonPropertyName("created")]
-    public int? Created { get; set; }
+    public string? Created { get; set; }
 
     [JsonPropertyName("updated")]
-    public int? Updated { get; set; }
+    public string? Updated { get; set; }
 
     public override string ToString()
     {

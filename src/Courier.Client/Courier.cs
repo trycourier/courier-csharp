@@ -25,7 +25,7 @@ public partial class Courier
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Courier.Client" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Courier.Client/0.2.0" },
+                { "User-Agent", "Courier.Client/0.3.0" },
             }
         );
         clientOptions ??= new ClientOptions();
@@ -103,38 +103,21 @@ public partial class Courier
     ///     {
     ///         Message = new ContentMessage
     ///         {
-    ///             Content = new ElementalContent
+    ///             To = new UserRecipient { Email = "email@example.com" },
+    ///             Content = new ElementalContentSugar
     ///             {
-    ///                 Version = "version",
-    ///                 Brand = null,
-    ///                 Elements = new List&lt;object&gt;()
+    ///                 Title = "Welcome!",
+    ///                 Body = "Thanks for signing up, {{name}}",
+    ///             },
+    ///             Data = new Dictionary&lt;string, object&gt;() { { "name", "Peter Parker" } },
+    ///             Routing = new Routing
+    ///             {
+    ///                 Method = RoutingMethod.Single,
+    ///                 Channels = new List&lt;
+    ///                     OneOf&lt;RoutingStrategyChannel, RoutingStrategyProvider, string&gt;
+    ///                 &gt;()
     ///                 {
-    ///                     new ElementalTextNode
-    ///                     {
-    ///                         Content = "content",
-    ///                         Align = TextAlign.Left,
-    ///                         TextStyle = null,
-    ///                         Color = null,
-    ///                         Bold = null,
-    ///                         Italic = null,
-    ///                         Strikethrough = null,
-    ///                         Underline = null,
-    ///                         Locales = null,
-    ///                         Format = null,
-    ///                     },
-    ///                     new ElementalTextNode
-    ///                     {
-    ///                         Content = "content",
-    ///                         Align = TextAlign.Left,
-    ///                         TextStyle = null,
-    ///                         Color = null,
-    ///                         Bold = null,
-    ///                         Italic = null,
-    ///                         Strikethrough = null,
-    ///                         Underline = null,
-    ///                         Locales = null,
-    ///                         Format = null,
-    ///                     },
+    ///                     "email",
     ///                 },
     ///             },
     ///         },
