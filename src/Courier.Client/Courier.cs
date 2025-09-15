@@ -25,7 +25,7 @@ public partial class Courier
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Courier.Client" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Courier.Client/0.3.0" },
+                { "User-Agent", "Courier.Client/0.4.0" },
             }
         );
         clientOptions ??= new ClientOptions();
@@ -113,12 +113,7 @@ public partial class Courier
     ///             Routing = new Routing
     ///             {
     ///                 Method = RoutingMethod.Single,
-    ///                 Channels = new List&lt;
-    ///                     OneOf&lt;RoutingStrategyChannel, RoutingStrategyProvider, string&gt;
-    ///                 &gt;()
-    ///                 {
-    ///                     "email",
-    ///                 },
+    ///                 Channels = new List&lt;OneOf&lt;string, MessageRouting&gt;&gt;() { "email" },
     ///             },
     ///         },
     ///     }

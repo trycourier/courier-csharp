@@ -17,10 +17,8 @@ public record Routing
     /// delivery strategies.
     /// </summary>
     [JsonPropertyName("channels")]
-    public IEnumerable<
-        OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>
-    > Channels { get; set; } =
-        new List<OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>>();
+    public IEnumerable<OneOf<string, MessageRouting>> Channels { get; set; } =
+        new List<OneOf<string, MessageRouting>>();
 
     public override string ToString()
     {

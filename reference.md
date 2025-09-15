@@ -41,12 +41,7 @@ await client.SendAsync(
             Routing = new Routing
             {
                 Method = RoutingMethod.Single,
-                Channels = new List<
-                    OneOf<RoutingStrategyChannel, RoutingStrategyProvider, string>
-                >()
-                {
-                    "email",
-                },
+                Channels = new List<OneOf<string, MessageRouting>>() { "email" },
             },
         },
     }
