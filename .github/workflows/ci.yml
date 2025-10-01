@@ -1,69 +1,63 @@
-name: ci
-
-on: [push]
+name: CI
+on:
+  push:
+    branches-ignore:
+      - 'generated'
+      - 'codegen/**'
+      - 'integrated/**'
+      - 'stl-preview-head/**'
+      - 'stl-preview-base/**'
+  pull_request:
+    branches-ignore:
+      - 'stl-preview-head/**'
+      - 'stl-preview-base/**'
 
 jobs:
-  compile:
-    runs-on: ubuntu-latest
+  lint:
+    timeout-minutes: 10
+    name: lint
+    runs-on: ${{ github.repository == 'stainless-sdks/courier-csharp' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/checkout@master
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.x
+          dotnet-version: '8.0.x'
 
-      - name: Install tools
-        run: |
-          dotnet tool restore
-
-      - name: Build Release
-        run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
-
-  unit-tests:
-    runs-on: ubuntu-latest
+      - name: Run lints
+        run: ./scripts/lint
+  build:
+    timeout-minutes: 10
+    name: build
+    runs-on: ${{ github.repository == 'stainless-sdks/courier-csharp' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/checkout@master
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.x
+          dotnet-version: '8.0.x'
 
-      - name: Install tools
-        run: |
-          dotnet tool restore
+      - name: Build SDK
+        run: ./scripts/build
 
-      - name: Run Tests
-        run: |
-          dotnet test src
-
-
-  publish:
-    needs: [compile]
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-
+  test:
+    timeout-minutes: 10
+    name: test
+    runs-on: ${{ github.repository == 'stainless-sdks/courier-csharp' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.x
+          dotnet-version: '8.0.x'
 
-      - name: Publish
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: |
-          dotnet pack src -c Release
-          dotnet nuget push src/Courier.Client/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+      - name: Run tests
+        run: ./scripts/test
