@@ -8,8 +8,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Send;
 
-[JsonConverter(typeof(ModelConverter<SendSendMessageResponse>))]
-public sealed record class SendSendMessageResponse : ModelBase, IFromRaw<SendSendMessageResponse>
+[JsonConverter(typeof(ModelConverter<SendMessageResponse>))]
+public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessageResponse>
 {
     /// <summary>
     /// A successful call to `POST /send` returns a `202` status code along with
@@ -53,25 +53,23 @@ public sealed record class SendSendMessageResponse : ModelBase, IFromRaw<SendSen
         _ = this.RequestID;
     }
 
-    public SendSendMessageResponse() { }
+    public SendMessageResponse() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SendSendMessageResponse(Dictionary<string, JsonElement> properties)
+    SendMessageResponse(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static SendSendMessageResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
-    )
+    public static SendMessageResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }
 
     [SetsRequiredMembers]
-    public SendSendMessageResponse(string requestID)
+    public SendMessageResponse(string requestID)
         : this()
     {
         this.RequestID = requestID;

@@ -19,9 +19,9 @@ namespace Courier.Tests.Services.Send;
 public class SendServiceTest : TestBase
 {
     [Fact(Skip = "Prism tests are disabled")]
-    public async Task SendMessage_Works()
+    public async Task Message_Works()
     {
-        var response = await this.client.Send.SendMessage(
+        var response = await this.client.Send.Message(
             new()
             {
                 Message = new ContentMessage()

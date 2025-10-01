@@ -11,7 +11,7 @@ namespace Courier.Models.Send;
 /// <summary>
 /// Use the send API to send a message to one or more recipients.
 /// </summary>
-public sealed record class SendSendMessageParams : ParamsBase
+public sealed record class SendMessageParams : ParamsBase
 {
     public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
