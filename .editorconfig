@@ -1,0 +1,26 @@
+root = true
+
+# All files
+[*]
+indent_style = space
+
+# Xml files
+[*.xml]
+indent_size = 2
+
+# C# files
+[*.cs]
+
+#### Core EditorConfig Options ####
+
+# Indentation and spacing
+indent_size = 4
+tab_width = 4
+
+# New line preferences
+end_of_line = crlf
+insert_final_newline = true
+
+dotnet_diagnostic.IDE0060.severity = none # Caused by resource with no methods and no subresources
+dotnet_diagnostic.IDE1006.severity = none # Some names may not match up with C# conventions
+dotnet_diagnostic.IDE0290.severity = none # Don't prefer primary constructors
