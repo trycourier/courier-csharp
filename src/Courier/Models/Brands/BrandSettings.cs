@@ -3,21 +3,20 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Brands.BrandSettingsProperties;
 
 namespace Courier.Models.Brands;
 
 [JsonConverter(typeof(ModelConverter<BrandSettings>))]
 public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
 {
-    public Colors? Colors
+    public BrandColors? Colors
     {
         get
         {
             if (!this.Properties.TryGetValue("colors", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Colors?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<BrandColors?>(element, ModelBase.SerializerOptions);
         }
         set
         {

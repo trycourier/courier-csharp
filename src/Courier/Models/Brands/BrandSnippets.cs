@@ -5,14 +5,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Brands.BrandSnippetsProperties;
 
 namespace Courier.Models.Brands;
 
 [JsonConverter(typeof(ModelConverter<BrandSnippets>))]
 public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
 {
-    public required List<Item> Items
+    public required List<BrandSnippet> Items
     {
         get
         {
@@ -22,7 +21,10 @@ public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
                     new ArgumentOutOfRangeException("items", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<Item>>(element, ModelBase.SerializerOptions)
+            return JsonSerializer.Deserialize<List<BrandSnippet>>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
                 ?? throw new CourierInvalidDataException(
                     "'items' cannot be null",
                     new ArgumentNullException("items")
@@ -61,7 +63,7 @@ public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
     }
 
     [SetsRequiredMembers]
-    public BrandSnippets(List<Item> items)
+    public BrandSnippets(List<BrandSnippet> items)
         : this()
     {
         this.Items = items;

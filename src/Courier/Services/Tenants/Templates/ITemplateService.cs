@@ -8,7 +8,7 @@ public interface ITemplateService
     /// <summary>
     /// Get a Template in Tenant
     /// </summary>
-    Task<TemplateRetrieveResponse> Retrieve(TemplateRetrieveParams parameters);
+    Task<BaseTemplateTenantAssociation> Retrieve(TemplateRetrieveParams parameters);
 
     /// <summary>
     /// List Templates in Tenant
