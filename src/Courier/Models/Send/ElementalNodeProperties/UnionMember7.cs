@@ -3,12 +3,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember1Properties;
+using Courier.Models.Send.ElementalNodeProperties.UnionMember7Properties;
 
-namespace Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties;
+namespace Courier.Models.Send.ElementalNodeProperties;
 
-[JsonConverter(typeof(ModelConverter<UnionMember1>))]
-public sealed record class UnionMember1 : ModelBase, IFromRaw<UnionMember1>
+[JsonConverter(typeof(ModelConverter<UnionMember7>))]
+public sealed record class UnionMember7 : ModelBase, IFromRaw<UnionMember7>
 {
     public List<string>? Channels
     {
@@ -115,17 +115,17 @@ public sealed record class UnionMember1 : ModelBase, IFromRaw<UnionMember1>
         this.Type?.Validate();
     }
 
-    public UnionMember1() { }
+    public UnionMember7() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UnionMember1(Dictionary<string, JsonElement> properties)
+    UnionMember7(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static UnionMember1 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static UnionMember7 FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

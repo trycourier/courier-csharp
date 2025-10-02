@@ -3,12 +3,12 @@ using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using System = System;
 
-namespace Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember3Properties;
+namespace Courier.Models.Send.ElementalNodeProperties.UnionMember7Properties;
 
 [JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
-    Action,
+    Quote,
 }
 
 sealed class TypeConverter : JsonConverter<Type>
@@ -21,7 +21,7 @@ sealed class TypeConverter : JsonConverter<Type>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "action" => UnionMember3Properties.Type.Action,
+            "quote" => UnionMember7Properties.Type.Quote,
             _ => (Type)(-1),
         };
     }
@@ -32,7 +32,7 @@ sealed class TypeConverter : JsonConverter<Type>
             writer,
             value switch
             {
-                UnionMember3Properties.Type.Action => "action",
+                UnionMember7Properties.Type.Quote => "quote",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

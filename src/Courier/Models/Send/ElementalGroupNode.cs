@@ -1,15 +1,47 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember0Properties;
+using Courier.Exceptions;
 
-namespace Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties;
+namespace Courier.Models.Send;
 
-[JsonConverter(typeof(ModelConverter<UnionMember0>))]
-public sealed record class UnionMember0 : ModelBase, IFromRaw<UnionMember0>
+[JsonConverter(typeof(ModelConverter<ElementalGroupNode>))]
+public sealed record class ElementalGroupNode : ModelBase, IFromRaw<ElementalGroupNode>
 {
+    /// <summary>
+    /// Sub elements to render.
+    /// </summary>
+    public required List<ElementalNode> Elements
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("elements", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'elements' cannot be null",
+                    new ArgumentOutOfRangeException("elements", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<List<ElementalNode>>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'elements' cannot be null",
+                    new ArgumentNullException("elements")
+                );
+        }
+        set
+        {
+            this.Properties["elements"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
     public List<string>? Channels
     {
         get
@@ -82,29 +114,12 @@ public sealed record class UnionMember0 : ModelBase, IFromRaw<UnionMember0>
         }
     }
 
-    public ApiEnum<string, Type>? Type
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Type>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        set
-        {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
     public override void Validate()
     {
+        foreach (var item in this.Elements)
+        {
+            item.Validate();
+        }
         foreach (var item in this.Channels ?? [])
         {
             _ = item;
@@ -112,21 +127,27 @@ public sealed record class UnionMember0 : ModelBase, IFromRaw<UnionMember0>
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
-        this.Type?.Validate();
     }
 
-    public UnionMember0() { }
+    public ElementalGroupNode() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UnionMember0(Dictionary<string, JsonElement> properties)
+    ElementalGroupNode(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static UnionMember0 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ElementalGroupNode FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
+    }
+
+    [SetsRequiredMembers]
+    public ElementalGroupNode(List<ElementalNode> elements)
+        : this()
+    {
+        this.Elements = elements;
     }
 }
