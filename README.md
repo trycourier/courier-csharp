@@ -31,10 +31,11 @@ See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using Courier;
 using Courier.Models.Send;
-using Courier.Models.Send.ContentProperties;
-using Courier.Models.Send.ElementalNodeProperties;
+using Courier.Models.Send.BaseMessageSendToProperties.ToProperties;
 using Courier.Models.Send.MessageProperties;
 
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
@@ -42,16 +43,15 @@ CourierClient client = new();
 
 SendMessageParams parameters = new()
 {
-    Message = new ContentMessage(
-        new ElementalContent()
+    Message = new TemplateMessage()
+    {
+        To = new UnionMember1(),
+        Template = "your_template",
+        Data = new Dictionary<string, JsonElement>()
         {
-            Elements =
-            [
-                new UnionMember0()
-            ],
-            Version = "version",
-        }
-    ),
+            { "foo", JsonSerializer.SerializeToElement("bar") }
+        },
+    },
 };
 
 var response = await client.Send.Message(parameters);
