@@ -14,7 +14,7 @@ public sealed class TemplateService : ITemplateService
         _client = client;
     }
 
-    public async Task<BaseTemplateTenantAssociation> Retrieve(TemplateRetrieveParams parameters)
+    public async Task<TemplateRetrieveResponse> Retrieve(TemplateRetrieveParams parameters)
     {
         HttpRequest<TemplateRetrieveParams> request = new()
         {
@@ -22,7 +22,7 @@ public sealed class TemplateService : ITemplateService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<BaseTemplateTenantAssociation>().ConfigureAwait(false);
+        return await response.Deserialize<TemplateRetrieveResponse>().ConfigureAwait(false);
     }
 
     public async Task<TemplateListResponse> List(TemplateListParams parameters)

@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using Courier.Models.Send.ContentProperties;
-using Courier.Models.Tenants.Templates;
 using ContentVariants = Courier.Models.Send.ContentVariants;
 
 namespace Courier.Models.Send;
