@@ -7,10 +7,10 @@ public class TemplateServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var template = await this.client.Tenants.Templates.Retrieve(
+        var baseTemplateTenantAssociation = await this.client.Tenants.Templates.Retrieve(
             new() { TenantID = "tenant_id", TemplateID = "template_id" }
         );
-        template.Validate();
+        baseTemplateTenantAssociation.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
