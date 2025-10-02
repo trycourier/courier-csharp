@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using UnionMember0Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember0Properties;
+using Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember0Properties;
 
-namespace Courier.Models.Send.ElementalNodeProperties;
+namespace Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties;
 
 [JsonConverter(typeof(ModelConverter<UnionMember0>))]
 public sealed record class UnionMember0 : ModelBase, IFromRaw<UnionMember0>
@@ -82,14 +82,14 @@ public sealed record class UnionMember0 : ModelBase, IFromRaw<UnionMember0>
         }
     }
 
-    public ApiEnum<string, UnionMember0Properties::Type>? Type
+    public ApiEnum<string, Type>? Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, UnionMember0Properties::Type>?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, Type>?>(
                 element,
                 ModelBase.SerializerOptions
             );

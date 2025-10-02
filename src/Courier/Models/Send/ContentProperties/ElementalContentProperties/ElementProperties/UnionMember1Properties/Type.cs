@@ -3,12 +3,12 @@ using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using System = System;
 
-namespace Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties;
+namespace Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember1Properties;
 
 [JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
-    Group,
+    Meta,
 }
 
 sealed class TypeConverter : JsonConverter<Type>
@@ -21,7 +21,7 @@ sealed class TypeConverter : JsonConverter<Type>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "group" => IntersectionMember1Properties.Type.Group,
+            "meta" => UnionMember1Properties.Type.Meta,
             _ => (Type)(-1),
         };
     }
@@ -32,7 +32,7 @@ sealed class TypeConverter : JsonConverter<Type>
             writer,
             value switch
             {
-                IntersectionMember1Properties.Type.Group => "group",
+                UnionMember1Properties.Type.Meta => "meta",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
