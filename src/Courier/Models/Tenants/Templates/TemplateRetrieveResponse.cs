@@ -1,16 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Tenants.Templates.TemplateListResponseProperties.ItemProperties;
-using System = System;
 
-namespace Courier.Models.Tenants.Templates.TemplateListResponseProperties;
+namespace Courier.Models.Tenants.Templates;
 
-[JsonConverter(typeof(ModelConverter<Item>))]
-public sealed record class Item : ModelBase, IFromRaw<Item>
+[JsonConverter(typeof(ModelConverter<TemplateRetrieveResponse>))]
+public sealed record class TemplateRetrieveResponse : ModelBase, IFromRaw<TemplateRetrieveResponse>
 {
     /// <summary>
     /// The template's id
@@ -22,13 +21,13 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
             if (!this.Properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
+                    new ArgumentOutOfRangeException("id", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new System::ArgumentNullException("id")
+                    new ArgumentNullException("id")
                 );
         }
         set
@@ -50,49 +49,18 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
             if (!this.Properties.TryGetValue("created_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'created_at' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "created_at",
-                        "Missing required argument"
-                    )
+                    new ArgumentOutOfRangeException("created_at", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'created_at' cannot be null",
-                    new System::ArgumentNullException("created_at")
+                    new ArgumentNullException("created_at")
                 );
         }
         set
         {
             this.Properties["created_at"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    /// <summary>
-    /// The template's data containing it's routing configs
-    /// </summary>
-    public required Data Data
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("data", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'data' cannot be null",
-                    new System::ArgumentOutOfRangeException("data", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Data>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'data' cannot be null",
-                    new System::ArgumentNullException("data")
-                );
-        }
-        set
-        {
-            this.Properties["data"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -109,16 +77,13 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
             if (!this.Properties.TryGetValue("published_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'published_at' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "published_at",
-                        "Missing required argument"
-                    )
+                    new ArgumentOutOfRangeException("published_at", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'published_at' cannot be null",
-                    new System::ArgumentNullException("published_at")
+                    new ArgumentNullException("published_at")
                 );
         }
         set
@@ -140,16 +105,13 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
             if (!this.Properties.TryGetValue("updated_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated_at' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "updated_at",
-                        "Missing required argument"
-                    )
+                    new ArgumentOutOfRangeException("updated_at", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'updated_at' cannot be null",
-                    new System::ArgumentNullException("updated_at")
+                    new ArgumentNullException("updated_at")
                 );
         }
         set
@@ -171,13 +133,13 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
             if (!this.Properties.TryGetValue("version", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'version' cannot be null",
-                    new System::ArgumentOutOfRangeException("version", "Missing required argument")
+                    new ArgumentOutOfRangeException("version", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'version' cannot be null",
-                    new System::ArgumentNullException("version")
+                    new ArgumentNullException("version")
                 );
         }
         set
@@ -193,23 +155,24 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
     {
         _ = this.ID;
         _ = this.CreatedAt;
-        this.Data.Validate();
         _ = this.PublishedAt;
         _ = this.UpdatedAt;
         _ = this.Version;
     }
 
-    public Item() { }
+    public TemplateRetrieveResponse() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Item(Dictionary<string, JsonElement> properties)
+    TemplateRetrieveResponse(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Item FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static TemplateRetrieveResponse FromRawUnchecked(
+        Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }
