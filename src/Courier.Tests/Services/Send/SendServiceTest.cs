@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Courier.Models.Send;
 using Courier.Models.Send.BaseMessageProperties.ChannelsProperties;
+using Courier.Models.Send.BaseMessageProperties.ChannelsProperties.ChannelsItemProperties;
 using Courier.Models.Send.BaseMessageProperties.ProvidersProperties;
-using Courier.Models.Send.BaseMessageProperties.RoutingProperties.ChannelProperties;
+using Courier.Models.Send.BaseMessageProperties.RoutingProperties;
 using Courier.Models.Send.BaseMessageProperties.TimeoutProperties;
 using Courier.Models.Send.BaseMessageSendToProperties.ToProperties;
-using Courier.Models.Send.BaseMessageSendToProperties.ToProperties.AudienceRecipientProperties.FilterProperties;
+using Courier.Models.Send.BaseMessageSendToProperties.ToProperties.UnionMember1Properties.FilterProperties;
 using Courier.Models.Send.ContentProperties;
-using Courier.Models.Send.ElementalNodeProperties.UnionMember0Properties;
 using Courier.Models.Send.MessageProperties;
-using ElementalNodeProperties = Courier.Models.Send.ElementalNodeProperties;
-using ProvidersProperties = Courier.Models.Send.BaseMessageProperties.RoutingProperties.ChannelProperties.RoutingStrategyChannelProperties.ProvidersProperties;
 
 namespace Courier.Tests.Services.Send;
 
@@ -59,7 +56,7 @@ public class SendServiceTest : TestBase
                     Context = new() { TenantID = "tenant_id" },
                     Data = new Dictionary<string, JsonElement>()
                     {
-                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                        { "name", JsonSerializer.SerializeToElement("bar") },
                     },
                     Delay = new() { Duration = 0, Until = "until" },
                     Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
@@ -104,52 +101,7 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Routing = new()
-                    {
-                        Channels =
-                        [
-                            new RoutingStrategyChannel()
-                            {
-                                Channel = "channel",
-                                Config = new Dictionary<string, JsonElement>()
-                                {
-                                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                                },
-                                If = "if",
-                                Method = RoutingMethod.All,
-                                Providers = new Dictionary<
-                                    string,
-                                    ProvidersProperties::ProvidersItem
-                                >()
-                                {
-                                    {
-                                        "foo",
-                                        new()
-                                        {
-                                            If = "if",
-                                            Metadata = new()
-                                            {
-                                                Utm = new()
-                                                {
-                                                    Campaign = "campaign",
-                                                    Content = "content",
-                                                    Medium = "medium",
-                                                    Source = "source",
-                                                    Term = "term",
-                                                },
-                                            },
-                                            Override = new Dictionary<string, JsonElement>()
-                                            {
-                                                { "foo", JsonSerializer.SerializeToElement("bar") },
-                                            },
-                                            Timeouts = 0,
-                                        }
-                                    },
-                                },
-                            },
-                        ],
-                        Method = RoutingMethod.All,
-                    },
+                    Routing = new() { Channels = ["email"], Method = Method.Single },
                     Timeout = new()
                     {
                         Channel = new Dictionary<string, long>() { { "foo", 0 } },
@@ -158,9 +110,8 @@ public class SendServiceTest : TestBase
                         Message = 0,
                         Provider = new Dictionary<string, long>() { { "foo", 0 } },
                     },
-                    To = new AudienceRecipient()
+                    To = new UnionMember1()
                     {
-                        AudienceID = "audience_id",
                         Data = new Dictionary<string, JsonElement>()
                         {
                             { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -174,22 +125,12 @@ public class SendServiceTest : TestBase
                                 Value = "value",
                             },
                         ],
+                        ListID = "list_id",
                     },
-                    Content = new ElementalContent()
+                    Content = new ElementalContentSugar()
                     {
-                        Elements =
-                        [
-                            new ElementalNodeProperties::UnionMember0()
-                            {
-                                Channels = ["string"],
-                                If = "if",
-                                Loop = "loop",
-                                Ref = "ref",
-                                Type = Type.Text,
-                            },
-                        ],
-                        Version = "version",
-                        Brand = JsonSerializer.Deserialize<JsonElement>("{}"),
+                        Body = "Thanks for signing up, {{name}}",
+                        Title = "Welcome!",
                     },
                 },
             }

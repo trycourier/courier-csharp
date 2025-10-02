@@ -15,6 +15,17 @@ public sealed class TokenService : ITokenService
         _client = client;
     }
 
+    public async Task<TokenRetrieveResponse> Retrieve(TokenRetrieveParams parameters)
+    {
+        HttpRequest<TokenRetrieveParams> request = new()
+        {
+            Method = HttpMethod.Get,
+            Params = parameters,
+        };
+        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        return await response.Deserialize<TokenRetrieveResponse>().ConfigureAwait(false);
+    }
+
     public async Task Update(TokenUpdateParams parameters)
     {
         HttpRequest<TokenUpdateParams> request = new()
@@ -68,18 +79,5 @@ public sealed class TokenService : ITokenService
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
         return;
-    }
-
-    public async Task<TokenRetrieveSingleResponse> RetrieveSingle(
-        TokenRetrieveSingleParams parameters
-    )
-    {
-        HttpRequest<TokenRetrieveSingleParams> request = new()
-        {
-            Method = HttpMethod.Get,
-            Params = parameters,
-        };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<TokenRetrieveSingleResponse>().ConfigureAwait(false);
     }
 }

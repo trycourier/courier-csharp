@@ -5,7 +5,6 @@ using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Auth.AuthIssueTokenParamsProperties;
 
 namespace Courier.Models.Auth;
 
@@ -41,7 +40,7 @@ public sealed record class AuthIssueTokenParams : ParamsBase
         }
     }
 
-    public required ApiEnum<string, Scope> Scope
+    public required string Scope
     {
         get
         {
@@ -51,10 +50,11 @@ public sealed record class AuthIssueTokenParams : ParamsBase
                     new ArgumentOutOfRangeException("scope", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'scope' cannot be null",
+                    new ArgumentNullException("scope")
+                );
         }
         set
         {

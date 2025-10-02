@@ -1,13 +1,14 @@
 using Courier.Core;
 using ContentProperties = Courier.Models.Send.ContentProperties;
+using Templates = Courier.Models.Tenants.Templates;
 
 namespace Courier.Models.Send.ContentVariants;
 
-public sealed record class ElementalContent(ContentProperties::ElementalContent Value)
+public sealed record class ElementalContent(Templates::ElementalContent Value)
     : Content,
-        IVariant<ElementalContent, ContentProperties::ElementalContent>
+        IVariant<ElementalContent, Templates::ElementalContent>
 {
-    public static ElementalContent From(ContentProperties::ElementalContent value)
+    public static ElementalContent From(Templates::ElementalContent value)
     {
         return new(value);
     }

@@ -34,8 +34,9 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
 
     /// <summary>
     /// A JavaScript conditional expression to determine if the message should  be
-    /// sent through the channel. Has access to the data and profile object.  For
-    /// example, `data.name === profile.name`
+    /// sent through the channel. Has access to the data and profile object. Only
+    /// applies when a custom routing strategy is defined. For example, `data.name
+    /// === profile.name`.
     /// </summary>
     public string? If
     {
@@ -127,17 +128,17 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     /// send to one of the available providers for this channel,  all will send the
     /// message through all channels. Defaults to `single`.
     /// </summary>
-    public ApiEnum<string, RoutingMethod>? RoutingMethod
+    public ApiEnum<string, ChannelsItemProperties::RoutingMethod>? RoutingMethod
     {
         get
         {
             if (!this.Properties.TryGetValue("routing_method", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ChannelsItemProperties::RoutingMethod
+            >?>(element, ModelBase.SerializerOptions);
         }
         set
         {

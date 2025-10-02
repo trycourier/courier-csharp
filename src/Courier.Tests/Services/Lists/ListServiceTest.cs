@@ -14,8 +14,7 @@ public class ListServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Update_Works()
     {
-        var list = await this.client.Lists.Update(new() { ListID = "list_id", Name = "name" });
-        list.Validate();
+        await this.client.Lists.Update(new() { ListID = "list_id", Name = "name" });
     }
 
     [Fact(Skip = "Prism tests are disabled")]

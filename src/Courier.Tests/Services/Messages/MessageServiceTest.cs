@@ -26,9 +26,9 @@ public class MessageServiceTest : TestBase
     }
 
     [Fact(Skip = "Prism tests are disabled")]
-    public async Task GetContent_Works()
+    public async Task Content_Works()
     {
-        var response = await this.client.Messages.GetContent(new() { MessageID = "message_id" });
+        var response = await this.client.Messages.Content(new() { MessageID = "message_id" });
         response.Validate();
     }
 

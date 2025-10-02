@@ -12,8 +12,9 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
 {
     /// <summary>
     /// A JavaScript conditional expression to determine if the message should be
-    /// sent  through the channel. Has access to the data and profile object. For
-    /// example,  `data.name === profile.name`
+    /// sent through the provider. Has access to the data and profile object. Only
+    /// applies when a custom routing strategy is defined. For example, `data.name
+    /// === profile.name`
     /// </summary>
     public string? If
     {

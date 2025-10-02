@@ -61,14 +61,14 @@ public sealed record class List : ModelBase, IFromRaw<List>
         }
     }
 
-    public long? Created
+    public string? Created
     {
         get
         {
             if (!this.Properties.TryGetValue("created", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -79,14 +79,14 @@ public sealed record class List : ModelBase, IFromRaw<List>
         }
     }
 
-    public long? Updated
+    public string? Updated
     {
         get
         {
             if (!this.Properties.TryGetValue("updated", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set
         {

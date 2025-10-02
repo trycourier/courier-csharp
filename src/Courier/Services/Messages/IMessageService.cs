@@ -27,7 +27,7 @@ public interface IMessageService
     /// <summary>
     /// Get message content
     /// </summary>
-    Task<MessageGetContentResponse> GetContent(MessageGetContentParams parameters);
+    Task<MessageContentResponse> Content(MessageContentParams parameters);
 
     /// <summary>
     /// Fetch the array of events of a message you've previously sent.

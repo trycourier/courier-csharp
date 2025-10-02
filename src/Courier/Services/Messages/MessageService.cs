@@ -49,15 +49,15 @@ public sealed class MessageService : IMessageService
         return await response.Deserialize<MessageDetails>().ConfigureAwait(false);
     }
 
-    public async Task<MessageGetContentResponse> GetContent(MessageGetContentParams parameters)
+    public async Task<MessageContentResponse> Content(MessageContentParams parameters)
     {
-        HttpRequest<MessageGetContentParams> request = new()
+        HttpRequest<MessageContentParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<MessageGetContentResponse>().ConfigureAwait(false);
+        return await response.Deserialize<MessageContentResponse>().ConfigureAwait(false);
     }
 
     public async Task<MessageHistoryResponse> History(MessageHistoryParams parameters)
