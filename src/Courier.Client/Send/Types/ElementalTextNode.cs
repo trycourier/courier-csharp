@@ -1,12 +1,19 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record ElementalTextNode
+/// <summary>
+/// Represents a body of text to be rendered inside of the notification.
+/// </summary>
+[Serializable]
+public record ElementalTextNode : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// The text content displayed in the notification. Either this
     /// field must be specified, or the elements field
@@ -77,6 +84,13 @@ public record ElementalTextNode
     [JsonPropertyName("loop")]
     public string? Loop { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

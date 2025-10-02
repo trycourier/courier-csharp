@@ -999,12 +999,12 @@ await client.Bulk.CreateJobAsync(
     {
         Message = new InboundBulkMessage
         {
+            Message = null,
             Brand = null,
             Data = null,
             Event = null,
             Locale = null,
             Override = null,
-            Message = null,
         },
     }
 );
@@ -3715,7 +3715,7 @@ await client.Translations.UpdateAsync("domain", "locale", "string");
 </details>
 
 ## Users Preferences
-<details><summary><code>client.Users.Preferences.<a href="/src/Courier.Client/Users/Preferences/PreferencesClient.cs">ListAsync</a>(userId, UserPreferencesParams { ... }) -> UserPreferencesListResponse</code></summary>
+<details><summary><code>client.Users.Preferences.<a href="/src/Courier.Client/Users/Preferences/PreferencesClient.cs">ListAsync</a>(userId, Users.UserPreferencesParams { ... }) -> Users.UserPreferencesListResponse</code></summary>
 <dl>
 <dd>
 
@@ -3765,7 +3765,7 @@ await client.Users.Preferences.ListAsync("user_id", new UserPreferencesParams())
 <dl>
 <dd>
 
-**request:** `UserPreferencesParams` 
+**request:** `Users.UserPreferencesParams` 
     
 </dd>
 </dl>
@@ -3777,7 +3777,7 @@ await client.Users.Preferences.ListAsync("user_id", new UserPreferencesParams())
 </dl>
 </details>
 
-<details><summary><code>client.Users.Preferences.<a href="/src/Courier.Client/Users/Preferences/PreferencesClient.cs">GetAsync</a>(userId, topicId, UserPreferencesTopicParams { ... }) -> UserPreferencesGetResponse</code></summary>
+<details><summary><code>client.Users.Preferences.<a href="/src/Courier.Client/Users/Preferences/PreferencesClient.cs">GetAsync</a>(userId, topicId, Users.UserPreferencesTopicParams { ... }) -> Users.UserPreferencesGetResponse</code></summary>
 <dl>
 <dd>
 
@@ -3835,7 +3835,7 @@ await client.Users.Preferences.GetAsync("user_id", "topic_id", new UserPreferenc
 <dl>
 <dd>
 
-**request:** `UserPreferencesTopicParams` 
+**request:** `Users.UserPreferencesTopicParams` 
     
 </dd>
 </dl>
@@ -3847,7 +3847,7 @@ await client.Users.Preferences.GetAsync("user_id", "topic_id", new UserPreferenc
 </dl>
 </details>
 
-<details><summary><code>client.Users.Preferences.<a href="/src/Courier.Client/Users/Preferences/PreferencesClient.cs">UpdateAsync</a>(userId, topicId, UserPreferencesUpdateParams { ... }) -> UserPreferencesUpdateResponse</code></summary>
+<details><summary><code>client.Users.Preferences.<a href="/src/Courier.Client/Users/Preferences/PreferencesClient.cs">UpdateAsync</a>(userId, topicId, Users.UserPreferencesUpdateParams { ... }) -> Users.UserPreferencesUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -3921,7 +3921,7 @@ await client.Users.Preferences.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `UserPreferencesUpdateParams` 
+**request:** `Users.UserPreferencesUpdateParams` 
     
 </dd>
 </dl>
@@ -3934,7 +3934,7 @@ await client.Users.Preferences.UpdateAsync(
 </details>
 
 ## Users Tenants
-<details><summary><code>client.Users.Tenants.<a href="/src/Courier.Client/Users/Tenants/TenantsClient.cs">AddMultpleAsync</a>(userId, AddUserToMultipleTenantsParams { ... })</code></summary>
+<details><summary><code>client.Users.Tenants.<a href="/src/Courier.Client/Users/Tenants/TenantsClient.cs">AddMultpleAsync</a>(userId, Users.AddUserToMultipleTenantsParams { ... })</code></summary>
 <dl>
 <dd>
 
@@ -4010,7 +4010,7 @@ await client.Users.Tenants.AddMultpleAsync(
 <dl>
 <dd>
 
-**request:** `AddUserToMultipleTenantsParams` 
+**request:** `Users.AddUserToMultipleTenantsParams` 
     
 </dd>
 </dl>
@@ -4022,7 +4022,7 @@ await client.Users.Tenants.AddMultpleAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Tenants.<a href="/src/Courier.Client/Users/Tenants/TenantsClient.cs">AddAsync</a>(userId, tenantId, AddUserToSingleTenantsParams { ... })</code></summary>
+<details><summary><code>client.Users.Tenants.<a href="/src/Courier.Client/Users/Tenants/TenantsClient.cs">AddAsync</a>(userId, tenantId, Users.AddUserToSingleTenantsParams { ... })</code></summary>
 <dl>
 <dd>
 
@@ -4088,7 +4088,7 @@ await client.Users.Tenants.AddAsync(
 <dl>
 <dd>
 
-**request:** `AddUserToSingleTenantsParams` 
+**request:** `Users.AddUserToSingleTenantsParams` 
     
 </dd>
 </dl>
@@ -4216,7 +4216,7 @@ await client.Users.Tenants.RemoveAsync("user_id", "tenant_id");
 </dl>
 </details>
 
-<details><summary><code>client.Users.Tenants.<a href="/src/Courier.Client/Users/Tenants/TenantsClient.cs">ListAsync</a>(userId, ListTenantsForUserParams { ... }) -> ListTenantsForUserResponse</code></summary>
+<details><summary><code>client.Users.Tenants.<a href="/src/Courier.Client/Users/Tenants/TenantsClient.cs">ListAsync</a>(userId, Users.ListTenantsForUserParams { ... }) -> Users.ListTenantsForUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -4266,7 +4266,7 @@ await client.Users.Tenants.ListAsync("user_id", new ListTenantsForUserParams());
 <dl>
 <dd>
 
-**request:** `ListTenantsForUserParams` 
+**request:** `Users.ListTenantsForUserParams` 
     
 </dd>
 </dl>
@@ -4333,7 +4333,7 @@ await client.Users.Tokens.AddMultipleAsync("user_id");
 </dl>
 </details>
 
-<details><summary><code>client.Users.Tokens.<a href="/src/Courier.Client/Users/Tokens/TokensClient.cs">AddAsync</a>(userId, token, UserToken { ... })</code></summary>
+<details><summary><code>client.Users.Tokens.<a href="/src/Courier.Client/Users/Tokens/TokensClient.cs">AddAsync</a>(userId, token, Users.UserToken { ... })</code></summary>
 <dl>
 <dd>
 
@@ -4403,7 +4403,7 @@ await client.Users.Tokens.AddAsync(
 <dl>
 <dd>
 
-**request:** `UserToken` 
+**request:** `Users.UserToken` 
     
 </dd>
 </dl>
@@ -4415,7 +4415,7 @@ await client.Users.Tokens.AddAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Tokens.<a href="/src/Courier.Client/Users/Tokens/TokensClient.cs">UpdateAsync</a>(userId, token, PatchUserTokenOpts { ... })</code></summary>
+<details><summary><code>client.Users.Tokens.<a href="/src/Courier.Client/Users/Tokens/TokensClient.cs">UpdateAsync</a>(userId, token, Users.PatchUserTokenOpts { ... })</code></summary>
 <dl>
 <dd>
 
@@ -4494,7 +4494,7 @@ await client.Users.Tokens.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `PatchUserTokenOpts` 
+**request:** `Users.PatchUserTokenOpts` 
     
 </dd>
 </dl>
@@ -4506,7 +4506,7 @@ await client.Users.Tokens.UpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.Tokens.<a href="/src/Courier.Client/Users/Tokens/TokensClient.cs">GetAsync</a>(userId, token) -> GetUserTokenResponse</code></summary>
+<details><summary><code>client.Users.Tokens.<a href="/src/Courier.Client/Users/Tokens/TokensClient.cs">GetAsync</a>(userId, token) -> Users.GetUserTokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -4568,7 +4568,7 @@ await client.Users.Tokens.GetAsync("user_id", "token");
 </dl>
 </details>
 
-<details><summary><code>client.Users.Tokens.<a href="/src/Courier.Client/Users/Tokens/TokensClient.cs">ListAsync</a>(userId) -> IEnumerable<UserToken></code></summary>
+<details><summary><code>client.Users.Tokens.<a href="/src/Courier.Client/Users/Tokens/TokensClient.cs">ListAsync</a>(userId) -> IEnumerable<Users.UserToken></code></summary>
 <dl>
 <dd>
 

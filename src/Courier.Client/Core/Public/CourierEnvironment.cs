@@ -1,6 +1,7 @@
 namespace Courier.Client.Core;
 
+[Serializable]
 public class CourierEnvironment
 {
-    public static string PRODUCTION = "https://api.courier.com";
+    public const string PRODUCTION = "https://api.courier.com";
 }

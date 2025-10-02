@@ -2,10 +2,9 @@ using System.Text.Json.Serialization;
 using Courier.Client.Core;
 using OneOf;
 
-#nullable enable
-
 namespace Courier.Client;
 
+[Serializable]
 public record AudienceUpdateParams
 {
     /// <summary>
@@ -23,6 +22,7 @@ public record AudienceUpdateParams
     [JsonPropertyName("filter")]
     public OneOf<SingleFilterConfig, NestedFilterConfig>? Filter { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

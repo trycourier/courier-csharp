@@ -1,7 +1,5 @@
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client.Users;
 
 public partial class UsersClient

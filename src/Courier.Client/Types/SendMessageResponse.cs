@@ -1,12 +1,16 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record SendMessageResponse
+[Serializable]
+public record SendMessageResponse : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// A successful call to `POST /send` returns a `202` status code along with a `requestId` in the response body.
     ///
@@ -17,6 +21,13 @@ public record SendMessageResponse
     [JsonPropertyName("requestId")]
     public required string RequestId { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

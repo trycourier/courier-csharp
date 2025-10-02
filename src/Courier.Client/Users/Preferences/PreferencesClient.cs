@@ -1,10 +1,9 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Courier.Client;
 using Courier.Client.Core;
-
-#nullable enable
 
 namespace Courier.Client.Users;
 
@@ -20,11 +19,9 @@ public partial class PreferencesClient
     /// <summary>
     /// Fetch all user preferences.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Users.Preferences.ListAsync("user_id", new UserPreferencesParams());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<UserPreferencesListResponse> ListAsync(
         string userId,
         UserPreferencesParams request,
@@ -37,20 +34,25 @@ public partial class PreferencesClient
         {
             _query["tenant_id"] = request.TenantId;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/users/{userId}/preferences",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/users/{0}/preferences",
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<UserPreferencesListResponse>(responseBody)!;
@@ -61,33 +63,34 @@ public partial class PreferencesClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 400:
-                    throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Fetch user preferences for a specific subscription topic.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Users.Preferences.GetAsync("user_id", "topic_id", new UserPreferencesTopicParams());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<UserPreferencesGetResponse> GetAsync(
         string userId,
         string topicId,
@@ -101,20 +104,26 @@ public partial class PreferencesClient
         {
             _query["tenant_id"] = request.TenantId;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/users/{userId}/preferences/{topicId}",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/users/{0}/preferences/{1}",
+                        ValueConvert.ToPathParameterString(userId),
+                        ValueConvert.ToPathParameterString(topicId)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<UserPreferencesGetResponse>(responseBody)!;
@@ -125,30 +134,32 @@ public partial class PreferencesClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 404:
-                    throw new NotFoundError(JsonUtils.Deserialize<NotFound>(responseBody));
+                switch (response.StatusCode)
+                {
+                    case 404:
+                        throw new NotFoundError(JsonUtils.Deserialize<NotFound>(responseBody));
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Update or Create user preferences for a specific subscription topic.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Users.Preferences.UpdateAsync(
     ///     "abc-123",
     ///     "74Q4QGFBEX481DP6JRPMV751H4XT",
@@ -166,8 +177,7 @@ public partial class PreferencesClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<UserPreferencesUpdateResponse> UpdateAsync(
         string userId,
         string topicId,
@@ -181,22 +191,27 @@ public partial class PreferencesClient
         {
             _query["tenant_id"] = request.TenantId;
         }
-        var requestBody = new Dictionary<string, object>() { { "topic", request.Topic } };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Put,
-                Path = $"/users/{userId}/preferences/{topicId}",
-                Body = requestBody,
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Put,
+                    Path = string.Format(
+                        "/users/{0}/preferences/{1}",
+                        ValueConvert.ToPathParameterString(userId),
+                        ValueConvert.ToPathParameterString(topicId)
+                    ),
+                    Body = request,
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<UserPreferencesUpdateResponse>(responseBody)!;
@@ -207,22 +222,25 @@ public partial class PreferencesClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 400:
-                    throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

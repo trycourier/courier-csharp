@@ -1,12 +1,16 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record TenantListResponse
+[Serializable]
+public record TenantListResponse : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// A pointer to the next page of results. Defined only when has_more is set to true.
     /// </summary>
@@ -42,8 +46,15 @@ public record TenantListResponse
     /// Always set to "list". Represents the type of this object.
     /// </summary>
     [JsonPropertyName("type")]
-    public required string Type { get; set; }
+    public string Type { get; set; } = "list";
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

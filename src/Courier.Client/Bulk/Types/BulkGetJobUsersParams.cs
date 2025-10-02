@@ -1,18 +1,29 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record BulkGetJobUsersParams
+[Serializable]
+public record BulkGetJobUsersParams : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("jobId")]
     public required string JobId { get; set; }
 
     [JsonPropertyName("cursor")]
     public string? Cursor { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

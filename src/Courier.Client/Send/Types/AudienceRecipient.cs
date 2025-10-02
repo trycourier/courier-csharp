@@ -1,12 +1,16 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record AudienceRecipient
+[Serializable]
+public record AudienceRecipient : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// A unique identifier associated with an Audience. A message will be sent to each user in the audience.
     /// </summary>
@@ -19,6 +23,13 @@ public record AudienceRecipient
     [JsonPropertyName("filters")]
     public IEnumerable<AudienceFilter>? Filters { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

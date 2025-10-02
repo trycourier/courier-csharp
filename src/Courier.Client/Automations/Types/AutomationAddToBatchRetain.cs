@@ -1,12 +1,19 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record AutomationAddToBatchRetain
+/// <summary>
+/// Defines what items should be retained and passed along to the next steps when the batch is released
+/// </summary>
+[Serializable]
+public record AutomationAddToBatchRetain : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Keep N number of notifications based on the type. First/Last N based on notification received.
     /// highest/lowest based on a scoring key providing in the data accessed by sort_key
@@ -27,6 +34,13 @@ public record AutomationAddToBatchRetain
     [JsonPropertyName("sort_key")]
     public string? SortKey { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

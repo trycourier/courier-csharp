@@ -1,13 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 using OneOf;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record UserProfile
+[Serializable]
+public record UserProfile : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("address")]
     public required Address Address { get; set; }
 
@@ -114,6 +118,13 @@ public record UserProfile
         SendToMsTeamsChannelName
     > MsTeams { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

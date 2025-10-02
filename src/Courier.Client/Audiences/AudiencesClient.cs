@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
 public partial class AudiencesClient
@@ -20,30 +18,33 @@ public partial class AudiencesClient
     /// <summary>
     /// Returns the specified audience by id.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Audiences.GetAsync("audience_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Audience> GetAsync(
         string audienceId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/audiences/{audienceId}",
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/audiences/{0}",
+                        ValueConvert.ToPathParameterString(audienceId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Audience>(responseBody)!;
@@ -54,18 +55,20 @@ public partial class AudiencesClient
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Creates or updates audience.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Audiences.UpdateAsync(
     ///     "audience_id",
     ///     new AudienceUpdateParams
@@ -75,8 +78,7 @@ public partial class AudiencesClient
     ///         Filter = null,
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<AudienceUpdateResponse> UpdateAsync(
         string audienceId,
         AudienceUpdateParams request,
@@ -84,20 +86,25 @@ public partial class AudiencesClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Put,
-                Path = $"/audiences/{audienceId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Put,
+                    Path = string.Format(
+                        "/audiences/{0}",
+                        ValueConvert.ToPathParameterString(audienceId)
+                    ),
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<AudienceUpdateResponse>(responseBody)!;
@@ -108,57 +115,63 @@ public partial class AudiencesClient
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Deletes the specified audience.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Audiences.DeleteAsync("audience_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task DeleteAsync(
         string audienceId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Delete,
-                Path = $"/audiences/{audienceId}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Delete,
+                    Path = string.Format(
+                        "/audiences/{0}",
+                        ValueConvert.ToPathParameterString(audienceId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Get list of members of an audience.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Audiences.ListMembersAsync("audience_id", new AudienceMembersListParams());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<AudienceMemberListResponse> ListMembersAsync(
         string audienceId,
         AudienceMembersListParams request,
@@ -171,20 +184,25 @@ public partial class AudiencesClient
         {
             _query["cursor"] = request.Cursor;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/audiences/{audienceId}/members",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/audiences/{0}/members",
+                        ValueConvert.ToPathParameterString(audienceId)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<AudienceMemberListResponse>(responseBody)!;
@@ -195,33 +213,34 @@ public partial class AudiencesClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 400:
-                    throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     /// <summary>
     /// Get the audiences associated with the authorization token.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Audiences.ListAudiencesAsync(new AudiencesListParams());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<AudienceListResponse> ListAudiencesAsync(
         AudiencesListParams request,
         RequestOptions? options = null,
@@ -233,20 +252,22 @@ public partial class AudiencesClient
         {
             _query["cursor"] = request.Cursor;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/audiences",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/audiences",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<AudienceListResponse>(responseBody)!;
@@ -257,22 +278,25 @@ public partial class AudiencesClient
             }
         }
 
-        try
         {
-            switch (response.StatusCode)
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
             {
-                case 400:
-                    throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<BadRequest>(responseBody));
+                }
             }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
         }
-        catch (JsonException)
-        {
-            // unable to map error response, throwing generic error
-        }
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 }

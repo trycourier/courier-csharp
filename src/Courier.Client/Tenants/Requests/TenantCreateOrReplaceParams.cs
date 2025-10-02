@@ -1,10 +1,9 @@
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
+[Serializable]
 public record TenantCreateOrReplaceParams
 {
     /// <summary>
@@ -43,6 +42,7 @@ public record TenantCreateOrReplaceParams
     [JsonPropertyName("brand_id")]
     public string? BrandId { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

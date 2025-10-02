@@ -1,14 +1,18 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record AutomationThrottleStep
+[Serializable]
+public record AutomationThrottleStep : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("action")]
-    public required string Action { get; set; }
+    public string Action { get; set; } = "throttle";
 
     /// <summary>
     /// Maximum number of allowed notifications in that timeframe
@@ -35,7 +39,7 @@ public record AutomationThrottleStep
     /// Value must be true
     /// </summary>
     [JsonPropertyName("should_alert")]
-    public required bool ShouldAlert { get; set; }
+    public bool ShouldAlert { get; set; } = false;
 
     [JsonPropertyName("on_throttle")]
     public required AutomationThrottleOnThrottle OnThrottle { get; set; }
@@ -46,6 +50,13 @@ public record AutomationThrottleStep
     [JsonPropertyName("ref")]
     public string? Ref { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

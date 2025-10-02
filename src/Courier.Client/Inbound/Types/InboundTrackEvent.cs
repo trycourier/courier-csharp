@@ -1,12 +1,16 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record InboundTrackEvent
+[Serializable]
+public record InboundTrackEvent : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// A descriptive name of the event. This name will appear as a trigger in the Courier Automation Trigger node.
     /// </summary>
@@ -23,7 +27,7 @@ public record InboundTrackEvent
     public Dictionary<string, object?> Properties { get; set; } = new Dictionary<string, object?>();
 
     [JsonPropertyName("type")]
-    public required string Type { get; set; }
+    public string Type { get; set; } = "track";
 
     /// <summary>
     /// The user id assocatiated with the track
@@ -31,6 +35,13 @@ public record InboundTrackEvent
     [JsonPropertyName("userId")]
     public string? UserId { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

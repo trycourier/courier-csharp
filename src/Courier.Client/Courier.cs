@@ -1,16 +1,15 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Courier.Client.Core;
 using Courier.Client.Users;
-
-#nullable enable
 
 namespace Courier.Client;
 
 public partial class Courier
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     public Courier(string? authorizationToken = null, ClientOptions? clientOptions = null)
     {
@@ -25,7 +24,7 @@ public partial class Courier
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "Courier.Client" },
                 { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Courier.Client/0.4.0" },
+                { "User-Agent", "Courier.Client/0.5.0" },
             }
         );
         clientOptions ??= new ClientOptions();
@@ -42,62 +41,57 @@ public partial class Courier
         AuthTokens = new AuthTokensClient(_client);
         Automations = new AutomationsClient(_client);
         Brands = new BrandsClient(_client);
-        Commons = new CommonsClient(_client);
         Bulk = new BulkClient(_client);
         Inbound = new InboundClient(_client);
         Lists = new ListsClient(_client);
         Messages = new MessagesClient(_client);
         Notifications = new NotificationsClient(_client);
-        Preferences = new PreferencesClient(_client);
         Profiles = new ProfilesClient(_client);
-        Send = new SendClient(_client);
         Templates = new TemplatesClient(_client);
         Tenants = new TenantsClient(_client);
         Translations = new TranslationsClient(_client);
         Users = new UsersClient(_client);
     }
 
-    public AudiencesClient Audiences { get; init; }
+    public AudiencesClient Audiences { get; }
 
-    public AuditEventsClient AuditEvents { get; init; }
+    public AuditEventsClient AuditEvents { get; }
 
-    public AuthTokensClient AuthTokens { get; init; }
+    public AuthTokensClient AuthTokens { get; }
 
-    public AutomationsClient Automations { get; init; }
+    public AutomationsClient Automations { get; }
 
-    public BrandsClient Brands { get; init; }
+    public BrandsClient Brands { get; }
 
-    public CommonsClient Commons { get; init; }
+    public BulkClient Bulk { get; }
 
-    public BulkClient Bulk { get; init; }
+    public InboundClient Inbound { get; }
 
-    public InboundClient Inbound { get; init; }
+    public ListsClient Lists { get; }
 
-    public ListsClient Lists { get; init; }
+    public MessagesClient Messages { get; }
 
-    public MessagesClient Messages { get; init; }
+    public NotificationsClient Notifications { get; }
 
-    public NotificationsClient Notifications { get; init; }
+    public ProfilesClient Profiles { get; }
 
-    public PreferencesClient Preferences { get; init; }
+    public TemplatesClient Templates { get; }
 
-    public ProfilesClient Profiles { get; init; }
+    public TenantsClient Tenants { get; }
 
-    public SendClient Send { get; init; }
+    public TranslationsClient Translations { get; }
 
-    public TemplatesClient Templates { get; init; }
+    public UsersClient Users { get; }
 
-    public TenantsClient Tenants { get; init; }
-
-    public TranslationsClient Translations { get; init; }
-
-    public UsersClient Users { get; init; }
+    private static string GetFromEnvironmentOrThrow(string env, string message)
+    {
+        return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
+    }
 
     /// <summary>
     /// Use the send API to send a message to one or more recipients.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.SendAsync(
     ///     new SendMessageRequest
     ///     {
@@ -118,28 +112,29 @@ public partial class Courier
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendMessageResponse> SendAsync(
         SendMessageRequest request,
         IdempotentRequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "/send",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Post,
+                    Path = "/send",
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<SendMessageResponse>(responseBody)!;
@@ -150,15 +145,13 @@ public partial class Courier
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
-    }
-
-    private static string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client.Users;
 
 public partial class TenantsClient
@@ -24,8 +22,7 @@ public partial class TenantsClient
     /// This profile will be merged with the user's main
     /// profile when sending to the user with that tenant.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Users.Tenants.AddMultpleAsync(
     ///     "user_id",
     ///     new AddUserToMultipleTenantsParams
@@ -49,8 +46,7 @@ public partial class TenantsClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task AddMultpleAsync(
         string userId,
         AddUserToMultipleTenantsParams request,
@@ -58,27 +54,34 @@ public partial class TenantsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Put,
-                Path = $"users/{userId}/tenants",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Put,
+                    Path = string.Format(
+                        "users/{0}/tenants",
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
@@ -88,15 +91,13 @@ public partial class TenantsClient
     /// This profile will be merged with the user's main profile
     /// when sending to the user with that tenant.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Users.Tenants.AddAsync(
     ///     "user_id",
     ///     "tenant_id",
     ///     new AddUserToSingleTenantsParams { Profile = null }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task AddAsync(
         string userId,
         string tenantId,
@@ -105,73 +106,84 @@ public partial class TenantsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Put,
-                Path = $"users/{userId}/tenants/{tenantId}",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Put,
+                    Path = string.Format(
+                        "users/{0}/tenants/{1}",
+                        ValueConvert.ToPathParameterString(userId),
+                        ValueConvert.ToPathParameterString(tenantId)
+                    ),
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Removes a user from any tenants they may have been associated with.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Users.Tenants.RemoveAllAsync("user_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task RemoveAllAsync(
         string userId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Delete,
-                Path = $"users/{userId}/tenants",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Delete,
+                    Path = string.Format(
+                        "users/{0}/tenants",
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Removes a user from the supplied tenant.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Users.Tenants.RemoveAsync("user_id", "tenant_id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task RemoveAsync(
         string userId,
         string tenantId,
@@ -179,36 +191,42 @@ public partial class TenantsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Delete,
-                Path = $"users/{userId}/tenants/{tenantId}",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Delete,
+                    Path = string.Format(
+                        "users/{0}/tenants/{1}",
+                        ValueConvert.ToPathParameterString(userId),
+                        ValueConvert.ToPathParameterString(tenantId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns a paginated list of user tenant associations.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Users.Tenants.ListAsync("user_id", new ListTenantsForUserParams());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ListTenantsForUserResponse> ListAsync(
         string userId,
         ListTenantsForUserParams request,
@@ -219,26 +237,31 @@ public partial class TenantsClient
         var _query = new Dictionary<string, object>();
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.ToString();
+            _query["limit"] = request.Limit.Value.ToString();
         }
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor;
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"users/{userId}/tenants",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "users/{0}/tenants",
+                        ValueConvert.ToPathParameterString(userId)
+                    ),
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ListTenantsForUserResponse>(responseBody)!;
@@ -249,10 +272,13 @@ public partial class TenantsClient
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

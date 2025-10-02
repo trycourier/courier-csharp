@@ -1,12 +1,20 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using Courier.Client;
 using Courier.Client.Core;
-
-#nullable enable
 
 namespace Courier.Client.Users;
 
-public record AddUserToSingleTenantsParamsProfile
+/// <summary>
+/// AddUserToSingleTenantsParamsProfile is no longer used for Add a User to a Single Tenant
+/// </summary>
+[Serializable]
+public record AddUserToSingleTenantsParamsProfile : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("title")]
     public required string Title { get; set; }
 
@@ -35,6 +43,13 @@ public record AddUserToSingleTenantsParamsProfile
     public Dictionary<string, object?> AdditionalFields { get; set; } =
         new Dictionary<string, object?>();
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

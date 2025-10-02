@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
 public partial class NotificationsClient
@@ -17,11 +15,9 @@ public partial class NotificationsClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Notifications.ListAsync(new NotificationListParams());
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<NotificationListResponse> ListAsync(
         NotificationListParams request,
         RequestOptions? options = null,
@@ -35,22 +31,24 @@ public partial class NotificationsClient
         }
         if (request.Notes != null)
         {
-            _query["notes"] = request.Notes.ToString();
+            _query["notes"] = JsonUtils.Serialize(request.Notes.Value);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "/notifications",
-                Query = _query,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/notifications",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<NotificationListResponse>(responseBody)!;
@@ -61,37 +59,43 @@ public partial class NotificationsClient
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Notifications.GetContentAsync("id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<NotificationGetContentResponse> GetContentAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/notifications/{id}/content",
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/notifications/{0}/content",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<NotificationGetContentResponse>(responseBody)!;
@@ -102,37 +106,43 @@ public partial class NotificationsClient
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Notifications.GetDraftContentAsync("id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<NotificationGetContentResponse> GetDraftContentAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/notifications/{id}/draft/content",
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/notifications/{0}/draft/content",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<NotificationGetContentResponse>(responseBody)!;
@@ -143,18 +153,19 @@ public partial class NotificationsClient
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Notifications.GetSubmissionChecksAsync("id", "submissionId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SubmissionChecksGetResponse> GetSubmissionChecksAsync(
         string id,
         string submissionId,
@@ -162,19 +173,25 @@ public partial class NotificationsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = $"/notifications/{id}/{submissionId}/checks",
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/notifications/{0}/{1}/checks",
+                        ValueConvert.ToPathParameterString(id),
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<SubmissionChecksGetResponse>(responseBody)!;
@@ -185,15 +202,17 @@ public partial class NotificationsClient
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Notifications.ReplaceSubmissionChecksAsync(
     ///     "id",
     ///     "submissionId",
@@ -216,8 +235,7 @@ public partial class NotificationsClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SubmissionChecksReplaceResponse> ReplaceSubmissionChecksAsync(
         string id,
         string submissionId,
@@ -226,20 +244,26 @@ public partial class NotificationsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Put,
-                Path = $"/notifications/{id}/{submissionId}/checks",
-                Body = request,
-                Options = options,
-            },
-            cancellationToken
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Put,
+                    Path = string.Format(
+                        "/notifications/{0}/{1}/checks",
+                        ValueConvert.ToPathParameterString(id),
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
+                    Body = request,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<SubmissionChecksReplaceResponse>(responseBody)!;
@@ -250,18 +274,19 @@ public partial class NotificationsClient
             }
         }
 
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Notifications.CancelSubmissionAsync("id", "submissionId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task CancelSubmissionAsync(
         string id,
         string submissionId,
@@ -269,25 +294,33 @@ public partial class NotificationsClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Delete,
-                Path = $"/notifications/{id}/{submissionId}/checks",
-                Options = options,
-            },
-            cancellationToken
-        );
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Delete,
+                    Path = string.Format(
+                        "/notifications/{0}/{1}/checks",
+                        ValueConvert.ToPathParameterString(id),
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new CourierApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new CourierApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

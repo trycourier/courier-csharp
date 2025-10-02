@@ -1,10 +1,9 @@
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
+[Serializable]
 public record IssueTokenParams
 {
     [JsonPropertyName("scope")]
@@ -13,6 +12,7 @@ public record IssueTokenParams
     [JsonPropertyName("expires_in")]
     public required string ExpiresIn { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

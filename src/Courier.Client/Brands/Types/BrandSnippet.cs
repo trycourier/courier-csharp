@@ -1,14 +1,18 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record BrandSnippet
+[Serializable]
+public record BrandSnippet : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("format")]
-    public required string Format { get; set; }
+    public string Format { get; set; } = "handlebars";
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
@@ -16,6 +20,13 @@ public record BrandSnippet
     [JsonPropertyName("value")]
     public required string Value { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

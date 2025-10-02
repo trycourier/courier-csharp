@@ -1,10 +1,9 @@
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
+[Serializable]
 public record BrandUpdateParameters
 {
     /// <summary>
@@ -19,6 +18,7 @@ public record BrandUpdateParameters
     [JsonPropertyName("snippets")]
     public BrandSnippets? Snippets { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

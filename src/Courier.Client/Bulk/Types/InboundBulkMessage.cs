@@ -1,13 +1,17 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 using OneOf;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record InboundBulkMessage
+[Serializable]
+public record InboundBulkMessage : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("message")]
     public OneOf<InboundBulkTemplateMessage, InboundBulkContentMessage>? Message { get; set; }
 
@@ -39,6 +43,13 @@ public record InboundBulkMessage
     [JsonPropertyName("override")]
     public object? Override { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

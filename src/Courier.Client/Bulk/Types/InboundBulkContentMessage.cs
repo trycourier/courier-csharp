@@ -1,13 +1,21 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 using OneOf;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record InboundBulkContentMessage
+/// <summary>
+/// The message property has the following primary top-level properties. They define the destination and content of the message.
+/// Additional advanced configuration fields [are defined below](https://www.courier.com/docs/reference/send/message/#other-message-properties).
+/// </summary>
+[Serializable]
+public record InboundBulkContentMessage : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Describes the content of the message in a way that will work for email, push,
     /// chat, or any channel. Either this or template must be specified.
@@ -74,6 +82,13 @@ public record InboundBulkContentMessage
     [JsonPropertyName("expiry")]
     public Expiry? Expiry { get; set; }
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

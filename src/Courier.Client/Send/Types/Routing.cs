@@ -1,13 +1,22 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 using OneOf;
 
-#nullable enable
-
 namespace Courier.Client;
 
-public record Routing
+/// <summary>
+/// Allows you to customize which channel(s) Courier will potentially deliver the message.
+/// If no routing key is specified, Courier will use the default routing configuration or
+/// routing defined by the template.
+/// </summary>
+[Serializable]
+public record Routing : IJsonOnDeserialized
 {
+    [JsonExtensionData]
+    private readonly IDictionary<string, JsonElement> _extensionData =
+        new Dictionary<string, JsonElement>();
+
     [JsonPropertyName("method")]
     public required RoutingMethod Method { get; set; }
 
@@ -20,6 +29,13 @@ public record Routing
     public IEnumerable<OneOf<string, MessageRouting>> Channels { get; set; } =
         new List<OneOf<string, MessageRouting>>();
 
+    [JsonIgnore]
+    public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
+
+    void IJsonOnDeserialized.OnDeserialized() =>
+        AdditionalProperties.CopyFromExtensionData(_extensionData);
+
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

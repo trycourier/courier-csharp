@@ -1,16 +1,16 @@
 using System.Text.Json.Serialization;
 using Courier.Client.Core;
 
-#nullable enable
-
 namespace Courier.Client;
 
+[Serializable]
 public record SubscribeUsersToListRequest
 {
     [JsonPropertyName("recipients")]
     public IEnumerable<PutSubscriptionsRecipient> Recipients { get; set; } =
         new List<PutSubscriptionsRecipient>();
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
