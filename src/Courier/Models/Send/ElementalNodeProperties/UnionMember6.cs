@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -6,6 +5,7 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using IntersectionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties;
+using System = System;
 
 namespace Courier.Models.Send.ElementalNodeProperties;
 
@@ -27,7 +27,7 @@ public sealed record class UnionMember6 : ModelBase, IFromRaw<UnionMember6>
             if (!this.Properties.TryGetValue("elements", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'elements' cannot be null",
-                    new ArgumentOutOfRangeException("elements", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("elements", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<List<ElementalNode>>(
@@ -36,7 +36,7 @@ public sealed record class UnionMember6 : ModelBase, IFromRaw<UnionMember6>
                 )
                 ?? throw new CourierInvalidDataException(
                     "'elements' cannot be null",
-                    new ArgumentNullException("elements")
+                    new System::ArgumentNullException("elements")
                 );
         }
         set

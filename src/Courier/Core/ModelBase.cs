@@ -22,7 +22,7 @@ using BlockProperties = Courier.Models.Notifications.NotificationGetContentPrope
 using CategoriesItemProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
 using FilterProperties = Courier.Models.Send.BaseMessageSendToProperties.ToProperties.UnionMember1Properties.FilterProperties;
 using InboundTrackEventParamsProperties = Courier.Models.Inbound.InboundTrackEventParamsProperties;
-using IntersectionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember2Properties.IntersectionMember1Properties;
+using IntersectionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties;
 using ItemUpdateParamsProperties = Courier.Models.Tenants.DefaultPreferences.Items.ItemUpdateParamsProperties;
 using JobProperties = Courier.Models.Bulk.BulkRetrieveJobResponseProperties.JobProperties;
 using ListDeleteResponseProperties = Courier.Models.Profiles.Lists.ListDeleteResponseProperties;
@@ -38,6 +38,7 @@ using TenantAssociationProperties = Courier.Models.Users.Tenants.TenantAssociati
 using TenantListResponseProperties = Courier.Models.Tenants.TenantListResponseProperties;
 using TenantListUsersResponseProperties = Courier.Models.Tenants.TenantListUsersResponseProperties;
 using TokenAddSingleParamsProperties = Courier.Models.Users.Tokens.TokenAddSingleParamsProperties;
+using TypeProperties = Courier.Models.Send.ElementalNodeProperties.TypeProperties;
 using UnionMember0Properties = Courier.Models.Audiences.FilterProperties.UnionMember0Properties;
 using UnionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember1Properties;
 using UnionMember3Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember3Properties;
@@ -66,14 +67,11 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Profile>(),
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, UnionMember1Properties::Type>(),
-            new ApiEnumConverter<string, IntersectionMember1Properties::Type>(),
+            new ApiEnumConverter<string, TypeProperties::Type>(),
             new ApiEnumConverter<string, UnionMember3Properties::Type>(),
             new ApiEnumConverter<string, UnionMember4Properties::Type>(),
             new ApiEnumConverter<string, UnionMember5Properties::Type>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties.Type
-            >(),
+            new ApiEnumConverter<string, IntersectionMember1Properties::Type>(),
             new ApiEnumConverter<string, UnionMember7Properties::Type>(),
             new ApiEnumConverter<
                 string,
