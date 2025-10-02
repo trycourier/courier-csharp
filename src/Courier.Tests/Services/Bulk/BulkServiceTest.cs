@@ -5,17 +5,16 @@ using Courier.Models.Bulk.InboundBulkMessageProperties.MessageProperties;
 using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
 using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.CategoriesProperties;
 using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.NotificationsProperties;
-using Courier.Models.Send;
 using Courier.Models.Send.BaseMessageProperties.ChannelsProperties;
+using Courier.Models.Send.BaseMessageProperties.ChannelsProperties.ChannelsItemProperties;
 using Courier.Models.Send.BaseMessageProperties.ProvidersProperties;
-using Courier.Models.Send.BaseMessageProperties.RoutingProperties.ChannelProperties;
+using Courier.Models.Send.BaseMessageProperties.RoutingProperties;
 using Courier.Models.Send.BaseMessageProperties.TimeoutProperties;
 using Courier.Models.Tenants.DefaultPreferences.Items;
 using Courier.Models.Users.Preferences;
 using CategoriesItemProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
 using CategoriesProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties;
 using NotificationsProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties;
-using ProvidersProperties = Courier.Models.Send.BaseMessageProperties.RoutingProperties.ChannelProperties.RoutingStrategyChannelProperties.ProvidersProperties;
 
 namespace Courier.Tests.Services.Bulk;
 
@@ -228,55 +227,7 @@ public class BulkServiceTest : TestBase
                                 }
                             },
                         },
-                        Routing = new()
-                        {
-                            Channels =
-                            [
-                                new RoutingStrategyChannel()
-                                {
-                                    Channel = "channel",
-                                    Config = new Dictionary<string, JsonElement>()
-                                    {
-                                        { "foo", JsonSerializer.SerializeToElement("bar") },
-                                    },
-                                    If = "if",
-                                    Method = RoutingMethod.All,
-                                    Providers = new Dictionary<
-                                        string,
-                                        ProvidersProperties::ProvidersItem
-                                    >()
-                                    {
-                                        {
-                                            "foo",
-                                            new()
-                                            {
-                                                If = "if",
-                                                Metadata = new()
-                                                {
-                                                    Utm = new()
-                                                    {
-                                                        Campaign = "campaign",
-                                                        Content = "content",
-                                                        Medium = "medium",
-                                                        Source = "source",
-                                                        Term = "term",
-                                                    },
-                                                },
-                                                Override = new Dictionary<string, JsonElement>()
-                                                {
-                                                    {
-                                                        "foo",
-                                                        JsonSerializer.SerializeToElement("bar")
-                                                    },
-                                                },
-                                                Timeouts = 0,
-                                            }
-                                        },
-                                    },
-                                },
-                            ],
-                            Method = RoutingMethod.All,
-                        },
+                        Routing = new() { Channels = ["string"], Method = Method.All },
                         Timeout = new()
                         {
                             Channel = new Dictionary<string, long>() { { "foo", 0 } },

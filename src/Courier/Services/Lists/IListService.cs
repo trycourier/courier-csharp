@@ -16,7 +16,7 @@ public interface IListService
     /// <summary>
     /// Create or replace an existing list with the supplied values.
     /// </summary>
-    Task<List> Update(ListUpdateParams parameters);
+    Task Update(ListUpdateParams parameters);
 
     /// <summary>
     /// Returns all of the lists, with the ability to filter based on a pattern.

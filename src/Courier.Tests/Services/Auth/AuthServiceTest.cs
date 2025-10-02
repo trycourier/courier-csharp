@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Courier.Models.Auth.AuthIssueTokenParamsProperties;
 
 namespace Courier.Tests.Services.Auth;
 
@@ -9,7 +8,7 @@ public class AuthServiceTest : TestBase
     public async Task IssueToken_Works()
     {
         var response = await this.client.Auth.IssueToken(
-            new() { ExpiresIn = "expires_in", Scope = Scope.ReadPreferences }
+            new() { ExpiresIn = "expires_in", Scope = "scope" }
         );
         response.Validate();
     }

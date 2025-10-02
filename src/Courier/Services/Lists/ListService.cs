@@ -34,7 +34,7 @@ public sealed class ListService : IListService
         return await response.Deserialize<List>().ConfigureAwait(false);
     }
 
-    public async Task<List> Update(ListUpdateParams parameters)
+    public async Task Update(ListUpdateParams parameters)
     {
         HttpRequest<ListUpdateParams> request = new()
         {
@@ -42,7 +42,7 @@ public sealed class ListService : IListService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<List>().ConfigureAwait(false);
+        return;
     }
 
     public async Task<ListListResponse> List(ListListParams? parameters = null)

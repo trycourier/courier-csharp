@@ -6,6 +6,15 @@ namespace Courier.Tests.Services.Users.Tokens;
 public class TokenServiceTest : TestBase
 {
     [Fact(Skip = "Prism tests are disabled")]
+    public async Task Retrieve_Works()
+    {
+        var token = await this.client.Users.Tokens.Retrieve(
+            new() { UserID = "user_id", Token = "token" }
+        );
+        token.Validate();
+    }
+
+    [Fact(Skip = "Prism tests are disabled")]
     public async Task Update_Works()
     {
         await this.client.Users.Tokens.Update(
@@ -59,14 +68,5 @@ public class TokenServiceTest : TestBase
                 ProviderKey = ProviderKey.FirebaseFcm,
             }
         );
-    }
-
-    [Fact(Skip = "Prism tests are disabled")]
-    public async Task RetrieveSingle_Works()
-    {
-        var response = await this.client.Users.Tokens.RetrieveSingle(
-            new() { UserID = "user_id", Token = "token" }
-        );
-        response.Validate();
     }
 }

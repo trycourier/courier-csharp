@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using Courier.Models.Notifications;
 using Courier.Models.Send.BaseMessageProperties.RoutingProperties;
 
 namespace Courier.Models.Send.BaseMessageProperties;
@@ -22,7 +23,7 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
     /// define  sub-routing methods, which can be useful for defining advanced push
     /// notification  delivery strategies.
     /// </summary>
-    public required List<Channel> Channels
+    public required List<MessageRoutingChannel> Channels
     {
         get
         {
@@ -32,7 +33,10 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
                     new ArgumentOutOfRangeException("channels", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<Channel>>(element, ModelBase.SerializerOptions)
+            return JsonSerializer.Deserialize<List<MessageRoutingChannel>>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
                 ?? throw new CourierInvalidDataException(
                     "'channels' cannot be null",
                     new ArgumentNullException("channels")
@@ -47,7 +51,7 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
         }
     }
 
-    public required ApiEnum<string, RoutingMethod> Method
+    public required ApiEnum<string, Method> Method
     {
         get
         {
@@ -57,7 +61,7 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
                     new ArgumentOutOfRangeException("method", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, Method>>(
                 element,
                 ModelBase.SerializerOptions
             );

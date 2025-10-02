@@ -7,6 +7,11 @@ namespace Courier.Services.Users.Tokens;
 public interface ITokenService
 {
     /// <summary>
+    /// Get single token available for a `:token`
+    /// </summary>
+    Task<TokenRetrieveResponse> Retrieve(TokenRetrieveParams parameters);
+
+    /// <summary>
     /// Apply a JSON Patch (RFC 6902) to the specified token.
     /// </summary>
     Task Update(TokenUpdateParams parameters);
@@ -30,9 +35,4 @@ public interface ITokenService
     /// Adds a single token to a user and overwrites a matching existing token.
     /// </summary>
     Task AddSingle(TokenAddSingleParams parameters);
-
-    /// <summary>
-    /// Get single token available for a `:token`
-    /// </summary>
-    Task<TokenRetrieveSingleResponse> RetrieveSingle(TokenRetrieveSingleParams parameters);
 }
