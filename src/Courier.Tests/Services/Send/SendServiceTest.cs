@@ -9,9 +9,9 @@ using Courier.Models.Send.BaseMessageProperties.TimeoutProperties;
 using Courier.Models.Send.BaseMessageSendToProperties.ToProperties;
 using Courier.Models.Send.BaseMessageSendToProperties.ToProperties.AudienceRecipientProperties.FilterProperties;
 using Courier.Models.Send.ContentProperties;
-using Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember0Properties;
+using Courier.Models.Send.ElementalNodeProperties.UnionMember0Properties;
 using Courier.Models.Send.MessageProperties;
-using ElementProperties = Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties;
+using ElementalNodeProperties = Courier.Models.Send.ElementalNodeProperties;
 using ProvidersProperties = Courier.Models.Send.BaseMessageProperties.RoutingProperties.ChannelProperties.RoutingStrategyChannelProperties.ProvidersProperties;
 
 namespace Courier.Tests.Services.Send;
@@ -179,7 +179,7 @@ public class SendServiceTest : TestBase
                     {
                         Elements =
                         [
-                            new ElementProperties::UnionMember0()
+                            new ElementalNodeProperties::UnionMember0()
                             {
                                 Channels = ["string"],
                                 If = "if",

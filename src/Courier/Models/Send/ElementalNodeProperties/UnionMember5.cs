@@ -3,9 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember5Properties;
+using Courier.Models.Send.ElementalNodeProperties.UnionMember5Properties;
 
-namespace Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties;
+namespace Courier.Models.Send.ElementalNodeProperties;
 
 [JsonConverter(typeof(ModelConverter<UnionMember5>))]
 public sealed record class UnionMember5 : ModelBase, IFromRaw<UnionMember5>
