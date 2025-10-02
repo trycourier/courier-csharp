@@ -3,24 +3,24 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties;
+using IntersectionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties;
 
 namespace Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties;
 
 [JsonConverter(typeof(ModelConverter<IntersectionMember1>))]
 public sealed record class IntersectionMember1 : ModelBase, IFromRaw<IntersectionMember1>
 {
-    public ApiEnum<string, Type>? Type
+    public ApiEnum<string, IntersectionMember1Properties::Type>? Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                IntersectionMember1Properties::Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         set
         {

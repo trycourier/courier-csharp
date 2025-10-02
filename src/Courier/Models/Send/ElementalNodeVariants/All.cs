@@ -33,23 +33,11 @@ public sealed record class UnionMember1(ElementalNodeProperties::UnionMember1 Va
     }
 }
 
-/// <summary>
-/// The channel element allows a notification to be customized based on which channel
-/// it is sent through.  For example, you may want to display a detailed message
-/// when the notification is sent through email,  and a more concise message in a
-/// push notification. Channel elements are only valid as top-level  elements; you
-/// cannot nest channel elements. If there is a channel element specified at the
-/// top-level  of the document, all sibling elements must be channel elements. Note:
-/// As an alternative, most elements support a `channel` property. Which allows you
-/// to selectively  display an individual element on a per channel basis. See the
-///  [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-/// for more details.
-/// </summary>
-public sealed record class UnionMember2(ElementalNodeProperties::UnionMember2 Value)
+public sealed record class Type(ElementalNodeProperties::Type Value)
     : ElementalNode,
-        IVariant<UnionMember2, ElementalNodeProperties::UnionMember2>
+        IVariant<Type, ElementalNodeProperties::Type>
 {
-    public static UnionMember2 From(ElementalNodeProperties::UnionMember2 value)
+    public static Type From(ElementalNodeProperties::Type value)
     {
         return new(value);
     }

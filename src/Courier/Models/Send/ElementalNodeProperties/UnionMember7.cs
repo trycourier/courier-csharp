@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.ElementalNodeProperties.UnionMember7Properties;
+using UnionMember7Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember7Properties;
 
 namespace Courier.Models.Send.ElementalNodeProperties;
 
@@ -82,14 +82,14 @@ public sealed record class UnionMember7 : ModelBase, IFromRaw<UnionMember7>
         }
     }
 
-    public ApiEnum<string, Type>? Type
+    public ApiEnum<string, UnionMember7Properties::Type>? Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type>?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, UnionMember7Properties::Type>?>(
                 element,
                 ModelBase.SerializerOptions
             );
