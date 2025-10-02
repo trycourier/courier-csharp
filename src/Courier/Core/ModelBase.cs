@@ -11,7 +11,7 @@ using Courier.Models.Send.BaseMessageProperties.TimeoutProperties;
 using Courier.Models.Send.BaseMessageSendToProperties.ToProperties.AudienceRecipientProperties.FilterProperties;
 using Courier.Models.Send.BaseMessageSendToProperties.ToProperties.WebhookRecipientProperties.WebhookProperties;
 using Courier.Models.Send.BaseMessageSendToProperties.ToProperties.WebhookRecipientProperties.WebhookProperties.AuthenticationProperties;
-using Courier.Models.Send.ElementalNodeProperties.UnionMember0Properties;
+using Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember0Properties;
 using Courier.Models.Tenants.DefaultPreferences.Items;
 using Courier.Models.Users.Preferences;
 using Courier.Models.Users.Tokens.UserTokenProperties;
@@ -22,7 +22,7 @@ using BlockProperties = Courier.Models.Notifications.NotificationGetContentPrope
 using CategoriesItemProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
 using FilterProperties = Courier.Models.Send.BaseMessageSendToProperties.ToProperties.UnionMember1Properties.FilterProperties;
 using InboundTrackEventParamsProperties = Courier.Models.Inbound.InboundTrackEventParamsProperties;
-using IntersectionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties;
+using IntersectionMember1Properties = Courier.Models.Automations.AutomationInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationAddToBatchStepProperties.IntersectionMember1Properties;
 using ItemUpdateParamsProperties = Courier.Models.Tenants.DefaultPreferences.Items.ItemUpdateParamsProperties;
 using JobProperties = Courier.Models.Bulk.BulkRetrieveJobResponseProperties.JobProperties;
 using ListDeleteResponseProperties = Courier.Models.Profiles.Lists.ListDeleteResponseProperties;
@@ -38,13 +38,12 @@ using TenantAssociationProperties = Courier.Models.Users.Tenants.TenantAssociati
 using TenantListResponseProperties = Courier.Models.Tenants.TenantListResponseProperties;
 using TenantListUsersResponseProperties = Courier.Models.Tenants.TenantListUsersResponseProperties;
 using TokenAddSingleParamsProperties = Courier.Models.Users.Tokens.TokenAddSingleParamsProperties;
-using TypeProperties = Courier.Models.Send.ElementalNodeProperties.TypeProperties;
 using UnionMember0Properties = Courier.Models.Audiences.FilterProperties.UnionMember0Properties;
-using UnionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember1Properties;
-using UnionMember3Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember3Properties;
-using UnionMember4Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember4Properties;
-using UnionMember5Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember5Properties;
-using UnionMember7Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember7Properties;
+using UnionMember1Properties = Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember1Properties;
+using UnionMember2Properties = Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember2Properties;
+using UnionMember3Properties = Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember3Properties;
+using UnionMember4Properties = Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember4Properties;
+using UnionMember5Properties = Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember5Properties;
 using WebhookProperties = Courier.Models.Send.RecipientProperties.WebhookRecipientProperties.WebhookProperties;
 
 namespace Courier.Core;
@@ -67,12 +66,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Profile>(),
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, UnionMember1Properties::Type>(),
-            new ApiEnumConverter<string, TypeProperties::Type>(),
+            new ApiEnumConverter<string, UnionMember2Properties::Type>(),
             new ApiEnumConverter<string, UnionMember3Properties::Type>(),
             new ApiEnumConverter<string, UnionMember4Properties::Type>(),
             new ApiEnumConverter<string, UnionMember5Properties::Type>(),
-            new ApiEnumConverter<string, IntersectionMember1Properties::Type>(),
-            new ApiEnumConverter<string, UnionMember7Properties::Type>(),
             new ApiEnumConverter<
                 string,
                 global::Courier.Models.Send.RecipientProperties.AudienceRecipientProperties.FilterProperties.Operator
@@ -101,15 +98,9 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, NestedFilterConfigProperties::Operator>(),
             new ApiEnumConverter<string, Scope>(),
             new ApiEnumConverter<string, Action>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Automations.AutomationInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationAddToBatchStepProperties.IntersectionMember1Properties.Action
-            >(),
+            new ApiEnumConverter<string, IntersectionMember1Properties::Action>(),
             new ApiEnumConverter<string, RetainProperties::Type>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Automations.AutomationInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationAddToBatchStepProperties.IntersectionMember1Properties.Scope
-            >(),
+            new ApiEnumConverter<string, IntersectionMember1Properties::Scope>(),
             new ApiEnumConverter<
                 string,
                 global::Courier.Models.Automations.AutomationInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationThrottleStepProperties.IntersectionMember1Properties.Action

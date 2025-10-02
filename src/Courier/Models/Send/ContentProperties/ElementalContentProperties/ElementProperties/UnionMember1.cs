@@ -3,12 +3,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using UnionMember5Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember5Properties;
+using Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties.UnionMember1Properties;
 
-namespace Courier.Models.Send.ElementalNodeProperties;
+namespace Courier.Models.Send.ContentProperties.ElementalContentProperties.ElementProperties;
 
-[JsonConverter(typeof(ModelConverter<UnionMember5>))]
-public sealed record class UnionMember5 : ModelBase, IFromRaw<UnionMember5>
+[JsonConverter(typeof(ModelConverter<UnionMember1>))]
+public sealed record class UnionMember1 : ModelBase, IFromRaw<UnionMember1>
 {
     public List<string>? Channels
     {
@@ -82,14 +82,14 @@ public sealed record class UnionMember5 : ModelBase, IFromRaw<UnionMember5>
         }
     }
 
-    public ApiEnum<string, UnionMember5Properties::Type>? Type
+    public ApiEnum<string, Type>? Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, UnionMember5Properties::Type>?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, Type>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -115,17 +115,17 @@ public sealed record class UnionMember5 : ModelBase, IFromRaw<UnionMember5>
         this.Type?.Validate();
     }
 
-    public UnionMember5() { }
+    public UnionMember1() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UnionMember5(Dictionary<string, JsonElement> properties)
+    UnionMember1(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static UnionMember5 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static UnionMember1 FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }
