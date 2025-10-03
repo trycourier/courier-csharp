@@ -5,9 +5,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties;
+using Courier.Models.Send.PreferenceProperties.ChannelPreferenceProperties;
 
-namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
+namespace Courier.Models.Send.PreferenceProperties;
 
 [JsonConverter(typeof(ModelConverter<ChannelPreference>))]
 public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPreference>

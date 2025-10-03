@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models.Send.MessageRoutingProperties;
-using Courier.Models.Send.RecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
-using Courier.Models.Send.RecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties;
+using Courier.Models.Send.PreferenceProperties;
+using Courier.Models.Send.PreferenceProperties.ChannelPreferenceProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
-using CategoriesItemProperties = Courier.Models.Send.RecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
-using ChannelPreferenceProperties = Courier.Models.Send.RecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties;
-using NotificationsItemProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
 using RoutingProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
 
 namespace Courier.Core;
@@ -24,30 +21,9 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, Channel>(),
             new ApiEnumConverter<string, Source>(),
-            new ApiEnumConverter<string, CategoriesItemProperties::Status>(),
-            new ApiEnumConverter<string, ChannelPreferenceProperties::Channel>(),
-            new ApiEnumConverter<string, CategoriesItemProperties::Source>(),
             new ApiEnumConverter<string, RoutingMethod>(),
             new ApiEnumConverter<string, RoutingProperties::Method>(),
             new ApiEnumConverter<string, Criteria>(),
-            new ApiEnumConverter<string, NotificationsItemProperties::Status>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties.Channel
-            >(),
-            new ApiEnumConverter<string, NotificationsItemProperties::Source>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.Status
-            >(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties.Channel
-            >(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.Source
-            >(),
         },
     };
 

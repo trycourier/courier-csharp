@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Courier.Models.Send;
+using Courier.Models.Send.PreferenceProperties;
+using Courier.Models.Send.PreferenceProperties.ChannelPreferenceProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties;
-using CategoriesItemProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
-using ChannelPreferenceProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties;
 
 namespace Courier.Tests.Services.Send;
 
@@ -131,7 +128,7 @@ public class SendServiceTest : TestBase
                         PhoneNumber = "phone_number",
                         Preferences = new()
                         {
-                            Notifications = new Dictionary<string, NotificationsItem>()
+                            Notifications = new Dictionary<string, Preference>()
                             {
                                 {
                                     "foo",
@@ -144,19 +141,16 @@ public class SendServiceTest : TestBase
                                     }
                                 },
                             },
-                            Categories = new Dictionary<string, CategoriesItem>()
+                            Categories = new Dictionary<string, Preference>()
                             {
                                 {
                                     "foo",
                                     new()
                                     {
-                                        Status = CategoriesItemProperties::Status.OptedIn,
-                                        ChannelPreferences =
-                                        [
-                                            new(ChannelPreferenceProperties::Channel.DirectMessage),
-                                        ],
+                                        Status = Status.OptedIn,
+                                        ChannelPreferences = [new(Channel.DirectMessage)],
                                         Rules = [new() { Until = "until", Start = "start" }],
-                                        Source = CategoriesItemProperties::Source.Subscription,
+                                        Source = Source.Subscription,
                                     }
                                 },
                             },

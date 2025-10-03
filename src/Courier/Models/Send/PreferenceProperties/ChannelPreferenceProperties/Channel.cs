@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 
-namespace Courier.Models.Send.RecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties;
+namespace Courier.Models.Send.PreferenceProperties.ChannelPreferenceProperties;
 
 [JsonConverter(typeof(ChannelConverter))]
 public enum Channel
