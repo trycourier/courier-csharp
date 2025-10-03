@@ -3,12 +3,12 @@ using System.Text.Json;
 using Courier.Models.Send.MessageRoutingProperties;
 using Courier.Models.Send.RecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
 using Courier.Models.Send.RecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.TimeoutProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
 using CategoriesItemProperties = Courier.Models.Send.RecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
 using ChannelPreferenceProperties = Courier.Models.Send.RecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties;
-using NotificationsItemProperties = Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
-using RoutingProperties = Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.RoutingProperties;
+using NotificationsItemProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
+using RoutingProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
 
 namespace Courier.Core;
 
@@ -33,20 +33,20 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, NotificationsItemProperties::Status>(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties.Channel
+                global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties.Channel
             >(),
             new ApiEnumConverter<string, NotificationsItemProperties::Source>(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.Status
+                global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.Status
             >(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties.Channel
+                global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties.Channel
             >(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.Source
+                global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.Source
             >(),
         },
     };
