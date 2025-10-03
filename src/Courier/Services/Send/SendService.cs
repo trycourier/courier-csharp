@@ -14,14 +14,14 @@ public sealed class SendService : ISendService
         _client = client;
     }
 
-    public async Task<SendMessageResponse> Message(SendMessageParams parameters)
+    public async Task<SendSendMessageResponse> SendMessage(SendSendMessageParams parameters)
     {
-        HttpRequest<SendMessageParams> request = new()
+        HttpRequest<SendSendMessageParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<SendMessageResponse>().ConfigureAwait(false);
+        return await response.Deserialize<SendSendMessageResponse>().ConfigureAwait(false);
     }
 }

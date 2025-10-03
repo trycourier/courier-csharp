@@ -31,30 +31,24 @@ See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using Courier;
 using Courier.Models.Send;
-using Courier.Models.Send.BaseMessageSendToProperties.ToProperties;
-using Courier.Models.Send.MessageProperties;
 
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
 CourierClient client = new();
 
-SendMessageParams parameters = new()
+SendSendMessageParams parameters = new()
 {
-    Message = new TemplateMessage()
-    {
-        To = new UnionMember1(),
-        Template = "your_template",
-        Data = new Dictionary<string, JsonElement>()
+    Message = new(
+        new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") }
-        },
-    },
+            Body = "body",
+            Title = "title",
+        }
+    ),
 };
 
-var response = await client.Send.Message(parameters);
+var response = await client.Send.SendMessage(parameters);
 
 Console.WriteLine(response);
 ```
@@ -91,7 +85,7 @@ See this table for the available options:
 
 To send a request to the Courier API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
-For example, `client.Send.Message` should be called with an instance of `SendMessageParams`, and it will return an instance of `Task<SendMessageResponse>`.
+For example, `client.Send.SendMessage` should be called with an instance of `SendSendMessageParams`, and it will return an instance of `Task<SendSendMessageResponse>`.
 
 ## Error handling
 
