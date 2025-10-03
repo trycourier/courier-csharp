@@ -3,12 +3,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.RecipientProperties;
+using UnionMember0Properties = Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties;
 
-namespace Courier.Models.Send;
+namespace Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties;
 
-[JsonConverter(typeof(ModelConverter<Recipient>))]
-public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
+[JsonConverter(typeof(ModelConverter<UnionMember0>))]
+public sealed record class UnionMember0 : ModelBase, IFromRaw<UnionMember0>
 {
     /// <summary>
     /// Use `tenant_id` instead.
@@ -133,14 +133,17 @@ public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
         }
     }
 
-    public Preferences? Preferences
+    public UnionMember0Properties::Preferences? Preferences
     {
         get
         {
             if (!this.Properties.TryGetValue("preferences", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Preferences?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<UnionMember0Properties::Preferences?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -209,17 +212,17 @@ public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
         _ = this.UserID;
     }
 
-    public Recipient() { }
+    public UnionMember0() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Recipient(Dictionary<string, JsonElement> properties)
+    UnionMember0(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Recipient FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static UnionMember0 FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

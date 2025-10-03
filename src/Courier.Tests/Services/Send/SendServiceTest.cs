@@ -1,28 +1,36 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Courier.Models.Send.BaseMessageProperties.ChannelsProperties;
-using Courier.Models.Send.BaseMessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Courier.Models.Send.BaseMessageProperties.ProvidersProperties;
-using Courier.Models.Send.BaseMessageProperties.RoutingProperties;
-using Courier.Models.Send.BaseMessageProperties.TimeoutProperties;
-using Courier.Models.Send.BaseMessageSendToProperties.ToProperties;
-using Courier.Models.Send.BaseMessageSendToProperties.ToProperties.UnionMember1Properties.FilterProperties;
-using Courier.Models.Send.ContentProperties;
-using Courier.Models.Send.MessageProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ProvidersProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.RoutingProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.TimeoutProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties;
+using CategoriesItemProperties = Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
+using ChannelPreferenceProperties = Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties;
 
 namespace Courier.Tests.Services.Send;
 
 public class SendServiceTest : TestBase
 {
     [Fact(Skip = "Prism tests are disabled")]
-    public async Task Message_Works()
+    public async Task SendMessage_Works()
     {
-        var response = await this.client.Send.Message(
+        var response = await this.client.Send.SendMessage(
             new()
             {
-                Message = new ContentMessage()
+                Message = new()
                 {
+                    Content = new()
+                    {
+                        Body = "Thanks for signing up, {{name}}",
+                        Title = "Welcome!",
+                    },
                     BrandID = "brand_id",
                     Channels = new Dictionary<string, ChannelsItem>()
                     {
@@ -110,27 +118,52 @@ public class SendServiceTest : TestBase
                         Message = 0,
                         Provider = new Dictionary<string, long>() { { "foo", 0 } },
                     },
-                    To = new UnionMember1()
+                    To = new UnionMember0()
                     {
+                        AccountID = "account_id",
+                        Context = new() { TenantID = "tenant_id" },
                         Data = new Dictionary<string, JsonElement>()
                         {
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
-                        Filters =
-                        [
-                            new()
+                        Email = "email@example.com",
+                        Locale = "locale",
+                        PhoneNumber = "phone_number",
+                        Preferences = new()
+                        {
+                            Notifications = new Dictionary<string, NotificationsItem>()
                             {
-                                Operator = Operator.MemberOf,
-                                Path = Path.AccountID,
-                                Value = "value",
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = Status.OptedIn,
+                                        ChannelPreferences = [new(Channel.DirectMessage)],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Source.Subscription,
+                                    }
+                                },
                             },
-                        ],
-                        ListID = "list_id",
-                    },
-                    Content = new ElementalContentSugar()
-                    {
-                        Body = "Thanks for signing up, {{name}}",
-                        Title = "Welcome!",
+                            Categories = new Dictionary<string, CategoriesItem>()
+                            {
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = CategoriesItemProperties::Status.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(ChannelPreferenceProperties::Channel.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = CategoriesItemProperties::Source.Subscription,
+                                    }
+                                },
+                            },
+                            TemplateID = "templateId",
+                        },
+                        TenantID = "tenant_id",
+                        UserID = "user_id",
                     },
                 },
             }

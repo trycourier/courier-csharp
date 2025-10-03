@@ -8,5 +8,5 @@ public interface ISendService
     /// <summary>
     /// Use the send API to send a message to one or more recipients.
     /// </summary>
-    Task<SendMessageResponse> Message(SendMessageParams parameters);
+    Task<SendSendMessageResponse> SendMessage(SendSendMessageParams parameters);
 }
