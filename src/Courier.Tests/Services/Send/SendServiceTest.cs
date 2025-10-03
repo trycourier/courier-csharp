@@ -1,27 +1,27 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ProvidersProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.RoutingProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.TimeoutProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties;
-using CategoriesItemProperties = Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
-using ChannelPreferenceProperties = Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties.ChannelPreferenceProperties;
+using CategoriesItemProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
+using ChannelPreferenceProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.ChannelPreferenceProperties;
 
 namespace Courier.Tests.Services.Send;
 
 public class SendServiceTest : TestBase
 {
     [Fact(Skip = "Prism tests are disabled")]
-    public async Task SendMessage_Works()
+    public async Task Message_Works()
     {
-        var response = await this.client.Send.SendMessage(
+        var response = await this.client.Send.Message(
             new()
             {
                 Message = new()

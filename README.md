@@ -37,7 +37,7 @@ using Courier.Models.Send;
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
 CourierClient client = new();
 
-SendSendMessageParams parameters = new()
+SendMessageParams parameters = new()
 {
     Message = new(
         new()
@@ -48,7 +48,7 @@ SendSendMessageParams parameters = new()
     ),
 };
 
-var response = await client.Send.SendMessage(parameters);
+var response = await client.Send.Message(parameters);
 
 Console.WriteLine(response);
 ```
@@ -85,7 +85,7 @@ See this table for the available options:
 
 To send a request to the Courier API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
-For example, `client.Send.SendMessage` should be called with an instance of `SendSendMessageParams`, and it will return an instance of `Task<SendSendMessageResponse>`.
+For example, `client.Send.Message` should be called with an instance of `SendMessageParams`, and it will return an instance of `Task<SendMessageResponse>`.
 
 ## Error handling
 
