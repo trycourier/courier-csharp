@@ -5,7 +5,7 @@ using FilterConfigProperties = Courier.Models.Audiences.FilterConfigProperties;
 namespace Courier.Models.Audiences.FilterConfigVariants;
 
 public sealed record class UnionMember0(FilterConfigProperties::UnionMember0 Value)
-    : Audiences::FilterConfig,
+    : FilterConfig,
         IVariant<UnionMember0, FilterConfigProperties::UnionMember0>
 {
     public static UnionMember0 From(FilterConfigProperties::UnionMember0 value)
@@ -23,7 +23,7 @@ public sealed record class UnionMember0(FilterConfigProperties::UnionMember0 Val
 /// The operator to use for filtering
 /// </summary>
 public sealed record class NestedFilterConfig(Audiences::NestedFilterConfig Value)
-    : Audiences::FilterConfig,
+    : FilterConfig,
         IVariant<NestedFilterConfig, Audiences::NestedFilterConfig>
 {
     public static NestedFilterConfig From(Audiences::NestedFilterConfig value)

@@ -3,9 +3,7 @@ using Notifications = Courier.Models.Notifications;
 
 namespace Courier.Models.Notifications.MessageRoutingChannelVariants;
 
-public sealed record class String(string Value)
-    : Notifications::MessageRoutingChannel,
-        IVariant<String, string>
+public sealed record class String(string Value) : MessageRoutingChannel, IVariant<String, string>
 {
     public static String From(string value)
     {
@@ -16,7 +14,7 @@ public sealed record class String(string Value)
 }
 
 public sealed record class MessageRouting(Notifications::MessageRouting Value)
-    : Notifications::MessageRoutingChannel,
+    : MessageRoutingChannel,
         IVariant<MessageRouting, Notifications::MessageRouting>
 {
     public static MessageRouting From(Notifications::MessageRouting value)
