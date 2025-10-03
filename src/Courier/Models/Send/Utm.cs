@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 
-namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties.MetadataProperties;
+namespace Courier.Models.Send;
 
 [JsonConverter(typeof(ModelConverter<Utm>))]
 public sealed record class Utm : ModelBase, IFromRaw<Utm>

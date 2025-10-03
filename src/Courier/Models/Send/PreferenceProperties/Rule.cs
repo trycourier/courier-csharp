@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 
-namespace Courier.Models.Send.RecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
+namespace Courier.Models.Send.PreferenceProperties;
 
 [JsonConverter(typeof(ModelConverter<Rule>))]
 public sealed record class Rule : ModelBase, IFromRaw<Rule>

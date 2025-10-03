@@ -5,12 +5,12 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
+using Courier.Models.Send.PreferenceProperties;
 
-namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties;
+namespace Courier.Models.Send;
 
-[JsonConverter(typeof(ModelConverter<NotificationsItem>))]
-public sealed record class NotificationsItem : ModelBase, IFromRaw<NotificationsItem>
+[JsonConverter(typeof(ModelConverter<Preference>))]
+public sealed record class Preference : ModelBase, IFromRaw<Preference>
 {
     public required ApiEnum<string, Status> Status
     {
@@ -110,23 +110,23 @@ public sealed record class NotificationsItem : ModelBase, IFromRaw<Notifications
         this.Source?.Validate();
     }
 
-    public NotificationsItem() { }
+    public Preference() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationsItem(Dictionary<string, JsonElement> properties)
+    Preference(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static NotificationsItem FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Preference FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }
 
     [SetsRequiredMembers]
-    public NotificationsItem(ApiEnum<string, Status> status)
+    public Preference(ApiEnum<string, Status> status)
         : this()
     {
         this.Status = status;

@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 
-namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
+namespace Courier.Models.Send.PreferenceProperties;
 
 [JsonConverter(typeof(StatusConverter))]
 public enum Status

@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 
-namespace Courier.Models.Send.RecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
+namespace Courier.Models.Send.PreferenceProperties;
 
 [JsonConverter(typeof(SourceConverter))]
 public enum Source

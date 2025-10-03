@@ -5,15 +5,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.CategoriesProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties.PreferencesProperties.NotificationsProperties;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties.UnionMember0Properties;
 
 [JsonConverter(typeof(ModelConverter<Preferences>))]
 public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
 {
-    public required Dictionary<string, NotificationsItem> Notifications
+    public required Dictionary<string, Preference> Notifications
     {
         get
         {
@@ -23,7 +21,7 @@ public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
                     new ArgumentOutOfRangeException("notifications", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Dictionary<string, NotificationsItem>>(
+            return JsonSerializer.Deserialize<Dictionary<string, Preference>>(
                     element,
                     ModelBase.SerializerOptions
                 )
@@ -41,14 +39,14 @@ public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
         }
     }
 
-    public Dictionary<string, CategoriesItem>? Categories
+    public Dictionary<string, Preference>? Categories
     {
         get
         {
             if (!this.Properties.TryGetValue("categories", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Dictionary<string, CategoriesItem>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, Preference>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -112,7 +110,7 @@ public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
     }
 
     [SetsRequiredMembers]
-    public Preferences(Dictionary<string, NotificationsItem> notifications)
+    public Preferences(Dictionary<string, Preference> notifications)
         : this()
     {
         this.Notifications = notifications;
