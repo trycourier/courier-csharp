@@ -5,17 +5,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using IntersectionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties;
 
-namespace Courier.Models.Send.ElementalNodeProperties;
+namespace Courier.Models.Send;
 
-/// <summary>
-/// Allows you to group elements together. This can be useful when used in combination
-/// with "if" or "loop". See [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-/// for more details.
-/// </summary>
-[JsonConverter(typeof(ModelConverter<UnionMember6>))]
-public sealed record class UnionMember6 : ModelBase, IFromRaw<UnionMember6>
+[JsonConverter(typeof(ModelConverter<ElementalGroupNode>))]
+public sealed record class ElementalGroupNode : ModelBase, IFromRaw<ElementalGroupNode>
 {
     /// <summary>
     /// Sub elements to render.
@@ -120,37 +114,6 @@ public sealed record class UnionMember6 : ModelBase, IFromRaw<UnionMember6>
         }
     }
 
-    public ApiEnum<string, IntersectionMember1Properties::Type>? Type
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                IntersectionMember1Properties::Type
-            >?>(element, ModelBase.SerializerOptions);
-        }
-        set
-        {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    public static implicit operator ElementalGroupNode(UnionMember6 unionMember6) =>
-        new()
-        {
-            Elements = unionMember6.Elements,
-            Channels = unionMember6.Channels,
-            If = unionMember6.If,
-            Loop = unionMember6.Loop,
-            Ref = unionMember6.Ref,
-        };
-
     public override void Validate()
     {
         foreach (var item in this.Elements)
@@ -164,26 +127,25 @@ public sealed record class UnionMember6 : ModelBase, IFromRaw<UnionMember6>
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
-        this.Type?.Validate();
     }
 
-    public UnionMember6() { }
+    public ElementalGroupNode() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UnionMember6(Dictionary<string, JsonElement> properties)
+    ElementalGroupNode(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static UnionMember6 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ElementalGroupNode FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }
 
     [SetsRequiredMembers]
-    public UnionMember6(List<ElementalNode> elements)
+    public ElementalGroupNode(List<ElementalNode> elements)
         : this()
     {
         this.Elements = elements;

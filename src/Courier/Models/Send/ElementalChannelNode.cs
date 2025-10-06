@@ -5,24 +5,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using IntersectionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember2Properties.IntersectionMember1Properties;
 
-namespace Courier.Models.Send.ElementalNodeProperties;
+namespace Courier.Models.Send;
 
-/// <summary>
-/// The channel element allows a notification to be customized based on which channel
-/// it is sent through.  For example, you may want to display a detailed message
-/// when the notification is sent through email,  and a more concise message in a
-/// push notification. Channel elements are only valid as top-level  elements; you
-/// cannot nest channel elements. If there is a channel element specified at the
-/// top-level  of the document, all sibling elements must be channel elements. Note:
-/// As an alternative, most elements support a `channel` property. Which allows you
-/// to selectively  display an individual element on a per channel basis. See the
-///  [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-/// for more details.
-/// </summary>
-[JsonConverter(typeof(ModelConverter<UnionMember2>))]
-public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
+[JsonConverter(typeof(ModelConverter<ElementalChannelNode>))]
+public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalChannelNode>
 {
     /// <summary>
     /// The channel the contents of this element should be applied to. Can be `email`,
@@ -175,39 +162,6 @@ public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
         }
     }
 
-    public ApiEnum<string, IntersectionMember1Properties::Type>? Type
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                IntersectionMember1Properties::Type
-            >?>(element, ModelBase.SerializerOptions);
-        }
-        set
-        {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    public static implicit operator ElementalChannelNode(UnionMember2 unionMember2) =>
-        new()
-        {
-            Channel = unionMember2.Channel,
-            Channels = unionMember2.Channels,
-            Elements = unionMember2.Elements,
-            If = unionMember2.If,
-            Loop = unionMember2.Loop,
-            Raw = unionMember2.Raw,
-            Ref = unionMember2.Ref,
-        };
-
     public override void Validate()
     {
         _ = this.Channel;
@@ -229,26 +183,25 @@ public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
             }
         }
         _ = this.Ref;
-        this.Type?.Validate();
     }
 
-    public UnionMember2() { }
+    public ElementalChannelNode() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UnionMember2(Dictionary<string, JsonElement> properties)
+    ElementalChannelNode(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static UnionMember2 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ElementalChannelNode FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }
 
     [SetsRequiredMembers]
-    public UnionMember2(string channel)
+    public ElementalChannelNode(string channel)
         : this()
     {
         this.Channel = channel;

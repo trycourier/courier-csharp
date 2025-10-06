@@ -6,13 +6,12 @@ using Courier.Models.Send.PreferenceProperties;
 using Courier.Models.Send.PreferenceProperties.ChannelPreferenceProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
+using IntersectionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember2Properties.IntersectionMember1Properties;
 using RoutingProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
 using UnionMember1Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember1Properties;
-using UnionMember2Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember2Properties;
 using UnionMember3Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember3Properties;
 using UnionMember4Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember4Properties;
 using UnionMember5Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember5Properties;
-using UnionMember6Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties;
 using UnionMember7Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember7Properties;
 
 namespace Courier.Core;
@@ -27,13 +26,16 @@ public abstract record class ModelBase
         {
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, UnionMember1Properties::Type>(),
-            new ApiEnumConverter<string, UnionMember2Properties::Type>(),
+            new ApiEnumConverter<string, IntersectionMember1Properties::Type>(),
             new ApiEnumConverter<string, UnionMember3Properties::Type>(),
             new ApiEnumConverter<string, UnionMember4Properties::Align>(),
             new ApiEnumConverter<string, UnionMember4Properties::Style>(),
             new ApiEnumConverter<string, UnionMember4Properties::Type>(),
             new ApiEnumConverter<string, UnionMember5Properties::Type>(),
-            new ApiEnumConverter<string, UnionMember6Properties::Type>(),
+            new ApiEnumConverter<
+                string,
+                global::Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties.Type
+            >(),
             new ApiEnumConverter<string, UnionMember7Properties::Type>(),
             new ApiEnumConverter<string, Method>(),
             new ApiEnumConverter<string, Status>(),
