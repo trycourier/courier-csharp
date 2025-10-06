@@ -24,7 +24,6 @@ public class SendServiceTest : TestBase
             {
                 Message = new()
                 {
-                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     BrandID = "brand_id",
                     Channels = new Dictionary<string, ChannelsItem>()
                     {
@@ -55,6 +54,7 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     Context = new() { TenantID = "tenant_id" },
                     Data = new Dictionary<string, JsonElement>()
                     {
