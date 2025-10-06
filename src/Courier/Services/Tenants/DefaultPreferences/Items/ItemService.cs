@@ -1,0 +1,38 @@
+using System.Net.Http;
+using System.Threading.Tasks;
+using Courier.Core;
+using Courier.Models.Tenants.DefaultPreferences.Items;
+
+namespace Courier.Services.Tenants.DefaultPreferences.Items;
+
+public sealed class ItemService : IItemService
+{
+    readonly ICourierClient _client;
+
+    public ItemService(ICourierClient client)
+    {
+        _client = client;
+    }
+
+    public async Task Update(ItemUpdateParams parameters)
+    {
+        HttpRequest<ItemUpdateParams> request = new()
+        {
+            Method = HttpMethod.Put,
+            Params = parameters,
+        };
+        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        return;
+    }
+
+    public async Task Delete(ItemDeleteParams parameters)
+    {
+        HttpRequest<ItemDeleteParams> request = new()
+        {
+            Method = HttpMethod.Delete,
+            Params = parameters,
+        };
+        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        return;
+    }
+}

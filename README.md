@@ -34,8 +34,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier;
+using Courier.Models.Bulk;
 using Courier.Models.Send;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
 
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
 CourierClient client = new();
@@ -44,7 +44,7 @@ SendMessageParams parameters = new()
 {
     Message = new()
     {
-        To = new UnionMember0() { UserID = "your_user_id" },
+        To = new UserRecipient() { UserID = "your_user_id" },
         Data = new Dictionary<string, JsonElement>()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") }

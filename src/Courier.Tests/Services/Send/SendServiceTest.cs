@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Courier.Models.Bulk;
 using Courier.Models.Send;
+using Courier.Models.Send.ContentProperties;
 using Courier.Models.Send.PreferenceProperties;
-using Courier.Models.Send.PreferenceProperties.ChannelPreferenceProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ContentProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
+using Courier.Models.Tenants.DefaultPreferences.Items;
+using Courier.Models.Users.Preferences;
 
 namespace Courier.Tests.Services.Send;
 
@@ -112,7 +113,7 @@ public class SendServiceTest : TestBase
                         Message = 0,
                         Provider = new Dictionary<string, long>() { { "foo", 0 } },
                     },
-                    To = new UnionMember0()
+                    To = new UserRecipient()
                     {
                         AccountID = "account_id",
                         Context = new() { TenantID = "tenant_id" },
@@ -131,8 +132,11 @@ public class SendServiceTest : TestBase
                                     "foo",
                                     new()
                                     {
-                                        Status = Status.OptedIn,
-                                        ChannelPreferences = [new(Channel.DirectMessage)],
+                                        Status = PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(ChannelClassification.DirectMessage),
+                                        ],
                                         Rules = [new() { Until = "until", Start = "start" }],
                                         Source = Source.Subscription,
                                     }
@@ -144,8 +148,11 @@ public class SendServiceTest : TestBase
                                     "foo",
                                     new()
                                     {
-                                        Status = Status.OptedIn,
-                                        ChannelPreferences = [new(Channel.DirectMessage)],
+                                        Status = PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(ChannelClassification.DirectMessage),
+                                        ],
                                         Rules = [new() { Until = "until", Start = "start" }],
                                         Source = Source.Subscription,
                                     }

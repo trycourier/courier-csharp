@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Courier.Core;
-using ToProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
+using Bulk = Courier.Models.Bulk;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToVariants;
 
-public sealed record class UnionMember0(ToProperties::UnionMember0 Value)
+public sealed record class UserRecipient(Bulk::UserRecipient Value)
     : To,
-        IVariant<UnionMember0, ToProperties::UnionMember0>
+        IVariant<UserRecipient, Bulk::UserRecipient>
 {
-    public static UnionMember0 From(ToProperties::UnionMember0 value)
+    public static UserRecipient From(Bulk::UserRecipient value)
     {
         return new(value);
     }
