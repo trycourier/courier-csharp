@@ -47,9 +47,6 @@ public abstract record class ElementalNode
     public static implicit operator ElementalNode(UnionMember6 value) =>
         new ElementalNodeVariants::UnionMember6(value);
 
-    public static implicit operator ElementalNode(UnionMember7 value) =>
-        new ElementalNodeVariants::UnionMember7(value);
-
     public bool TryPickUnionMember0([NotNullWhen(true)] out UnionMember0? value)
     {
         value = (this as ElementalNodeVariants::UnionMember0)?.Value;
@@ -92,12 +89,6 @@ public abstract record class ElementalNode
         return value != null;
     }
 
-    public bool TryPickUnionMember7([NotNullWhen(true)] out UnionMember7? value)
-    {
-        value = (this as ElementalNodeVariants::UnionMember7)?.Value;
-        return value != null;
-    }
-
     public void Switch(
         Action<ElementalNodeVariants::UnionMember0> unionMember0,
         Action<ElementalNodeVariants::UnionMember1> unionMember1,
@@ -105,8 +96,7 @@ public abstract record class ElementalNode
         Action<ElementalNodeVariants::UnionMember3> unionMember3,
         Action<ElementalNodeVariants::UnionMember4> unionMember4,
         Action<ElementalNodeVariants::UnionMember5> unionMember5,
-        Action<ElementalNodeVariants::UnionMember6> unionMember6,
-        Action<ElementalNodeVariants::UnionMember7> unionMember7
+        Action<ElementalNodeVariants::UnionMember6> unionMember6
     )
     {
         switch (this)
@@ -132,9 +122,6 @@ public abstract record class ElementalNode
             case ElementalNodeVariants::UnionMember6 inner:
                 unionMember6(inner);
                 break;
-            case ElementalNodeVariants::UnionMember7 inner:
-                unionMember7(inner);
-                break;
             default:
                 throw new CourierInvalidDataException(
                     "Data did not match any variant of ElementalNode"
@@ -149,8 +136,7 @@ public abstract record class ElementalNode
         Func<ElementalNodeVariants::UnionMember3, T> unionMember3,
         Func<ElementalNodeVariants::UnionMember4, T> unionMember4,
         Func<ElementalNodeVariants::UnionMember5, T> unionMember5,
-        Func<ElementalNodeVariants::UnionMember6, T> unionMember6,
-        Func<ElementalNodeVariants::UnionMember7, T> unionMember7
+        Func<ElementalNodeVariants::UnionMember6, T> unionMember6
     )
     {
         return this switch
@@ -162,7 +148,6 @@ public abstract record class ElementalNode
             ElementalNodeVariants::UnionMember4 inner => unionMember4(inner),
             ElementalNodeVariants::UnionMember5 inner => unionMember5(inner),
             ElementalNodeVariants::UnionMember6 inner => unionMember6(inner),
-            ElementalNodeVariants::UnionMember7 inner => unionMember7(inner),
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of ElementalNode"
             ),
@@ -308,24 +293,6 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             );
         }
 
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<UnionMember7>(ref reader, options);
-            if (deserialized != null)
-            {
-                return new ElementalNodeVariants::UnionMember7(deserialized);
-            }
-        }
-        catch (JsonException e)
-        {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant ElementalNodeVariants::UnionMember7",
-                    e
-                )
-            );
-        }
-
         throw new AggregateException(exceptions);
     }
 
@@ -344,7 +311,6 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             ElementalNodeVariants::UnionMember4(var unionMember4) => unionMember4,
             ElementalNodeVariants::UnionMember5(var unionMember5) => unionMember5,
             ElementalNodeVariants::UnionMember6(var unionMember6) => unionMember6,
-            ElementalNodeVariants::UnionMember7(var unionMember7) => unionMember7,
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of ElementalNode"
             ),

@@ -105,31 +105,11 @@ public sealed record class UnionMember5(ElementalNodeProperties::UnionMember5 Va
     }
 }
 
-/// <summary>
-/// Allows you to group elements together. This can be useful when used in combination
-/// with "if" or "loop". See [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-/// for more details.
-/// </summary>
 public sealed record class UnionMember6(ElementalNodeProperties::UnionMember6 Value)
     : ElementalNode,
         IVariant<UnionMember6, ElementalNodeProperties::UnionMember6>
 {
     public static UnionMember6 From(ElementalNodeProperties::UnionMember6 value)
-    {
-        return new(value);
-    }
-
-    public override void Validate()
-    {
-        this.Value.Validate();
-    }
-}
-
-public sealed record class UnionMember7(ElementalNodeProperties::UnionMember7 Value)
-    : ElementalNode,
-        IVariant<UnionMember7, ElementalNodeProperties::UnionMember7>
-{
-    public static UnionMember7 From(ElementalNodeProperties::UnionMember7 value)
     {
         return new(value);
     }
