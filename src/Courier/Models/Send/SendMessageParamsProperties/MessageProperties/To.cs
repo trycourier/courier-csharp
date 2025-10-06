@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
+using Courier.Models.Bulk;
 using ToVariants = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToVariants;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties;
@@ -17,13 +17,13 @@ public abstract record class To
 {
     internal To() { }
 
-    public static implicit operator To(UnionMember0 value) => new ToVariants::UnionMember0(value);
+    public static implicit operator To(UserRecipient value) => new ToVariants::UserRecipient(value);
 
     public static implicit operator To(List<Recipient> value) => new ToVariants::Recipients(value);
 
-    public bool TryPickUnionMember0([NotNullWhen(true)] out UnionMember0? value)
+    public bool TryPickUserRecipient([NotNullWhen(true)] out UserRecipient? value)
     {
-        value = (this as ToVariants::UnionMember0)?.Value;
+        value = (this as ToVariants::UserRecipient)?.Value;
         return value != null;
     }
 
@@ -34,14 +34,14 @@ public abstract record class To
     }
 
     public void Switch(
-        Action<ToVariants::UnionMember0> unionMember0,
+        Action<ToVariants::UserRecipient> userRecipient,
         Action<ToVariants::Recipients> recipients
     )
     {
         switch (this)
         {
-            case ToVariants::UnionMember0 inner:
-                unionMember0(inner);
+            case ToVariants::UserRecipient inner:
+                userRecipient(inner);
                 break;
             case ToVariants::Recipients inner:
                 recipients(inner);
@@ -52,13 +52,13 @@ public abstract record class To
     }
 
     public T Match<T>(
-        Func<ToVariants::UnionMember0, T> unionMember0,
+        Func<ToVariants::UserRecipient, T> userRecipient,
         Func<ToVariants::Recipients, T> recipients
     )
     {
         return this switch
         {
-            ToVariants::UnionMember0 inner => unionMember0(inner),
+            ToVariants::UserRecipient inner => userRecipient(inner),
             ToVariants::Recipients inner => recipients(inner),
             _ => throw new CourierInvalidDataException("Data did not match any variant of To"),
         };
@@ -79,17 +79,17 @@ sealed class ToConverter : JsonConverter<To?>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember0>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<UserRecipient>(ref reader, options);
             if (deserialized != null)
             {
-                return new ToVariants::UnionMember0(deserialized);
+                return new ToVariants::UserRecipient(deserialized);
             }
         }
         catch (JsonException e)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ToVariants::UnionMember0",
+                    "Data does not match union variant ToVariants::UserRecipient",
                     e
                 )
             );
@@ -121,7 +121,7 @@ sealed class ToConverter : JsonConverter<To?>
         object? variant = value switch
         {
             null => null,
-            ToVariants::UnionMember0(var unionMember0) => unionMember0,
+            ToVariants::UserRecipient(var userRecipient) => userRecipient,
             ToVariants::Recipients(var recipients) => recipients,
             _ => throw new CourierInvalidDataException("Data did not match any variant of To"),
         };

@@ -6,13 +6,14 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Send.PreferenceProperties;
+using Courier.Models.Users.Preferences;
 
 namespace Courier.Models.Send;
 
 [JsonConverter(typeof(ModelConverter<Preference>))]
 public sealed record class Preference : ModelBase, IFromRaw<Preference>
 {
-    public required ApiEnum<string, Status> Status
+    public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
@@ -22,7 +23,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
                     new ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -126,7 +127,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     }
 
     [SetsRequiredMembers]
-    public Preference(ApiEnum<string, Status> status)
+    public Preference(ApiEnum<string, PreferenceStatus> status)
         : this()
     {
         this.Status = status;
