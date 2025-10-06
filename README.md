@@ -31,22 +31,31 @@ See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using Courier;
 using Courier.Models.Send;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ContentProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
 
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
 CourierClient client = new();
 
 SendMessageParams parameters = new()
 {
-    Message = new(
-        new ElementalContentSugar()
+    Message = new()
+    {
+        Content = new ElementalContentSugar()
         {
             Body = "body",
             Title = "title",
-        }
-    ),
+        },
+        Data = new Dictionary<string, JsonElement>()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") }
+        },
+        To = new UnionMember0() { UserID = "your_user_id" },
+    },
 };
 
 var response = await client.Send.Message(parameters);
