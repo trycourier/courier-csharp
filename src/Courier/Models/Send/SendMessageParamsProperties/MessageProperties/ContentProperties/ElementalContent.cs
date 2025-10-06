@@ -67,14 +67,14 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
         }
     }
 
-    public JsonElement? Brand
+    public string? Brand
     {
         get
         {
             if (!this.Properties.TryGetValue("brand", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set
         {
