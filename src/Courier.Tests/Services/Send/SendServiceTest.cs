@@ -24,11 +24,7 @@ public class SendServiceTest : TestBase
             {
                 Message = new()
                 {
-                    Content = new ElementalContentSugar()
-                    {
-                        Body = "Thanks for signing up, {{name}}",
-                        Title = "Welcome!",
-                    },
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     BrandID = "brand_id",
                     Channels = new Dictionary<string, ChannelsItem>()
                     {
@@ -107,7 +103,7 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Routing = new() { Channels = ["email"], Method = Method.Single },
+                    Routing = new() { Channels = ["string"], Method = Method.All },
                     Timeout = new()
                     {
                         Channel = new Dictionary<string, long>() { { "foo", 0 } },
@@ -124,7 +120,7 @@ public class SendServiceTest : TestBase
                         {
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
-                        Email = "email@example.com",
+                        Email = "email",
                         Locale = "locale",
                         PhoneNumber = "phone_number",
                         Preferences = new()
@@ -158,7 +154,7 @@ public class SendServiceTest : TestBase
                             TemplateID = "templateId",
                         },
                         TenantID = "tenant_id",
-                        UserID = "user_id",
+                        UserID = "example_user",
                     },
                 },
             }
