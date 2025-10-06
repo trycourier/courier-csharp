@@ -12,7 +12,7 @@ using UnionMember1Properties = Courier.Models.Send.ElementalNodeProperties.Union
 using UnionMember3Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember3Properties;
 using UnionMember4Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember4Properties;
 using UnionMember5Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember5Properties;
-using UnionMember7Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember7Properties;
+using UnionMember6Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties;
 
 namespace Courier.Core;
 
@@ -32,11 +32,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, UnionMember4Properties::Style>(),
             new ApiEnumConverter<string, UnionMember4Properties::Type>(),
             new ApiEnumConverter<string, UnionMember5Properties::Type>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties.Type
-            >(),
-            new ApiEnumConverter<string, UnionMember7Properties::Type>(),
+            new ApiEnumConverter<string, UnionMember6Properties::Type>(),
             new ApiEnumConverter<string, Method>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, Channel>(),
