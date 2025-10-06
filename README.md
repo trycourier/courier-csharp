@@ -33,6 +33,7 @@ See the [`examples`](examples) directory for complete and runnable examples.
 using System;
 using Courier;
 using Courier.Models.Send;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ContentProperties;
 
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
 CourierClient client = new();
@@ -40,7 +41,7 @@ CourierClient client = new();
 SendMessageParams parameters = new()
 {
     Message = new(
-        new()
+        new ElementalContentSugar()
         {
             Body = "body",
             Title = "title",

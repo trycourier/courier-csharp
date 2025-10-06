@@ -6,6 +6,7 @@ using Courier.Models.Send.PreferenceProperties;
 using Courier.Models.Send.PreferenceProperties.ChannelPreferenceProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ContentProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
@@ -23,7 +24,7 @@ public class SendServiceTest : TestBase
             {
                 Message = new()
                 {
-                    Content = new()
+                    Content = new ElementalContentSugar()
                     {
                         Body = "Thanks for signing up, {{name}}",
                         Title = "Welcome!",

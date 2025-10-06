@@ -19,7 +19,7 @@ namespace Courier.Models.Send.SendMessageParamsProperties;
 public sealed record class Message : ModelBase, IFromRaw<Message>
 {
     /// <summary>
-    /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+    /// Describes content that will work for email, inbox, push, chat, or any channel id.
     /// </summary>
     public required Content Content
     {
