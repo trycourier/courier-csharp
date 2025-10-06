@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
@@ -18,34 +16,6 @@ namespace Courier.Models.Send.SendMessageParamsProperties;
 [JsonConverter(typeof(ModelConverter<Message>))]
 public sealed record class Message : ModelBase, IFromRaw<Message>
 {
-    /// <summary>
-    /// Describes content that will work for email, inbox, push, chat, or any channel id.
-    /// </summary>
-    public required Content Content
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("content", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'content' cannot be null",
-                    new ArgumentOutOfRangeException("content", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'content' cannot be null",
-                    new ArgumentNullException("content")
-                );
-        }
-        set
-        {
-            this.Properties["content"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
     public string? BrandID
     {
         get
@@ -83,6 +53,27 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
         set
         {
             this.Properties["channels"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    /// <summary>
+    /// Describes content that will work for email, inbox, push, chat, or any channel id.
+    /// </summary>
+    public Content? Content
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("content", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<Content?>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -286,7 +277,6 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
 
     public override void Validate()
     {
-        this.Content.Validate();
         _ = this.BrandID;
         if (this.Channels != null)
         {
@@ -295,6 +285,7 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
                 item.Validate();
             }
         }
+        this.Content?.Validate();
         this.Context?.Validate();
         if (this.Data != null)
         {
@@ -332,12 +323,5 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     public static Message FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
-    }
-
-    [SetsRequiredMembers]
-    public Message(Content content)
-        : this()
-    {
-        this.Content = content;
     }
 }
