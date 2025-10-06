@@ -24,35 +24,6 @@ namespace Courier.Models.Send.ElementalNodeProperties;
 [JsonConverter(typeof(ModelConverter<UnionMember2>))]
 public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
 {
-    /// <summary>
-    /// The channel the contents of this element should be applied to. Can be `email`,
-    /// `push`, `direct_message`, `sms` or a provider such as slack
-    /// </summary>
-    public required string Channel
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("channel", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new ArgumentOutOfRangeException("channel", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new ArgumentNullException("channel")
-                );
-        }
-        set
-        {
-            this.Properties["channel"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
     public List<string>? Channels
     {
         get
@@ -65,31 +36,6 @@ public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
         set
         {
             this.Properties["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    /// <summary>
-    /// An array of elements to apply to the channel. If `raw` has not been  specified,
-    /// `elements` is `required`.
-    /// </summary>
-    public List<ElementalNode>? Elements
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("elements", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ElementalNode>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        set
-        {
-            this.Properties["elements"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -132,6 +78,53 @@ public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
         }
     }
 
+    public string? Ref
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("ref", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["ref"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    /// <summary>
+    /// The channel the contents of this element should be applied to. Can be `email`,
+    /// `push`, `direct_message`, `sms` or a provider such as slack
+    /// </summary>
+    public required string Channel
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("channel", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'channel' cannot be null",
+                    new ArgumentOutOfRangeException("channel", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'channel' cannot be null",
+                    new ArgumentNullException("channel")
+                );
+        }
+        set
+        {
+            this.Properties["channel"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
     /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is `required`.
@@ -151,24 +144,6 @@ public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
         set
         {
             this.Properties["raw"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    public string? Ref
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("ref", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        set
-        {
-            this.Properties["ref"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -199,28 +174,24 @@ public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
     public static implicit operator ElementalChannelNode(UnionMember2 unionMember2) =>
         new()
         {
-            Channel = unionMember2.Channel,
             Channels = unionMember2.Channels,
-            Elements = unionMember2.Elements,
             If = unionMember2.If,
             Loop = unionMember2.Loop,
-            Raw = unionMember2.Raw,
             Ref = unionMember2.Ref,
+            Channel = unionMember2.Channel,
+            Raw = unionMember2.Raw,
         };
 
     public override void Validate()
     {
-        _ = this.Channel;
         foreach (var item in this.Channels ?? [])
         {
             _ = item;
         }
-        foreach (var item in this.Elements ?? [])
-        {
-            item.Validate();
-        }
         _ = this.If;
         _ = this.Loop;
+        _ = this.Ref;
+        _ = this.Channel;
         if (this.Raw != null)
         {
             foreach (var item in this.Raw.Values)
@@ -228,7 +199,6 @@ public sealed record class UnionMember2 : ModelBase, IFromRaw<UnionMember2>
                 _ = item;
             }
         }
-        _ = this.Ref;
         this.Type?.Validate();
     }
 

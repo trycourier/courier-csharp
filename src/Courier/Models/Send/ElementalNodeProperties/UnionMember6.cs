@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties;
+using Courier.Models.Send.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties;
 
 namespace Courier.Models.Send.ElementalNodeProperties;
 
@@ -102,6 +102,15 @@ public sealed record class UnionMember6 : ModelBase, IFromRaw<UnionMember6>
             );
         }
     }
+
+    public static implicit operator ElementalBaseNode(UnionMember6 unionMember6) =>
+        new()
+        {
+            Channels = unionMember6.Channels,
+            If = unionMember6.If,
+            Loop = unionMember6.Loop,
+            Ref = unionMember6.Ref,
+        };
 
     public override void Validate()
     {

@@ -3,12 +3,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.ElementalNodeProperties.UnionMember1Properties.IntersectionMember1Properties;
 
-namespace Courier.Models.Send.ElementalNodeProperties;
+namespace Courier.Models.Send;
 
-[JsonConverter(typeof(ModelConverter<UnionMember1>))]
-public sealed record class UnionMember1 : ModelBase, IFromRaw<UnionMember1>
+[JsonConverter(typeof(ModelConverter<ElementalBaseNode>))]
+public sealed record class ElementalBaseNode : ModelBase, IFromRaw<ElementalBaseNode>
 {
     public List<string>? Channels
     {
@@ -82,36 +81,6 @@ public sealed record class UnionMember1 : ModelBase, IFromRaw<UnionMember1>
         }
     }
 
-    public ApiEnum<string, Type>? Type
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Type>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        set
-        {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    public static implicit operator ElementalBaseNode(UnionMember1 unionMember1) =>
-        new()
-        {
-            Channels = unionMember1.Channels,
-            If = unionMember1.If,
-            Loop = unionMember1.Loop,
-            Ref = unionMember1.Ref,
-        };
-
     public override void Validate()
     {
         foreach (var item in this.Channels ?? [])
@@ -121,20 +90,19 @@ public sealed record class UnionMember1 : ModelBase, IFromRaw<UnionMember1>
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
-        this.Type?.Validate();
     }
 
-    public UnionMember1() { }
+    public ElementalBaseNode() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UnionMember1(Dictionary<string, JsonElement> properties)
+    ElementalBaseNode(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static UnionMember1 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ElementalBaseNode FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }
