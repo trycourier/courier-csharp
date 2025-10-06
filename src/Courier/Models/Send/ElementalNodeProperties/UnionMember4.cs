@@ -35,14 +35,14 @@ public sealed record class UnionMember4 : ModelBase, IFromRaw<UnionMember4>
     /// <summary>
     /// The alignment of the action button. Defaults to "center".
     /// </summary>
-    public ApiEnum<string, Align>? Align
+    public ApiEnum<string, Alignment>? Align
     {
         get
         {
             if (!this.Properties.TryGetValue("align", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Align>?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, Alignment>?>(
                 element,
                 ModelBase.SerializerOptions
             );

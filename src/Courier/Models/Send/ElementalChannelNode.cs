@@ -8,38 +8,21 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Send;
 
+/// <summary>
+/// The channel element allows a notification to be customized based on which channel
+/// it is sent through.  For example, you may want to display a detailed message
+/// when the notification is sent through email,  and a more concise message in a
+/// push notification. Channel elements are only valid as top-level  elements; you
+/// cannot nest channel elements. If there is a channel element specified at the
+/// top-level  of the document, all sibling elements must be channel elements. Note:
+/// As an alternative, most elements support a `channel` property. Which allows you
+/// to selectively  display an individual element on a per channel basis. See the
+///  [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
+/// for more details.
+/// </summary>
 [JsonConverter(typeof(ModelConverter<ElementalChannelNode>))]
 public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalChannelNode>
 {
-    /// <summary>
-    /// The channel the contents of this element should be applied to. Can be `email`,
-    /// `push`, `direct_message`, `sms` or a provider such as slack
-    /// </summary>
-    public required string Channel
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("channel", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new ArgumentOutOfRangeException("channel", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new ArgumentNullException("channel")
-                );
-        }
-        set
-        {
-            this.Properties["channel"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
     public List<string>? Channels
     {
         get
@@ -52,31 +35,6 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
         set
         {
             this.Properties["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    /// <summary>
-    /// An array of elements to apply to the channel. If `raw` has not been  specified,
-    /// `elements` is `required`.
-    /// </summary>
-    public List<ElementalNode>? Elements
-    {
-        get
-        {
-            if (!this.Properties.TryGetValue("elements", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ElementalNode>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        set
-        {
-            this.Properties["elements"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -119,6 +77,53 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
         }
     }
 
+    public string? Ref
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("ref", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["ref"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    /// <summary>
+    /// The channel the contents of this element should be applied to. Can be `email`,
+    /// `push`, `direct_message`, `sms` or a provider such as slack
+    /// </summary>
+    public required string Channel
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("channel", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'channel' cannot be null",
+                    new ArgumentOutOfRangeException("channel", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'channel' cannot be null",
+                    new ArgumentNullException("channel")
+                );
+        }
+        set
+        {
+            this.Properties["channel"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
     /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is `required`.
@@ -144,37 +149,25 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
         }
     }
 
-    public string? Ref
-    {
-        get
+    public static implicit operator ElementalBaseNode(ElementalChannelNode elementalChannelNode) =>
+        new()
         {
-            if (!this.Properties.TryGetValue("ref", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        set
-        {
-            this.Properties["ref"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
+            Channels = elementalChannelNode.Channels,
+            If = elementalChannelNode.If,
+            Loop = elementalChannelNode.Loop,
+            Ref = elementalChannelNode.Ref,
+        };
 
     public override void Validate()
     {
-        _ = this.Channel;
         foreach (var item in this.Channels ?? [])
         {
             _ = item;
         }
-        foreach (var item in this.Elements ?? [])
-        {
-            item.Validate();
-        }
         _ = this.If;
         _ = this.Loop;
+        _ = this.Ref;
+        _ = this.Channel;
         if (this.Raw != null)
         {
             foreach (var item in this.Raw.Values)
@@ -182,7 +175,6 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
                 _ = item;
             }
         }
-        _ = this.Ref;
     }
 
     public ElementalChannelNode() { }
