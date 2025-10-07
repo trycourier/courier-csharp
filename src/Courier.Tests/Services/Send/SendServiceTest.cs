@@ -104,6 +104,7 @@ public class SendServiceTest : TestBase
                         },
                     },
                     Routing = new() { Channels = ["string"], Method = Method.All },
+                    Template = "template_id",
                     Timeout = new()
                     {
                         Channel = new Dictionary<string, long>() { { "foo", 0 } },

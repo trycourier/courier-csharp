@@ -236,6 +236,24 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
         }
     }
 
+    public string? Template
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("template", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["template"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
     public Timeout? Timeout
     {
         get
@@ -306,6 +324,7 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
             }
         }
         this.Routing?.Validate();
+        _ = this.Template;
         this.Timeout?.Validate();
         this.To?.Validate();
     }
