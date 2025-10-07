@@ -5,14 +5,14 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Tenants.Templates.ElementalContentProperties;
+using Courier.Models.Send;
 
 namespace Courier.Models.Tenants.Templates;
 
 [JsonConverter(typeof(ModelConverter<ElementalContent>))]
 public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalContent>
 {
-    public required List<Element> Elements
+    public required List<ElementalNode> Elements
     {
         get
         {
@@ -22,7 +22,10 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
                     new ArgumentOutOfRangeException("elements", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<Element>>(element, ModelBase.SerializerOptions)
+            return JsonSerializer.Deserialize<List<ElementalNode>>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
                 ?? throw new CourierInvalidDataException(
                     "'elements' cannot be null",
                     new ArgumentNullException("elements")

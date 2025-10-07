@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using Courier.Models;
 using Courier.Models.Bulk;
 using Courier.Models.PreferenceProperties;
-using Courier.Models.Send.ContentProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ProvidersProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.RoutingProperties;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.TimeoutProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ContentProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
 using Courier.Models.Tenants.DefaultPreferences.Items;
 using Courier.Models.Users.Preferences;
 
@@ -18,9 +18,9 @@ namespace Courier.Tests.Services.Send;
 public class SendServiceTest : TestBase
 {
     [Fact(Skip = "Prism tests are disabled")]
-    public async Task SendMessage_Works()
+    public async Task Message_Works()
     {
-        var response = await this.client.Send.SendMessage(
+        var response = await this.client.Send.Message(
             new()
             {
                 Message = new()
