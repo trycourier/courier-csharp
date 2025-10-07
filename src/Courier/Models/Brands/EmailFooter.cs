@@ -9,14 +9,14 @@ namespace Courier.Models.Brands;
 [JsonConverter(typeof(ModelConverter<EmailFooter>))]
 public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
 {
-    public JsonElement? Content
+    public string? Content
     {
         get
         {
             if (!this.Properties.TryGetValue("content", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set
         {
