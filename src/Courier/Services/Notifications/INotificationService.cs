@@ -7,11 +7,11 @@ namespace Courier.Services.Notifications;
 
 public interface INotificationService
 {
-    ICheckService Checks { get; }
-
     IDraftService Draft { get; }
+
+    ICheckService Checks { get; }
 
     Task<NotificationListResponse> List(NotificationListParams? parameters = null);
 
-    Task<NotificationContent> RetrieveContent(NotificationRetrieveContentParams parameters);
+    Task<NotificationGetContent> RetrieveContent(NotificationRetrieveContentParams parameters);
 }

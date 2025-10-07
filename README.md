@@ -5,7 +5,7 @@
 >
 > This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
 >
-> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/trycourier/courier-csharp/issues/new).
+> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/stainless-sdks/courier-csharp/issues/new).
 
 The Courier C# SDK provides convenient access to the Courier REST API from applications written in C#.
 
@@ -14,7 +14,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```bash
-git clone git@github.com:trycourier/courier-csharp.git
+git clone git@github.com:stainless-sdks/courier-csharp.git
 dotnet add reference courier-csharp/src/Courier
 ```
 
@@ -40,7 +40,7 @@ using Courier.Models.Send;
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
 CourierClient client = new();
 
-SendMessageParams parameters = new()
+SendSendMessageParams parameters = new()
 {
     Message = new()
     {
@@ -52,7 +52,7 @@ SendMessageParams parameters = new()
     },
 };
 
-var response = await client.Send.Message(parameters);
+var response = await client.Send.SendMessage(parameters);
 
 Console.WriteLine(response);
 ```
@@ -89,7 +89,7 @@ See this table for the available options:
 
 To send a request to the Courier API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
-For example, `client.Send.Message` should be called with an instance of `SendMessageParams`, and it will return an instance of `Task<SendMessageResponse>`.
+For example, `client.Send.SendMessage` should be called with an instance of `SendSendMessageParams`, and it will return an instance of `Task<SendSendMessageResponse>`.
 
 ## Error handling
 
@@ -127,4 +127,4 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/trycourier/courier-csharp/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/courier-csharp/issues) with questions, bugs, or suggestions.

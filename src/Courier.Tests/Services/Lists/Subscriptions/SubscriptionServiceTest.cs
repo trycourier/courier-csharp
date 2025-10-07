@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Courier.Models.Lists.Subscriptions;
+using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.CategoriesProperties;
+using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.NotificationsProperties;
 using Courier.Models.Tenants.DefaultPreferences.Items;
 using Courier.Models.Users.Preferences;
 
@@ -31,7 +32,7 @@ public class SubscriptionServiceTest : TestBase
                         RecipientID = "recipientId",
                         Preferences = new()
                         {
-                            Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                            Categories = new Dictionary<string, CategoriesItem>()
                             {
                                 {
                                     "foo",
@@ -46,7 +47,7 @@ public class SubscriptionServiceTest : TestBase
                                     }
                                 },
                             },
-                            Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                            Notifications = new Dictionary<string, NotificationsItem>()
                             {
                                 {
                                     "foo",
@@ -82,7 +83,7 @@ public class SubscriptionServiceTest : TestBase
                         RecipientID = "recipientId",
                         Preferences = new()
                         {
-                            Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                            Categories = new Dictionary<string, CategoriesItem>()
                             {
                                 {
                                     "foo",
@@ -97,7 +98,7 @@ public class SubscriptionServiceTest : TestBase
                                     }
                                 },
                             },
-                            Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                            Notifications = new Dictionary<string, NotificationsItem>()
                             {
                                 {
                                     "foo",

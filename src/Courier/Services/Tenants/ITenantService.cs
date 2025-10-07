@@ -7,9 +7,9 @@ namespace Courier.Services.Tenants;
 
 public interface ITenantService
 {
-    ITemplateService Templates { get; }
-
     IDefaultPreferenceService DefaultPreferences { get; }
+
+    ITemplateService Templates { get; }
 
     /// <summary>
     /// Get a Tenant

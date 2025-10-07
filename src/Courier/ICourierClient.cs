@@ -31,35 +31,35 @@ public interface ICourierClient
 
     ISendService Send { get; }
 
-    ITenantService Tenants { get; }
-
     IAudienceService Audiences { get; }
 
-    IBulkService Bulk { get; }
-
-    IUserService Users { get; }
-
     IAuditEventService AuditEvents { get; }
+
+    IAuthService Auth { get; }
 
     IAutomationService Automations { get; }
 
     IBrandService Brands { get; }
 
+    IBulkService Bulk { get; }
+
+    IInboundService Inbound { get; }
+
     IListService Lists { get; }
 
     IMessageService Messages { get; }
 
-    INotificationService Notifications { get; }
-
-    IAuthService Auth { get; }
-
-    IInboundService Inbound { get; }
-
     IRequestService Requests { get; }
+
+    INotificationService Notifications { get; }
 
     IProfileService Profiles { get; }
 
+    ITenantService Tenants { get; }
+
     ITranslationService Translations { get; }
+
+    IUserService Users { get; }
 
     Task<HttpResponse> Execute<T>(HttpRequest<T> request)
         where T : ParamsBase;

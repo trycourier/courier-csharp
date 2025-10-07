@@ -15,20 +15,20 @@ public sealed class TenantService : ITenantService
     public TenantService(ICourierClient client)
     {
         _client = client;
-        _templates = new(() => new TemplateService(client));
         _defaultPreferences = new(() => new DefaultPreferenceService(client));
-    }
-
-    readonly Lazy<ITemplateService> _templates;
-    public ITemplateService Templates
-    {
-        get { return _templates.Value; }
+        _templates = new(() => new TemplateService(client));
     }
 
     readonly Lazy<IDefaultPreferenceService> _defaultPreferences;
     public IDefaultPreferenceService DefaultPreferences
     {
         get { return _defaultPreferences.Value; }
+    }
+
+    readonly Lazy<ITemplateService> _templates;
+    public ITemplateService Templates
+    {
+        get { return _templates.Value; }
     }
 
     public async Task<Tenant> Retrieve(TenantRetrieveParams parameters)

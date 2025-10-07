@@ -3,20 +3,22 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
+using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.CategoriesProperties;
+using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.NotificationsProperties;
 
 namespace Courier.Models.Lists.Subscriptions;
 
 [JsonConverter(typeof(ModelConverter<RecipientPreferences>))]
 public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientPreferences>
 {
-    public Dictionary<string, NotificationPreferenceDetails>? Categories
+    public Dictionary<string, CategoriesItem>? Categories
     {
         get
         {
             if (!this.Properties.TryGetValue("categories", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, CategoriesItem>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -30,14 +32,14 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
         }
     }
 
-    public Dictionary<string, NotificationPreferenceDetails>? Notifications
+    public Dictionary<string, NotificationsItem>? Notifications
     {
         get
         {
             if (!this.Properties.TryGetValue("notifications", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, NotificationsItem>?>(
                 element,
                 ModelBase.SerializerOptions
             );

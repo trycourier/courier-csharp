@@ -12,7 +12,7 @@
     <!-- Generate an XML documentation file for the project. -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://www.github.com/trycourier/courier-csharp</RepositoryUrl>
+    <RepositoryUrl>https://www.github.com/stainless-sdks/courier-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <!-- Embed source files that are not tracked by the source control manager in the PDB -->
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

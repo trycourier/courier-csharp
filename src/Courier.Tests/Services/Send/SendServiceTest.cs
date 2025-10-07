@@ -2,25 +2,27 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Courier.Models.Bulk;
-using Courier.Models.Send;
+using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties;
+using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties;
+using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
 using Courier.Models.Send.ContentProperties;
-using Courier.Models.Send.PreferenceProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ProvidersProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.RoutingProperties;
+using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.TimeoutProperties;
 using Courier.Models.Tenants.DefaultPreferences.Items;
 using Courier.Models.Users.Preferences;
+using CategoriesItemProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
 
 namespace Courier.Tests.Services.Send;
 
 public class SendServiceTest : TestBase
 {
     [Fact(Skip = "Prism tests are disabled")]
-    public async Task Message_Works()
+    public async Task SendMessage_Works()
     {
-        var response = await this.client.Send.Message(
+        var response = await this.client.Send.SendMessage(
             new()
             {
                 Message = new()
@@ -126,7 +128,7 @@ public class SendServiceTest : TestBase
                         PhoneNumber = "phone_number",
                         Preferences = new()
                         {
-                            Notifications = new Dictionary<string, Preference>()
+                            Notifications = new Dictionary<string, NotificationsItem>()
                             {
                                 {
                                     "foo",
@@ -142,7 +144,7 @@ public class SendServiceTest : TestBase
                                     }
                                 },
                             },
-                            Categories = new Dictionary<string, Preference>()
+                            Categories = new Dictionary<string, CategoriesItem>()
                             {
                                 {
                                     "foo",
@@ -154,7 +156,7 @@ public class SendServiceTest : TestBase
                                             new(ChannelClassification.DirectMessage),
                                         ],
                                         Rules = [new() { Until = "until", Start = "start" }],
-                                        Source = Source.Subscription,
+                                        Source = CategoriesItemProperties::Source.Subscription,
                                     }
                                 },
                             },

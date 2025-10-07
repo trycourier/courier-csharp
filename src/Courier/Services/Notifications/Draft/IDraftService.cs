@@ -6,5 +6,5 @@ namespace Courier.Services.Notifications.Draft;
 
 public interface IDraftService
 {
-    Task<NotificationContent> RetrieveContent(DraftRetrieveContentParams parameters);
+    Task<NotificationGetContent> RetrieveContent(DraftRetrieveContentParams parameters);
 }
