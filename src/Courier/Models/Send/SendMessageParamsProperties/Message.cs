@@ -236,6 +236,9 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
         }
     }
 
+    /// <summary>
+    /// The id of the template you want to send
+    /// </summary>
     public string? Template
     {
         get
