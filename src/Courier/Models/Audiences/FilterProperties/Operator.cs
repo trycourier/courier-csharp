@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 
-namespace Courier.Models.Audiences.FilterProperties.UnionMember0Properties;
+namespace Courier.Models.Audiences.FilterProperties;
 
 /// <summary>
 /// The operator to use for filtering

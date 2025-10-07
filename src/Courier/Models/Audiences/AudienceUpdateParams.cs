@@ -38,7 +38,7 @@ public sealed record class AudienceUpdateParams : ParamsBase
     }
 
     /// <summary>
-    /// The operator to use for filtering
+    /// A single filter to use for filtering
     /// </summary>
     public Filter? Filter
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
-using Courier.Models.Audiences.FilterProperties.UnionMember0Properties;
+using Courier.Models.Audiences.FilterProperties;
 using Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationDelayStepProperties;
 using Courier.Models.Brands.BrandSettingsInAppProperties;
 using Courier.Models.Bulk.BulkListUsersResponseProperties.ItemProperties.IntersectionMember1Properties;
@@ -21,6 +21,7 @@ using AutomationSendStepProperties = Courier.Models.Automations.Invoke.InvokeInv
 using AutomationUpdateProfileStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationUpdateProfileStepProperties;
 using BaseCheckProperties = Courier.Models.Notifications.Checks.BaseCheckProperties;
 using BlockProperties = Courier.Models.Notifications.NotificationGetContentProperties.BlockProperties;
+using FilterConfigProperties = Courier.Models.Audiences.FilterConfigProperties;
 using IntersectionMember1Properties = Courier.Models.Tenants.Templates.ElementalContentProperties.ElementProperties.UnionMember0Properties.IntersectionMember1Properties;
 using ItemUpdateParamsProperties = Courier.Models.Tenants.DefaultPreferences.Items.ItemUpdateParamsProperties;
 using JobProperties = Courier.Models.Bulk.BulkRetrieveJobResponseProperties.JobProperties;
@@ -28,7 +29,6 @@ using ListDeleteResponseProperties = Courier.Models.Profiles.Lists.ListDeleteRes
 using ListSubscribeResponseProperties = Courier.Models.Profiles.Lists.ListSubscribeResponseProperties;
 using MessageDetailsProperties = Courier.Models.Messages.MessageDetailsProperties;
 using MessageRoutingProperties = Courier.Models.Notifications.MessageRoutingProperties;
-using NestedFilterConfigProperties = Courier.Models.Audiences.NestedFilterConfigProperties;
 using ProfileCreateResponseProperties = Courier.Models.Profiles.ProfileCreateResponseProperties;
 using ProfileReplaceResponseProperties = Courier.Models.Profiles.ProfileReplaceResponseProperties;
 using SubscriptionTopicNewProperties = Courier.Models.Tenants.DefaultPreferences.Items.SubscriptionTopicNewProperties;
@@ -37,7 +37,6 @@ using TenantAssociationProperties = Courier.Models.Users.Tenants.TenantAssociati
 using TenantListResponseProperties = Courier.Models.Tenants.TenantListResponseProperties;
 using TenantListUsersResponseProperties = Courier.Models.Tenants.TenantListUsersResponseProperties;
 using TokenAddSingleParamsProperties = Courier.Models.Users.Tokens.TokenAddSingleParamsProperties;
-using UnionMember0Properties = Courier.Models.Audiences.FilterConfigProperties.UnionMember0Properties;
 using UnionMember4Properties = Courier.Models.Tenants.Templates.ElementalContentProperties.ElementProperties.UnionMember4Properties;
 using WebhookProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationFetchDataStepProperties.WebhookProperties;
 
@@ -56,8 +55,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Method>(),
             new ApiEnumConverter<string, Criteria>(),
             new ApiEnumConverter<string, Operator>(),
-            new ApiEnumConverter<string, UnionMember0Properties::Operator>(),
-            new ApiEnumConverter<string, NestedFilterConfigProperties::Operator>(),
+            new ApiEnumConverter<string, FilterConfigProperties::Operator>(),
             new ApiEnumConverter<string, Action>(),
             new ApiEnumConverter<string, AutomationSendStepProperties::Action>(),
             new ApiEnumConverter<string, AutomationSendListStepProperties::Action>(),
