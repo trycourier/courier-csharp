@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Courier.Models;
 using Courier.Models.Bulk;
-using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties;
-using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties;
-using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
+using Courier.Models.PreferenceProperties;
 using Courier.Models.Send.ContentProperties;
 using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties;
 using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
@@ -13,7 +12,6 @@ using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.Rout
 using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.TimeoutProperties;
 using Courier.Models.Tenants.DefaultPreferences.Items;
 using Courier.Models.Users.Preferences;
-using CategoriesItemProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
 
 namespace Courier.Tests.Services.Send;
 
@@ -128,7 +126,7 @@ public class SendServiceTest : TestBase
                         PhoneNumber = "phone_number",
                         Preferences = new()
                         {
-                            Notifications = new Dictionary<string, NotificationsItem>()
+                            Notifications = new Dictionary<string, Preference>()
                             {
                                 {
                                     "foo",
@@ -144,7 +142,7 @@ public class SendServiceTest : TestBase
                                     }
                                 },
                             },
-                            Categories = new Dictionary<string, CategoriesItem>()
+                            Categories = new Dictionary<string, Preference>()
                             {
                                 {
                                     "foo",
@@ -156,7 +154,7 @@ public class SendServiceTest : TestBase
                                             new(ChannelClassification.DirectMessage),
                                         ],
                                         Rules = [new() { Until = "until", Start = "start" }],
-                                        Source = CategoriesItemProperties::Source.Subscription,
+                                        Source = Source.Subscription,
                                     }
                                 },
                             },

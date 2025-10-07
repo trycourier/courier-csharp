@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models.Audiences.FilterProperties.UnionMember0Properties;
 using Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationDelayStepProperties;
-using Courier.Models.Brands.BrandSettingsProperties.InappProperties;
+using Courier.Models.Brands.BrandSettingsInAppProperties;
 using Courier.Models.Bulk.BulkListUsersResponseProperties.ItemProperties.IntersectionMember1Properties;
 using Courier.Models.Inbound.InboundTrackEventParamsProperties;
-using Courier.Models.Send.RecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
+using Courier.Models.PreferenceProperties;
 using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
 using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.RoutingProperties;
 using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.TimeoutProperties;
@@ -21,7 +21,6 @@ using AutomationSendStepProperties = Courier.Models.Automations.Invoke.InvokeInv
 using AutomationUpdateProfileStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationUpdateProfileStepProperties;
 using BaseCheckProperties = Courier.Models.Notifications.Checks.BaseCheckProperties;
 using BlockProperties = Courier.Models.Notifications.NotificationGetContentProperties.BlockProperties;
-using CategoriesItemProperties = Courier.Models.Send.RecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
 using IntersectionMember1Properties = Courier.Models.Tenants.Templates.ElementalContentProperties.ElementProperties.UnionMember0Properties.IntersectionMember1Properties;
 using ItemUpdateParamsProperties = Courier.Models.Tenants.DefaultPreferences.Items.ItemUpdateParamsProperties;
 using JobProperties = Courier.Models.Bulk.BulkRetrieveJobResponseProperties.JobProperties;
@@ -30,7 +29,6 @@ using ListSubscribeResponseProperties = Courier.Models.Profiles.Lists.ListSubscr
 using MessageDetailsProperties = Courier.Models.Messages.MessageDetailsProperties;
 using MessageRoutingProperties = Courier.Models.Notifications.MessageRoutingProperties;
 using NestedFilterConfigProperties = Courier.Models.Audiences.NestedFilterConfigProperties;
-using NotificationsItemProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
 using ProfileCreateResponseProperties = Courier.Models.Profiles.ProfileCreateResponseProperties;
 using ProfileReplaceResponseProperties = Courier.Models.Profiles.ProfileReplaceResponseProperties;
 using SubscriptionTopicNewProperties = Courier.Models.Tenants.DefaultPreferences.Items.SubscriptionTopicNewProperties;
@@ -54,7 +52,6 @@ public abstract record class ModelBase
         Converters =
         {
             new ApiEnumConverter<string, Source>(),
-            new ApiEnumConverter<string, CategoriesItemProperties::Source>(),
             new ApiEnumConverter<string, RoutingMethod>(),
             new ApiEnumConverter<string, Method>(),
             new ApiEnumConverter<string, Criteria>(),
@@ -72,11 +69,6 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, AutomationFetchDataStepProperties::MergeStrategy>(),
             new ApiEnumConverter<string, AutomationInvokeStepProperties::Action>(),
             new ApiEnumConverter<string, Placement>(),
-            new ApiEnumConverter<string, NotificationsItemProperties::Source>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties.Source
-            >(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, JobProperties::Status>(),
             new ApiEnumConverter<string, Type>(),
