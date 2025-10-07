@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using Courier.Core;
 using Models = Courier.Models;
 
-namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToVariants;
+namespace Courier.Models.Send.RecipientVariants;
 
 public sealed record class UserRecipient(Models::UserRecipient Value)
-    : To,
+    : Recipient,
         IVariant<UserRecipient, Models::UserRecipient>
 {
     public static UserRecipient From(Models::UserRecipient value)
@@ -20,7 +19,7 @@ public sealed record class UserRecipient(Models::UserRecipient Value)
 }
 
 public sealed record class ListRecipient(Models::ListRecipient Value)
-    : To,
+    : Recipient,
         IVariant<ListRecipient, Models::ListRecipient>
 {
     public static ListRecipient From(Models::ListRecipient value)
@@ -32,16 +31,4 @@ public sealed record class ListRecipient(Models::ListRecipient Value)
     {
         this.Value.Validate();
     }
-}
-
-public sealed record class Recipients(List<Recipient> Value)
-    : To,
-        IVariant<Recipients, List<Recipient>>
-{
-    public static Recipients From(List<Recipient> value)
-    {
-        return new(value);
-    }
-
-    public override void Validate() { }
 }

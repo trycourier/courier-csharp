@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Courier.Models;
-using Courier.Models.Bulk;
 using Courier.Models.PreferenceProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
