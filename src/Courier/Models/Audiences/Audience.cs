@@ -93,7 +93,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
     }
 
     /// <summary>
-    /// The operator to use for filtering
+    /// A single filter to use for filtering
     /// </summary>
     public required Filter Filter
     {

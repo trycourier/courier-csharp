@@ -3,139 +3,117 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Audiences.FilterConfigProperties;
-using FilterConfigVariants = Courier.Models.Audiences.FilterConfigVariants;
 
 namespace Courier.Models.Audiences;
 
-/// <summary>
-/// The operator to use for filtering
-/// </summary>
-[JsonConverter(typeof(FilterConfigConverter))]
-public abstract record class FilterConfig
+[JsonConverter(typeof(ModelConverter<FilterConfig>))]
+public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
 {
-    internal FilterConfig() { }
-
-    public static implicit operator FilterConfig(UnionMember0 value) =>
-        new FilterConfigVariants::UnionMember0(value);
-
-    public static implicit operator FilterConfig(NestedFilterConfig value) =>
-        new FilterConfigVariants::NestedFilterConfig(value);
-
-    public bool TryPickUnionMember0([NotNullWhen(true)] out UnionMember0? value)
+    /// <summary>
+    /// The operator to use for filtering
+    /// </summary>
+    public required ApiEnum<string, Operator> Operator
     {
-        value = (this as FilterConfigVariants::UnionMember0)?.Value;
-        return value != null;
-    }
-
-    public bool TryPickNested([NotNullWhen(true)] out NestedFilterConfig? value)
-    {
-        value = (this as FilterConfigVariants::NestedFilterConfig)?.Value;
-        return value != null;
-    }
-
-    public void Switch(
-        Action<FilterConfigVariants::UnionMember0> unionMember0,
-        Action<FilterConfigVariants::NestedFilterConfig> nested
-    )
-    {
-        switch (this)
+        get
         {
-            case FilterConfigVariants::UnionMember0 inner:
-                unionMember0(inner);
-                break;
-            case FilterConfigVariants::NestedFilterConfig inner:
-                nested(inner);
-                break;
-            default:
+            if (!this.Properties.TryGetValue("operator", out JsonElement element))
                 throw new CourierInvalidDataException(
-                    "Data did not match any variant of FilterConfig"
+                    "'operator' cannot be null",
+                    new ArgumentOutOfRangeException("operator", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<ApiEnum<string, Operator>>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        set
+        {
+            this.Properties["operator"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    /// <summary>
+    /// The attribe name from profile whose value will be operated against the filter value
+    /// </summary>
+    public required string Path
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("path", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'path' cannot be null",
+                    new ArgumentOutOfRangeException("path", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'path' cannot be null",
+                    new ArgumentNullException("path")
                 );
         }
-    }
-
-    public T Match<T>(
-        Func<FilterConfigVariants::UnionMember0, T> unionMember0,
-        Func<FilterConfigVariants::NestedFilterConfig, T> nested
-    )
-    {
-        return this switch
+        set
         {
-            FilterConfigVariants::UnionMember0 inner => unionMember0(inner),
-            FilterConfigVariants::NestedFilterConfig inner => nested(inner),
-            _ => throw new CourierInvalidDataException(
-                "Data did not match any variant of FilterConfig"
-            ),
-        };
-    }
-
-    public abstract void Validate();
-}
-
-sealed class FilterConfigConverter : JsonConverter<FilterConfig>
-{
-    public override FilterConfig? Read(
-        ref Utf8JsonReader reader,
-        Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        List<CourierInvalidDataException> exceptions = [];
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<UnionMember0>(ref reader, options);
-            if (deserialized != null)
-            {
-                return new FilterConfigVariants::UnionMember0(deserialized);
-            }
-        }
-        catch (JsonException e)
-        {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant FilterConfigVariants::UnionMember0",
-                    e
-                )
+            this.Properties["path"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
             );
         }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<NestedFilterConfig>(ref reader, options);
-            if (deserialized != null)
-            {
-                return new FilterConfigVariants::NestedFilterConfig(deserialized);
-            }
-        }
-        catch (JsonException e)
-        {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant FilterConfigVariants::NestedFilterConfig",
-                    e
-                )
-            );
-        }
-
-        throw new AggregateException(exceptions);
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        FilterConfig value,
-        JsonSerializerOptions options
-    )
+    /// <summary>
+    /// The value to use for filtering
+    /// </summary>
+    public required string Value
     {
-        object variant = value switch
+        get
         {
-            FilterConfigVariants::UnionMember0(var unionMember0) => unionMember0,
-            FilterConfigVariants::NestedFilterConfig(var nested) => nested,
-            _ => throw new CourierInvalidDataException(
-                "Data did not match any variant of FilterConfig"
-            ),
-        };
-        JsonSerializer.Serialize(writer, variant, options);
+            if (!this.Properties.TryGetValue("value", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'value' cannot be null",
+                    new ArgumentOutOfRangeException("value", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'value' cannot be null",
+                    new ArgumentNullException("value")
+                );
+        }
+        set
+        {
+            this.Properties["value"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        this.Operator.Validate();
+        _ = this.Path;
+        _ = this.Value;
+    }
+
+    public FilterConfig() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    FilterConfig(Dictionary<string, JsonElement> properties)
+    {
+        Properties = properties;
+    }
+#pragma warning restore CS8618
+
+    public static FilterConfig FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    {
+        return new(properties);
     }
 }
