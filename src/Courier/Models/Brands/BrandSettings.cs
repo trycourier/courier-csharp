@@ -3,21 +3,20 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Brands.BrandSettingsProperties;
 
 namespace Courier.Models.Brands;
 
 [JsonConverter(typeof(ModelConverter<BrandSettings>))]
 public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
 {
-    public Colors? Colors
+    public BrandColors? Colors
     {
         get
         {
             if (!this.Properties.TryGetValue("colors", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Colors?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<BrandColors?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -28,14 +27,17 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
         }
     }
 
-    public Email? Email
+    public BrandSettingsEmail? Email
     {
         get
         {
             if (!this.Properties.TryGetValue("email", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Email?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<BrandSettingsEmail?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -46,14 +48,17 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
         }
     }
 
-    public Inapp? Inapp
+    public BrandSettingsInApp? Inapp
     {
         get
         {
             if (!this.Properties.TryGetValue("inapp", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Inapp?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<BrandSettingsInApp?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {

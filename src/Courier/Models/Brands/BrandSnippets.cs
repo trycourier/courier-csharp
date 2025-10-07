@@ -3,21 +3,23 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Brands.BrandSnippetsProperties;
 
 namespace Courier.Models.Brands;
 
 [JsonConverter(typeof(ModelConverter<BrandSnippets>))]
 public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
 {
-    public List<Item>? Items
+    public List<BrandSnippet>? Items
     {
         get
         {
             if (!this.Properties.TryGetValue("items", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<Item>?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<List<BrandSnippet>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {

@@ -1,15 +1,12 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Courier.Models;
 using Courier.Models.Bulk.InboundBulkMessageProperties;
-using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties.NotificationsItemProperties;
-using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.CategoriesProperties;
-using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.NotificationsProperties;
+using Courier.Models.Lists.Subscriptions;
+using Courier.Models.PreferenceProperties;
 using Courier.Models.Tenants.DefaultPreferences.Items;
 using Courier.Models.Users.Preferences;
-using CategoriesItemProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties.CategoriesItemProperties;
-using CategoriesProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties;
-using NotificationsProperties = Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties;
 
 namespace Courier.Tests.Services.Bulk;
 
@@ -29,7 +26,7 @@ public class BulkServiceTest : TestBase
                         Data = JsonSerializer.Deserialize<JsonElement>("{}"),
                         Preferences = new()
                         {
-                            Categories = new Dictionary<string, CategoriesItem>()
+                            Categories = new Dictionary<string, NotificationPreferenceDetails>()
                             {
                                 {
                                     "foo",
@@ -44,7 +41,7 @@ public class BulkServiceTest : TestBase
                                     }
                                 },
                             },
-                            Notifications = new Dictionary<string, NotificationsItem>()
+                            Notifications = new Dictionary<string, NotificationPreferenceDetails>()
                             {
                                 {
                                     "foo",
@@ -75,10 +72,7 @@ public class BulkServiceTest : TestBase
                             PhoneNumber = "phone_number",
                             Preferences = new()
                             {
-                                Notifications = new Dictionary<
-                                    string,
-                                    NotificationsProperties::NotificationsItem
-                                >()
+                                Notifications = new Dictionary<string, Preference>()
                                 {
                                     {
                                         "foo",
@@ -94,10 +88,7 @@ public class BulkServiceTest : TestBase
                                         }
                                     },
                                 },
-                                Categories = new Dictionary<
-                                    string,
-                                    CategoriesProperties::CategoriesItem
-                                >()
+                                Categories = new Dictionary<string, Preference>()
                                 {
                                     {
                                         "foo",
@@ -109,7 +100,7 @@ public class BulkServiceTest : TestBase
                                                 new(ChannelClassification.DirectMessage),
                                             ],
                                             Rules = [new() { Until = "until", Start = "start" }],
-                                            Source = CategoriesItemProperties::Source.Subscription,
+                                            Source = Source.Subscription,
                                         }
                                     },
                                 },

@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ProvidersProperties.ProvidersItemProperties.MetadataProperties;
 
 namespace Courier.Models.Send.SendSendMessageParamsProperties.MessageProperties.ProvidersProperties.ProvidersItemProperties;
 
