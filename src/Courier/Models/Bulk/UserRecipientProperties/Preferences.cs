@@ -5,14 +5,15 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Send;
+using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.CategoriesProperties;
+using Courier.Models.Bulk.UserRecipientProperties.PreferencesProperties.NotificationsProperties;
 
 namespace Courier.Models.Bulk.UserRecipientProperties;
 
 [JsonConverter(typeof(ModelConverter<Preferences>))]
 public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
 {
-    public required Dictionary<string, Preference> Notifications
+    public required Dictionary<string, NotificationsItem> Notifications
     {
         get
         {
@@ -22,7 +23,7 @@ public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
                     new ArgumentOutOfRangeException("notifications", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Dictionary<string, Preference>>(
+            return JsonSerializer.Deserialize<Dictionary<string, NotificationsItem>>(
                     element,
                     ModelBase.SerializerOptions
                 )
@@ -40,14 +41,14 @@ public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
         }
     }
 
-    public Dictionary<string, Preference>? Categories
+    public Dictionary<string, CategoriesItem>? Categories
     {
         get
         {
             if (!this.Properties.TryGetValue("categories", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Dictionary<string, Preference>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, CategoriesItem>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -111,7 +112,7 @@ public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
     }
 
     [SetsRequiredMembers]
-    public Preferences(Dictionary<string, Preference> notifications)
+    public Preferences(Dictionary<string, NotificationsItem> notifications)
         : this()
     {
         this.Notifications = notifications;

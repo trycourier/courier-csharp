@@ -6,7 +6,6 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Notifications.NotificationListResponseProperties.ResultProperties;
-using Courier.Models.Send;
 
 namespace Courier.Models.Notifications.NotificationListResponseProperties;
 

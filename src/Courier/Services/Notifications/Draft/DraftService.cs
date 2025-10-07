@@ -15,7 +15,7 @@ public sealed class DraftService : IDraftService
         _client = client;
     }
 
-    public async Task<NotificationContent> RetrieveContent(DraftRetrieveContentParams parameters)
+    public async Task<NotificationGetContent> RetrieveContent(DraftRetrieveContentParams parameters)
     {
         HttpRequest<DraftRetrieveContentParams> request = new()
         {
@@ -23,6 +23,6 @@ public sealed class DraftService : IDraftService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<NotificationContent>().ConfigureAwait(false);
+        return await response.Deserialize<NotificationGetContent>().ConfigureAwait(false);
     }
 }

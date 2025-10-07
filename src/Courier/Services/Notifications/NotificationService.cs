@@ -15,20 +15,20 @@ public sealed class NotificationService : INotificationService
     public NotificationService(ICourierClient client)
     {
         _client = client;
-        _checks = new(() => new CheckService(client));
         _draft = new(() => new DraftService(client));
-    }
-
-    readonly Lazy<ICheckService> _checks;
-    public ICheckService Checks
-    {
-        get { return _checks.Value; }
+        _checks = new(() => new CheckService(client));
     }
 
     readonly Lazy<IDraftService> _draft;
     public IDraftService Draft
     {
         get { return _draft.Value; }
+    }
+
+    readonly Lazy<ICheckService> _checks;
+    public ICheckService Checks
+    {
+        get { return _checks.Value; }
     }
 
     public async Task<NotificationListResponse> List(NotificationListParams? parameters = null)
@@ -44,7 +44,7 @@ public sealed class NotificationService : INotificationService
         return await response.Deserialize<NotificationListResponse>().ConfigureAwait(false);
     }
 
-    public async Task<NotificationContent> RetrieveContent(
+    public async Task<NotificationGetContent> RetrieveContent(
         NotificationRetrieveContentParams parameters
     )
     {
@@ -54,6 +54,6 @@ public sealed class NotificationService : INotificationService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<NotificationContent>().ConfigureAwait(false);
+        return await response.Deserialize<NotificationGetContent>().ConfigureAwait(false);
     }
 }

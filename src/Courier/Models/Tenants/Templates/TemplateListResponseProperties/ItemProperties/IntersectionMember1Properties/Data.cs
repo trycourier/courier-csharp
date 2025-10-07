@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Send;
+using Courier.Models.Notifications;
 
 namespace Courier.Models.Tenants.Templates.TemplateListResponseProperties.ItemProperties.IntersectionMember1Properties;
 

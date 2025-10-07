@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Courier.Models.Lists.Subscriptions;
+using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.CategoriesProperties;
+using Courier.Models.Lists.Subscriptions.RecipientPreferencesProperties.NotificationsProperties;
 using Courier.Models.Tenants.DefaultPreferences.Items;
 using Courier.Models.Users.Preferences;
 
@@ -36,7 +37,7 @@ public class ListServiceTest : TestBase
                         ListID = "listId",
                         Preferences = new()
                         {
-                            Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                            Categories = new Dictionary<string, CategoriesItem>()
                             {
                                 {
                                     "foo",
@@ -51,7 +52,7 @@ public class ListServiceTest : TestBase
                                     }
                                 },
                             },
-                            Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                            Notifications = new Dictionary<string, NotificationsItem>()
                             {
                                 {
                                     "foo",
