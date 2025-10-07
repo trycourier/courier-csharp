@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
-using Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMessageProperties.ContentProperties;
 using Courier.Models.Tenants.Templates;
 using ContentVariants = Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMessageProperties.ContentVariants;
 

@@ -1,5 +1,5 @@
 using Courier.Core;
-using ContentProperties = Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMessageProperties.ContentProperties;
+using Models = Courier.Models;
 using Templates = Courier.Models.Tenants.Templates;
 
 namespace Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMessageProperties.ContentVariants;
@@ -7,11 +7,11 @@ namespace Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMes
 /// <summary>
 /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
 /// </summary>
-public sealed record class ElementalContentSugar(ContentProperties::ElementalContentSugar Value)
+public sealed record class ElementalContentSugar(Models::ElementalContentSugar Value)
     : Content,
-        IVariant<ElementalContentSugar, ContentProperties::ElementalContentSugar>
+        IVariant<ElementalContentSugar, Models::ElementalContentSugar>
 {
-    public static ElementalContentSugar From(ContentProperties::ElementalContentSugar value)
+    public static ElementalContentSugar From(Models::ElementalContentSugar value)
     {
         return new(value);
     }
