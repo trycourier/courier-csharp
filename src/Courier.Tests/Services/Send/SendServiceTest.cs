@@ -6,7 +6,6 @@ using Courier.Models.Bulk;
 using Courier.Models.PreferenceProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ContentProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;

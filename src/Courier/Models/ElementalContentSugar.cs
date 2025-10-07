@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 
-namespace Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMessageProperties.ContentProperties;
+namespace Courier.Models;
 
 /// <summary>
 /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
