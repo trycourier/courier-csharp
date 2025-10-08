@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 
-namespace Courier.Models;
+namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
 
 [JsonConverter(typeof(ModelConverter<ListRecipient>))]
 public sealed record class ListRecipient : ModelBase, IFromRaw<ListRecipient>

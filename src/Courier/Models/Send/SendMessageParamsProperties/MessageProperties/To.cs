@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
+using Courier.Models.Bulk;
+using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties;
 

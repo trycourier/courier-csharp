@@ -34,7 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier;
-using Courier.Models;
+using Courier.Models.Bulk;
 using Courier.Models.Send;
 
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
