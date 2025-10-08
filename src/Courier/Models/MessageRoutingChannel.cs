@@ -4,45 +4,55 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
-using MessageRoutingChannelVariants = Courier.Models.MessageRoutingChannelVariants;
 
 namespace Courier.Models;
 
 [JsonConverter(typeof(MessageRoutingChannelConverter))]
-public abstract record class MessageRoutingChannel
+public record class MessageRoutingChannel
 {
-    internal MessageRoutingChannel() { }
+    public object Value { get; private init; }
 
-    public static implicit operator MessageRoutingChannel(string value) =>
-        new MessageRoutingChannelVariants::String(value);
+    public MessageRoutingChannel(string value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator MessageRoutingChannel(MessageRouting value) =>
-        new MessageRoutingChannelVariants::MessageRouting(value);
+    public MessageRoutingChannel(MessageRouting value)
+    {
+        Value = value;
+    }
+
+    MessageRoutingChannel(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static MessageRoutingChannel CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
     {
-        value = (this as MessageRoutingChannelVariants::String)?.Value;
+        value = this.Value as string;
         return value != null;
     }
 
     public bool TryPickMessageRouting([NotNullWhen(true)] out MessageRouting? value)
     {
-        value = (this as MessageRoutingChannelVariants::MessageRouting)?.Value;
+        value = this.Value as MessageRouting;
         return value != null;
     }
 
-    public void Switch(
-        Action<MessageRoutingChannelVariants::String> @string,
-        Action<MessageRoutingChannelVariants::MessageRouting> messageRouting
-    )
+    public void Switch(Action<string> @string, Action<MessageRouting> messageRouting)
     {
-        switch (this)
+        switch (this.Value)
         {
-            case MessageRoutingChannelVariants::String inner:
-                @string(inner);
+            case string value:
+                @string(value);
                 break;
-            case MessageRoutingChannelVariants::MessageRouting inner:
-                messageRouting(inner);
+            case MessageRouting value:
+                messageRouting(value);
                 break;
             default:
                 throw new CourierInvalidDataException(
@@ -51,22 +61,29 @@ public abstract record class MessageRoutingChannel
         }
     }
 
-    public T Match<T>(
-        Func<MessageRoutingChannelVariants::String, T> @string,
-        Func<MessageRoutingChannelVariants::MessageRouting, T> messageRouting
-    )
+    public T Match<T>(Func<string, T> @string, Func<MessageRouting, T> messageRouting)
     {
-        return this switch
+        return this.Value switch
         {
-            MessageRoutingChannelVariants::String inner => @string(inner),
-            MessageRoutingChannelVariants::MessageRouting inner => messageRouting(inner),
+            string value => @string(value),
+            MessageRouting value => messageRouting(value),
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of MessageRoutingChannel"
             ),
         };
     }
 
-    public abstract void Validate();
+    public void Validate()
+    {
+        if (this.Value is not UnknownVariant)
+        {
+            throw new CourierInvalidDataException(
+                "Data did not match any variant of MessageRoutingChannel"
+            );
+        }
+    }
+
+    private record struct UnknownVariant(JsonElement value);
 }
 
 sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChannel>
@@ -84,14 +101,15 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
             var deserialized = JsonSerializer.Deserialize<MessageRouting>(ref reader, options);
             if (deserialized != null)
             {
-                return new MessageRoutingChannelVariants::MessageRouting(deserialized);
+                deserialized.Validate();
+                return new MessageRoutingChannel(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant MessageRoutingChannelVariants::MessageRouting",
+                    "Data does not match union variant 'MessageRouting'",
                     e
                 )
             );
@@ -102,16 +120,13 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
             var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
             if (deserialized != null)
             {
-                return new MessageRoutingChannelVariants::String(deserialized);
+                return new MessageRoutingChannel(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant MessageRoutingChannelVariants::String",
-                    e
-                )
+                new CourierInvalidDataException("Data does not match union variant 'string'", e)
             );
         }
 
@@ -124,14 +139,7 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
         JsonSerializerOptions options
     )
     {
-        object variant = value switch
-        {
-            MessageRoutingChannelVariants::String(var @string) => @string,
-            MessageRoutingChannelVariants::MessageRouting(var messageRouting) => messageRouting,
-            _ => throw new CourierInvalidDataException(
-                "Data did not match any variant of MessageRoutingChannel"
-            ),
-        };
+        object variant = value.Value;
         JsonSerializer.Serialize(writer, variant, options);
     }
 }

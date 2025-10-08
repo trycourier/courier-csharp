@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
-using ExpiresInVariants = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ExpiryProperties.ExpiresInVariants;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ExpiryProperties;
 
@@ -12,38 +11,51 @@ namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.Expi
 /// Duration in ms or ISO8601 duration (e.g. P1DT4H).
 /// </summary>
 [JsonConverter(typeof(ExpiresInConverter))]
-public abstract record class ExpiresIn
+public record class ExpiresIn
 {
-    internal ExpiresIn() { }
+    public object Value { get; private init; }
 
-    public static implicit operator ExpiresIn(string value) => new ExpiresInVariants::String(value);
+    public ExpiresIn(string value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator ExpiresIn(long value) => new ExpiresInVariants::Long(value);
+    public ExpiresIn(long value)
+    {
+        Value = value;
+    }
+
+    ExpiresIn(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static ExpiresIn CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
     {
-        value = (this as ExpiresInVariants::String)?.Value;
+        value = this.Value as string;
         return value != null;
     }
 
     public bool TryPickLong([NotNullWhen(true)] out long? value)
     {
-        value = (this as ExpiresInVariants::Long)?.Value;
+        value = this.Value as long?;
         return value != null;
     }
 
-    public void Switch(
-        Action<ExpiresInVariants::String> @string,
-        Action<ExpiresInVariants::Long> @long
-    )
+    public void Switch(Action<string> @string, Action<long> @long)
     {
-        switch (this)
+        switch (this.Value)
         {
-            case ExpiresInVariants::String inner:
-                @string(inner);
+            case string value:
+                @string(value);
                 break;
-            case ExpiresInVariants::Long inner:
-                @long(inner);
+            case long value:
+                @long(value);
                 break;
             default:
                 throw new CourierInvalidDataException(
@@ -52,22 +64,27 @@ public abstract record class ExpiresIn
         }
     }
 
-    public T Match<T>(
-        Func<ExpiresInVariants::String, T> @string,
-        Func<ExpiresInVariants::Long, T> @long
-    )
+    public T Match<T>(Func<string, T> @string, Func<long, T> @long)
     {
-        return this switch
+        return this.Value switch
         {
-            ExpiresInVariants::String inner => @string(inner),
-            ExpiresInVariants::Long inner => @long(inner),
+            string value => @string(value),
+            long value => @long(value),
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of ExpiresIn"
             ),
         };
     }
 
-    public abstract void Validate();
+    public void Validate()
+    {
+        if (this.Value is not UnknownVariant)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of ExpiresIn");
+        }
+    }
+
+    private record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
@@ -85,32 +102,24 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
             var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
             if (deserialized != null)
             {
-                return new ExpiresInVariants::String(deserialized);
+                return new ExpiresIn(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant ExpiresInVariants::String",
-                    e
-                )
+                new CourierInvalidDataException("Data does not match union variant 'string'", e)
             );
         }
 
         try
         {
-            return new ExpiresInVariants::Long(
-                JsonSerializer.Deserialize<long>(ref reader, options)
-            );
+            return new ExpiresIn(JsonSerializer.Deserialize<long>(ref reader, options));
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant ExpiresInVariants::Long",
-                    e
-                )
+                new CourierInvalidDataException("Data does not match union variant 'long'", e)
             );
         }
 
@@ -123,14 +132,7 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
         JsonSerializerOptions options
     )
     {
-        object variant = value switch
-        {
-            ExpiresInVariants::String(var @string) => @string,
-            ExpiresInVariants::Long(var @long) => @long,
-            _ => throw new CourierInvalidDataException(
-                "Data did not match any variant of ExpiresIn"
-            ),
-        };
+        object variant = value.Value;
         JsonSerializer.Serialize(writer, variant, options);
     }
 }

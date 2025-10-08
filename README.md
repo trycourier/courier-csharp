@@ -44,7 +44,7 @@ SendMessageParams parameters = new()
 {
     Message = new()
     {
-        To = new UserRecipient() { UserID = "your_user_id" },
+        To = new(new UserRecipient() { UserID = "your_user_id" }),
         Template = "your_template",
         Data = new Dictionary<string, JsonElement>()
         {

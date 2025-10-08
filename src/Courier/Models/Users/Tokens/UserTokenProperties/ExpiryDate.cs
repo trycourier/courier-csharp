@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
-using ExpiryDateVariants = Courier.Models.Users.Tokens.UserTokenProperties.ExpiryDateVariants;
 
 namespace Courier.Models.Users.Tokens.UserTokenProperties;
 
@@ -13,39 +12,51 @@ namespace Courier.Models.Users.Tokens.UserTokenProperties;
 /// to disable expiration.
 /// </summary>
 [JsonConverter(typeof(ExpiryDateConverter))]
-public abstract record class ExpiryDate
+public record class ExpiryDate
 {
-    internal ExpiryDate() { }
+    public object Value { get; private init; }
 
-    public static implicit operator ExpiryDate(string value) =>
-        new ExpiryDateVariants::String(value);
+    public ExpiryDate(string value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator ExpiryDate(bool value) => new ExpiryDateVariants::Bool(value);
+    public ExpiryDate(bool value)
+    {
+        Value = value;
+    }
+
+    ExpiryDate(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static ExpiryDate CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
     {
-        value = (this as ExpiryDateVariants::String)?.Value;
+        value = this.Value as string;
         return value != null;
     }
 
     public bool TryPickBool([NotNullWhen(true)] out bool? value)
     {
-        value = (this as ExpiryDateVariants::Bool)?.Value;
+        value = this.Value as bool?;
         return value != null;
     }
 
-    public void Switch(
-        Action<ExpiryDateVariants::String> @string,
-        Action<ExpiryDateVariants::Bool> @bool
-    )
+    public void Switch(Action<string> @string, Action<bool> @bool)
     {
-        switch (this)
+        switch (this.Value)
         {
-            case ExpiryDateVariants::String inner:
-                @string(inner);
+            case string value:
+                @string(value);
                 break;
-            case ExpiryDateVariants::Bool inner:
-                @bool(inner);
+            case bool value:
+                @bool(value);
                 break;
             default:
                 throw new CourierInvalidDataException(
@@ -54,22 +65,27 @@ public abstract record class ExpiryDate
         }
     }
 
-    public T Match<T>(
-        Func<ExpiryDateVariants::String, T> @string,
-        Func<ExpiryDateVariants::Bool, T> @bool
-    )
+    public T Match<T>(Func<string, T> @string, Func<bool, T> @bool)
     {
-        return this switch
+        return this.Value switch
         {
-            ExpiryDateVariants::String inner => @string(inner),
-            ExpiryDateVariants::Bool inner => @bool(inner),
+            string value => @string(value),
+            bool value => @bool(value),
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of ExpiryDate"
             ),
         };
     }
 
-    public abstract void Validate();
+    public void Validate()
+    {
+        if (this.Value is not UnknownVariant)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of ExpiryDate");
+        }
+    }
+
+    private record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
@@ -87,32 +103,24 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
             var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
             if (deserialized != null)
             {
-                return new ExpiryDateVariants::String(deserialized);
+                return new ExpiryDate(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant ExpiryDateVariants::String",
-                    e
-                )
+                new CourierInvalidDataException("Data does not match union variant 'string'", e)
             );
         }
 
         try
         {
-            return new ExpiryDateVariants::Bool(
-                JsonSerializer.Deserialize<bool>(ref reader, options)
-            );
+            return new ExpiryDate(JsonSerializer.Deserialize<bool>(ref reader, options));
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant ExpiryDateVariants::Bool",
-                    e
-                )
+                new CourierInvalidDataException("Data does not match union variant 'bool'", e)
             );
         }
 
@@ -125,15 +133,7 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        object? variant = value switch
-        {
-            null => null,
-            ExpiryDateVariants::String(var @string) => @string,
-            ExpiryDateVariants::Bool(var @bool) => @bool,
-            _ => throw new CourierInvalidDataException(
-                "Data did not match any variant of ExpiryDate"
-            ),
-        };
+        object? variant = value?.Value;
         JsonSerializer.Serialize(writer, variant, options);
     }
 }

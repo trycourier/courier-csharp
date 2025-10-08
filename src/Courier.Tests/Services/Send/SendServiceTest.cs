@@ -53,14 +53,14 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
+                    Content = new(new ElementalContentSugar() { Body = "body", Title = "title" }),
                     Context = new() { TenantID = "tenant_id" },
                     Data = new Dictionary<string, JsonElement>()
                     {
                         { "name", JsonSerializer.SerializeToElement("bar") },
                     },
                     Delay = new() { Duration = 0, Until = "until" },
-                    Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
+                    Expiry = new() { ExpiresIn = new("string"), ExpiresAt = "expires_at" },
                     Metadata = new()
                     {
                         Event = "event",
@@ -102,7 +102,7 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Routing = new() { Channels = ["string"], Method = Method.All },
+                    Routing = new() { Channels = [new("string")], Method = Method.All },
                     Template = "template_id",
                     Timeout = new()
                     {
@@ -112,56 +112,58 @@ public class SendServiceTest : TestBase
                         Message = 0,
                         Provider = new Dictionary<string, long>() { { "foo", 0 } },
                     },
-                    To = new UserRecipient()
-                    {
-                        AccountID = "account_id",
-                        Context = new() { TenantID = "tenant_id" },
-                        Data = new Dictionary<string, JsonElement>()
+                    To = new(
+                        new UserRecipient()
                         {
-                            { "foo", JsonSerializer.SerializeToElement("bar") },
-                        },
-                        Email = "email",
-                        Locale = "locale",
-                        PhoneNumber = "phone_number",
-                        Preferences = new()
-                        {
-                            Notifications = new Dictionary<string, Preference>()
+                            AccountID = "account_id",
+                            Context = new() { TenantID = "tenant_id" },
+                            Data = new Dictionary<string, JsonElement>()
                             {
-                                {
-                                    "foo",
-                                    new()
-                                    {
-                                        Status = PreferenceStatus.OptedIn,
-                                        ChannelPreferences =
-                                        [
-                                            new(ChannelClassification.DirectMessage),
-                                        ],
-                                        Rules = [new() { Until = "until", Start = "start" }],
-                                        Source = Source.Subscription,
-                                    }
-                                },
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
                             },
-                            Categories = new Dictionary<string, Preference>()
+                            Email = "email",
+                            Locale = "locale",
+                            PhoneNumber = "phone_number",
+                            Preferences = new()
                             {
+                                Notifications = new Dictionary<string, Preference>()
                                 {
-                                    "foo",
-                                    new()
                                     {
-                                        Status = PreferenceStatus.OptedIn,
-                                        ChannelPreferences =
-                                        [
-                                            new(ChannelClassification.DirectMessage),
-                                        ],
-                                        Rules = [new() { Until = "until", Start = "start" }],
-                                        Source = Source.Subscription,
-                                    }
+                                        "foo",
+                                        new()
+                                        {
+                                            Status = PreferenceStatus.OptedIn,
+                                            ChannelPreferences =
+                                            [
+                                                new(ChannelClassification.DirectMessage),
+                                            ],
+                                            Rules = [new() { Until = "until", Start = "start" }],
+                                            Source = Source.Subscription,
+                                        }
+                                    },
                                 },
+                                Categories = new Dictionary<string, Preference>()
+                                {
+                                    {
+                                        "foo",
+                                        new()
+                                        {
+                                            Status = PreferenceStatus.OptedIn,
+                                            ChannelPreferences =
+                                            [
+                                                new(ChannelClassification.DirectMessage),
+                                            ],
+                                            Rules = [new() { Until = "until", Start = "start" }],
+                                            Source = Source.Subscription,
+                                        }
+                                    },
+                                },
+                                TemplateID = "templateId",
                             },
-                            TemplateID = "templateId",
-                        },
-                        TenantID = "tenant_id",
-                        UserID = "example_user",
-                    },
+                            TenantID = "tenant_id",
+                            UserID = "example_user",
+                        }
+                    ),
                 },
             }
         );

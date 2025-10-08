@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using Courier.Models.Send.ElementalNodeProperties;
-using ElementalNodeVariants = Courier.Models.Send.ElementalNodeVariants;
 
 namespace Courier.Models.Send;
 
@@ -22,105 +21,193 @@ namespace Courier.Models.Send;
 /// for more details.
 /// </summary>
 [JsonConverter(typeof(ElementalNodeConverter))]
-public abstract record class ElementalNode
+public record class ElementalNode
 {
-    internal ElementalNode() { }
+    public object Value { get; private init; }
 
-    public static implicit operator ElementalNode(UnionMember0 value) =>
-        new ElementalNodeVariants::UnionMember0(value);
+    public List<string>? Channels
+    {
+        get
+        {
+            return Match<List<string>?>(
+                unionMember0: (x) => x.Channels,
+                unionMember1: (x) => x.Channels,
+                unionMember2: (x) => x.Channels,
+                unionMember3: (x) => x.Channels,
+                unionMember4: (_) => null,
+                unionMember5: (x) => x.Channels,
+                unionMember6: (x) => x.Channels
+            );
+        }
+    }
 
-    public static implicit operator ElementalNode(UnionMember1 value) =>
-        new ElementalNodeVariants::UnionMember1(value);
+    public string? If
+    {
+        get
+        {
+            return Match<string?>(
+                unionMember0: (x) => x.If,
+                unionMember1: (x) => x.If,
+                unionMember2: (x) => x.If,
+                unionMember3: (x) => x.If,
+                unionMember4: (_) => null,
+                unionMember5: (x) => x.If,
+                unionMember6: (x) => x.If
+            );
+        }
+    }
 
-    public static implicit operator ElementalNode(UnionMember2 value) =>
-        new ElementalNodeVariants::UnionMember2(value);
+    public string? Loop
+    {
+        get
+        {
+            return Match<string?>(
+                unionMember0: (x) => x.Loop,
+                unionMember1: (x) => x.Loop,
+                unionMember2: (x) => x.Loop,
+                unionMember3: (x) => x.Loop,
+                unionMember4: (_) => null,
+                unionMember5: (x) => x.Loop,
+                unionMember6: (x) => x.Loop
+            );
+        }
+    }
 
-    public static implicit operator ElementalNode(UnionMember3 value) =>
-        new ElementalNodeVariants::UnionMember3(value);
+    public string? Ref
+    {
+        get
+        {
+            return Match<string?>(
+                unionMember0: (x) => x.Ref,
+                unionMember1: (x) => x.Ref,
+                unionMember2: (x) => x.Ref,
+                unionMember3: (x) => x.Ref,
+                unionMember4: (_) => null,
+                unionMember5: (x) => x.Ref,
+                unionMember6: (x) => x.Ref
+            );
+        }
+    }
 
-    public static implicit operator ElementalNode(UnionMember4 value) =>
-        new ElementalNodeVariants::UnionMember4(value);
+    public ElementalNode(UnionMember0 value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator ElementalNode(UnionMember5 value) =>
-        new ElementalNodeVariants::UnionMember5(value);
+    public ElementalNode(UnionMember1 value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator ElementalNode(UnionMember6 value) =>
-        new ElementalNodeVariants::UnionMember6(value);
+    public ElementalNode(UnionMember2 value)
+    {
+        Value = value;
+    }
+
+    public ElementalNode(UnionMember3 value)
+    {
+        Value = value;
+    }
+
+    public ElementalNode(UnionMember4 value)
+    {
+        Value = value;
+    }
+
+    public ElementalNode(UnionMember5 value)
+    {
+        Value = value;
+    }
+
+    public ElementalNode(UnionMember6 value)
+    {
+        Value = value;
+    }
+
+    ElementalNode(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static ElementalNode CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
 
     public bool TryPickUnionMember0([NotNullWhen(true)] out UnionMember0? value)
     {
-        value = (this as ElementalNodeVariants::UnionMember0)?.Value;
+        value = this.Value as UnionMember0;
         return value != null;
     }
 
     public bool TryPickUnionMember1([NotNullWhen(true)] out UnionMember1? value)
     {
-        value = (this as ElementalNodeVariants::UnionMember1)?.Value;
+        value = this.Value as UnionMember1;
         return value != null;
     }
 
     public bool TryPickUnionMember2([NotNullWhen(true)] out UnionMember2? value)
     {
-        value = (this as ElementalNodeVariants::UnionMember2)?.Value;
+        value = this.Value as UnionMember2;
         return value != null;
     }
 
     public bool TryPickUnionMember3([NotNullWhen(true)] out UnionMember3? value)
     {
-        value = (this as ElementalNodeVariants::UnionMember3)?.Value;
+        value = this.Value as UnionMember3;
         return value != null;
     }
 
     public bool TryPickUnionMember4([NotNullWhen(true)] out UnionMember4? value)
     {
-        value = (this as ElementalNodeVariants::UnionMember4)?.Value;
+        value = this.Value as UnionMember4;
         return value != null;
     }
 
     public bool TryPickUnionMember5([NotNullWhen(true)] out UnionMember5? value)
     {
-        value = (this as ElementalNodeVariants::UnionMember5)?.Value;
+        value = this.Value as UnionMember5;
         return value != null;
     }
 
     public bool TryPickUnionMember6([NotNullWhen(true)] out UnionMember6? value)
     {
-        value = (this as ElementalNodeVariants::UnionMember6)?.Value;
+        value = this.Value as UnionMember6;
         return value != null;
     }
 
     public void Switch(
-        Action<ElementalNodeVariants::UnionMember0> unionMember0,
-        Action<ElementalNodeVariants::UnionMember1> unionMember1,
-        Action<ElementalNodeVariants::UnionMember2> unionMember2,
-        Action<ElementalNodeVariants::UnionMember3> unionMember3,
-        Action<ElementalNodeVariants::UnionMember4> unionMember4,
-        Action<ElementalNodeVariants::UnionMember5> unionMember5,
-        Action<ElementalNodeVariants::UnionMember6> unionMember6
+        Action<UnionMember0> unionMember0,
+        Action<UnionMember1> unionMember1,
+        Action<UnionMember2> unionMember2,
+        Action<UnionMember3> unionMember3,
+        Action<UnionMember4> unionMember4,
+        Action<UnionMember5> unionMember5,
+        Action<UnionMember6> unionMember6
     )
     {
-        switch (this)
+        switch (this.Value)
         {
-            case ElementalNodeVariants::UnionMember0 inner:
-                unionMember0(inner);
+            case UnionMember0 value:
+                unionMember0(value);
                 break;
-            case ElementalNodeVariants::UnionMember1 inner:
-                unionMember1(inner);
+            case UnionMember1 value:
+                unionMember1(value);
                 break;
-            case ElementalNodeVariants::UnionMember2 inner:
-                unionMember2(inner);
+            case UnionMember2 value:
+                unionMember2(value);
                 break;
-            case ElementalNodeVariants::UnionMember3 inner:
-                unionMember3(inner);
+            case UnionMember3 value:
+                unionMember3(value);
                 break;
-            case ElementalNodeVariants::UnionMember4 inner:
-                unionMember4(inner);
+            case UnionMember4 value:
+                unionMember4(value);
                 break;
-            case ElementalNodeVariants::UnionMember5 inner:
-                unionMember5(inner);
+            case UnionMember5 value:
+                unionMember5(value);
                 break;
-            case ElementalNodeVariants::UnionMember6 inner:
-                unionMember6(inner);
+            case UnionMember6 value:
+                unionMember6(value);
                 break;
             default:
                 throw new CourierInvalidDataException(
@@ -130,31 +217,41 @@ public abstract record class ElementalNode
     }
 
     public T Match<T>(
-        Func<ElementalNodeVariants::UnionMember0, T> unionMember0,
-        Func<ElementalNodeVariants::UnionMember1, T> unionMember1,
-        Func<ElementalNodeVariants::UnionMember2, T> unionMember2,
-        Func<ElementalNodeVariants::UnionMember3, T> unionMember3,
-        Func<ElementalNodeVariants::UnionMember4, T> unionMember4,
-        Func<ElementalNodeVariants::UnionMember5, T> unionMember5,
-        Func<ElementalNodeVariants::UnionMember6, T> unionMember6
+        Func<UnionMember0, T> unionMember0,
+        Func<UnionMember1, T> unionMember1,
+        Func<UnionMember2, T> unionMember2,
+        Func<UnionMember3, T> unionMember3,
+        Func<UnionMember4, T> unionMember4,
+        Func<UnionMember5, T> unionMember5,
+        Func<UnionMember6, T> unionMember6
     )
     {
-        return this switch
+        return this.Value switch
         {
-            ElementalNodeVariants::UnionMember0 inner => unionMember0(inner),
-            ElementalNodeVariants::UnionMember1 inner => unionMember1(inner),
-            ElementalNodeVariants::UnionMember2 inner => unionMember2(inner),
-            ElementalNodeVariants::UnionMember3 inner => unionMember3(inner),
-            ElementalNodeVariants::UnionMember4 inner => unionMember4(inner),
-            ElementalNodeVariants::UnionMember5 inner => unionMember5(inner),
-            ElementalNodeVariants::UnionMember6 inner => unionMember6(inner),
+            UnionMember0 value => unionMember0(value),
+            UnionMember1 value => unionMember1(value),
+            UnionMember2 value => unionMember2(value),
+            UnionMember3 value => unionMember3(value),
+            UnionMember4 value => unionMember4(value),
+            UnionMember5 value => unionMember5(value),
+            UnionMember6 value => unionMember6(value),
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of ElementalNode"
             ),
         };
     }
 
-    public abstract void Validate();
+    public void Validate()
+    {
+        if (this.Value is not UnknownVariant)
+        {
+            throw new CourierInvalidDataException(
+                "Data did not match any variant of ElementalNode"
+            );
+        }
+    }
+
+    private record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
@@ -172,14 +269,15 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             var deserialized = JsonSerializer.Deserialize<UnionMember0>(ref reader, options);
             if (deserialized != null)
             {
-                return new ElementalNodeVariants::UnionMember0(deserialized);
+                deserialized.Validate();
+                return new ElementalNode(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ElementalNodeVariants::UnionMember0",
+                    "Data does not match union variant 'UnionMember0'",
                     e
                 )
             );
@@ -190,14 +288,15 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             var deserialized = JsonSerializer.Deserialize<UnionMember1>(ref reader, options);
             if (deserialized != null)
             {
-                return new ElementalNodeVariants::UnionMember1(deserialized);
+                deserialized.Validate();
+                return new ElementalNode(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ElementalNodeVariants::UnionMember1",
+                    "Data does not match union variant 'UnionMember1'",
                     e
                 )
             );
@@ -208,14 +307,15 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             var deserialized = JsonSerializer.Deserialize<UnionMember2>(ref reader, options);
             if (deserialized != null)
             {
-                return new ElementalNodeVariants::UnionMember2(deserialized);
+                deserialized.Validate();
+                return new ElementalNode(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ElementalNodeVariants::UnionMember2",
+                    "Data does not match union variant 'UnionMember2'",
                     e
                 )
             );
@@ -226,14 +326,15 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             var deserialized = JsonSerializer.Deserialize<UnionMember3>(ref reader, options);
             if (deserialized != null)
             {
-                return new ElementalNodeVariants::UnionMember3(deserialized);
+                deserialized.Validate();
+                return new ElementalNode(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ElementalNodeVariants::UnionMember3",
+                    "Data does not match union variant 'UnionMember3'",
                     e
                 )
             );
@@ -244,14 +345,15 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             var deserialized = JsonSerializer.Deserialize<UnionMember4>(ref reader, options);
             if (deserialized != null)
             {
-                return new ElementalNodeVariants::UnionMember4(deserialized);
+                deserialized.Validate();
+                return new ElementalNode(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ElementalNodeVariants::UnionMember4",
+                    "Data does not match union variant 'UnionMember4'",
                     e
                 )
             );
@@ -262,14 +364,15 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             var deserialized = JsonSerializer.Deserialize<UnionMember5>(ref reader, options);
             if (deserialized != null)
             {
-                return new ElementalNodeVariants::UnionMember5(deserialized);
+                deserialized.Validate();
+                return new ElementalNode(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ElementalNodeVariants::UnionMember5",
+                    "Data does not match union variant 'UnionMember5'",
                     e
                 )
             );
@@ -280,14 +383,15 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             var deserialized = JsonSerializer.Deserialize<UnionMember6>(ref reader, options);
             if (deserialized != null)
             {
-                return new ElementalNodeVariants::UnionMember6(deserialized);
+                deserialized.Validate();
+                return new ElementalNode(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ElementalNodeVariants::UnionMember6",
+                    "Data does not match union variant 'UnionMember6'",
                     e
                 )
             );
@@ -302,19 +406,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         JsonSerializerOptions options
     )
     {
-        object variant = value switch
-        {
-            ElementalNodeVariants::UnionMember0(var unionMember0) => unionMember0,
-            ElementalNodeVariants::UnionMember1(var unionMember1) => unionMember1,
-            ElementalNodeVariants::UnionMember2(var unionMember2) => unionMember2,
-            ElementalNodeVariants::UnionMember3(var unionMember3) => unionMember3,
-            ElementalNodeVariants::UnionMember4(var unionMember4) => unionMember4,
-            ElementalNodeVariants::UnionMember5(var unionMember5) => unionMember5,
-            ElementalNodeVariants::UnionMember6(var unionMember6) => unionMember6,
-            _ => throw new CourierInvalidDataException(
-                "Data did not match any variant of ElementalNode"
-            ),
-        };
+        object variant = value.Value;
         JsonSerializer.Serialize(writer, variant, options);
     }
 }
