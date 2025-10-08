@@ -38,7 +38,6 @@ using TenantAssociationProperties = Courier.Models.Users.Tenants.TenantAssociati
 using TenantListResponseProperties = Courier.Models.Tenants.TenantListResponseProperties;
 using TenantListUsersResponseProperties = Courier.Models.Tenants.TenantListUsersResponseProperties;
 using TokenAddSingleParamsProperties = Courier.Models.Users.Tokens.TokenAddSingleParamsProperties;
-using UnionMember4Properties = Courier.Models.Send.ElementalNodeProperties.UnionMember4Properties;
 using WebhookProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationFetchDataStepProperties.WebhookProperties;
 
 namespace Courier.Core;
@@ -65,8 +64,10 @@ public abstract record class ModelBase
                 string,
                 global::Courier.Models.Send.ElementalNodeProperties.UnionMember3Properties.IntersectionMember1Properties.Type
             >(),
-            new ApiEnumConverter<string, UnionMember4Properties::Style>(),
-            new ApiEnumConverter<string, UnionMember4Properties::Type>(),
+            new ApiEnumConverter<
+                string,
+                global::Courier.Models.Send.ElementalNodeProperties.UnionMember4Properties.IntersectionMember1Properties.Type
+            >(),
             new ApiEnumConverter<
                 string,
                 global::Courier.Models.Send.ElementalNodeProperties.UnionMember5Properties.IntersectionMember1Properties.Type

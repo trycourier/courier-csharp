@@ -34,7 +34,7 @@ public record class ElementalNode
                 unionMember1: (x) => x.Channels,
                 unionMember2: (x) => x.Channels,
                 unionMember3: (x) => x.Channels,
-                unionMember4: (_) => null,
+                unionMember4: (x) => x.Channels,
                 unionMember5: (x) => x.Channels,
                 unionMember6: (x) => x.Channels
             );
@@ -50,7 +50,7 @@ public record class ElementalNode
                 unionMember1: (x) => x.If,
                 unionMember2: (x) => x.If,
                 unionMember3: (x) => x.If,
-                unionMember4: (_) => null,
+                unionMember4: (x) => x.If,
                 unionMember5: (x) => x.If,
                 unionMember6: (x) => x.If
             );
@@ -66,7 +66,7 @@ public record class ElementalNode
                 unionMember1: (x) => x.Loop,
                 unionMember2: (x) => x.Loop,
                 unionMember3: (x) => x.Loop,
-                unionMember4: (_) => null,
+                unionMember4: (x) => x.Loop,
                 unionMember5: (x) => x.Loop,
                 unionMember6: (x) => x.Loop
             );
@@ -82,7 +82,7 @@ public record class ElementalNode
                 unionMember1: (x) => x.Ref,
                 unionMember2: (x) => x.Ref,
                 unionMember3: (x) => x.Ref,
-                unionMember4: (_) => null,
+                unionMember4: (x) => x.Ref,
                 unionMember5: (x) => x.Ref,
                 unionMember6: (x) => x.Ref
             );

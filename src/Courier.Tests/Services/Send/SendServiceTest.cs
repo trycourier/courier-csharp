@@ -57,7 +57,7 @@ public class SendServiceTest : TestBase
                     Context = new() { TenantID = "tenant_id" },
                     Data = new Dictionary<string, JsonElement>()
                     {
-                        { "name", JsonSerializer.SerializeToElement("bar") },
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
                     Delay = new() { Duration = 0, Until = "until" },
                     Expiry = new() { ExpiresIn = new("string"), ExpiresAt = "expires_at" },
