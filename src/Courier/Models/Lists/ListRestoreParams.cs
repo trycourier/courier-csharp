@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Lists;
 
@@ -12,7 +12,7 @@ namespace Courier.Models.Lists;
 /// </summary>
 public sealed record class ListRestoreParams : ParamsBase
 {
-    public Generic::Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
     public required string ListID;
 

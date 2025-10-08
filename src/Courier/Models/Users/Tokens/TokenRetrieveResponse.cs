@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Users.Tokens.TokenRetrieveResponseProperties.IntersectionMember1Properties;
-using Courier.Models.Users.Tokens.UserTokenProperties;
+using Courier.Models.UserTokenProperties;
 
 namespace Courier.Models.Users.Tokens;
 

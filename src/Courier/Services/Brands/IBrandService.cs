@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Courier.Models;
 using Courier.Models.Brands;
 
 namespace Courier.Services.Brands;

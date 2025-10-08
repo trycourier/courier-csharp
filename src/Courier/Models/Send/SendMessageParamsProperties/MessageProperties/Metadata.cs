@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties;
 
@@ -27,14 +27,17 @@ public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
         }
     }
 
-    public List<string>? Tags
+    public Generic::List<string>? Tags
     {
         get
         {
             if (!this.Properties.TryGetValue("tags", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<Generic::List<string>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -96,13 +99,13 @@ public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Metadata(Dictionary<string, JsonElement> properties)
+    Metadata(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Metadata FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Metadata FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

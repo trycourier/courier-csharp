@@ -1,22 +1,25 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
 [JsonConverter(typeof(ModelConverter<ElementalBaseNode>))]
 public sealed record class ElementalBaseNode : ModelBase, IFromRaw<ElementalBaseNode>
 {
-    public List<string>? Channels
+    public Generic::List<string>? Channels
     {
         get
         {
             if (!this.Properties.TryGetValue("channels", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<Generic::List<string>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -96,13 +99,15 @@ public sealed record class ElementalBaseNode : ModelBase, IFromRaw<ElementalBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalBaseNode(Dictionary<string, JsonElement> properties)
+    ElementalBaseNode(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static ElementalBaseNode FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ElementalBaseNode FromRawUnchecked(
+        Generic::Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }

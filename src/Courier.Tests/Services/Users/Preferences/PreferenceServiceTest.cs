@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
-using Courier.Models.Tenants.DefaultPreferences.Items;
-using Courier.Models.Users.Preferences;
+using Courier.Models;
 
 namespace Courier.Tests.Services.Users.Preferences;
 

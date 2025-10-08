@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -94,7 +94,7 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
+        Generic::List<CourierInvalidDataException> exceptions = [];
 
         try
         {

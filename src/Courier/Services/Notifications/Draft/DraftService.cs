@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Notifications;
+using Courier.Models;
 using Courier.Models.Notifications.Draft;
 
 namespace Courier.Services.Notifications.Draft;

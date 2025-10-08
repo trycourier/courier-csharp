@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Users.Tenants;
 
@@ -15,11 +15,11 @@ namespace Courier.Models.Users.Tenants;
 /// </summary>
 public sealed record class TenantAddMultipleParams : ParamsBase
 {
-    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    public Generic::Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
     public required string UserID;
 
-    public required List<TenantAssociation> Tenants
+    public required Generic::List<TenantAssociation> Tenants
     {
         get
         {
@@ -29,7 +29,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
                     new ArgumentOutOfRangeException("tenants", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<TenantAssociation>>(
+            return JsonSerializer.Deserialize<Generic::List<TenantAssociation>>(
                     element,
                     ModelBase.SerializerOptions
                 )

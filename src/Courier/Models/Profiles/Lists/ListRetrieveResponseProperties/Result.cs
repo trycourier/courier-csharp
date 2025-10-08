@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Lists.Subscriptions;
 
 namespace Courier.Models.Profiles.Lists.ListRetrieveResponseProperties;
 

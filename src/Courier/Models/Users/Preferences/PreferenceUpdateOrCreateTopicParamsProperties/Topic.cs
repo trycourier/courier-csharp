@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Tenants.DefaultPreferences.Items;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Users.Preferences.PreferenceUpdateOrCreateTopicParamsProperties;
 
@@ -39,17 +38,16 @@ public sealed record class Topic : ModelBase, IFromRaw<Topic>
     /// <summary>
     /// The Channels a user has chosen to receive notifications through for this topic
     /// </summary>
-    public List<ApiEnum<string, ChannelClassification>>? CustomRouting
+    public Generic::List<ApiEnum<string, ChannelClassification>>? CustomRouting
     {
         get
         {
             if (!this.Properties.TryGetValue("custom_routing", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<Generic::List<
+                ApiEnum<string, ChannelClassification>
+            >?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -92,13 +90,13 @@ public sealed record class Topic : ModelBase, IFromRaw<Topic>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Topic(Dictionary<string, JsonElement> properties)
+    Topic(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Topic FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Topic FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using Generic = System.Collections.Generic;
 using TenantListResponseProperties = Courier.Models.Tenants.TenantListResponseProperties;
 
 namespace Courier.Models.Tenants;
@@ -39,7 +39,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
     /// <summary>
     /// An array of Tenants
     /// </summary>
-    public required List<Tenant> Items
+    public required Generic::List<Tenant> Items
     {
         get
         {
@@ -49,7 +49,10 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
                     new ArgumentOutOfRangeException("items", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<Tenant>>(element, ModelBase.SerializerOptions)
+            return JsonSerializer.Deserialize<Generic::List<Tenant>>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
                 ?? throw new CourierInvalidDataException(
                     "'items' cannot be null",
                     new ArgumentNullException("items")
@@ -179,13 +182,15 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TenantListResponse(Dictionary<string, JsonElement> properties)
+    TenantListResponse(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static TenantListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static TenantListResponse FromRawUnchecked(
+        Generic::Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }

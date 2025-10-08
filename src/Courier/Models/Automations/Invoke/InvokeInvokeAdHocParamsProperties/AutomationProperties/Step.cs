@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties;
 
@@ -214,7 +214,7 @@ sealed class StepConverter : JsonConverter<Step>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
+        Generic::List<CourierInvalidDataException> exceptions = [];
 
         try
         {

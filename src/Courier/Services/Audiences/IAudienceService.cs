@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Courier.Models;
 using Courier.Models.Audiences;
 
 namespace Courier.Services.Audiences;

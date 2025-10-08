@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using Generic = System.Collections.Generic;
 using TemplateListResponseProperties = Courier.Models.Tenants.Templates.TemplateListResponseProperties;
 
 namespace Courier.Models.Tenants.Templates;
@@ -112,14 +112,14 @@ public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateLi
         }
     }
 
-    public List<TemplateListResponseProperties::Item>? Items
+    public Generic::List<TemplateListResponseProperties::Item>? Items
     {
         get
         {
             if (!this.Properties.TryGetValue("items", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<TemplateListResponseProperties::Item>?>(
+            return JsonSerializer.Deserialize<Generic::List<TemplateListResponseProperties::Item>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -172,13 +172,15 @@ public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateLi
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TemplateListResponse(Dictionary<string, JsonElement> properties)
+    TemplateListResponse(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static TemplateListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static TemplateListResponse FromRawUnchecked(
+        Generic::Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }
