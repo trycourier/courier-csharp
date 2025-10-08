@@ -3,10 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
+using Courier.Models.Bulk.UserRecipientProperties;
 using Courier.Models.Send;
-using Courier.Models.UserRecipientProperties;
 
-namespace Courier.Models;
+namespace Courier.Models.Bulk;
 
 [JsonConverter(typeof(ModelConverter<UserRecipient>))]
 public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>

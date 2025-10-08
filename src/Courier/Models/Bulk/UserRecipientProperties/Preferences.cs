@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 
-namespace Courier.Models.UserRecipientProperties;
+namespace Courier.Models.Bulk.UserRecipientProperties;
 
 [JsonConverter(typeof(ModelConverter<Preferences>))]
 public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
