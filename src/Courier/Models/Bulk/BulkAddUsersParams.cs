@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Bulk;
 
@@ -13,11 +13,11 @@ namespace Courier.Models.Bulk;
 /// </summary>
 public sealed record class BulkAddUsersParams : ParamsBase
 {
-    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    public Generic::Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
     public required string JobID;
 
-    public required List<InboundBulkMessageUser> Users
+    public required Generic::List<InboundBulkMessageUser> Users
     {
         get
         {
@@ -27,7 +27,7 @@ public sealed record class BulkAddUsersParams : ParamsBase
                     new ArgumentOutOfRangeException("users", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<InboundBulkMessageUser>>(
+            return JsonSerializer.Deserialize<Generic::List<InboundBulkMessageUser>>(
                     element,
                     ModelBase.SerializerOptions
                 )

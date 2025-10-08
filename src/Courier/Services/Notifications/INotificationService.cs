@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Courier.Models;
 using Courier.Models.Notifications;
 using Courier.Services.Notifications.Checks;
 using Courier.Services.Notifications.Draft;

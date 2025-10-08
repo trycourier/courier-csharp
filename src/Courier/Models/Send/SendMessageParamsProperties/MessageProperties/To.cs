@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
-using Courier.Models.Bulk;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ToProperties;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties;
 
@@ -22,12 +20,7 @@ public record class To
         Value = value;
     }
 
-    public To(ListRecipient value)
-    {
-        Value = value;
-    }
-
-    public To(List<Recipient> value)
+    public To(Generic::List<Recipient> value)
     {
         Value = value;
     }
@@ -48,22 +41,15 @@ public record class To
         return value != null;
     }
 
-    public bool TryPickListRecipient([NotNullWhen(true)] out ListRecipient? value)
+    public bool TryPickRecipients([NotNullWhen(true)] out Generic::List<Recipient>? value)
     {
-        value = this.Value as ListRecipient;
-        return value != null;
-    }
-
-    public bool TryPickRecipients([NotNullWhen(true)] out List<Recipient>? value)
-    {
-        value = this.Value as List<Recipient>;
+        value = this.Value as Generic::List<Recipient>;
         return value != null;
     }
 
     public void Switch(
         Action<UserRecipient> userRecipient,
-        Action<ListRecipient> listRecipient,
-        Action<List<Recipient>> recipients
+        Action<Generic::List<Recipient>> recipients
     )
     {
         switch (this.Value)
@@ -71,10 +57,7 @@ public record class To
             case UserRecipient value:
                 userRecipient(value);
                 break;
-            case ListRecipient value:
-                listRecipient(value);
-                break;
-            case List<Recipient> value:
+            case Generic::List<Recipient> value:
                 recipients(value);
                 break;
             default:
@@ -84,15 +67,13 @@ public record class To
 
     public T Match<T>(
         Func<UserRecipient, T> userRecipient,
-        Func<ListRecipient, T> listRecipient,
-        Func<List<Recipient>, T> recipients
+        Func<Generic::List<Recipient>, T> recipients
     )
     {
         return this.Value switch
         {
             UserRecipient value => userRecipient(value),
-            ListRecipient value => listRecipient(value),
-            List<Recipient> value => recipients(value),
+            Generic::List<Recipient> value => recipients(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of To"),
         };
     }
@@ -116,7 +97,7 @@ sealed class ToConverter : JsonConverter<To?>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
+        Generic::List<CourierInvalidDataException> exceptions = [];
 
         try
         {
@@ -139,26 +120,10 @@ sealed class ToConverter : JsonConverter<To?>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ListRecipient>(ref reader, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new To(deserialized);
-            }
-        }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ListRecipient'",
-                    e
-                )
+            var deserialized = JsonSerializer.Deserialize<Generic::List<Recipient>>(
+                ref reader,
+                options
             );
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<List<Recipient>>(ref reader, options);
             if (deserialized != null)
             {
                 return new To(deserialized);
@@ -168,7 +133,7 @@ sealed class ToConverter : JsonConverter<To?>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'List<Recipient>'",
+                    "Data does not match union variant 'Generic::List<Recipient>'",
                     e
                 )
             );

@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Models;
 using Courier.Models.Messages;
 
 namespace Courier.Services.Messages;

@@ -1,17 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Notifications.Checks;
 
 [JsonConverter(typeof(ModelConverter<CheckUpdateResponse>))]
 public sealed record class CheckUpdateResponse : ModelBase, IFromRaw<CheckUpdateResponse>
 {
-    public required List<Check> Checks
+    public required Generic::List<Check> Checks
     {
         get
         {
@@ -21,7 +21,10 @@ public sealed record class CheckUpdateResponse : ModelBase, IFromRaw<CheckUpdate
                     new ArgumentOutOfRangeException("checks", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<Check>>(element, ModelBase.SerializerOptions)
+            return JsonSerializer.Deserialize<Generic::List<Check>>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
                 ?? throw new CourierInvalidDataException(
                     "'checks' cannot be null",
                     new ArgumentNullException("checks")
@@ -48,19 +51,21 @@ public sealed record class CheckUpdateResponse : ModelBase, IFromRaw<CheckUpdate
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    CheckUpdateResponse(Dictionary<string, JsonElement> properties)
+    CheckUpdateResponse(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static CheckUpdateResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static CheckUpdateResponse FromRawUnchecked(
+        Generic::Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }
 
     [SetsRequiredMembers]
-    public CheckUpdateResponse(List<Check> checks)
+    public CheckUpdateResponse(Generic::List<Check> checks)
         : this()
     {
         this.Checks = checks;

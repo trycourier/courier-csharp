@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Courier.Models.Users.Tokens;
+using Models = Courier.Models;
 
 namespace Courier.Services.Users.Tokens;
 
@@ -19,7 +20,7 @@ public interface ITokenService
     /// <summary>
     /// Gets all tokens available for a :user_id
     /// </summary>
-    Task<List<UserToken>> List(TokenListParams parameters);
+    Task<List<Models::UserToken>> List(TokenListParams parameters);
 
     /// <summary>
     /// Delete User Token

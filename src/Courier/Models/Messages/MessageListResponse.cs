@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Audiences;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Messages;
 
@@ -43,7 +42,7 @@ public sealed record class MessageListResponse : ModelBase, IFromRaw<MessageList
     /// <summary>
     /// An array of messages with their details.
     /// </summary>
-    public required List<MessageDetails> Results
+    public required Generic::List<MessageDetails> Results
     {
         get
         {
@@ -53,7 +52,7 @@ public sealed record class MessageListResponse : ModelBase, IFromRaw<MessageList
                     new ArgumentOutOfRangeException("results", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<MessageDetails>>(
+            return JsonSerializer.Deserialize<Generic::List<MessageDetails>>(
                     element,
                     ModelBase.SerializerOptions
                 )
@@ -84,13 +83,15 @@ public sealed record class MessageListResponse : ModelBase, IFromRaw<MessageList
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageListResponse(Dictionary<string, JsonElement> properties)
+    MessageListResponse(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static MessageListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static MessageListResponse FromRawUnchecked(
+        Generic::Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }

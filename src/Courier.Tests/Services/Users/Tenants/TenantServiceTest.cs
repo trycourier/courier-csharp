@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Courier.Models.Users.Tenants.TenantAssociationProperties;
+using Courier.Models.TenantAssociationProperties;
 
 namespace Courier.Tests.Services.Users.Tenants;
 

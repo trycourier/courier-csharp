@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.PreferenceProperties;
-using Courier.Models.Users.Preferences;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -37,14 +36,14 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
         }
     }
 
-    public List<ChannelPreference>? ChannelPreferences
+    public Generic::List<ChannelPreference>? ChannelPreferences
     {
         get
         {
             if (!this.Properties.TryGetValue("channel_preferences", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<ChannelPreference>?>(
+            return JsonSerializer.Deserialize<Generic::List<ChannelPreference>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -58,14 +57,17 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
         }
     }
 
-    public List<Rule>? Rules
+    public Generic::List<Rule>? Rules
     {
         get
         {
             if (!this.Properties.TryGetValue("rules", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<Rule>?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<Generic::List<Rule>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -115,13 +117,13 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Preference(Dictionary<string, JsonElement> properties)
+    Preference(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Preference FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Preference FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

@@ -1,11 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Messages.MessageDetailsProperties;
+using Courier.Models.MessageDetailsProperties;
+using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Messages;
 
@@ -322,17 +322,17 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
     }
 
-    public List<Dictionary<string, JsonElement>>? Providers
+    public Generic::List<Generic::Dictionary<string, JsonElement>>? Providers
     {
         get
         {
             if (!this.Properties.TryGetValue("providers", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<Generic::List<Generic::Dictionary<
+                string,
+                JsonElement
+            >>?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -389,14 +389,14 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageRetrieveResponse(Dictionary<string, JsonElement> properties)
+    MessageRetrieveResponse(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
     public static MessageRetrieveResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        Generic::Dictionary<string, JsonElement> properties
     )
     {
         return new(properties);

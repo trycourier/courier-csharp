@@ -6,7 +6,6 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Bulk.BulkListUsersResponseProperties.ItemProperties.IntersectionMember1Properties;
-using Courier.Models.Lists.Subscriptions;
 
 namespace Courier.Models.Bulk.BulkListUsersResponseProperties;
 

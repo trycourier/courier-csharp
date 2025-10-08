@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Audiences;
 using Courier.Models.Lists.Subscriptions.SubscriptionListResponseProperties;
 using Generic = System.Collections.Generic;
 

@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using Generic = System.Collections.Generic;
 using TenantListResponseProperties = Courier.Models.Users.Tenants.TenantListResponseProperties;
 
 namespace Courier.Models.Users.Tenants;
@@ -113,14 +113,14 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
         }
     }
 
-    public List<TenantAssociation>? Items
+    public Generic::List<TenantAssociation>? Items
     {
         get
         {
             if (!this.Properties.TryGetValue("items", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<TenantAssociation>?>(
+            return JsonSerializer.Deserialize<Generic::List<TenantAssociation>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -173,13 +173,15 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TenantListResponse(Dictionary<string, JsonElement> properties)
+    TenantListResponse(Generic::Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static TenantListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static TenantListResponse FromRawUnchecked(
+        Generic::Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }
