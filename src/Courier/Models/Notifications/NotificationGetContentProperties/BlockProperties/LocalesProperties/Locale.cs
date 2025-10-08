@@ -4,24 +4,38 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using Courier.Models.Notifications.NotificationGetContentProperties.BlockProperties.LocalesProperties.LocaleProperties;
-using LocaleVariants = Courier.Models.Notifications.NotificationGetContentProperties.BlockProperties.LocalesProperties.LocaleVariants;
 using System = System;
 
 namespace Courier.Models.Notifications.NotificationGetContentProperties.BlockProperties.LocalesProperties;
 
 [JsonConverter(typeof(LocaleConverter))]
-public abstract record class Locale
+public record class Locale
 {
-    internal Locale() { }
+    public object Value { get; private init; }
 
-    public static implicit operator Locale(string value) => new LocaleVariants::String(value);
+    public Locale(string value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator Locale(NotificationContentHierarchy value) =>
-        new LocaleVariants::NotificationContentHierarchy(value);
+    public Locale(NotificationContentHierarchy value)
+    {
+        Value = value;
+    }
+
+    Locale(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static Locale CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
     {
-        value = (this as LocaleVariants::String)?.Value;
+        value = this.Value as string;
         return value != null;
     }
 
@@ -29,22 +43,22 @@ public abstract record class Locale
         [NotNullWhen(true)] out NotificationContentHierarchy? value
     )
     {
-        value = (this as LocaleVariants::NotificationContentHierarchy)?.Value;
+        value = this.Value as NotificationContentHierarchy;
         return value != null;
     }
 
     public void Switch(
-        System::Action<LocaleVariants::String> @string,
-        System::Action<LocaleVariants::NotificationContentHierarchy> notificationContentHierarchy
+        System::Action<string> @string,
+        System::Action<NotificationContentHierarchy> notificationContentHierarchy
     )
     {
-        switch (this)
+        switch (this.Value)
         {
-            case LocaleVariants::String inner:
-                @string(inner);
+            case string value:
+                @string(value);
                 break;
-            case LocaleVariants::NotificationContentHierarchy inner:
-                notificationContentHierarchy(inner);
+            case NotificationContentHierarchy value:
+                notificationContentHierarchy(value);
                 break;
             default:
                 throw new CourierInvalidDataException("Data did not match any variant of Locale");
@@ -52,21 +66,27 @@ public abstract record class Locale
     }
 
     public T Match<T>(
-        System::Func<LocaleVariants::String, T> @string,
-        System::Func<LocaleVariants::NotificationContentHierarchy, T> notificationContentHierarchy
+        System::Func<string, T> @string,
+        System::Func<NotificationContentHierarchy, T> notificationContentHierarchy
     )
     {
-        return this switch
+        return this.Value switch
         {
-            LocaleVariants::String inner => @string(inner),
-            LocaleVariants::NotificationContentHierarchy inner => notificationContentHierarchy(
-                inner
-            ),
+            string value => @string(value),
+            NotificationContentHierarchy value => notificationContentHierarchy(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of Locale"),
         };
     }
 
-    public abstract void Validate();
+    public void Validate()
+    {
+        if (this.Value is not UnknownVariant)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of Locale");
+        }
+    }
+
+    private record struct UnknownVariant(JsonElement value);
 }
 
 sealed class LocaleConverter : JsonConverter<Locale>
@@ -87,14 +107,15 @@ sealed class LocaleConverter : JsonConverter<Locale>
             );
             if (deserialized != null)
             {
-                return new LocaleVariants::NotificationContentHierarchy(deserialized);
+                deserialized.Validate();
+                return new Locale(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant LocaleVariants::NotificationContentHierarchy",
+                    "Data does not match union variant 'NotificationContentHierarchy'",
                     e
                 )
             );
@@ -105,16 +126,13 @@ sealed class LocaleConverter : JsonConverter<Locale>
             var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
             if (deserialized != null)
             {
-                return new LocaleVariants::String(deserialized);
+                return new Locale(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant LocaleVariants::String",
-                    e
-                )
+                new CourierInvalidDataException("Data does not match union variant 'string'", e)
             );
         }
 
@@ -123,13 +141,7 @@ sealed class LocaleConverter : JsonConverter<Locale>
 
     public override void Write(Utf8JsonWriter writer, Locale value, JsonSerializerOptions options)
     {
-        object variant = value switch
-        {
-            LocaleVariants::String(var @string) => @string,
-            LocaleVariants::NotificationContentHierarchy(var notificationContentHierarchy) =>
-                notificationContentHierarchy,
-            _ => throw new CourierInvalidDataException("Data did not match any variant of Locale"),
-        };
+        object variant = value.Value;
         JsonSerializer.Serialize(writer, variant, options);
     }
 }

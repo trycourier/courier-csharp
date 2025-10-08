@@ -5,51 +5,106 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties;
-using StepVariants = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepVariants;
 
 namespace Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties;
 
 [JsonConverter(typeof(StepConverter))]
-public abstract record class Step
+public record class Step
 {
-    internal Step() { }
+    public object Value { get; private init; }
 
-    public static implicit operator Step(AutomationDelayStep value) =>
-        new StepVariants::AutomationDelayStep(value);
+    public string? Brand
+    {
+        get
+        {
+            return Match<string?>(
+                automationDelay: (_) => null,
+                automationSend: (x) => x.Brand,
+                automationSendList: (x) => x.Brand,
+                automationUpdateProfile: (_) => null,
+                automationCancel: (_) => null,
+                automationFetchData: (_) => null,
+                automationInvoke: (_) => null
+            );
+        }
+    }
 
-    public static implicit operator Step(AutomationSendStep value) =>
-        new StepVariants::AutomationSendStep(value);
+    public string? Template
+    {
+        get
+        {
+            return Match<string?>(
+                automationDelay: (_) => null,
+                automationSend: (x) => x.Template,
+                automationSendList: (_) => null,
+                automationUpdateProfile: (_) => null,
+                automationCancel: (_) => null,
+                automationFetchData: (_) => null,
+                automationInvoke: (x) => x.Template
+            );
+        }
+    }
 
-    public static implicit operator Step(AutomationSendListStep value) =>
-        new StepVariants::AutomationSendListStep(value);
+    public Step(AutomationDelayStep value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator Step(AutomationUpdateProfileStep value) =>
-        new StepVariants::AutomationUpdateProfileStep(value);
+    public Step(AutomationSendStep value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator Step(AutomationCancelStep value) =>
-        new StepVariants::AutomationCancelStep(value);
+    public Step(AutomationSendListStep value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator Step(AutomationFetchDataStep value) =>
-        new StepVariants::AutomationFetchDataStep(value);
+    public Step(AutomationUpdateProfileStep value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator Step(AutomationInvokeStep value) =>
-        new StepVariants::AutomationInvokeStep(value);
+    public Step(AutomationCancelStep value)
+    {
+        Value = value;
+    }
+
+    public Step(AutomationFetchDataStep value)
+    {
+        Value = value;
+    }
+
+    public Step(AutomationInvokeStep value)
+    {
+        Value = value;
+    }
+
+    Step(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static Step CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
 
     public bool TryPickAutomationDelay([NotNullWhen(true)] out AutomationDelayStep? value)
     {
-        value = (this as StepVariants::AutomationDelayStep)?.Value;
+        value = this.Value as AutomationDelayStep;
         return value != null;
     }
 
     public bool TryPickAutomationSend([NotNullWhen(true)] out AutomationSendStep? value)
     {
-        value = (this as StepVariants::AutomationSendStep)?.Value;
+        value = this.Value as AutomationSendStep;
         return value != null;
     }
 
     public bool TryPickAutomationSendList([NotNullWhen(true)] out AutomationSendListStep? value)
     {
-        value = (this as StepVariants::AutomationSendListStep)?.Value;
+        value = this.Value as AutomationSendListStep;
         return value != null;
     }
 
@@ -57,60 +112,60 @@ public abstract record class Step
         [NotNullWhen(true)] out AutomationUpdateProfileStep? value
     )
     {
-        value = (this as StepVariants::AutomationUpdateProfileStep)?.Value;
+        value = this.Value as AutomationUpdateProfileStep;
         return value != null;
     }
 
     public bool TryPickAutomationCancel([NotNullWhen(true)] out AutomationCancelStep? value)
     {
-        value = (this as StepVariants::AutomationCancelStep)?.Value;
+        value = this.Value as AutomationCancelStep;
         return value != null;
     }
 
     public bool TryPickAutomationFetchData([NotNullWhen(true)] out AutomationFetchDataStep? value)
     {
-        value = (this as StepVariants::AutomationFetchDataStep)?.Value;
+        value = this.Value as AutomationFetchDataStep;
         return value != null;
     }
 
     public bool TryPickAutomationInvoke([NotNullWhen(true)] out AutomationInvokeStep? value)
     {
-        value = (this as StepVariants::AutomationInvokeStep)?.Value;
+        value = this.Value as AutomationInvokeStep;
         return value != null;
     }
 
     public void Switch(
-        Action<StepVariants::AutomationDelayStep> automationDelay,
-        Action<StepVariants::AutomationSendStep> automationSend,
-        Action<StepVariants::AutomationSendListStep> automationSendList,
-        Action<StepVariants::AutomationUpdateProfileStep> automationUpdateProfile,
-        Action<StepVariants::AutomationCancelStep> automationCancel,
-        Action<StepVariants::AutomationFetchDataStep> automationFetchData,
-        Action<StepVariants::AutomationInvokeStep> automationInvoke
+        Action<AutomationDelayStep> automationDelay,
+        Action<AutomationSendStep> automationSend,
+        Action<AutomationSendListStep> automationSendList,
+        Action<AutomationUpdateProfileStep> automationUpdateProfile,
+        Action<AutomationCancelStep> automationCancel,
+        Action<AutomationFetchDataStep> automationFetchData,
+        Action<AutomationInvokeStep> automationInvoke
     )
     {
-        switch (this)
+        switch (this.Value)
         {
-            case StepVariants::AutomationDelayStep inner:
-                automationDelay(inner);
+            case AutomationDelayStep value:
+                automationDelay(value);
                 break;
-            case StepVariants::AutomationSendStep inner:
-                automationSend(inner);
+            case AutomationSendStep value:
+                automationSend(value);
                 break;
-            case StepVariants::AutomationSendListStep inner:
-                automationSendList(inner);
+            case AutomationSendListStep value:
+                automationSendList(value);
                 break;
-            case StepVariants::AutomationUpdateProfileStep inner:
-                automationUpdateProfile(inner);
+            case AutomationUpdateProfileStep value:
+                automationUpdateProfile(value);
                 break;
-            case StepVariants::AutomationCancelStep inner:
-                automationCancel(inner);
+            case AutomationCancelStep value:
+                automationCancel(value);
                 break;
-            case StepVariants::AutomationFetchDataStep inner:
-                automationFetchData(inner);
+            case AutomationFetchDataStep value:
+                automationFetchData(value);
                 break;
-            case StepVariants::AutomationInvokeStep inner:
-                automationInvoke(inner);
+            case AutomationInvokeStep value:
+                automationInvoke(value);
                 break;
             default:
                 throw new CourierInvalidDataException("Data did not match any variant of Step");
@@ -118,29 +173,37 @@ public abstract record class Step
     }
 
     public T Match<T>(
-        Func<StepVariants::AutomationDelayStep, T> automationDelay,
-        Func<StepVariants::AutomationSendStep, T> automationSend,
-        Func<StepVariants::AutomationSendListStep, T> automationSendList,
-        Func<StepVariants::AutomationUpdateProfileStep, T> automationUpdateProfile,
-        Func<StepVariants::AutomationCancelStep, T> automationCancel,
-        Func<StepVariants::AutomationFetchDataStep, T> automationFetchData,
-        Func<StepVariants::AutomationInvokeStep, T> automationInvoke
+        Func<AutomationDelayStep, T> automationDelay,
+        Func<AutomationSendStep, T> automationSend,
+        Func<AutomationSendListStep, T> automationSendList,
+        Func<AutomationUpdateProfileStep, T> automationUpdateProfile,
+        Func<AutomationCancelStep, T> automationCancel,
+        Func<AutomationFetchDataStep, T> automationFetchData,
+        Func<AutomationInvokeStep, T> automationInvoke
     )
     {
-        return this switch
+        return this.Value switch
         {
-            StepVariants::AutomationDelayStep inner => automationDelay(inner),
-            StepVariants::AutomationSendStep inner => automationSend(inner),
-            StepVariants::AutomationSendListStep inner => automationSendList(inner),
-            StepVariants::AutomationUpdateProfileStep inner => automationUpdateProfile(inner),
-            StepVariants::AutomationCancelStep inner => automationCancel(inner),
-            StepVariants::AutomationFetchDataStep inner => automationFetchData(inner),
-            StepVariants::AutomationInvokeStep inner => automationInvoke(inner),
+            AutomationDelayStep value => automationDelay(value),
+            AutomationSendStep value => automationSend(value),
+            AutomationSendListStep value => automationSendList(value),
+            AutomationUpdateProfileStep value => automationUpdateProfile(value),
+            AutomationCancelStep value => automationCancel(value),
+            AutomationFetchDataStep value => automationFetchData(value),
+            AutomationInvokeStep value => automationInvoke(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of Step"),
         };
     }
 
-    public abstract void Validate();
+    public void Validate()
+    {
+        if (this.Value is not UnknownVariant)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of Step");
+        }
+    }
+
+    private record struct UnknownVariant(JsonElement value);
 }
 
 sealed class StepConverter : JsonConverter<Step>
@@ -158,14 +221,15 @@ sealed class StepConverter : JsonConverter<Step>
             var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(ref reader, options);
             if (deserialized != null)
             {
-                return new StepVariants::AutomationDelayStep(deserialized);
+                deserialized.Validate();
+                return new Step(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant StepVariants::AutomationDelayStep",
+                    "Data does not match union variant 'AutomationDelayStep'",
                     e
                 )
             );
@@ -176,14 +240,15 @@ sealed class StepConverter : JsonConverter<Step>
             var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(ref reader, options);
             if (deserialized != null)
             {
-                return new StepVariants::AutomationSendStep(deserialized);
+                deserialized.Validate();
+                return new Step(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant StepVariants::AutomationSendStep",
+                    "Data does not match union variant 'AutomationSendStep'",
                     e
                 )
             );
@@ -197,14 +262,15 @@ sealed class StepConverter : JsonConverter<Step>
             );
             if (deserialized != null)
             {
-                return new StepVariants::AutomationSendListStep(deserialized);
+                deserialized.Validate();
+                return new Step(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant StepVariants::AutomationSendListStep",
+                    "Data does not match union variant 'AutomationSendListStep'",
                     e
                 )
             );
@@ -218,14 +284,15 @@ sealed class StepConverter : JsonConverter<Step>
             );
             if (deserialized != null)
             {
-                return new StepVariants::AutomationUpdateProfileStep(deserialized);
+                deserialized.Validate();
+                return new Step(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant StepVariants::AutomationUpdateProfileStep",
+                    "Data does not match union variant 'AutomationUpdateProfileStep'",
                     e
                 )
             );
@@ -239,14 +306,15 @@ sealed class StepConverter : JsonConverter<Step>
             );
             if (deserialized != null)
             {
-                return new StepVariants::AutomationCancelStep(deserialized);
+                deserialized.Validate();
+                return new Step(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant StepVariants::AutomationCancelStep",
+                    "Data does not match union variant 'AutomationCancelStep'",
                     e
                 )
             );
@@ -260,14 +328,15 @@ sealed class StepConverter : JsonConverter<Step>
             );
             if (deserialized != null)
             {
-                return new StepVariants::AutomationFetchDataStep(deserialized);
+                deserialized.Validate();
+                return new Step(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant StepVariants::AutomationFetchDataStep",
+                    "Data does not match union variant 'AutomationFetchDataStep'",
                     e
                 )
             );
@@ -281,14 +350,15 @@ sealed class StepConverter : JsonConverter<Step>
             );
             if (deserialized != null)
             {
-                return new StepVariants::AutomationInvokeStep(deserialized);
+                deserialized.Validate();
+                return new Step(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant StepVariants::AutomationInvokeStep",
+                    "Data does not match union variant 'AutomationInvokeStep'",
                     e
                 )
             );
@@ -299,18 +369,7 @@ sealed class StepConverter : JsonConverter<Step>
 
     public override void Write(Utf8JsonWriter writer, Step value, JsonSerializerOptions options)
     {
-        object variant = value switch
-        {
-            StepVariants::AutomationDelayStep(var automationDelay) => automationDelay,
-            StepVariants::AutomationSendStep(var automationSend) => automationSend,
-            StepVariants::AutomationSendListStep(var automationSendList) => automationSendList,
-            StepVariants::AutomationUpdateProfileStep(var automationUpdateProfile) =>
-                automationUpdateProfile,
-            StepVariants::AutomationCancelStep(var automationCancel) => automationCancel,
-            StepVariants::AutomationFetchDataStep(var automationFetchData) => automationFetchData,
-            StepVariants::AutomationInvokeStep(var automationInvoke) => automationInvoke,
-            _ => throw new CourierInvalidDataException("Data did not match any variant of Step"),
-        };
+        object variant = value.Value;
         JsonSerializer.Serialize(writer, variant, options);
     }
 }

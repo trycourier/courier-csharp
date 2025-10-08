@@ -19,27 +19,31 @@ public class InvokeServiceTest : TestBase
                 {
                     Steps =
                     [
-                        new AutomationDelayStep()
-                        {
-                            Action = Action.Delay,
-                            Duration = "duration",
-                            Until = "20240408T080910.123",
-                        },
-                        new AutomationSendStep()
-                        {
-                            Action = AutomationSendStepProperties::Action.Send,
-                            Brand = "brand",
-                            Data = new Dictionary<string, JsonElement>()
+                        new(
+                            new AutomationDelayStep()
                             {
-                                { "foo", JsonSerializer.SerializeToElement("bar") },
-                            },
-                            Profile = new Dictionary<string, JsonElement>()
+                                Action = Action.Delay,
+                                Duration = "duration",
+                                Until = "20240408T080910.123",
+                            }
+                        ),
+                        new(
+                            new AutomationSendStep()
                             {
-                                { "foo", JsonSerializer.SerializeToElement("bar") },
-                            },
-                            Recipient = "recipient",
-                            Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
-                        },
+                                Action = AutomationSendStepProperties::Action.Send,
+                                Brand = "brand",
+                                Data = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Profile = new Dictionary<string, JsonElement>()
+                                {
+                                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                                },
+                                Recipient = "recipient",
+                                Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                            }
+                        ),
                     ],
                     CancelationToken = "delay-send--user-yes--abc-123",
                 },

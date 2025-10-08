@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using Courier.Models.Tenants.Templates;
-using ContentVariants = Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMessageProperties.ContentVariants;
 
 namespace Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMessageProperties;
 
@@ -13,40 +12,54 @@ namespace Courier.Models.Bulk.InboundBulkMessageProperties.InboundBulkContentMes
 /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
 /// </summary>
 [JsonConverter(typeof(ContentConverter))]
-public abstract record class Content
+public record class Content
 {
-    internal Content() { }
+    public object Value { get; private init; }
 
-    public static implicit operator Content(ElementalContentSugar value) =>
-        new ContentVariants::ElementalContentSugar(value);
+    public Content(ElementalContentSugar value)
+    {
+        Value = value;
+    }
 
-    public static implicit operator Content(ElementalContent value) =>
-        new ContentVariants::ElementalContent(value);
+    public Content(ElementalContent value)
+    {
+        Value = value;
+    }
+
+    Content(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static Content CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
 
     public bool TryPickElementalContentSugar([NotNullWhen(true)] out ElementalContentSugar? value)
     {
-        value = (this as ContentVariants::ElementalContentSugar)?.Value;
+        value = this.Value as ElementalContentSugar;
         return value != null;
     }
 
     public bool TryPickElemental([NotNullWhen(true)] out ElementalContent? value)
     {
-        value = (this as ContentVariants::ElementalContent)?.Value;
+        value = this.Value as ElementalContent;
         return value != null;
     }
 
     public void Switch(
-        Action<ContentVariants::ElementalContentSugar> elementalContentSugar,
-        Action<ContentVariants::ElementalContent> elemental
+        Action<ElementalContentSugar> elementalContentSugar,
+        Action<ElementalContent> elemental
     )
     {
-        switch (this)
+        switch (this.Value)
         {
-            case ContentVariants::ElementalContentSugar inner:
-                elementalContentSugar(inner);
+            case ElementalContentSugar value:
+                elementalContentSugar(value);
                 break;
-            case ContentVariants::ElementalContent inner:
-                elemental(inner);
+            case ElementalContent value:
+                elemental(value);
                 break;
             default:
                 throw new CourierInvalidDataException("Data did not match any variant of Content");
@@ -54,19 +67,27 @@ public abstract record class Content
     }
 
     public T Match<T>(
-        Func<ContentVariants::ElementalContentSugar, T> elementalContentSugar,
-        Func<ContentVariants::ElementalContent, T> elemental
+        Func<ElementalContentSugar, T> elementalContentSugar,
+        Func<ElementalContent, T> elemental
     )
     {
-        return this switch
+        return this.Value switch
         {
-            ContentVariants::ElementalContentSugar inner => elementalContentSugar(inner),
-            ContentVariants::ElementalContent inner => elemental(inner),
+            ElementalContentSugar value => elementalContentSugar(value),
+            ElementalContent value => elemental(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of Content"),
         };
     }
 
-    public abstract void Validate();
+    public void Validate()
+    {
+        if (this.Value is not UnknownVariant)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of Content");
+        }
+    }
+
+    private record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ContentConverter : JsonConverter<Content>
@@ -87,14 +108,15 @@ sealed class ContentConverter : JsonConverter<Content>
             );
             if (deserialized != null)
             {
-                return new ContentVariants::ElementalContentSugar(deserialized);
+                deserialized.Validate();
+                return new Content(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ContentVariants::ElementalContentSugar",
+                    "Data does not match union variant 'ElementalContentSugar'",
                     e
                 )
             );
@@ -105,14 +127,15 @@ sealed class ContentConverter : JsonConverter<Content>
             var deserialized = JsonSerializer.Deserialize<ElementalContent>(ref reader, options);
             if (deserialized != null)
             {
-                return new ContentVariants::ElementalContent(deserialized);
+                deserialized.Validate();
+                return new Content(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant ContentVariants::ElementalContent",
+                    "Data does not match union variant 'ElementalContent'",
                     e
                 )
             );
@@ -123,13 +146,7 @@ sealed class ContentConverter : JsonConverter<Content>
 
     public override void Write(Utf8JsonWriter writer, Content value, JsonSerializerOptions options)
     {
-        object variant = value switch
-        {
-            ContentVariants::ElementalContentSugar(var elementalContentSugar) =>
-                elementalContentSugar,
-            ContentVariants::ElementalContent(var elemental) => elemental,
-            _ => throw new CourierInvalidDataException("Data did not match any variant of Content"),
-        };
+        object variant = value.Value;
         JsonSerializer.Serialize(writer, variant, options);
     }
 }

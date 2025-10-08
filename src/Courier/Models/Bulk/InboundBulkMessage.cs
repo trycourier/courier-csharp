@@ -5,45 +5,68 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using Courier.Models.Bulk.InboundBulkMessageProperties;
-using InboundBulkMessageVariants = Courier.Models.Bulk.InboundBulkMessageVariants;
 
 namespace Courier.Models.Bulk;
 
 [JsonConverter(typeof(InboundBulkMessageConverter))]
-public abstract record class InboundBulkMessage
+public record class InboundBulkMessage
 {
-    internal InboundBulkMessage() { }
+    public object Value { get; private init; }
 
-    public static implicit operator InboundBulkMessage(InboundBulkTemplateMessage value) =>
-        new InboundBulkMessageVariants::InboundBulkTemplateMessage(value);
+    public string? Brand
+    {
+        get { return Match<string?>(template: (x) => x.Brand, content: (x) => x.Brand); }
+    }
 
-    public static implicit operator InboundBulkMessage(InboundBulkContentMessage value) =>
-        new InboundBulkMessageVariants::InboundBulkContentMessage(value);
+    public string? Event
+    {
+        get { return Match<string?>(template: (x) => x.Event, content: (x) => x.Event); }
+    }
+
+    public InboundBulkMessage(InboundBulkTemplateMessage value)
+    {
+        Value = value;
+    }
+
+    public InboundBulkMessage(InboundBulkContentMessage value)
+    {
+        Value = value;
+    }
+
+    InboundBulkMessage(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static InboundBulkMessage CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
 
     public bool TryPickTemplate([NotNullWhen(true)] out InboundBulkTemplateMessage? value)
     {
-        value = (this as InboundBulkMessageVariants::InboundBulkTemplateMessage)?.Value;
+        value = this.Value as InboundBulkTemplateMessage;
         return value != null;
     }
 
     public bool TryPickContent([NotNullWhen(true)] out InboundBulkContentMessage? value)
     {
-        value = (this as InboundBulkMessageVariants::InboundBulkContentMessage)?.Value;
+        value = this.Value as InboundBulkContentMessage;
         return value != null;
     }
 
     public void Switch(
-        Action<InboundBulkMessageVariants::InboundBulkTemplateMessage> template,
-        Action<InboundBulkMessageVariants::InboundBulkContentMessage> content
+        Action<InboundBulkTemplateMessage> template,
+        Action<InboundBulkContentMessage> content
     )
     {
-        switch (this)
+        switch (this.Value)
         {
-            case InboundBulkMessageVariants::InboundBulkTemplateMessage inner:
-                template(inner);
+            case InboundBulkTemplateMessage value:
+                template(value);
                 break;
-            case InboundBulkMessageVariants::InboundBulkContentMessage inner:
-                content(inner);
+            case InboundBulkContentMessage value:
+                content(value);
                 break;
             default:
                 throw new CourierInvalidDataException(
@@ -53,21 +76,31 @@ public abstract record class InboundBulkMessage
     }
 
     public T Match<T>(
-        Func<InboundBulkMessageVariants::InboundBulkTemplateMessage, T> template,
-        Func<InboundBulkMessageVariants::InboundBulkContentMessage, T> content
+        Func<InboundBulkTemplateMessage, T> template,
+        Func<InboundBulkContentMessage, T> content
     )
     {
-        return this switch
+        return this.Value switch
         {
-            InboundBulkMessageVariants::InboundBulkTemplateMessage inner => template(inner),
-            InboundBulkMessageVariants::InboundBulkContentMessage inner => content(inner),
+            InboundBulkTemplateMessage value => template(value),
+            InboundBulkContentMessage value => content(value),
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of InboundBulkMessage"
             ),
         };
     }
 
-    public abstract void Validate();
+    public void Validate()
+    {
+        if (this.Value is not UnknownVariant)
+        {
+            throw new CourierInvalidDataException(
+                "Data did not match any variant of InboundBulkMessage"
+            );
+        }
+    }
+
+    private record struct UnknownVariant(JsonElement value);
 }
 
 sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
@@ -88,14 +121,15 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
             );
             if (deserialized != null)
             {
-                return new InboundBulkMessageVariants::InboundBulkTemplateMessage(deserialized);
+                deserialized.Validate();
+                return new InboundBulkMessage(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant InboundBulkMessageVariants::InboundBulkTemplateMessage",
+                    "Data does not match union variant 'InboundBulkTemplateMessage'",
                     e
                 )
             );
@@ -109,14 +143,15 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
             );
             if (deserialized != null)
             {
-                return new InboundBulkMessageVariants::InboundBulkContentMessage(deserialized);
+                deserialized.Validate();
+                return new InboundBulkMessage(deserialized);
             }
         }
-        catch (JsonException e)
+        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant InboundBulkMessageVariants::InboundBulkContentMessage",
+                    "Data does not match union variant 'InboundBulkContentMessage'",
                     e
                 )
             );
@@ -131,14 +166,7 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
         JsonSerializerOptions options
     )
     {
-        object variant = value switch
-        {
-            InboundBulkMessageVariants::InboundBulkTemplateMessage(var template) => template,
-            InboundBulkMessageVariants::InboundBulkContentMessage(var content) => content,
-            _ => throw new CourierInvalidDataException(
-                "Data did not match any variant of InboundBulkMessage"
-            ),
-        };
+        object variant = value.Value;
         JsonSerializer.Serialize(writer, variant, options);
     }
 }
