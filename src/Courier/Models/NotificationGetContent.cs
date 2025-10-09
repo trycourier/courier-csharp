@@ -1,26 +1,23 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Models.NotificationGetContentProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
 [JsonConverter(typeof(ModelConverter<NotificationGetContent>))]
 public sealed record class NotificationGetContent : ModelBase, IFromRaw<NotificationGetContent>
 {
-    public Generic::List<Block>? Blocks
+    public List<Block>? Blocks
     {
         get
         {
             if (!this.Properties.TryGetValue("blocks", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<Block>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<Block>?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -31,17 +28,14 @@ public sealed record class NotificationGetContent : ModelBase, IFromRaw<Notifica
         }
     }
 
-    public Generic::List<Channel>? Channels
+    public List<Channel>? Channels
     {
         get
         {
             if (!this.Properties.TryGetValue("channels", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<Channel>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<Channel>?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -87,14 +81,14 @@ public sealed record class NotificationGetContent : ModelBase, IFromRaw<Notifica
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationGetContent(Generic::Dictionary<string, JsonElement> properties)
+    NotificationGetContent(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
     public static NotificationGetContent FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
+        Dictionary<string, JsonElement> properties
     )
     {
         return new(properties);

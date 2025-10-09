@@ -7,8 +7,8 @@ public class ListServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var list = await this.client.Lists.Retrieve(new() { ListID = "list_id" });
-        list.Validate();
+        var userList = await this.client.Lists.Retrieve(new() { ListID = "list_id" });
+        userList.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]

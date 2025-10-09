@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Models.RecipientProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -55,14 +55,14 @@ public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
         }
     }
 
-    public Generic::Dictionary<string, JsonElement>? Data
+    public Dictionary<string, JsonElement>? Data
     {
         get
         {
             if (!this.Properties.TryGetValue("data", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::Dictionary<string, JsonElement>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -213,13 +213,13 @@ public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Recipient(Generic::Dictionary<string, JsonElement> properties)
+    Recipient(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Recipient FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static Recipient FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

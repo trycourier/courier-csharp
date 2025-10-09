@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Models;
 using Courier.Models.Users.Tokens;
-using Models = Courier.Models;
 
 namespace Courier.Services.Users.Tokens;
 
@@ -38,7 +38,7 @@ public sealed class TokenService : ITokenService
         return;
     }
 
-    public async Task<List<Models::UserToken>> List(TokenListParams parameters)
+    public async Task<List<UserToken>> List(TokenListParams parameters)
     {
         HttpRequest<TokenListParams> request = new()
         {
@@ -46,7 +46,7 @@ public sealed class TokenService : ITokenService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<List<Models::UserToken>>().ConfigureAwait(false);
+        return await response.Deserialize<List<UserToken>>().ConfigureAwait(false);
     }
 
     public async Task Delete(TokenDeleteParams parameters)

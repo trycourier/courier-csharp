@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.AuditEvents;
 
@@ -36,7 +36,7 @@ public sealed record class AuditEventListResponse : ModelBase, IFromRaw<AuditEve
         }
     }
 
-    public required Generic::List<AuditEvent> Results
+    public required List<AuditEvent> Results
     {
         get
         {
@@ -46,7 +46,7 @@ public sealed record class AuditEventListResponse : ModelBase, IFromRaw<AuditEve
                     new ArgumentOutOfRangeException("results", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<AuditEvent>>(
+            return JsonSerializer.Deserialize<List<AuditEvent>>(
                     element,
                     ModelBase.SerializerOptions
                 )
@@ -77,14 +77,14 @@ public sealed record class AuditEventListResponse : ModelBase, IFromRaw<AuditEve
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AuditEventListResponse(Generic::Dictionary<string, JsonElement> properties)
+    AuditEventListResponse(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
     public static AuditEventListResponse FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
+        Dictionary<string, JsonElement> properties
     )
     {
         return new(properties);

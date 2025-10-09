@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 using Courier.Models.NotificationGetContentProperties.BlockProperties.ContentProperties;
-using Generic = System.Collections.Generic;
 using System = System;
 
 namespace Courier.Models.NotificationGetContentProperties.BlockProperties;
@@ -97,7 +97,7 @@ sealed class ContentConverter : JsonConverter<Content?>
         JsonSerializerOptions options
     )
     {
-        Generic::List<CourierInvalidDataException> exceptions = [];
+        List<CourierInvalidDataException> exceptions = [];
 
         try
         {

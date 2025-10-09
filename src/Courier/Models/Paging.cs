@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -60,13 +60,13 @@ public sealed record class Paging : ModelBase, IFromRaw<Paging>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Paging(Generic::Dictionary<string, JsonElement> properties)
+    Paging(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Paging FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static Paging FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

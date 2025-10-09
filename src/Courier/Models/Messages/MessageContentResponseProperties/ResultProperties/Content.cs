@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Messages.MessageContentResponseProperties.ResultProperties.ContentProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Messages.MessageContentResponseProperties.ResultProperties;
 
@@ -18,7 +18,7 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
     /// <summary>
     /// The blocks of the rendered message.
     /// </summary>
-    public required Generic::List<Block> Blocks
+    public required List<Block> Blocks
     {
         get
         {
@@ -28,10 +28,7 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
                     new ArgumentOutOfRangeException("blocks", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<Block>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
+            return JsonSerializer.Deserialize<List<Block>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'blocks' cannot be null",
                     new ArgumentNullException("blocks")
@@ -203,13 +200,13 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Content(Generic::Dictionary<string, JsonElement> properties)
+    Content(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Content FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static Content FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

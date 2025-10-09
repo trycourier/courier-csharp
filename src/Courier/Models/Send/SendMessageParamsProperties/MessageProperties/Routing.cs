@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties;
 
@@ -18,7 +18,7 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
     /// <summary>
     /// A list of channels or providers (or nested routing rules).
     /// </summary>
-    public required Generic::List<MessageRoutingChannel> Channels
+    public required List<MessageRoutingChannel> Channels
     {
         get
         {
@@ -28,7 +28,7 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
                     new ArgumentOutOfRangeException("channels", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<MessageRoutingChannel>>(
+            return JsonSerializer.Deserialize<List<MessageRoutingChannel>>(
                     element,
                     ModelBase.SerializerOptions
                 )
@@ -83,13 +83,13 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Routing(Generic::Dictionary<string, JsonElement> properties)
+    Routing(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Routing FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static Routing FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using BaseCheckProperties = Courier.Models.BaseCheckProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -126,13 +126,13 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Check(Generic::Dictionary<string, JsonElement> properties)
+    Check(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Check FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static Check FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

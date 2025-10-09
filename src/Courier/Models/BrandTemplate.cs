@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -155,15 +155,13 @@ public sealed record class BrandTemplate : ModelBase, IFromRaw<BrandTemplate>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandTemplate(Generic::Dictionary<string, JsonElement> properties)
+    BrandTemplate(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static BrandTemplate FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static BrandTemplate FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

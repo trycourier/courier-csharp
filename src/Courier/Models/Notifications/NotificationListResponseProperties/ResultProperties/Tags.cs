@@ -1,18 +1,18 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Notifications.NotificationListResponseProperties.ResultProperties.TagsProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Notifications.NotificationListResponseProperties.ResultProperties;
 
 [JsonConverter(typeof(ModelConverter<Tags>))]
 public sealed record class Tags : ModelBase, IFromRaw<Tags>
 {
-    public required Generic::List<Data> Data
+    public required List<Data> Data
     {
         get
         {
@@ -22,10 +22,7 @@ public sealed record class Tags : ModelBase, IFromRaw<Tags>
                     new ArgumentOutOfRangeException("data", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<Data>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
+            return JsonSerializer.Deserialize<List<Data>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'data' cannot be null",
                     new ArgumentNullException("data")
@@ -52,19 +49,19 @@ public sealed record class Tags : ModelBase, IFromRaw<Tags>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Tags(Generic::Dictionary<string, JsonElement> properties)
+    Tags(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Tags FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static Tags FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }
 
     [SetsRequiredMembers]
-    public Tags(Generic::List<Data> data)
+    public Tags(List<Data> data)
         : this()
     {
         this.Data = data;

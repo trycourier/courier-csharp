@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -83,13 +83,13 @@ public sealed record class EmailHeader : ModelBase, IFromRaw<EmailHeader>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    EmailHeader(Generic::Dictionary<string, JsonElement> properties)
+    EmailHeader(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static EmailHeader FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static EmailHeader FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -55,15 +55,13 @@ public sealed record class WidgetBackground : ModelBase, IFromRaw<WidgetBackgrou
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    WidgetBackground(Generic::Dictionary<string, JsonElement> properties)
+    WidgetBackground(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static WidgetBackground FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static WidgetBackground FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

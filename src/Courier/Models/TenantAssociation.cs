@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 using TenantAssociationProperties = Courier.Models.TenantAssociationProperties;
 
 namespace Courier.Models;
@@ -43,14 +43,14 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     /// <summary>
     /// Additional metadata to be applied to a user profile when used in a tenant context
     /// </summary>
-    public Generic::Dictionary<string, JsonElement>? Profile
+    public Dictionary<string, JsonElement>? Profile
     {
         get
         {
             if (!this.Properties.TryGetValue("profile", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::Dictionary<string, JsonElement>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -124,15 +124,13 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TenantAssociation(Generic::Dictionary<string, JsonElement> properties)
+    TenantAssociation(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static TenantAssociation FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static TenantAssociation FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

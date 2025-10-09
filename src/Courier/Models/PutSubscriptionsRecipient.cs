@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -69,14 +69,14 @@ public sealed record class PutSubscriptionsRecipient
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PutSubscriptionsRecipient(Generic::Dictionary<string, JsonElement> properties)
+    PutSubscriptionsRecipient(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
     public static PutSubscriptionsRecipient FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
+        Dictionary<string, JsonElement> properties
     )
     {
         return new(properties);

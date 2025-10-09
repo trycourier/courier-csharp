@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Tenants.DefaultPreferences.Items.ItemUpdateParamsProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Tenants.DefaultPreferences.Items;
 
@@ -14,7 +14,7 @@ namespace Courier.Models.Tenants.DefaultPreferences.Items;
 /// </summary>
 public sealed record class ItemUpdateParams : ParamsBase
 {
-    public Generic::Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
     public required string TenantID;
 
@@ -47,16 +47,17 @@ public sealed record class ItemUpdateParams : ParamsBase
     /// <summary>
     /// The default channels to send to this tenant when has_custom_routing is enabled
     /// </summary>
-    public Generic::List<ApiEnum<string, ChannelClassification>>? CustomRouting
+    public List<ApiEnum<string, ChannelClassification>>? CustomRouting
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("custom_routing", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<
-                ApiEnum<string, ChannelClassification>
-            >?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {

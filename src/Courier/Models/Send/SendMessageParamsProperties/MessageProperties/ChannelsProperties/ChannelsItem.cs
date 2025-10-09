@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using ChannelsItemProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
 
@@ -76,14 +76,14 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     /// <summary>
     /// Channel specific overrides.
     /// </summary>
-    public Generic::Dictionary<string, JsonElement>? Override
+    public Dictionary<string, JsonElement>? Override
     {
         get
         {
             if (!this.Properties.TryGetValue("override", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::Dictionary<string, JsonElement>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -100,17 +100,14 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     /// <summary>
     /// Providers enabled for this channel.
     /// </summary>
-    public Generic::List<string>? Providers
+    public List<string>? Providers
     {
         get
         {
             if (!this.Properties.TryGetValue("providers", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<string>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -190,13 +187,13 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ChannelsItem(Generic::Dictionary<string, JsonElement> properties)
+    ChannelsItem(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static ChannelsItem FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static ChannelsItem FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

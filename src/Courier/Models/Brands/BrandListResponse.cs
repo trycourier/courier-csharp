@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Brands;
 
@@ -36,7 +36,7 @@ public sealed record class BrandListResponse : ModelBase, IFromRaw<BrandListResp
         }
     }
 
-    public required Generic::List<Brand> Results
+    public required List<Brand> Results
     {
         get
         {
@@ -46,10 +46,7 @@ public sealed record class BrandListResponse : ModelBase, IFromRaw<BrandListResp
                     new ArgumentOutOfRangeException("results", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<Brand>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
+            return JsonSerializer.Deserialize<List<Brand>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'results' cannot be null",
                     new ArgumentNullException("results")
@@ -77,15 +74,13 @@ public sealed record class BrandListResponse : ModelBase, IFromRaw<BrandListResp
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandListResponse(Generic::Dictionary<string, JsonElement> properties)
+    BrandListResponse(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static BrandListResponse FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static BrandListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

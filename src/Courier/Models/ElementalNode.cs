@@ -1,10 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
-using Courier.Models.ElementalNodeProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -25,18 +24,18 @@ public record class ElementalNode
 {
     public object Value { get; private init; }
 
-    public Generic::List<string>? Channels
+    public List<string>? Channels
     {
         get
         {
-            return Match<Generic::List<string>?>(
-                unionMember0: (x) => x.Channels,
-                unionMember1: (x) => x.Channels,
-                unionMember2: (x) => x.Channels,
-                unionMember3: (x) => x.Channels,
-                unionMember4: (x) => x.Channels,
-                unionMember5: (x) => x.Channels,
-                unionMember6: (x) => x.Channels
+            return Match<List<string>?>(
+                textNodeWithType: (x) => x.Channels,
+                metaNodeWithType: (x) => x.Channels,
+                channelNodeWithType: (x) => x.Channels,
+                imageNodeWithType: (x) => x.Channels,
+                actionNodeWithType: (x) => x.Channels,
+                dividerNodeWithType: (x) => x.Channels,
+                quoteNodeWithType: (x) => x.Channels
             );
         }
     }
@@ -46,13 +45,13 @@ public record class ElementalNode
         get
         {
             return Match<string?>(
-                unionMember0: (x) => x.If,
-                unionMember1: (x) => x.If,
-                unionMember2: (x) => x.If,
-                unionMember3: (x) => x.If,
-                unionMember4: (x) => x.If,
-                unionMember5: (x) => x.If,
-                unionMember6: (x) => x.If
+                textNodeWithType: (x) => x.If,
+                metaNodeWithType: (x) => x.If,
+                channelNodeWithType: (x) => x.If,
+                imageNodeWithType: (x) => x.If,
+                actionNodeWithType: (x) => x.If,
+                dividerNodeWithType: (x) => x.If,
+                quoteNodeWithType: (x) => x.If
             );
         }
     }
@@ -62,13 +61,13 @@ public record class ElementalNode
         get
         {
             return Match<string?>(
-                unionMember0: (x) => x.Loop,
-                unionMember1: (x) => x.Loop,
-                unionMember2: (x) => x.Loop,
-                unionMember3: (x) => x.Loop,
-                unionMember4: (x) => x.Loop,
-                unionMember5: (x) => x.Loop,
-                unionMember6: (x) => x.Loop
+                textNodeWithType: (x) => x.Loop,
+                metaNodeWithType: (x) => x.Loop,
+                channelNodeWithType: (x) => x.Loop,
+                imageNodeWithType: (x) => x.Loop,
+                actionNodeWithType: (x) => x.Loop,
+                dividerNodeWithType: (x) => x.Loop,
+                quoteNodeWithType: (x) => x.Loop
             );
         }
     }
@@ -78,48 +77,48 @@ public record class ElementalNode
         get
         {
             return Match<string?>(
-                unionMember0: (x) => x.Ref,
-                unionMember1: (x) => x.Ref,
-                unionMember2: (x) => x.Ref,
-                unionMember3: (x) => x.Ref,
-                unionMember4: (x) => x.Ref,
-                unionMember5: (x) => x.Ref,
-                unionMember6: (x) => x.Ref
+                textNodeWithType: (x) => x.Ref,
+                metaNodeWithType: (x) => x.Ref,
+                channelNodeWithType: (x) => x.Ref,
+                imageNodeWithType: (x) => x.Ref,
+                actionNodeWithType: (x) => x.Ref,
+                dividerNodeWithType: (x) => x.Ref,
+                quoteNodeWithType: (x) => x.Ref
             );
         }
     }
 
-    public ElementalNode(UnionMember0 value)
+    public ElementalNode(ElementalTextNodeWithType value)
     {
         Value = value;
     }
 
-    public ElementalNode(UnionMember1 value)
+    public ElementalNode(ElementalMetaNodeWithType value)
     {
         Value = value;
     }
 
-    public ElementalNode(UnionMember2 value)
+    public ElementalNode(ElementalChannelNodeWithType value)
     {
         Value = value;
     }
 
-    public ElementalNode(UnionMember3 value)
+    public ElementalNode(ElementalImageNodeWithType value)
     {
         Value = value;
     }
 
-    public ElementalNode(UnionMember4 value)
+    public ElementalNode(ElementalActionNodeWithType value)
     {
         Value = value;
     }
 
-    public ElementalNode(UnionMember5 value)
+    public ElementalNode(ElementalDividerNodeWithType value)
     {
         Value = value;
     }
 
-    public ElementalNode(UnionMember6 value)
+    public ElementalNode(ElementalQuoteNodeWithType value)
     {
         Value = value;
     }
@@ -134,80 +133,86 @@ public record class ElementalNode
         return new(new UnknownVariant(value));
     }
 
-    public bool TryPickUnionMember0([NotNullWhen(true)] out UnionMember0? value)
+    public bool TryPickTextNodeWithType([NotNullWhen(true)] out ElementalTextNodeWithType? value)
     {
-        value = this.Value as UnionMember0;
+        value = this.Value as ElementalTextNodeWithType;
         return value != null;
     }
 
-    public bool TryPickUnionMember1([NotNullWhen(true)] out UnionMember1? value)
+    public bool TryPickMetaNodeWithType([NotNullWhen(true)] out ElementalMetaNodeWithType? value)
     {
-        value = this.Value as UnionMember1;
+        value = this.Value as ElementalMetaNodeWithType;
         return value != null;
     }
 
-    public bool TryPickUnionMember2([NotNullWhen(true)] out UnionMember2? value)
+    public bool TryPickChannelNodeWithType(
+        [NotNullWhen(true)] out ElementalChannelNodeWithType? value
+    )
     {
-        value = this.Value as UnionMember2;
+        value = this.Value as ElementalChannelNodeWithType;
         return value != null;
     }
 
-    public bool TryPickUnionMember3([NotNullWhen(true)] out UnionMember3? value)
+    public bool TryPickImageNodeWithType([NotNullWhen(true)] out ElementalImageNodeWithType? value)
     {
-        value = this.Value as UnionMember3;
+        value = this.Value as ElementalImageNodeWithType;
         return value != null;
     }
 
-    public bool TryPickUnionMember4([NotNullWhen(true)] out UnionMember4? value)
+    public bool TryPickActionNodeWithType(
+        [NotNullWhen(true)] out ElementalActionNodeWithType? value
+    )
     {
-        value = this.Value as UnionMember4;
+        value = this.Value as ElementalActionNodeWithType;
         return value != null;
     }
 
-    public bool TryPickUnionMember5([NotNullWhen(true)] out UnionMember5? value)
+    public bool TryPickDividerNodeWithType(
+        [NotNullWhen(true)] out ElementalDividerNodeWithType? value
+    )
     {
-        value = this.Value as UnionMember5;
+        value = this.Value as ElementalDividerNodeWithType;
         return value != null;
     }
 
-    public bool TryPickUnionMember6([NotNullWhen(true)] out UnionMember6? value)
+    public bool TryPickQuoteNodeWithType([NotNullWhen(true)] out ElementalQuoteNodeWithType? value)
     {
-        value = this.Value as UnionMember6;
+        value = this.Value as ElementalQuoteNodeWithType;
         return value != null;
     }
 
     public void Switch(
-        Action<UnionMember0> unionMember0,
-        Action<UnionMember1> unionMember1,
-        Action<UnionMember2> unionMember2,
-        Action<UnionMember3> unionMember3,
-        Action<UnionMember4> unionMember4,
-        Action<UnionMember5> unionMember5,
-        Action<UnionMember6> unionMember6
+        Action<ElementalTextNodeWithType> textNodeWithType,
+        Action<ElementalMetaNodeWithType> metaNodeWithType,
+        Action<ElementalChannelNodeWithType> channelNodeWithType,
+        Action<ElementalImageNodeWithType> imageNodeWithType,
+        Action<ElementalActionNodeWithType> actionNodeWithType,
+        Action<ElementalDividerNodeWithType> dividerNodeWithType,
+        Action<ElementalQuoteNodeWithType> quoteNodeWithType
     )
     {
         switch (this.Value)
         {
-            case UnionMember0 value:
-                unionMember0(value);
+            case ElementalTextNodeWithType value:
+                textNodeWithType(value);
                 break;
-            case UnionMember1 value:
-                unionMember1(value);
+            case ElementalMetaNodeWithType value:
+                metaNodeWithType(value);
                 break;
-            case UnionMember2 value:
-                unionMember2(value);
+            case ElementalChannelNodeWithType value:
+                channelNodeWithType(value);
                 break;
-            case UnionMember3 value:
-                unionMember3(value);
+            case ElementalImageNodeWithType value:
+                imageNodeWithType(value);
                 break;
-            case UnionMember4 value:
-                unionMember4(value);
+            case ElementalActionNodeWithType value:
+                actionNodeWithType(value);
                 break;
-            case UnionMember5 value:
-                unionMember5(value);
+            case ElementalDividerNodeWithType value:
+                dividerNodeWithType(value);
                 break;
-            case UnionMember6 value:
-                unionMember6(value);
+            case ElementalQuoteNodeWithType value:
+                quoteNodeWithType(value);
                 break;
             default:
                 throw new CourierInvalidDataException(
@@ -217,24 +222,24 @@ public record class ElementalNode
     }
 
     public T Match<T>(
-        Func<UnionMember0, T> unionMember0,
-        Func<UnionMember1, T> unionMember1,
-        Func<UnionMember2, T> unionMember2,
-        Func<UnionMember3, T> unionMember3,
-        Func<UnionMember4, T> unionMember4,
-        Func<UnionMember5, T> unionMember5,
-        Func<UnionMember6, T> unionMember6
+        Func<ElementalTextNodeWithType, T> textNodeWithType,
+        Func<ElementalMetaNodeWithType, T> metaNodeWithType,
+        Func<ElementalChannelNodeWithType, T> channelNodeWithType,
+        Func<ElementalImageNodeWithType, T> imageNodeWithType,
+        Func<ElementalActionNodeWithType, T> actionNodeWithType,
+        Func<ElementalDividerNodeWithType, T> dividerNodeWithType,
+        Func<ElementalQuoteNodeWithType, T> quoteNodeWithType
     )
     {
         return this.Value switch
         {
-            UnionMember0 value => unionMember0(value),
-            UnionMember1 value => unionMember1(value),
-            UnionMember2 value => unionMember2(value),
-            UnionMember3 value => unionMember3(value),
-            UnionMember4 value => unionMember4(value),
-            UnionMember5 value => unionMember5(value),
-            UnionMember6 value => unionMember6(value),
+            ElementalTextNodeWithType value => textNodeWithType(value),
+            ElementalMetaNodeWithType value => metaNodeWithType(value),
+            ElementalChannelNodeWithType value => channelNodeWithType(value),
+            ElementalImageNodeWithType value => imageNodeWithType(value),
+            ElementalActionNodeWithType value => actionNodeWithType(value),
+            ElementalDividerNodeWithType value => dividerNodeWithType(value),
+            ElementalQuoteNodeWithType value => quoteNodeWithType(value),
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of ElementalNode"
             ),
@@ -262,11 +267,14 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         JsonSerializerOptions options
     )
     {
-        Generic::List<CourierInvalidDataException> exceptions = [];
+        List<CourierInvalidDataException> exceptions = [];
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember0>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(
+                ref reader,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -277,7 +285,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'UnionMember0'",
+                    "Data does not match union variant 'ElementalTextNodeWithType'",
                     e
                 )
             );
@@ -285,7 +293,10 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember1>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(
+                ref reader,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -296,7 +307,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'UnionMember1'",
+                    "Data does not match union variant 'ElementalMetaNodeWithType'",
                     e
                 )
             );
@@ -304,7 +315,10 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember2>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(
+                ref reader,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -315,7 +329,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'UnionMember2'",
+                    "Data does not match union variant 'ElementalChannelNodeWithType'",
                     e
                 )
             );
@@ -323,7 +337,10 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember3>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
+                ref reader,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -334,7 +351,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'UnionMember3'",
+                    "Data does not match union variant 'ElementalImageNodeWithType'",
                     e
                 )
             );
@@ -342,7 +359,10 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember4>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(
+                ref reader,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -353,7 +373,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'UnionMember4'",
+                    "Data does not match union variant 'ElementalActionNodeWithType'",
                     e
                 )
             );
@@ -361,7 +381,10 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember5>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(
+                ref reader,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -372,7 +395,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'UnionMember5'",
+                    "Data does not match union variant 'ElementalDividerNodeWithType'",
                     e
                 )
             );
@@ -380,7 +403,10 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UnionMember6>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(
+                ref reader,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -391,7 +417,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'UnionMember6'",
+                    "Data does not match union variant 'ElementalQuoteNodeWithType'",
                     e
                 )
             );

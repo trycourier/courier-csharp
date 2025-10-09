@@ -1,22 +1,22 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Notifications.Checks;
 
 public sealed record class CheckUpdateParams : ParamsBase
 {
-    public Generic::Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
     public required string ID;
 
     public required string SubmissionID;
 
-    public required Generic::List<BaseCheck> Checks
+    public required List<BaseCheck> Checks
     {
         get
         {
@@ -26,10 +26,7 @@ public sealed record class CheckUpdateParams : ParamsBase
                     new ArgumentOutOfRangeException("checks", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<BaseCheck>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
+            return JsonSerializer.Deserialize<List<BaseCheck>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'checks' cannot be null",
                     new ArgumentNullException("checks")

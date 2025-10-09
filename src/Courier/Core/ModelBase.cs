@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Courier.Models;
 using Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationDelayStepProperties;
 using Courier.Models.BaseCheckProperties;
 using Courier.Models.BrandSettingsInAppProperties;
@@ -18,13 +19,12 @@ using AutomationUpdateProfileStepProperties = Courier.Models.Automations.Invoke.
 using BlockProperties = Courier.Models.NotificationGetContentProperties.BlockProperties;
 using FilterConfigProperties = Courier.Models.FilterConfigProperties;
 using InboundTrackEventParamsProperties = Courier.Models.Inbound.InboundTrackEventParamsProperties;
-using IntersectionMember1Properties = Courier.Models.ElementalNodeProperties.UnionMember0Properties.IntersectionMember1Properties;
+using IntersectionMember1Properties = Courier.Models.ElementalActionNodeWithTypeProperties.IntersectionMember1Properties;
 using ItemUpdateParamsProperties = Courier.Models.Tenants.DefaultPreferences.Items.ItemUpdateParamsProperties;
 using JobProperties = Courier.Models.Bulk.BulkRetrieveJobResponseProperties.JobProperties;
 using ListDeleteResponseProperties = Courier.Models.Profiles.Lists.ListDeleteResponseProperties;
 using ListSubscribeResponseProperties = Courier.Models.Profiles.Lists.ListSubscribeResponseProperties;
 using MessageDetailsProperties = Courier.Models.MessageDetailsProperties;
-using Models = Courier.Models;
 using ProfileCreateResponseProperties = Courier.Models.Profiles.ProfileCreateResponseProperties;
 using ProfileReplaceResponseProperties = Courier.Models.Profiles.ProfileReplaceResponseProperties;
 using RoutingProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
@@ -46,35 +46,35 @@ public abstract record class ModelBase
     {
         Converters =
         {
-            new ApiEnumConverter<string, Models::Alignment>(),
+            new ApiEnumConverter<string, Alignment>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, Placement>(),
-            new ApiEnumConverter<string, Models::ChannelClassification>(),
+            new ApiEnumConverter<string, ChannelClassification>(),
             new ApiEnumConverter<string, IntersectionMember1Properties::Type>(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.ElementalNodeProperties.UnionMember1Properties.IntersectionMember1Properties.Type
+                global::Courier.Models.ElementalChannelNodeWithTypeProperties.IntersectionMember1Properties.Type
             >(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.ElementalNodeProperties.UnionMember2Properties.IntersectionMember1Properties.Type
+                global::Courier.Models.ElementalDividerNodeWithTypeProperties.IntersectionMember1Properties.Type
             >(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.ElementalNodeProperties.UnionMember3Properties.IntersectionMember1Properties.Type
+                global::Courier.Models.ElementalImageNodeWithTypeProperties.IntersectionMember1Properties.Type
             >(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.ElementalNodeProperties.UnionMember4Properties.IntersectionMember1Properties.Type
+                global::Courier.Models.ElementalMetaNodeWithTypeProperties.IntersectionMember1Properties.Type
             >(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.ElementalNodeProperties.UnionMember5Properties.IntersectionMember1Properties.Type
+                global::Courier.Models.ElementalQuoteNodeWithTypeProperties.IntersectionMember1Properties.Type
             >(),
             new ApiEnumConverter<
                 string,
-                global::Courier.Models.ElementalNodeProperties.UnionMember6Properties.IntersectionMember1Properties.Type
+                global::Courier.Models.ElementalTextNodeWithTypeProperties.IntersectionMember1Properties.Type
             >(),
             new ApiEnumConverter<string, Operator>(),
             new ApiEnumConverter<string, FilterConfigProperties::Operator>(),
@@ -83,10 +83,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Method>(),
             new ApiEnumConverter<string, BlockProperties::Type>(),
             new ApiEnumConverter<string, Source>(),
-            new ApiEnumConverter<string, Models::PreferenceStatus>(),
+            new ApiEnumConverter<string, PreferenceStatus>(),
             new ApiEnumConverter<string, SubscriptionTopicNewProperties::Status>(),
             new ApiEnumConverter<string, TenantAssociationProperties::Type>(),
-            new ApiEnumConverter<string, Models::TextStyle>(),
+            new ApiEnumConverter<string, TextStyle>(),
             new ApiEnumConverter<string, ProviderKey>(),
             new ApiEnumConverter<string, RoutingMethod>(),
             new ApiEnumConverter<string, RoutingProperties::Method>(),

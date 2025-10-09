@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -23,17 +23,14 @@ namespace Courier.Models;
 [JsonConverter(typeof(ModelConverter<ElementalChannelNode>))]
 public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalChannelNode>
 {
-    public Generic::List<string>? Channels
+    public List<string>? Channels
     {
         get
         {
             if (!this.Properties.TryGetValue("channels", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<string>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -131,14 +128,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is `required`.
     /// </summary>
-    public Generic::Dictionary<string, JsonElement>? Raw
+    public Dictionary<string, JsonElement>? Raw
     {
         get
         {
             if (!this.Properties.TryGetValue("raw", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::Dictionary<string, JsonElement>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -184,15 +181,13 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalChannelNode(Generic::Dictionary<string, JsonElement> properties)
+    ElementalChannelNode(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static ElementalChannelNode FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static ElementalChannelNode FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Models.BrandSettingsEmailProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -97,15 +97,13 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSettingsEmail(Generic::Dictionary<string, JsonElement> properties)
+    BrandSettingsEmail(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static BrandSettingsEmail FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static BrandSettingsEmail FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

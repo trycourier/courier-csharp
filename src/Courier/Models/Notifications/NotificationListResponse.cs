@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Notifications.NotificationListResponseProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Notifications;
 
@@ -37,7 +37,7 @@ public sealed record class NotificationListResponse : ModelBase, IFromRaw<Notifi
         }
     }
 
-    public required Generic::List<Result> Results
+    public required List<Result> Results
     {
         get
         {
@@ -47,10 +47,7 @@ public sealed record class NotificationListResponse : ModelBase, IFromRaw<Notifi
                     new ArgumentOutOfRangeException("results", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<Result>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
+            return JsonSerializer.Deserialize<List<Result>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'results' cannot be null",
                     new ArgumentNullException("results")
@@ -78,14 +75,14 @@ public sealed record class NotificationListResponse : ModelBase, IFromRaw<Notifi
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationListResponse(Generic::Dictionary<string, JsonElement> properties)
+    NotificationListResponse(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
     public static NotificationListResponse FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
+        Dictionary<string, JsonElement> properties
     )
     {
         return new(properties);

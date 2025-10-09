@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models = Courier.Models;
+using Courier.Models;
 
 namespace Courier.Tests.Services.Profiles.Lists;
 
@@ -34,37 +34,31 @@ public class ListServiceTest : TestBase
                         ListID = "listId",
                         Preferences = new()
                         {
-                            Categories = new Dictionary<
-                                string,
-                                Models::NotificationPreferenceDetails
-                            >()
+                            Categories = new Dictionary<string, NotificationPreferenceDetails>()
                             {
                                 {
                                     "foo",
                                     new()
                                     {
-                                        Status = Models::PreferenceStatus.OptedIn,
+                                        Status = PreferenceStatus.OptedIn,
                                         ChannelPreferences =
                                         [
-                                            new(Models::ChannelClassification.DirectMessage),
+                                            new(ChannelClassification.DirectMessage),
                                         ],
                                         Rules = [new() { Until = "until", Start = "start" }],
                                     }
                                 },
                             },
-                            Notifications = new Dictionary<
-                                string,
-                                Models::NotificationPreferenceDetails
-                            >()
+                            Notifications = new Dictionary<string, NotificationPreferenceDetails>()
                             {
                                 {
                                     "foo",
                                     new()
                                     {
-                                        Status = Models::PreferenceStatus.OptedIn,
+                                        Status = PreferenceStatus.OptedIn,
                                         ChannelPreferences =
                                         [
-                                            new(Models::ChannelClassification.DirectMessage),
+                                            new(ChannelClassification.DirectMessage),
                                         ],
                                         Rules = [new() { Until = "until", Start = "start" }],
                                     }
