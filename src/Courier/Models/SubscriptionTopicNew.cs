@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.SubscriptionTopicNewProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -39,16 +39,17 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
     /// <summary>
     /// The default channels to send to this tenant when has_custom_routing is enabled
     /// </summary>
-    public Generic::List<ApiEnum<string, ChannelClassification>>? CustomRouting
+    public List<ApiEnum<string, ChannelClassification>>? CustomRouting
     {
         get
         {
             if (!this.Properties.TryGetValue("custom_routing", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<
-                ApiEnum<string, ChannelClassification>
-            >?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -95,15 +96,13 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SubscriptionTopicNew(Generic::Dictionary<string, JsonElement> properties)
+    SubscriptionTopicNew(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static SubscriptionTopicNew FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static SubscriptionTopicNew FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

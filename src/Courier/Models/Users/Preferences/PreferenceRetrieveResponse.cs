@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Users.Preferences;
 
@@ -16,7 +16,7 @@ public sealed record class PreferenceRetrieveResponse
     /// <summary>
     /// The Preferences associated with the user_id.
     /// </summary>
-    public required Generic::List<TopicPreference> Items
+    public required List<TopicPreference> Items
     {
         get
         {
@@ -26,7 +26,7 @@ public sealed record class PreferenceRetrieveResponse
                     new ArgumentOutOfRangeException("items", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<TopicPreference>>(
+            return JsonSerializer.Deserialize<List<TopicPreference>>(
                     element,
                     ModelBase.SerializerOptions
                 )
@@ -85,14 +85,14 @@ public sealed record class PreferenceRetrieveResponse
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PreferenceRetrieveResponse(Generic::Dictionary<string, JsonElement> properties)
+    PreferenceRetrieveResponse(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
     public static PreferenceRetrieveResponse FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
+        Dictionary<string, JsonElement> properties
     )
     {
         return new(properties);

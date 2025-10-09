@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Courier.Models;
 using Courier.Models.InboundBulkMessageProperties;
 using Courier.Models.PreferenceProperties;
-using Models = Courier.Models;
 
 namespace Courier.Tests.Services.Bulk;
 
@@ -23,37 +23,31 @@ public class BulkServiceTest : TestBase
                         Data = JsonSerializer.Deserialize<JsonElement>("{}"),
                         Preferences = new()
                         {
-                            Categories = new Dictionary<
-                                string,
-                                Models::NotificationPreferenceDetails
-                            >()
+                            Categories = new Dictionary<string, NotificationPreferenceDetails>()
                             {
                                 {
                                     "foo",
                                     new()
                                     {
-                                        Status = Models::PreferenceStatus.OptedIn,
+                                        Status = PreferenceStatus.OptedIn,
                                         ChannelPreferences =
                                         [
-                                            new(Models::ChannelClassification.DirectMessage),
+                                            new(ChannelClassification.DirectMessage),
                                         ],
                                         Rules = [new() { Until = "until", Start = "start" }],
                                     }
                                 },
                             },
-                            Notifications = new Dictionary<
-                                string,
-                                Models::NotificationPreferenceDetails
-                            >()
+                            Notifications = new Dictionary<string, NotificationPreferenceDetails>()
                             {
                                 {
                                     "foo",
                                     new()
                                     {
-                                        Status = Models::PreferenceStatus.OptedIn,
+                                        Status = PreferenceStatus.OptedIn,
                                         ChannelPreferences =
                                         [
-                                            new(Models::ChannelClassification.DirectMessage),
+                                            new(ChannelClassification.DirectMessage),
                                         ],
                                         Rules = [new() { Until = "until", Start = "start" }],
                                     }
@@ -75,32 +69,32 @@ public class BulkServiceTest : TestBase
                             PhoneNumber = "phone_number",
                             Preferences = new()
                             {
-                                Notifications = new Dictionary<string, Models::Preference>()
+                                Notifications = new Dictionary<string, Preference>()
                                 {
                                     {
                                         "foo",
                                         new()
                                         {
-                                            Status = Models::PreferenceStatus.OptedIn,
+                                            Status = PreferenceStatus.OptedIn,
                                             ChannelPreferences =
                                             [
-                                                new(Models::ChannelClassification.DirectMessage),
+                                                new(ChannelClassification.DirectMessage),
                                             ],
                                             Rules = [new() { Until = "until", Start = "start" }],
                                             Source = Source.Subscription,
                                         }
                                     },
                                 },
-                                Categories = new Dictionary<string, Models::Preference>()
+                                Categories = new Dictionary<string, Preference>()
                                 {
                                     {
                                         "foo",
                                         new()
                                         {
-                                            Status = Models::PreferenceStatus.OptedIn,
+                                            Status = PreferenceStatus.OptedIn,
                                             ChannelPreferences =
                                             [
-                                                new(Models::ChannelClassification.DirectMessage),
+                                                new(ChannelClassification.DirectMessage),
                                             ],
                                             Rules = [new() { Until = "until", Start = "start" }],
                                             Source = Source.Subscription,

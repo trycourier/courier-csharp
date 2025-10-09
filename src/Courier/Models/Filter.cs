@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.FilterProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -106,13 +106,13 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Filter(Generic::Dictionary<string, JsonElement> properties)
+    Filter(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Filter FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static Filter FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

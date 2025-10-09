@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -137,14 +137,14 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     /// <summary>
     /// Arbitrary properties accessible to a template.
     /// </summary>
-    public Generic::Dictionary<string, JsonElement>? Properties1
+    public Dictionary<string, JsonElement>? Properties1
     {
         get
         {
             if (!this.Properties.TryGetValue("properties", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::Dictionary<string, JsonElement>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -161,14 +161,14 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     /// <summary>
     /// A user profile object merged with user profile on send.
     /// </summary>
-    public Generic::Dictionary<string, JsonElement>? UserProfile
+    public Dictionary<string, JsonElement>? UserProfile
     {
         get
         {
             if (!this.Properties.TryGetValue("user_profile", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::Dictionary<string, JsonElement>?>(
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -209,13 +209,13 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Tenant(Generic::Dictionary<string, JsonElement> properties)
+    Tenant(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static Tenant FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static Tenant FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

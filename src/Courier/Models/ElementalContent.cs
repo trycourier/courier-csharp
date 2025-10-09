@@ -1,17 +1,17 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
 [JsonConverter(typeof(ModelConverter<ElementalContent>))]
 public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalContent>
 {
-    public required Generic::List<ElementalNode> Elements
+    public required List<ElementalNode> Elements
     {
         get
         {
@@ -21,7 +21,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
                     new ArgumentOutOfRangeException("elements", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<ElementalNode>>(
+            return JsonSerializer.Deserialize<List<ElementalNode>>(
                     element,
                     ModelBase.SerializerOptions
                 )
@@ -99,15 +99,13 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalContent(Generic::Dictionary<string, JsonElement> properties)
+    ElementalContent(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static ElementalContent FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static ElementalContent FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

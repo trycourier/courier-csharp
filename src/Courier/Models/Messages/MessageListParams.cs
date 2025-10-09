@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using Courier.Core;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Messages;
 
@@ -164,17 +164,14 @@ public sealed record class MessageListParams : ParamsBase
     /// The key assocated to the provider you want to filter on. E.g., sendgrid,
     /// inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
     /// </summary>
-    public Generic::List<string?>? Provider
+    public List<string?>? Provider
     {
         get
         {
             if (!this.QueryProperties.TryGetValue("provider", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<string?>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -210,17 +207,14 @@ public sealed record class MessageListParams : ParamsBase
     /// An indicator of the current status of the message. Allows multiple values
     /// to be set in query parameters.
     /// </summary>
-    public Generic::List<string?>? Status
+    public List<string?>? Status
     {
         get
         {
             if (!this.QueryProperties.TryGetValue("status", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<string?>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -235,17 +229,14 @@ public sealed record class MessageListParams : ParamsBase
     /// A tag placed in the metadata.tags during a notification send. Allows multiple
     /// values to be set in query parameters.
     /// </summary>
-    public Generic::List<string?>? Tag
+    public List<string?>? Tag
     {
         get
         {
             if (!this.QueryProperties.TryGetValue("tag", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::List<string?>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
         }
         set
         {

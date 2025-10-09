@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties;
 
@@ -20,7 +20,7 @@ public record class To
         Value = value;
     }
 
-    public To(Generic::List<Recipient> value)
+    public To(List<Recipient> value)
     {
         Value = value;
     }
@@ -41,23 +41,20 @@ public record class To
         return value != null;
     }
 
-    public bool TryPickRecipients([NotNullWhen(true)] out Generic::List<Recipient>? value)
+    public bool TryPickRecipients([NotNullWhen(true)] out List<Recipient>? value)
     {
-        value = this.Value as Generic::List<Recipient>;
+        value = this.Value as List<Recipient>;
         return value != null;
     }
 
-    public void Switch(
-        Action<UserRecipient> userRecipient,
-        Action<Generic::List<Recipient>> recipients
-    )
+    public void Switch(Action<UserRecipient> userRecipient, Action<List<Recipient>> recipients)
     {
         switch (this.Value)
         {
             case UserRecipient value:
                 userRecipient(value);
                 break;
-            case Generic::List<Recipient> value:
+            case List<Recipient> value:
                 recipients(value);
                 break;
             default:
@@ -65,15 +62,12 @@ public record class To
         }
     }
 
-    public T Match<T>(
-        Func<UserRecipient, T> userRecipient,
-        Func<Generic::List<Recipient>, T> recipients
-    )
+    public T Match<T>(Func<UserRecipient, T> userRecipient, Func<List<Recipient>, T> recipients)
     {
         return this.Value switch
         {
             UserRecipient value => userRecipient(value),
-            Generic::List<Recipient> value => recipients(value),
+            List<Recipient> value => recipients(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of To"),
         };
     }
@@ -97,7 +91,7 @@ sealed class ToConverter : JsonConverter<To?>
         JsonSerializerOptions options
     )
     {
-        Generic::List<CourierInvalidDataException> exceptions = [];
+        List<CourierInvalidDataException> exceptions = [];
 
         try
         {
@@ -120,10 +114,7 @@ sealed class ToConverter : JsonConverter<To?>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<Generic::List<Recipient>>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<List<Recipient>>(ref reader, options);
             if (deserialized != null)
             {
                 return new To(deserialized);
@@ -133,7 +124,7 @@ sealed class ToConverter : JsonConverter<To?>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'Generic::List<Recipient>'",
+                    "Data does not match union variant 'List<Recipient>'",
                     e
                 )
             );

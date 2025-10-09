@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Messages.MessageContentResponseProperties;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Messages;
 
@@ -15,7 +15,7 @@ public sealed record class MessageContentResponse : ModelBase, IFromRaw<MessageC
     /// <summary>
     /// An array of render output of a previously sent message.
     /// </summary>
-    public required Generic::List<Result> Results
+    public required List<Result> Results
     {
         get
         {
@@ -25,10 +25,7 @@ public sealed record class MessageContentResponse : ModelBase, IFromRaw<MessageC
                     new ArgumentOutOfRangeException("results", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<Result>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
+            return JsonSerializer.Deserialize<List<Result>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'results' cannot be null",
                     new ArgumentNullException("results")
@@ -55,21 +52,21 @@ public sealed record class MessageContentResponse : ModelBase, IFromRaw<MessageC
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageContentResponse(Generic::Dictionary<string, JsonElement> properties)
+    MessageContentResponse(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
     public static MessageContentResponse FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
+        Dictionary<string, JsonElement> properties
     )
     {
         return new(properties);
     }
 
     [SetsRequiredMembers]
-    public MessageContentResponse(Generic::List<Result> results)
+    public MessageContentResponse(List<Result> results)
         : this()
     {
         this.Results = results;

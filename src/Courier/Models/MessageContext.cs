@@ -1,8 +1,8 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
@@ -39,15 +39,13 @@ public sealed record class MessageContext : ModelBase, IFromRaw<MessageContext>
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageContext(Generic::Dictionary<string, JsonElement> properties)
+    MessageContext(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static MessageContext FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static MessageContext FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

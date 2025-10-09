@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Courier.Models;
 using Courier.Models.PreferenceProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
 using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
-using Models = Courier.Models;
 
 namespace Courier.Tests.Services.Send;
 
@@ -51,9 +51,7 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Content = new(
-                        new Models::ElementalContentSugar() { Body = "body", Title = "title" }
-                    ),
+                    Content = new(new ElementalContentSugar() { Body = "body", Title = "title" }),
                     Context = new() { TenantID = "tenant_id" },
                     Data = new Dictionary<string, JsonElement>()
                     {
@@ -112,7 +110,7 @@ public class SendServiceTest : TestBase
                         Provider = new Dictionary<string, long>() { { "foo", 0 } },
                     },
                     To = new(
-                        new Models::UserRecipient()
+                        new UserRecipient()
                         {
                             AccountID = "account_id",
                             Context = new() { TenantID = "tenant_id" },
@@ -125,32 +123,32 @@ public class SendServiceTest : TestBase
                             PhoneNumber = "phone_number",
                             Preferences = new()
                             {
-                                Notifications = new Dictionary<string, Models::Preference>()
+                                Notifications = new Dictionary<string, Preference>()
                                 {
                                     {
                                         "foo",
                                         new()
                                         {
-                                            Status = Models::PreferenceStatus.OptedIn,
+                                            Status = PreferenceStatus.OptedIn,
                                             ChannelPreferences =
                                             [
-                                                new(Models::ChannelClassification.DirectMessage),
+                                                new(ChannelClassification.DirectMessage),
                                             ],
                                             Rules = [new() { Until = "until", Start = "start" }],
                                             Source = Source.Subscription,
                                         }
                                     },
                                 },
-                                Categories = new Dictionary<string, Models::Preference>()
+                                Categories = new Dictionary<string, Preference>()
                                 {
                                     {
                                         "foo",
                                         new()
                                         {
-                                            Status = Models::PreferenceStatus.OptedIn,
+                                            Status = PreferenceStatus.OptedIn,
                                             ChannelPreferences =
                                             [
-                                                new(Models::ChannelClassification.DirectMessage),
+                                                new(ChannelClassification.DirectMessage),
                                             ],
                                             Rules = [new() { Until = "until", Start = "start" }],
                                             Source = Source.Subscription,

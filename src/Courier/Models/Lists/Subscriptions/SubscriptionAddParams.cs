@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Lists.Subscriptions;
 
@@ -14,11 +14,11 @@ namespace Courier.Models.Lists.Subscriptions;
 /// </summary>
 public sealed record class SubscriptionAddParams : ParamsBase
 {
-    public Generic::Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
     public required string ListID;
 
-    public required Generic::List<PutSubscriptionsRecipient> Recipients
+    public required List<PutSubscriptionsRecipient> Recipients
     {
         get
         {
@@ -28,7 +28,7 @@ public sealed record class SubscriptionAddParams : ParamsBase
                     new ArgumentOutOfRangeException("recipients", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<PutSubscriptionsRecipient>>(
+            return JsonSerializer.Deserialize<List<PutSubscriptionsRecipient>>(
                     element,
                     ModelBase.SerializerOptions
                 )

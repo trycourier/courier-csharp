@@ -1,25 +1,25 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models;
 
 [JsonConverter(typeof(ModelConverter<RecipientPreferences>))]
 public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientPreferences>
 {
-    public Generic::Dictionary<string, NotificationPreferenceDetails>? Categories
+    public Dictionary<string, NotificationPreferenceDetails>? Categories
     {
         get
         {
             if (!this.Properties.TryGetValue("categories", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::Dictionary<
-                string,
-                NotificationPreferenceDetails
-            >?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -30,17 +30,17 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
         }
     }
 
-    public Generic::Dictionary<string, NotificationPreferenceDetails>? Notifications
+    public Dictionary<string, NotificationPreferenceDetails>? Notifications
     {
         get
         {
             if (!this.Properties.TryGetValue("notifications", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Generic::Dictionary<
-                string,
-                NotificationPreferenceDetails
-            >?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -73,15 +73,13 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    RecipientPreferences(Generic::Dictionary<string, JsonElement> properties)
+    RecipientPreferences(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static RecipientPreferences FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static RecipientPreferences FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

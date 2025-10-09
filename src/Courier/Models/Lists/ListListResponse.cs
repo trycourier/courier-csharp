@@ -1,17 +1,17 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
 namespace Courier.Models.Lists;
 
 [JsonConverter(typeof(ModelConverter<ListListResponse>))]
 public sealed record class ListListResponse : ModelBase, IFromRaw<ListListResponse>
 {
-    public required Generic::List<List> Items
+    public required List<UserList> Items
     {
         get
         {
@@ -21,10 +21,7 @@ public sealed record class ListListResponse : ModelBase, IFromRaw<ListListRespon
                     new ArgumentOutOfRangeException("items", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<Generic::List<List>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
+            return JsonSerializer.Deserialize<List<UserList>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'items' cannot be null",
                     new ArgumentNullException("items")
@@ -77,15 +74,13 @@ public sealed record class ListListResponse : ModelBase, IFromRaw<ListListRespon
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ListListResponse(Generic::Dictionary<string, JsonElement> properties)
+    ListListResponse(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static ListListResponse FromRawUnchecked(
-        Generic::Dictionary<string, JsonElement> properties
-    )
+    public static ListListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }

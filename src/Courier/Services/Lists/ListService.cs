@@ -24,7 +24,7 @@ public sealed class ListService : IListService
         get { return _subscriptions.Value; }
     }
 
-    public async Task<List> Retrieve(ListRetrieveParams parameters)
+    public async Task<UserList> Retrieve(ListRetrieveParams parameters)
     {
         HttpRequest<ListRetrieveParams> request = new()
         {
@@ -32,7 +32,7 @@ public sealed class ListService : IListService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<List>().ConfigureAwait(false);
+        return await response.Deserialize<UserList>().ConfigureAwait(false);
     }
 
     public async Task Update(ListUpdateParams parameters)
