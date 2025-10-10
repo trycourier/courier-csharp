@@ -8,8 +8,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<UserList>))]
-public sealed record class UserList : ModelBase, IFromRaw<UserList>
+[JsonConverter(typeof(ModelConverter<SubscriptionList>))]
+public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionList>
 {
     public required string ID
     {
@@ -105,17 +105,17 @@ public sealed record class UserList : ModelBase, IFromRaw<UserList>
         _ = this.Updated;
     }
 
-    public UserList() { }
+    public SubscriptionList() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UserList(Dictionary<string, JsonElement> properties)
+    SubscriptionList(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static UserList FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static SubscriptionList FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
     }
