@@ -11,7 +11,7 @@ namespace Courier.Models.Lists;
 [JsonConverter(typeof(ModelConverter<ListListResponse>))]
 public sealed record class ListListResponse : ModelBase, IFromRaw<ListListResponse>
 {
-    public required List<UserList> Items
+    public required List<SubscriptionList> Items
     {
         get
         {
@@ -21,7 +21,10 @@ public sealed record class ListListResponse : ModelBase, IFromRaw<ListListRespon
                     new ArgumentOutOfRangeException("items", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<UserList>>(element, ModelBase.SerializerOptions)
+            return JsonSerializer.Deserialize<List<SubscriptionList>>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
                 ?? throw new CourierInvalidDataException(
                     "'items' cannot be null",
                     new ArgumentNullException("items")

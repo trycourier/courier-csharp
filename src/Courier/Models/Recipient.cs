@@ -76,6 +76,9 @@ public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
         }
     }
 
+    /// <summary>
+    /// The user's email address.
+    /// </summary>
     public string? Email
     {
         get
@@ -115,6 +118,9 @@ public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
         }
     }
 
+    /// <summary>
+    /// The user's phone number.
+    /// </summary>
     public string? PhoneNumber
     {
         get
@@ -152,7 +158,7 @@ public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
     }
 
     /// <summary>
-    /// Tenant id. Will load brand, default preferences and base context data.
+    /// The id of the tenant the user is associated with.
     /// </summary>
     public string? TenantID
     {
@@ -172,6 +178,10 @@ public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
         }
     }
 
+    /// <summary>
+    /// The user's unique identifier. Typically, this will match the user id of a
+    /// user in your system.
+    /// </summary>
     public string? UserID
     {
         get

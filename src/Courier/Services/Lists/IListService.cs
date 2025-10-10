@@ -12,7 +12,7 @@ public interface IListService
     /// <summary>
     /// Returns a list based on the list ID provided.
     /// </summary>
-    Task<UserList> Retrieve(ListRetrieveParams parameters);
+    Task<SubscriptionList> Retrieve(ListRetrieveParams parameters);
 
     /// <summary>
     /// Create or replace an existing list with the supplied values.
