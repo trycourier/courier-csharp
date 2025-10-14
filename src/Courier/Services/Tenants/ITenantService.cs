@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using Courier.Models;
 using Courier.Models.Tenants;
-using Courier.Services.Tenants.DefaultPreferences;
 using Courier.Services.Tenants.Templates;
+using Courier.Services.Tenants.TenantDefaultPreferences;
 
 namespace Courier.Services.Tenants;
 
 public interface ITenantService
 {
-    IDefaultPreferenceService DefaultPreferences { get; }
+    ITenantDefaultPreferenceService TenantDefaultPreferences { get; }
 
     ITemplateService Templates { get; }
 

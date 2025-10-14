@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0-alpha0 (2025-10-14)
+
+Full Changelog: [v0.1.0...v1.0.0-alpha0](https://github.com/trycourier/courier-csharp/compare/v0.1.0...v1.0.0-alpha0)
+
+### Features
+
+* Changes to spec, examples and scripts ([6458d15](https://github.com/trycourier/courier-csharp/commit/6458d1581373364ba37c6fa5e8f08123b396e4be))
+
 ## 0.1.0 (2025-10-14)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/trycourier/courier-csharp/compare/v0.0.1...v0.1.0)
