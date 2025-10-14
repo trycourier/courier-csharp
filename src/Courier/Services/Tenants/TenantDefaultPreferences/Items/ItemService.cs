@@ -1,9 +1,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Tenants.DefaultPreferences.Items;
+using Courier.Models.Tenants.TenantDefaultPreferences.Items;
 
-namespace Courier.Services.Tenants.DefaultPreferences.Items;
+namespace Courier.Services.Tenants.TenantDefaultPreferences.Items;
 
 public sealed class ItemService : IItemService
 {

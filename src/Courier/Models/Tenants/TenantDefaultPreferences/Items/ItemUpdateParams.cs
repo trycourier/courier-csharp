@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Tenants.DefaultPreferences.Items.ItemUpdateParamsProperties;
+using Courier.Models.Tenants.TenantDefaultPreferences.Items.ItemUpdateParamsProperties;
 
-namespace Courier.Models.Tenants.DefaultPreferences.Items;
+namespace Courier.Models.Tenants.TenantDefaultPreferences.Items;
 
 /// <summary>
 /// Create or Replace Default Preferences For Topic

@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models;
 using Courier.Models.Tenants;
-using Courier.Services.Tenants.DefaultPreferences;
 using Courier.Services.Tenants.Templates;
+using Courier.Services.Tenants.TenantDefaultPreferences;
 
 namespace Courier.Services.Tenants;
 
@@ -16,14 +16,14 @@ public sealed class TenantService : ITenantService
     public TenantService(ICourierClient client)
     {
         _client = client;
-        _defaultPreferences = new(() => new DefaultPreferenceService(client));
+        _tenantDefaultPreferences = new(() => new TenantDefaultPreferenceService(client));
         _templates = new(() => new TemplateService(client));
     }
 
-    readonly Lazy<IDefaultPreferenceService> _defaultPreferences;
-    public IDefaultPreferenceService DefaultPreferences
+    readonly Lazy<ITenantDefaultPreferenceService> _tenantDefaultPreferences;
+    public ITenantDefaultPreferenceService TenantDefaultPreferences
     {
-        get { return _defaultPreferences.Value; }
+        get { return _tenantDefaultPreferences.Value; }
     }
 
     readonly Lazy<ITemplateService> _templates;

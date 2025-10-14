@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
 
-namespace Courier.Models.Tenants.DefaultPreferences.Items.ItemUpdateParamsProperties;
+namespace Courier.Models.Tenants.TenantDefaultPreferences.Items.ItemUpdateParamsProperties;
 
 [JsonConverter(typeof(StatusConverter))]
 public enum Status
