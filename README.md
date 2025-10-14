@@ -1,98 +1,131 @@
-# Courier .NET Library
+# Courier C# API Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
-![NuGet Version](https://img.shields.io/nuget/v/Courier.Client)
+> [!NOTE]
+> The Courier C# API Library is currently in **beta** and we're excited for you to experiment with it!
+>
+> This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
+>
+> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/trycourier/courier-csharp/issues/new).
 
+The Courier C# SDK provides convenient access to the Courier REST API from applications written in C#.
 
-The official Courier C# library, supporting .NET Standard, .NET Core, and .NET Framework.
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
-Using the .NET Core command-line interface (CLI) tools:
-
-```sh
-dotnet add package Courier.Client
+```bash
+git clone git@github.com:trycourier/courier-csharp.git
+dotnet add reference courier-csharp/src/Courier
 ```
 
-Using the NuGet Command Line Interface (CLI):
+## Requirements
 
-```sh
-nuget install Courier.Client
-```
+This library requires .NET 8 or later.
 
-## Documentation
-
-API reference documentation is available [here](https://courier.com/docs/rest).
+> [!NOTE]
+> The library is currently in **beta**. The requirements will be lowered in the future.
 
 ## Usage
 
-Below are code snippets of how you can use the C# SDK.
+See the [`examples`](examples) directory for complete and runnable examples.
 
 ```csharp
-using Courier.Client;
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using Courier;
+using Courier.Models;
+using Courier.Models.Send;
 
-Courier courier = new Courier("YOUR_API_KEY")
-Agent agent = courier.SendAsync(
-    new SendMessageRequest {
-        ...
-    }
-);
+// Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
+CourierClient client = new();
+
+SendMessageParams parameters = new()
+{
+    Message = new()
+    {
+        To = new(new UserRecipient() { UserID = "your_user_id" }),
+        Template = "your_template",
+        Data = new Dictionary<string, JsonElement>()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") }
+        },
+    },
+};
+
+var response = await client.Send.Message(parameters);
+
+Console.WriteLine(response);
 ```
 
-## Exception Handling
-When the API returns a non-zero status code, (4xx or 5xx response),
-a subclass of CourierException will be thrown:
+## Client Configuration
+
+Configure the client using environment variables:
 
 ```csharp
-using Courier.Client;
+using Courier;
 
-try {
-  courier.SendAsync(...);
-} catch (CourierException e) {
-  System.Console.WriteLine(e.Message)
-  System.Console.WriteLine(e.StatusCode)
-}
+// Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
+CourierClient client = new();
 ```
 
-## Advanced
-
-### Retries
-429 Rate Limit, and >=500 Internal errors will all be
-retried twice with exponential backoff. You can override this behavior
-globally or per-request.
+Or manually:
 
 ```csharp
-var courier = new Courier("...", new ClientOptions {
-    MaxRetries = 1 // Only retry once
-});
+using Courier;
+
+CourierClient client = new() { APIKey = "My API Key" };
 ```
 
-### Timeouts
-The SDK defaults to a 60s timeout. You can override this behaviour
-globally or per-request.
+Or using a combination of the two approaches.
 
-```csharp
-var courier = new Courier("...", new ClientOptions {
-    TimeoutInSeconds = 20 // Lower timeout
-});
-```
+See this table for the available options:
 
-### HTTP Client
-You can override the HttpClient by passing in `ClientOptions`.
+| Property  | Environment variable | Required | Default value               |
+| --------- | -------------------- | -------- | --------------------------- |
+| `APIKey`  | `COURIER_API_KEY`    | true     | -                           |
+| `BaseUrl` | `COURIER_BASE_URL`   | true     | `"https://api.courier.com"` |
 
-```csharp
-var courier = new Courier("YOUR_API_KEY", new ClientOptions {
-    HttpClient = ... // Override the Http Client
-    BaseURL = ... // Override the Base URL
-})
-```
+## Requests and responses
 
-## Contributing
-While we value open-source contributions to this SDK, this library
-is generated programmatically. Additions made directly to this library
-would have to be moved over to our generation code, otherwise they would
-be overwritten upon the next generated release. Feel free to open a PR as a
-proof of concept, but know that we will not be able to Courier it as-is.
-We suggest opening an issue first to discuss with us!
+To send a request to the Courier API, build an instance of some `Params` class and pass it to the corresponding client method. When the response is received, it will be deserialized into an instance of a C# class.
 
-On the other hand, contributions to the README are always very welcome!
+For example, `client.Send.Message` should be called with an instance of `SendMessageParams`, and it will return an instance of `Task<SendMessageResponse>`.
+
+## Error handling
+
+The SDK throws custom unchecked exception types:
+
+- `CourierApiException`: Base class for API errors. See this table for which exception subclass is thrown for each HTTP status code:
+
+| Status | Exception                              |
+| ------ | -------------------------------------- |
+| 400    | `CourierBadRequestException`           |
+| 401    | `CourierUnauthorizedException`         |
+| 403    | `CourierForbiddenException`            |
+| 404    | `CourierNotFoundException`             |
+| 422    | `CourierUnprocessableEntityException`  |
+| 429    | `CourierRateLimitException`            |
+| 5xx    | `Courier5xxException`                  |
+| others | `CourierUnexpectedStatusCodeException` |
+
+Additionally, all 4xx errors inherit from `Courier4xxException`.
+
+false
+
+- `CourierIOException`: I/O networking errors.
+
+- `CourierInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
+
+- `CourierException`: Base class for all exceptions.
+
+## Semantic versioning
+
+This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
+
+1. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals.)_
+2. Changes that we do not expect to impact the vast majority of users in practice.
+
+We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
+
+We are keen for your feedback; please open an [issue](https://www.github.com/trycourier/courier-csharp/issues) with questions, bugs, or suggestions.
