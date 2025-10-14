@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Courier.Models.Tenants.DefaultPreferences.Items;
+using Courier.Models.Tenants.TenantDefaultPreferences.Items;
 
-namespace Courier.Services.Tenants.DefaultPreferences.Items;
+namespace Courier.Services.Tenants.TenantDefaultPreferences.Items;
 
 public interface IItemService
 {
