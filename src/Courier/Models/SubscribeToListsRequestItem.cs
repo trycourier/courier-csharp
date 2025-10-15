@@ -1,15 +1,17 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Generic = System.Collections.Generic;
 
-namespace Courier.Models.Profiles.Lists.ListSubscribeParamsProperties;
+namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<List>))]
-public sealed record class List : ModelBase, IFromRaw<List>
+[JsonConverter(typeof(ModelConverter<SubscribeToListsRequestItem>))]
+public sealed record class SubscribeToListsRequestItem
+    : ModelBase,
+        IFromRaw<SubscribeToListsRequestItem>
 {
     public required string ListID
     {
@@ -63,23 +65,25 @@ public sealed record class List : ModelBase, IFromRaw<List>
         this.Preferences?.Validate();
     }
 
-    public List() { }
+    public SubscribeToListsRequestItem() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    List(Generic::Dictionary<string, JsonElement> properties)
+    SubscribeToListsRequestItem(Dictionary<string, JsonElement> properties)
     {
         Properties = properties;
     }
 #pragma warning restore CS8618
 
-    public static List FromRawUnchecked(Generic::Dictionary<string, JsonElement> properties)
+    public static SubscribeToListsRequestItem FromRawUnchecked(
+        Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }
 
     [SetsRequiredMembers]
-    public List(string listID)
+    public SubscribeToListsRequestItem(string listID)
         : this()
     {
         this.ListID = listID;
