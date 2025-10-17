@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Courier.Models;
-using Courier.Models.InboundBulkMessageProperties;
+using Courier.Models.Bulk.InboundBulkMessageProperties;
 using Courier.Models.PreferenceProperties;
 
 namespace Courier.Tests.Services.Bulk;

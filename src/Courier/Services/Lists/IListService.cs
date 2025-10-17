@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Courier.Models;
 using Courier.Models.Lists;
 using Courier.Services.Lists.Subscriptions;
 

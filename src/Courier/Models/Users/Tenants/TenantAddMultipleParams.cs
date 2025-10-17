@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
+using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Models.Users.Tenants;
 
@@ -19,7 +20,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
 
     public required string UserID;
 
-    public required List<TenantAssociation> Tenants
+    public required List<Tenants::TenantAssociation> Tenants
     {
         get
         {
@@ -29,7 +30,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
                     new ArgumentOutOfRangeException("tenants", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<TenantAssociation>>(
+            return JsonSerializer.Deserialize<List<Tenants::TenantAssociation>>(
                     element,
                     ModelBase.SerializerOptions
                 )

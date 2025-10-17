@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Courier.Models;
 using Courier.Models.Users.Tokens;
 
 namespace Courier.Services.Users.Tokens;
