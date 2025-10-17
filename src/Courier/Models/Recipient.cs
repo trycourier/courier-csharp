@@ -11,7 +11,7 @@ namespace Courier.Models;
 public sealed record class Recipient : ModelBase, IFromRaw<Recipient>
 {
     /// <summary>
-    /// Use `tenant_id` instead.
+    /// Deprecated - Use `tenant_id` instead.
     /// </summary>
     public string? AccountID
     {
