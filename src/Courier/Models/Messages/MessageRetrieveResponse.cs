@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.MessageDetailsProperties;
+using Courier.Models.Messages.MessageDetailsProperties;
 
 namespace Courier.Models.Messages;
 

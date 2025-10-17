@@ -2,7 +2,6 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models;
 using Courier.Models.Lists;
 using Courier.Services.Lists.Subscriptions;
 
