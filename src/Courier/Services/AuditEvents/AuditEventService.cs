@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models;
 using Courier.Models.AuditEvents;
 
 namespace Courier.Services.AuditEvents;

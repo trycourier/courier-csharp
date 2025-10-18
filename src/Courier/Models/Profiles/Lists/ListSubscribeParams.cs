@@ -5,7 +5,6 @@ using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
-using ListSubscribeParamsProperties = Courier.Models.Profiles.Lists.ListSubscribeParamsProperties;
 
 namespace Courier.Models.Profiles.Lists;
 
@@ -19,7 +18,7 @@ public sealed record class ListSubscribeParams : ParamsBase
 
     public required string UserID;
 
-    public required List<ListSubscribeParamsProperties::List> Lists
+    public required List<SubscribeToListsRequestItem> Lists
     {
         get
         {
@@ -29,7 +28,7 @@ public sealed record class ListSubscribeParams : ParamsBase
                     new ArgumentOutOfRangeException("lists", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<ListSubscribeParamsProperties::List>>(
+            return JsonSerializer.Deserialize<List<SubscribeToListsRequestItem>>(
                     element,
                     ModelBase.SerializerOptions
                 )

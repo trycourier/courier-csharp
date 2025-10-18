@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
 using TenantListResponseProperties = Courier.Models.Users.Tenants.TenantListResponseProperties;
+using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Models.Users.Tenants;
 
@@ -113,14 +114,14 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
         }
     }
 
-    public List<TenantAssociation>? Items
+    public List<Tenants::TenantAssociation>? Items
     {
         get
         {
             if (!this.Properties.TryGetValue("items", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<TenantAssociation>?>(
+            return JsonSerializer.Deserialize<List<Tenants::TenantAssociation>?>(
                 element,
                 ModelBase.SerializerOptions
             );

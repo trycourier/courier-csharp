@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Courier.Models;
 using Courier.Models.Tenants;
 using Courier.Services.Tenants.Templates;
 using Courier.Services.Tenants.TenantDefaultPreferences;

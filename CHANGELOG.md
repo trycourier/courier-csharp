@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0-alpha1 (2025-10-18)
+
+Full Changelog: [v1.0.0-alpha0...v1.0.0-alpha1](https://github.com/trycourier/courier-csharp/compare/v1.0.0-alpha0...v1.0.0-alpha1)
+
+### Features
+
+* More PHP and attempted node automerge ([bbdaa77](https://github.com/trycourier/courier-csharp/commit/bbdaa77b47d46b8835c5de3e13ede2dc033ef0ab))
+
+
+### Bug Fixes
+
+* Dep Warning ([09bb055](https://github.com/trycourier/courier-csharp/commit/09bb05576a07ada91cd00acc87c334ee9085c642))
+* Updated paths for each model and go example updates ([8324cfd](https://github.com/trycourier/courier-csharp/commit/8324cfde1ecd60e36fdff7bd040c34b3661e7579))
+
 ## 1.0.0-alpha0 (2025-10-14)
 
 Full Changelog: [v0.1.0...v1.0.0-alpha0](https://github.com/trycourier/courier-csharp/compare/v0.1.0...v1.0.0-alpha0)

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Courier.Models;
 using Courier.Models.Messages;
 
 namespace Courier.Services.Messages;

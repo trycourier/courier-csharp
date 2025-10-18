@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models;
 using Courier.Models.Users.Tokens;
 
 namespace Courier.Services.Users.Tokens;
