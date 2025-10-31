@@ -129,7 +129,7 @@ public sealed record class ElementalChannelNodeWithType
 
     /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
-    /// is `required`.
+    /// is required.
     /// </summary>
     public Dictionary<string, JsonElement>? Raw
     {
