@@ -42,7 +42,7 @@ public sealed record class IntersectionMember1 : ModelBase, IFromRaw<Intersectio
 
     /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
-    /// is `required`.
+    /// is required.
     /// </summary>
     public Dictionary<string, JsonElement>? Raw
     {

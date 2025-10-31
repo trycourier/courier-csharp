@@ -10,7 +10,7 @@ using Courier.Models.Send.SendMessageParamsProperties;
 namespace Courier.Models.Send;
 
 /// <summary>
-/// Use the send API to send a message to one or more recipients.
+/// API to send a message to one or more recipients.
 /// </summary>
 public sealed record class SendMessageParams : ParamsBase
 {

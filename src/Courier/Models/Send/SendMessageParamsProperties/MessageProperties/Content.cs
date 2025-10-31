@@ -80,7 +80,7 @@ public record class Content
 
     public void Validate()
     {
-        if (this.Value is not UnknownVariant)
+        if (this.Value is UnknownVariant)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }

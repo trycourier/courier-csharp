@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0-alpha2 (2025-10-31)
+
+Full Changelog: [v1.0.0-alpha1...v1.0.0-alpha2](https://github.com/trycourier/courier-csharp/compare/v1.0.0-alpha1...v1.0.0-alpha2)
+
+### Features
+
+* Comment adjustment to kick of build ([6e9e20c](https://github.com/trycourier/courier-csharp/commit/6e9e20c6a5b189684233a90acf5fd20f6b66f901))
+
+
+### Bug Fixes
+
+* Comment to kick off build ([158b124](https://github.com/trycourier/courier-csharp/commit/158b12492b8e17644ac3868980b6ca74e547d10b))
+* **internal:** minor bug fixes on model instantiation and union validation ([c064475](https://github.com/trycourier/courier-csharp/commit/c064475ae553d991dfcb87510e53623fdc278461))
+
 ## 1.0.0-alpha1 (2025-10-18)
 
 Full Changelog: [v1.0.0-alpha0...v1.0.0-alpha1](https://github.com/trycourier/courier-csharp/compare/v1.0.0-alpha0...v1.0.0-alpha1)

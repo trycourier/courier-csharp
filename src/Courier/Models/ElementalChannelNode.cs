@@ -126,7 +126,7 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
 
     /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
-    /// is `required`.
+    /// is required.
     /// </summary>
     public Dictionary<string, JsonElement>? Raw
     {
