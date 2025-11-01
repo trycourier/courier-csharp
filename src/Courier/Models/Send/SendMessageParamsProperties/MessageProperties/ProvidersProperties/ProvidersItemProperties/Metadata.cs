@@ -6,8 +6,12 @@ using Courier.Core;
 
 namespace Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties.ProvidersItemProperties;
 
-[JsonConverter(typeof(ModelConverter<Metadata>))]
-public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
+[JsonConverter(
+    typeof(ModelConverter<global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties.ProvidersItemProperties.Metadata>)
+)]
+public sealed record class Metadata
+    : ModelBase,
+        IFromRaw<global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties.ProvidersItemProperties.Metadata>
 {
     public Utm? Utm
     {
@@ -42,7 +46,9 @@ public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
     }
 #pragma warning restore CS8618
 
-    public static Metadata FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static global::Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ProvidersProperties.ProvidersItemProperties.Metadata FromRawUnchecked(
+        Dictionary<string, JsonElement> properties
+    )
     {
         return new(properties);
     }
