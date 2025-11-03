@@ -7,9 +7,11 @@
 >
 > **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/trycourier/courier-csharp/issues/new).
 
-The Courier C# SDK provides convenient access to the Courier REST API from applications written in C#.
+The Courier C# SDK provides convenient access to the [Courier REST API](https://www.courier.com/docs) from applications written in C#.
 
 It is generated with [Stainless](https://www.stainless.com/).
+
+The REST API documentation can be found on [www.courier.com](https://www.courier.com/docs).
 
 ## Installation
 
