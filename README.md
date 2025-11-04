@@ -47,7 +47,7 @@ SendMessageParams parameters = new()
     Message = new()
     {
         To = new(new UserRecipient() { UserID = "your_user_id" }),
-        Template = "your_template",
+        Template = "your_template_id",
         Data = new Dictionary<string, JsonElement>()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") }
