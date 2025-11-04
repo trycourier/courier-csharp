@@ -100,7 +100,7 @@ public record class InboundBulkMessage
         }
     }
 
-    private record struct UnknownVariant(JsonElement value);
+    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>

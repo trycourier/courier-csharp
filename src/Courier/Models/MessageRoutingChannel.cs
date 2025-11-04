@@ -83,7 +83,7 @@ public record class MessageRoutingChannel
         }
     }
 
-    private record struct UnknownVariant(JsonElement value);
+    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChannel>

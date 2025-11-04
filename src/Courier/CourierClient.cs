@@ -24,28 +24,24 @@ namespace Courier;
 
 public sealed class CourierClient : ICourierClient
 {
-    public HttpClient HttpClient { get; init; } = new();
+    readonly ClientOptions _options = new();
 
-    Lazy<Uri> _baseUrl = new(() =>
-        new Uri(Environment.GetEnvironmentVariable("COURIER_BASE_URL") ?? "https://api.courier.com")
-    );
-    public Uri BaseUrl
+    public HttpClient HttpClient
     {
-        get { return _baseUrl.Value; }
-        init { _baseUrl = new(() => value); }
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
     }
 
-    Lazy<string> _apiKey = new(() =>
-        Environment.GetEnvironmentVariable("COURIER_API_KEY")
-        ?? throw new CourierInvalidDataException(
-            string.Format("{0} cannot be null", nameof(APIKey)),
-            new ArgumentNullException(nameof(APIKey))
-        )
-    );
+    public Uri BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
     public string APIKey
     {
-        get { return _apiKey.Value; }
-        init { _apiKey = new(() => value); }
+        get { return this._options.APIKey; }
+        init { this._options.APIKey = value; }
     }
 
     readonly Lazy<ISendService> _send;

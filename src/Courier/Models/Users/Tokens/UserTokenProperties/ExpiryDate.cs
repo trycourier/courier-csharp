@@ -85,7 +85,7 @@ public record class ExpiryDate
         }
     }
 
-    private record struct UnknownVariant(JsonElement value);
+    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
