@@ -22,7 +22,6 @@ public sealed class ItemService : IItemService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task Delete(ItemDeleteParams parameters)
@@ -33,6 +32,5 @@ public sealed class ItemService : IItemService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }

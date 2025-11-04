@@ -22,6 +22,13 @@ public sealed class SendService : ISendService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<SendMessageResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<SendMessageResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 }

@@ -168,17 +168,8 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
         _ = this.BrandID;
         _ = this.If;
         this.Metadata?.Validate();
-        if (this.Override != null)
-        {
-            foreach (var item in this.Override.Values)
-            {
-                _ = item;
-            }
-        }
-        foreach (var item in this.Providers ?? [])
-        {
-            _ = item;
-        }
+        _ = this.Override;
+        _ = this.Providers;
         this.RoutingMethod?.Validate();
         this.Timeouts?.Validate();
     }

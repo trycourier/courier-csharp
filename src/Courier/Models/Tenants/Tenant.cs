@@ -189,20 +189,8 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
         _ = this.BrandID;
         this.DefaultPreferences?.Validate();
         _ = this.ParentTenantID;
-        if (this.Properties1 != null)
-        {
-            foreach (var item in this.Properties1.Values)
-            {
-                _ = item;
-            }
-        }
-        if (this.UserProfile != null)
-        {
-            foreach (var item in this.UserProfile.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Properties1;
+        _ = this.UserProfile;
     }
 
     public Tenant() { }

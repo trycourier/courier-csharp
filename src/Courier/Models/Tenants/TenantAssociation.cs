@@ -109,13 +109,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     public override void Validate()
     {
         _ = this.TenantID;
-        if (this.Profile != null)
-        {
-            foreach (var item in this.Profile.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Profile;
         this.Type?.Validate();
         _ = this.UserID;
     }

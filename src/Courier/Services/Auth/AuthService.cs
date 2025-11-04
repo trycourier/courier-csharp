@@ -22,6 +22,13 @@ public sealed class AuthService : IAuthService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<AuthIssueTokenResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<AuthIssueTokenResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 }

@@ -68,13 +68,7 @@ public sealed record class IntersectionMember1 : ModelBase, IFromRaw<Intersectio
     public override void Validate()
     {
         _ = this.Channel;
-        if (this.Raw != null)
-        {
-            foreach (var item in this.Raw.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Raw;
     }
 
     public IntersectionMember1() { }

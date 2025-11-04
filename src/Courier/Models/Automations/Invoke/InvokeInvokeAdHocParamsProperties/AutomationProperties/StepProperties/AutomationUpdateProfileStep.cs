@@ -107,10 +107,7 @@ public sealed record class AutomationUpdateProfileStep
     public override void Validate()
     {
         this.Action.Validate();
-        foreach (var item in this.Profile.Values)
-        {
-            _ = item;
-        }
+        _ = this.Profile;
         this.Merge?.Validate();
         _ = this.RecipientID;
     }

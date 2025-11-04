@@ -118,10 +118,7 @@ public sealed record class ElementalImageNodeWithType
 
     public override void Validate()
     {
-        foreach (var item in this.Channels ?? [])
-        {
-            _ = item;
-        }
+        _ = this.Channels;
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;

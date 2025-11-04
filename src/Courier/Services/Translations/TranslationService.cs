@@ -33,6 +33,5 @@ public sealed class TranslationService : ITranslationService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }

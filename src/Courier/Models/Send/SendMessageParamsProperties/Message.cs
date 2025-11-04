@@ -305,13 +305,7 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
         }
         this.Content?.Validate();
         this.Context?.Validate();
-        if (this.Data != null)
-        {
-            foreach (var item in this.Data.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Data;
         this.Delay?.Validate();
         this.Expiry?.Validate();
         this.Metadata?.Validate();

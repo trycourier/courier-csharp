@@ -22,7 +22,14 @@ public sealed class PreferenceService : IPreferenceService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<PreferenceRetrieveResponse>().ConfigureAwait(false);
+        var preference = await response
+            .Deserialize<PreferenceRetrieveResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            preference.Validate();
+        }
+        return preference;
     }
 
     public async Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
@@ -35,7 +42,14 @@ public sealed class PreferenceService : IPreferenceService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<PreferenceRetrieveTopicResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<PreferenceRetrieveTopicResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     public async Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
@@ -48,8 +62,13 @@ public sealed class PreferenceService : IPreferenceService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response
+        var deserializedResponse = await response
             .Deserialize<PreferenceUpdateOrCreateTopicResponse>()
             .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 }

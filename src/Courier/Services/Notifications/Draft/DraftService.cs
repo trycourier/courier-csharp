@@ -23,6 +23,13 @@ public sealed class DraftService : IDraftService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<NotificationGetContent>().ConfigureAwait(false);
+        var notificationGetContent = await response
+            .Deserialize<NotificationGetContent>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            notificationGetContent.Validate();
+        }
+        return notificationGetContent;
     }
 }

@@ -22,7 +22,6 @@ public sealed class BulkService : IBulkService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task<BulkCreateJobResponse> CreateJob(BulkCreateJobParams parameters)
@@ -33,7 +32,14 @@ public sealed class BulkService : IBulkService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<BulkCreateJobResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<BulkCreateJobResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     public async Task<BulkListUsersResponse> ListUsers(BulkListUsersParams parameters)
@@ -44,7 +50,14 @@ public sealed class BulkService : IBulkService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<BulkListUsersResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<BulkListUsersResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     public async Task<BulkRetrieveJobResponse> RetrieveJob(BulkRetrieveJobParams parameters)
@@ -55,7 +68,14 @@ public sealed class BulkService : IBulkService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<BulkRetrieveJobResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<BulkRetrieveJobResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     public async Task RunJob(BulkRunJobParams parameters)
@@ -66,6 +86,5 @@ public sealed class BulkService : IBulkService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }

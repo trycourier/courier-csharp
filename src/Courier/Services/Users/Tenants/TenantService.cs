@@ -22,7 +22,12 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<TenantListResponse>().ConfigureAwait(false);
+        var tenants = await response.Deserialize<TenantListResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            tenants.Validate();
+        }
+        return tenants;
     }
 
     public async Task AddMultiple(TenantAddMultipleParams parameters)
@@ -33,7 +38,6 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task AddSingle(TenantAddSingleParams parameters)
@@ -44,7 +48,6 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task RemoveAll(TenantRemoveAllParams parameters)
@@ -55,7 +58,6 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task RemoveSingle(TenantRemoveSingleParams parameters)
@@ -66,6 +68,5 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }

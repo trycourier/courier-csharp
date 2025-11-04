@@ -204,13 +204,7 @@ public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
     {
         _ = this.AccountID;
         this.Context?.Validate();
-        if (this.Data != null)
-        {
-            foreach (var item in this.Data.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Data;
         _ = this.Email;
         _ = this.Locale;
         _ = this.PhoneNumber;

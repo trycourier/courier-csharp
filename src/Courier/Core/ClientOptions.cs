@@ -17,6 +17,8 @@ public struct ClientOptions()
         set { _baseUrl = new(() => value); }
     }
 
+    public bool ResponseValidation { get; set; } = false;
+
     public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1);
 
     Lazy<string> _apiKey = new(() =>

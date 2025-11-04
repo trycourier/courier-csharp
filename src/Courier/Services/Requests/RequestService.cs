@@ -22,6 +22,5 @@ public sealed class RequestService : IRequestService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }

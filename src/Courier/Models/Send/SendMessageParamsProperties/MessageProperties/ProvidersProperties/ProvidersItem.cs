@@ -98,13 +98,7 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
     {
         _ = this.If;
         this.Metadata?.Validate();
-        if (this.Override != null)
-        {
-            foreach (var item in this.Override.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Override;
         _ = this.Timeouts;
     }
 

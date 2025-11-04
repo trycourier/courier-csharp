@@ -84,10 +84,7 @@ public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
     public override void Validate()
     {
         _ = this.Event;
-        foreach (var item in this.Tags ?? [])
-        {
-            _ = item;
-        }
+        _ = this.Tags;
         _ = this.TraceID;
         this.Utm?.Validate();
     }

@@ -39,7 +39,12 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<Tenant>().ConfigureAwait(false);
+        var tenant = await response.Deserialize<Tenant>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            tenant.Validate();
+        }
+        return tenant;
     }
 
     public async Task<Tenant> Update(TenantUpdateParams parameters)
@@ -50,7 +55,12 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<Tenant>().ConfigureAwait(false);
+        var tenant = await response.Deserialize<Tenant>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            tenant.Validate();
+        }
+        return tenant;
     }
 
     public async Task<TenantListResponse> List(TenantListParams? parameters = null)
@@ -63,7 +73,12 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<TenantListResponse>().ConfigureAwait(false);
+        var tenants = await response.Deserialize<TenantListResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            tenants.Validate();
+        }
+        return tenants;
     }
 
     public async Task Delete(TenantDeleteParams parameters)
@@ -74,7 +89,6 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task<TenantListUsersResponse> ListUsers(TenantListUsersParams parameters)
@@ -85,6 +99,13 @@ public sealed class TenantService : ITenantService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<TenantListUsersResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<TenantListUsersResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 }

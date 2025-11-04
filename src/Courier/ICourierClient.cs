@@ -27,6 +27,8 @@ public interface ICourierClient
 
     Uri BaseUrl { get; init; }
 
+    bool ResponseValidation { get; init; }
+
     TimeSpan Timeout { get; init; }
 
     string APIKey { get; init; }

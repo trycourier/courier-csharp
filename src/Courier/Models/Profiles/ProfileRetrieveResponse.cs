@@ -62,10 +62,7 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
 
     public override void Validate()
     {
-        foreach (var item in this.Profile.Values)
-        {
-            _ = item;
-        }
+        _ = this.Profile;
         this.Preferences?.Validate();
     }
 

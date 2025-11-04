@@ -23,7 +23,14 @@ public sealed class InvokeService : IInvokeService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<AutomationInvokeResponse>().ConfigureAwait(false);
+        var automationInvokeResponse = await response
+            .Deserialize<AutomationInvokeResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            automationInvokeResponse.Validate();
+        }
+        return automationInvokeResponse;
     }
 
     public async Task<AutomationInvokeResponse> InvokeByTemplate(
@@ -36,6 +43,13 @@ public sealed class InvokeService : IInvokeService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<AutomationInvokeResponse>().ConfigureAwait(false);
+        var automationInvokeResponse = await response
+            .Deserialize<AutomationInvokeResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            automationInvokeResponse.Validate();
+        }
+        return automationInvokeResponse;
     }
 }

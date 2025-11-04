@@ -22,7 +22,14 @@ public sealed class SubscriptionService : ISubscriptionService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<SubscriptionListResponse>().ConfigureAwait(false);
+        var subscriptions = await response
+            .Deserialize<SubscriptionListResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            subscriptions.Validate();
+        }
+        return subscriptions;
     }
 
     public async Task Add(SubscriptionAddParams parameters)
@@ -33,7 +40,6 @@ public sealed class SubscriptionService : ISubscriptionService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task Subscribe(SubscriptionSubscribeParams parameters)
@@ -44,7 +50,6 @@ public sealed class SubscriptionService : ISubscriptionService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task SubscribeUser(SubscriptionSubscribeUserParams parameters)
@@ -55,7 +60,6 @@ public sealed class SubscriptionService : ISubscriptionService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task UnsubscribeUser(SubscriptionUnsubscribeUserParams parameters)
@@ -66,6 +70,5 @@ public sealed class SubscriptionService : ISubscriptionService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }

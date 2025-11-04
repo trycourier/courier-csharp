@@ -135,20 +135,8 @@ public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSe
     {
         this.Action.Validate();
         _ = this.Brand;
-        if (this.Data != null)
-        {
-            foreach (var item in this.Data.Values)
-            {
-                _ = item;
-            }
-        }
-        if (this.Profile != null)
-        {
-            foreach (var item in this.Profile.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Data;
+        _ = this.Profile;
         _ = this.Recipient;
         _ = this.Template;
     }
