@@ -256,7 +256,7 @@ public record class ElementalNode
         }
     }
 
-    private record struct UnknownVariant(JsonElement value);
+    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ElementalNodeConverter : JsonConverter<ElementalNode>

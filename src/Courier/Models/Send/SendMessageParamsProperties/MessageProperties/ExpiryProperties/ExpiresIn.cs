@@ -84,7 +84,7 @@ public record class ExpiresIn
         }
     }
 
-    private record struct UnknownVariant(JsonElement value);
+    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
