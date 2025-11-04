@@ -22,7 +22,12 @@ public sealed class CheckService : ICheckService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<CheckUpdateResponse>().ConfigureAwait(false);
+        var check = await response.Deserialize<CheckUpdateResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            check.Validate();
+        }
+        return check;
     }
 
     public async Task<CheckListResponse> List(CheckListParams parameters)
@@ -33,7 +38,12 @@ public sealed class CheckService : ICheckService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<CheckListResponse>().ConfigureAwait(false);
+        var checks = await response.Deserialize<CheckListResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            checks.Validate();
+        }
+        return checks;
     }
 
     public async Task Delete(CheckDeleteParams parameters)
@@ -44,6 +54,5 @@ public sealed class CheckService : ICheckService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }

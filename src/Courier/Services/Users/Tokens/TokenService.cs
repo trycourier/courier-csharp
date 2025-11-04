@@ -23,7 +23,12 @@ public sealed class TokenService : ITokenService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<TokenRetrieveResponse>().ConfigureAwait(false);
+        var token = await response.Deserialize<TokenRetrieveResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            token.Validate();
+        }
+        return token;
     }
 
     public async Task Update(TokenUpdateParams parameters)
@@ -34,7 +39,6 @@ public sealed class TokenService : ITokenService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task<List<UserToken>> List(TokenListParams parameters)
@@ -45,7 +49,15 @@ public sealed class TokenService : ITokenService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<List<UserToken>>().ConfigureAwait(false);
+        var userTokens = await response.Deserialize<List<UserToken>>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            foreach (var item in userTokens)
+            {
+                item.Validate();
+            }
+        }
+        return userTokens;
     }
 
     public async Task Delete(TokenDeleteParams parameters)
@@ -56,7 +68,6 @@ public sealed class TokenService : ITokenService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task AddMultiple(TokenAddMultipleParams parameters)
@@ -67,7 +78,6 @@ public sealed class TokenService : ITokenService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task AddSingle(TokenAddSingleParams parameters)
@@ -78,6 +88,5 @@ public sealed class TokenService : ITokenService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }

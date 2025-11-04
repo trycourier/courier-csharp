@@ -7,10 +7,7 @@ public class TranslationServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var translation = await this.client.Translations.Retrieve(
-            new() { Domain = "domain", Locale = "locale" }
-        );
-        _ = translation;
+        await this.client.Translations.Retrieve(new() { Domain = "domain", Locale = "locale" });
     }
 
     [Fact(Skip = "Prism tests are disabled")]

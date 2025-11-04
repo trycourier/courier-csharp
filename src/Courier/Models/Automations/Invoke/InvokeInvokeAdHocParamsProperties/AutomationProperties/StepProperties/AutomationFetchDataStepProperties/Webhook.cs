@@ -105,13 +105,7 @@ public sealed record class Webhook : ModelBase, IFromRaw<Webhook>
         this.Method.Validate();
         _ = this.URL;
         _ = this.Body;
-        if (this.Headers != null)
-        {
-            foreach (var item in this.Headers.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Headers;
     }
 
     public Webhook() { }

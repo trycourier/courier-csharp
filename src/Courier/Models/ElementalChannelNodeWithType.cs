@@ -188,21 +188,12 @@ public sealed record class ElementalChannelNodeWithType
 
     public override void Validate()
     {
-        foreach (var item in this.Channels ?? [])
-        {
-            _ = item;
-        }
+        _ = this.Channels;
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
         _ = this.Channel;
-        if (this.Raw != null)
-        {
-            foreach (var item in this.Raw.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Raw;
         this.Type?.Validate();
     }
 

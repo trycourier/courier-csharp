@@ -376,13 +376,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         this.Status.Validate();
         _ = this.Error;
         this.Reason?.Validate();
-        foreach (var item in this.Providers ?? [])
-        {
-            foreach (var item1 in item.Values)
-            {
-                _ = item1;
-            }
-        }
+        _ = this.Providers;
     }
 
     public MessageRetrieveResponse() { }

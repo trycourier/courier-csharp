@@ -23,7 +23,14 @@ public sealed class TemplateService : ITemplateService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<BaseTemplateTenantAssociation>().ConfigureAwait(false);
+        var baseTemplateTenantAssociation = await response
+            .Deserialize<BaseTemplateTenantAssociation>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            baseTemplateTenantAssociation.Validate();
+        }
+        return baseTemplateTenantAssociation;
     }
 
     public async Task<TemplateListResponse> List(TemplateListParams parameters)
@@ -34,6 +41,11 @@ public sealed class TemplateService : ITemplateService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<TemplateListResponse>().ConfigureAwait(false);
+        var templates = await response.Deserialize<TemplateListResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            templates.Validate();
+        }
+        return templates;
     }
 }

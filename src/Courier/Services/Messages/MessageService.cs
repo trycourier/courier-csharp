@@ -22,7 +22,12 @@ public sealed class MessageService : IMessageService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<MessageRetrieveResponse>().ConfigureAwait(false);
+        var message = await response.Deserialize<MessageRetrieveResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            message.Validate();
+        }
+        return message;
     }
 
     public async Task<MessageListResponse> List(MessageListParams? parameters = null)
@@ -35,7 +40,12 @@ public sealed class MessageService : IMessageService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<MessageListResponse>().ConfigureAwait(false);
+        var messages = await response.Deserialize<MessageListResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            messages.Validate();
+        }
+        return messages;
     }
 
     public async Task<MessageDetails> Cancel(MessageCancelParams parameters)
@@ -46,7 +56,12 @@ public sealed class MessageService : IMessageService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<MessageDetails>().ConfigureAwait(false);
+        var messageDetails = await response.Deserialize<MessageDetails>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            messageDetails.Validate();
+        }
+        return messageDetails;
     }
 
     public async Task<MessageContentResponse> Content(MessageContentParams parameters)
@@ -57,7 +72,14 @@ public sealed class MessageService : IMessageService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<MessageContentResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<MessageContentResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 
     public async Task<MessageHistoryResponse> History(MessageHistoryParams parameters)
@@ -68,6 +90,13 @@ public sealed class MessageService : IMessageService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<MessageHistoryResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<MessageHistoryResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 }

@@ -22,7 +22,12 @@ public sealed class AuditEventService : IAuditEventService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<AuditEvent>().ConfigureAwait(false);
+        var auditEvent = await response.Deserialize<AuditEvent>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            auditEvent.Validate();
+        }
+        return auditEvent;
     }
 
     public async Task<AuditEventListResponse> List(AuditEventListParams? parameters = null)
@@ -35,6 +40,13 @@ public sealed class AuditEventService : IAuditEventService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<AuditEventListResponse>().ConfigureAwait(false);
+        var auditEvents = await response
+            .Deserialize<AuditEventListResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            auditEvents.Validate();
+        }
+        return auditEvents;
     }
 }

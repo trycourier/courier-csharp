@@ -41,7 +41,14 @@ public sealed class NotificationService : INotificationService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<NotificationListResponse>().ConfigureAwait(false);
+        var notifications = await response
+            .Deserialize<NotificationListResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            notifications.Validate();
+        }
+        return notifications;
     }
 
     public async Task<NotificationGetContent> RetrieveContent(
@@ -54,6 +61,13 @@ public sealed class NotificationService : INotificationService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<NotificationGetContent>().ConfigureAwait(false);
+        var notificationGetContent = await response
+            .Deserialize<NotificationGetContent>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            notificationGetContent.Validate();
+        }
+        return notificationGetContent;
     }
 }

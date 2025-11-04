@@ -141,31 +141,10 @@ public sealed record class InboundBulkTemplateMessage
     {
         _ = this.Template;
         _ = this.Brand;
-        if (this.Data != null)
-        {
-            foreach (var item in this.Data.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Data;
         _ = this.Event;
-        if (this.Locale != null)
-        {
-            foreach (var item in this.Locale.Values)
-            {
-                foreach (var item1 in item.Values)
-                {
-                    _ = item1;
-                }
-            }
-        }
-        if (this.Override != null)
-        {
-            foreach (var item in this.Override.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Locale;
+        _ = this.Override;
     }
 
     public InboundBulkTemplateMessage() { }

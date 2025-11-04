@@ -31,7 +31,12 @@ public sealed class ProfileService : IProfileService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<ProfileCreateResponse>().ConfigureAwait(false);
+        var profile = await response.Deserialize<ProfileCreateResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            profile.Validate();
+        }
+        return profile;
     }
 
     public async Task<ProfileRetrieveResponse> Retrieve(ProfileRetrieveParams parameters)
@@ -42,7 +47,12 @@ public sealed class ProfileService : IProfileService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<ProfileRetrieveResponse>().ConfigureAwait(false);
+        var profile = await response.Deserialize<ProfileRetrieveResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            profile.Validate();
+        }
+        return profile;
     }
 
     public async Task Update(ProfileUpdateParams parameters)
@@ -53,7 +63,6 @@ public sealed class ProfileService : IProfileService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task Delete(ProfileDeleteParams parameters)
@@ -64,7 +73,6 @@ public sealed class ProfileService : IProfileService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task<ProfileReplaceResponse> Replace(ProfileReplaceParams parameters)
@@ -75,6 +83,13 @@ public sealed class ProfileService : IProfileService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<ProfileReplaceResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<ProfileReplaceResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 }

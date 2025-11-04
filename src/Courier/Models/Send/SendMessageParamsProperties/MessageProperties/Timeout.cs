@@ -111,23 +111,11 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
 
     public override void Validate()
     {
-        if (this.Channel != null)
-        {
-            foreach (var item in this.Channel.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Channel;
         this.Criteria?.Validate();
         _ = this.Escalation;
         _ = this.Message;
-        if (this.Provider != null)
-        {
-            foreach (var item in this.Provider.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Provider;
     }
 
     public Timeout() { }

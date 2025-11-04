@@ -104,13 +104,7 @@ public sealed record class AutomationSendListStep : ModelBase, IFromRaw<Automati
         this.Action.Validate();
         _ = this.List;
         _ = this.Brand;
-        if (this.Data != null)
-        {
-            foreach (var item in this.Data.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Data;
     }
 
     public AutomationSendListStep() { }

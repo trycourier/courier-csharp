@@ -22,7 +22,12 @@ public sealed class AudienceService : IAudienceService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<Audience>().ConfigureAwait(false);
+        var audience = await response.Deserialize<Audience>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            audience.Validate();
+        }
+        return audience;
     }
 
     public async Task<AudienceUpdateResponse> Update(AudienceUpdateParams parameters)
@@ -33,7 +38,12 @@ public sealed class AudienceService : IAudienceService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<AudienceUpdateResponse>().ConfigureAwait(false);
+        var audience = await response.Deserialize<AudienceUpdateResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            audience.Validate();
+        }
+        return audience;
     }
 
     public async Task<AudienceListResponse> List(AudienceListParams? parameters = null)
@@ -46,7 +56,12 @@ public sealed class AudienceService : IAudienceService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<AudienceListResponse>().ConfigureAwait(false);
+        var audiences = await response.Deserialize<AudienceListResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            audiences.Validate();
+        }
+        return audiences;
     }
 
     public async Task Delete(AudienceDeleteParams parameters)
@@ -57,7 +72,6 @@ public sealed class AudienceService : IAudienceService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task<AudienceListMembersResponse> ListMembers(AudienceListMembersParams parameters)
@@ -68,6 +82,13 @@ public sealed class AudienceService : IAudienceService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<AudienceListMembersResponse>().ConfigureAwait(false);
+        var deserializedResponse = await response
+            .Deserialize<AudienceListMembersResponse>()
+            .ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            deserializedResponse.Validate();
+        }
+        return deserializedResponse;
     }
 }

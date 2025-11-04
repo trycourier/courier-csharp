@@ -41,13 +41,7 @@ public sealed record class MessageHistoryResponse : ModelBase, IFromRaw<MessageH
 
     public override void Validate()
     {
-        foreach (var item in this.Results)
-        {
-            foreach (var item1 in item.Values)
-            {
-                _ = item1;
-            }
-        }
+        _ = this.Results;
     }
 
     public MessageHistoryResponse() { }

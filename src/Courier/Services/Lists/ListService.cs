@@ -31,7 +31,12 @@ public sealed class ListService : IListService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<SubscriptionList>().ConfigureAwait(false);
+        var subscriptionList = await response.Deserialize<SubscriptionList>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            subscriptionList.Validate();
+        }
+        return subscriptionList;
     }
 
     public async Task Update(ListUpdateParams parameters)
@@ -42,7 +47,6 @@ public sealed class ListService : IListService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task<ListListResponse> List(ListListParams? parameters = null)
@@ -55,7 +59,12 @@ public sealed class ListService : IListService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<ListListResponse>().ConfigureAwait(false);
+        var lists = await response.Deserialize<ListListResponse>().ConfigureAwait(false);
+        if (this._client.ResponseValidation)
+        {
+            lists.Validate();
+        }
+        return lists;
     }
 
     public async Task Delete(ListDeleteParams parameters)
@@ -66,7 +75,6 @@ public sealed class ListService : IListService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 
     public async Task Restore(ListRestoreParams parameters)
@@ -77,6 +85,5 @@ public sealed class ListService : IListService
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return;
     }
 }
