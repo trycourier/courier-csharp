@@ -39,7 +39,6 @@ using Courier;
 using Courier.Models;
 using Courier.Models.Send;
 
-// Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
 CourierClient client = new();
 
 SendMessageParams parameters = new()
@@ -60,7 +59,7 @@ var response = await client.Send.Message(parameters);
 Console.WriteLine(response);
 ```
 
-## Client Configuration
+## Client configuration
 
 Configure the client using environment variables:
 
@@ -94,15 +93,18 @@ To temporarily use a modified client configuration, while reusing the same conne
 
 ```csharp
 using System;
-using Courier;
 
-ICourierClient clientWithOptions = client.WithOptions(options =>
-    options with
-    {
-        BaseUrl = new("https://example.com"),
-        Timeout = TimeSpan.FromSeconds(42),
-    }
-);
+var response = await client
+    .WithOptions(options =>
+        options with
+        {
+            BaseUrl = new("https://example.com"),
+            Timeout = TimeSpan.FromSeconds(42),
+        }
+    )
+    .Send.Message(parameters);
+
+Console.WriteLine(response);
 ```
 
 Using a [`with` expression](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/with-expression) makes it easy to construct the modified options.
@@ -141,6 +143,38 @@ false
 - `CourierInvalidDataException`: Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
 - `CourierException`: Base class for all exceptions.
+
+## Network options
+
+### Timeouts
+
+Requests time out after 1 minute by default.
+
+To set a custom timeout, configure the client using the `Timeout` option:
+
+```csharp
+using System;
+using Courier;
+
+CourierClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
+```
+
+Or configure a single method call using [`WithOptions`](#modifying-configuration):
+
+```csharp
+using System;
+
+var response = await client
+    .WithOptions(options =>
+        options with
+        {
+            Timeout = TimeSpan.FromSeconds(42)
+        }
+    )
+    .Send.Message(parameters);
+
+Console.WriteLine(response);
+```
 
 ## Semantic versioning
 
