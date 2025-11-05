@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.AuditEvents;
 
 public sealed class AuditEventService : IAuditEventService
 {
+    public IAuditEventService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new AuditEventService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public AuditEventService(ICourierClient client)

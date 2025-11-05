@@ -1,10 +1,14 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Bulk;
 
 namespace Courier.Services.Bulk;
 
 public interface IBulkService
 {
+    IBulkService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     /// <summary>
     /// Ingest user data into a Bulk Job
     /// </summary>

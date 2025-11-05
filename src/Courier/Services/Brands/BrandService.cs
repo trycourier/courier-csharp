@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Brands;
 
 public sealed class BrandService : IBrandService
 {
+    public IBrandService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new BrandService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public BrandService(ICourierClient client)

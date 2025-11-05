@@ -1,10 +1,14 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Profiles.Lists;
 
 namespace Courier.Services.Profiles.Lists;
 
 public interface IListService
 {
+    IListService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     /// <summary>
     /// Returns the subscribed lists for a specified user.
     /// </summary>

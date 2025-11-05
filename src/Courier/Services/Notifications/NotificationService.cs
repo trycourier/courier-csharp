@@ -10,6 +10,11 @@ namespace Courier.Services.Notifications;
 
 public sealed class NotificationService : INotificationService
 {
+    public INotificationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new NotificationService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public NotificationService(ICourierClient client)

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Translations;
 
 public sealed class TranslationService : ITranslationService
 {
+    public ITranslationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new TranslationService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public TranslationService(ICourierClient client)

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -8,6 +9,11 @@ namespace Courier.Services.Automations.Invoke;
 
 public sealed class InvokeService : IInvokeService
 {
+    public IInvokeService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new InvokeService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public InvokeService(ICourierClient client)

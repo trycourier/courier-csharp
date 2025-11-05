@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Audiences;
 
 public sealed class AudienceService : IAudienceService
 {
+    public IAudienceService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new AudienceService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public AudienceService(ICourierClient client)

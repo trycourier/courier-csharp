@@ -1,10 +1,14 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Audiences;
 
 namespace Courier.Services.Audiences;
 
 public interface IAudienceService
 {
+    IAudienceService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     /// <summary>
     /// Returns the specified audience by id.
     /// </summary>

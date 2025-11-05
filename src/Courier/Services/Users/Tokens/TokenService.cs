@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,6 +9,11 @@ namespace Courier.Services.Users.Tokens;
 
 public sealed class TokenService : ITokenService
 {
+    public ITokenService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new TokenService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public TokenService(ICourierClient client)

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -8,6 +9,11 @@ namespace Courier.Services.Notifications.Draft;
 
 public sealed class DraftService : IDraftService
 {
+    public IDraftService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new DraftService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public DraftService(ICourierClient client)

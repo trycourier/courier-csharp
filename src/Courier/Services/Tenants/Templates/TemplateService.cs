@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -8,6 +9,11 @@ namespace Courier.Services.Tenants.Templates;
 
 public sealed class TemplateService : ITemplateService
 {
+    public ITemplateService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new TemplateService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public TemplateService(ICourierClient client)

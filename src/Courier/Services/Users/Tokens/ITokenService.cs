@@ -1,11 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Users.Tokens;
 
 namespace Courier.Services.Users.Tokens;
 
 public interface ITokenService
 {
+    ITokenService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     /// <summary>
     /// Get single token available for a `:token`
     /// </summary>

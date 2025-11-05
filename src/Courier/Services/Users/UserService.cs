@@ -1,4 +1,5 @@
 using System;
+using Courier.Core;
 using Courier.Services.Users.Preferences;
 using Courier.Services.Users.Tenants;
 using Courier.Services.Users.Tokens;
@@ -7,8 +8,16 @@ namespace Courier.Services.Users;
 
 public sealed class UserService : IUserService
 {
+    public IUserService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new UserService(this._client.WithOptions(modifier));
+    }
+
+    readonly ICourierClient _client;
+
     public UserService(ICourierClient client)
     {
+        _client = client;
         _preferences = new(() => new PreferenceService(client));
         _tenants = new(() => new TenantService(client));
         _tokens = new(() => new TokenService(client));

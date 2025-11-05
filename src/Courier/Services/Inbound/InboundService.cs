@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Inbound;
 
 public sealed class InboundService : IInboundService
 {
+    public IInboundService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new InboundService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public InboundService(ICourierClient client)

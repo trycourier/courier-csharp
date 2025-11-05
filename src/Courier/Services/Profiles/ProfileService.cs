@@ -9,6 +9,11 @@ namespace Courier.Services.Profiles;
 
 public sealed class ProfileService : IProfileService
 {
+    public IProfileService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new ProfileService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public ProfileService(ICourierClient client)

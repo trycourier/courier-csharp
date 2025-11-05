@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Profiles;
 using Courier.Services.Profiles.Lists;
 
@@ -6,6 +8,8 @@ namespace Courier.Services.Profiles;
 
 public interface IProfileService
 {
+    IProfileService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     IListService Lists { get; }
 
     /// <summary>
