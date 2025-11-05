@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Notifications.Checks;
 
 public sealed class CheckService : ICheckService
 {
+    public ICheckService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new CheckService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public CheckService(ICourierClient client)

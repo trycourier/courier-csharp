@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Bulk;
 
 public sealed class BulkService : IBulkService
 {
+    public IBulkService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new BulkService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public BulkService(ICourierClient client)

@@ -33,6 +33,8 @@ public interface ICourierClient
 
     string APIKey { get; init; }
 
+    ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     ISendService Send { get; }
 
     IAudienceService Audiences { get; }

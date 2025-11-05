@@ -1,10 +1,14 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Users.Tenants;
 
 namespace Courier.Services.Users.Tenants;
 
 public interface ITenantService
 {
+    ITenantService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     /// <summary>
     /// Returns a paginated list of user tenant associations.
     /// </summary>

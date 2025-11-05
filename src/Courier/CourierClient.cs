@@ -25,7 +25,7 @@ namespace Courier;
 
 public sealed class CourierClient : ICourierClient
 {
-    readonly ClientOptions _options = new();
+    readonly ClientOptions _options;
 
     public HttpClient HttpClient
     {
@@ -55,6 +55,11 @@ public sealed class CourierClient : ICourierClient
     {
         get { return this._options.APIKey; }
         init { this._options.APIKey = value; }
+    }
+
+    public ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new CourierClient(modifier(this._options));
     }
 
     readonly Lazy<ISendService> _send;
@@ -200,6 +205,8 @@ public sealed class CourierClient : ICourierClient
 
     public CourierClient()
     {
+        _options = new();
+
         _send = new(() => new SendService(this));
         _audiences = new(() => new AudienceService(this));
         _auditEvents = new(() => new AuditEventService(this));
@@ -216,5 +223,11 @@ public sealed class CourierClient : ICourierClient
         _tenants = new(() => new TenantService(this));
         _translations = new(() => new TranslationService(this));
         _users = new(() => new UserService(this));
+    }
+
+    public CourierClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
     }
 }

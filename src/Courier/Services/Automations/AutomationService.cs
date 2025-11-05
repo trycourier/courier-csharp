@@ -1,12 +1,21 @@
 using System;
+using Courier.Core;
 using Courier.Services.Automations.Invoke;
 
 namespace Courier.Services.Automations;
 
 public sealed class AutomationService : IAutomationService
 {
+    public IAutomationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new AutomationService(this._client.WithOptions(modifier));
+    }
+
+    readonly ICourierClient _client;
+
     public AutomationService(ICourierClient client)
     {
+        _client = client;
         _invoke = new(() => new InvokeService(client));
     }
 

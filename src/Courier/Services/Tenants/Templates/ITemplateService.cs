@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Tenants;
 using Courier.Models.Tenants.Templates;
 
@@ -6,6 +8,8 @@ namespace Courier.Services.Tenants.Templates;
 
 public interface ITemplateService
 {
+    ITemplateService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     /// <summary>
     /// Get a Template in Tenant
     /// </summary>

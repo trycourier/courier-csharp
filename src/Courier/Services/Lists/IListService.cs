@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Lists;
 using Courier.Services.Lists.Subscriptions;
 
@@ -6,6 +8,8 @@ namespace Courier.Services.Lists;
 
 public interface IListService
 {
+    IListService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     ISubscriptionService Subscriptions { get; }
 
     /// <summary>

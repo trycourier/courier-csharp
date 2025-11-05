@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Lists.Subscriptions;
 
 public sealed class SubscriptionService : ISubscriptionService
 {
+    public ISubscriptionService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new SubscriptionService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public SubscriptionService(ICourierClient client)

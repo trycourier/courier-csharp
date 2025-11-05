@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Users.Tenants;
 
 public sealed class TenantService : ITenantService
 {
+    public ITenantService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new TenantService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public TenantService(ICourierClient client)

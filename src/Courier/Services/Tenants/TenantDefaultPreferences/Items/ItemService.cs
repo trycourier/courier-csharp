@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Tenants.TenantDefaultPreferences.Items;
 
 public sealed class ItemService : IItemService
 {
+    public IItemService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new ItemService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public ItemService(ICourierClient client)

@@ -1,10 +1,14 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Brands;
 
 namespace Courier.Services.Brands;
 
 public interface IBrandService
 {
+    IBrandService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     /// <summary>
     /// Create a new brand
     /// </summary>

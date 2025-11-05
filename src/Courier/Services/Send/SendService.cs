@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Send;
 
 public sealed class SendService : ISendService
 {
+    public ISendService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new SendService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public SendService(ICourierClient client)

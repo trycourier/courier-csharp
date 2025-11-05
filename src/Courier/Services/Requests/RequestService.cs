@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Requests;
 
 public sealed class RequestService : IRequestService
 {
+    public IRequestService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new RequestService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public RequestService(ICourierClient client)

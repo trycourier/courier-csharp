@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -7,6 +8,11 @@ namespace Courier.Services.Messages;
 
 public sealed class MessageService : IMessageService
 {
+    public IMessageService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new MessageService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public MessageService(ICourierClient client)

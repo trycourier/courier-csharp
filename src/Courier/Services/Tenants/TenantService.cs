@@ -10,6 +10,11 @@ namespace Courier.Services.Tenants;
 
 public sealed class TenantService : ITenantService
 {
+    public ITenantService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new TenantService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public TenantService(ICourierClient client)

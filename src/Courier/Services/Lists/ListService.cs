@@ -9,6 +9,11 @@ namespace Courier.Services.Lists;
 
 public sealed class ListService : IListService
 {
+    public IListService WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new ListService(this._client.WithOptions(modifier));
+    }
+
     readonly ICourierClient _client;
 
     public ListService(ICourierClient client)

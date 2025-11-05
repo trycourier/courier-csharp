@@ -1,10 +1,14 @@
+using System;
 using System.Threading.Tasks;
+using Courier.Core;
 using Courier.Models.Lists.Subscriptions;
 
 namespace Courier.Services.Lists.Subscriptions;
 
 public interface ISubscriptionService
 {
+    ISubscriptionService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
     /// <summary>
     /// Get the list's subscriptions.
     /// </summary>
