@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -24,13 +24,13 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
             if (!this.Properties.TryGetValue("body", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'body' cannot be null",
-                    new ArgumentOutOfRangeException("body", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("body", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'body' cannot be null",
-                    new ArgumentNullException("body")
+                    new System::ArgumentNullException("body")
                 );
         }
         set
@@ -52,13 +52,13 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
             if (!this.Properties.TryGetValue("title", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'title' cannot be null",
-                    new ArgumentOutOfRangeException("title", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("title", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'title' cannot be null",
-                    new ArgumentNullException("title")
+                    new System::ArgumentNullException("title")
                 );
         }
         set

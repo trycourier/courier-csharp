@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Courier.Models.Notifications.BaseCheckProperties;
+using Courier.Models.Notifications;
 
 namespace Courier.Tests.Services.Notifications.Checks;
 

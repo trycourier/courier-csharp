@@ -1,7 +1,7 @@
-using System;
 using System.Net.Http;
 using System.Text.Json;
 using Courier.Core;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -73,9 +73,9 @@ public sealed record class TenantListParams : ParamsBase
         }
     }
 
-    public override Uri Url(ICourierClient client)
+    public override System::Uri Url(ICourierClient client)
     {
-        return new UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/tenants")
+        return new System::UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/tenants")
         {
             Query = this.QueryString(client),
         }.Uri;

@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
+using System = System;
 
 namespace Courier.Models.Automations.Invoke;
 
@@ -112,9 +112,9 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
         }
     }
 
-    public override Uri Url(ICourierClient client)
+    public override System::Uri Url(ICourierClient client)
     {
-        return new UriBuilder(
+        return new System::UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/automations/{0}/invoke", this.TemplateID)
         )

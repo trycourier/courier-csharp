@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using IntersectionMember1Properties = Courier.Models.ElementalChannelNodeWithTypeProperties.IntersectionMember1Properties;
+using System = System;
 
 namespace Courier.Models;
 
@@ -109,13 +108,13 @@ public sealed record class ElementalChannelNodeWithType
             if (!this.Properties.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
-                    new ArgumentOutOfRangeException("channel", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("channel", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'channel' cannot be null",
-                    new ArgumentNullException("channel")
+                    new System::ArgumentNullException("channel")
                 );
         }
         set
@@ -152,17 +151,17 @@ public sealed record class ElementalChannelNodeWithType
         }
     }
 
-    public ApiEnum<string, IntersectionMember1Properties::Type>? Type
+    public ApiEnum<string, TypeModel>? Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                IntersectionMember1Properties::Type
-            >?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, TypeModel>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -219,5 +218,91 @@ public sealed record class ElementalChannelNodeWithType
         : this()
     {
         this.Channel = channel;
+    }
+}
+
+[JsonConverter(typeof(ModelConverter<IntersectionMember11>))]
+public sealed record class IntersectionMember11 : ModelBase, IFromRaw<IntersectionMember11>
+{
+    public ApiEnum<string, TypeModel>? Type
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("type", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<ApiEnum<string, TypeModel>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        this.Type?.Validate();
+    }
+
+    public IntersectionMember11() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    IntersectionMember11(Dictionary<string, JsonElement> properties)
+    {
+        Properties = properties;
+    }
+#pragma warning restore CS8618
+
+    public static IntersectionMember11 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    {
+        return new(properties);
+    }
+}
+
+[JsonConverter(typeof(TypeModelConverter))]
+public enum TypeModel
+{
+    Channel,
+}
+
+sealed class TypeModelConverter : JsonConverter<TypeModel>
+{
+    public override TypeModel Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "channel" => TypeModel.Channel,
+            _ => (TypeModel)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        TypeModel value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                TypeModel.Channel => "channel",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

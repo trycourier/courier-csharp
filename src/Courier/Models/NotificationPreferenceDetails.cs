@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -20,7 +20,7 @@ public sealed record class NotificationPreferenceDetails
             if (!this.Properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(

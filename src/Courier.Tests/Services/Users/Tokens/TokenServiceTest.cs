@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Courier.Models.Users.Tokens.TokenAddSingleParamsProperties;
+using Courier.Models.Users.Tokens;
 
 namespace Courier.Tests.Services.Users.Tokens;
 

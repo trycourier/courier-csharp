@@ -1,29 +1,30 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Users.Tokens.TokenRetrieveResponseProperties.IntersectionMember1Properties;
-using Courier.Models.Users.Tokens.UserTokenProperties;
+using System = System;
 
 namespace Courier.Models.Users.Tokens;
 
 [JsonConverter(typeof(ModelConverter<TokenRetrieveResponse>))]
 public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetrieveResponse>
 {
-    public required ApiEnum<string, ProviderKey> ProviderKey
+    public required ApiEnum<string, ProviderKeyModel> ProviderKey
     {
         get
         {
             if (!this.Properties.TryGetValue("provider_key", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'provider_key' cannot be null",
-                    new ArgumentOutOfRangeException("provider_key", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "provider_key",
+                        "Missing required argument"
+                    )
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, ProviderKey>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, ProviderKeyModel>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -61,14 +62,14 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     /// <summary>
     /// Information about the device the token is associated with.
     /// </summary>
-    public Device? Device
+    public DeviceModel? Device
     {
         get
         {
             if (!this.Properties.TryGetValue("device", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Device?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<DeviceModel?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -83,14 +84,17 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     /// ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false
     /// to disable expiration.
     /// </summary>
-    public ExpiryDate? ExpiryDate
+    public ExpiryDateModel? ExpiryDate
     {
         get
         {
             if (!this.Properties.TryGetValue("expiry_date", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ExpiryDate?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ExpiryDateModel?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -125,14 +129,14 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     /// <summary>
     /// Information about the device the token is associated with.
     /// </summary>
-    public Tracking? Tracking
+    public TrackingModel? Tracking
     {
         get
         {
             if (!this.Properties.TryGetValue("tracking", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Tracking?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<TrackingModel?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -224,9 +228,126 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     }
 
     [SetsRequiredMembers]
-    public TokenRetrieveResponse(ApiEnum<string, ProviderKey> providerKey)
+    public TokenRetrieveResponse(ApiEnum<string, ProviderKeyModel> providerKey)
         : this()
     {
         this.ProviderKey = providerKey;
+    }
+}
+
+[JsonConverter(typeof(ModelConverter<global::Courier.Models.Users.Tokens.IntersectionMember1>))]
+public sealed record class IntersectionMember1
+    : ModelBase,
+        IFromRaw<global::Courier.Models.Users.Tokens.IntersectionMember1>
+{
+    public ApiEnum<string, Status>? Status
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("status", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<ApiEnum<string, Status>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        set
+        {
+            this.Properties["status"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    /// <summary>
+    /// The reason for the token status.
+    /// </summary>
+    public string? StatusReason
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("status_reason", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["status_reason"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        this.Status?.Validate();
+        _ = this.StatusReason;
+    }
+
+    public IntersectionMember1() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    IntersectionMember1(Dictionary<string, JsonElement> properties)
+    {
+        Properties = properties;
+    }
+#pragma warning restore CS8618
+
+    public static global::Courier.Models.Users.Tokens.IntersectionMember1 FromRawUnchecked(
+        Dictionary<string, JsonElement> properties
+    )
+    {
+        return new(properties);
+    }
+}
+
+[JsonConverter(typeof(StatusConverter))]
+public enum Status
+{
+    Active,
+    Unknown,
+    Failed,
+    Revoked,
+}
+
+sealed class StatusConverter : JsonConverter<Status>
+{
+    public override Status Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "active" => Status.Active,
+            "unknown" => Status.Unknown,
+            "failed" => Status.Failed,
+            "revoked" => Status.Revoked,
+            _ => (Status)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Status.Active => "active",
+                Status.Unknown => "unknown",
+                Status.Failed => "failed",
+                Status.Revoked => "revoked",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

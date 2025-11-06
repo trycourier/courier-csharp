@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Courier.Models.Tenants.TenantDefaultPreferences.Items.ItemUpdateParamsProperties;
+using Courier.Models.Tenants.TenantDefaultPreferences.Items;
 
 namespace Courier.Tests.Services.Tenants.TenantDefaultPreferences.Items;
 

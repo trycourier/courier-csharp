@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models.Inbound;
 
@@ -24,13 +24,16 @@ public sealed record class InboundTrackEventResponse
             if (!this.Properties.TryGetValue("messageId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'messageId' cannot be null",
-                    new ArgumentOutOfRangeException("messageId", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "messageId",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'messageId' cannot be null",
-                    new ArgumentNullException("messageId")
+                    new System::ArgumentNullException("messageId")
                 );
         }
         set

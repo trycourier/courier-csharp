@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Tenants.SubscriptionTopicNewProperties;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -19,7 +18,7 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
             if (!this.Properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
@@ -112,5 +111,48 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
         : this()
     {
         this.Status = status;
+    }
+}
+
+[JsonConverter(typeof(StatusConverter))]
+public enum Status
+{
+    OptedOut,
+    OptedIn,
+    Required,
+}
+
+sealed class StatusConverter : JsonConverter<Status>
+{
+    public override Status Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "OPTED_OUT" => Status.OptedOut,
+            "OPTED_IN" => Status.OptedIn,
+            "REQUIRED" => Status.Required,
+            _ => (Status)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Status.OptedOut => "OPTED_OUT",
+                Status.OptedIn => "OPTED_IN",
+                Status.Required => "REQUIRED",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

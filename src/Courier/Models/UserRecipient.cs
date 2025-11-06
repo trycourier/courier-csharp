@@ -3,7 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.UserRecipientProperties;
+using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -139,14 +140,17 @@ public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
         }
     }
 
-    public Preferences? Preferences
+    public PreferencesModel? Preferences
     {
         get
         {
             if (!this.Properties.TryGetValue("preferences", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Preferences?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<PreferencesModel?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -226,5 +230,117 @@ public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
     public static UserRecipient FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
+    }
+}
+
+[JsonConverter(typeof(ModelConverter<PreferencesModel>))]
+public sealed record class PreferencesModel : ModelBase, IFromRaw<PreferencesModel>
+{
+    public required Dictionary<string, Preference> Notifications
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("notifications", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'notifications' cannot be null",
+                    new System::ArgumentOutOfRangeException(
+                        "notifications",
+                        "Missing required argument"
+                    )
+                );
+
+            return JsonSerializer.Deserialize<Dictionary<string, Preference>>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'notifications' cannot be null",
+                    new System::ArgumentNullException("notifications")
+                );
+        }
+        set
+        {
+            this.Properties["notifications"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public Dictionary<string, Preference>? Categories
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("categories", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<Dictionary<string, Preference>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        set
+        {
+            this.Properties["categories"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public string? TemplateID
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("templateId", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["templateId"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        foreach (var item in this.Notifications.Values)
+        {
+            item.Validate();
+        }
+        if (this.Categories != null)
+        {
+            foreach (var item in this.Categories.Values)
+            {
+                item.Validate();
+            }
+        }
+        _ = this.TemplateID;
+    }
+
+    public PreferencesModel() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    PreferencesModel(Dictionary<string, JsonElement> properties)
+    {
+        Properties = properties;
+    }
+#pragma warning restore CS8618
+
+    public static PreferencesModel FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    {
+        return new(properties);
+    }
+
+    [SetsRequiredMembers]
+    public PreferencesModel(Dictionary<string, Preference> notifications)
+        : this()
+    {
+        this.Notifications = notifications;
     }
 }

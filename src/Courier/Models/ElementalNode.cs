@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -182,13 +182,13 @@ public record class ElementalNode
     }
 
     public void Switch(
-        Action<ElementalTextNodeWithType> textNodeWithType,
-        Action<ElementalMetaNodeWithType> metaNodeWithType,
-        Action<ElementalChannelNodeWithType> channelNodeWithType,
-        Action<ElementalImageNodeWithType> imageNodeWithType,
-        Action<ElementalActionNodeWithType> actionNodeWithType,
-        Action<ElementalDividerNodeWithType> dividerNodeWithType,
-        Action<ElementalQuoteNodeWithType> quoteNodeWithType
+        System::Action<ElementalTextNodeWithType> textNodeWithType,
+        System::Action<ElementalMetaNodeWithType> metaNodeWithType,
+        System::Action<ElementalChannelNodeWithType> channelNodeWithType,
+        System::Action<ElementalImageNodeWithType> imageNodeWithType,
+        System::Action<ElementalActionNodeWithType> actionNodeWithType,
+        System::Action<ElementalDividerNodeWithType> dividerNodeWithType,
+        System::Action<ElementalQuoteNodeWithType> quoteNodeWithType
     )
     {
         switch (this.Value)
@@ -222,13 +222,13 @@ public record class ElementalNode
     }
 
     public T Match<T>(
-        Func<ElementalTextNodeWithType, T> textNodeWithType,
-        Func<ElementalMetaNodeWithType, T> metaNodeWithType,
-        Func<ElementalChannelNodeWithType, T> channelNodeWithType,
-        Func<ElementalImageNodeWithType, T> imageNodeWithType,
-        Func<ElementalActionNodeWithType, T> actionNodeWithType,
-        Func<ElementalDividerNodeWithType, T> dividerNodeWithType,
-        Func<ElementalQuoteNodeWithType, T> quoteNodeWithType
+        System::Func<ElementalTextNodeWithType, T> textNodeWithType,
+        System::Func<ElementalMetaNodeWithType, T> metaNodeWithType,
+        System::Func<ElementalChannelNodeWithType, T> channelNodeWithType,
+        System::Func<ElementalImageNodeWithType, T> imageNodeWithType,
+        System::Func<ElementalActionNodeWithType, T> actionNodeWithType,
+        System::Func<ElementalDividerNodeWithType, T> dividerNodeWithType,
+        System::Func<ElementalQuoteNodeWithType, T> quoteNodeWithType
     )
     {
         return this.Value switch
@@ -263,7 +263,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 {
     public override ElementalNode? Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System::Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -281,7 +281,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
                 return new ElementalNode(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -303,7 +303,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
                 return new ElementalNode(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -325,7 +325,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
                 return new ElementalNode(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -347,7 +347,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
                 return new ElementalNode(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -369,7 +369,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
                 return new ElementalNode(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -391,7 +391,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
                 return new ElementalNode(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -413,7 +413,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
                 return new ElementalNode(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -423,7 +423,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             );
         }
 
-        throw new AggregateException(exceptions);
+        throw new System::AggregateException(exceptions);
     }
 
     public override void Write(

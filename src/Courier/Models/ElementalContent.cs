@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -18,7 +18,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
             if (!this.Properties.TryGetValue("elements", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'elements' cannot be null",
-                    new ArgumentOutOfRangeException("elements", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("elements", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<List<ElementalNode>>(
@@ -27,7 +27,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
                 )
                 ?? throw new CourierInvalidDataException(
                     "'elements' cannot be null",
-                    new ArgumentNullException("elements")
+                    new System::ArgumentNullException("elements")
                 );
         }
         set
@@ -49,13 +49,13 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
             if (!this.Properties.TryGetValue("version", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'version' cannot be null",
-                    new ArgumentOutOfRangeException("version", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("version", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'version' cannot be null",
-                    new ArgumentNullException("version")
+                    new System::ArgumentNullException("version")
                 );
         }
         set

@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using TenantListUsersResponseProperties = Courier.Models.Tenants.TenantListUsersResponseProperties;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -22,7 +21,7 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
             if (!this.Properties.TryGetValue("has_more", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'has_more' cannot be null",
-                    new ArgumentOutOfRangeException("has_more", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("has_more", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
@@ -39,18 +38,18 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     /// <summary>
     /// Always set to `list`. Represents the type of this object.
     /// </summary>
-    public required ApiEnum<string, TenantListUsersResponseProperties::Type> Type
+    public required ApiEnum<string, global::Courier.Models.Tenants.Type1> Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
-                    new ArgumentOutOfRangeException("type", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<
-                ApiEnum<string, TenantListUsersResponseProperties::Type>
+                ApiEnum<string, global::Courier.Models.Tenants.Type1>
             >(element, ModelBase.SerializerOptions);
         }
         set
@@ -72,13 +71,13 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
             if (!this.Properties.TryGetValue("url", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'url' cannot be null",
-                    new ArgumentOutOfRangeException("url", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("url", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'url' cannot be null",
-                    new ArgumentNullException("url")
+                    new System::ArgumentNullException("url")
                 );
         }
         set
@@ -183,5 +182,49 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     )
     {
         return new(properties);
+    }
+}
+
+/// <summary>
+/// Always set to `list`. Represents the type of this object.
+/// </summary>
+[JsonConverter(typeof(global::Courier.Models.Tenants.Type1Converter))]
+public enum Type1
+{
+    List,
+}
+
+sealed class Type1Converter : JsonConverter<global::Courier.Models.Tenants.Type1>
+{
+    public override global::Courier.Models.Tenants.Type1 Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "list" => global::Courier.Models.Tenants.Type1.List,
+            _ => (global::Courier.Models.Tenants.Type1)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::Courier.Models.Tenants.Type1 value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::Courier.Models.Tenants.Type1.List => "list",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

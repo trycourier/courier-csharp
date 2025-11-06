@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Bulk.BulkRetrieveJobResponseProperties;
+using System = System;
 
 namespace Courier.Models.Bulk;
 
@@ -19,13 +18,13 @@ public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRet
             if (!this.Properties.TryGetValue("job", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'job' cannot be null",
-                    new ArgumentOutOfRangeException("job", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("job", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<Job>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'job' cannot be null",
-                    new ArgumentNullException("job")
+                    new System::ArgumentNullException("job")
                 );
         }
         set
@@ -64,5 +63,201 @@ public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRet
         : this()
     {
         this.Job = job;
+    }
+}
+
+[JsonConverter(typeof(ModelConverter<Job>))]
+public sealed record class Job : ModelBase, IFromRaw<Job>
+{
+    public required InboundBulkMessage Definition
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("definition", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'definition' cannot be null",
+                    new System::ArgumentOutOfRangeException(
+                        "definition",
+                        "Missing required argument"
+                    )
+                );
+
+            return JsonSerializer.Deserialize<InboundBulkMessage>(
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'definition' cannot be null",
+                    new System::ArgumentNullException("definition")
+                );
+        }
+        set
+        {
+            this.Properties["definition"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public required long Enqueued
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("enqueued", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'enqueued' cannot be null",
+                    new System::ArgumentOutOfRangeException("enqueued", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["enqueued"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public required long Failures
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("failures", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'failures' cannot be null",
+                    new System::ArgumentOutOfRangeException("failures", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["failures"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public required long Received
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("received", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'received' cannot be null",
+                    new System::ArgumentOutOfRangeException("received", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["received"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public required ApiEnum<string, StatusModel> Status
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("status", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<ApiEnum<string, StatusModel>>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        set
+        {
+            this.Properties["status"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        this.Definition.Validate();
+        _ = this.Enqueued;
+        _ = this.Failures;
+        _ = this.Received;
+        this.Status.Validate();
+    }
+
+    public Job() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Job(Dictionary<string, JsonElement> properties)
+    {
+        Properties = properties;
+    }
+#pragma warning restore CS8618
+
+    public static Job FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    {
+        return new(properties);
+    }
+}
+
+[JsonConverter(typeof(StatusModelConverter))]
+public enum StatusModel
+{
+    Created,
+    Processing,
+    Completed,
+    Error,
+}
+
+sealed class StatusModelConverter : JsonConverter<StatusModel>
+{
+    public override StatusModel Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "CREATED" => StatusModel.Created,
+            "PROCESSING" => StatusModel.Processing,
+            "COMPLETED" => StatusModel.Completed,
+            "ERROR" => StatusModel.Error,
+            _ => (StatusModel)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        StatusModel value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                StatusModel.Created => "CREATED",
+                StatusModel.Processing => "PROCESSING",
+                StatusModel.Completed => "COMPLETED",
+                StatusModel.Error => "ERROR",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

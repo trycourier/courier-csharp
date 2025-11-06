@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using InboundTrackEventParamsProperties = Courier.Models.Inbound.InboundTrackEventParamsProperties;
+using System = System;
 
 namespace Courier.Models.Inbound;
 
@@ -27,13 +27,13 @@ public sealed record class InboundTrackEventParams : ParamsBase
             if (!this.BodyProperties.TryGetValue("event", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'event' cannot be null",
-                    new ArgumentOutOfRangeException("event", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("event", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'event' cannot be null",
-                    new ArgumentNullException("event")
+                    new System::ArgumentNullException("event")
                 );
         }
         set
@@ -56,13 +56,16 @@ public sealed record class InboundTrackEventParams : ParamsBase
             if (!this.BodyProperties.TryGetValue("messageId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'messageId' cannot be null",
-                    new ArgumentOutOfRangeException("messageId", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "messageId",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'messageId' cannot be null",
-                    new ArgumentNullException("messageId")
+                    new System::ArgumentNullException("messageId")
                 );
         }
         set
@@ -81,7 +84,10 @@ public sealed record class InboundTrackEventParams : ParamsBase
             if (!this.BodyProperties.TryGetValue("properties", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'properties' cannot be null",
-                    new ArgumentOutOfRangeException("properties", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "properties",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
@@ -90,7 +96,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
                 )
                 ?? throw new CourierInvalidDataException(
                     "'properties' cannot be null",
-                    new ArgumentNullException("properties")
+                    new System::ArgumentNullException("properties")
                 );
         }
         set
@@ -102,19 +108,20 @@ public sealed record class InboundTrackEventParams : ParamsBase
         }
     }
 
-    public required ApiEnum<string, InboundTrackEventParamsProperties::Type> Type
+    public required ApiEnum<string, global::Courier.Models.Inbound.Type> Type
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
-                    new ArgumentOutOfRangeException("type", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<
-                ApiEnum<string, InboundTrackEventParamsProperties::Type>
-            >(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, global::Courier.Models.Inbound.Type>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         set
         {
@@ -146,9 +153,9 @@ public sealed record class InboundTrackEventParams : ParamsBase
         }
     }
 
-    public override Uri Url(ICourierClient client)
+    public override System::Uri Url(ICourierClient client)
     {
-        return new UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/inbound/courier")
+        return new System::UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/inbound/courier")
         {
             Query = this.QueryString(client),
         }.Uri;
@@ -170,5 +177,46 @@ public sealed record class InboundTrackEventParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+}
+
+[JsonConverter(typeof(global::Courier.Models.Inbound.TypeConverter))]
+public enum Type
+{
+    Track,
+}
+
+sealed class TypeConverter : JsonConverter<global::Courier.Models.Inbound.Type>
+{
+    public override global::Courier.Models.Inbound.Type Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "track" => global::Courier.Models.Inbound.Type.Track,
+            _ => (global::Courier.Models.Inbound.Type)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::Courier.Models.Inbound.Type value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::Courier.Models.Inbound.Type.Track => "track",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

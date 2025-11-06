@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -27,13 +27,13 @@ public sealed record class TenantUpdateParams : ParamsBase
             if (!this.BodyProperties.TryGetValue("name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'name' cannot be null",
-                    new ArgumentOutOfRangeException("name", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("name", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'name' cannot be null",
-                    new ArgumentNullException("name")
+                    new System::ArgumentNullException("name")
                 );
         }
         set
@@ -160,9 +160,9 @@ public sealed record class TenantUpdateParams : ParamsBase
         }
     }
 
-    public override Uri Url(ICourierClient client)
+    public override System::Uri Url(ICourierClient client)
     {
-        return new UriBuilder(
+        return new System::UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/') + string.Format("/tenants/{0}", this.TenantID)
         )
         {
