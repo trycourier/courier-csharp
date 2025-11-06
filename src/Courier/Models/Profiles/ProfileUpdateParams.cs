@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
@@ -15,9 +16,13 @@ namespace Courier.Models.Profiles;
 /// </summary>
 public sealed record class ProfileUpdateParams : ParamsBase
 {
-    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
+    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    {
+        get { return this._bodyProperties.Freeze(); }
+    }
 
-    public required string UserID;
+    public required string UserID { get; init; }
 
     /// <summary>
     /// List of patch operations to apply to the profile.
@@ -26,7 +31,7 @@ public sealed record class ProfileUpdateParams : ParamsBase
     {
         get
         {
-            if (!this.BodyProperties.TryGetValue("patch", out JsonElement element))
+            if (!this._bodyProperties.TryGetValue("patch", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'patch' cannot be null",
                     new ArgumentOutOfRangeException("patch", "Missing required argument")
@@ -38,13 +43,53 @@ public sealed record class ProfileUpdateParams : ParamsBase
                     new ArgumentNullException("patch")
                 );
         }
-        set
+        init
         {
-            this.BodyProperties["patch"] = JsonSerializer.SerializeToElement(
+            this._bodyProperties["patch"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
+    }
+
+    public ProfileUpdateParams() { }
+
+    public ProfileUpdateParams(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ProfileUpdateParams(
+        FrozenDictionary<string, JsonElement> headerProperties,
+        FrozenDictionary<string, JsonElement> queryProperties,
+        FrozenDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+#pragma warning restore CS8618
+
+    public static ProfileUpdateParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(headerProperties),
+            FrozenDictionary.ToFrozenDictionary(queryProperties),
+            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+        );
     }
 
     public override Uri Url(ICourierClient client)
@@ -86,7 +131,7 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
     {
         get
         {
-            if (!this.Properties.TryGetValue("op", out JsonElement element))
+            if (!this._properties.TryGetValue("op", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'op' cannot be null",
                     new ArgumentOutOfRangeException("op", "Missing required argument")
@@ -98,9 +143,9 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
                     new ArgumentNullException("op")
                 );
         }
-        set
+        init
         {
-            this.Properties["op"] = JsonSerializer.SerializeToElement(
+            this._properties["op"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -114,7 +159,7 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
     {
         get
         {
-            if (!this.Properties.TryGetValue("path", out JsonElement element))
+            if (!this._properties.TryGetValue("path", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'path' cannot be null",
                     new ArgumentOutOfRangeException("path", "Missing required argument")
@@ -126,9 +171,9 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
                     new ArgumentNullException("path")
                 );
         }
-        set
+        init
         {
-            this.Properties["path"] = JsonSerializer.SerializeToElement(
+            this._properties["path"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -142,7 +187,7 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
     {
         get
         {
-            if (!this.Properties.TryGetValue("value", out JsonElement element))
+            if (!this._properties.TryGetValue("value", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'value' cannot be null",
                     new ArgumentOutOfRangeException("value", "Missing required argument")
@@ -154,9 +199,9 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
                     new ArgumentNullException("value")
                 );
         }
-        set
+        init
         {
-            this.Properties["value"] = JsonSerializer.SerializeToElement(
+            this._properties["value"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -172,16 +217,21 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
 
     public Patch() { }
 
+    public Patch(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Patch(Dictionary<string, JsonElement> properties)
+    Patch(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Patch FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

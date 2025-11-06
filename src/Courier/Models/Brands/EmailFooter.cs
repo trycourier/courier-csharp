@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -13,14 +14,14 @@ public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
     {
         get
         {
-            if (!this.Properties.TryGetValue("content", out JsonElement element))
+            if (!this._properties.TryGetValue("content", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["content"] = JsonSerializer.SerializeToElement(
+            this._properties["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -31,14 +32,14 @@ public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
     {
         get
         {
-            if (!this.Properties.TryGetValue("inheritDefault", out JsonElement element))
+            if (!this._properties.TryGetValue("inheritDefault", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["inheritDefault"] = JsonSerializer.SerializeToElement(
+            this._properties["inheritDefault"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -53,16 +54,21 @@ public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
 
     public EmailFooter() { }
 
+    public EmailFooter(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    EmailFooter(Dictionary<string, JsonElement> properties)
+    EmailFooter(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static EmailFooter FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

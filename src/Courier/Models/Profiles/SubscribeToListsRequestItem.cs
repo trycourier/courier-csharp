@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -17,7 +18,7 @@ public sealed record class SubscribeToListsRequestItem
     {
         get
         {
-            if (!this.Properties.TryGetValue("listId", out JsonElement element))
+            if (!this._properties.TryGetValue("listId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'listId' cannot be null",
                     new ArgumentOutOfRangeException("listId", "Missing required argument")
@@ -29,9 +30,9 @@ public sealed record class SubscribeToListsRequestItem
                     new ArgumentNullException("listId")
                 );
         }
-        set
+        init
         {
-            this.Properties["listId"] = JsonSerializer.SerializeToElement(
+            this._properties["listId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -42,7 +43,7 @@ public sealed record class SubscribeToListsRequestItem
     {
         get
         {
-            if (!this.Properties.TryGetValue("preferences", out JsonElement element))
+            if (!this._properties.TryGetValue("preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<RecipientPreferences?>(
@@ -50,9 +51,9 @@ public sealed record class SubscribeToListsRequestItem
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["preferences"] = JsonSerializer.SerializeToElement(
+            this._properties["preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -67,19 +68,24 @@ public sealed record class SubscribeToListsRequestItem
 
     public SubscribeToListsRequestItem() { }
 
+    public SubscribeToListsRequestItem(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SubscribeToListsRequestItem(Dictionary<string, JsonElement> properties)
+    SubscribeToListsRequestItem(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static SubscribeToListsRequestItem FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

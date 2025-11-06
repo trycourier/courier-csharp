@@ -1,4 +1,6 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -15,7 +17,11 @@ namespace Courier.Models.Send;
 /// </summary>
 public sealed record class SendMessageParams : ParamsBase
 {
-    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
+    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    {
+        get { return this._bodyProperties.Freeze(); }
+    }
 
     /// <summary>
     /// The message property has the following primary top-level properties. They
@@ -25,7 +31,7 @@ public sealed record class SendMessageParams : ParamsBase
     {
         get
         {
-            if (!this.BodyProperties.TryGetValue("message", out JsonElement element))
+            if (!this._bodyProperties.TryGetValue("message", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'message' cannot be null",
                     new System::ArgumentOutOfRangeException("message", "Missing required argument")
@@ -37,13 +43,53 @@ public sealed record class SendMessageParams : ParamsBase
                     new System::ArgumentNullException("message")
                 );
         }
-        set
+        init
         {
-            this.BodyProperties["message"] = JsonSerializer.SerializeToElement(
+            this._bodyProperties["message"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
+    }
+
+    public SendMessageParams() { }
+
+    public SendMessageParams(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SendMessageParams(
+        FrozenDictionary<string, JsonElement> headerProperties,
+        FrozenDictionary<string, JsonElement> queryProperties,
+        FrozenDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+#pragma warning restore CS8618
+
+    public static SendMessageParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(headerProperties),
+            FrozenDictionary.ToFrozenDictionary(queryProperties),
+            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+        );
     }
 
     public override System::Uri Url(ICourierClient client)
@@ -84,14 +130,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("brand_id", out JsonElement element))
+            if (!this._properties.TryGetValue("brand_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["brand_id"] = JsonSerializer.SerializeToElement(
+            this._properties["brand_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -106,7 +152,7 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("channels", out JsonElement element))
+            if (!this._properties.TryGetValue("channels", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, ChannelsItem>?>(
@@ -114,9 +160,9 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["channels"] = JsonSerializer.SerializeToElement(
+            this._properties["channels"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -130,14 +176,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("content", out JsonElement element))
+            if (!this._properties.TryGetValue("content", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Content?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["content"] = JsonSerializer.SerializeToElement(
+            this._properties["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -148,7 +194,7 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("context", out JsonElement element))
+            if (!this._properties.TryGetValue("context", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<MessageContext?>(
@@ -156,9 +202,9 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["context"] = JsonSerializer.SerializeToElement(
+            this._properties["context"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -169,7 +215,7 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("data", out JsonElement element))
+            if (!this._properties.TryGetValue("data", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -177,9 +223,9 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["data"] = JsonSerializer.SerializeToElement(
+            this._properties["data"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -190,14 +236,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("delay", out JsonElement element))
+            if (!this._properties.TryGetValue("delay", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Delay?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["delay"] = JsonSerializer.SerializeToElement(
+            this._properties["delay"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -208,14 +254,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("expiry", out JsonElement element))
+            if (!this._properties.TryGetValue("expiry", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Expiry?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["expiry"] = JsonSerializer.SerializeToElement(
+            this._properties["expiry"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -226,14 +272,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("metadata", out JsonElement element))
+            if (!this._properties.TryGetValue("metadata", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<MetadataModel?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["metadata"] = JsonSerializer.SerializeToElement(
+            this._properties["metadata"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -244,7 +290,7 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("preferences", out JsonElement element))
+            if (!this._properties.TryGetValue("preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<global::Courier.Models.Send.Preferences?>(
@@ -252,9 +298,9 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["preferences"] = JsonSerializer.SerializeToElement(
+            this._properties["preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -265,7 +311,7 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("providers", out JsonElement element))
+            if (!this._properties.TryGetValue("providers", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, ProvidersItem>?>(
@@ -273,9 +319,9 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["providers"] = JsonSerializer.SerializeToElement(
+            this._properties["providers"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -289,14 +335,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("routing", out JsonElement element))
+            if (!this._properties.TryGetValue("routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Routing?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["routing"] = JsonSerializer.SerializeToElement(
+            this._properties["routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -307,14 +353,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("template", out JsonElement element))
+            if (!this._properties.TryGetValue("template", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["template"] = JsonSerializer.SerializeToElement(
+            this._properties["template"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -325,14 +371,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("timeout", out JsonElement element))
+            if (!this._properties.TryGetValue("timeout", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Timeout?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["timeout"] = JsonSerializer.SerializeToElement(
+            this._properties["timeout"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -346,14 +392,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     {
         get
         {
-            if (!this.Properties.TryGetValue("to", out JsonElement element))
+            if (!this._properties.TryGetValue("to", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<To?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["to"] = JsonSerializer.SerializeToElement(
+            this._properties["to"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -392,17 +438,22 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
 
     public Message() { }
 
+    public Message(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Message(Dictionary<string, JsonElement> properties)
+    Message(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Message FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Message FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -416,14 +467,14 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("brand_id", out JsonElement element))
+            if (!this._properties.TryGetValue("brand_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["brand_id"] = JsonSerializer.SerializeToElement(
+            this._properties["brand_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -437,14 +488,14 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("if", out JsonElement element))
+            if (!this._properties.TryGetValue("if", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["if"] = JsonSerializer.SerializeToElement(
+            this._properties["if"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -455,14 +506,14 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("metadata", out JsonElement element))
+            if (!this._properties.TryGetValue("metadata", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Metadata?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["metadata"] = JsonSerializer.SerializeToElement(
+            this._properties["metadata"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -476,7 +527,7 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("override", out JsonElement element))
+            if (!this._properties.TryGetValue("override", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -484,9 +535,9 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["override"] = JsonSerializer.SerializeToElement(
+            this._properties["override"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -500,14 +551,14 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("providers", out JsonElement element))
+            if (!this._properties.TryGetValue("providers", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["providers"] = JsonSerializer.SerializeToElement(
+            this._properties["providers"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -521,7 +572,7 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("routing_method", out JsonElement element))
+            if (!this._properties.TryGetValue("routing_method", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>?>(
@@ -529,9 +580,9 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["routing_method"] = JsonSerializer.SerializeToElement(
+            this._properties["routing_method"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -542,14 +593,14 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("timeouts", out JsonElement element))
+            if (!this._properties.TryGetValue("timeouts", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Timeouts?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["timeouts"] = JsonSerializer.SerializeToElement(
+            this._properties["timeouts"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -569,17 +620,22 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
 
     public ChannelsItem() { }
 
+    public ChannelsItem(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ChannelsItem(Dictionary<string, JsonElement> properties)
+    ChannelsItem(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static ChannelsItem FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ChannelsItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -590,14 +646,14 @@ public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
     {
         get
         {
-            if (!this.Properties.TryGetValue("utm", out JsonElement element))
+            if (!this._properties.TryGetValue("utm", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Utm?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["utm"] = JsonSerializer.SerializeToElement(
+            this._properties["utm"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -611,17 +667,22 @@ public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
 
     public Metadata() { }
 
+    public Metadata(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Metadata(Dictionary<string, JsonElement> properties)
+    Metadata(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Metadata FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Metadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -679,14 +740,14 @@ public sealed record class Timeouts : ModelBase, IFromRaw<Timeouts>
     {
         get
         {
-            if (!this.Properties.TryGetValue("channel", out JsonElement element))
+            if (!this._properties.TryGetValue("channel", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["channel"] = JsonSerializer.SerializeToElement(
+            this._properties["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -697,14 +758,14 @@ public sealed record class Timeouts : ModelBase, IFromRaw<Timeouts>
     {
         get
         {
-            if (!this.Properties.TryGetValue("provider", out JsonElement element))
+            if (!this._properties.TryGetValue("provider", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["provider"] = JsonSerializer.SerializeToElement(
+            this._properties["provider"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -719,17 +780,22 @@ public sealed record class Timeouts : ModelBase, IFromRaw<Timeouts>
 
     public Timeouts() { }
 
+    public Timeouts(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Timeouts(Dictionary<string, JsonElement> properties)
+    Timeouts(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Timeouts FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Timeouts FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -886,14 +952,14 @@ public sealed record class Delay : ModelBase, IFromRaw<Delay>
     {
         get
         {
-            if (!this.Properties.TryGetValue("duration", out JsonElement element))
+            if (!this._properties.TryGetValue("duration", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["duration"] = JsonSerializer.SerializeToElement(
+            this._properties["duration"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -907,14 +973,14 @@ public sealed record class Delay : ModelBase, IFromRaw<Delay>
     {
         get
         {
-            if (!this.Properties.TryGetValue("until", out JsonElement element))
+            if (!this._properties.TryGetValue("until", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["until"] = JsonSerializer.SerializeToElement(
+            this._properties["until"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -929,17 +995,22 @@ public sealed record class Delay : ModelBase, IFromRaw<Delay>
 
     public Delay() { }
 
+    public Delay(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Delay(Dictionary<string, JsonElement> properties)
+    Delay(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Delay FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Delay FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -953,7 +1024,7 @@ public sealed record class Expiry : ModelBase, IFromRaw<Expiry>
     {
         get
         {
-            if (!this.Properties.TryGetValue("expires_in", out JsonElement element))
+            if (!this._properties.TryGetValue("expires_in", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'expires_in' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -968,9 +1039,9 @@ public sealed record class Expiry : ModelBase, IFromRaw<Expiry>
                     new System::ArgumentNullException("expires_in")
                 );
         }
-        set
+        init
         {
-            this.Properties["expires_in"] = JsonSerializer.SerializeToElement(
+            this._properties["expires_in"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -984,14 +1055,14 @@ public sealed record class Expiry : ModelBase, IFromRaw<Expiry>
     {
         get
         {
-            if (!this.Properties.TryGetValue("expires_at", out JsonElement element))
+            if (!this._properties.TryGetValue("expires_at", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["expires_at"] = JsonSerializer.SerializeToElement(
+            this._properties["expires_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1006,17 +1077,22 @@ public sealed record class Expiry : ModelBase, IFromRaw<Expiry>
 
     public Expiry() { }
 
+    public Expiry(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Expiry(Dictionary<string, JsonElement> properties)
+    Expiry(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Expiry FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Expiry FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
@@ -1164,14 +1240,14 @@ public sealed record class MetadataModel : ModelBase, IFromRaw<MetadataModel>
     {
         get
         {
-            if (!this.Properties.TryGetValue("event", out JsonElement element))
+            if (!this._properties.TryGetValue("event", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["event"] = JsonSerializer.SerializeToElement(
+            this._properties["event"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1182,14 +1258,14 @@ public sealed record class MetadataModel : ModelBase, IFromRaw<MetadataModel>
     {
         get
         {
-            if (!this.Properties.TryGetValue("tags", out JsonElement element))
+            if (!this._properties.TryGetValue("tags", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["tags"] = JsonSerializer.SerializeToElement(
+            this._properties["tags"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1200,14 +1276,14 @@ public sealed record class MetadataModel : ModelBase, IFromRaw<MetadataModel>
     {
         get
         {
-            if (!this.Properties.TryGetValue("trace_id", out JsonElement element))
+            if (!this._properties.TryGetValue("trace_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["trace_id"] = JsonSerializer.SerializeToElement(
+            this._properties["trace_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1218,14 +1294,14 @@ public sealed record class MetadataModel : ModelBase, IFromRaw<MetadataModel>
     {
         get
         {
-            if (!this.Properties.TryGetValue("utm", out JsonElement element))
+            if (!this._properties.TryGetValue("utm", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Utm?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["utm"] = JsonSerializer.SerializeToElement(
+            this._properties["utm"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1242,17 +1318,24 @@ public sealed record class MetadataModel : ModelBase, IFromRaw<MetadataModel>
 
     public MetadataModel() { }
 
+    public MetadataModel(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MetadataModel(Dictionary<string, JsonElement> properties)
+    MetadataModel(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static MetadataModel FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static MetadataModel FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -1268,7 +1351,7 @@ public sealed record class Preferences
     {
         get
         {
-            if (!this.Properties.TryGetValue("subscription_topic_id", out JsonElement element))
+            if (!this._properties.TryGetValue("subscription_topic_id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'subscription_topic_id' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -1283,9 +1366,9 @@ public sealed record class Preferences
                     new System::ArgumentNullException("subscription_topic_id")
                 );
         }
-        set
+        init
         {
-            this.Properties["subscription_topic_id"] = JsonSerializer.SerializeToElement(
+            this._properties["subscription_topic_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1299,19 +1382,24 @@ public sealed record class Preferences
 
     public Preferences() { }
 
+    public Preferences(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Preferences(Dictionary<string, JsonElement> properties)
+    Preferences(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Send.Preferences FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
@@ -1332,14 +1420,14 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("if", out JsonElement element))
+            if (!this._properties.TryGetValue("if", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["if"] = JsonSerializer.SerializeToElement(
+            this._properties["if"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1350,14 +1438,14 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("metadata", out JsonElement element))
+            if (!this._properties.TryGetValue("metadata", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Metadata1?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["metadata"] = JsonSerializer.SerializeToElement(
+            this._properties["metadata"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1371,7 +1459,7 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("override", out JsonElement element))
+            if (!this._properties.TryGetValue("override", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -1379,9 +1467,9 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["override"] = JsonSerializer.SerializeToElement(
+            this._properties["override"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1392,14 +1480,14 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
     {
         get
         {
-            if (!this.Properties.TryGetValue("timeouts", out JsonElement element))
+            if (!this._properties.TryGetValue("timeouts", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["timeouts"] = JsonSerializer.SerializeToElement(
+            this._properties["timeouts"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1416,17 +1504,24 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
 
     public ProvidersItem() { }
 
+    public ProvidersItem(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProvidersItem(Dictionary<string, JsonElement> properties)
+    ProvidersItem(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static ProvidersItem FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ProvidersItem FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -1437,14 +1532,14 @@ public sealed record class Metadata1 : ModelBase, IFromRaw<Metadata1>
     {
         get
         {
-            if (!this.Properties.TryGetValue("utm", out JsonElement element))
+            if (!this._properties.TryGetValue("utm", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Utm?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["utm"] = JsonSerializer.SerializeToElement(
+            this._properties["utm"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1458,17 +1553,22 @@ public sealed record class Metadata1 : ModelBase, IFromRaw<Metadata1>
 
     public Metadata1() { }
 
+    public Metadata1(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Metadata1(Dictionary<string, JsonElement> properties)
+    Metadata1(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Metadata1 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Metadata1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -1485,7 +1585,7 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
     {
         get
         {
-            if (!this.Properties.TryGetValue("channels", out JsonElement element))
+            if (!this._properties.TryGetValue("channels", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channels' cannot be null",
                     new System::ArgumentOutOfRangeException("channels", "Missing required argument")
@@ -1500,9 +1600,9 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
                     new System::ArgumentNullException("channels")
                 );
         }
-        set
+        init
         {
-            this.Properties["channels"] = JsonSerializer.SerializeToElement(
+            this._properties["channels"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1513,7 +1613,7 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
     {
         get
         {
-            if (!this.Properties.TryGetValue("method", out JsonElement element))
+            if (!this._properties.TryGetValue("method", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'method' cannot be null",
                     new System::ArgumentOutOfRangeException("method", "Missing required argument")
@@ -1524,9 +1624,9 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["method"] = JsonSerializer.SerializeToElement(
+            this._properties["method"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1544,17 +1644,22 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
 
     public Routing() { }
 
+    public Routing(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Routing(Dictionary<string, JsonElement> properties)
+    Routing(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Routing FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Routing FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -1609,7 +1714,7 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
     {
         get
         {
-            if (!this.Properties.TryGetValue("channel", out JsonElement element))
+            if (!this._properties.TryGetValue("channel", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, long>?>(
@@ -1617,9 +1722,9 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["channel"] = JsonSerializer.SerializeToElement(
+            this._properties["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1630,7 +1735,7 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
     {
         get
         {
-            if (!this.Properties.TryGetValue("criteria", out JsonElement element))
+            if (!this._properties.TryGetValue("criteria", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, Criteria>?>(
@@ -1638,9 +1743,9 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["criteria"] = JsonSerializer.SerializeToElement(
+            this._properties["criteria"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1651,14 +1756,14 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
     {
         get
         {
-            if (!this.Properties.TryGetValue("escalation", out JsonElement element))
+            if (!this._properties.TryGetValue("escalation", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["escalation"] = JsonSerializer.SerializeToElement(
+            this._properties["escalation"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1669,14 +1774,14 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
     {
         get
         {
-            if (!this.Properties.TryGetValue("message", out JsonElement element))
+            if (!this._properties.TryGetValue("message", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["message"] = JsonSerializer.SerializeToElement(
+            this._properties["message"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1687,7 +1792,7 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
     {
         get
         {
-            if (!this.Properties.TryGetValue("provider", out JsonElement element))
+            if (!this._properties.TryGetValue("provider", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, long>?>(
@@ -1695,9 +1800,9 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["provider"] = JsonSerializer.SerializeToElement(
+            this._properties["provider"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1715,17 +1820,22 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
 
     public Timeout() { }
 
+    public Timeout(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Timeout(Dictionary<string, JsonElement> properties)
+    Timeout(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Timeout FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Timeout FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -1788,9 +1898,9 @@ public record class To
         Value = value;
     }
 
-    public To(List<Recipient> value)
+    public To(IReadOnlyList<Recipient> value)
     {
-        Value = value;
+        Value = ImmutableArray.ToImmutableArray(value);
     }
 
     To(UnknownVariant value)
@@ -1809,15 +1919,15 @@ public record class To
         return value != null;
     }
 
-    public bool TryPickRecipients([NotNullWhen(true)] out List<Recipient>? value)
+    public bool TryPickRecipients([NotNullWhen(true)] out IReadOnlyList<Recipient>? value)
     {
-        value = this.Value as List<Recipient>;
+        value = this.Value as IReadOnlyList<Recipient>;
         return value != null;
     }
 
     public void Switch(
         System::Action<UserRecipient> userRecipient,
-        System::Action<List<Recipient>> recipients
+        System::Action<IReadOnlyList<Recipient>> recipients
     )
     {
         switch (this.Value)
@@ -1835,13 +1945,13 @@ public record class To
 
     public T Match<T>(
         System::Func<UserRecipient, T> userRecipient,
-        System::Func<List<Recipient>, T> recipients
+        System::Func<IReadOnlyList<Recipient>, T> recipients
     )
     {
         return this.Value switch
         {
             UserRecipient value => userRecipient(value),
-            List<Recipient> value => recipients(value),
+            IReadOnlyList<Recipient> value => recipients(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of To"),
         };
     }

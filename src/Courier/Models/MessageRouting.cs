@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
     {
         get
         {
-            if (!this.Properties.TryGetValue("channels", out JsonElement element))
+            if (!this._properties.TryGetValue("channels", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channels' cannot be null",
                     new System::ArgumentOutOfRangeException("channels", "Missing required argument")
@@ -30,9 +31,9 @@ public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
                     new System::ArgumentNullException("channels")
                 );
         }
-        set
+        init
         {
-            this.Properties["channels"] = JsonSerializer.SerializeToElement(
+            this._properties["channels"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,7 +44,7 @@ public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
     {
         get
         {
-            if (!this.Properties.TryGetValue("method", out JsonElement element))
+            if (!this._properties.TryGetValue("method", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'method' cannot be null",
                     new System::ArgumentOutOfRangeException("method", "Missing required argument")
@@ -54,9 +55,9 @@ public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["method"] = JsonSerializer.SerializeToElement(
+            this._properties["method"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -74,17 +75,24 @@ public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
 
     public MessageRouting() { }
 
+    public MessageRouting(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageRouting(Dictionary<string, JsonElement> properties)
+    MessageRouting(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static MessageRouting FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static MessageRouting FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 

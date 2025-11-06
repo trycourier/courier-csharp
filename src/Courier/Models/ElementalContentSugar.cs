@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -21,7 +22,7 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
     {
         get
         {
-            if (!this.Properties.TryGetValue("body", out JsonElement element))
+            if (!this._properties.TryGetValue("body", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'body' cannot be null",
                     new System::ArgumentOutOfRangeException("body", "Missing required argument")
@@ -33,9 +34,9 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
                     new System::ArgumentNullException("body")
                 );
         }
-        set
+        init
         {
-            this.Properties["body"] = JsonSerializer.SerializeToElement(
+            this._properties["body"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -49,7 +50,7 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
     {
         get
         {
-            if (!this.Properties.TryGetValue("title", out JsonElement element))
+            if (!this._properties.TryGetValue("title", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'title' cannot be null",
                     new System::ArgumentOutOfRangeException("title", "Missing required argument")
@@ -61,9 +62,9 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
                     new System::ArgumentNullException("title")
                 );
         }
-        set
+        init
         {
-            this.Properties["title"] = JsonSerializer.SerializeToElement(
+            this._properties["title"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -78,16 +79,23 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
 
     public ElementalContentSugar() { }
 
+    public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalContentSugar(Dictionary<string, JsonElement> properties)
+    ElementalContentSugar(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static ElementalContentSugar FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ElementalContentSugar FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

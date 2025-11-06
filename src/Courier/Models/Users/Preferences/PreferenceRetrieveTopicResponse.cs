@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -17,7 +18,7 @@ public sealed record class PreferenceRetrieveTopicResponse
     {
         get
         {
-            if (!this.Properties.TryGetValue("topic", out JsonElement element))
+            if (!this._properties.TryGetValue("topic", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'topic' cannot be null",
                     new ArgumentOutOfRangeException("topic", "Missing required argument")
@@ -29,9 +30,9 @@ public sealed record class PreferenceRetrieveTopicResponse
                     new ArgumentNullException("topic")
                 );
         }
-        set
+        init
         {
-            this.Properties["topic"] = JsonSerializer.SerializeToElement(
+            this._properties["topic"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -45,19 +46,24 @@ public sealed record class PreferenceRetrieveTopicResponse
 
     public PreferenceRetrieveTopicResponse() { }
 
+    public PreferenceRetrieveTopicResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PreferenceRetrieveTopicResponse(Dictionary<string, JsonElement> properties)
+    PreferenceRetrieveTopicResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static PreferenceRetrieveTopicResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

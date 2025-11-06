@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class BrandSnippet : ModelBase, IFromRaw<BrandSnippet>
     {
         get
         {
-            if (!this.Properties.TryGetValue("name", out JsonElement element))
+            if (!this._properties.TryGetValue("name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'name' cannot be null",
                     new ArgumentOutOfRangeException("name", "Missing required argument")
@@ -27,9 +28,9 @@ public sealed record class BrandSnippet : ModelBase, IFromRaw<BrandSnippet>
                     new ArgumentNullException("name")
                 );
         }
-        set
+        init
         {
-            this.Properties["name"] = JsonSerializer.SerializeToElement(
+            this._properties["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -40,7 +41,7 @@ public sealed record class BrandSnippet : ModelBase, IFromRaw<BrandSnippet>
     {
         get
         {
-            if (!this.Properties.TryGetValue("value", out JsonElement element))
+            if (!this._properties.TryGetValue("value", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'value' cannot be null",
                     new ArgumentOutOfRangeException("value", "Missing required argument")
@@ -52,9 +53,9 @@ public sealed record class BrandSnippet : ModelBase, IFromRaw<BrandSnippet>
                     new ArgumentNullException("value")
                 );
         }
-        set
+        init
         {
-            this.Properties["value"] = JsonSerializer.SerializeToElement(
+            this._properties["value"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -69,16 +70,21 @@ public sealed record class BrandSnippet : ModelBase, IFromRaw<BrandSnippet>
 
     public BrandSnippet() { }
 
+    public BrandSnippet(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSnippet(Dictionary<string, JsonElement> properties)
+    BrandSnippet(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static BrandSnippet FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static BrandSnippet FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

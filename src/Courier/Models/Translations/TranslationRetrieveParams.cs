@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using System.Text.Json;
 using Courier.Core;
 
 namespace Courier.Models.Translations;
@@ -9,9 +13,43 @@ namespace Courier.Models.Translations;
 /// </summary>
 public sealed record class TranslationRetrieveParams : ParamsBase
 {
-    public required string Domain;
+    public required string Domain { get; init; }
 
-    public required string Locale;
+    public required string Locale { get; init; }
+
+    public TranslationRetrieveParams() { }
+
+    public TranslationRetrieveParams(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    TranslationRetrieveParams(
+        FrozenDictionary<string, JsonElement> headerProperties,
+        FrozenDictionary<string, JsonElement> queryProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+    }
+#pragma warning restore CS8618
+
+    public static TranslationRetrieveParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(headerProperties),
+            FrozenDictionary.ToFrozenDictionary(queryProperties)
+        );
+    }
 
     public override Uri Url(ICourierClient client)
     {

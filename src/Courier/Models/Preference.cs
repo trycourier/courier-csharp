@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         get
         {
-            if (!this.Properties.TryGetValue("status", out JsonElement element))
+            if (!this._properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new System::ArgumentOutOfRangeException("status", "Missing required argument")
@@ -26,9 +27,9 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["status"] = JsonSerializer.SerializeToElement(
+            this._properties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -39,7 +40,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         get
         {
-            if (!this.Properties.TryGetValue("channel_preferences", out JsonElement element))
+            if (!this._properties.TryGetValue("channel_preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<ChannelPreference>?>(
@@ -47,9 +48,9 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["channel_preferences"] = JsonSerializer.SerializeToElement(
+            this._properties["channel_preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -60,14 +61,14 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         get
         {
-            if (!this.Properties.TryGetValue("rules", out JsonElement element))
+            if (!this._properties.TryGetValue("rules", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<Rule>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["rules"] = JsonSerializer.SerializeToElement(
+            this._properties["rules"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -78,7 +79,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         get
         {
-            if (!this.Properties.TryGetValue("source", out JsonElement element))
+            if (!this._properties.TryGetValue("source", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, Source>?>(
@@ -86,9 +87,9 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["source"] = JsonSerializer.SerializeToElement(
+            this._properties["source"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -111,17 +112,22 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
 
     public Preference() { }
 
+    public Preference(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Preference(Dictionary<string, JsonElement> properties)
+    Preference(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Preference FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Preference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

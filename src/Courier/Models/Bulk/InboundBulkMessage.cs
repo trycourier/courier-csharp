@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -180,7 +181,7 @@ public sealed record class InboundBulkTemplateMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("template", out JsonElement element))
+            if (!this._properties.TryGetValue("template", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'template' cannot be null",
                     new System::ArgumentOutOfRangeException("template", "Missing required argument")
@@ -192,9 +193,9 @@ public sealed record class InboundBulkTemplateMessage
                     new System::ArgumentNullException("template")
                 );
         }
-        set
+        init
         {
-            this.Properties["template"] = JsonSerializer.SerializeToElement(
+            this._properties["template"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -205,14 +206,14 @@ public sealed record class InboundBulkTemplateMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("brand", out JsonElement element))
+            if (!this._properties.TryGetValue("brand", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["brand"] = JsonSerializer.SerializeToElement(
+            this._properties["brand"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -223,7 +224,7 @@ public sealed record class InboundBulkTemplateMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("data", out JsonElement element))
+            if (!this._properties.TryGetValue("data", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -231,9 +232,9 @@ public sealed record class InboundBulkTemplateMessage
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["data"] = JsonSerializer.SerializeToElement(
+            this._properties["data"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -244,14 +245,14 @@ public sealed record class InboundBulkTemplateMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("event", out JsonElement element))
+            if (!this._properties.TryGetValue("event", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["event"] = JsonSerializer.SerializeToElement(
+            this._properties["event"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -262,7 +263,7 @@ public sealed record class InboundBulkTemplateMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("locale", out JsonElement element))
+            if (!this._properties.TryGetValue("locale", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, JsonElement>>?>(
@@ -270,9 +271,9 @@ public sealed record class InboundBulkTemplateMessage
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["locale"] = JsonSerializer.SerializeToElement(
+            this._properties["locale"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -283,7 +284,7 @@ public sealed record class InboundBulkTemplateMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("override", out JsonElement element))
+            if (!this._properties.TryGetValue("override", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -291,9 +292,9 @@ public sealed record class InboundBulkTemplateMessage
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["override"] = JsonSerializer.SerializeToElement(
+            this._properties["override"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -312,19 +313,24 @@ public sealed record class InboundBulkTemplateMessage
 
     public InboundBulkTemplateMessage() { }
 
+    public InboundBulkTemplateMessage(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    InboundBulkTemplateMessage(Dictionary<string, JsonElement> properties)
+    InboundBulkTemplateMessage(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static InboundBulkTemplateMessage FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
@@ -347,7 +353,7 @@ public sealed record class InboundBulkContentMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("content", out JsonElement element))
+            if (!this._properties.TryGetValue("content", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'content' cannot be null",
                     new System::ArgumentOutOfRangeException("content", "Missing required argument")
@@ -359,9 +365,9 @@ public sealed record class InboundBulkContentMessage
                     new System::ArgumentNullException("content")
                 );
         }
-        set
+        init
         {
-            this.Properties["content"] = JsonSerializer.SerializeToElement(
+            this._properties["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -372,14 +378,14 @@ public sealed record class InboundBulkContentMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("brand", out JsonElement element))
+            if (!this._properties.TryGetValue("brand", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["brand"] = JsonSerializer.SerializeToElement(
+            this._properties["brand"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -390,7 +396,7 @@ public sealed record class InboundBulkContentMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("data", out JsonElement element))
+            if (!this._properties.TryGetValue("data", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -398,9 +404,9 @@ public sealed record class InboundBulkContentMessage
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["data"] = JsonSerializer.SerializeToElement(
+            this._properties["data"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -411,14 +417,14 @@ public sealed record class InboundBulkContentMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("event", out JsonElement element))
+            if (!this._properties.TryGetValue("event", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["event"] = JsonSerializer.SerializeToElement(
+            this._properties["event"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -429,7 +435,7 @@ public sealed record class InboundBulkContentMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("locale", out JsonElement element))
+            if (!this._properties.TryGetValue("locale", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, JsonElement>>?>(
@@ -437,9 +443,9 @@ public sealed record class InboundBulkContentMessage
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["locale"] = JsonSerializer.SerializeToElement(
+            this._properties["locale"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -450,7 +456,7 @@ public sealed record class InboundBulkContentMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("override", out JsonElement element))
+            if (!this._properties.TryGetValue("override", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -458,9 +464,9 @@ public sealed record class InboundBulkContentMessage
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["override"] = JsonSerializer.SerializeToElement(
+            this._properties["override"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -479,19 +485,24 @@ public sealed record class InboundBulkContentMessage
 
     public InboundBulkContentMessage() { }
 
+    public InboundBulkContentMessage(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    InboundBulkContentMessage(Dictionary<string, JsonElement> properties)
+    InboundBulkContentMessage(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static InboundBulkContentMessage FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

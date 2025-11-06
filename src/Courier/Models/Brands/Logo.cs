@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -13,14 +14,14 @@ public sealed record class Logo : ModelBase, IFromRaw<Logo>
     {
         get
         {
-            if (!this.Properties.TryGetValue("href", out JsonElement element))
+            if (!this._properties.TryGetValue("href", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["href"] = JsonSerializer.SerializeToElement(
+            this._properties["href"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -31,14 +32,14 @@ public sealed record class Logo : ModelBase, IFromRaw<Logo>
     {
         get
         {
-            if (!this.Properties.TryGetValue("image", out JsonElement element))
+            if (!this._properties.TryGetValue("image", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["image"] = JsonSerializer.SerializeToElement(
+            this._properties["image"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -53,16 +54,21 @@ public sealed record class Logo : ModelBase, IFromRaw<Logo>
 
     public Logo() { }
 
+    public Logo(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Logo(Dictionary<string, JsonElement> properties)
+    Logo(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Logo FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Logo FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

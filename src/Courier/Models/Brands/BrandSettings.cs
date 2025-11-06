@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -13,14 +14,14 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
     {
         get
         {
-            if (!this.Properties.TryGetValue("colors", out JsonElement element))
+            if (!this._properties.TryGetValue("colors", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<BrandColors?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["colors"] = JsonSerializer.SerializeToElement(
+            this._properties["colors"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -31,7 +32,7 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
     {
         get
         {
-            if (!this.Properties.TryGetValue("email", out JsonElement element))
+            if (!this._properties.TryGetValue("email", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<BrandSettingsEmail?>(
@@ -39,9 +40,9 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["email"] = JsonSerializer.SerializeToElement(
+            this._properties["email"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -52,7 +53,7 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
     {
         get
         {
-            if (!this.Properties.TryGetValue("inapp", out JsonElement element))
+            if (!this._properties.TryGetValue("inapp", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<BrandSettingsInApp?>(
@@ -60,9 +61,9 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["inapp"] = JsonSerializer.SerializeToElement(
+            this._properties["inapp"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -78,16 +79,23 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
 
     public BrandSettings() { }
 
+    public BrandSettings(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSettings(Dictionary<string, JsonElement> properties)
+    BrandSettings(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static BrandSettings FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static BrandSettings FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

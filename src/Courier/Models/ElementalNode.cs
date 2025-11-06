@@ -24,11 +24,11 @@ public record class ElementalNode
 {
     public object Value { get; private init; }
 
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
         get
         {
-            return Match<List<string>?>(
+            return Match<IReadOnlyList<string>?>(
                 textNodeWithType: (x) => x.Channels,
                 metaNodeWithType: (x) => x.Channels,
                 channelNodeWithType: (x) => x.Channels,
