@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class CheckListResponse : ModelBase, IFromRaw<CheckListResp
     {
         get
         {
-            if (!this.Properties.TryGetValue("checks", out JsonElement element))
+            if (!this._properties.TryGetValue("checks", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'checks' cannot be null",
                     new ArgumentOutOfRangeException("checks", "Missing required argument")
@@ -27,9 +28,9 @@ public sealed record class CheckListResponse : ModelBase, IFromRaw<CheckListResp
                     new ArgumentNullException("checks")
                 );
         }
-        set
+        init
         {
-            this.Properties["checks"] = JsonSerializer.SerializeToElement(
+            this._properties["checks"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -46,17 +47,24 @@ public sealed record class CheckListResponse : ModelBase, IFromRaw<CheckListResp
 
     public CheckListResponse() { }
 
+    public CheckListResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    CheckListResponse(Dictionary<string, JsonElement> properties)
+    CheckListResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static CheckListResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static CheckListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

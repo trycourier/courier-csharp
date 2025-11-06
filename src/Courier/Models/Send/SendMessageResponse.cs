@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -21,7 +22,7 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
     {
         get
         {
-            if (!this.Properties.TryGetValue("requestId", out JsonElement element))
+            if (!this._properties.TryGetValue("requestId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'requestId' cannot be null",
                     new ArgumentOutOfRangeException("requestId", "Missing required argument")
@@ -33,9 +34,9 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
                     new ArgumentNullException("requestId")
                 );
         }
-        set
+        init
         {
-            this.Properties["requestId"] = JsonSerializer.SerializeToElement(
+            this._properties["requestId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -49,17 +50,24 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
 
     public SendMessageResponse() { }
 
+    public SendMessageResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SendMessageResponse(Dictionary<string, JsonElement> properties)
+    SendMessageResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static SendMessageResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static SendMessageResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

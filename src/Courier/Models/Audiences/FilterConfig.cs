@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -18,7 +19,7 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
     {
         get
         {
-            if (!this.Properties.TryGetValue("operator", out JsonElement element))
+            if (!this._properties.TryGetValue("operator", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'operator' cannot be null",
                     new System::ArgumentOutOfRangeException("operator", "Missing required argument")
@@ -29,9 +30,9 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["operator"] = JsonSerializer.SerializeToElement(
+            this._properties["operator"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -45,7 +46,7 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
     {
         get
         {
-            if (!this.Properties.TryGetValue("path", out JsonElement element))
+            if (!this._properties.TryGetValue("path", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'path' cannot be null",
                     new System::ArgumentOutOfRangeException("path", "Missing required argument")
@@ -57,9 +58,9 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
                     new System::ArgumentNullException("path")
                 );
         }
-        set
+        init
         {
-            this.Properties["path"] = JsonSerializer.SerializeToElement(
+            this._properties["path"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -73,7 +74,7 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
     {
         get
         {
-            if (!this.Properties.TryGetValue("value", out JsonElement element))
+            if (!this._properties.TryGetValue("value", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'value' cannot be null",
                     new System::ArgumentOutOfRangeException("value", "Missing required argument")
@@ -85,9 +86,9 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
                     new System::ArgumentNullException("value")
                 );
         }
-        set
+        init
         {
-            this.Properties["value"] = JsonSerializer.SerializeToElement(
+            this._properties["value"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -103,17 +104,22 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
 
     public FilterConfig() { }
 
+    public FilterConfig(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    FilterConfig(Dictionary<string, JsonElement> properties)
+    FilterConfig(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static FilterConfig FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static FilterConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 

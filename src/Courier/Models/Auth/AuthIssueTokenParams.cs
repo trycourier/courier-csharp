@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -13,13 +15,17 @@ namespace Courier.Models.Auth;
 /// </summary>
 public sealed record class AuthIssueTokenParams : ParamsBase
 {
-    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
+    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    {
+        get { return this._bodyProperties.Freeze(); }
+    }
 
     public required string ExpiresIn
     {
         get
         {
-            if (!this.BodyProperties.TryGetValue("expires_in", out JsonElement element))
+            if (!this._bodyProperties.TryGetValue("expires_in", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'expires_in' cannot be null",
                     new ArgumentOutOfRangeException("expires_in", "Missing required argument")
@@ -31,9 +37,9 @@ public sealed record class AuthIssueTokenParams : ParamsBase
                     new ArgumentNullException("expires_in")
                 );
         }
-        set
+        init
         {
-            this.BodyProperties["expires_in"] = JsonSerializer.SerializeToElement(
+            this._bodyProperties["expires_in"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -44,7 +50,7 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     {
         get
         {
-            if (!this.BodyProperties.TryGetValue("scope", out JsonElement element))
+            if (!this._bodyProperties.TryGetValue("scope", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'scope' cannot be null",
                     new ArgumentOutOfRangeException("scope", "Missing required argument")
@@ -56,13 +62,53 @@ public sealed record class AuthIssueTokenParams : ParamsBase
                     new ArgumentNullException("scope")
                 );
         }
-        set
+        init
         {
-            this.BodyProperties["scope"] = JsonSerializer.SerializeToElement(
+            this._bodyProperties["scope"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
+    }
+
+    public AuthIssueTokenParams() { }
+
+    public AuthIssueTokenParams(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AuthIssueTokenParams(
+        FrozenDictionary<string, JsonElement> headerProperties,
+        FrozenDictionary<string, JsonElement> queryProperties,
+        FrozenDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+#pragma warning restore CS8618
+
+    public static AuthIssueTokenParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(headerProperties),
+            FrozenDictionary.ToFrozenDictionary(queryProperties),
+            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+        );
     }
 
     public override Uri Url(ICourierClient client)

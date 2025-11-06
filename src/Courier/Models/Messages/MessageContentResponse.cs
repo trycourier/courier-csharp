@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -18,7 +19,7 @@ public sealed record class MessageContentResponse : ModelBase, IFromRaw<MessageC
     {
         get
         {
-            if (!this.Properties.TryGetValue("results", out JsonElement element))
+            if (!this._properties.TryGetValue("results", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'results' cannot be null",
                     new ArgumentOutOfRangeException("results", "Missing required argument")
@@ -30,9 +31,9 @@ public sealed record class MessageContentResponse : ModelBase, IFromRaw<MessageC
                     new ArgumentNullException("results")
                 );
         }
-        set
+        init
         {
-            this.Properties["results"] = JsonSerializer.SerializeToElement(
+            this._properties["results"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -49,19 +50,24 @@ public sealed record class MessageContentResponse : ModelBase, IFromRaw<MessageC
 
     public MessageContentResponse() { }
 
+    public MessageContentResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageContentResponse(Dictionary<string, JsonElement> properties)
+    MessageContentResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static MessageContentResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
@@ -82,7 +88,7 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
     {
         get
         {
-            if (!this.Properties.TryGetValue("channel", out JsonElement element))
+            if (!this._properties.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
                     new ArgumentOutOfRangeException("channel", "Missing required argument")
@@ -94,9 +100,9 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
                     new ArgumentNullException("channel")
                 );
         }
-        set
+        init
         {
-            this.Properties["channel"] = JsonSerializer.SerializeToElement(
+            this._properties["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -110,7 +116,7 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
     {
         get
         {
-            if (!this.Properties.TryGetValue("channel_id", out JsonElement element))
+            if (!this._properties.TryGetValue("channel_id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel_id' cannot be null",
                     new ArgumentOutOfRangeException("channel_id", "Missing required argument")
@@ -122,9 +128,9 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
                     new ArgumentNullException("channel_id")
                 );
         }
-        set
+        init
         {
-            this.Properties["channel_id"] = JsonSerializer.SerializeToElement(
+            this._properties["channel_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -138,7 +144,7 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
     {
         get
         {
-            if (!this.Properties.TryGetValue("content", out JsonElement element))
+            if (!this._properties.TryGetValue("content", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'content' cannot be null",
                     new ArgumentOutOfRangeException("content", "Missing required argument")
@@ -150,9 +156,9 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
                     new ArgumentNullException("content")
                 );
         }
-        set
+        init
         {
-            this.Properties["content"] = JsonSerializer.SerializeToElement(
+            this._properties["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -168,17 +174,22 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
 
     public Result() { }
 
+    public Result(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Result(Dictionary<string, JsonElement> properties)
+    Result(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Result FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -195,7 +206,7 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
     {
         get
         {
-            if (!this.Properties.TryGetValue("blocks", out JsonElement element))
+            if (!this._properties.TryGetValue("blocks", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'blocks' cannot be null",
                     new ArgumentOutOfRangeException("blocks", "Missing required argument")
@@ -207,9 +218,9 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
                     new ArgumentNullException("blocks")
                 );
         }
-        set
+        init
         {
-            this.Properties["blocks"] = JsonSerializer.SerializeToElement(
+            this._properties["blocks"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -223,7 +234,7 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
     {
         get
         {
-            if (!this.Properties.TryGetValue("body", out JsonElement element))
+            if (!this._properties.TryGetValue("body", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'body' cannot be null",
                     new ArgumentOutOfRangeException("body", "Missing required argument")
@@ -235,9 +246,9 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
                     new ArgumentNullException("body")
                 );
         }
-        set
+        init
         {
-            this.Properties["body"] = JsonSerializer.SerializeToElement(
+            this._properties["body"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -251,7 +262,7 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
     {
         get
         {
-            if (!this.Properties.TryGetValue("html", out JsonElement element))
+            if (!this._properties.TryGetValue("html", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'html' cannot be null",
                     new ArgumentOutOfRangeException("html", "Missing required argument")
@@ -263,9 +274,9 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
                     new ArgumentNullException("html")
                 );
         }
-        set
+        init
         {
-            this.Properties["html"] = JsonSerializer.SerializeToElement(
+            this._properties["html"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -279,7 +290,7 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
     {
         get
         {
-            if (!this.Properties.TryGetValue("subject", out JsonElement element))
+            if (!this._properties.TryGetValue("subject", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'subject' cannot be null",
                     new ArgumentOutOfRangeException("subject", "Missing required argument")
@@ -291,9 +302,9 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
                     new ArgumentNullException("subject")
                 );
         }
-        set
+        init
         {
-            this.Properties["subject"] = JsonSerializer.SerializeToElement(
+            this._properties["subject"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -307,7 +318,7 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
     {
         get
         {
-            if (!this.Properties.TryGetValue("text", out JsonElement element))
+            if (!this._properties.TryGetValue("text", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'text' cannot be null",
                     new ArgumentOutOfRangeException("text", "Missing required argument")
@@ -319,9 +330,9 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
                     new ArgumentNullException("text")
                 );
         }
-        set
+        init
         {
-            this.Properties["text"] = JsonSerializer.SerializeToElement(
+            this._properties["text"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -335,7 +346,7 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
     {
         get
         {
-            if (!this.Properties.TryGetValue("title", out JsonElement element))
+            if (!this._properties.TryGetValue("title", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'title' cannot be null",
                     new ArgumentOutOfRangeException("title", "Missing required argument")
@@ -347,9 +358,9 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
                     new ArgumentNullException("title")
                 );
         }
-        set
+        init
         {
-            this.Properties["title"] = JsonSerializer.SerializeToElement(
+            this._properties["title"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -371,17 +382,22 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
 
     public Content() { }
 
+    public Content(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Content(Dictionary<string, JsonElement> properties)
+    Content(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Content FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Content FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 
@@ -395,7 +411,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this.Properties.TryGetValue("text", out JsonElement element))
+            if (!this._properties.TryGetValue("text", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'text' cannot be null",
                     new ArgumentOutOfRangeException("text", "Missing required argument")
@@ -407,9 +423,9 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
                     new ArgumentNullException("text")
                 );
         }
-        set
+        init
         {
-            this.Properties["text"] = JsonSerializer.SerializeToElement(
+            this._properties["text"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -423,7 +439,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
+            if (!this._properties.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
                     new ArgumentOutOfRangeException("type", "Missing required argument")
@@ -435,9 +451,9 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
                     new ArgumentNullException("type")
                 );
         }
-        set
+        init
         {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
+            this._properties["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -452,16 +468,21 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
 
     public Block() { }
 
+    public Block(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Block(Dictionary<string, JsonElement> properties)
+    Block(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Block FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

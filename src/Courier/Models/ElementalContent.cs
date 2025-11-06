@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
     {
         get
         {
-            if (!this.Properties.TryGetValue("elements", out JsonElement element))
+            if (!this._properties.TryGetValue("elements", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'elements' cannot be null",
                     new System::ArgumentOutOfRangeException("elements", "Missing required argument")
@@ -30,9 +31,9 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
                     new System::ArgumentNullException("elements")
                 );
         }
-        set
+        init
         {
-            this.Properties["elements"] = JsonSerializer.SerializeToElement(
+            this._properties["elements"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -46,7 +47,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
     {
         get
         {
-            if (!this.Properties.TryGetValue("version", out JsonElement element))
+            if (!this._properties.TryGetValue("version", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'version' cannot be null",
                     new System::ArgumentOutOfRangeException("version", "Missing required argument")
@@ -58,9 +59,9 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
                     new System::ArgumentNullException("version")
                 );
         }
-        set
+        init
         {
-            this.Properties["version"] = JsonSerializer.SerializeToElement(
+            this._properties["version"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -71,14 +72,14 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
     {
         get
         {
-            if (!this.Properties.TryGetValue("brand", out JsonElement element))
+            if (!this._properties.TryGetValue("brand", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["brand"] = JsonSerializer.SerializeToElement(
+            this._properties["brand"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -97,16 +98,23 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
 
     public ElementalContent() { }
 
+    public ElementalContent(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalContent(Dictionary<string, JsonElement> properties)
+    ElementalContent(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static ElementalContent FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ElementalContent FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

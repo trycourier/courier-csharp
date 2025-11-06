@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -27,14 +28,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this.Properties.TryGetValue("channels", out JsonElement element))
+            if (!this._properties.TryGetValue("channels", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["channels"] = JsonSerializer.SerializeToElement(
+            this._properties["channels"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -45,14 +46,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this.Properties.TryGetValue("if", out JsonElement element))
+            if (!this._properties.TryGetValue("if", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["if"] = JsonSerializer.SerializeToElement(
+            this._properties["if"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -63,14 +64,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this.Properties.TryGetValue("loop", out JsonElement element))
+            if (!this._properties.TryGetValue("loop", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["loop"] = JsonSerializer.SerializeToElement(
+            this._properties["loop"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -81,14 +82,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this.Properties.TryGetValue("ref", out JsonElement element))
+            if (!this._properties.TryGetValue("ref", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["ref"] = JsonSerializer.SerializeToElement(
+            this._properties["ref"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -103,7 +104,7 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this.Properties.TryGetValue("channel", out JsonElement element))
+            if (!this._properties.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
                     new System::ArgumentOutOfRangeException("channel", "Missing required argument")
@@ -115,9 +116,9 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
                     new System::ArgumentNullException("channel")
                 );
         }
-        set
+        init
         {
-            this.Properties["channel"] = JsonSerializer.SerializeToElement(
+            this._properties["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -132,7 +133,7 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this.Properties.TryGetValue("raw", out JsonElement element))
+            if (!this._properties.TryGetValue("raw", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -140,9 +141,9 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["raw"] = JsonSerializer.SerializeToElement(
+            this._properties["raw"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -170,17 +171,24 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
 
     public ElementalChannelNode() { }
 
+    public ElementalChannelNode(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalChannelNode(Dictionary<string, JsonElement> properties)
+    ElementalChannelNode(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static ElementalChannelNode FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ElementalChannelNode FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
@@ -202,7 +210,7 @@ public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<Inters
     {
         get
         {
-            if (!this.Properties.TryGetValue("channel", out JsonElement element))
+            if (!this._properties.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
                     new System::ArgumentOutOfRangeException("channel", "Missing required argument")
@@ -214,9 +222,9 @@ public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<Inters
                     new System::ArgumentNullException("channel")
                 );
         }
-        set
+        init
         {
-            this.Properties["channel"] = JsonSerializer.SerializeToElement(
+            this._properties["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -231,7 +239,7 @@ public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<Inters
     {
         get
         {
-            if (!this.Properties.TryGetValue("raw", out JsonElement element))
+            if (!this._properties.TryGetValue("raw", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -239,9 +247,9 @@ public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<Inters
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["raw"] = JsonSerializer.SerializeToElement(
+            this._properties["raw"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -256,19 +264,24 @@ public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<Inters
 
     public IntersectionMember1Model() { }
 
+    public IntersectionMember1Model(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1Model(Dictionary<string, JsonElement> properties)
+    IntersectionMember1Model(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static IntersectionMember1Model FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

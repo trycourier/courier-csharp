@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -14,15 +16,19 @@ namespace Courier.Models.Lists.Subscriptions;
 /// </summary>
 public sealed record class SubscriptionAddParams : ParamsBase
 {
-    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
+    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    {
+        get { return this._bodyProperties.Freeze(); }
+    }
 
-    public required string ListID;
+    public required string ListID { get; init; }
 
     public required List<PutSubscriptionsRecipient> Recipients
     {
         get
         {
-            if (!this.BodyProperties.TryGetValue("recipients", out JsonElement element))
+            if (!this._bodyProperties.TryGetValue("recipients", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'recipients' cannot be null",
                     new ArgumentOutOfRangeException("recipients", "Missing required argument")
@@ -37,13 +43,53 @@ public sealed record class SubscriptionAddParams : ParamsBase
                     new ArgumentNullException("recipients")
                 );
         }
-        set
+        init
         {
-            this.BodyProperties["recipients"] = JsonSerializer.SerializeToElement(
+            this._bodyProperties["recipients"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
+    }
+
+    public SubscriptionAddParams() { }
+
+    public SubscriptionAddParams(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    SubscriptionAddParams(
+        FrozenDictionary<string, JsonElement> headerProperties,
+        FrozenDictionary<string, JsonElement> queryProperties,
+        FrozenDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+#pragma warning restore CS8618
+
+    public static SubscriptionAddParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(headerProperties),
+            FrozenDictionary.ToFrozenDictionary(queryProperties),
+            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+        );
     }
 
     public override Uri Url(ICourierClient client)

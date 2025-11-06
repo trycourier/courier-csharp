@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
     {
         get
         {
-            if (!this.Properties.TryGetValue("default_status", out JsonElement element))
+            if (!this._properties.TryGetValue("default_status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'default_status' cannot be null",
                     new ArgumentOutOfRangeException("default_status", "Missing required argument")
@@ -26,9 +27,9 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["default_status"] = JsonSerializer.SerializeToElement(
+            this._properties["default_status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -39,7 +40,7 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
     {
         get
         {
-            if (!this.Properties.TryGetValue("status", out JsonElement element))
+            if (!this._properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new ArgumentOutOfRangeException("status", "Missing required argument")
@@ -50,9 +51,9 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["status"] = JsonSerializer.SerializeToElement(
+            this._properties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -63,7 +64,7 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
     {
         get
         {
-            if (!this.Properties.TryGetValue("topic_id", out JsonElement element))
+            if (!this._properties.TryGetValue("topic_id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'topic_id' cannot be null",
                     new ArgumentOutOfRangeException("topic_id", "Missing required argument")
@@ -75,9 +76,9 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
                     new ArgumentNullException("topic_id")
                 );
         }
-        set
+        init
         {
-            this.Properties["topic_id"] = JsonSerializer.SerializeToElement(
+            this._properties["topic_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -88,7 +89,7 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
     {
         get
         {
-            if (!this.Properties.TryGetValue("topic_name", out JsonElement element))
+            if (!this._properties.TryGetValue("topic_name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'topic_name' cannot be null",
                     new ArgumentOutOfRangeException("topic_name", "Missing required argument")
@@ -100,9 +101,9 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
                     new ArgumentNullException("topic_name")
                 );
         }
-        set
+        init
         {
-            this.Properties["topic_name"] = JsonSerializer.SerializeToElement(
+            this._properties["topic_name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -116,7 +117,7 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
     {
         get
         {
-            if (!this.Properties.TryGetValue("custom_routing", out JsonElement element))
+            if (!this._properties.TryGetValue("custom_routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
@@ -124,9 +125,9 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["custom_routing"] = JsonSerializer.SerializeToElement(
+            this._properties["custom_routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -137,14 +138,14 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
     {
         get
         {
-            if (!this.Properties.TryGetValue("has_custom_routing", out JsonElement element))
+            if (!this._properties.TryGetValue("has_custom_routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["has_custom_routing"] = JsonSerializer.SerializeToElement(
+            this._properties["has_custom_routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -166,16 +167,23 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
 
     public TopicPreference() { }
 
+    public TopicPreference(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TopicPreference(Dictionary<string, JsonElement> properties)
+    TopicPreference(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static TopicPreference FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static TopicPreference FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

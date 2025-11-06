@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         get
         {
-            if (!this.Properties.TryGetValue("id", out JsonElement element))
+            if (!this._properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -27,9 +28,9 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
                     new ArgumentNullException("id")
                 );
         }
-        set
+        init
         {
-            this.Properties["id"] = JsonSerializer.SerializeToElement(
+            this._properties["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -40,7 +41,7 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         get
         {
-            if (!this.Properties.TryGetValue("name", out JsonElement element))
+            if (!this._properties.TryGetValue("name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'name' cannot be null",
                     new ArgumentOutOfRangeException("name", "Missing required argument")
@@ -52,9 +53,9 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
                     new ArgumentNullException("name")
                 );
         }
-        set
+        init
         {
-            this.Properties["name"] = JsonSerializer.SerializeToElement(
+            this._properties["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -65,14 +66,14 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         get
         {
-            if (!this.Properties.TryGetValue("created", out JsonElement element))
+            if (!this._properties.TryGetValue("created", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["created"] = JsonSerializer.SerializeToElement(
+            this._properties["created"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -83,14 +84,14 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         get
         {
-            if (!this.Properties.TryGetValue("updated", out JsonElement element))
+            if (!this._properties.TryGetValue("updated", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["updated"] = JsonSerializer.SerializeToElement(
+            this._properties["updated"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -107,16 +108,23 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
 
     public SubscriptionList() { }
 
+    public SubscriptionList(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SubscriptionList(Dictionary<string, JsonElement> properties)
+    SubscriptionList(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static SubscriptionList FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static SubscriptionList FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

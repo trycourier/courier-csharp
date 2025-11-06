@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRet
     {
         get
         {
-            if (!this.Properties.TryGetValue("job", out JsonElement element))
+            if (!this._properties.TryGetValue("job", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'job' cannot be null",
                     new System::ArgumentOutOfRangeException("job", "Missing required argument")
@@ -27,9 +28,9 @@ public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRet
                     new System::ArgumentNullException("job")
                 );
         }
-        set
+        init
         {
-            this.Properties["job"] = JsonSerializer.SerializeToElement(
+            this._properties["job"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,19 +44,24 @@ public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRet
 
     public BulkRetrieveJobResponse() { }
 
+    public BulkRetrieveJobResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BulkRetrieveJobResponse(Dictionary<string, JsonElement> properties)
+    BulkRetrieveJobResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static BulkRetrieveJobResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
@@ -73,7 +79,7 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
     {
         get
         {
-            if (!this.Properties.TryGetValue("definition", out JsonElement element))
+            if (!this._properties.TryGetValue("definition", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'definition' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -91,9 +97,9 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
                     new System::ArgumentNullException("definition")
                 );
         }
-        set
+        init
         {
-            this.Properties["definition"] = JsonSerializer.SerializeToElement(
+            this._properties["definition"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -104,7 +110,7 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
     {
         get
         {
-            if (!this.Properties.TryGetValue("enqueued", out JsonElement element))
+            if (!this._properties.TryGetValue("enqueued", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'enqueued' cannot be null",
                     new System::ArgumentOutOfRangeException("enqueued", "Missing required argument")
@@ -112,9 +118,9 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["enqueued"] = JsonSerializer.SerializeToElement(
+            this._properties["enqueued"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -125,7 +131,7 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
     {
         get
         {
-            if (!this.Properties.TryGetValue("failures", out JsonElement element))
+            if (!this._properties.TryGetValue("failures", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'failures' cannot be null",
                     new System::ArgumentOutOfRangeException("failures", "Missing required argument")
@@ -133,9 +139,9 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["failures"] = JsonSerializer.SerializeToElement(
+            this._properties["failures"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -146,7 +152,7 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
     {
         get
         {
-            if (!this.Properties.TryGetValue("received", out JsonElement element))
+            if (!this._properties.TryGetValue("received", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'received' cannot be null",
                     new System::ArgumentOutOfRangeException("received", "Missing required argument")
@@ -154,9 +160,9 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["received"] = JsonSerializer.SerializeToElement(
+            this._properties["received"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -167,7 +173,7 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
     {
         get
         {
-            if (!this.Properties.TryGetValue("status", out JsonElement element))
+            if (!this._properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new System::ArgumentOutOfRangeException("status", "Missing required argument")
@@ -178,9 +184,9 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["status"] = JsonSerializer.SerializeToElement(
+            this._properties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -198,17 +204,22 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
 
     public Job() { }
 
+    public Job(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Job(Dictionary<string, JsonElement> properties)
+    Job(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Job FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Job FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }
 

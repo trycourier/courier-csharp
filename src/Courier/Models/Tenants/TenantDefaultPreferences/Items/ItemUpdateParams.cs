@@ -1,4 +1,6 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -14,11 +16,15 @@ namespace Courier.Models.Tenants.TenantDefaultPreferences.Items;
 /// </summary>
 public sealed record class ItemUpdateParams : ParamsBase
 {
-    public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
+    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
+    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    {
+        get { return this._bodyProperties.Freeze(); }
+    }
 
-    public required string TenantID;
+    public required string TenantID { get; init; }
 
-    public required string TopicID;
+    public required string TopicID { get; init; }
 
     public required ApiEnum<
         string,
@@ -27,7 +33,7 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            if (!this.BodyProperties.TryGetValue("status", out JsonElement element))
+            if (!this._bodyProperties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new System::ArgumentOutOfRangeException("status", "Missing required argument")
@@ -40,9 +46,9 @@ public sealed record class ItemUpdateParams : ParamsBase
                 >
             >(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.BodyProperties["status"] = JsonSerializer.SerializeToElement(
+            this._bodyProperties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -56,7 +62,7 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            if (!this.BodyProperties.TryGetValue("custom_routing", out JsonElement element))
+            if (!this._bodyProperties.TryGetValue("custom_routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
@@ -64,9 +70,9 @@ public sealed record class ItemUpdateParams : ParamsBase
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.BodyProperties["custom_routing"] = JsonSerializer.SerializeToElement(
+            this._bodyProperties["custom_routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -81,18 +87,58 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            if (!this.BodyProperties.TryGetValue("has_custom_routing", out JsonElement element))
+            if (!this._bodyProperties.TryGetValue("has_custom_routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.BodyProperties["has_custom_routing"] = JsonSerializer.SerializeToElement(
+            this._bodyProperties["has_custom_routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
+    }
+
+    public ItemUpdateParams() { }
+
+    public ItemUpdateParams(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    ItemUpdateParams(
+        FrozenDictionary<string, JsonElement> headerProperties,
+        FrozenDictionary<string, JsonElement> queryProperties,
+        FrozenDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+        this._bodyProperties = [.. bodyProperties];
+    }
+#pragma warning restore CS8618
+
+    public static ItemUpdateParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties,
+        IReadOnlyDictionary<string, JsonElement> bodyProperties
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(headerProperties),
+            FrozenDictionary.ToFrozenDictionary(queryProperties),
+            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+        );
     }
 
     public override System::Uri Url(ICourierClient client)

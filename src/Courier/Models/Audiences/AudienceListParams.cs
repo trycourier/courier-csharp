@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
 using Courier.Core;
@@ -17,18 +20,52 @@ public sealed record class AudienceListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("cursor", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("cursor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["cursor"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["cursor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
+    }
+
+    public AudienceListParams() { }
+
+    public AudienceListParams(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    AudienceListParams(
+        FrozenDictionary<string, JsonElement> headerProperties,
+        FrozenDictionary<string, JsonElement> queryProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+    }
+#pragma warning restore CS8618
+
+    public static AudienceListParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(headerProperties),
+            FrozenDictionary.ToFrozenDictionary(queryProperties)
+        );
     }
 
     public override Uri Url(ICourierClient client)

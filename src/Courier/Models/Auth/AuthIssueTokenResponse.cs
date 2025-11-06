@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
     {
         get
         {
-            if (!this.Properties.TryGetValue("token", out JsonElement element))
+            if (!this._properties.TryGetValue("token", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'token' cannot be null",
                     new ArgumentOutOfRangeException("token", "Missing required argument")
@@ -27,9 +28,9 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
                     new ArgumentNullException("token")
                 );
         }
-        set
+        init
         {
-            this.Properties["token"] = JsonSerializer.SerializeToElement(
+            this._properties["token"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,19 +44,24 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
 
     public AuthIssueTokenResponse() { }
 
+    public AuthIssueTokenResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AuthIssueTokenResponse(Dictionary<string, JsonElement> properties)
+    AuthIssueTokenResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static AuthIssueTokenResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

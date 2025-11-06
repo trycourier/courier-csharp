@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -18,7 +19,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this.Properties.TryGetValue("tenant_id", out JsonElement element))
+            if (!this._properties.TryGetValue("tenant_id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'tenant_id' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -33,9 +34,9 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
                     new System::ArgumentNullException("tenant_id")
                 );
         }
-        set
+        init
         {
-            this.Properties["tenant_id"] = JsonSerializer.SerializeToElement(
+            this._properties["tenant_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -49,7 +50,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this.Properties.TryGetValue("profile", out JsonElement element))
+            if (!this._properties.TryGetValue("profile", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -57,9 +58,9 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["profile"] = JsonSerializer.SerializeToElement(
+            this._properties["profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -70,7 +71,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
+            if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<
@@ -78,9 +79,9 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
                 global::Courier.Models.Tenants.Type
             >?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
+            this._properties["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -94,14 +95,14 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this.Properties.TryGetValue("user_id", out JsonElement element))
+            if (!this._properties.TryGetValue("user_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["user_id"] = JsonSerializer.SerializeToElement(
+            this._properties["user_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -118,17 +119,24 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
 
     public TenantAssociation() { }
 
+    public TenantAssociation(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TenantAssociation(Dictionary<string, JsonElement> properties)
+    TenantAssociation(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static TenantAssociation FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static TenantAssociation FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
