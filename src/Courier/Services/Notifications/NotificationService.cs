@@ -2,9 +2,9 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Notifications;
 using Courier.Services.Notifications.Checks;
 using Courier.Services.Notifications.Draft;
+using Notifications = Courier.Models.Notifications;
 
 namespace Courier.Services.Notifications;
 
@@ -36,18 +36,20 @@ public sealed class NotificationService : INotificationService
         get { return _checks.Value; }
     }
 
-    public async Task<NotificationListResponse> List(NotificationListParams? parameters = null)
+    public async Task<Notifications::NotificationListResponse> List(
+        Notifications::NotificationListParams? parameters = null
+    )
     {
         parameters ??= new();
 
-        HttpRequest<NotificationListParams> request = new()
+        HttpRequest<Notifications::NotificationListParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
         var notifications = await response
-            .Deserialize<NotificationListResponse>()
+            .Deserialize<Notifications::NotificationListResponse>()
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -56,18 +58,18 @@ public sealed class NotificationService : INotificationService
         return notifications;
     }
 
-    public async Task<NotificationGetContent> RetrieveContent(
-        NotificationRetrieveContentParams parameters
+    public async Task<Notifications::NotificationGetContent> RetrieveContent(
+        Notifications::NotificationRetrieveContentParams parameters
     )
     {
-        HttpRequest<NotificationRetrieveContentParams> request = new()
+        HttpRequest<Notifications::NotificationRetrieveContentParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
         var notificationGetContent = await response
-            .Deserialize<NotificationGetContent>()
+            .Deserialize<Notifications::NotificationGetContent>()
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

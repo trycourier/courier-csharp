@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Inbound;
+using Inbound = Courier.Models.Inbound;
 
 namespace Courier.Services.Inbound;
 
@@ -12,5 +12,7 @@ public interface IInboundService
     /// <summary>
     /// Courier Track Event
     /// </summary>
-    Task<InboundTrackEventResponse> TrackEvent(InboundTrackEventParams parameters);
+    Task<Inbound::InboundTrackEventResponse> TrackEvent(
+        Inbound::InboundTrackEventParams parameters
+    );
 }

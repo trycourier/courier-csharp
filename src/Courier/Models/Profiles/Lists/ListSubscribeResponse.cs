@@ -1,31 +1,29 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Profiles.Lists.ListSubscribeResponseProperties;
+using System = System;
 
 namespace Courier.Models.Profiles.Lists;
 
 [JsonConverter(typeof(ModelConverter<ListSubscribeResponse>))]
 public sealed record class ListSubscribeResponse : ModelBase, IFromRaw<ListSubscribeResponse>
 {
-    public required ApiEnum<string, Status> Status
+    public required ApiEnum<string, global::Courier.Models.Profiles.Lists.StatusModel> Status
     {
         get
         {
             if (!this.Properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<
+                ApiEnum<string, global::Courier.Models.Profiles.Lists.StatusModel>
+            >(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -57,9 +55,52 @@ public sealed record class ListSubscribeResponse : ModelBase, IFromRaw<ListSubsc
     }
 
     [SetsRequiredMembers]
-    public ListSubscribeResponse(ApiEnum<string, Status> status)
+    public ListSubscribeResponse(
+        ApiEnum<string, global::Courier.Models.Profiles.Lists.StatusModel> status
+    )
         : this()
     {
         this.Status = status;
+    }
+}
+
+[JsonConverter(typeof(global::Courier.Models.Profiles.Lists.StatusModelConverter))]
+public enum StatusModel
+{
+    Success,
+}
+
+sealed class StatusModelConverter : JsonConverter<global::Courier.Models.Profiles.Lists.StatusModel>
+{
+    public override global::Courier.Models.Profiles.Lists.StatusModel Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "SUCCESS" => global::Courier.Models.Profiles.Lists.StatusModel.Success,
+            _ => (global::Courier.Models.Profiles.Lists.StatusModel)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::Courier.Models.Profiles.Lists.StatusModel value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::Courier.Models.Profiles.Lists.StatusModel.Success => "SUCCESS",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

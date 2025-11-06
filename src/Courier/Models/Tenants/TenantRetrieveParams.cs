@@ -1,6 +1,6 @@
-using System;
 using System.Net.Http;
 using Courier.Core;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -11,9 +11,9 @@ public sealed record class TenantRetrieveParams : ParamsBase
 {
     public required string TenantID;
 
-    public override Uri Url(ICourierClient client)
+    public override System::Uri Url(ICourierClient client)
     {
-        return new UriBuilder(
+        return new System::UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/') + string.Format("/tenants/{0}", this.TenantID)
         )
         {

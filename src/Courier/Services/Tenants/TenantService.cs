@@ -2,9 +2,9 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Tenants;
 using Courier.Services.Tenants.Templates;
 using Courier.Services.Tenants.TenantDefaultPreferences;
+using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Services.Tenants;
 
@@ -36,15 +36,15 @@ public sealed class TenantService : ITenantService
         get { return _templates.Value; }
     }
 
-    public async Task<Tenant> Retrieve(TenantRetrieveParams parameters)
+    public async Task<Tenants::Tenant> Retrieve(Tenants::TenantRetrieveParams parameters)
     {
-        HttpRequest<TenantRetrieveParams> request = new()
+        HttpRequest<Tenants::TenantRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var tenant = await response.Deserialize<Tenant>().ConfigureAwait(false);
+        var tenant = await response.Deserialize<Tenants::Tenant>().ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             tenant.Validate();
@@ -52,15 +52,15 @@ public sealed class TenantService : ITenantService
         return tenant;
     }
 
-    public async Task<Tenant> Update(TenantUpdateParams parameters)
+    public async Task<Tenants::Tenant> Update(Tenants::TenantUpdateParams parameters)
     {
-        HttpRequest<TenantUpdateParams> request = new()
+        HttpRequest<Tenants::TenantUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var tenant = await response.Deserialize<Tenant>().ConfigureAwait(false);
+        var tenant = await response.Deserialize<Tenants::Tenant>().ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             tenant.Validate();
@@ -68,17 +68,21 @@ public sealed class TenantService : ITenantService
         return tenant;
     }
 
-    public async Task<TenantListResponse> List(TenantListParams? parameters = null)
+    public async Task<Tenants::TenantListResponse> List(
+        Tenants::TenantListParams? parameters = null
+    )
     {
         parameters ??= new();
 
-        HttpRequest<TenantListParams> request = new()
+        HttpRequest<Tenants::TenantListParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var tenants = await response.Deserialize<TenantListResponse>().ConfigureAwait(false);
+        var tenants = await response
+            .Deserialize<Tenants::TenantListResponse>()
+            .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             tenants.Validate();
@@ -86,9 +90,9 @@ public sealed class TenantService : ITenantService
         return tenants;
     }
 
-    public async Task Delete(TenantDeleteParams parameters)
+    public async Task Delete(Tenants::TenantDeleteParams parameters)
     {
-        HttpRequest<TenantDeleteParams> request = new()
+        HttpRequest<Tenants::TenantDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
             Params = parameters,
@@ -96,16 +100,18 @@ public sealed class TenantService : ITenantService
         using var response = await this._client.Execute(request).ConfigureAwait(false);
     }
 
-    public async Task<TenantListUsersResponse> ListUsers(TenantListUsersParams parameters)
+    public async Task<Tenants::TenantListUsersResponse> ListUsers(
+        Tenants::TenantListUsersParams parameters
+    )
     {
-        HttpRequest<TenantListUsersParams> request = new()
+        HttpRequest<Tenants::TenantListUsersParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<TenantListUsersResponse>()
+            .Deserialize<Tenants::TenantListUsersResponse>()
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
+using System = System;
 using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Models.Users.Tenants;
@@ -27,7 +27,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
             if (!this.BodyProperties.TryGetValue("tenants", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'tenants' cannot be null",
-                    new ArgumentOutOfRangeException("tenants", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("tenants", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<List<Tenants::TenantAssociation>>(
@@ -36,7 +36,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
                 )
                 ?? throw new CourierInvalidDataException(
                     "'tenants' cannot be null",
-                    new ArgumentNullException("tenants")
+                    new System::ArgumentNullException("tenants")
                 );
         }
         set
@@ -48,9 +48,9 @@ public sealed record class TenantAddMultipleParams : ParamsBase
         }
     }
 
-    public override Uri Url(ICourierClient client)
+    public override System::Uri Url(ICourierClient client)
     {
-        return new UriBuilder(
+        return new System::UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/users/{0}/tenants", this.UserID)
         )

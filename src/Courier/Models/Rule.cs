@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -18,13 +18,13 @@ public sealed record class Rule : ModelBase, IFromRaw<Rule>
             if (!this.Properties.TryGetValue("until", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'until' cannot be null",
-                    new ArgumentOutOfRangeException("until", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("until", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'until' cannot be null",
-                    new ArgumentNullException("until")
+                    new System::ArgumentNullException("until")
                 );
         }
         set

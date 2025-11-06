@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Tenants;
 using Courier.Services.Tenants.Templates;
 using Courier.Services.Tenants.TenantDefaultPreferences;
+using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Services.Tenants;
 
@@ -18,25 +18,25 @@ public interface ITenantService
     /// <summary>
     /// Get a Tenant
     /// </summary>
-    Task<Tenant> Retrieve(TenantRetrieveParams parameters);
+    Task<Tenants::Tenant> Retrieve(Tenants::TenantRetrieveParams parameters);
 
     /// <summary>
     /// Create or Replace a Tenant
     /// </summary>
-    Task<Tenant> Update(TenantUpdateParams parameters);
+    Task<Tenants::Tenant> Update(Tenants::TenantUpdateParams parameters);
 
     /// <summary>
     /// Get a List of Tenants
     /// </summary>
-    Task<TenantListResponse> List(TenantListParams? parameters = null);
+    Task<Tenants::TenantListResponse> List(Tenants::TenantListParams? parameters = null);
 
     /// <summary>
     /// Delete a Tenant
     /// </summary>
-    Task Delete(TenantDeleteParams parameters);
+    Task Delete(Tenants::TenantDeleteParams parameters);
 
     /// <summary>
     /// Get Users in Tenant
     /// </summary>
-    Task<TenantListUsersResponse> ListUsers(TenantListUsersParams parameters);
+    Task<Tenants::TenantListUsersResponse> ListUsers(Tenants::TenantListUsersParams parameters);
 }

@@ -2,8 +2,8 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Tenants;
-using Courier.Models.Tenants.Templates;
+using Templates = Courier.Models.Tenants.Templates;
+using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Services.Tenants.Templates;
 
@@ -21,16 +21,18 @@ public sealed class TemplateService : ITemplateService
         _client = client;
     }
 
-    public async Task<BaseTemplateTenantAssociation> Retrieve(TemplateRetrieveParams parameters)
+    public async Task<Tenants::BaseTemplateTenantAssociation> Retrieve(
+        Templates::TemplateRetrieveParams parameters
+    )
     {
-        HttpRequest<TemplateRetrieveParams> request = new()
+        HttpRequest<Templates::TemplateRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
         var baseTemplateTenantAssociation = await response
-            .Deserialize<BaseTemplateTenantAssociation>()
+            .Deserialize<Tenants::BaseTemplateTenantAssociation>()
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -39,15 +41,19 @@ public sealed class TemplateService : ITemplateService
         return baseTemplateTenantAssociation;
     }
 
-    public async Task<TemplateListResponse> List(TemplateListParams parameters)
+    public async Task<Templates::TemplateListResponse> List(
+        Templates::TemplateListParams parameters
+    )
     {
-        HttpRequest<TemplateListParams> request = new()
+        HttpRequest<Templates::TemplateListParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
         using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var templates = await response.Deserialize<TemplateListResponse>().ConfigureAwait(false);
+        var templates = await response
+            .Deserialize<Templates::TemplateListResponse>()
+            .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             templates.Validate();

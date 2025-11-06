@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Tenants;
-using Courier.Models.Tenants.Templates;
+using Templates = Courier.Models.Tenants.Templates;
+using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Services.Tenants.Templates;
 
@@ -13,10 +13,12 @@ public interface ITemplateService
     /// <summary>
     /// Get a Template in Tenant
     /// </summary>
-    Task<BaseTemplateTenantAssociation> Retrieve(TemplateRetrieveParams parameters);
+    Task<Tenants::BaseTemplateTenantAssociation> Retrieve(
+        Templates::TemplateRetrieveParams parameters
+    );
 
     /// <summary>
     /// List Templates in Tenant
     /// </summary>
-    Task<TemplateListResponse> List(TemplateListParams parameters);
+    Task<Templates::TemplateListResponse> List(Templates::TemplateListParams parameters);
 }

@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
+using System = System;
 
 namespace Courier.Models.Users.Tenants;
 
@@ -42,9 +42,9 @@ public sealed record class TenantAddSingleParams : ParamsBase
         }
     }
 
-    public override Uri Url(ICourierClient client)
+    public override System::Uri Url(ICourierClient client)
     {
-        return new UriBuilder(
+        return new System::UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/users/{0}/tenants/{1}", this.UserID, this.TenantID)
         )

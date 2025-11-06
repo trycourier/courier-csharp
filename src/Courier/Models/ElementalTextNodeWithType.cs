@@ -3,7 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.ElementalTextNodeWithTypeProperties.IntersectionMember1Properties;
+using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -84,14 +85,14 @@ public sealed record class ElementalTextNodeWithType
         }
     }
 
-    public ApiEnum<string, Type>? Type
+    public ApiEnum<string, Type5>? Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type>?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, Type5>?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -140,5 +141,87 @@ public sealed record class ElementalTextNodeWithType
     )
     {
         return new(properties);
+    }
+}
+
+[JsonConverter(typeof(ModelConverter<IntersectionMember16>))]
+public sealed record class IntersectionMember16 : ModelBase, IFromRaw<IntersectionMember16>
+{
+    public ApiEnum<string, Type5>? Type
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("type", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<ApiEnum<string, Type5>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        this.Type?.Validate();
+    }
+
+    public IntersectionMember16() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    IntersectionMember16(Dictionary<string, JsonElement> properties)
+    {
+        Properties = properties;
+    }
+#pragma warning restore CS8618
+
+    public static IntersectionMember16 FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    {
+        return new(properties);
+    }
+}
+
+[JsonConverter(typeof(Type5Converter))]
+public enum Type5
+{
+    Text,
+}
+
+sealed class Type5Converter : JsonConverter<Type5>
+{
+    public override Type5 Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "text" => Type5.Text,
+            _ => (Type5)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Type5 value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Type5.Text => "text",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

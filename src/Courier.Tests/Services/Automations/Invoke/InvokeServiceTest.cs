@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties;
-using Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationDelayStepProperties;
-using AutomationSendStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationSendStepProperties;
+using Courier.Models.Automations.Invoke;
 
 namespace Courier.Tests.Services.Automations.Invoke;
 
@@ -30,7 +28,7 @@ public class InvokeServiceTest : TestBase
                         new(
                             new AutomationSendStep()
                             {
-                                Action = AutomationSendStepProperties::Action.Send,
+                                Action = ActionModel.Send,
                                 Brand = "brand",
                                 Data = new Dictionary<string, JsonElement>()
                                 {

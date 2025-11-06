@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using BaseCheckProperties = Courier.Models.Notifications.BaseCheckProperties;
+using System = System;
 
 namespace Courier.Models.Notifications;
 
@@ -19,13 +18,13 @@ public sealed record class BaseCheck : ModelBase, IFromRaw<BaseCheck>
             if (!this.Properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new ArgumentOutOfRangeException("id", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new ArgumentNullException("id")
+                    new System::ArgumentNullException("id")
                 );
         }
         set
@@ -37,17 +36,17 @@ public sealed record class BaseCheck : ModelBase, IFromRaw<BaseCheck>
         }
     }
 
-    public required ApiEnum<string, BaseCheckProperties::Status> Status
+    public required ApiEnum<string, Status> Status
     {
         get
         {
             if (!this.Properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, BaseCheckProperties::Status>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -61,20 +60,19 @@ public sealed record class BaseCheck : ModelBase, IFromRaw<BaseCheck>
         }
     }
 
-    public required ApiEnum<string, BaseCheckProperties::Type> Type
+    public required ApiEnum<string, global::Courier.Models.Notifications.Type> Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
-                    new ArgumentOutOfRangeException("type", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, BaseCheckProperties::Type>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<
+                ApiEnum<string, global::Courier.Models.Notifications.Type>
+            >(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -105,5 +103,89 @@ public sealed record class BaseCheck : ModelBase, IFromRaw<BaseCheck>
     public static BaseCheck FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
+    }
+}
+
+[JsonConverter(typeof(StatusConverter))]
+public enum Status
+{
+    Resolved,
+    Failed,
+    Pending,
+}
+
+sealed class StatusConverter : JsonConverter<Status>
+{
+    public override Status Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "RESOLVED" => Status.Resolved,
+            "FAILED" => Status.Failed,
+            "PENDING" => Status.Pending,
+            _ => (Status)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Status.Resolved => "RESOLVED",
+                Status.Failed => "FAILED",
+                Status.Pending => "PENDING",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+[JsonConverter(typeof(global::Courier.Models.Notifications.TypeConverter))]
+public enum Type
+{
+    Custom,
+}
+
+sealed class TypeConverter : JsonConverter<global::Courier.Models.Notifications.Type>
+{
+    public override global::Courier.Models.Notifications.Type Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "custom" => global::Courier.Models.Notifications.Type.Custom,
+            _ => (global::Courier.Models.Notifications.Type)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::Courier.Models.Notifications.Type value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::Courier.Models.Notifications.Type.Custom => "custom",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

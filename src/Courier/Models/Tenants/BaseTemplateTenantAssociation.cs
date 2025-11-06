@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -23,13 +23,13 @@ public sealed record class BaseTemplateTenantAssociation
             if (!this.Properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new ArgumentOutOfRangeException("id", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new ArgumentNullException("id")
+                    new System::ArgumentNullException("id")
                 );
         }
         set
@@ -51,13 +51,16 @@ public sealed record class BaseTemplateTenantAssociation
             if (!this.Properties.TryGetValue("created_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'created_at' cannot be null",
-                    new ArgumentOutOfRangeException("created_at", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "created_at",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'created_at' cannot be null",
-                    new ArgumentNullException("created_at")
+                    new System::ArgumentNullException("created_at")
                 );
         }
         set
@@ -79,13 +82,16 @@ public sealed record class BaseTemplateTenantAssociation
             if (!this.Properties.TryGetValue("published_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'published_at' cannot be null",
-                    new ArgumentOutOfRangeException("published_at", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "published_at",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'published_at' cannot be null",
-                    new ArgumentNullException("published_at")
+                    new System::ArgumentNullException("published_at")
                 );
         }
         set
@@ -107,13 +113,16 @@ public sealed record class BaseTemplateTenantAssociation
             if (!this.Properties.TryGetValue("updated_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated_at' cannot be null",
-                    new ArgumentOutOfRangeException("updated_at", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "updated_at",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'updated_at' cannot be null",
-                    new ArgumentNullException("updated_at")
+                    new System::ArgumentNullException("updated_at")
                 );
         }
         set
@@ -135,13 +144,13 @@ public sealed record class BaseTemplateTenantAssociation
             if (!this.Properties.TryGetValue("version", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'version' cannot be null",
-                    new ArgumentOutOfRangeException("version", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("version", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'version' cannot be null",
-                    new ArgumentNullException("version")
+                    new System::ArgumentNullException("version")
                 );
         }
         set

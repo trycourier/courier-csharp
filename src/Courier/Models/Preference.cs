@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.PreferenceProperties;
+using System = System;
 
 namespace Courier.Models;
 
@@ -19,7 +18,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
             if (!this.Properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
@@ -130,5 +129,48 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
         : this()
     {
         this.Status = status;
+    }
+}
+
+[JsonConverter(typeof(SourceConverter))]
+public enum Source
+{
+    Subscription,
+    List,
+    Recipient,
+}
+
+sealed class SourceConverter : JsonConverter<Source>
+{
+    public override Source Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "subscription" => Source.Subscription,
+            "list" => Source.List,
+            "recipient" => Source.Recipient,
+            _ => (Source)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Source value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Source.Subscription => "subscription",
+                Source.List => "list",
+                Source.Recipient => "recipient",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Brands.BrandSettingsInAppProperties;
+using System = System;
 
 namespace Courier.Models.Brands;
 
@@ -19,13 +18,13 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
             if (!this.Properties.TryGetValue("colors", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'colors' cannot be null",
-                    new ArgumentOutOfRangeException("colors", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("colors", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<BrandColors>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'colors' cannot be null",
-                    new ArgumentNullException("colors")
+                    new System::ArgumentNullException("colors")
                 );
         }
         set
@@ -44,13 +43,13 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
             if (!this.Properties.TryGetValue("icons", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'icons' cannot be null",
-                    new ArgumentOutOfRangeException("icons", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("icons", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<Icons>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'icons' cannot be null",
-                    new ArgumentNullException("icons")
+                    new System::ArgumentNullException("icons")
                 );
         }
         set
@@ -69,7 +68,10 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
             if (!this.Properties.TryGetValue("widgetBackground", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'widgetBackground' cannot be null",
-                    new ArgumentOutOfRangeException("widgetBackground", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "widgetBackground",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<WidgetBackground>(
@@ -78,7 +80,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
                 )
                 ?? throw new CourierInvalidDataException(
                     "'widgetBackground' cannot be null",
-                    new ArgumentNullException("widgetBackground")
+                    new System::ArgumentNullException("widgetBackground")
                 );
         }
         set
@@ -189,5 +191,55 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     public static BrandSettingsInApp FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
+    }
+}
+
+[JsonConverter(typeof(PlacementConverter))]
+public enum Placement
+{
+    Top,
+    Bottom,
+    Left,
+    Right,
+}
+
+sealed class PlacementConverter : JsonConverter<Placement>
+{
+    public override Placement Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "top" => Placement.Top,
+            "bottom" => Placement.Bottom,
+            "left" => Placement.Left,
+            "right" => Placement.Right,
+            _ => (Placement)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        Placement value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Placement.Top => "top",
+                Placement.Bottom => "bottom",
+                Placement.Left => "left",
+                Placement.Right => "right",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

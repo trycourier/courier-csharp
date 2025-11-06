@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Courier.Models.Inbound.InboundTrackEventParamsProperties;
+using Courier.Models.Inbound;
 
 namespace Courier.Tests.Services.Inbound;
 
