@@ -166,10 +166,7 @@ using System;
 
 var response = await client
     .WithOptions(options =>
-        options with
-        {
-            Timeout = TimeSpan.FromSeconds(42)
-        }
+        options with { Timeout = TimeSpan.FromSeconds(42) }
     )
     .Send.Message(parameters);
 
@@ -208,10 +205,7 @@ using System;
 
 var response = await client
     .WithOptions(options =>
-        options with
-        {
-            ResponseValidation = true
-        }
+        options with { ResponseValidation = true }
     )
     .Send.Message(parameters);
 
