@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text.Json;
 using Courier.Core;
 
-namespace Courier.Models.Tenants.TenantDefaultPreferences.Items;
+namespace Courier.Models.Tenants.Preferences.Items;
 
 /// <summary>
 /// Remove Default Preferences For Topic

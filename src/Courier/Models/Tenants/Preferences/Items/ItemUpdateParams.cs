@@ -9,7 +9,7 @@ using Courier.Core;
 using Courier.Exceptions;
 using System = System;
 
-namespace Courier.Models.Tenants.TenantDefaultPreferences.Items;
+namespace Courier.Models.Tenants.Preferences.Items;
 
 /// <summary>
 /// Create or Replace Default Preferences For Topic
@@ -26,10 +26,7 @@ public sealed record class ItemUpdateParams : ParamsBase
 
     public required string TopicID { get; init; }
 
-    public required ApiEnum<
-        string,
-        global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status
-    > Status
+    public required ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status> Status
     {
         get
         {
@@ -40,10 +37,7 @@ public sealed record class ItemUpdateParams : ParamsBase
                 );
 
             return JsonSerializer.Deserialize<
-                ApiEnum<
-                    string,
-                    global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status
-                >
+                ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status>
             >(element, ModelBase.SerializerOptions);
         }
         init
@@ -175,9 +169,7 @@ public sealed record class ItemUpdateParams : ParamsBase
     }
 }
 
-[JsonConverter(
-    typeof(global::Courier.Models.Tenants.TenantDefaultPreferences.Items.StatusConverter)
-)]
+[JsonConverter(typeof(global::Courier.Models.Tenants.Preferences.Items.StatusConverter))]
 public enum Status
 {
     OptedOut,
@@ -186,9 +178,9 @@ public enum Status
 }
 
 sealed class StatusConverter
-    : JsonConverter<global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status>
+    : JsonConverter<global::Courier.Models.Tenants.Preferences.Items.Status>
 {
-    public override global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status Read(
+    public override global::Courier.Models.Tenants.Preferences.Items.Status Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -196,34 +188,16 @@ sealed class StatusConverter
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "OPTED_OUT" => global::Courier
-                .Models
-                .Tenants
-                .TenantDefaultPreferences
-                .Items
-                .Status
-                .OptedOut,
-            "OPTED_IN" => global::Courier
-                .Models
-                .Tenants
-                .TenantDefaultPreferences
-                .Items
-                .Status
-                .OptedIn,
-            "REQUIRED" => global::Courier
-                .Models
-                .Tenants
-                .TenantDefaultPreferences
-                .Items
-                .Status
-                .Required,
-            _ => (global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status)(-1),
+            "OPTED_OUT" => global::Courier.Models.Tenants.Preferences.Items.Status.OptedOut,
+            "OPTED_IN" => global::Courier.Models.Tenants.Preferences.Items.Status.OptedIn,
+            "REQUIRED" => global::Courier.Models.Tenants.Preferences.Items.Status.Required,
+            _ => (global::Courier.Models.Tenants.Preferences.Items.Status)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status value,
+        global::Courier.Models.Tenants.Preferences.Items.Status value,
         JsonSerializerOptions options
     )
     {
@@ -231,12 +205,9 @@ sealed class StatusConverter
             writer,
             value switch
             {
-                global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status.OptedOut =>
-                    "OPTED_OUT",
-                global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status.OptedIn =>
-                    "OPTED_IN",
-                global::Courier.Models.Tenants.TenantDefaultPreferences.Items.Status.Required =>
-                    "REQUIRED",
+                global::Courier.Models.Tenants.Preferences.Items.Status.OptedOut => "OPTED_OUT",
+                global::Courier.Models.Tenants.Preferences.Items.Status.OptedIn => "OPTED_IN",
+                global::Courier.Models.Tenants.Preferences.Items.Status.Required => "REQUIRED",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

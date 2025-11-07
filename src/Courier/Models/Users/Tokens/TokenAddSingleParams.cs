@@ -26,6 +26,34 @@ public sealed record class TokenAddSingleParams : ParamsBase
 
     public required string Token { get; init; }
 
+    /// <summary>
+    /// Full body of the token. Must match token in URL path parameter.
+    /// </summary>
+    public required string Token1
+    {
+        get
+        {
+            if (!this._bodyProperties.TryGetValue("token", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'token' cannot be null",
+                    new System::ArgumentOutOfRangeException("token", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'token' cannot be null",
+                    new System::ArgumentNullException("token")
+                );
+        }
+        init
+        {
+            this._bodyProperties["token"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
     public required ApiEnum<string, ProviderKey> ProviderKey
     {
         get
@@ -47,27 +75,6 @@ public sealed record class TokenAddSingleParams : ParamsBase
         init
         {
             this._bodyProperties["provider_key"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    /// <summary>
-    /// Full body of the token. Must match token in URL.
-    /// </summary>
-    public string? Token1
-    {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("token", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._bodyProperties["token"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );

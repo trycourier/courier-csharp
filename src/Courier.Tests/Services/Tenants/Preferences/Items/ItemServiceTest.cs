@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
-using Courier.Models.Tenants.TenantDefaultPreferences.Items;
+using Courier.Models.Tenants.Preferences.Items;
 
-namespace Courier.Tests.Services.Tenants.TenantDefaultPreferences.Items;
+namespace Courier.Tests.Services.Tenants.Preferences.Items;
 
 public class ItemServiceTest : TestBase
 {
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Update_Works()
     {
-        await this.client.Tenants.TenantDefaultPreferences.Items.Update(
+        await this.client.Tenants.Preferences.Items.Update(
             new()
             {
                 TenantID = "tenant_id",
@@ -21,7 +21,7 @@ public class ItemServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Tenants.TenantDefaultPreferences.Items.Delete(
+        await this.client.Tenants.Preferences.Items.Delete(
             new() { TenantID = "tenant_id", TopicID = "topic_id" }
         );
     }

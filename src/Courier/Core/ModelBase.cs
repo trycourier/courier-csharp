@@ -4,7 +4,7 @@ using Courier.Models.Audiences;
 using Courier.Models.Brands;
 using Courier.Models.Inbound;
 using Courier.Models.Send;
-using Courier.Models.Tenants.TenantDefaultPreferences.Items;
+using Courier.Models.Tenants.Preferences.Items;
 using Bulk = Courier.Models.Bulk;
 using Invoke = Courier.Models.Automations.Invoke;
 using Lists = Courier.Models.Profiles.Lists;
