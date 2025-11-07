@@ -12,6 +12,34 @@ namespace Courier.Models.Users.Tokens;
 [JsonConverter(typeof(ModelConverter<TokenRetrieveResponse>))]
 public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetrieveResponse>
 {
+    /// <summary>
+    /// Full body of the token. Must match token in URL path parameter.
+    /// </summary>
+    public required string Token
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("token", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'token' cannot be null",
+                    new System::ArgumentOutOfRangeException("token", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'token' cannot be null",
+                    new System::ArgumentNullException("token")
+                );
+        }
+        init
+        {
+            this._properties["token"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
     public required ApiEnum<string, ProviderKeyModel> ProviderKey
     {
         get
@@ -33,27 +61,6 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         init
         {
             this._properties["provider_key"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
-    }
-
-    /// <summary>
-    /// Full body of the token. Must match token in URL.
-    /// </summary>
-    public string? Token
-    {
-        get
-        {
-            if (!this._properties.TryGetValue("token", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["token"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -193,8 +200,8 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     public static implicit operator UserToken(TokenRetrieveResponse tokenRetrieveResponse) =>
         new()
         {
-            ProviderKey = tokenRetrieveResponse.ProviderKey,
             Token = tokenRetrieveResponse.Token,
+            ProviderKey = tokenRetrieveResponse.ProviderKey,
             Device = tokenRetrieveResponse.Device,
             ExpiryDate = tokenRetrieveResponse.ExpiryDate,
             Properties1 = tokenRetrieveResponse.Properties1,
@@ -203,8 +210,8 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
 
     public override void Validate()
     {
-        this.ProviderKey.Validate();
         _ = this.Token;
+        this.ProviderKey.Validate();
         this.Device?.Validate();
         this.ExpiryDate?.Validate();
         _ = this.Properties1;
@@ -233,13 +240,6 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(properties));
-    }
-
-    [SetsRequiredMembers]
-    public TokenRetrieveResponse(ApiEnum<string, ProviderKeyModel> providerKey)
-        : this()
-    {
-        this.ProviderKey = providerKey;
     }
 }
 
