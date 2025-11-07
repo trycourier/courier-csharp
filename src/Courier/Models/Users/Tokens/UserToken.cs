@@ -68,7 +68,7 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     }
 
     /// <summary>
-    /// Information about the device the token is associated with.
+    /// Information about the device the token came from.
     /// </summary>
     public DeviceModel? Device
     {
@@ -135,7 +135,7 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     }
 
     /// <summary>
-    /// Information about the device the token is associated with.
+    /// Tracking information about the device the token came from.
     /// </summary>
     public TrackingModel? Tracking
     {
@@ -237,7 +237,7 @@ sealed class ProviderKeyModelConverter : JsonConverter<ProviderKeyModel>
 }
 
 /// <summary>
-/// Information about the device the token is associated with.
+/// Information about the device the token came from.
 /// </summary>
 [JsonConverter(typeof(ModelConverter<DeviceModel>))]
 public sealed record class DeviceModel : ModelBase, IFromRaw<DeviceModel>
@@ -533,7 +533,7 @@ sealed class ExpiryDateModelConverter : JsonConverter<ExpiryDateModel?>
 }
 
 /// <summary>
-/// Information about the device the token is associated with.
+/// Tracking information about the device the token came from.
 /// </summary>
 [JsonConverter(typeof(ModelConverter<TrackingModel>))]
 public sealed record class TrackingModel : ModelBase, IFromRaw<TrackingModel>

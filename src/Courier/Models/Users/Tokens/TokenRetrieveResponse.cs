@@ -68,7 +68,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     }
 
     /// <summary>
-    /// Information about the device the token is associated with.
+    /// Information about the device the token came from.
     /// </summary>
     public DeviceModel? Device
     {
@@ -135,7 +135,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     }
 
     /// <summary>
-    /// Information about the device the token is associated with.
+    /// Tracking information about the device the token came from.
     /// </summary>
     public TrackingModel? Tracking
     {

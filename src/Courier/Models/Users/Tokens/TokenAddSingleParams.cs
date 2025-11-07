@@ -82,7 +82,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
     }
 
     /// <summary>
-    /// Information about the device the token is associated with.
+    /// Information about the device the token came from.
     /// </summary>
     public Device? Device
     {
@@ -146,7 +146,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
     }
 
     /// <summary>
-    /// Information about the device the token is associated with.
+    /// Tracking information about the device the token came from.
     /// </summary>
     public Tracking? Tracking
     {
@@ -287,7 +287,7 @@ sealed class ProviderKeyConverter : JsonConverter<ProviderKey>
 }
 
 /// <summary>
-/// Information about the device the token is associated with.
+/// Information about the device the token came from.
 /// </summary>
 [JsonConverter(typeof(ModelConverter<Device>))]
 public sealed record class Device : ModelBase, IFromRaw<Device>
@@ -581,7 +581,7 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
 }
 
 /// <summary>
-/// Information about the device the token is associated with.
+/// Tracking information about the device the token came from.
 /// </summary>
 [JsonConverter(typeof(ModelConverter<Tracking>))]
 public sealed record class Tracking : ModelBase, IFromRaw<Tracking>
