@@ -138,6 +138,11 @@ public sealed record class TokenAddSingleParams : ParamsBase
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._bodyProperties["properties"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions

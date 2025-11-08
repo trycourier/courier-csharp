@@ -127,6 +127,11 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["properties"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions

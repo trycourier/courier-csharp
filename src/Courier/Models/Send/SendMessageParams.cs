@@ -183,6 +183,11 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions

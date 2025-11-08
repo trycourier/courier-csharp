@@ -100,6 +100,11 @@ public sealed record class ElementalImageNodeWithType
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -167,6 +172,11 @@ public sealed record class IntersectionMember13 : ModelBase, IFromRaw<Intersecti
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions

@@ -108,6 +108,11 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["data"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -129,6 +134,11 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -147,6 +157,11 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -183,6 +198,11 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["to"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
