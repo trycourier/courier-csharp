@@ -114,7 +114,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     }
 
     /// <summary>
-    /// Properties sent to the provider along with the token
+    /// Properties about the token.
     /// </summary>
     public JsonElement? Properties1
     {
