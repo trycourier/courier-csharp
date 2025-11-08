@@ -19,9 +19,9 @@ public struct ClientOptions()
 
     public bool ResponseValidation { get; set; } = false;
 
-    public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1);
-
     public int MaxRetries { get; set; } = 2;
+
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1);
 
     Lazy<string> _apiKey = new(() =>
         Environment.GetEnvironmentVariable("COURIER_API_KEY")
