@@ -20,6 +20,7 @@ public abstract record class ParamsBase
         var runtime = GetRuntime();
         s_defaultHeaders = new Dictionary<string, string>
         {
+            ["User-Agent"] = GetUserAgent(),
             ["X-Stainless-Arch"] = GetOSArch(),
             ["X-Stainless-Lang"] = "csharp",
             ["X-Stainless-OS"] = GetOS(),
@@ -194,6 +195,8 @@ public abstract record class ParamsBase
             request.Headers.Add("Authorization", string.Format("Bearer {0}", options.APIKey));
         }
     }
+
+    static string GetUserAgent() => $"{typeof(CourierClient).Name}/C# {GetPackageVersion()}";
 
     static string GetOSArch() =>
         RuntimeInformation.OSArchitecture switch
