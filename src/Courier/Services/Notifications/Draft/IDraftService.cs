@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Notifications.Draft;
@@ -11,6 +12,7 @@ public interface IDraftService
     IDraftService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     Task<Notifications::NotificationGetContent> RetrieveContent(
-        DraftRetrieveContentParams parameters
+        DraftRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
     );
 }

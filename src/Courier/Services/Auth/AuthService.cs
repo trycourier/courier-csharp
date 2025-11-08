@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Auth;
@@ -20,16 +21,21 @@ public sealed class AuthService : IAuthService
         _client = client;
     }
 
-    public async Task<AuthIssueTokenResponse> IssueToken(AuthIssueTokenParams parameters)
+    public async Task<AuthIssueTokenResponse> IssueToken(
+        AuthIssueTokenParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<AuthIssueTokenParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<AuthIssueTokenResponse>()
+            .Deserialize<AuthIssueTokenResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

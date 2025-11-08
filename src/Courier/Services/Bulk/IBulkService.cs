@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Bulk;
@@ -12,25 +13,34 @@ public interface IBulkService
     /// <summary>
     /// Ingest user data into a Bulk Job
     /// </summary>
-    Task AddUsers(BulkAddUsersParams parameters);
+    Task AddUsers(BulkAddUsersParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Create a bulk job
     /// </summary>
-    Task<BulkCreateJobResponse> CreateJob(BulkCreateJobParams parameters);
+    Task<BulkCreateJobResponse> CreateJob(
+        BulkCreateJobParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Get Bulk Job Users
     /// </summary>
-    Task<BulkListUsersResponse> ListUsers(BulkListUsersParams parameters);
+    Task<BulkListUsersResponse> ListUsers(
+        BulkListUsersParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Get a bulk job
     /// </summary>
-    Task<BulkRetrieveJobResponse> RetrieveJob(BulkRetrieveJobParams parameters);
+    Task<BulkRetrieveJobResponse> RetrieveJob(
+        BulkRetrieveJobParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Run a bulk job
     /// </summary>
-    Task RunJob(BulkRunJobParams parameters);
+    Task RunJob(BulkRunJobParams parameters, CancellationToken cancellationToken = default);
 }

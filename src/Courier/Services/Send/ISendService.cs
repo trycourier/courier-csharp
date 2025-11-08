@@ -1,7 +1,8 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Models.Send;
+using Send = Courier.Models.Send;
 
 namespace Courier.Services.Send;
 
@@ -12,5 +13,8 @@ public interface ISendService
     /// <summary>
     /// API to send a message to one or more recipients.
     /// </summary>
-    Task<SendMessageResponse> Message(SendMessageParams parameters);
+    Task<Send::SendMessageResponse> Message(
+        Send::SendMessageParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

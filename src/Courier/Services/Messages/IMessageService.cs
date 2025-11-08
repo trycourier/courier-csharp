@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Messages;
@@ -12,12 +13,18 @@ public interface IMessageService
     /// <summary>
     /// Fetch the status of a message you've previously sent.
     /// </summary>
-    Task<MessageRetrieveResponse> Retrieve(MessageRetrieveParams parameters);
+    Task<MessageRetrieveResponse> Retrieve(
+        MessageRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Fetch the statuses of messages you've previously sent.
     /// </summary>
-    Task<MessageListResponse> List(MessageListParams? parameters = null);
+    Task<MessageListResponse> List(
+        MessageListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Cancel a message that is currently in the process of being delivered. A well-formatted
@@ -26,15 +33,24 @@ public interface IMessageService
     /// Both cases will include the actual message record in the response body (see
     /// details below).
     /// </summary>
-    Task<MessageDetails> Cancel(MessageCancelParams parameters);
+    Task<MessageDetails> Cancel(
+        MessageCancelParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Get message content
     /// </summary>
-    Task<MessageContentResponse> Content(MessageContentParams parameters);
+    Task<MessageContentResponse> Content(
+        MessageContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Fetch the array of events of a message you've previously sent.
     /// </summary>
-    Task<MessageHistoryResponse> History(MessageHistoryParams parameters);
+    Task<MessageHistoryResponse> History(
+        MessageHistoryParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

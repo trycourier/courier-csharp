@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Templates = Courier.Models.Tenants.Templates;
@@ -22,7 +23,8 @@ public sealed class TemplateService : ITemplateService
     }
 
     public async Task<Tenants::BaseTemplateTenantAssociation> Retrieve(
-        Templates::TemplateRetrieveParams parameters
+        Templates::TemplateRetrieveParams parameters,
+        CancellationToken cancellationToken = default
     )
     {
         HttpRequest<Templates::TemplateRetrieveParams> request = new()
@@ -30,9 +32,11 @@ public sealed class TemplateService : ITemplateService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var baseTemplateTenantAssociation = await response
-            .Deserialize<Tenants::BaseTemplateTenantAssociation>()
+            .Deserialize<Tenants::BaseTemplateTenantAssociation>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -42,7 +46,8 @@ public sealed class TemplateService : ITemplateService
     }
 
     public async Task<Templates::TemplateListResponse> List(
-        Templates::TemplateListParams parameters
+        Templates::TemplateListParams parameters,
+        CancellationToken cancellationToken = default
     )
     {
         HttpRequest<Templates::TemplateListParams> request = new()
@@ -50,9 +55,11 @@ public sealed class TemplateService : ITemplateService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var templates = await response
-            .Deserialize<Templates::TemplateListResponse>()
+            .Deserialize<Templates::TemplateListResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

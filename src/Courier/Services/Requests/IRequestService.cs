@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Requests;
@@ -12,5 +13,5 @@ public interface IRequestService
     /// <summary>
     /// Archive message
     /// </summary>
-    Task Archive(RequestArchiveParams parameters);
+    Task Archive(RequestArchiveParams parameters, CancellationToken cancellationToken = default);
 }

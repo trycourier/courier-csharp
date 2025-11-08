@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Profiles;
@@ -28,15 +29,22 @@ public sealed class ProfileService : IProfileService
         get { return _lists.Value; }
     }
 
-    public async Task<ProfileCreateResponse> Create(ProfileCreateParams parameters)
+    public async Task<ProfileCreateResponse> Create(
+        ProfileCreateParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ProfileCreateParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var profile = await response.Deserialize<ProfileCreateResponse>().ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
+        var profile = await response
+            .Deserialize<ProfileCreateResponse>(cancellationToken)
+            .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             profile.Validate();
@@ -44,15 +52,22 @@ public sealed class ProfileService : IProfileService
         return profile;
     }
 
-    public async Task<ProfileRetrieveResponse> Retrieve(ProfileRetrieveParams parameters)
+    public async Task<ProfileRetrieveResponse> Retrieve(
+        ProfileRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ProfileRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var profile = await response.Deserialize<ProfileRetrieveResponse>().ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
+        var profile = await response
+            .Deserialize<ProfileRetrieveResponse>(cancellationToken)
+            .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             profile.Validate();
@@ -60,36 +75,51 @@ public sealed class ProfileService : IProfileService
         return profile;
     }
 
-    public async Task Update(ProfileUpdateParams parameters)
+    public async Task Update(
+        ProfileUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ProfileUpdateParams> request = new()
         {
             Method = HttpMethod.Patch,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
     }
 
-    public async Task Delete(ProfileDeleteParams parameters)
+    public async Task Delete(
+        ProfileDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ProfileDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
     }
 
-    public async Task<ProfileReplaceResponse> Replace(ProfileReplaceParams parameters)
+    public async Task<ProfileReplaceResponse> Replace(
+        ProfileReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ProfileReplaceParams> request = new()
         {
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<ProfileReplaceResponse>()
+            .Deserialize<ProfileReplaceResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

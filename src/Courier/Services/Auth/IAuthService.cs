@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Auth;
@@ -12,5 +13,8 @@ public interface IAuthService
     /// <summary>
     /// Returns a new access token.
     /// </summary>
-    Task<AuthIssueTokenResponse> IssueToken(AuthIssueTokenParams parameters);
+    Task<AuthIssueTokenResponse> IssueToken(
+        AuthIssueTokenParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

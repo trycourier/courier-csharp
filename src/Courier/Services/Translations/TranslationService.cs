@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Translations;
@@ -20,24 +21,34 @@ public sealed class TranslationService : ITranslationService
         _client = client;
     }
 
-    public async Task<string> Retrieve(TranslationRetrieveParams parameters)
+    public async Task<string> Retrieve(
+        TranslationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<TranslationRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        return await response.Deserialize<string>().ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize<string>(cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task Update(TranslationUpdateParams parameters)
+    public async Task Update(
+        TranslationUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<TranslationUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

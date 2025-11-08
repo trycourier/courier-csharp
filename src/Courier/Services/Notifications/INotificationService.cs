@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Services.Notifications.Checks;
@@ -16,10 +17,12 @@ public interface INotificationService
     ICheckService Checks { get; }
 
     Task<Notifications::NotificationListResponse> List(
-        Notifications::NotificationListParams? parameters = null
+        Notifications::NotificationListParams? parameters = null,
+        CancellationToken cancellationToken = default
     );
 
     Task<Notifications::NotificationGetContent> RetrieveContent(
-        Notifications::NotificationRetrieveContentParams parameters
+        Notifications::NotificationRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
     );
 }
