@@ -91,14 +91,14 @@ public sealed record class TokenUpdateParams : ParamsBase
         );
     }
 
-    public override Uri Url(ICourierClient client)
+    public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
-            client.BaseUrl.ToString().TrimEnd('/')
+            options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/users/{0}/tokens/{1}", this.UserID, this.Token)
         )
         {
-            Query = this.QueryString(client),
+            Query = this.QueryString(options),
         }.Uri;
     }
 
@@ -111,9 +111,9 @@ public sealed record class TokenUpdateParams : ParamsBase
         );
     }
 
-    internal override void AddHeadersToRequest(HttpRequestMessage request, ICourierClient client)
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
-        ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, options);
         foreach (var item in this.HeaderProperties)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);

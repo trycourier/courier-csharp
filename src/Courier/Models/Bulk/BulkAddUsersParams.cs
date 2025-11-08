@@ -91,13 +91,13 @@ public sealed record class BulkAddUsersParams : ParamsBase
         );
     }
 
-    public override Uri Url(ICourierClient client)
+    public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
-            client.BaseUrl.ToString().TrimEnd('/') + string.Format("/bulk/{0}", this.JobID)
+            options.BaseUrl.ToString().TrimEnd('/') + string.Format("/bulk/{0}", this.JobID)
         )
         {
-            Query = this.QueryString(client),
+            Query = this.QueryString(options),
         }.Uri;
     }
 
@@ -110,9 +110,9 @@ public sealed record class BulkAddUsersParams : ParamsBase
         );
     }
 
-    internal override void AddHeadersToRequest(HttpRequestMessage request, ICourierClient client)
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
-        ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, options);
         foreach (var item in this.HeaderProperties)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);

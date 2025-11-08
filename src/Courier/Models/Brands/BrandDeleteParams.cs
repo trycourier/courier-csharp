@@ -49,19 +49,19 @@ public sealed record class BrandDeleteParams : ParamsBase
         );
     }
 
-    public override Uri Url(ICourierClient client)
+    public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
-            client.BaseUrl.ToString().TrimEnd('/') + string.Format("/brands/{0}", this.BrandID)
+            options.BaseUrl.ToString().TrimEnd('/') + string.Format("/brands/{0}", this.BrandID)
         )
         {
-            Query = this.QueryString(client),
+            Query = this.QueryString(options),
         }.Uri;
     }
 
-    internal override void AddHeadersToRequest(HttpRequestMessage request, ICourierClient client)
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
-        ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, options);
         foreach (var item in this.HeaderProperties)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
