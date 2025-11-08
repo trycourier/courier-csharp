@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using Web = System.Web;
@@ -166,9 +167,25 @@ public abstract record class ParamsBase
 
     protected static void AddDefaultHeaders(HttpRequestMessage request, ClientOptions options)
     {
+        request.Headers.Add("X-Stainless-Arch", GetOSArch());
+
         if (options.APIKey != null)
         {
             request.Headers.Add("Authorization", string.Format("Bearer {0}", options.APIKey));
         }
     }
+
+    static string GetOSArch() =>
+        RuntimeInformation.OSArchitecture switch
+        {
+            Architecture.X86 => "x32",
+            Architecture.X64 => "x64",
+            Architecture.Arm => "arm",
+            Architecture.Arm64 or Architecture.Armv6 => "arm64",
+            Architecture.Wasm
+            or Architecture.S390x
+            or Architecture.LoongArch64
+            or Architecture.Ppc64le => $"other:{RuntimeInformation.OSArchitecture}",
+            _ => "unknown",
+        };
 }
