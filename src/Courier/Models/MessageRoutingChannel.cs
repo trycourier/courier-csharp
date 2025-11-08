@@ -79,6 +79,10 @@ public record class MessageRoutingChannel
         };
     }
 
+    public static implicit operator MessageRoutingChannel(string value) => new(value);
+
+    public static implicit operator MessageRoutingChannel(MessageRouting value) => new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)

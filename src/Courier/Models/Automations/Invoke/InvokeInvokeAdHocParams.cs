@@ -487,6 +487,20 @@ public record class Step
         };
     }
 
+    public static implicit operator Step(AutomationDelayStep value) => new(value);
+
+    public static implicit operator Step(AutomationSendStep value) => new(value);
+
+    public static implicit operator Step(AutomationSendListStep value) => new(value);
+
+    public static implicit operator Step(AutomationUpdateProfileStep value) => new(value);
+
+    public static implicit operator Step(AutomationCancelStep value) => new(value);
+
+    public static implicit operator Step(AutomationFetchDataStep value) => new(value);
+
+    public static implicit operator Step(AutomationInvokeStep value) => new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)

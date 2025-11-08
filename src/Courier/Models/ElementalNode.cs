@@ -246,6 +246,20 @@ public record class ElementalNode
         };
     }
 
+    public static implicit operator ElementalNode(ElementalTextNodeWithType value) => new(value);
+
+    public static implicit operator ElementalNode(ElementalMetaNodeWithType value) => new(value);
+
+    public static implicit operator ElementalNode(ElementalChannelNodeWithType value) => new(value);
+
+    public static implicit operator ElementalNode(ElementalImageNodeWithType value) => new(value);
+
+    public static implicit operator ElementalNode(ElementalActionNodeWithType value) => new(value);
+
+    public static implicit operator ElementalNode(ElementalDividerNodeWithType value) => new(value);
+
+    public static implicit operator ElementalNode(ElementalQuoteNodeWithType value) => new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)

@@ -46,16 +46,18 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Content = new(
-                        new Models::ElementalContentSugar() { Body = "body", Title = "title" }
-                    ),
+                    Content = new Models::ElementalContentSugar()
+                    {
+                        Body = "body",
+                        Title = "title",
+                    },
                     Context = new() { TenantID = "tenant_id" },
                     Data = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
                     Delay = new() { Duration = 0, Until = "until" },
-                    Expiry = new() { ExpiresIn = new("string"), ExpiresAt = "expires_at" },
+                    Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
                     Metadata = new()
                     {
                         Event = "event",
@@ -97,7 +99,7 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Routing = new() { Channels = [new("string")], Method = Method.All },
+                    Routing = new() { Channels = ["string"], Method = Method.All },
                     Template = "template_id",
                     Timeout = new()
                     {
@@ -107,58 +109,56 @@ public class SendServiceTest : TestBase
                         Message = 0,
                         Provider = new Dictionary<string, long>() { { "foo", 0 } },
                     },
-                    To = new(
-                        new Models::UserRecipient()
+                    To = new Models::UserRecipient()
+                    {
+                        AccountID = "account_id",
+                        Context = new() { TenantID = "tenant_id" },
+                        Data = new Dictionary<string, JsonElement>()
                         {
-                            AccountID = "account_id",
-                            Context = new() { TenantID = "tenant_id" },
-                            Data = new Dictionary<string, JsonElement>()
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Email = "email",
+                        Locale = "locale",
+                        PhoneNumber = "phone_number",
+                        Preferences = new()
+                        {
+                            Notifications = new Dictionary<string, Models::Preference>()
                             {
-                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = Models::PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(Models::ChannelClassification.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Models::Source.Subscription,
+                                    }
+                                },
                             },
-                            Email = "email",
-                            Locale = "locale",
-                            PhoneNumber = "phone_number",
-                            Preferences = new()
+                            Categories = new Dictionary<string, Models::Preference>()
                             {
-                                Notifications = new Dictionary<string, Models::Preference>()
                                 {
+                                    "foo",
+                                    new()
                                     {
-                                        "foo",
-                                        new()
-                                        {
-                                            Status = Models::PreferenceStatus.OptedIn,
-                                            ChannelPreferences =
-                                            [
-                                                new(Models::ChannelClassification.DirectMessage),
-                                            ],
-                                            Rules = [new() { Until = "until", Start = "start" }],
-                                            Source = Models::Source.Subscription,
-                                        }
-                                    },
+                                        Status = Models::PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(Models::ChannelClassification.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Models::Source.Subscription,
+                                    }
                                 },
-                                Categories = new Dictionary<string, Models::Preference>()
-                                {
-                                    {
-                                        "foo",
-                                        new()
-                                        {
-                                            Status = Models::PreferenceStatus.OptedIn,
-                                            ChannelPreferences =
-                                            [
-                                                new(Models::ChannelClassification.DirectMessage),
-                                            ],
-                                            Rules = [new() { Until = "until", Start = "start" }],
-                                            Source = Models::Source.Subscription,
-                                        }
-                                    },
-                                },
-                                TemplateID = "templateId",
                             },
-                            TenantID = "tenant_id",
-                            UserID = "example_user",
-                        }
-                    ),
+                            TemplateID = "templateId",
+                        },
+                        TenantID = "tenant_id",
+                        UserID = "example_user",
+                    },
                 },
             }
         );

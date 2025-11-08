@@ -469,6 +469,10 @@ public record class ExpiryDateModel
         };
     }
 
+    public static implicit operator ExpiryDateModel(string value) => new(value);
+
+    public static implicit operator ExpiryDateModel(bool value) => new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)
