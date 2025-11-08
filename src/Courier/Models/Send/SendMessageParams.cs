@@ -870,6 +870,10 @@ public record class Content
         };
     }
 
+    public static implicit operator Content(ElementalContentSugar value) => new(value);
+
+    public static implicit operator Content(ElementalContent value) => new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)
@@ -1171,6 +1175,10 @@ public record class ExpiresIn
             ),
         };
     }
+
+    public static implicit operator ExpiresIn(string value) => new(value);
+
+    public static implicit operator ExpiresIn(long value) => new(value);
 
     public void Validate()
     {
@@ -1955,6 +1963,11 @@ public record class To
             _ => throw new CourierInvalidDataException("Data did not match any variant of To"),
         };
     }
+
+    public static implicit operator To(UserRecipient value) => new(value);
+
+    public static implicit operator To(List<Recipient> value) =>
+        new((IReadOnlyList<Recipient>)value);
 
     public void Validate()
     {

@@ -123,32 +123,30 @@ public class BulkServiceTest : TestBase
         var response = await this.client.Bulk.CreateJob(
             new()
             {
-                Message = new(
-                    new InboundBulkTemplateMessage()
+                Message = new InboundBulkTemplateMessage()
+                {
+                    Template = "template",
+                    Brand = "brand",
+                    Data = new Dictionary<string, JsonElement>()
                     {
-                        Template = "template",
-                        Brand = "brand",
-                        Data = new Dictionary<string, JsonElement>()
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Event = "event",
+                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    {
                         {
-                            { "foo", JsonSerializer.SerializeToElement("bar") },
-                        },
-                        Event = "event",
-                        Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
-                        {
+                            "foo",
+                            new Dictionary<string, JsonElement>()
                             {
-                                "foo",
-                                new Dictionary<string, JsonElement>()
-                                {
-                                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                                }
-                            },
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            }
                         },
-                        Override = new Dictionary<string, JsonElement>()
-                        {
-                            { "foo", JsonSerializer.SerializeToElement("bar") },
-                        },
-                    }
-                ),
+                    },
+                    Override = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                },
             }
         );
         response.Validate();

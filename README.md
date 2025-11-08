@@ -45,7 +45,7 @@ SendMessageParams parameters = new()
 {
     Message = new()
     {
-        To = new(new Models::UserRecipient() { UserID = "your_user_id" }),
+        To = new Models::UserRecipient() { UserID = "your_user_id" },
         Template = "your_template_id",
         Data = new Dictionary<string, JsonElement>()
         {

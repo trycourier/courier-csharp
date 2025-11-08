@@ -419,6 +419,10 @@ public record class Content
         };
     }
 
+    public static implicit operator Content(string value) => new(value);
+
+    public static implicit operator Content(NotificationContentHierarchy value) => new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)
@@ -626,6 +630,10 @@ public record class Locale
             _ => throw new CourierInvalidDataException("Data did not match any variant of Locale"),
         };
     }
+
+    public static implicit operator Locale(string value) => new(value);
+
+    public static implicit operator Locale(NotificationContentHierarchyModel value) => new(value);
 
     public void Validate()
     {

@@ -91,6 +91,12 @@ public record class InboundBulkMessage
         };
     }
 
+    public static implicit operator InboundBulkMessage(InboundBulkTemplateMessage value) =>
+        new(value);
+
+    public static implicit operator InboundBulkMessage(InboundBulkContentMessage value) =>
+        new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)
@@ -583,6 +589,10 @@ public record class Content
             _ => throw new CourierInvalidDataException("Data did not match any variant of Content"),
         };
     }
+
+    public static implicit operator Content(ElementalContentSugar value) => new(value);
+
+    public static implicit operator Content(ElementalContent value) => new(value);
 
     public void Validate()
     {
