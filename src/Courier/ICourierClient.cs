@@ -30,9 +30,9 @@ public interface ICourierClient
 
     bool ResponseValidation { get; init; }
 
-    TimeSpan Timeout { get; init; }
-
     int MaxRetries { get; init; }
+
+    TimeSpan Timeout { get; init; }
 
     string APIKey { get; init; }
 
