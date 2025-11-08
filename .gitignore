@@ -1,3 +1,5 @@
 .prism.log
 bin/
 obj/
+.vs/
+.idea/
