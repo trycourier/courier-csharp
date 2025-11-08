@@ -114,7 +114,7 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     }
 
     /// <summary>
-    /// Properties sent to the provider along with the token
+    /// Properties about the token.
     /// </summary>
     public JsonElement? Properties1
     {

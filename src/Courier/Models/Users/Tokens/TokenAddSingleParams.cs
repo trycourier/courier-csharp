@@ -125,7 +125,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
     }
 
     /// <summary>
-    /// Properties sent to the provider along with the token
+    /// Properties about the token.
     /// </summary>
     public JsonElement? Properties
     {
