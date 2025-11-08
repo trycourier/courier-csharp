@@ -12,8 +12,8 @@ using System = System;
 namespace Courier.Models.Automations.Invoke;
 
 /// <summary>
-/// Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series
-/// of automation steps. For information about what steps are available, checkout
+/// Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a
+/// series of automation steps. For information about what steps are available, checkout
 /// the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
 /// </summary>
 public sealed record class InvokeInvokeAdHocParams : ParamsBase

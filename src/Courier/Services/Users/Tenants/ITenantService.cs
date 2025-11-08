@@ -31,8 +31,9 @@ public interface ITenantService
     /// <summary>
     /// This endpoint is used to add a single tenant.
     ///
-    /// A custom profile can also be supplied with the tenant.  This profile will
-    /// be merged with the user's main profile  when sending to the user with that tenant.
+    /// <para>A custom profile can also be supplied with the tenant.  This profile
+    /// will be merged with the user's main profile  when sending to the user with
+    /// that tenant.</para>
     /// </summary>
     Task AddSingle(
         Tenants::TenantAddSingleParams parameters,

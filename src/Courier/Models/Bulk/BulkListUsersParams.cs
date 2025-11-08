@@ -16,8 +16,8 @@ public sealed record class BulkListUsersParams : ParamsBase
     public required string JobID { get; init; }
 
     /// <summary>
-    /// A unique identifier that allows for fetching the next set of users added
-    /// to the bulk job
+    /// A unique identifier that allows for fetching the next set of users added to
+    /// the bulk job
     /// </summary>
     public string? Cursor
     {

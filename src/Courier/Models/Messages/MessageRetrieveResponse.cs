@@ -42,8 +42,8 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     }
 
     /// <summary>
-    /// A UTC timestamp at which the recipient clicked on a tracked link for the first
-    /// time. Stored as a millisecond representation of the Unix epoch.
+    /// A UTC timestamp at which the recipient clicked on a tracked link for the
+    /// first time. Stored as a millisecond representation of the Unix epoch.
     /// </summary>
     public required long Clicked
     {
@@ -67,8 +67,8 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     }
 
     /// <summary>
-    /// A UTC timestamp at which the Integration provider delivered the message.
-    /// Stored as a millisecond representation of the Unix epoch.
+    /// A UTC timestamp at which the Integration provider delivered the message. Stored
+    /// as a millisecond representation of the Unix epoch.
     /// </summary>
     public required long Delivered
     {
@@ -92,8 +92,8 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     }
 
     /// <summary>
-    /// A UTC timestamp at which Courier received the message request. Stored as a
-    /// millisecond representation of the Unix epoch.
+    /// A UTC timestamp at which Courier received the message request. Stored as
+    /// a millisecond representation of the Unix epoch.
     /// </summary>
     public required long Enqueued
     {

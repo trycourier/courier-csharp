@@ -52,8 +52,8 @@ public sealed record class InboundTrackEventParams : ParamsBase
     }
 
     /// <summary>
-    /// A required unique identifier that will be used to de-duplicate requests.
-    /// If not unique, will respond with 409 Conflict status
+    /// A required unique identifier that will be used to de-duplicate requests. If
+    /// not unique, will respond with 409 Conflict status
     /// </summary>
     public required string MessageID
     {
