@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Lists;
@@ -28,15 +29,22 @@ public sealed class ListService : IListService
         get { return _subscriptions.Value; }
     }
 
-    public async Task<SubscriptionList> Retrieve(ListRetrieveParams parameters)
+    public async Task<SubscriptionList> Retrieve(
+        ListRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ListRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var subscriptionList = await response.Deserialize<SubscriptionList>().ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
+        var subscriptionList = await response
+            .Deserialize<SubscriptionList>(cancellationToken)
+            .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             subscriptionList.Validate();
@@ -44,17 +52,25 @@ public sealed class ListService : IListService
         return subscriptionList;
     }
 
-    public async Task Update(ListUpdateParams parameters)
+    public async Task Update(
+        ListUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ListUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
     }
 
-    public async Task<ListListResponse> List(ListListParams? parameters = null)
+    public async Task<ListListResponse> List(
+        ListListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
     {
         parameters ??= new();
 
@@ -63,8 +79,12 @@ public sealed class ListService : IListService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var lists = await response.Deserialize<ListListResponse>().ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
+        var lists = await response
+            .Deserialize<ListListResponse>(cancellationToken)
+            .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             lists.Validate();
@@ -72,23 +92,33 @@ public sealed class ListService : IListService
         return lists;
     }
 
-    public async Task Delete(ListDeleteParams parameters)
+    public async Task Delete(
+        ListDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ListDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
     }
 
-    public async Task Restore(ListRestoreParams parameters)
+    public async Task Restore(
+        ListRestoreParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<ListRestoreParams> request = new()
         {
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

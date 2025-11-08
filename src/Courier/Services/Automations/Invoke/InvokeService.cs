@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Automations;
@@ -22,7 +23,8 @@ public sealed class InvokeService : IInvokeService
     }
 
     public async Task<AutomationInvokeResponse> InvokeAdHoc(
-        Invoke::InvokeInvokeAdHocParams parameters
+        Invoke::InvokeInvokeAdHocParams parameters,
+        CancellationToken cancellationToken = default
     )
     {
         HttpRequest<Invoke::InvokeInvokeAdHocParams> request = new()
@@ -30,9 +32,11 @@ public sealed class InvokeService : IInvokeService
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var automationInvokeResponse = await response
-            .Deserialize<AutomationInvokeResponse>()
+            .Deserialize<AutomationInvokeResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -42,7 +46,8 @@ public sealed class InvokeService : IInvokeService
     }
 
     public async Task<AutomationInvokeResponse> InvokeByTemplate(
-        Invoke::InvokeInvokeByTemplateParams parameters
+        Invoke::InvokeInvokeByTemplateParams parameters,
+        CancellationToken cancellationToken = default
     )
     {
         HttpRequest<Invoke::InvokeInvokeByTemplateParams> request = new()
@@ -50,9 +55,11 @@ public sealed class InvokeService : IInvokeService
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var automationInvokeResponse = await response
-            .Deserialize<AutomationInvokeResponse>()
+            .Deserialize<AutomationInvokeResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

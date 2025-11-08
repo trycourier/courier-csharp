@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Translations;
@@ -12,10 +13,13 @@ public interface ITranslationService
     /// <summary>
     /// Get translations by locale
     /// </summary>
-    Task<string> Retrieve(TranslationRetrieveParams parameters);
+    Task<string> Retrieve(
+        TranslationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Update a translation
     /// </summary>
-    Task Update(TranslationUpdateParams parameters);
+    Task Update(TranslationUpdateParams parameters, CancellationToken cancellationToken = default);
 }

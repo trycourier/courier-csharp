@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Templates = Courier.Models.Tenants.Templates;
@@ -14,11 +15,15 @@ public interface ITemplateService
     /// Get a Template in Tenant
     /// </summary>
     Task<Tenants::BaseTemplateTenantAssociation> Retrieve(
-        Templates::TemplateRetrieveParams parameters
+        Templates::TemplateRetrieveParams parameters,
+        CancellationToken cancellationToken = default
     );
 
     /// <summary>
     /// List Templates in Tenant
     /// </summary>
-    Task<Templates::TemplateListResponse> List(Templates::TemplateListParams parameters);
+    Task<Templates::TemplateListResponse> List(
+        Templates::TemplateListParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

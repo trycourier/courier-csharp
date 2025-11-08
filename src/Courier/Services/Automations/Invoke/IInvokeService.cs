@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Automations;
@@ -15,12 +16,16 @@ public interface IInvokeService
     /// a series of automation steps. For information about what steps are available,
     /// checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
     /// </summary>
-    Task<AutomationInvokeResponse> InvokeAdHoc(Invoke::InvokeInvokeAdHocParams parameters);
+    Task<AutomationInvokeResponse> InvokeAdHoc(
+        Invoke::InvokeInvokeAdHocParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Invoke an automation run from an automation template.
     /// </summary>
     Task<AutomationInvokeResponse> InvokeByTemplate(
-        Invoke::InvokeInvokeByTemplateParams parameters
+        Invoke::InvokeInvokeByTemplateParams parameters,
+        CancellationToken cancellationToken = default
     );
 }

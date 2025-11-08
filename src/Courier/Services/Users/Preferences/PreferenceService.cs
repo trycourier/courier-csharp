@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Users.Preferences;
@@ -20,16 +21,21 @@ public sealed class PreferenceService : IPreferenceService
         _client = client;
     }
 
-    public async Task<PreferenceRetrieveResponse> Retrieve(PreferenceRetrieveParams parameters)
+    public async Task<PreferenceRetrieveResponse> Retrieve(
+        PreferenceRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<PreferenceRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var preference = await response
-            .Deserialize<PreferenceRetrieveResponse>()
+            .Deserialize<PreferenceRetrieveResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -39,7 +45,8 @@ public sealed class PreferenceService : IPreferenceService
     }
 
     public async Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
-        PreferenceRetrieveTopicParams parameters
+        PreferenceRetrieveTopicParams parameters,
+        CancellationToken cancellationToken = default
     )
     {
         HttpRequest<PreferenceRetrieveTopicParams> request = new()
@@ -47,9 +54,11 @@ public sealed class PreferenceService : IPreferenceService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<PreferenceRetrieveTopicResponse>()
+            .Deserialize<PreferenceRetrieveTopicResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -59,7 +68,8 @@ public sealed class PreferenceService : IPreferenceService
     }
 
     public async Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
-        PreferenceUpdateOrCreateTopicParams parameters
+        PreferenceUpdateOrCreateTopicParams parameters,
+        CancellationToken cancellationToken = default
     )
     {
         HttpRequest<PreferenceUpdateOrCreateTopicParams> request = new()
@@ -67,9 +77,11 @@ public sealed class PreferenceService : IPreferenceService
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<PreferenceUpdateOrCreateTopicResponse>()
+            .Deserialize<PreferenceUpdateOrCreateTopicResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

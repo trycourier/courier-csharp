@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.AuditEvents;
@@ -20,15 +21,22 @@ public sealed class AuditEventService : IAuditEventService
         _client = client;
     }
 
-    public async Task<AuditEvent> Retrieve(AuditEventRetrieveParams parameters)
+    public async Task<AuditEvent> Retrieve(
+        AuditEventRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<AuditEventRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
-        var auditEvent = await response.Deserialize<AuditEvent>().ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
+        var auditEvent = await response
+            .Deserialize<AuditEvent>(cancellationToken)
+            .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             auditEvent.Validate();
@@ -36,7 +44,10 @@ public sealed class AuditEventService : IAuditEventService
         return auditEvent;
     }
 
-    public async Task<AuditEventListResponse> List(AuditEventListParams? parameters = null)
+    public async Task<AuditEventListResponse> List(
+        AuditEventListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
     {
         parameters ??= new();
 
@@ -45,9 +56,11 @@ public sealed class AuditEventService : IAuditEventService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var auditEvents = await response
-            .Deserialize<AuditEventListResponse>()
+            .Deserialize<AuditEventListResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

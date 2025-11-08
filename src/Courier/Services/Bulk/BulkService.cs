@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Bulk;
@@ -20,26 +21,36 @@ public sealed class BulkService : IBulkService
         _client = client;
     }
 
-    public async Task AddUsers(BulkAddUsersParams parameters)
+    public async Task AddUsers(
+        BulkAddUsersParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<BulkAddUsersParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
     }
 
-    public async Task<BulkCreateJobResponse> CreateJob(BulkCreateJobParams parameters)
+    public async Task<BulkCreateJobResponse> CreateJob(
+        BulkCreateJobParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<BulkCreateJobParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<BulkCreateJobResponse>()
+            .Deserialize<BulkCreateJobResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -48,16 +59,21 @@ public sealed class BulkService : IBulkService
         return deserializedResponse;
     }
 
-    public async Task<BulkListUsersResponse> ListUsers(BulkListUsersParams parameters)
+    public async Task<BulkListUsersResponse> ListUsers(
+        BulkListUsersParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<BulkListUsersParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<BulkListUsersResponse>()
+            .Deserialize<BulkListUsersResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -66,16 +82,21 @@ public sealed class BulkService : IBulkService
         return deserializedResponse;
     }
 
-    public async Task<BulkRetrieveJobResponse> RetrieveJob(BulkRetrieveJobParams parameters)
+    public async Task<BulkRetrieveJobResponse> RetrieveJob(
+        BulkRetrieveJobParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<BulkRetrieveJobParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<BulkRetrieveJobResponse>()
+            .Deserialize<BulkRetrieveJobResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -84,13 +105,18 @@ public sealed class BulkService : IBulkService
         return deserializedResponse;
     }
 
-    public async Task RunJob(BulkRunJobParams parameters)
+    public async Task RunJob(
+        BulkRunJobParams parameters,
+        CancellationToken cancellationToken = default
+    )
     {
         HttpRequest<BulkRunJobParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

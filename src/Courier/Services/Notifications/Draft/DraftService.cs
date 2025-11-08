@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Notifications.Draft;
@@ -22,7 +23,8 @@ public sealed class DraftService : IDraftService
     }
 
     public async Task<Notifications::NotificationGetContent> RetrieveContent(
-        DraftRetrieveContentParams parameters
+        DraftRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
     )
     {
         HttpRequest<DraftRetrieveContentParams> request = new()
@@ -30,9 +32,11 @@ public sealed class DraftService : IDraftService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this._client.Execute(request).ConfigureAwait(false);
+        using var response = await this
+            ._client.Execute(request, cancellationToken)
+            .ConfigureAwait(false);
         var notificationGetContent = await response
-            .Deserialize<Notifications::NotificationGetContent>()
+            .Deserialize<Notifications::NotificationGetContent>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
