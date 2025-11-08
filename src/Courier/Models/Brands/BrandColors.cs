@@ -21,6 +21,11 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["primary"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -39,6 +44,11 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["secondary"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions

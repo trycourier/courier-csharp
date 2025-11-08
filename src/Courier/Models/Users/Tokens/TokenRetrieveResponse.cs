@@ -127,6 +127,11 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["properties"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions

@@ -177,6 +177,11 @@ public sealed record class MessageListParams : ParamsBase
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._queryProperties["provider"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -220,6 +225,11 @@ public sealed record class MessageListParams : ParamsBase
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._queryProperties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -242,6 +252,11 @@ public sealed record class MessageListParams : ParamsBase
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._queryProperties["tag"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions

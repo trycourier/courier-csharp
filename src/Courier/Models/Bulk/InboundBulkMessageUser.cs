@@ -21,6 +21,11 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["data"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
@@ -60,6 +65,11 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
         }
         init
         {
+            if (value == null)
+            {
+                return;
+            }
+
             this._properties["profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
