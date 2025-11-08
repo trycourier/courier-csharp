@@ -163,8 +163,8 @@ public sealed record class MessageListParams : ParamsBase
     }
 
     /// <summary>
-    /// The key assocated to the provider you want to filter on. E.g., sendgrid,
-    /// inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
+    /// The key assocated to the provider you want to filter on. E.g., sendgrid, inbox,
+    /// twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
     /// </summary>
     public List<string?>? Provider
     {

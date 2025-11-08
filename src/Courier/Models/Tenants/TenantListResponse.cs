@@ -119,7 +119,8 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
     }
 
     /// <summary>
-    /// A pointer to the next page of results. Defined only when has_more is set to true.
+    /// A pointer to the next page of results. Defined only when has_more is set
+    /// to true.
     /// </summary>
     public string? Cursor
     {

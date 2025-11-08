@@ -11,8 +11,8 @@ using Courier.Exceptions;
 namespace Courier.Models.Lists.Subscriptions;
 
 /// <summary>
-/// Subscribes the users to the list, overwriting existing subscriptions. If the
-/// list does not exist, it will be automatically created.
+/// Subscribes the users to the list, overwriting existing subscriptions. If the list
+/// does not exist, it will be automatically created.
 /// </summary>
 public sealed record class SubscriptionSubscribeParams : ParamsBase
 {

@@ -41,11 +41,11 @@ public interface IProfileService
     Task Delete(ProfileDeleteParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// When using `PUT`, be sure to include all the key-value pairs required by
-    /// the recipient's profile.  Any key-value pairs that exist in the profile but
-    /// fail to be included in the `PUT` request will be  removed from the profile.
-    /// Remember, a `PUT` update is a full replacement of the data. For partial updates,
-    ///  use the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request.
+    /// When using `PUT`, be sure to include all the key-value pairs required by the
+    /// recipient's profile.  Any key-value pairs that exist in the profile but fail
+    /// to be included in the `PUT` request will be  removed from the profile. Remember,
+    /// a `PUT` update is a full replacement of the data. For partial updates,  use
+    /// the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request.
     /// </summary>
     Task<ProfileReplaceResponse> Replace(
         ProfileReplaceParams parameters,

@@ -25,8 +25,8 @@ public interface ISubscriptionService
     Task Add(SubscriptionAddParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Subscribes the users to the list, overwriting existing subscriptions. If the
-    /// list does not exist, it will be automatically created.
+    /// Subscribes the users to the list, overwriting existing subscriptions. If
+    /// the list does not exist, it will be automatically created.
     /// </summary>
     Task Subscribe(
         SubscriptionSubscribeParams parameters,

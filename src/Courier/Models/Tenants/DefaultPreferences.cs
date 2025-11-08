@@ -113,8 +113,8 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
     }
 
     /// <summary>
-    /// Override channel routing with custom preferences. This will override any template
-    /// prefernces that are set, but a user can still customize their preferences
+    /// Override channel routing with custom preferences. This will override any
+    /// template prefernces that are set, but a user can still customize their preferences
     /// </summary>
     public bool? HasCustomRouting
     {

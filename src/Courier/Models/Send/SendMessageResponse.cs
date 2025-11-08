@@ -13,8 +13,8 @@ namespace Courier.Models.Send;
 public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessageResponse>
 {
     /// <summary>
-    /// A successful call to `POST /send` returns a `202` status code along with
-    /// a `requestId` in the response body. For single-recipient requests, the `requestId`
+    /// A successful call to `POST /send` returns a `202` status code along with a
+    /// `requestId` in the response body. For single-recipient requests, the `requestId`
     /// is the derived message_id. For multiple recipients, Courier assigns a unique
     /// message_id to each derived message.
     /// </summary>
