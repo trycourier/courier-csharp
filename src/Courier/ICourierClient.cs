@@ -32,6 +32,8 @@ public interface ICourierClient
 
     TimeSpan Timeout { get; init; }
 
+    int MaxRetries { get; init; }
+
     string APIKey { get; init; }
 
     ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier);
