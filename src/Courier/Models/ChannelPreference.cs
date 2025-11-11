@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -5,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using System = System;
 
 namespace Courier.Models;
 
@@ -19,7 +19,7 @@ public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPrefer
             if (!this._properties.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
-                    new System::ArgumentOutOfRangeException("channel", "Missing required argument")
+                    new ArgumentOutOfRangeException("channel", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, ChannelClassification>>(

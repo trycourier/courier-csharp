@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Models.Tenants;
 using Courier.Services.Tenants.Preferences;
 using Courier.Services.Tenants.Templates;
-using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Services.Tenants;
 
@@ -37,12 +37,12 @@ public sealed class TenantService : ITenantService
         get { return _templates.Value; }
     }
 
-    public async Task<Tenants::Tenant> Retrieve(
-        Tenants::TenantRetrieveParams parameters,
+    public async Task<Tenant> Retrieve(
+        TenantRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantRetrieveParams> request = new()
+        HttpRequest<TenantRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
@@ -50,9 +50,7 @@ public sealed class TenantService : ITenantService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        var tenant = await response
-            .Deserialize<Tenants::Tenant>(cancellationToken)
-            .ConfigureAwait(false);
+        var tenant = await response.Deserialize<Tenant>(cancellationToken).ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             tenant.Validate();
@@ -60,12 +58,12 @@ public sealed class TenantService : ITenantService
         return tenant;
     }
 
-    public async Task<Tenants::Tenant> Update(
-        Tenants::TenantUpdateParams parameters,
+    public async Task<Tenant> Update(
+        TenantUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantUpdateParams> request = new()
+        HttpRequest<TenantUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
             Params = parameters,
@@ -73,9 +71,7 @@ public sealed class TenantService : ITenantService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        var tenant = await response
-            .Deserialize<Tenants::Tenant>(cancellationToken)
-            .ConfigureAwait(false);
+        var tenant = await response.Deserialize<Tenant>(cancellationToken).ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
             tenant.Validate();
@@ -83,14 +79,14 @@ public sealed class TenantService : ITenantService
         return tenant;
     }
 
-    public async Task<Tenants::TenantListResponse> List(
-        Tenants::TenantListParams? parameters = null,
+    public async Task<TenantListResponse> List(
+        TenantListParams? parameters = null,
         CancellationToken cancellationToken = default
     )
     {
         parameters ??= new();
 
-        HttpRequest<Tenants::TenantListParams> request = new()
+        HttpRequest<TenantListParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
@@ -99,7 +95,7 @@ public sealed class TenantService : ITenantService
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
         var tenants = await response
-            .Deserialize<Tenants::TenantListResponse>(cancellationToken)
+            .Deserialize<TenantListResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -109,11 +105,11 @@ public sealed class TenantService : ITenantService
     }
 
     public async Task Delete(
-        Tenants::TenantDeleteParams parameters,
+        TenantDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantDeleteParams> request = new()
+        HttpRequest<TenantDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
             Params = parameters,
@@ -123,12 +119,12 @@ public sealed class TenantService : ITenantService
             .ConfigureAwait(false);
     }
 
-    public async Task<Tenants::TenantListUsersResponse> ListUsers(
-        Tenants::TenantListUsersParams parameters,
+    public async Task<TenantListUsersResponse> ListUsers(
+        TenantListUsersParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantListUsersParams> request = new()
+        HttpRequest<TenantListUsersParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
@@ -137,7 +133,7 @@ public sealed class TenantService : ITenantService
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<Tenants::TenantListUsersResponse>(cancellationToken)
+            .Deserialize<TenantListUsersResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

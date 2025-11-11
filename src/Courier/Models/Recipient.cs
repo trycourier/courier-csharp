@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -5,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using System = System;
 
 namespace Courier.Models;
 
@@ -246,10 +246,7 @@ public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
             if (!this._properties.TryGetValue("notifications", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'notifications' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "notifications",
-                        "Missing required argument"
-                    )
+                    new ArgumentOutOfRangeException("notifications", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<Dictionary<string, Preference>>(
@@ -258,7 +255,7 @@ public sealed record class Preferences : ModelBase, IFromRaw<Preferences>
                 )
                 ?? throw new CourierInvalidDataException(
                     "'notifications' cannot be null",
-                    new System::ArgumentNullException("notifications")
+                    new ArgumentNullException("notifications")
                 );
         }
         init

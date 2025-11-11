@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -5,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using System = System;
 
 namespace Courier.Models.Notifications;
 
@@ -19,13 +19,13 @@ public sealed record class NotificationListResponse : ModelBase, IFromRaw<Notifi
             if (!this._properties.TryGetValue("paging", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'paging' cannot be null",
-                    new System::ArgumentOutOfRangeException("paging", "Missing required argument")
+                    new ArgumentOutOfRangeException("paging", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<Paging>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'paging' cannot be null",
-                    new System::ArgumentNullException("paging")
+                    new ArgumentNullException("paging")
                 );
         }
         init
@@ -44,13 +44,13 @@ public sealed record class NotificationListResponse : ModelBase, IFromRaw<Notifi
             if (!this._properties.TryGetValue("results", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'results' cannot be null",
-                    new System::ArgumentOutOfRangeException("results", "Missing required argument")
+                    new ArgumentOutOfRangeException("results", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<List<Result>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'results' cannot be null",
-                    new System::ArgumentNullException("results")
+                    new ArgumentNullException("results")
                 );
         }
         init
@@ -104,13 +104,13 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
             if (!this._properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
+                    new ArgumentOutOfRangeException("id", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new System::ArgumentNullException("id")
+                    new ArgumentNullException("id")
                 );
         }
         init
@@ -129,10 +129,7 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
             if (!this._properties.TryGetValue("created_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'created_at' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "created_at",
-                        "Missing required argument"
-                    )
+                    new ArgumentOutOfRangeException("created_at", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
@@ -153,13 +150,13 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
             if (!this._properties.TryGetValue("note", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'note' cannot be null",
-                    new System::ArgumentOutOfRangeException("note", "Missing required argument")
+                    new ArgumentOutOfRangeException("note", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'note' cannot be null",
-                    new System::ArgumentNullException("note")
+                    new ArgumentNullException("note")
                 );
         }
         init
@@ -178,13 +175,13 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
             if (!this._properties.TryGetValue("routing", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'routing' cannot be null",
-                    new System::ArgumentOutOfRangeException("routing", "Missing required argument")
+                    new ArgumentOutOfRangeException("routing", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<MessageRouting>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'routing' cannot be null",
-                    new System::ArgumentNullException("routing")
+                    new ArgumentNullException("routing")
                 );
         }
         init
@@ -203,13 +200,13 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
             if (!this._properties.TryGetValue("topic_id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'topic_id' cannot be null",
-                    new System::ArgumentOutOfRangeException("topic_id", "Missing required argument")
+                    new ArgumentOutOfRangeException("topic_id", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'topic_id' cannot be null",
-                    new System::ArgumentNullException("topic_id")
+                    new ArgumentNullException("topic_id")
                 );
         }
         init
@@ -228,10 +225,7 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
             if (!this._properties.TryGetValue("updated_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated_at' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "updated_at",
-                        "Missing required argument"
-                    )
+                    new ArgumentOutOfRangeException("updated_at", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
@@ -324,13 +318,13 @@ public sealed record class Tags : ModelBase, IFromRaw<Tags>
             if (!this._properties.TryGetValue("data", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'data' cannot be null",
-                    new System::ArgumentOutOfRangeException("data", "Missing required argument")
+                    new ArgumentOutOfRangeException("data", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<List<Data>>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'data' cannot be null",
-                    new System::ArgumentNullException("data")
+                    new ArgumentNullException("data")
                 );
         }
         init
@@ -388,13 +382,13 @@ public sealed record class Data : ModelBase, IFromRaw<Data>
             if (!this._properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
+                    new ArgumentOutOfRangeException("id", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new System::ArgumentNullException("id")
+                    new ArgumentNullException("id")
                 );
         }
         init
@@ -413,13 +407,13 @@ public sealed record class Data : ModelBase, IFromRaw<Data>
             if (!this._properties.TryGetValue("name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'name' cannot be null",
-                    new System::ArgumentOutOfRangeException("name", "Missing required argument")
+                    new ArgumentOutOfRangeException("name", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'name' cannot be null",
-                    new System::ArgumentNullException("name")
+                    new ArgumentNullException("name")
                 );
         }
         init

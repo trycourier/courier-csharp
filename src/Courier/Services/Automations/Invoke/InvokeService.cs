@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Automations;
-using Invoke = Courier.Models.Automations.Invoke;
+using Courier.Models.Automations.Invoke;
 
 namespace Courier.Services.Automations.Invoke;
 
@@ -23,11 +23,11 @@ public sealed class InvokeService : IInvokeService
     }
 
     public async Task<AutomationInvokeResponse> InvokeAdHoc(
-        Invoke::InvokeInvokeAdHocParams parameters,
+        InvokeInvokeAdHocParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Invoke::InvokeInvokeAdHocParams> request = new()
+        HttpRequest<InvokeInvokeAdHocParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
@@ -46,11 +46,11 @@ public sealed class InvokeService : IInvokeService
     }
 
     public async Task<AutomationInvokeResponse> InvokeByTemplate(
-        Invoke::InvokeInvokeByTemplateParams parameters,
+        InvokeInvokeByTemplateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Invoke::InvokeInvokeByTemplateParams> request = new()
+        HttpRequest<InvokeInvokeByTemplateParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,

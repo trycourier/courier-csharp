@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
-using Tenants = Courier.Models.Users.Tenants;
+using Courier.Models.Users.Tenants;
 
 namespace Courier.Services.Users.Tenants;
 
@@ -21,12 +21,12 @@ public sealed class TenantService : ITenantService
         _client = client;
     }
 
-    public async Task<Tenants::TenantListResponse> List(
-        Tenants::TenantListParams parameters,
+    public async Task<TenantListResponse> List(
+        TenantListParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantListParams> request = new()
+        HttpRequest<TenantListParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
@@ -35,7 +35,7 @@ public sealed class TenantService : ITenantService
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
         var tenants = await response
-            .Deserialize<Tenants::TenantListResponse>(cancellationToken)
+            .Deserialize<TenantListResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -45,11 +45,11 @@ public sealed class TenantService : ITenantService
     }
 
     public async Task AddMultiple(
-        Tenants::TenantAddMultipleParams parameters,
+        TenantAddMultipleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantAddMultipleParams> request = new()
+        HttpRequest<TenantAddMultipleParams> request = new()
         {
             Method = HttpMethod.Put,
             Params = parameters,
@@ -60,11 +60,11 @@ public sealed class TenantService : ITenantService
     }
 
     public async Task AddSingle(
-        Tenants::TenantAddSingleParams parameters,
+        TenantAddSingleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantAddSingleParams> request = new()
+        HttpRequest<TenantAddSingleParams> request = new()
         {
             Method = HttpMethod.Put,
             Params = parameters,
@@ -75,11 +75,11 @@ public sealed class TenantService : ITenantService
     }
 
     public async Task RemoveAll(
-        Tenants::TenantRemoveAllParams parameters,
+        TenantRemoveAllParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantRemoveAllParams> request = new()
+        HttpRequest<TenantRemoveAllParams> request = new()
         {
             Method = HttpMethod.Delete,
             Params = parameters,
@@ -90,11 +90,11 @@ public sealed class TenantService : ITenantService
     }
 
     public async Task RemoveSingle(
-        Tenants::TenantRemoveSingleParams parameters,
+        TenantRemoveSingleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Tenants::TenantRemoveSingleParams> request = new()
+        HttpRequest<TenantRemoveSingleParams> request = new()
         {
             Method = HttpMethod.Delete,
             Params = parameters,

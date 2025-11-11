@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -5,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using System = System;
 
 namespace Courier.Models;
 
@@ -106,13 +106,13 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
             if (!this._properties.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
-                    new System::ArgumentOutOfRangeException("channel", "Missing required argument")
+                    new ArgumentOutOfRangeException("channel", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'channel' cannot be null",
-                    new System::ArgumentNullException("channel")
+                    new ArgumentNullException("channel")
                 );
         }
         init
@@ -212,13 +212,13 @@ public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<Inters
             if (!this._properties.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
-                    new System::ArgumentOutOfRangeException("channel", "Missing required argument")
+                    new ArgumentOutOfRangeException("channel", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'channel' cannot be null",
-                    new System::ArgumentNullException("channel")
+                    new ArgumentNullException("channel")
                 );
         }
         init

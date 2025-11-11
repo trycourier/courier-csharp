@@ -2,9 +2,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Models.Tenants;
 using Courier.Services.Tenants.Preferences;
 using Courier.Services.Tenants.Templates;
-using Tenants = Courier.Models.Tenants;
 
 namespace Courier.Services.Tenants;
 
@@ -19,40 +19,37 @@ public interface ITenantService
     /// <summary>
     /// Get a Tenant
     /// </summary>
-    Task<Tenants::Tenant> Retrieve(
-        Tenants::TenantRetrieveParams parameters,
+    Task<Tenant> Retrieve(
+        TenantRetrieveParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
     /// Create or Replace a Tenant
     /// </summary>
-    Task<Tenants::Tenant> Update(
-        Tenants::TenantUpdateParams parameters,
+    Task<Tenant> Update(
+        TenantUpdateParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
     /// Get a List of Tenants
     /// </summary>
-    Task<Tenants::TenantListResponse> List(
-        Tenants::TenantListParams? parameters = null,
+    Task<TenantListResponse> List(
+        TenantListParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
     /// <summary>
     /// Delete a Tenant
     /// </summary>
-    Task Delete(
-        Tenants::TenantDeleteParams parameters,
-        CancellationToken cancellationToken = default
-    );
+    Task Delete(TenantDeleteParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get Users in Tenant
     /// </summary>
-    Task<Tenants::TenantListUsersResponse> ListUsers(
-        Tenants::TenantListUsersParams parameters,
+    Task<TenantListUsersResponse> ListUsers(
+        TenantListUsersParams parameters,
         CancellationToken cancellationToken = default
     );
 }

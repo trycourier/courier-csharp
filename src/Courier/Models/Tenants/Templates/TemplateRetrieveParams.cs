@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
 using Courier.Core;
-using System = System;
 
 namespace Courier.Models.Tenants.Templates;
 
@@ -51,9 +51,9 @@ public sealed record class TemplateRetrieveParams : ParamsBase
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override Uri Url(ClientOptions options)
     {
-        return new System::UriBuilder(
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/tenants/{0}/templates/{1}", this.TenantID, this.TemplateID)
         )

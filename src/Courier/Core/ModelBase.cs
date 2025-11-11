@@ -3,12 +3,12 @@ using System.Text.Json;
 using Courier.Models.Audiences;
 using Courier.Models.Brands;
 using Courier.Models.Inbound;
+using Courier.Models.Messages;
 using Courier.Models.Send;
-using Courier.Models.Tenants.Preferences.Items;
 using Bulk = Courier.Models.Bulk;
 using Invoke = Courier.Models.Automations.Invoke;
+using Items = Courier.Models.Tenants.Preferences.Items;
 using Lists = Courier.Models.Profiles.Lists;
-using Messages = Courier.Models.Messages;
 using Models = Courier.Models;
 using Notifications = Courier.Models.Notifications;
 using Profiles = Courier.Models.Profiles;
@@ -63,8 +63,8 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Bulk::Status>(),
             new ApiEnumConverter<string, Bulk::StatusModel>(),
             new ApiEnumConverter<string, Type>(),
-            new ApiEnumConverter<string, Messages::Status>(),
-            new ApiEnumConverter<string, Messages::Reason>(),
+            new ApiEnumConverter<string, Status>(),
+            new ApiEnumConverter<string, Reason>(),
             new ApiEnumConverter<string, Notifications::Status>(),
             new ApiEnumConverter<string, Notifications::Type>(),
             new ApiEnumConverter<string, Notifications::TypeModel>(),
@@ -76,7 +76,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, global::Courier.Models.Tenants.Type>(),
             new ApiEnumConverter<string, global::Courier.Models.Tenants.TypeModel>(),
             new ApiEnumConverter<string, global::Courier.Models.Tenants.Type1>(),
-            new ApiEnumConverter<string, Status>(),
+            new ApiEnumConverter<string, Items::Status>(),
             new ApiEnumConverter<string, Templates::Type>(),
             new ApiEnumConverter<string, Tenants::Type>(),
             new ApiEnumConverter<string, Tokens::ProviderKeyModel>(),
