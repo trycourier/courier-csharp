@@ -8,22 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Services.Audiences;
-using Courier.Services.AuditEvents;
-using Courier.Services.Auth;
-using Courier.Services.Automations;
-using Courier.Services.Brands;
-using Courier.Services.Bulk;
-using Courier.Services.Inbound;
-using Courier.Services.Lists;
-using Courier.Services.Messages;
-using Courier.Services.Notifications;
-using Courier.Services.Profiles;
-using Courier.Services.Requests;
-using Courier.Services.Send;
-using Courier.Services.Tenants;
-using Courier.Services.Translations;
-using Courier.Services.Users;
+using Courier.Services;
 
 namespace Courier;
 
