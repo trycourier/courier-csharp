@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
-using Send = Courier.Models.Send;
+using Courier.Models.Send;
 
 namespace Courier.Services.Send;
 
@@ -21,12 +21,12 @@ public sealed class SendService : ISendService
         _client = client;
     }
 
-    public async Task<Send::SendMessageResponse> Message(
-        Send::SendMessageParams parameters,
+    public async Task<SendMessageResponse> Message(
+        SendMessageParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Send::SendMessageParams> request = new()
+        HttpRequest<SendMessageParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
@@ -35,7 +35,7 @@ public sealed class SendService : ISendService
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<Send::SendMessageResponse>(cancellationToken)
+            .Deserialize<SendMessageResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

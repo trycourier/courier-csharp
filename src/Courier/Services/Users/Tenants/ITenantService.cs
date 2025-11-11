@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
-using Tenants = Courier.Models.Users.Tenants;
+using Courier.Models.Users.Tenants;
 
 namespace Courier.Services.Users.Tenants;
 
@@ -13,8 +13,8 @@ public interface ITenantService
     /// <summary>
     /// Returns a paginated list of user tenant associations.
     /// </summary>
-    Task<Tenants::TenantListResponse> List(
-        Tenants::TenantListParams parameters,
+    Task<TenantListResponse> List(
+        TenantListParams parameters,
         CancellationToken cancellationToken = default
     );
 
@@ -24,7 +24,7 @@ public interface ITenantService
     /// with the user's main  profile when sending to the user with that tenant.
     /// </summary>
     Task AddMultiple(
-        Tenants::TenantAddMultipleParams parameters,
+        TenantAddMultipleParams parameters,
         CancellationToken cancellationToken = default
     );
 
@@ -35,24 +35,18 @@ public interface ITenantService
     /// will be merged with the user's main profile  when sending to the user with
     /// that tenant.</para>
     /// </summary>
-    Task AddSingle(
-        Tenants::TenantAddSingleParams parameters,
-        CancellationToken cancellationToken = default
-    );
+    Task AddSingle(TenantAddSingleParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes a user from any tenants they may have been associated with.
     /// </summary>
-    Task RemoveAll(
-        Tenants::TenantRemoveAllParams parameters,
-        CancellationToken cancellationToken = default
-    );
+    Task RemoveAll(TenantRemoveAllParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes a user from the supplied tenant.
     /// </summary>
     Task RemoveSingle(
-        Tenants::TenantRemoveSingleParams parameters,
+        TenantRemoveSingleParams parameters,
         CancellationToken cancellationToken = default
     );
 }

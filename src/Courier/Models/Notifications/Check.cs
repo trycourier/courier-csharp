@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -5,7 +6,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using System = System;
 
 namespace Courier.Models.Notifications;
 
@@ -19,13 +19,13 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
             if (!this._properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
+                    new ArgumentOutOfRangeException("id", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new System::ArgumentNullException("id")
+                    new ArgumentNullException("id")
                 );
         }
         init
@@ -44,7 +44,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
             if (!this._properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
+                    new ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
@@ -68,7 +68,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
+                    new ArgumentOutOfRangeException("type", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<
@@ -91,7 +91,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
             if (!this._properties.TryGetValue("updated", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated' cannot be null",
-                    new System::ArgumentOutOfRangeException("updated", "Missing required argument")
+                    new ArgumentOutOfRangeException("updated", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
@@ -154,7 +154,7 @@ public sealed record class IntersectionMember1
             if (!this._properties.TryGetValue("updated", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated' cannot be null",
-                    new System::ArgumentOutOfRangeException("updated", "Missing required argument")
+                    new ArgumentOutOfRangeException("updated", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);

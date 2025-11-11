@@ -36,7 +36,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier;
-using Models = Courier.Models;
+using Courier.Models;
 using Courier.Models.Send;
 
 CourierClient client = new();
@@ -45,7 +45,7 @@ SendMessageParams parameters = new()
 {
     Message = new()
     {
-        To = new Models::UserRecipient() { UserID = "your_user_id" },
+        To = new UserRecipient() { UserID = "your_user_id" },
         Template = "your_template_id",
         Data = new Dictionary<string, JsonElement>()
         {

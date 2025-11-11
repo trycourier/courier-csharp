@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -6,8 +7,7 @@ using System.Text;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
-using System = System;
-using Tenants = Courier.Models.Tenants;
+using Courier.Models.Tenants;
 
 namespace Courier.Models.Users.Tenants;
 
@@ -26,23 +26,23 @@ public sealed record class TenantAddMultipleParams : ParamsBase
 
     public required string UserID { get; init; }
 
-    public required List<Tenants::TenantAssociation> Tenants
+    public required List<TenantAssociation> Tenants
     {
         get
         {
             if (!this._bodyProperties.TryGetValue("tenants", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'tenants' cannot be null",
-                    new System::ArgumentOutOfRangeException("tenants", "Missing required argument")
+                    new ArgumentOutOfRangeException("tenants", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<List<Tenants::TenantAssociation>>(
+            return JsonSerializer.Deserialize<List<TenantAssociation>>(
                     element,
                     ModelBase.SerializerOptions
                 )
                 ?? throw new CourierInvalidDataException(
                     "'tenants' cannot be null",
-                    new System::ArgumentNullException("tenants")
+                    new ArgumentNullException("tenants")
                 );
         }
         init
@@ -94,9 +94,9 @@ public sealed record class TenantAddMultipleParams : ParamsBase
         );
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override Uri Url(ClientOptions options)
     {
-        return new System::UriBuilder(
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/users/{0}/tenants", this.UserID)
         )

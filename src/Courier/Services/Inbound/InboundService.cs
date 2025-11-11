@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
-using Inbound = Courier.Models.Inbound;
+using Courier.Models.Inbound;
 
 namespace Courier.Services.Inbound;
 
@@ -21,12 +21,12 @@ public sealed class InboundService : IInboundService
         _client = client;
     }
 
-    public async Task<Inbound::InboundTrackEventResponse> TrackEvent(
-        Inbound::InboundTrackEventParams parameters,
+    public async Task<InboundTrackEventResponse> TrackEvent(
+        InboundTrackEventParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Inbound::InboundTrackEventParams> request = new()
+        HttpRequest<InboundTrackEventParams> request = new()
         {
             Method = HttpMethod.Post,
             Params = parameters,
@@ -35,7 +35,7 @@ public sealed class InboundService : IInboundService
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
         var deserializedResponse = await response
-            .Deserialize<Inbound::InboundTrackEventResponse>(cancellationToken)
+            .Deserialize<InboundTrackEventResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {

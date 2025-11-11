@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Models.Notifications;
 using Courier.Services.Notifications.Checks;
 using Courier.Services.Notifications.Draft;
-using Notifications = Courier.Models.Notifications;
 
 namespace Courier.Services.Notifications;
 
@@ -37,14 +37,14 @@ public sealed class NotificationService : INotificationService
         get { return _checks.Value; }
     }
 
-    public async Task<Notifications::NotificationListResponse> List(
-        Notifications::NotificationListParams? parameters = null,
+    public async Task<NotificationListResponse> List(
+        NotificationListParams? parameters = null,
         CancellationToken cancellationToken = default
     )
     {
         parameters ??= new();
 
-        HttpRequest<Notifications::NotificationListParams> request = new()
+        HttpRequest<NotificationListParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
@@ -53,7 +53,7 @@ public sealed class NotificationService : INotificationService
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
         var notifications = await response
-            .Deserialize<Notifications::NotificationListResponse>(cancellationToken)
+            .Deserialize<NotificationListResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
@@ -62,12 +62,12 @@ public sealed class NotificationService : INotificationService
         return notifications;
     }
 
-    public async Task<Notifications::NotificationGetContent> RetrieveContent(
-        Notifications::NotificationRetrieveContentParams parameters,
+    public async Task<NotificationGetContent> RetrieveContent(
+        NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        HttpRequest<Notifications::NotificationRetrieveContentParams> request = new()
+        HttpRequest<NotificationRetrieveContentParams> request = new()
         {
             Method = HttpMethod.Get,
             Params = parameters,
@@ -76,7 +76,7 @@ public sealed class NotificationService : INotificationService
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
         var notificationGetContent = await response
-            .Deserialize<Notifications::NotificationGetContent>(cancellationToken)
+            .Deserialize<NotificationGetContent>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
