@@ -1,5 +1,76 @@
 # Changelog
 
+## 1.0.0 (2025-11-12)
+
+Full Changelog: [v1.0.0-alpha2...v1.0.0](https://github.com/trycourier/courier-csharp/compare/v1.0.0-alpha2...v1.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** flatten service namespaces
+* **client:** interpret null as omitted in some properties
+* **client:** make models immutable
+
+### Features
+
+* Attempt kick off again ([cfb2dbe](https://github.com/trycourier/courier-csharp/commit/cfb2dbe8d349a33d850e8a41801c34858bfb0749))
+* **client:** add cancellation token support ([4a71c3e](https://github.com/trycourier/courier-csharp/commit/4a71c3e8e32df9641333d420044c2e35940debea))
+* **client:** add response validation option ([3e9fae2](https://github.com/trycourier/courier-csharp/commit/3e9fae221cf807c8196e6154634ea10c4db7ae1b))
+* **client:** add retries support ([ba8dc40](https://github.com/trycourier/courier-csharp/commit/ba8dc402d27c8c49fc2fb091df1d44d83e5df31b))
+* **client:** add some implicit operators ([8c93861](https://github.com/trycourier/courier-csharp/commit/8c938619cf7f3b4203e82a05a5f7ff85f29adcf1))
+* **client:** add support for option modification ([fdaacfa](https://github.com/trycourier/courier-csharp/commit/fdaacfa472b5fd83e7b1a3725fabf6b81bc4d8a5))
+* **client:** make models immutable ([1a4515b](https://github.com/trycourier/courier-csharp/commit/1a4515b65f1b59a3bc05bfa662e04b78719d9660))
+* **client:** send `User-Agent` header ([e03b54b](https://github.com/trycourier/courier-csharp/commit/e03b54bf398bfb8eb59245eb0253140b88f60da3))
+* **client:** send `X-Stainless-Arch` header ([355ce4d](https://github.com/trycourier/courier-csharp/commit/355ce4df5a9c23ea908a887e9de0cfcf12d9c47e))
+* **client:** send `X-Stainless-Lang` and `X-Stainless-OS` headers ([ec7b4b8](https://github.com/trycourier/courier-csharp/commit/ec7b4b8404519c719d16df319b3e17e671448536))
+* **client:** send `X-Stainless-Package-Version` headers ([a4171fd](https://github.com/trycourier/courier-csharp/commit/a4171fd9de7b6329d96c693f5211a409810ad88c))
+* **client:** send `X-Stainless-Runtime` and `X-Stainless-Runtime-Version` ([263cbf1](https://github.com/trycourier/courier-csharp/commit/263cbf1d6248ea1c081f22819243ded8660b3c7f))
+* **client:** send `X-Stainless-Timeout` header ([c0c691a](https://github.com/trycourier/courier-csharp/commit/c0c691abc95312f3d6fb628b1934da3b698773ca))
+* **client:** support request timeout ([7d68644](https://github.com/trycourier/courier-csharp/commit/7d68644246482254f3a0aee0f77808640a4effa8))
+* Organization update ([b82d346](https://github.com/trycourier/courier-csharp/commit/b82d346403253e6f0f1ae5107a58a6333f3c538b))
+* Spec Comment Change ([eaf3aab](https://github.com/trycourier/courier-csharp/commit/eaf3aabfecc31c2054d3e1e437311f1800277645))
+* Token Prop Description Change ([7110be1](https://github.com/trycourier/courier-csharp/commit/7110be1a27a6cca7167eb7292a9480d53e6a8fad))
+
+
+### Bug Fixes
+
+* Better Python Samples + Updates to naming ([324f06a](https://github.com/trycourier/courier-csharp/commit/324f06ad204a0b4ba30651df5330e992ce6300f2))
+* **client:** interpret null as omitted in some properties ([025593e](https://github.com/trycourier/courier-csharp/commit/025593e5aa6aed69408f1af780a7eb39530c42dc))
+
+
+### Performance Improvements
+
+* **client:** optimize header creation ([8bcbba2](https://github.com/trycourier/courier-csharp/commit/8bcbba2466755dc38cf27ed559847bf7d6c331e6))
+
+
+### Chores
+
+* **client:** simplify field validations ([3e9fae2](https://github.com/trycourier/courier-csharp/commit/3e9fae221cf807c8196e6154634ea10c4db7ae1b))
+* **internal:** add prism log file to gitignore ([6215c41](https://github.com/trycourier/courier-csharp/commit/6215c4157c61129c00494b8243d49195c57b8ca2))
+* **internal:** codegen related update ([370e046](https://github.com/trycourier/courier-csharp/commit/370e046e7f4398ac1c07ab17b0bc3c6f0e84ec45))
+* **internal:** delete empty test files ([6feb8cd](https://github.com/trycourier/courier-csharp/commit/6feb8cd995e11fb347f3779206ed504c6854b223))
+* **internal:** extract `ClientOptions` struct ([ed8a90d](https://github.com/trycourier/courier-csharp/commit/ed8a90d5e1cf1137cde837181830167a2820eea2))
+* **internal:** full qualify some references ([f2b2bff](https://github.com/trycourier/courier-csharp/commit/f2b2bff6b34e0ca36ffc09759636ba0311246d50))
+* **internal:** improve devcontainer ([e696694](https://github.com/trycourier/courier-csharp/commit/e69669492371d1345b21a023c115f08941558340))
+* **internal:** minor improvements to csproj and gitignore ([4c26559](https://github.com/trycourier/courier-csharp/commit/4c26559873809df61b43d0ad48ee55bcbdab3b12))
+* **internal:** reduce import qualification ([044c3f8](https://github.com/trycourier/courier-csharp/commit/044c3f877e50bbc53c01465ace3f78d5bdecc27a))
+* update SDK settings ([0232166](https://github.com/trycourier/courier-csharp/commit/02321665974d4fc60dd59693ace28142e21243c5))
+
+
+### Documentation
+
+* **client:** document `WithOptions` ([270f86a](https://github.com/trycourier/courier-csharp/commit/270f86ae473c27464521f814546a9c7b72b8ea46))
+* **client:** document max retries ([76b8e6d](https://github.com/trycourier/courier-csharp/commit/76b8e6dba5985ebbbc6dc0d8df6952f68e731bb3))
+* **client:** document response validation ([f48fca0](https://github.com/trycourier/courier-csharp/commit/f48fca037ae6894f0fd76999899216424975373e))
+* **client:** document timeout option ([472ff48](https://github.com/trycourier/courier-csharp/commit/472ff48b1a9c5cc064b81bb251b6fab1151ebcae))
+* **client:** improve snippet formatting ([dc01c18](https://github.com/trycourier/courier-csharp/commit/dc01c180926fa917a3f0c134b689a7219ef5b086))
+* **client:** separate comment content into paragraphs ([cd741ed](https://github.com/trycourier/courier-csharp/commit/cd741ed030a9d69d526da947e8a9c08bf958aed1))
+
+
+### Refactors
+
+* **client:** flatten service namespaces ([b92687e](https://github.com/trycourier/courier-csharp/commit/b92687eb7b0a18fa3e0e43ccc81a2791d991af1c))
+* **client:** pass around `ClientOptions` instead of client ([ce05c19](https://github.com/trycourier/courier-csharp/commit/ce05c19c18e94605ebfb9bf3a2ce50093eb82649))
+
 ## 1.0.0-alpha2 (2025-10-31)
 
 Full Changelog: [v1.0.0-alpha1...v1.0.0-alpha2](https://github.com/trycourier/courier-csharp/compare/v1.0.0-alpha1...v1.0.0-alpha2)
