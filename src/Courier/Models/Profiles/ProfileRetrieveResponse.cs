@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
     {
         get
         {
-            if (!this.Properties.TryGetValue("profile", out JsonElement element))
+            if (!this._properties.TryGetValue("profile", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'profile' cannot be null",
                     new ArgumentOutOfRangeException("profile", "Missing required argument")
@@ -30,9 +31,9 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
                     new ArgumentNullException("profile")
                 );
         }
-        set
+        init
         {
-            this.Properties["profile"] = JsonSerializer.SerializeToElement(
+            this._properties["profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,7 +44,7 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
     {
         get
         {
-            if (!this.Properties.TryGetValue("preferences", out JsonElement element))
+            if (!this._properties.TryGetValue("preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<RecipientPreferences?>(
@@ -51,9 +52,9 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["preferences"] = JsonSerializer.SerializeToElement(
+            this._properties["preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -62,27 +63,29 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
 
     public override void Validate()
     {
-        foreach (var item in this.Profile.Values)
-        {
-            _ = item;
-        }
+        _ = this.Profile;
         this.Preferences?.Validate();
     }
 
     public ProfileRetrieveResponse() { }
 
+    public ProfileRetrieveResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProfileRetrieveResponse(Dictionary<string, JsonElement> properties)
+    ProfileRetrieveResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static ProfileRetrieveResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

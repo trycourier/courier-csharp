@@ -1,11 +1,11 @@
-using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using TenantAssociationProperties = Courier.Models.Tenants.TenantAssociationProperties;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -19,21 +19,24 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this.Properties.TryGetValue("tenant_id", out JsonElement element))
+            if (!this._properties.TryGetValue("tenant_id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'tenant_id' cannot be null",
-                    new ArgumentOutOfRangeException("tenant_id", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "tenant_id",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'tenant_id' cannot be null",
-                    new ArgumentNullException("tenant_id")
+                    new System::ArgumentNullException("tenant_id")
                 );
         }
-        set
+        init
         {
-            this.Properties["tenant_id"] = JsonSerializer.SerializeToElement(
+            this._properties["tenant_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -47,7 +50,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this.Properties.TryGetValue("profile", out JsonElement element))
+            if (!this._properties.TryGetValue("profile", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -55,30 +58,30 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["profile"] = JsonSerializer.SerializeToElement(
+            this._properties["profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
     }
 
-    public ApiEnum<string, TenantAssociationProperties::Type>? Type
+    public ApiEnum<string, global::Courier.Models.Tenants.Type>? Type
     {
         get
         {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
+            if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, TenantAssociationProperties::Type>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                global::Courier.Models.Tenants.Type
+            >?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
+            this._properties["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -92,14 +95,14 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this.Properties.TryGetValue("user_id", out JsonElement element))
+            if (!this._properties.TryGetValue("user_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["user_id"] = JsonSerializer.SerializeToElement(
+            this._properties["user_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -109,30 +112,31 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     public override void Validate()
     {
         _ = this.TenantID;
-        if (this.Profile != null)
-        {
-            foreach (var item in this.Profile.Values)
-            {
-                _ = item;
-            }
-        }
+        _ = this.Profile;
         this.Type?.Validate();
         _ = this.UserID;
     }
 
     public TenantAssociation() { }
 
+    public TenantAssociation(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TenantAssociation(Dictionary<string, JsonElement> properties)
+    TenantAssociation(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static TenantAssociation FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static TenantAssociation FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
@@ -140,5 +144,46 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
         : this()
     {
         this.TenantID = tenantID;
+    }
+}
+
+[JsonConverter(typeof(global::Courier.Models.Tenants.TypeConverter))]
+public enum Type
+{
+    User,
+}
+
+sealed class TypeConverter : JsonConverter<global::Courier.Models.Tenants.Type>
+{
+    public override global::Courier.Models.Tenants.Type Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "user" => global::Courier.Models.Tenants.Type.User,
+            _ => (global::Courier.Models.Tenants.Type)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::Courier.Models.Tenants.Type value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::Courier.Models.Tenants.Type.User => "user",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

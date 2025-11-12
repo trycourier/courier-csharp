@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class BulkCreateJobResponse : ModelBase, IFromRaw<BulkCreat
     {
         get
         {
-            if (!this.Properties.TryGetValue("jobId", out JsonElement element))
+            if (!this._properties.TryGetValue("jobId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'jobId' cannot be null",
                     new ArgumentOutOfRangeException("jobId", "Missing required argument")
@@ -27,9 +28,9 @@ public sealed record class BulkCreateJobResponse : ModelBase, IFromRaw<BulkCreat
                     new ArgumentNullException("jobId")
                 );
         }
-        set
+        init
         {
-            this.Properties["jobId"] = JsonSerializer.SerializeToElement(
+            this._properties["jobId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,17 +44,24 @@ public sealed record class BulkCreateJobResponse : ModelBase, IFromRaw<BulkCreat
 
     public BulkCreateJobResponse() { }
 
+    public BulkCreateJobResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BulkCreateJobResponse(Dictionary<string, JsonElement> properties)
+    BulkCreateJobResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static BulkCreateJobResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static BulkCreateJobResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

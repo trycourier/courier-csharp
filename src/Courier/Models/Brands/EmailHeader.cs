@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class EmailHeader : ModelBase, IFromRaw<EmailHeader>
     {
         get
         {
-            if (!this.Properties.TryGetValue("logo", out JsonElement element))
+            if (!this._properties.TryGetValue("logo", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'logo' cannot be null",
                     new ArgumentOutOfRangeException("logo", "Missing required argument")
@@ -27,9 +28,9 @@ public sealed record class EmailHeader : ModelBase, IFromRaw<EmailHeader>
                     new ArgumentNullException("logo")
                 );
         }
-        set
+        init
         {
-            this.Properties["logo"] = JsonSerializer.SerializeToElement(
+            this._properties["logo"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -40,14 +41,14 @@ public sealed record class EmailHeader : ModelBase, IFromRaw<EmailHeader>
     {
         get
         {
-            if (!this.Properties.TryGetValue("barColor", out JsonElement element))
+            if (!this._properties.TryGetValue("barColor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["barColor"] = JsonSerializer.SerializeToElement(
+            this._properties["barColor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -58,14 +59,14 @@ public sealed record class EmailHeader : ModelBase, IFromRaw<EmailHeader>
     {
         get
         {
-            if (!this.Properties.TryGetValue("inheritDefault", out JsonElement element))
+            if (!this._properties.TryGetValue("inheritDefault", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["inheritDefault"] = JsonSerializer.SerializeToElement(
+            this._properties["inheritDefault"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -81,17 +82,22 @@ public sealed record class EmailHeader : ModelBase, IFromRaw<EmailHeader>
 
     public EmailHeader() { }
 
+    public EmailHeader(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    EmailHeader(Dictionary<string, JsonElement> properties)
+    EmailHeader(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static EmailHeader FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static EmailHeader FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

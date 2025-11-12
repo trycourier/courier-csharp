@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -13,14 +14,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this.Properties.TryGetValue("campaign", out JsonElement element))
+            if (!this._properties.TryGetValue("campaign", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["campaign"] = JsonSerializer.SerializeToElement(
+            this._properties["campaign"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -31,14 +32,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this.Properties.TryGetValue("content", out JsonElement element))
+            if (!this._properties.TryGetValue("content", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["content"] = JsonSerializer.SerializeToElement(
+            this._properties["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -49,14 +50,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this.Properties.TryGetValue("medium", out JsonElement element))
+            if (!this._properties.TryGetValue("medium", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["medium"] = JsonSerializer.SerializeToElement(
+            this._properties["medium"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -67,14 +68,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this.Properties.TryGetValue("source", out JsonElement element))
+            if (!this._properties.TryGetValue("source", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["source"] = JsonSerializer.SerializeToElement(
+            this._properties["source"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -85,14 +86,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this.Properties.TryGetValue("term", out JsonElement element))
+            if (!this._properties.TryGetValue("term", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["term"] = JsonSerializer.SerializeToElement(
+            this._properties["term"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -110,16 +111,21 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
 
     public Utm() { }
 
+    public Utm(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Utm(Dictionary<string, JsonElement> properties)
+    Utm(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Utm FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Utm FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

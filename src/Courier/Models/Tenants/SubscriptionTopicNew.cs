@@ -1,11 +1,11 @@
-using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Tenants.SubscriptionTopicNewProperties;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -16,10 +16,10 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
     {
         get
         {
-            if (!this.Properties.TryGetValue("status", out JsonElement element))
+            if (!this._properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
@@ -27,9 +27,9 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["status"] = JsonSerializer.SerializeToElement(
+            this._properties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,7 +43,7 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
     {
         get
         {
-            if (!this.Properties.TryGetValue("custom_routing", out JsonElement element))
+            if (!this._properties.TryGetValue("custom_routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
@@ -51,9 +51,9 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["custom_routing"] = JsonSerializer.SerializeToElement(
+            this._properties["custom_routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -61,21 +61,21 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
     }
 
     /// <summary>
-    /// Override channel routing with custom preferences. This will override any template
-    /// prefernces that are set, but a user can still customize their preferences
+    /// Override channel routing with custom preferences. This will override any
+    /// template prefernces that are set, but a user can still customize their preferences
     /// </summary>
     public bool? HasCustomRouting
     {
         get
         {
-            if (!this.Properties.TryGetValue("has_custom_routing", out JsonElement element))
+            if (!this._properties.TryGetValue("has_custom_routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["has_custom_routing"] = JsonSerializer.SerializeToElement(
+            this._properties["has_custom_routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -94,17 +94,24 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
 
     public SubscriptionTopicNew() { }
 
+    public SubscriptionTopicNew(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SubscriptionTopicNew(Dictionary<string, JsonElement> properties)
+    SubscriptionTopicNew(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static SubscriptionTopicNew FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static SubscriptionTopicNew FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
@@ -112,5 +119,48 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
         : this()
     {
         this.Status = status;
+    }
+}
+
+[JsonConverter(typeof(StatusConverter))]
+public enum Status
+{
+    OptedOut,
+    OptedIn,
+    Required,
+}
+
+sealed class StatusConverter : JsonConverter<Status>
+{
+    public override Status Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "OPTED_OUT" => Status.OptedOut,
+            "OPTED_IN" => Status.OptedIn,
+            "REQUIRED" => Status.Required,
+            _ => (Status)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Status.OptedOut => "OPTED_OUT",
+                Status.OptedIn => "OPTED_IN",
+                Status.Required => "REQUIRED",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

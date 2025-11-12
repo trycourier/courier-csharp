@@ -1,10 +1,11 @@
-using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Bulk.InboundBulkMessageProperties;
+using System = System;
 
 namespace Courier.Models.Bulk;
 
@@ -56,8 +57,8 @@ public record class InboundBulkMessage
     }
 
     public void Switch(
-        Action<InboundBulkTemplateMessage> template,
-        Action<InboundBulkContentMessage> content
+        System::Action<InboundBulkTemplateMessage> template,
+        System::Action<InboundBulkContentMessage> content
     )
     {
         switch (this.Value)
@@ -76,8 +77,8 @@ public record class InboundBulkMessage
     }
 
     public T Match<T>(
-        Func<InboundBulkTemplateMessage, T> template,
-        Func<InboundBulkContentMessage, T> content
+        System::Func<InboundBulkTemplateMessage, T> template,
+        System::Func<InboundBulkContentMessage, T> content
     )
     {
         return this.Value switch
@@ -90,6 +91,12 @@ public record class InboundBulkMessage
         };
     }
 
+    public static implicit operator InboundBulkMessage(InboundBulkTemplateMessage value) =>
+        new(value);
+
+    public static implicit operator InboundBulkMessage(InboundBulkContentMessage value) =>
+        new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)
@@ -100,14 +107,14 @@ public record class InboundBulkMessage
         }
     }
 
-    private record struct UnknownVariant(JsonElement value);
+    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
 {
     public override InboundBulkMessage? Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System::Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -125,7 +132,7 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
                 return new InboundBulkMessage(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -147,7 +154,7 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
                 return new InboundBulkMessage(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -157,7 +164,7 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
             );
         }
 
-        throw new AggregateException(exceptions);
+        throw new System::AggregateException(exceptions);
     }
 
     public override void Write(
@@ -165,6 +172,494 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
         InboundBulkMessage value,
         JsonSerializerOptions options
     )
+    {
+        object variant = value.Value;
+        JsonSerializer.Serialize(writer, variant, options);
+    }
+}
+
+[JsonConverter(typeof(ModelConverter<InboundBulkTemplateMessage>))]
+public sealed record class InboundBulkTemplateMessage
+    : ModelBase,
+        IFromRaw<InboundBulkTemplateMessage>
+{
+    public required string Template
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("template", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'template' cannot be null",
+                    new System::ArgumentOutOfRangeException("template", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'template' cannot be null",
+                    new System::ArgumentNullException("template")
+                );
+        }
+        init
+        {
+            this._properties["template"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public string? Brand
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("brand", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        init
+        {
+            this._properties["brand"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public Dictionary<string, JsonElement>? Data
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("data", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        init
+        {
+            this._properties["data"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public string? Event
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("event", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        init
+        {
+            this._properties["event"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public Dictionary<string, Dictionary<string, JsonElement>>? Locale
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("locale", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, JsonElement>>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        init
+        {
+            this._properties["locale"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public Dictionary<string, JsonElement>? Override
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("override", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        init
+        {
+            this._properties["override"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        _ = this.Template;
+        _ = this.Brand;
+        _ = this.Data;
+        _ = this.Event;
+        _ = this.Locale;
+        _ = this.Override;
+    }
+
+    public InboundBulkTemplateMessage() { }
+
+    public InboundBulkTemplateMessage(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    InboundBulkTemplateMessage(FrozenDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+#pragma warning restore CS8618
+
+    public static InboundBulkTemplateMessage FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
+    }
+
+    [SetsRequiredMembers]
+    public InboundBulkTemplateMessage(string template)
+        : this()
+    {
+        this.Template = template;
+    }
+}
+
+[JsonConverter(typeof(ModelConverter<InboundBulkContentMessage>))]
+public sealed record class InboundBulkContentMessage
+    : ModelBase,
+        IFromRaw<InboundBulkContentMessage>
+{
+    /// <summary>
+    /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+    /// </summary>
+    public required Content Content
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("content", out JsonElement element))
+                throw new CourierInvalidDataException(
+                    "'content' cannot be null",
+                    new System::ArgumentOutOfRangeException("content", "Missing required argument")
+                );
+
+            return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'content' cannot be null",
+                    new System::ArgumentNullException("content")
+                );
+        }
+        init
+        {
+            this._properties["content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public string? Brand
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("brand", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        init
+        {
+            this._properties["brand"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public Dictionary<string, JsonElement>? Data
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("data", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        init
+        {
+            this._properties["data"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public string? Event
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("event", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        init
+        {
+            this._properties["event"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public Dictionary<string, Dictionary<string, JsonElement>>? Locale
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("locale", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, JsonElement>>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        init
+        {
+            this._properties["locale"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public Dictionary<string, JsonElement>? Override
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("override", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        init
+        {
+            this._properties["override"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        this.Content.Validate();
+        _ = this.Brand;
+        _ = this.Data;
+        _ = this.Event;
+        _ = this.Locale;
+        _ = this.Override;
+    }
+
+    public InboundBulkContentMessage() { }
+
+    public InboundBulkContentMessage(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    InboundBulkContentMessage(FrozenDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+#pragma warning restore CS8618
+
+    public static InboundBulkContentMessage FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
+    }
+
+    [SetsRequiredMembers]
+    public InboundBulkContentMessage(Content content)
+        : this()
+    {
+        this.Content = content;
+    }
+}
+
+/// <summary>
+/// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+/// </summary>
+[JsonConverter(typeof(ContentConverter))]
+public record class Content
+{
+    public object Value { get; private init; }
+
+    public Content(ElementalContentSugar value)
+    {
+        Value = value;
+    }
+
+    public Content(ElementalContent value)
+    {
+        Value = value;
+    }
+
+    Content(UnknownVariant value)
+    {
+        Value = value;
+    }
+
+    public static Content CreateUnknownVariant(JsonElement value)
+    {
+        return new(new UnknownVariant(value));
+    }
+
+    public bool TryPickElementalContentSugar([NotNullWhen(true)] out ElementalContentSugar? value)
+    {
+        value = this.Value as ElementalContentSugar;
+        return value != null;
+    }
+
+    public bool TryPickElemental([NotNullWhen(true)] out ElementalContent? value)
+    {
+        value = this.Value as ElementalContent;
+        return value != null;
+    }
+
+    public void Switch(
+        System::Action<ElementalContentSugar> elementalContentSugar,
+        System::Action<ElementalContent> elemental
+    )
+    {
+        switch (this.Value)
+        {
+            case ElementalContentSugar value:
+                elementalContentSugar(value);
+                break;
+            case ElementalContent value:
+                elemental(value);
+                break;
+            default:
+                throw new CourierInvalidDataException("Data did not match any variant of Content");
+        }
+    }
+
+    public T Match<T>(
+        System::Func<ElementalContentSugar, T> elementalContentSugar,
+        System::Func<ElementalContent, T> elemental
+    )
+    {
+        return this.Value switch
+        {
+            ElementalContentSugar value => elementalContentSugar(value),
+            ElementalContent value => elemental(value),
+            _ => throw new CourierInvalidDataException("Data did not match any variant of Content"),
+        };
+    }
+
+    public static implicit operator Content(ElementalContentSugar value) => new(value);
+
+    public static implicit operator Content(ElementalContent value) => new(value);
+
+    public void Validate()
+    {
+        if (this.Value is UnknownVariant)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of Content");
+        }
+    }
+
+    record struct UnknownVariant(JsonElement value);
+}
+
+sealed class ContentConverter : JsonConverter<Content>
+{
+    public override Content? Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        List<CourierInvalidDataException> exceptions = [];
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(
+                ref reader,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new Content(deserialized);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            exceptions.Add(
+                new CourierInvalidDataException(
+                    "Data does not match union variant 'ElementalContentSugar'",
+                    e
+                )
+            );
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ElementalContent>(ref reader, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new Content(deserialized);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            exceptions.Add(
+                new CourierInvalidDataException(
+                    "Data does not match union variant 'ElementalContent'",
+                    e
+                )
+            );
+        }
+
+        throw new System::AggregateException(exceptions);
+    }
+
+    public override void Write(Utf8JsonWriter writer, Content value, JsonSerializerOptions options)
     {
         object variant = value.Value;
         JsonSerializer.Serialize(writer, variant, options);

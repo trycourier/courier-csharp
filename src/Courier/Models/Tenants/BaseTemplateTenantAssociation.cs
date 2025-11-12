@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -20,7 +21,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this.Properties.TryGetValue("id", out JsonElement element))
+            if (!this._properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -32,9 +33,9 @@ public sealed record class BaseTemplateTenantAssociation
                     new ArgumentNullException("id")
                 );
         }
-        set
+        init
         {
-            this.Properties["id"] = JsonSerializer.SerializeToElement(
+            this._properties["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -48,7 +49,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this.Properties.TryGetValue("created_at", out JsonElement element))
+            if (!this._properties.TryGetValue("created_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'created_at' cannot be null",
                     new ArgumentOutOfRangeException("created_at", "Missing required argument")
@@ -60,9 +61,9 @@ public sealed record class BaseTemplateTenantAssociation
                     new ArgumentNullException("created_at")
                 );
         }
-        set
+        init
         {
-            this.Properties["created_at"] = JsonSerializer.SerializeToElement(
+            this._properties["created_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -76,7 +77,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this.Properties.TryGetValue("published_at", out JsonElement element))
+            if (!this._properties.TryGetValue("published_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'published_at' cannot be null",
                     new ArgumentOutOfRangeException("published_at", "Missing required argument")
@@ -88,9 +89,9 @@ public sealed record class BaseTemplateTenantAssociation
                     new ArgumentNullException("published_at")
                 );
         }
-        set
+        init
         {
-            this.Properties["published_at"] = JsonSerializer.SerializeToElement(
+            this._properties["published_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -104,7 +105,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this.Properties.TryGetValue("updated_at", out JsonElement element))
+            if (!this._properties.TryGetValue("updated_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated_at' cannot be null",
                     new ArgumentOutOfRangeException("updated_at", "Missing required argument")
@@ -116,9 +117,9 @@ public sealed record class BaseTemplateTenantAssociation
                     new ArgumentNullException("updated_at")
                 );
         }
-        set
+        init
         {
-            this.Properties["updated_at"] = JsonSerializer.SerializeToElement(
+            this._properties["updated_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -132,7 +133,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this.Properties.TryGetValue("version", out JsonElement element))
+            if (!this._properties.TryGetValue("version", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'version' cannot be null",
                     new ArgumentOutOfRangeException("version", "Missing required argument")
@@ -144,9 +145,9 @@ public sealed record class BaseTemplateTenantAssociation
                     new ArgumentNullException("version")
                 );
         }
-        set
+        init
         {
-            this.Properties["version"] = JsonSerializer.SerializeToElement(
+            this._properties["version"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -164,18 +165,23 @@ public sealed record class BaseTemplateTenantAssociation
 
     public BaseTemplateTenantAssociation() { }
 
+    public BaseTemplateTenantAssociation(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BaseTemplateTenantAssociation(Dictionary<string, JsonElement> properties)
+    BaseTemplateTenantAssociation(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static BaseTemplateTenantAssociation FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

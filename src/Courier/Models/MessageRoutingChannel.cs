@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -44,7 +44,10 @@ public record class MessageRoutingChannel
         return value != null;
     }
 
-    public void Switch(Action<string> @string, Action<MessageRouting> messageRouting)
+    public void Switch(
+        System::Action<string> @string,
+        System::Action<MessageRouting> messageRouting
+    )
     {
         switch (this.Value)
         {
@@ -61,7 +64,10 @@ public record class MessageRoutingChannel
         }
     }
 
-    public T Match<T>(Func<string, T> @string, Func<MessageRouting, T> messageRouting)
+    public T Match<T>(
+        System::Func<string, T> @string,
+        System::Func<MessageRouting, T> messageRouting
+    )
     {
         return this.Value switch
         {
@@ -73,6 +79,10 @@ public record class MessageRoutingChannel
         };
     }
 
+    public static implicit operator MessageRoutingChannel(string value) => new(value);
+
+    public static implicit operator MessageRoutingChannel(MessageRouting value) => new(value);
+
     public void Validate()
     {
         if (this.Value is UnknownVariant)
@@ -83,14 +93,14 @@ public record class MessageRoutingChannel
         }
     }
 
-    private record struct UnknownVariant(JsonElement value);
+    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChannel>
 {
     public override MessageRoutingChannel? Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System::Type typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -105,7 +115,7 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
                 return new MessageRoutingChannel(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException(
@@ -123,14 +133,14 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
                 return new MessageRoutingChannel(deserialized);
             }
         }
-        catch (Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             exceptions.Add(
                 new CourierInvalidDataException("Data does not match union variant 'string'", e)
             );
         }
 
-        throw new AggregateException(exceptions);
+        throw new System::AggregateException(exceptions);
     }
 
     public override void Write(

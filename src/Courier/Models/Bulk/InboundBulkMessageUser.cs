@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -13,14 +14,19 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
     {
         get
         {
-            if (!this.Properties.TryGetValue("data", out JsonElement element))
+            if (!this._properties.TryGetValue("data", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["data"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._properties["data"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -31,7 +37,7 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
     {
         get
         {
-            if (!this.Properties.TryGetValue("preferences", out JsonElement element))
+            if (!this._properties.TryGetValue("preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<RecipientPreferences?>(
@@ -39,9 +45,9 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["preferences"] = JsonSerializer.SerializeToElement(
+            this._properties["preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -52,14 +58,19 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
     {
         get
         {
-            if (!this.Properties.TryGetValue("profile", out JsonElement element))
+            if (!this._properties.TryGetValue("profile", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["profile"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._properties["profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -70,14 +81,14 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
     {
         get
         {
-            if (!this.Properties.TryGetValue("recipient", out JsonElement element))
+            if (!this._properties.TryGetValue("recipient", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["recipient"] = JsonSerializer.SerializeToElement(
+            this._properties["recipient"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -88,14 +99,14 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
     {
         get
         {
-            if (!this.Properties.TryGetValue("to", out JsonElement element))
+            if (!this._properties.TryGetValue("to", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<UserRecipient?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["to"] = JsonSerializer.SerializeToElement(
+            this._properties["to"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -113,18 +124,23 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
 
     public InboundBulkMessageUser() { }
 
+    public InboundBulkMessageUser(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    InboundBulkMessageUser(Dictionary<string, JsonElement> properties)
+    InboundBulkMessageUser(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static InboundBulkMessageUser FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

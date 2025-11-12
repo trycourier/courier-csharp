@@ -1,125 +1,87 @@
 using System.Collections.Generic;
 using System.Text.Json;
-using Courier.Models;
-using Courier.Models.Audiences.FilterProperties;
-using Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationDelayStepProperties;
-using Courier.Models.Brands.BrandSettingsInAppProperties;
-using Courier.Models.Bulk.BulkListUsersResponseProperties.ItemProperties.IntersectionMember1Properties;
-using Courier.Models.ElementalActionNodeWithTypeProperties.IntersectionMember1Properties;
-using Courier.Models.MessageRoutingProperties;
-using Courier.Models.PreferenceProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.ChannelsProperties.ChannelsItemProperties;
-using Courier.Models.Send.SendMessageParamsProperties.MessageProperties.TimeoutProperties;
-using Courier.Models.Users.Tokens.UserTokenProperties;
-using AutomationCancelStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationCancelStepProperties;
-using AutomationFetchDataStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationFetchDataStepProperties;
-using AutomationInvokeStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationInvokeStepProperties;
-using AutomationSendListStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationSendListStepProperties;
-using AutomationSendStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationSendStepProperties;
-using AutomationUpdateProfileStepProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationUpdateProfileStepProperties;
-using BaseCheckProperties = Courier.Models.Notifications.BaseCheckProperties;
-using BlockProperties = Courier.Models.Notifications.NotificationGetContentProperties.BlockProperties;
-using FilterConfigProperties = Courier.Models.Audiences.FilterConfigProperties;
-using InboundTrackEventParamsProperties = Courier.Models.Inbound.InboundTrackEventParamsProperties;
-using IntersectionMember1Properties = Courier.Models.ElementalChannelNodeWithTypeProperties.IntersectionMember1Properties;
-using ItemUpdateParamsProperties = Courier.Models.Tenants.TenantDefaultPreferences.Items.ItemUpdateParamsProperties;
-using JobProperties = Courier.Models.Bulk.BulkRetrieveJobResponseProperties.JobProperties;
-using ListDeleteResponseProperties = Courier.Models.Profiles.Lists.ListDeleteResponseProperties;
-using ListSubscribeResponseProperties = Courier.Models.Profiles.Lists.ListSubscribeResponseProperties;
-using MessageDetailsProperties = Courier.Models.Messages.MessageDetailsProperties;
-using ProfileCreateResponseProperties = Courier.Models.Profiles.ProfileCreateResponseProperties;
-using ProfileReplaceResponseProperties = Courier.Models.Profiles.ProfileReplaceResponseProperties;
-using RoutingProperties = Courier.Models.Send.SendMessageParamsProperties.MessageProperties.RoutingProperties;
-using SubscriptionTopicNewProperties = Courier.Models.Tenants.SubscriptionTopicNewProperties;
-using TemplateListResponseProperties = Courier.Models.Tenants.Templates.TemplateListResponseProperties;
-using TenantAssociationProperties = Courier.Models.Tenants.TenantAssociationProperties;
-using TenantListResponseProperties = Courier.Models.Tenants.TenantListResponseProperties;
-using TenantListUsersResponseProperties = Courier.Models.Tenants.TenantListUsersResponseProperties;
-using TokenAddSingleParamsProperties = Courier.Models.Users.Tokens.TokenAddSingleParamsProperties;
-using WebhookProperties = Courier.Models.Automations.Invoke.InvokeInvokeAdHocParamsProperties.AutomationProperties.StepProperties.AutomationFetchDataStepProperties.WebhookProperties;
+using Courier.Models.Audiences;
+using Courier.Models.Brands;
+using Courier.Models.Inbound;
+using Courier.Models.Messages;
+using Courier.Models.Send;
+using Bulk = Courier.Models.Bulk;
+using Invoke = Courier.Models.Automations.Invoke;
+using Items = Courier.Models.Tenants.Preferences.Items;
+using Lists = Courier.Models.Profiles.Lists;
+using Models = Courier.Models;
+using Notifications = Courier.Models.Notifications;
+using Profiles = Courier.Models.Profiles;
+using Templates = Courier.Models.Tenants.Templates;
+using Tenants = Courier.Models.Users.Tenants;
+using Tokens = Courier.Models.Users.Tokens;
 
 namespace Courier.Core;
 
 public abstract record class ModelBase
 {
-    public Dictionary<string, JsonElement> Properties { get; set; } = [];
+    private protected FreezableDictionary<string, JsonElement> _properties = [];
+
+    public IReadOnlyDictionary<string, JsonElement> Properties
+    {
+        get { return this._properties.Freeze(); }
+    }
 
     internal static readonly JsonSerializerOptions SerializerOptions = new()
     {
         Converters =
         {
-            new ApiEnumConverter<string, Alignment>(),
-            new ApiEnumConverter<string, ChannelClassification>(),
-            new ApiEnumConverter<string, Type>(),
-            new ApiEnumConverter<string, IntersectionMember1Properties::Type>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.ElementalDividerNodeWithTypeProperties.IntersectionMember1Properties.Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.ElementalImageNodeWithTypeProperties.IntersectionMember1Properties.Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.ElementalMetaNodeWithTypeProperties.IntersectionMember1Properties.Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.ElementalQuoteNodeWithTypeProperties.IntersectionMember1Properties.Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.ElementalTextNodeWithTypeProperties.IntersectionMember1Properties.Type
-            >(),
-            new ApiEnumConverter<string, Method>(),
-            new ApiEnumConverter<string, Source>(),
-            new ApiEnumConverter<string, PreferenceStatus>(),
-            new ApiEnumConverter<string, TextStyle>(),
+            new ApiEnumConverter<string, Models::Alignment>(),
+            new ApiEnumConverter<string, Models::ChannelClassification>(),
+            new ApiEnumConverter<string, Models::Type>(),
+            new ApiEnumConverter<string, Models::TypeModel>(),
+            new ApiEnumConverter<string, Models::Type1>(),
+            new ApiEnumConverter<string, Models::Type2>(),
+            new ApiEnumConverter<string, Models::Type3>(),
+            new ApiEnumConverter<string, Models::Type4>(),
+            new ApiEnumConverter<string, Models::Type5>(),
+            new ApiEnumConverter<string, Models::Method>(),
+            new ApiEnumConverter<string, Models::Source>(),
+            new ApiEnumConverter<string, Models::PreferenceStatus>(),
+            new ApiEnumConverter<string, Models::TextStyle>(),
             new ApiEnumConverter<string, RoutingMethod>(),
-            new ApiEnumConverter<string, RoutingProperties::Method>(),
+            new ApiEnumConverter<string, Method>(),
             new ApiEnumConverter<string, Criteria>(),
             new ApiEnumConverter<string, Operator>(),
-            new ApiEnumConverter<string, FilterConfigProperties::Operator>(),
-            new ApiEnumConverter<string, Action>(),
-            new ApiEnumConverter<string, AutomationSendStepProperties::Action>(),
-            new ApiEnumConverter<string, AutomationSendListStepProperties::Action>(),
-            new ApiEnumConverter<string, AutomationUpdateProfileStepProperties::Action>(),
-            new ApiEnumConverter<string, AutomationUpdateProfileStepProperties::Merge>(),
-            new ApiEnumConverter<string, AutomationCancelStepProperties::Action>(),
-            new ApiEnumConverter<string, AutomationFetchDataStepProperties::Action>(),
-            new ApiEnumConverter<string, WebhookProperties::Method>(),
-            new ApiEnumConverter<string, AutomationFetchDataStepProperties::MergeStrategy>(),
-            new ApiEnumConverter<string, AutomationInvokeStepProperties::Action>(),
+            new ApiEnumConverter<string, OperatorModel>(),
+            new ApiEnumConverter<string, Invoke::Action>(),
+            new ApiEnumConverter<string, Invoke::ActionModel>(),
+            new ApiEnumConverter<string, Invoke::Action1>(),
+            new ApiEnumConverter<string, Invoke::Action2>(),
+            new ApiEnumConverter<string, Invoke::Merge>(),
+            new ApiEnumConverter<string, Invoke::Action3>(),
+            new ApiEnumConverter<string, Invoke::Action4>(),
+            new ApiEnumConverter<string, Invoke::Method>(),
+            new ApiEnumConverter<string, Invoke::MergeStrategy>(),
+            new ApiEnumConverter<string, Invoke::Action5>(),
             new ApiEnumConverter<string, Placement>(),
+            new ApiEnumConverter<string, Bulk::Status>(),
+            new ApiEnumConverter<string, Bulk::StatusModel>(),
+            new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, Status>(),
-            new ApiEnumConverter<string, JobProperties::Status>(),
-            new ApiEnumConverter<string, InboundTrackEventParamsProperties::Type>(),
-            new ApiEnumConverter<string, MessageDetailsProperties::Status>(),
-            new ApiEnumConverter<string, MessageDetailsProperties::Reason>(),
-            new ApiEnumConverter<string, BaseCheckProperties::Status>(),
-            new ApiEnumConverter<string, BaseCheckProperties::Type>(),
-            new ApiEnumConverter<string, BlockProperties::Type>(),
-            new ApiEnumConverter<string, ProfileCreateResponseProperties::Status>(),
-            new ApiEnumConverter<string, ProfileReplaceResponseProperties::Status>(),
-            new ApiEnumConverter<string, ListDeleteResponseProperties::Status>(),
-            new ApiEnumConverter<string, ListSubscribeResponseProperties::Status>(),
-            new ApiEnumConverter<string, SubscriptionTopicNewProperties::Status>(),
-            new ApiEnumConverter<string, TenantAssociationProperties::Type>(),
-            new ApiEnumConverter<string, TenantListResponseProperties::Type>(),
-            new ApiEnumConverter<string, TenantListUsersResponseProperties::Type>(),
-            new ApiEnumConverter<string, ItemUpdateParamsProperties::Status>(),
-            new ApiEnumConverter<string, TemplateListResponseProperties::Type>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Users.Tenants.TenantListResponseProperties.Type
-            >(),
-            new ApiEnumConverter<string, ProviderKey>(),
-            new ApiEnumConverter<
-                string,
-                global::Courier.Models.Users.Tokens.TokenRetrieveResponseProperties.IntersectionMember1Properties.Status
-            >(),
-            new ApiEnumConverter<string, TokenAddSingleParamsProperties::ProviderKey>(),
+            new ApiEnumConverter<string, Reason>(),
+            new ApiEnumConverter<string, Notifications::Status>(),
+            new ApiEnumConverter<string, Notifications::Type>(),
+            new ApiEnumConverter<string, Notifications::TypeModel>(),
+            new ApiEnumConverter<string, Profiles::Status>(),
+            new ApiEnumConverter<string, Profiles::StatusModel>(),
+            new ApiEnumConverter<string, Lists::Status>(),
+            new ApiEnumConverter<string, Lists::StatusModel>(),
+            new ApiEnumConverter<string, global::Courier.Models.Tenants.Status>(),
+            new ApiEnumConverter<string, global::Courier.Models.Tenants.Type>(),
+            new ApiEnumConverter<string, global::Courier.Models.Tenants.TypeModel>(),
+            new ApiEnumConverter<string, global::Courier.Models.Tenants.Type1>(),
+            new ApiEnumConverter<string, Items::Status>(),
+            new ApiEnumConverter<string, Templates::Type>(),
+            new ApiEnumConverter<string, Tenants::Type>(),
+            new ApiEnumConverter<string, Tokens::ProviderKeyModel>(),
+            new ApiEnumConverter<string, Tokens::Status>(),
+            new ApiEnumConverter<string, Tokens::ProviderKey>(),
         },
     };
 
@@ -138,5 +100,5 @@ public abstract record class ModelBase
 
 interface IFromRaw<T>
 {
-    static abstract T FromRawUnchecked(Dictionary<string, JsonElement> properties);
+    static abstract T FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties);
 }

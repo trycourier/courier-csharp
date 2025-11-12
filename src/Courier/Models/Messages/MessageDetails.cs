@@ -1,11 +1,11 @@
-using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Messages.MessageDetailsProperties;
+using System = System;
 
 namespace Courier.Models.Messages;
 
@@ -20,21 +20,21 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("id", out JsonElement element))
+            if (!this._properties.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new ArgumentOutOfRangeException("id", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'id' cannot be null",
-                    new ArgumentNullException("id")
+                    new System::ArgumentNullException("id")
                 );
         }
-        set
+        init
         {
-            this.Properties["id"] = JsonSerializer.SerializeToElement(
+            this._properties["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -42,24 +42,24 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     }
 
     /// <summary>
-    /// A UTC timestamp at which the recipient clicked on a tracked link for the first
-    /// time. Stored as a millisecond representation of the Unix epoch.
+    /// A UTC timestamp at which the recipient clicked on a tracked link for the
+    /// first time. Stored as a millisecond representation of the Unix epoch.
     /// </summary>
     public required long Clicked
     {
         get
         {
-            if (!this.Properties.TryGetValue("clicked", out JsonElement element))
+            if (!this._properties.TryGetValue("clicked", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'clicked' cannot be null",
-                    new ArgumentOutOfRangeException("clicked", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("clicked", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["clicked"] = JsonSerializer.SerializeToElement(
+            this._properties["clicked"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -67,24 +67,27 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     }
 
     /// <summary>
-    /// A UTC timestamp at which the Integration provider delivered the message.
-    /// Stored as a millisecond representation of the Unix epoch.
+    /// A UTC timestamp at which the Integration provider delivered the message. Stored
+    /// as a millisecond representation of the Unix epoch.
     /// </summary>
     public required long Delivered
     {
         get
         {
-            if (!this.Properties.TryGetValue("delivered", out JsonElement element))
+            if (!this._properties.TryGetValue("delivered", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'delivered' cannot be null",
-                    new ArgumentOutOfRangeException("delivered", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "delivered",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["delivered"] = JsonSerializer.SerializeToElement(
+            this._properties["delivered"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -92,24 +95,24 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     }
 
     /// <summary>
-    /// A UTC timestamp at which Courier received the message request. Stored as a
-    /// millisecond representation of the Unix epoch.
+    /// A UTC timestamp at which Courier received the message request. Stored as
+    /// a millisecond representation of the Unix epoch.
     /// </summary>
     public required long Enqueued
     {
         get
         {
-            if (!this.Properties.TryGetValue("enqueued", out JsonElement element))
+            if (!this._properties.TryGetValue("enqueued", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'enqueued' cannot be null",
-                    new ArgumentOutOfRangeException("enqueued", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("enqueued", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["enqueued"] = JsonSerializer.SerializeToElement(
+            this._properties["enqueued"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -123,21 +126,21 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("event", out JsonElement element))
+            if (!this._properties.TryGetValue("event", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'event' cannot be null",
-                    new ArgumentOutOfRangeException("event", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("event", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'event' cannot be null",
-                    new ArgumentNullException("event")
+                    new System::ArgumentNullException("event")
                 );
         }
-        set
+        init
         {
-            this.Properties["event"] = JsonSerializer.SerializeToElement(
+            this._properties["event"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -151,21 +154,24 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("notification", out JsonElement element))
+            if (!this._properties.TryGetValue("notification", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'notification' cannot be null",
-                    new ArgumentOutOfRangeException("notification", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "notification",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'notification' cannot be null",
-                    new ArgumentNullException("notification")
+                    new System::ArgumentNullException("notification")
                 );
         }
-        set
+        init
         {
-            this.Properties["notification"] = JsonSerializer.SerializeToElement(
+            this._properties["notification"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -180,17 +186,17 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("opened", out JsonElement element))
+            if (!this._properties.TryGetValue("opened", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'opened' cannot be null",
-                    new ArgumentOutOfRangeException("opened", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("opened", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["opened"] = JsonSerializer.SerializeToElement(
+            this._properties["opened"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -204,21 +210,24 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("recipient", out JsonElement element))
+            if (!this._properties.TryGetValue("recipient", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'recipient' cannot be null",
-                    new ArgumentOutOfRangeException("recipient", "Missing required argument")
+                    new System::ArgumentOutOfRangeException(
+                        "recipient",
+                        "Missing required argument"
+                    )
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'recipient' cannot be null",
-                    new ArgumentNullException("recipient")
+                    new System::ArgumentNullException("recipient")
                 );
         }
-        set
+        init
         {
-            this.Properties["recipient"] = JsonSerializer.SerializeToElement(
+            this._properties["recipient"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -233,17 +242,17 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("sent", out JsonElement element))
+            if (!this._properties.TryGetValue("sent", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'sent' cannot be null",
-                    new ArgumentOutOfRangeException("sent", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("sent", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["sent"] = JsonSerializer.SerializeToElement(
+            this._properties["sent"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -257,10 +266,10 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("status", out JsonElement element))
+            if (!this._properties.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
@@ -268,9 +277,9 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["status"] = JsonSerializer.SerializeToElement(
+            this._properties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -284,14 +293,14 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("error", out JsonElement element))
+            if (!this._properties.TryGetValue("error", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["error"] = JsonSerializer.SerializeToElement(
+            this._properties["error"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -305,7 +314,7 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         get
         {
-            if (!this.Properties.TryGetValue("reason", out JsonElement element))
+            if (!this._properties.TryGetValue("reason", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, Reason>?>(
@@ -313,9 +322,9 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["reason"] = JsonSerializer.SerializeToElement(
+            this._properties["reason"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -340,16 +349,169 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
 
     public MessageDetails() { }
 
+    public MessageDetails(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageDetails(Dictionary<string, JsonElement> properties)
+    MessageDetails(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static MessageDetails FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static MessageDetails FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
+    }
+}
+
+/// <summary>
+/// The current status of the message.
+/// </summary>
+[JsonConverter(typeof(StatusConverter))]
+public enum Status
+{
+    Canceled,
+    Clicked,
+    Delayed,
+    Delivered,
+    Digested,
+    Enqueued,
+    Filtered,
+    Opened,
+    Routed,
+    Sent,
+    Simulated,
+    Throttled,
+    Undeliverable,
+    Unmapped,
+    Unroutable,
+}
+
+sealed class StatusConverter : JsonConverter<Status>
+{
+    public override Status Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "CANCELED" => Status.Canceled,
+            "CLICKED" => Status.Clicked,
+            "DELAYED" => Status.Delayed,
+            "DELIVERED" => Status.Delivered,
+            "DIGESTED" => Status.Digested,
+            "ENQUEUED" => Status.Enqueued,
+            "FILTERED" => Status.Filtered,
+            "OPENED" => Status.Opened,
+            "ROUTED" => Status.Routed,
+            "SENT" => Status.Sent,
+            "SIMULATED" => Status.Simulated,
+            "THROTTLED" => Status.Throttled,
+            "UNDELIVERABLE" => Status.Undeliverable,
+            "UNMAPPED" => Status.Unmapped,
+            "UNROUTABLE" => Status.Unroutable,
+            _ => (Status)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Status.Canceled => "CANCELED",
+                Status.Clicked => "CLICKED",
+                Status.Delayed => "DELAYED",
+                Status.Delivered => "DELIVERED",
+                Status.Digested => "DIGESTED",
+                Status.Enqueued => "ENQUEUED",
+                Status.Filtered => "FILTERED",
+                Status.Opened => "OPENED",
+                Status.Routed => "ROUTED",
+                Status.Sent => "SENT",
+                Status.Simulated => "SIMULATED",
+                Status.Throttled => "THROTTLED",
+                Status.Undeliverable => "UNDELIVERABLE",
+                Status.Unmapped => "UNMAPPED",
+                Status.Unroutable => "UNROUTABLE",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+/// <summary>
+/// The reason for the current status of the message.
+/// </summary>
+[JsonConverter(typeof(ReasonConverter))]
+public enum Reason
+{
+    Bounced,
+    Failed,
+    Filtered,
+    NoChannels,
+    NoProviders,
+    OptInRequired,
+    ProviderError,
+    Unpublished,
+    Unsubscribed,
+}
+
+sealed class ReasonConverter : JsonConverter<Reason>
+{
+    public override Reason Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "BOUNCED" => Reason.Bounced,
+            "FAILED" => Reason.Failed,
+            "FILTERED" => Reason.Filtered,
+            "NO_CHANNELS" => Reason.NoChannels,
+            "NO_PROVIDERS" => Reason.NoProviders,
+            "OPT_IN_REQUIRED" => Reason.OptInRequired,
+            "PROVIDER_ERROR" => Reason.ProviderError,
+            "UNPUBLISHED" => Reason.Unpublished,
+            "UNSUBSCRIBED" => Reason.Unsubscribed,
+            _ => (Reason)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Reason value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Reason.Bounced => "BOUNCED",
+                Reason.Failed => "FAILED",
+                Reason.Filtered => "FILTERED",
+                Reason.NoChannels => "NO_CHANNELS",
+                Reason.NoProviders => "NO_PROVIDERS",
+                Reason.OptInRequired => "OPT_IN_REQUIRED",
+                Reason.ProviderError => "PROVIDER_ERROR",
+                Reason.Unpublished => "UNPUBLISHED",
+                Reason.Unsubscribed => "UNSUBSCRIBED",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

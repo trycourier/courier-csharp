@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
 using Courier.Core;
@@ -19,14 +21,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("archived", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("archived", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["archived"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["archived"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -40,14 +42,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("cursor", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("cursor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["cursor"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["cursor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -61,14 +63,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("enqueued_after", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("enqueued_after", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["enqueued_after"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["enqueued_after"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -82,14 +84,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("event", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("event", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["event"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["event"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -103,14 +105,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("list", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("list", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["list"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["list"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -125,14 +127,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("messageId", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("messageId", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["messageId"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["messageId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -146,14 +148,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("notification", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("notification", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["notification"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["notification"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -161,21 +163,26 @@ public sealed record class MessageListParams : ParamsBase
     }
 
     /// <summary>
-    /// The key assocated to the provider you want to filter on. E.g., sendgrid,
-    /// inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
+    /// The key assocated to the provider you want to filter on. E.g., sendgrid, inbox,
+    /// twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
     /// </summary>
     public List<string?>? Provider
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("provider", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("provider", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["provider"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._queryProperties["provider"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -189,14 +196,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("recipient", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("recipient", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["recipient"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["recipient"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -211,14 +218,19 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("status", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("status", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["status"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._queryProperties["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -233,14 +245,19 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("tag", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("tag", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["tag"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._queryProperties["tag"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -255,14 +272,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("tags", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("tags", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["tags"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["tags"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -276,14 +293,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("tenant_id", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("tenant_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["tenant_id"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["tenant_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -297,31 +314,65 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this.QueryProperties.TryGetValue("traceId", out JsonElement element))
+            if (!this._queryProperties.TryGetValue("traceId", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.QueryProperties["traceId"] = JsonSerializer.SerializeToElement(
+            this._queryProperties["traceId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
     }
 
-    public override Uri Url(ICourierClient client)
+    public MessageListParams() { }
+
+    public MessageListParams(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties
+    )
     {
-        return new UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/messages")
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    MessageListParams(
+        FrozenDictionary<string, JsonElement> headerProperties,
+        FrozenDictionary<string, JsonElement> queryProperties
+    )
+    {
+        this._headerProperties = [.. headerProperties];
+        this._queryProperties = [.. queryProperties];
+    }
+#pragma warning restore CS8618
+
+    public static MessageListParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> headerProperties,
+        IReadOnlyDictionary<string, JsonElement> queryProperties
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(headerProperties),
+            FrozenDictionary.ToFrozenDictionary(queryProperties)
+        );
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/messages")
         {
-            Query = this.QueryString(client),
+            Query = this.QueryString(options),
         }.Uri;
     }
 
-    internal override void AddHeadersToRequest(HttpRequestMessage request, ICourierClient client)
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
-        ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, options);
         foreach (var item in this.HeaderProperties)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);

@@ -3,19 +3,48 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
-using Web = System.Web;
+using System.Web;
 
 namespace Courier.Core;
 
 public abstract record class ParamsBase
 {
-    public Dictionary<string, JsonElement> QueryProperties { get; set; } = [];
+    static readonly IReadOnlyDictionary<string, string> s_defaultHeaders;
 
-    public Dictionary<string, JsonElement> HeaderProperties { get; set; } = [];
+    static ParamsBase()
+    {
+        var runtime = GetRuntime();
+        s_defaultHeaders = new Dictionary<string, string>
+        {
+            ["User-Agent"] = GetUserAgent(),
+            ["X-Stainless-Arch"] = GetOSArch(),
+            ["X-Stainless-Lang"] = "csharp",
+            ["X-Stainless-OS"] = GetOS(),
+            ["X-Stainless-Package-Version"] = GetPackageVersion(),
+            ["X-Stainless-Runtime"] = runtime.Name,
+            ["X-Stainless-Runtime-Version"] = runtime.Version,
+        };
+    }
 
-    public abstract Uri Url(ICourierClient client);
+    private protected FreezableDictionary<string, JsonElement> _queryProperties = [];
+
+    public IReadOnlyDictionary<string, JsonElement> QueryProperties
+    {
+        get { return this._queryProperties.Freeze(); }
+    }
+
+    private protected FreezableDictionary<string, JsonElement> _headerProperties = [];
+
+    public IReadOnlyDictionary<string, JsonElement> HeaderProperties
+    {
+        get { return this._headerProperties.Freeze(); }
+    }
+
+    public abstract Uri Url(ClientOptions options);
 
     protected static void AddQueryElementToCollection(
         NameValueCollection collection,
@@ -121,7 +150,7 @@ public abstract record class ParamsBase
         }
     }
 
-    protected string QueryString(ICourierClient client)
+    protected string QueryString(ClientOptions options)
     {
         NameValueCollection collection = [];
         foreach (var item in this.QueryProperties)
@@ -139,26 +168,92 @@ public abstract record class ParamsBase
                     sb.Append('&');
                 }
                 first = false;
-                sb.Append(Web::HttpUtility.UrlEncode(key));
+                sb.Append(HttpUtility.UrlEncode(key));
                 sb.Append('=');
-                sb.Append(Web::HttpUtility.UrlEncode(value));
+                sb.Append(HttpUtility.UrlEncode(value));
             }
         }
         return sb.ToString();
     }
 
-    internal abstract void AddHeadersToRequest(HttpRequestMessage request, ICourierClient client);
+    internal abstract void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options);
 
     internal virtual StringContent? BodyContent()
     {
         return null;
     }
 
-    protected static void AddDefaultHeaders(HttpRequestMessage request, ICourierClient client)
+    protected static void AddDefaultHeaders(HttpRequestMessage request, ClientOptions options)
     {
-        if (client.APIKey != null)
+        foreach (var header in s_defaultHeaders)
         {
-            request.Headers.Add("Authorization", string.Format("Bearer {0}", client.APIKey));
+            request.Headers.Add(header.Key, header.Value);
         }
+
+        if (options.APIKey != null)
+        {
+            request.Headers.Add("Authorization", string.Format("Bearer {0}", options.APIKey));
+        }
+        request.Headers.Add("X-Stainless-Timeout", options.Timeout.TotalSeconds.ToString());
     }
+
+    static string GetUserAgent() => $"{typeof(CourierClient).Name}/C# {GetPackageVersion()}";
+
+    static string GetOSArch() =>
+        RuntimeInformation.OSArchitecture switch
+        {
+            Architecture.X86 => "x32",
+            Architecture.X64 => "x64",
+            Architecture.Arm => "arm",
+            Architecture.Arm64 or Architecture.Armv6 => "arm64",
+            Architecture.Wasm
+            or Architecture.S390x
+            or Architecture.LoongArch64
+            or Architecture.Ppc64le => $"other:{RuntimeInformation.OSArchitecture}",
+            _ => "unknown",
+        };
+
+    static string GetOS()
+    {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            return "Windows";
+        }
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            return "MacOS";
+        }
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            return "Linux";
+        }
+        return $"Other:{RuntimeInformation.OSDescription}";
+    }
+
+    static string GetPackageVersion() =>
+        Assembly
+            .GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion
+        ?? "unknown";
+
+    static Runtime GetRuntime()
+    {
+        var runtimeDescription = RuntimeInformation.FrameworkDescription;
+        var lastSpaceIndex = runtimeDescription.LastIndexOf(' ');
+        if (lastSpaceIndex == -1)
+        {
+            return new() { Name = runtimeDescription, Version = "unknown" };
+        }
+
+        var name = runtimeDescription[..lastSpaceIndex].Trim();
+        var version = runtimeDescription[(lastSpaceIndex + 1)..].Trim();
+        return new()
+        {
+            Name = name.Length == 0 ? "unknown" : name,
+            Version = version.Length == 0 ? "unknown" : version,
+        };
+    }
+
+    readonly record struct Runtime(string Name, string Version);
 }

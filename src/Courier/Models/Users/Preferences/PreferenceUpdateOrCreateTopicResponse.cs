@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -17,7 +18,7 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse
     {
         get
         {
-            if (!this.Properties.TryGetValue("message", out JsonElement element))
+            if (!this._properties.TryGetValue("message", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'message' cannot be null",
                     new ArgumentOutOfRangeException("message", "Missing required argument")
@@ -29,9 +30,9 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse
                     new ArgumentNullException("message")
                 );
         }
-        set
+        init
         {
-            this.Properties["message"] = JsonSerializer.SerializeToElement(
+            this._properties["message"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -45,19 +46,26 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse
 
     public PreferenceUpdateOrCreateTopicResponse() { }
 
+    public PreferenceUpdateOrCreateTopicResponse(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PreferenceUpdateOrCreateTopicResponse(Dictionary<string, JsonElement> properties)
+    PreferenceUpdateOrCreateTopicResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static PreferenceUpdateOrCreateTopicResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]

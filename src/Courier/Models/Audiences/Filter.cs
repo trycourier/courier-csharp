@@ -1,11 +1,11 @@
-using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Models.Audiences.FilterProperties;
+using System = System;
 
 namespace Courier.Models.Audiences;
 
@@ -19,10 +19,10 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
     {
         get
         {
-            if (!this.Properties.TryGetValue("operator", out JsonElement element))
+            if (!this._properties.TryGetValue("operator", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'operator' cannot be null",
-                    new ArgumentOutOfRangeException("operator", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("operator", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Operator>>(
@@ -30,9 +30,9 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["operator"] = JsonSerializer.SerializeToElement(
+            this._properties["operator"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -46,21 +46,21 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
     {
         get
         {
-            if (!this.Properties.TryGetValue("path", out JsonElement element))
+            if (!this._properties.TryGetValue("path", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'path' cannot be null",
-                    new ArgumentOutOfRangeException("path", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("path", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'path' cannot be null",
-                    new ArgumentNullException("path")
+                    new System::ArgumentNullException("path")
                 );
         }
-        set
+        init
         {
-            this.Properties["path"] = JsonSerializer.SerializeToElement(
+            this._properties["path"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -74,21 +74,21 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
     {
         get
         {
-            if (!this.Properties.TryGetValue("value", out JsonElement element))
+            if (!this._properties.TryGetValue("value", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'value' cannot be null",
-                    new ArgumentOutOfRangeException("value", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("value", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'value' cannot be null",
-                    new ArgumentNullException("value")
+                    new System::ArgumentNullException("value")
                 );
         }
-        set
+        init
         {
-            this.Properties["value"] = JsonSerializer.SerializeToElement(
+            this._properties["value"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -104,16 +104,103 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
 
     public Filter() { }
 
+    public Filter(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Filter(Dictionary<string, JsonElement> properties)
+    Filter(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Filter FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
+    }
+}
+
+/// <summary>
+/// The operator to use for filtering
+/// </summary>
+[JsonConverter(typeof(OperatorConverter))]
+public enum Operator
+{
+    EndsWith,
+    Eq,
+    Exists,
+    Gt,
+    Gte,
+    Includes,
+    IsAfter,
+    IsBefore,
+    Lt,
+    Lte,
+    Neq,
+    Omit,
+    StartsWith,
+    And,
+    Or,
+}
+
+sealed class OperatorConverter : JsonConverter<Operator>
+{
+    public override Operator Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "ENDS_WITH" => Operator.EndsWith,
+            "EQ" => Operator.Eq,
+            "EXISTS" => Operator.Exists,
+            "GT" => Operator.Gt,
+            "GTE" => Operator.Gte,
+            "INCLUDES" => Operator.Includes,
+            "IS_AFTER" => Operator.IsAfter,
+            "IS_BEFORE" => Operator.IsBefore,
+            "LT" => Operator.Lt,
+            "LTE" => Operator.Lte,
+            "NEQ" => Operator.Neq,
+            "OMIT" => Operator.Omit,
+            "STARTS_WITH" => Operator.StartsWith,
+            "AND" => Operator.And,
+            "OR" => Operator.Or,
+            _ => (Operator)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Operator value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Operator.EndsWith => "ENDS_WITH",
+                Operator.Eq => "EQ",
+                Operator.Exists => "EXISTS",
+                Operator.Gt => "GT",
+                Operator.Gte => "GTE",
+                Operator.Includes => "INCLUDES",
+                Operator.IsAfter => "IS_AFTER",
+                Operator.IsBefore => "IS_BEFORE",
+                Operator.Lt => "LT",
+                Operator.Lte => "LTE",
+                Operator.Neq => "NEQ",
+                Operator.Omit => "OMIT",
+                Operator.StartsWith => "STARTS_WITH",
+                Operator.And => "AND",
+                Operator.Or => "OR",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

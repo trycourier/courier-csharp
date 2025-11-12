@@ -1,11 +1,11 @@
-using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 using Courier.Exceptions;
-using TenantListUsersResponseProperties = Courier.Models.Tenants.TenantListUsersResponseProperties;
+using System = System;
 
 namespace Courier.Models.Tenants;
 
@@ -19,17 +19,17 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     {
         get
         {
-            if (!this.Properties.TryGetValue("has_more", out JsonElement element))
+            if (!this._properties.TryGetValue("has_more", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'has_more' cannot be null",
-                    new ArgumentOutOfRangeException("has_more", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("has_more", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["has_more"] = JsonSerializer.SerializeToElement(
+            this._properties["has_more"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -39,23 +39,23 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     /// <summary>
     /// Always set to `list`. Represents the type of this object.
     /// </summary>
-    public required ApiEnum<string, TenantListUsersResponseProperties::Type> Type
+    public required ApiEnum<string, global::Courier.Models.Tenants.Type1> Type
     {
         get
         {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
+            if (!this._properties.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
-                    new ArgumentOutOfRangeException("type", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<
-                ApiEnum<string, TenantListUsersResponseProperties::Type>
+                ApiEnum<string, global::Courier.Models.Tenants.Type1>
             >(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
+            this._properties["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -69,21 +69,21 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     {
         get
         {
-            if (!this.Properties.TryGetValue("url", out JsonElement element))
+            if (!this._properties.TryGetValue("url", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'url' cannot be null",
-                    new ArgumentOutOfRangeException("url", "Missing required argument")
+                    new System::ArgumentOutOfRangeException("url", "Missing required argument")
                 );
 
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new CourierInvalidDataException(
                     "'url' cannot be null",
-                    new ArgumentNullException("url")
+                    new System::ArgumentNullException("url")
                 );
         }
-        set
+        init
         {
-            this.Properties["url"] = JsonSerializer.SerializeToElement(
+            this._properties["url"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -98,14 +98,14 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     {
         get
         {
-            if (!this.Properties.TryGetValue("cursor", out JsonElement element))
+            if (!this._properties.TryGetValue("cursor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["cursor"] = JsonSerializer.SerializeToElement(
+            this._properties["cursor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -116,7 +116,7 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     {
         get
         {
-            if (!this.Properties.TryGetValue("items", out JsonElement element))
+            if (!this._properties.TryGetValue("items", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<TenantAssociation>?>(
@@ -124,9 +124,9 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["items"] = JsonSerializer.SerializeToElement(
+            this._properties["items"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -141,14 +141,14 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     {
         get
         {
-            if (!this.Properties.TryGetValue("next_url", out JsonElement element))
+            if (!this._properties.TryGetValue("next_url", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["next_url"] = JsonSerializer.SerializeToElement(
+            this._properties["next_url"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -170,18 +170,67 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
 
     public TenantListUsersResponse() { }
 
+    public TenantListUsersResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TenantListUsersResponse(Dictionary<string, JsonElement> properties)
+    TenantListUsersResponse(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static TenantListUsersResponse FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
+    }
+}
+
+/// <summary>
+/// Always set to `list`. Represents the type of this object.
+/// </summary>
+[JsonConverter(typeof(global::Courier.Models.Tenants.Type1Converter))]
+public enum Type1
+{
+    List,
+}
+
+sealed class Type1Converter : JsonConverter<global::Courier.Models.Tenants.Type1>
+{
+    public override global::Courier.Models.Tenants.Type1 Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "list" => global::Courier.Models.Tenants.Type1.List,
+            _ => (global::Courier.Models.Tenants.Type1)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::Courier.Models.Tenants.Type1 value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::Courier.Models.Tenants.Type1.List => "list",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

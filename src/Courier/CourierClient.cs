@@ -1,51 +1,67 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Exceptions;
-using Courier.Services.Audiences;
-using Courier.Services.AuditEvents;
-using Courier.Services.Auth;
-using Courier.Services.Automations;
-using Courier.Services.Brands;
-using Courier.Services.Bulk;
-using Courier.Services.Inbound;
-using Courier.Services.Lists;
-using Courier.Services.Messages;
-using Courier.Services.Notifications;
-using Courier.Services.Profiles;
-using Courier.Services.Requests;
-using Courier.Services.Send;
-using Courier.Services.Tenants;
-using Courier.Services.Translations;
-using Courier.Services.Users;
+using Courier.Services;
 
 namespace Courier;
 
 public sealed class CourierClient : ICourierClient
 {
-    public HttpClient HttpClient { get; init; } = new();
+    static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
 
-    Lazy<Uri> _baseUrl = new(() =>
-        new Uri(Environment.GetEnvironmentVariable("COURIER_BASE_URL") ?? "https://api.courier.com")
-    );
-    public Uri BaseUrl
+    static Random Random
     {
-        get { return _baseUrl.Value; }
-        init { _baseUrl = new(() => value); }
+        get { return _threadLocalRandom.Value!; }
     }
 
-    Lazy<string> _apiKey = new(() =>
-        Environment.GetEnvironmentVariable("COURIER_API_KEY")
-        ?? throw new CourierInvalidDataException(
-            string.Format("{0} cannot be null", nameof(APIKey)),
-            new ArgumentNullException(nameof(APIKey))
-        )
-    );
+    readonly ClientOptions _options;
+
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
+    public Uri BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    public int MaxRetries
+    {
+        get { return this._options.MaxRetries; }
+        init { this._options.MaxRetries = value; }
+    }
+
+    public TimeSpan Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
     public string APIKey
     {
-        get { return _apiKey.Value; }
-        init { _apiKey = new(() => value); }
+        get { return this._options.APIKey; }
+        init { this._options.APIKey = value; }
+    }
+
+    public ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new CourierClient(modifier(this._options));
     }
 
     readonly Lazy<ISendService> _send;
@@ -144,48 +160,193 @@ public sealed class CourierClient : ICourierClient
         get { return _users.Value; }
     }
 
-    public async Task<HttpResponse> Execute<T>(HttpRequest<T> request)
+    public async Task<HttpResponse> Execute<T>(
+        HttpRequest<T> request,
+        CancellationToken cancellationToken = default
+    )
         where T : ParamsBase
     {
-        using HttpRequestMessage requestMessage = new(request.Method, request.Params.Url(this))
+        if (this.MaxRetries <= 0)
+        {
+            return await ExecuteOnce(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        var retries = 0;
+        while (true)
+        {
+            HttpResponse? response = null;
+            try
+            {
+                response = await ExecuteOnce(request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                if (++retries > this.MaxRetries || !ShouldRetry(e))
+                {
+                    throw;
+                }
+            }
+
+            if (response != null && (++retries > this.MaxRetries || !ShouldRetry(response)))
+            {
+                if (response.Message.IsSuccessStatusCode)
+                {
+                    return response;
+                }
+
+                try
+                {
+                    throw CourierExceptionFactory.CreateApiException(
+                        response.Message.StatusCode,
+                        await response.ReadAsString(cancellationToken).ConfigureAwait(false)
+                    );
+                }
+                catch (HttpRequestException e)
+                {
+                    throw new CourierIOException("I/O Exception", e);
+                }
+                finally
+                {
+                    response.Dispose();
+                }
+            }
+
+            var backoff = ComputeRetryBackoff(retries, response);
+            response?.Dispose();
+            await Task.Delay(backoff, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    async Task<HttpResponse> ExecuteOnce<T>(
+        HttpRequest<T> request,
+        CancellationToken cancellationToken = default
+    )
+        where T : ParamsBase
+    {
+        using HttpRequestMessage requestMessage = new(
+            request.Method,
+            request.Params.Url(this._options)
+        )
         {
             Content = request.Params.BodyContent(),
         };
-        request.Params.AddHeadersToRequest(requestMessage, this);
+        request.Params.AddHeadersToRequest(requestMessage, this._options);
+        using CancellationTokenSource timeoutCts = new(this.Timeout);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(
+            timeoutCts.Token,
+            cancellationToken
+        );
         HttpResponseMessage responseMessage;
         try
         {
             responseMessage = await this
-                .HttpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead)
+                .HttpClient.SendAsync(
+                    requestMessage,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    cts.Token
+                )
                 .ConfigureAwait(false);
         }
-        catch (HttpRequestException e1)
+        catch (HttpRequestException e)
         {
-            throw new CourierIOException("I/O exception", e1);
+            throw new CourierIOException("I/O exception", e);
         }
-        if (!responseMessage.IsSuccessStatusCode)
+        return new() { Message = responseMessage, CancellationToken = cts.Token };
+    }
+
+    static TimeSpan ComputeRetryBackoff(int retries, HttpResponse? response)
+    {
+        TimeSpan? apiBackoff = ParseRetryAfterMsHeader(response) ?? ParseRetryAfterHeader(response);
+        if (apiBackoff != null && apiBackoff < TimeSpan.FromMinutes(1))
         {
-            try
-            {
-                throw CourierExceptionFactory.CreateApiException(
-                    responseMessage.StatusCode,
-                    await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false)
-                );
-            }
-            catch (HttpRequestException e)
-            {
-                throw new CourierIOException("I/O Exception", e);
-            }
-            finally
-            {
-                responseMessage.Dispose();
-            }
+            // If the API asks us to wait a certain amount of time (and it's a reasonable amount), then just
+            // do what it says.
+            return (TimeSpan)apiBackoff;
         }
-        return new() { Message = responseMessage };
+
+        // Apply exponential backoff, but not more than the max.
+        var backoffSeconds = Math.Min(0.5 * Math.Pow(2.0, retries - 1), 8.0);
+        var jitter = 1.0 - 0.25 * Random.NextDouble();
+        return TimeSpan.FromSeconds(backoffSeconds * jitter);
+    }
+
+    static TimeSpan? ParseRetryAfterMsHeader(HttpResponse? response)
+    {
+        IEnumerable<string>? headerValues = null;
+        response?.Message.Headers.TryGetValues("Retry-After-Ms", out headerValues);
+        var headerValue = headerValues == null ? null : Enumerable.FirstOrDefault(headerValues);
+        if (headerValue == null)
+        {
+            return null;
+        }
+
+        if (float.TryParse(headerValue.AsSpan(), out var retryAfterMs))
+        {
+            return TimeSpan.FromMilliseconds(retryAfterMs);
+        }
+
+        return null;
+    }
+
+    static TimeSpan? ParseRetryAfterHeader(HttpResponse? response)
+    {
+        IEnumerable<string>? headerValues = null;
+        response?.Message.Headers.TryGetValues("Retry-After", out headerValues);
+        var headerValue = headerValues == null ? null : Enumerable.FirstOrDefault(headerValues);
+        if (headerValue == null)
+        {
+            return null;
+        }
+
+        if (float.TryParse(headerValue.AsSpan(), out var retryAfterSeconds))
+        {
+            return TimeSpan.FromSeconds(retryAfterSeconds);
+        }
+        else if (DateTimeOffset.TryParse(headerValue.AsSpan(), out var retryAfterDate))
+        {
+            return retryAfterDate - DateTimeOffset.Now;
+        }
+
+        return null;
+    }
+
+    static bool ShouldRetry(HttpResponse response)
+    {
+        if (
+            response.Message.Headers.TryGetValues("X-Should-Retry", out var headerValues)
+            && bool.TryParse(Enumerable.FirstOrDefault(headerValues), out var shouldRetry)
+        )
+        {
+            // If the server explicitly says whether to retry, then we obey.
+            return shouldRetry;
+        }
+
+        return response.Message.StatusCode switch
+        {
+            // Retry on request timeouts
+            HttpStatusCode.RequestTimeout
+            or
+            // Retry on lock timeouts
+            HttpStatusCode.Conflict
+            or
+            // Retry on rate limits
+            HttpStatusCode.TooManyRequests
+            or
+            // Retry internal errors
+            >= HttpStatusCode.InternalServerError => true,
+            _ => false,
+        };
+    }
+
+    static bool ShouldRetry(Exception e)
+    {
+        return e is IOException || e is CourierIOException;
     }
 
     public CourierClient()
     {
+        _options = new();
+
         _send = new(() => new SendService(this));
         _audiences = new(() => new AudienceService(this));
         _auditEvents = new(() => new AuditEventService(this));
@@ -202,5 +363,11 @@ public sealed class CourierClient : ICourierClient
         _tenants = new(() => new TenantService(this));
         _translations = new(() => new TranslationService(this));
         _users = new(() => new UserService(this));
+    }
+
+    public CourierClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
     }
 }

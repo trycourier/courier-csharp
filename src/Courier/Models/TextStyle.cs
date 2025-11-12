@@ -1,7 +1,7 @@
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -18,7 +18,7 @@ sealed class TextStyleConverter : JsonConverter<TextStyle>
 {
     public override TextStyle Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System::Type typeToConvert,
         JsonSerializerOptions options
     )
     {

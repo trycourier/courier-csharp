@@ -1,9 +1,11 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Models.ElementalMetaNodeWithTypeProperties.IntersectionMember1Properties;
+using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -16,14 +18,14 @@ public sealed record class ElementalMetaNodeWithType
     {
         get
         {
-            if (!this.Properties.TryGetValue("channels", out JsonElement element))
+            if (!this._properties.TryGetValue("channels", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["channels"] = JsonSerializer.SerializeToElement(
+            this._properties["channels"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -34,14 +36,14 @@ public sealed record class ElementalMetaNodeWithType
     {
         get
         {
-            if (!this.Properties.TryGetValue("if", out JsonElement element))
+            if (!this._properties.TryGetValue("if", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["if"] = JsonSerializer.SerializeToElement(
+            this._properties["if"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -52,14 +54,14 @@ public sealed record class ElementalMetaNodeWithType
     {
         get
         {
-            if (!this.Properties.TryGetValue("loop", out JsonElement element))
+            if (!this._properties.TryGetValue("loop", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["loop"] = JsonSerializer.SerializeToElement(
+            this._properties["loop"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -70,35 +72,40 @@ public sealed record class ElementalMetaNodeWithType
     {
         get
         {
-            if (!this.Properties.TryGetValue("ref", out JsonElement element))
+            if (!this._properties.TryGetValue("ref", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["ref"] = JsonSerializer.SerializeToElement(
+            this._properties["ref"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
         }
     }
 
-    public ApiEnum<string, Type>? Type
+    public ApiEnum<string, Type3>? Type
     {
         get
         {
-            if (!this.Properties.TryGetValue("type", out JsonElement element))
+            if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type>?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, Type3>?>(
                 element,
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["type"] = JsonSerializer.SerializeToElement(
+            if (value == null)
+            {
+                return;
+            }
+
+            this._properties["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -118,10 +125,7 @@ public sealed record class ElementalMetaNodeWithType
 
     public override void Validate()
     {
-        foreach (var item in this.Channels ?? [])
-        {
-            _ = item;
-        }
+        _ = this.Channels;
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
@@ -130,18 +134,117 @@ public sealed record class ElementalMetaNodeWithType
 
     public ElementalMetaNodeWithType() { }
 
+    public ElementalMetaNodeWithType(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalMetaNodeWithType(Dictionary<string, JsonElement> properties)
+    ElementalMetaNodeWithType(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
     public static ElementalMetaNodeWithType FromRawUnchecked(
-        Dictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> properties
     )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
+    }
+}
+
+[JsonConverter(typeof(ModelConverter<IntersectionMember14>))]
+public sealed record class IntersectionMember14 : ModelBase, IFromRaw<IntersectionMember14>
+{
+    public ApiEnum<string, Type3>? Type
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("type", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<ApiEnum<string, Type3>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public override void Validate()
+    {
+        this.Type?.Validate();
+    }
+
+    public IntersectionMember14() { }
+
+    public IntersectionMember14(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    IntersectionMember14(FrozenDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+#pragma warning restore CS8618
+
+    public static IntersectionMember14 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
+    }
+}
+
+[JsonConverter(typeof(Type3Converter))]
+public enum Type3
+{
+    Meta,
+}
+
+sealed class Type3Converter : JsonConverter<Type3>
+{
+    public override Type3 Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "meta" => Type3.Meta,
+            _ => (Type3)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Type3 value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Type3.Meta => "meta",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

@@ -1,7 +1,7 @@
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models;
 
@@ -20,7 +20,7 @@ sealed class ChannelClassificationConverter : JsonConverter<ChannelClassificatio
 {
     public override ChannelClassification Read(
         ref Utf8JsonReader reader,
-        Type typeToConvert,
+        System::Type typeToConvert,
         JsonSerializerOptions options
     )
     {

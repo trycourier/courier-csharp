@@ -1,23 +1,9 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
-using Courier.Services.Audiences;
-using Courier.Services.AuditEvents;
-using Courier.Services.Auth;
-using Courier.Services.Automations;
-using Courier.Services.Brands;
-using Courier.Services.Bulk;
-using Courier.Services.Inbound;
-using Courier.Services.Lists;
-using Courier.Services.Messages;
-using Courier.Services.Notifications;
-using Courier.Services.Profiles;
-using Courier.Services.Requests;
-using Courier.Services.Send;
-using Courier.Services.Tenants;
-using Courier.Services.Translations;
-using Courier.Services.Users;
+using Courier.Services;
 
 namespace Courier;
 
@@ -27,7 +13,15 @@ public interface ICourierClient
 
     Uri BaseUrl { get; init; }
 
+    bool ResponseValidation { get; init; }
+
+    int MaxRetries { get; init; }
+
+    TimeSpan Timeout { get; init; }
+
     string APIKey { get; init; }
+
+    ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     ISendService Send { get; }
 
@@ -61,6 +55,9 @@ public interface ICourierClient
 
     IUserService Users { get; }
 
-    Task<HttpResponse> Execute<T>(HttpRequest<T> request)
+    Task<HttpResponse> Execute<T>(
+        HttpRequest<T> request,
+        CancellationToken cancellationToken = default
+    )
         where T : ParamsBase;
 }

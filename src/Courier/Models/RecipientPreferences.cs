@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -13,7 +14,7 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
     {
         get
         {
-            if (!this.Properties.TryGetValue("categories", out JsonElement element))
+            if (!this._properties.TryGetValue("categories", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
@@ -21,9 +22,9 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["categories"] = JsonSerializer.SerializeToElement(
+            this._properties["categories"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -34,7 +35,7 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
     {
         get
         {
-            if (!this.Properties.TryGetValue("notifications", out JsonElement element))
+            if (!this._properties.TryGetValue("notifications", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
@@ -42,9 +43,9 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["notifications"] = JsonSerializer.SerializeToElement(
+            this._properties["notifications"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -71,16 +72,23 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
 
     public RecipientPreferences() { }
 
+    public RecipientPreferences(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    RecipientPreferences(Dictionary<string, JsonElement> properties)
+    RecipientPreferences(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static RecipientPreferences FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static RecipientPreferences FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

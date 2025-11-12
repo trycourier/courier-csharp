@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -13,14 +14,14 @@ public sealed record class Icons : ModelBase, IFromRaw<Icons>
     {
         get
         {
-            if (!this.Properties.TryGetValue("bell", out JsonElement element))
+            if (!this._properties.TryGetValue("bell", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["bell"] = JsonSerializer.SerializeToElement(
+            this._properties["bell"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -31,14 +32,14 @@ public sealed record class Icons : ModelBase, IFromRaw<Icons>
     {
         get
         {
-            if (!this.Properties.TryGetValue("message", out JsonElement element))
+            if (!this._properties.TryGetValue("message", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set
+        init
         {
-            this.Properties["message"] = JsonSerializer.SerializeToElement(
+            this._properties["message"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -53,16 +54,21 @@ public sealed record class Icons : ModelBase, IFromRaw<Icons>
 
     public Icons() { }
 
+    public Icons(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Icons(Dictionary<string, JsonElement> properties)
+    Icons(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Icons FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static Icons FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPrefer
     {
         get
         {
-            if (!this.Properties.TryGetValue("channel", out JsonElement element))
+            if (!this._properties.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
                     new ArgumentOutOfRangeException("channel", "Missing required argument")
@@ -26,9 +27,9 @@ public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPrefer
                 ModelBase.SerializerOptions
             );
         }
-        set
+        init
         {
-            this.Properties["channel"] = JsonSerializer.SerializeToElement(
+            this._properties["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -42,17 +43,24 @@ public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPrefer
 
     public ChannelPreference() { }
 
+    public ChannelPreference(IReadOnlyDictionary<string, JsonElement> properties)
+    {
+        this._properties = [.. properties];
+    }
+
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ChannelPreference(Dictionary<string, JsonElement> properties)
+    ChannelPreference(FrozenDictionary<string, JsonElement> properties)
     {
-        Properties = properties;
+        this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static ChannelPreference FromRawUnchecked(Dictionary<string, JsonElement> properties)
+    public static ChannelPreference FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
-        return new(properties);
+        return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
 
     [SetsRequiredMembers]
