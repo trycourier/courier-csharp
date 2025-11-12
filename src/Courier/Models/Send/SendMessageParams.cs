@@ -13,7 +13,7 @@ using System = System;
 namespace Courier.Models.Send;
 
 /// <summary>
-/// API to send a message to one or more recipients.
+/// Send a message to one or more recipients.
 /// </summary>
 public sealed record class SendMessageParams : ParamsBase
 {
