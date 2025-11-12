@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0 (2025-11-12)
+
+Full Changelog: [v1.0.0...v1.1.0](https://github.com/trycourier/courier-csharp/compare/v1.0.0...v1.1.0)
+
+### Features
+
+* NPM enabled ([db84330](https://github.com/trycourier/courier-csharp/commit/db84330198fff3d431e4850397d113432b522048))
+
 ## 1.0.0 (2025-11-12)
 
 Full Changelog: [v1.0.0-alpha2...v1.0.0](https://github.com/trycourier/courier-csharp/compare/v1.0.0-alpha2...v1.0.0)
