@@ -100,6 +100,27 @@ public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
     }
 
     /// <summary>
+    /// The id of the list to send the message to.
+    /// </summary>
+    public string? ListID
+    {
+        get
+        {
+            if (!this._properties.TryGetValue("list_id", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        init
+        {
+            this._properties["list_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    /// <summary>
     /// The user's preferred ISO 639-1 language code.
     /// </summary>
     public string? Locale
@@ -211,6 +232,7 @@ public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
         this.Context?.Validate();
         _ = this.Data;
         _ = this.Email;
+        _ = this.ListID;
         _ = this.Locale;
         _ = this.PhoneNumber;
         this.Preferences?.Validate();
