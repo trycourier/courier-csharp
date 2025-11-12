@@ -118,6 +118,7 @@ public class SendServiceTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Email = "email",
+                        ListID = "list_id",
                         Locale = "locale",
                         PhoneNumber = "phone_number",
                         Preferences = new()
