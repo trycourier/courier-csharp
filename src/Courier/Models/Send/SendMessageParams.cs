@@ -273,14 +273,17 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
         }
     }
 
-    public MetadataModel? Metadata
+    public MessageMetadata? Metadata
     {
         get
         {
             if (!this._properties.TryGetValue("metadata", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<MetadataModel?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<MessageMetadata?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {
@@ -1246,8 +1249,8 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<MetadataModel>))]
-public sealed record class MetadataModel : ModelBase, IFromRaw<MetadataModel>
+[JsonConverter(typeof(ModelConverter<MessageMetadata>))]
+public sealed record class MessageMetadata : ModelBase, IFromRaw<MessageMetadata>
 {
     public string? Event
     {
@@ -1329,22 +1332,22 @@ public sealed record class MetadataModel : ModelBase, IFromRaw<MetadataModel>
         this.Utm?.Validate();
     }
 
-    public MetadataModel() { }
+    public MessageMetadata() { }
 
-    public MetadataModel(IReadOnlyDictionary<string, JsonElement> properties)
+    public MessageMetadata(IReadOnlyDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MetadataModel(FrozenDictionary<string, JsonElement> properties)
+    MessageMetadata(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static MetadataModel FromRawUnchecked(
+    public static MessageMetadata FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -1447,14 +1450,17 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
         }
     }
 
-    public Metadata1? Metadata
+    public ProvidersItemMetadata? Metadata
     {
         get
         {
             if (!this._properties.TryGetValue("metadata", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<Metadata1?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ProvidersItemMetadata?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {
@@ -1538,8 +1544,8 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Metadata1>))]
-public sealed record class Metadata1 : ModelBase, IFromRaw<Metadata1>
+[JsonConverter(typeof(ModelConverter<ProvidersItemMetadata>))]
+public sealed record class ProvidersItemMetadata : ModelBase, IFromRaw<ProvidersItemMetadata>
 {
     public Utm? Utm
     {
@@ -1564,22 +1570,24 @@ public sealed record class Metadata1 : ModelBase, IFromRaw<Metadata1>
         this.Utm?.Validate();
     }
 
-    public Metadata1() { }
+    public ProvidersItemMetadata() { }
 
-    public Metadata1(IReadOnlyDictionary<string, JsonElement> properties)
+    public ProvidersItemMetadata(IReadOnlyDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Metadata1(FrozenDictionary<string, JsonElement> properties)
+    ProvidersItemMetadata(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static Metadata1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static ProvidersItemMetadata FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(properties));
     }

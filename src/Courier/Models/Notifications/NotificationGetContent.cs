@@ -130,7 +130,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
         }
     }
 
-    public required ApiEnum<string, global::Courier.Models.Notifications.TypeModel> Type
+    public required ApiEnum<string, BlockType> Type
     {
         get
         {
@@ -140,9 +140,10 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
                     new System::ArgumentOutOfRangeException("type", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<
-                ApiEnum<string, global::Courier.Models.Notifications.TypeModel>
-            >(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, BlockType>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {
@@ -284,8 +285,8 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     }
 }
 
-[JsonConverter(typeof(global::Courier.Models.Notifications.TypeModelConverter))]
-public enum TypeModel
+[JsonConverter(typeof(BlockTypeConverter))]
+public enum BlockType
 {
     Action,
     Divider,
@@ -298,9 +299,9 @@ public enum TypeModel
     Text,
 }
 
-sealed class TypeModelConverter : JsonConverter<global::Courier.Models.Notifications.TypeModel>
+sealed class BlockTypeConverter : JsonConverter<BlockType>
 {
-    public override global::Courier.Models.Notifications.TypeModel Read(
+    public override BlockType Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -308,22 +309,22 @@ sealed class TypeModelConverter : JsonConverter<global::Courier.Models.Notificat
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "action" => global::Courier.Models.Notifications.TypeModel.Action,
-            "divider" => global::Courier.Models.Notifications.TypeModel.Divider,
-            "image" => global::Courier.Models.Notifications.TypeModel.Image,
-            "jsonnet" => global::Courier.Models.Notifications.TypeModel.Jsonnet,
-            "list" => global::Courier.Models.Notifications.TypeModel.List,
-            "markdown" => global::Courier.Models.Notifications.TypeModel.Markdown,
-            "quote" => global::Courier.Models.Notifications.TypeModel.Quote,
-            "template" => global::Courier.Models.Notifications.TypeModel.Template,
-            "text" => global::Courier.Models.Notifications.TypeModel.Text,
-            _ => (global::Courier.Models.Notifications.TypeModel)(-1),
+            "action" => BlockType.Action,
+            "divider" => BlockType.Divider,
+            "image" => BlockType.Image,
+            "jsonnet" => BlockType.Jsonnet,
+            "list" => BlockType.List,
+            "markdown" => BlockType.Markdown,
+            "quote" => BlockType.Quote,
+            "template" => BlockType.Template,
+            "text" => BlockType.Text,
+            _ => (BlockType)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        global::Courier.Models.Notifications.TypeModel value,
+        BlockType value,
         JsonSerializerOptions options
     )
     {
@@ -331,15 +332,15 @@ sealed class TypeModelConverter : JsonConverter<global::Courier.Models.Notificat
             writer,
             value switch
             {
-                global::Courier.Models.Notifications.TypeModel.Action => "action",
-                global::Courier.Models.Notifications.TypeModel.Divider => "divider",
-                global::Courier.Models.Notifications.TypeModel.Image => "image",
-                global::Courier.Models.Notifications.TypeModel.Jsonnet => "jsonnet",
-                global::Courier.Models.Notifications.TypeModel.List => "list",
-                global::Courier.Models.Notifications.TypeModel.Markdown => "markdown",
-                global::Courier.Models.Notifications.TypeModel.Quote => "quote",
-                global::Courier.Models.Notifications.TypeModel.Template => "template",
-                global::Courier.Models.Notifications.TypeModel.Text => "text",
+                BlockType.Action => "action",
+                BlockType.Divider => "divider",
+                BlockType.Image => "image",
+                BlockType.Jsonnet => "jsonnet",
+                BlockType.List => "list",
+                BlockType.Markdown => "markdown",
+                BlockType.Quote => "quote",
+                BlockType.Template => "template",
+                BlockType.Text => "text",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -571,7 +572,7 @@ public record class Locale
         Value = value;
     }
 
-    public Locale(NotificationContentHierarchyModel value)
+    public Locale(LocaleNotificationContentHierarchy value)
     {
         Value = value;
     }
@@ -593,16 +594,16 @@ public record class Locale
     }
 
     public bool TryPickNotificationContentHierarchy(
-        [NotNullWhen(true)] out NotificationContentHierarchyModel? value
+        [NotNullWhen(true)] out LocaleNotificationContentHierarchy? value
     )
     {
-        value = this.Value as NotificationContentHierarchyModel;
+        value = this.Value as LocaleNotificationContentHierarchy;
         return value != null;
     }
 
     public void Switch(
         System::Action<string> @string,
-        System::Action<NotificationContentHierarchyModel> notificationContentHierarchy
+        System::Action<LocaleNotificationContentHierarchy> notificationContentHierarchy
     )
     {
         switch (this.Value)
@@ -610,7 +611,7 @@ public record class Locale
             case string value:
                 @string(value);
                 break;
-            case NotificationContentHierarchyModel value:
+            case LocaleNotificationContentHierarchy value:
                 notificationContentHierarchy(value);
                 break;
             default:
@@ -620,20 +621,20 @@ public record class Locale
 
     public T Match<T>(
         System::Func<string, T> @string,
-        System::Func<NotificationContentHierarchyModel, T> notificationContentHierarchy
+        System::Func<LocaleNotificationContentHierarchy, T> notificationContentHierarchy
     )
     {
         return this.Value switch
         {
             string value => @string(value),
-            NotificationContentHierarchyModel value => notificationContentHierarchy(value),
+            LocaleNotificationContentHierarchy value => notificationContentHierarchy(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of Locale"),
         };
     }
 
     public static implicit operator Locale(string value) => new(value);
 
-    public static implicit operator Locale(NotificationContentHierarchyModel value) => new(value);
+    public static implicit operator Locale(LocaleNotificationContentHierarchy value) => new(value);
 
     public void Validate()
     {
@@ -658,7 +659,7 @@ sealed class LocaleConverter : JsonConverter<Locale>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<NotificationContentHierarchyModel>(
+            var deserialized = JsonSerializer.Deserialize<LocaleNotificationContentHierarchy>(
                 ref reader,
                 options
             );
@@ -672,7 +673,7 @@ sealed class LocaleConverter : JsonConverter<Locale>
         {
             exceptions.Add(
                 new CourierInvalidDataException(
-                    "Data does not match union variant 'NotificationContentHierarchyModel'",
+                    "Data does not match union variant 'LocaleNotificationContentHierarchy'",
                     e
                 )
             );
@@ -703,10 +704,10 @@ sealed class LocaleConverter : JsonConverter<Locale>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<NotificationContentHierarchyModel>))]
-public sealed record class NotificationContentHierarchyModel
+[JsonConverter(typeof(ModelConverter<LocaleNotificationContentHierarchy>))]
+public sealed record class LocaleNotificationContentHierarchy
     : ModelBase,
-        IFromRaw<NotificationContentHierarchyModel>
+        IFromRaw<LocaleNotificationContentHierarchy>
 {
     public string? Children
     {
@@ -750,22 +751,22 @@ public sealed record class NotificationContentHierarchyModel
         _ = this.Parent;
     }
 
-    public NotificationContentHierarchyModel() { }
+    public LocaleNotificationContentHierarchy() { }
 
-    public NotificationContentHierarchyModel(IReadOnlyDictionary<string, JsonElement> properties)
+    public LocaleNotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationContentHierarchyModel(FrozenDictionary<string, JsonElement> properties)
+    LocaleNotificationContentHierarchy(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static NotificationContentHierarchyModel FromRawUnchecked(
+    public static LocaleNotificationContentHierarchy FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -819,14 +820,17 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
         }
     }
 
-    public ContentModel? Content
+    public ChannelContent? Content
     {
         get
         {
             if (!this._properties.TryGetValue("content", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ContentModel?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ChannelContent?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {
@@ -919,8 +923,8 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ContentModel>))]
-public sealed record class ContentModel : ModelBase, IFromRaw<ContentModel>
+[JsonConverter(typeof(ModelConverter<ChannelContent>))]
+public sealed record class ChannelContent : ModelBase, IFromRaw<ChannelContent>
 {
     public string? Subject
     {
@@ -964,22 +968,24 @@ public sealed record class ContentModel : ModelBase, IFromRaw<ContentModel>
         _ = this.Title;
     }
 
-    public ContentModel() { }
+    public ChannelContent() { }
 
-    public ContentModel(IReadOnlyDictionary<string, JsonElement> properties)
+    public ChannelContent(IReadOnlyDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ContentModel(FrozenDictionary<string, JsonElement> properties)
+    ChannelContent(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static ContentModel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static ChannelContent FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(properties));
     }

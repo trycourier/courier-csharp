@@ -39,7 +39,7 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     /// <summary>
     /// Always set to `list`. Represents the type of this object.
     /// </summary>
-    public required ApiEnum<string, global::Courier.Models.Tenants.Type1> Type
+    public required ApiEnum<string, TenantListUsersResponseType> Type
     {
         get
         {
@@ -49,9 +49,10 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
                     new System::ArgumentOutOfRangeException("type", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<
-                ApiEnum<string, global::Courier.Models.Tenants.Type1>
-            >(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, TenantListUsersResponseType>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {
@@ -194,15 +195,15 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
 /// <summary>
 /// Always set to `list`. Represents the type of this object.
 /// </summary>
-[JsonConverter(typeof(global::Courier.Models.Tenants.Type1Converter))]
-public enum Type1
+[JsonConverter(typeof(TenantListUsersResponseTypeConverter))]
+public enum TenantListUsersResponseType
 {
     List,
 }
 
-sealed class Type1Converter : JsonConverter<global::Courier.Models.Tenants.Type1>
+sealed class TenantListUsersResponseTypeConverter : JsonConverter<TenantListUsersResponseType>
 {
-    public override global::Courier.Models.Tenants.Type1 Read(
+    public override TenantListUsersResponseType Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -210,14 +211,14 @@ sealed class Type1Converter : JsonConverter<global::Courier.Models.Tenants.Type1
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "list" => global::Courier.Models.Tenants.Type1.List,
-            _ => (global::Courier.Models.Tenants.Type1)(-1),
+            "list" => TenantListUsersResponseType.List,
+            _ => (TenantListUsersResponseType)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        global::Courier.Models.Tenants.Type1 value,
+        TenantListUsersResponseType value,
         JsonSerializerOptions options
     )
     {
@@ -225,7 +226,7 @@ sealed class Type1Converter : JsonConverter<global::Courier.Models.Tenants.Type1
             writer,
             value switch
             {
-                global::Courier.Models.Tenants.Type1.List => "list",
+                TenantListUsersResponseType.List => "list",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
