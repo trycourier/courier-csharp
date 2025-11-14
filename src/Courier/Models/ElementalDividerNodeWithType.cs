@@ -86,17 +86,17 @@ public sealed record class ElementalDividerNodeWithType
         }
     }
 
-    public ApiEnum<string, Type1>? Type
+    public ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type1>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalDividerNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -155,20 +155,22 @@ public sealed record class ElementalDividerNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<IntersectionMember12>))]
-public sealed record class IntersectionMember12 : ModelBase, IFromRaw<IntersectionMember12>
+[JsonConverter(typeof(ModelConverter<ElementalDividerNodeWithTypeIntersectionMember1>))]
+public sealed record class ElementalDividerNodeWithTypeIntersectionMember1
+    : ModelBase,
+        IFromRaw<ElementalDividerNodeWithTypeIntersectionMember1>
 {
-    public ApiEnum<string, Type1>? Type
+    public ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type1>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalDividerNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -189,22 +191,26 @@ public sealed record class IntersectionMember12 : ModelBase, IFromRaw<Intersecti
         this.Type?.Validate();
     }
 
-    public IntersectionMember12() { }
+    public ElementalDividerNodeWithTypeIntersectionMember1() { }
 
-    public IntersectionMember12(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalDividerNodeWithTypeIntersectionMember1(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember12(FrozenDictionary<string, JsonElement> properties)
+    ElementalDividerNodeWithTypeIntersectionMember1(
+        FrozenDictionary<string, JsonElement> properties
+    )
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static IntersectionMember12 FromRawUnchecked(
+    public static ElementalDividerNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -212,15 +218,16 @@ public sealed record class IntersectionMember12 : ModelBase, IFromRaw<Intersecti
     }
 }
 
-[JsonConverter(typeof(Type1Converter))]
-public enum Type1
+[JsonConverter(typeof(ElementalDividerNodeWithTypeIntersectionMember1TypeConverter))]
+public enum ElementalDividerNodeWithTypeIntersectionMember1Type
 {
     Divider,
 }
 
-sealed class Type1Converter : JsonConverter<Type1>
+sealed class ElementalDividerNodeWithTypeIntersectionMember1TypeConverter
+    : JsonConverter<ElementalDividerNodeWithTypeIntersectionMember1Type>
 {
-    public override Type1 Read(
+    public override ElementalDividerNodeWithTypeIntersectionMember1Type Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -228,18 +235,22 @@ sealed class Type1Converter : JsonConverter<Type1>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "divider" => Type1.Divider,
-            _ => (Type1)(-1),
+            "divider" => ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
+            _ => (ElementalDividerNodeWithTypeIntersectionMember1Type)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Type1 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        ElementalDividerNodeWithTypeIntersectionMember1Type value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Type1.Divider => "divider",
+                ElementalDividerNodeWithTypeIntersectionMember1Type.Divider => "divider",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
