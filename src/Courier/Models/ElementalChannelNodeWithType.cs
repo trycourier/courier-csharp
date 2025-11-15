@@ -151,17 +151,17 @@ public sealed record class ElementalChannelNodeWithType
         }
     }
 
-    public ApiEnum<string, TypeModel>? Type
+    public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, TypeModel>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalChannelNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -231,20 +231,22 @@ public sealed record class ElementalChannelNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<IntersectionMember11>))]
-public sealed record class IntersectionMember11 : ModelBase, IFromRaw<IntersectionMember11>
+[JsonConverter(typeof(ModelConverter<ElementalChannelNodeWithTypeIntersectionMember1>))]
+public sealed record class ElementalChannelNodeWithTypeIntersectionMember1
+    : ModelBase,
+        IFromRaw<ElementalChannelNodeWithTypeIntersectionMember1>
 {
-    public ApiEnum<string, TypeModel>? Type
+    public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, TypeModel>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalChannelNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -265,22 +267,26 @@ public sealed record class IntersectionMember11 : ModelBase, IFromRaw<Intersecti
         this.Type?.Validate();
     }
 
-    public IntersectionMember11() { }
+    public ElementalChannelNodeWithTypeIntersectionMember1() { }
 
-    public IntersectionMember11(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalChannelNodeWithTypeIntersectionMember1(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember11(FrozenDictionary<string, JsonElement> properties)
+    ElementalChannelNodeWithTypeIntersectionMember1(
+        FrozenDictionary<string, JsonElement> properties
+    )
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static IntersectionMember11 FromRawUnchecked(
+    public static ElementalChannelNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -288,15 +294,16 @@ public sealed record class IntersectionMember11 : ModelBase, IFromRaw<Intersecti
     }
 }
 
-[JsonConverter(typeof(TypeModelConverter))]
-public enum TypeModel
+[JsonConverter(typeof(ElementalChannelNodeWithTypeIntersectionMember1TypeConverter))]
+public enum ElementalChannelNodeWithTypeIntersectionMember1Type
 {
     Channel,
 }
 
-sealed class TypeModelConverter : JsonConverter<TypeModel>
+sealed class ElementalChannelNodeWithTypeIntersectionMember1TypeConverter
+    : JsonConverter<ElementalChannelNodeWithTypeIntersectionMember1Type>
 {
-    public override TypeModel Read(
+    public override ElementalChannelNodeWithTypeIntersectionMember1Type Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -304,14 +311,14 @@ sealed class TypeModelConverter : JsonConverter<TypeModel>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "channel" => TypeModel.Channel,
-            _ => (TypeModel)(-1),
+            "channel" => ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+            _ => (ElementalChannelNodeWithTypeIntersectionMember1Type)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        TypeModel value,
+        ElementalChannelNodeWithTypeIntersectionMember1Type value,
         JsonSerializerOptions options
     )
     {
@@ -319,7 +326,7 @@ sealed class TypeModelConverter : JsonConverter<TypeModel>
             writer,
             value switch
             {
-                TypeModel.Channel => "channel",
+                ElementalChannelNodeWithTypeIntersectionMember1Type.Channel => "channel",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

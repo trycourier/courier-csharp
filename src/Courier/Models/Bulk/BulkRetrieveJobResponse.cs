@@ -169,7 +169,7 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
         }
     }
 
-    public required ApiEnum<string, StatusModel> Status
+    public required ApiEnum<string, JobStatus> Status
     {
         get
         {
@@ -179,7 +179,7 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
                     new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, StatusModel>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -223,8 +223,8 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
     }
 }
 
-[JsonConverter(typeof(StatusModelConverter))]
-public enum StatusModel
+[JsonConverter(typeof(JobStatusConverter))]
+public enum JobStatus
 {
     Created,
     Processing,
@@ -232,9 +232,9 @@ public enum StatusModel
     Error,
 }
 
-sealed class StatusModelConverter : JsonConverter<StatusModel>
+sealed class JobStatusConverter : JsonConverter<JobStatus>
 {
-    public override StatusModel Read(
+    public override JobStatus Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -242,17 +242,17 @@ sealed class StatusModelConverter : JsonConverter<StatusModel>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "CREATED" => StatusModel.Created,
-            "PROCESSING" => StatusModel.Processing,
-            "COMPLETED" => StatusModel.Completed,
-            "ERROR" => StatusModel.Error,
-            _ => (StatusModel)(-1),
+            "CREATED" => JobStatus.Created,
+            "PROCESSING" => JobStatus.Processing,
+            "COMPLETED" => JobStatus.Completed,
+            "ERROR" => JobStatus.Error,
+            _ => (JobStatus)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        StatusModel value,
+        JobStatus value,
         JsonSerializerOptions options
     )
     {
@@ -260,10 +260,10 @@ sealed class StatusModelConverter : JsonConverter<StatusModel>
             writer,
             value switch
             {
-                StatusModel.Created => "CREATED",
-                StatusModel.Processing => "PROCESSING",
-                StatusModel.Completed => "COMPLETED",
-                StatusModel.Error => "ERROR",
+                JobStatus.Created => "CREATED",
+                JobStatus.Processing => "PROCESSING",
+                JobStatus.Completed => "COMPLETED",
+                JobStatus.Error => "ERROR",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

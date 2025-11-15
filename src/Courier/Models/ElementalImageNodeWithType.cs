@@ -86,17 +86,17 @@ public sealed record class ElementalImageNodeWithType
         }
     }
 
-    public ApiEnum<string, Type2>? Type
+    public ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type2>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalImageNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -155,20 +155,22 @@ public sealed record class ElementalImageNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<IntersectionMember13>))]
-public sealed record class IntersectionMember13 : ModelBase, IFromRaw<IntersectionMember13>
+[JsonConverter(typeof(ModelConverter<ElementalImageNodeWithTypeIntersectionMember1>))]
+public sealed record class ElementalImageNodeWithTypeIntersectionMember1
+    : ModelBase,
+        IFromRaw<ElementalImageNodeWithTypeIntersectionMember1>
 {
-    public ApiEnum<string, Type2>? Type
+    public ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type2>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalImageNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -189,22 +191,24 @@ public sealed record class IntersectionMember13 : ModelBase, IFromRaw<Intersecti
         this.Type?.Validate();
     }
 
-    public IntersectionMember13() { }
+    public ElementalImageNodeWithTypeIntersectionMember1() { }
 
-    public IntersectionMember13(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalImageNodeWithTypeIntersectionMember1(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember13(FrozenDictionary<string, JsonElement> properties)
+    ElementalImageNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static IntersectionMember13 FromRawUnchecked(
+    public static ElementalImageNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -212,15 +216,16 @@ public sealed record class IntersectionMember13 : ModelBase, IFromRaw<Intersecti
     }
 }
 
-[JsonConverter(typeof(Type2Converter))]
-public enum Type2
+[JsonConverter(typeof(ElementalImageNodeWithTypeIntersectionMember1TypeConverter))]
+public enum ElementalImageNodeWithTypeIntersectionMember1Type
 {
     Image,
 }
 
-sealed class Type2Converter : JsonConverter<Type2>
+sealed class ElementalImageNodeWithTypeIntersectionMember1TypeConverter
+    : JsonConverter<ElementalImageNodeWithTypeIntersectionMember1Type>
 {
-    public override Type2 Read(
+    public override ElementalImageNodeWithTypeIntersectionMember1Type Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -228,18 +233,22 @@ sealed class Type2Converter : JsonConverter<Type2>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "image" => Type2.Image,
-            _ => (Type2)(-1),
+            "image" => ElementalImageNodeWithTypeIntersectionMember1Type.Image,
+            _ => (ElementalImageNodeWithTypeIntersectionMember1Type)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Type2 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        ElementalImageNodeWithTypeIntersectionMember1Type value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Type2.Image => "image",
+                ElementalImageNodeWithTypeIntersectionMember1Type.Image => "image",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

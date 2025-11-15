@@ -820,7 +820,7 @@ sealed class ActionConverter : JsonConverter<Action>
 [JsonConverter(typeof(ModelConverter<AutomationSendStep>))]
 public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSendStep>
 {
-    public required ApiEnum<string, ActionModel> Action
+    public required ApiEnum<string, AutomationSendStepAction> Action
     {
         get
         {
@@ -830,7 +830,7 @@ public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSe
                     new System::ArgumentOutOfRangeException("action", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, ActionModel>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, AutomationSendStepAction>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -973,22 +973,22 @@ public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSe
     }
 
     [SetsRequiredMembers]
-    public AutomationSendStep(ApiEnum<string, ActionModel> action)
+    public AutomationSendStep(ApiEnum<string, AutomationSendStepAction> action)
         : this()
     {
         this.Action = action;
     }
 }
 
-[JsonConverter(typeof(ActionModelConverter))]
-public enum ActionModel
+[JsonConverter(typeof(AutomationSendStepActionConverter))]
+public enum AutomationSendStepAction
 {
     Send,
 }
 
-sealed class ActionModelConverter : JsonConverter<ActionModel>
+sealed class AutomationSendStepActionConverter : JsonConverter<AutomationSendStepAction>
 {
-    public override ActionModel Read(
+    public override AutomationSendStepAction Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -996,14 +996,14 @@ sealed class ActionModelConverter : JsonConverter<ActionModel>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "send" => ActionModel.Send,
-            _ => (ActionModel)(-1),
+            "send" => AutomationSendStepAction.Send,
+            _ => (AutomationSendStepAction)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        ActionModel value,
+        AutomationSendStepAction value,
         JsonSerializerOptions options
     )
     {
@@ -1011,7 +1011,7 @@ sealed class ActionModelConverter : JsonConverter<ActionModel>
             writer,
             value switch
             {
-                ActionModel.Send => "send",
+                AutomationSendStepAction.Send => "send",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -1024,7 +1024,7 @@ sealed class ActionModelConverter : JsonConverter<ActionModel>
 [JsonConverter(typeof(ModelConverter<AutomationSendListStep>))]
 public sealed record class AutomationSendListStep : ModelBase, IFromRaw<AutomationSendListStep>
 {
-    public required ApiEnum<string, Action1> Action
+    public required ApiEnum<string, AutomationSendListStepAction> Action
     {
         get
         {
@@ -1034,7 +1034,7 @@ public sealed record class AutomationSendListStep : ModelBase, IFromRaw<Automati
                     new System::ArgumentOutOfRangeException("action", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Action1>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, AutomationSendListStepAction>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -1143,15 +1143,15 @@ public sealed record class AutomationSendListStep : ModelBase, IFromRaw<Automati
     }
 }
 
-[JsonConverter(typeof(Action1Converter))]
-public enum Action1
+[JsonConverter(typeof(AutomationSendListStepActionConverter))]
+public enum AutomationSendListStepAction
 {
     SendList,
 }
 
-sealed class Action1Converter : JsonConverter<Action1>
+sealed class AutomationSendListStepActionConverter : JsonConverter<AutomationSendListStepAction>
 {
-    public override Action1 Read(
+    public override AutomationSendListStepAction Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1159,18 +1159,22 @@ sealed class Action1Converter : JsonConverter<Action1>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "send-list" => Action1.SendList,
-            _ => (Action1)(-1),
+            "send-list" => AutomationSendListStepAction.SendList,
+            _ => (AutomationSendListStepAction)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Action1 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        AutomationSendListStepAction value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Action1.SendList => "send-list",
+                AutomationSendListStepAction.SendList => "send-list",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -1185,7 +1189,7 @@ public sealed record class AutomationUpdateProfileStep
     : ModelBase,
         IFromRaw<AutomationUpdateProfileStep>
 {
-    public required ApiEnum<string, Action2> Action
+    public required ApiEnum<string, AutomationUpdateProfileStepAction> Action
     {
         get
         {
@@ -1195,7 +1199,7 @@ public sealed record class AutomationUpdateProfileStep
                     new System::ArgumentOutOfRangeException("action", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Action2>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, AutomationUpdateProfileStepAction>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -1307,15 +1311,16 @@ public sealed record class AutomationUpdateProfileStep
     }
 }
 
-[JsonConverter(typeof(Action2Converter))]
-public enum Action2
+[JsonConverter(typeof(AutomationUpdateProfileStepActionConverter))]
+public enum AutomationUpdateProfileStepAction
 {
     UpdateProfile,
 }
 
-sealed class Action2Converter : JsonConverter<Action2>
+sealed class AutomationUpdateProfileStepActionConverter
+    : JsonConverter<AutomationUpdateProfileStepAction>
 {
-    public override Action2 Read(
+    public override AutomationUpdateProfileStepAction Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1323,18 +1328,22 @@ sealed class Action2Converter : JsonConverter<Action2>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "update-profile" => Action2.UpdateProfile,
-            _ => (Action2)(-1),
+            "update-profile" => AutomationUpdateProfileStepAction.UpdateProfile,
+            _ => (AutomationUpdateProfileStepAction)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Action2 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        AutomationUpdateProfileStepAction value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Action2.UpdateProfile => "update-profile",
+                AutomationUpdateProfileStepAction.UpdateProfile => "update-profile",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -1393,7 +1402,7 @@ sealed class MergeConverter : JsonConverter<Merge>
 [JsonConverter(typeof(ModelConverter<AutomationCancelStep>))]
 public sealed record class AutomationCancelStep : ModelBase, IFromRaw<AutomationCancelStep>
 {
-    public required ApiEnum<string, Action3> Action
+    public required ApiEnum<string, AutomationCancelStepAction> Action
     {
         get
         {
@@ -1403,7 +1412,7 @@ public sealed record class AutomationCancelStep : ModelBase, IFromRaw<Automation
                     new System::ArgumentOutOfRangeException("action", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Action3>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, AutomationCancelStepAction>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -1474,15 +1483,15 @@ public sealed record class AutomationCancelStep : ModelBase, IFromRaw<Automation
     }
 }
 
-[JsonConverter(typeof(Action3Converter))]
-public enum Action3
+[JsonConverter(typeof(AutomationCancelStepActionConverter))]
+public enum AutomationCancelStepAction
 {
     Cancel,
 }
 
-sealed class Action3Converter : JsonConverter<Action3>
+sealed class AutomationCancelStepActionConverter : JsonConverter<AutomationCancelStepAction>
 {
-    public override Action3 Read(
+    public override AutomationCancelStepAction Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1490,18 +1499,22 @@ sealed class Action3Converter : JsonConverter<Action3>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "cancel" => Action3.Cancel,
-            _ => (Action3)(-1),
+            "cancel" => AutomationCancelStepAction.Cancel,
+            _ => (AutomationCancelStepAction)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Action3 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        AutomationCancelStepAction value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Action3.Cancel => "cancel",
+                AutomationCancelStepAction.Cancel => "cancel",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -1514,7 +1527,7 @@ sealed class Action3Converter : JsonConverter<Action3>
 [JsonConverter(typeof(ModelConverter<AutomationFetchDataStep>))]
 public sealed record class AutomationFetchDataStep : ModelBase, IFromRaw<AutomationFetchDataStep>
 {
-    public required ApiEnum<string, Action4> Action
+    public required ApiEnum<string, AutomationFetchDataStepAction> Action
     {
         get
         {
@@ -1524,7 +1537,7 @@ public sealed record class AutomationFetchDataStep : ModelBase, IFromRaw<Automat
                     new System::ArgumentOutOfRangeException("action", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Action4>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, AutomationFetchDataStepAction>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -1614,15 +1627,15 @@ public sealed record class AutomationFetchDataStep : ModelBase, IFromRaw<Automat
     }
 }
 
-[JsonConverter(typeof(Action4Converter))]
-public enum Action4
+[JsonConverter(typeof(AutomationFetchDataStepActionConverter))]
+public enum AutomationFetchDataStepAction
 {
     FetchData,
 }
 
-sealed class Action4Converter : JsonConverter<Action4>
+sealed class AutomationFetchDataStepActionConverter : JsonConverter<AutomationFetchDataStepAction>
 {
-    public override Action4 Read(
+    public override AutomationFetchDataStepAction Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1630,18 +1643,22 @@ sealed class Action4Converter : JsonConverter<Action4>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "fetch-data" => Action4.FetchData,
-            _ => (Action4)(-1),
+            "fetch-data" => AutomationFetchDataStepAction.FetchData,
+            _ => (AutomationFetchDataStepAction)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Action4 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        AutomationFetchDataStepAction value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Action4.FetchData => "fetch-data",
+                AutomationFetchDataStepAction.FetchData => "fetch-data",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -1873,7 +1890,7 @@ sealed class MergeStrategyConverter : JsonConverter<MergeStrategy>
 [JsonConverter(typeof(ModelConverter<AutomationInvokeStep>))]
 public sealed record class AutomationInvokeStep : ModelBase, IFromRaw<AutomationInvokeStep>
 {
-    public required ApiEnum<string, Action5> Action
+    public required ApiEnum<string, AutomationInvokeStepAction> Action
     {
         get
         {
@@ -1883,7 +1900,7 @@ public sealed record class AutomationInvokeStep : ModelBase, IFromRaw<Automation
                     new System::ArgumentOutOfRangeException("action", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Action5>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, AutomationInvokeStepAction>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -1951,15 +1968,15 @@ public sealed record class AutomationInvokeStep : ModelBase, IFromRaw<Automation
     }
 }
 
-[JsonConverter(typeof(Action5Converter))]
-public enum Action5
+[JsonConverter(typeof(AutomationInvokeStepActionConverter))]
+public enum AutomationInvokeStepAction
 {
     Invoke,
 }
 
-sealed class Action5Converter : JsonConverter<Action5>
+sealed class AutomationInvokeStepActionConverter : JsonConverter<AutomationInvokeStepAction>
 {
-    public override Action5 Read(
+    public override AutomationInvokeStepAction Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1967,18 +1984,22 @@ sealed class Action5Converter : JsonConverter<Action5>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "invoke" => Action5.Invoke,
-            _ => (Action5)(-1),
+            "invoke" => AutomationInvokeStepAction.Invoke,
+            _ => (AutomationInvokeStepAction)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Action5 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        AutomationInvokeStepAction value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Action5.Invoke => "invoke",
+                AutomationInvokeStepAction.Invoke => "invoke",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

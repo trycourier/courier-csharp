@@ -40,7 +40,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         }
     }
 
-    public required ApiEnum<string, ProviderKeyModel> ProviderKey
+    public required ApiEnum<string, UserTokenProviderKey> ProviderKey
     {
         get
         {
@@ -53,7 +53,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
                     )
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, ProviderKeyModel>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -70,14 +70,17 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     /// <summary>
     /// Information about the device the token came from.
     /// </summary>
-    public DeviceModel? Device
+    public UserTokenDevice? Device
     {
         get
         {
             if (!this._properties.TryGetValue("device", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<DeviceModel?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<UserTokenDevice?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {
@@ -92,14 +95,14 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     /// ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false
     /// to disable expiration.
     /// </summary>
-    public ExpiryDateModel? ExpiryDate
+    public UserTokenExpiryDate? ExpiryDate
     {
         get
         {
             if (!this._properties.TryGetValue("expiry_date", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ExpiryDateModel?>(
+            return JsonSerializer.Deserialize<UserTokenExpiryDate?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -142,14 +145,17 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     /// <summary>
     /// Tracking information about the device the token came from.
     /// </summary>
-    public TrackingModel? Tracking
+    public UserTokenTracking? Tracking
     {
         get
         {
             if (!this._properties.TryGetValue("tracking", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<TrackingModel?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<UserTokenTracking?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {

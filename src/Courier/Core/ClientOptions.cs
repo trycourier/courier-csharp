@@ -6,6 +6,10 @@ namespace Courier.Core;
 
 public struct ClientOptions()
 {
+    public static readonly int DefaultMaxRetries = 2;
+
+    public static readonly TimeSpan DefaultTimeout = TimeSpan.FromMinutes(1);
+
     public HttpClient HttpClient { get; set; } = new();
 
     Lazy<Uri> _baseUrl = new(() =>
@@ -19,9 +23,9 @@ public struct ClientOptions()
 
     public bool ResponseValidation { get; set; } = false;
 
-    public int MaxRetries { get; set; } = 2;
+    public int? MaxRetries { get; set; }
 
-    public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1);
+    public TimeSpan? Timeout { get; set; }
 
     Lazy<string> _apiKey = new(() =>
         Environment.GetEnvironmentVariable("COURIER_API_KEY")

@@ -40,7 +40,7 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
         }
     }
 
-    public required ApiEnum<string, ProviderKeyModel> ProviderKey
+    public required ApiEnum<string, UserTokenProviderKey> ProviderKey
     {
         get
         {
@@ -53,7 +53,7 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
                     )
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, ProviderKeyModel>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -70,14 +70,17 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     /// <summary>
     /// Information about the device the token came from.
     /// </summary>
-    public DeviceModel? Device
+    public UserTokenDevice? Device
     {
         get
         {
             if (!this._properties.TryGetValue("device", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<DeviceModel?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<UserTokenDevice?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {
@@ -92,14 +95,14 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     /// ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false
     /// to disable expiration.
     /// </summary>
-    public ExpiryDateModel? ExpiryDate
+    public UserTokenExpiryDate? ExpiryDate
     {
         get
         {
             if (!this._properties.TryGetValue("expiry_date", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ExpiryDateModel?>(
+            return JsonSerializer.Deserialize<UserTokenExpiryDate?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -142,14 +145,17 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     /// <summary>
     /// Tracking information about the device the token came from.
     /// </summary>
-    public TrackingModel? Tracking
+    public UserTokenTracking? Tracking
     {
         get
         {
             if (!this._properties.TryGetValue("tracking", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<TrackingModel?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<UserTokenTracking?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
         init
         {
@@ -191,8 +197,8 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     }
 }
 
-[JsonConverter(typeof(ProviderKeyModelConverter))]
-public enum ProviderKeyModel
+[JsonConverter(typeof(UserTokenProviderKeyConverter))]
+public enum UserTokenProviderKey
 {
     FirebaseFcm,
     Apn,
@@ -200,9 +206,9 @@ public enum ProviderKeyModel
     Onesignal,
 }
 
-sealed class ProviderKeyModelConverter : JsonConverter<ProviderKeyModel>
+sealed class UserTokenProviderKeyConverter : JsonConverter<UserTokenProviderKey>
 {
-    public override ProviderKeyModel Read(
+    public override UserTokenProviderKey Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -210,17 +216,17 @@ sealed class ProviderKeyModelConverter : JsonConverter<ProviderKeyModel>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "firebase-fcm" => ProviderKeyModel.FirebaseFcm,
-            "apn" => ProviderKeyModel.Apn,
-            "expo" => ProviderKeyModel.Expo,
-            "onesignal" => ProviderKeyModel.Onesignal,
-            _ => (ProviderKeyModel)(-1),
+            "firebase-fcm" => UserTokenProviderKey.FirebaseFcm,
+            "apn" => UserTokenProviderKey.Apn,
+            "expo" => UserTokenProviderKey.Expo,
+            "onesignal" => UserTokenProviderKey.Onesignal,
+            _ => (UserTokenProviderKey)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        ProviderKeyModel value,
+        UserTokenProviderKey value,
         JsonSerializerOptions options
     )
     {
@@ -228,10 +234,10 @@ sealed class ProviderKeyModelConverter : JsonConverter<ProviderKeyModel>
             writer,
             value switch
             {
-                ProviderKeyModel.FirebaseFcm => "firebase-fcm",
-                ProviderKeyModel.Apn => "apn",
-                ProviderKeyModel.Expo => "expo",
-                ProviderKeyModel.Onesignal => "onesignal",
+                UserTokenProviderKey.FirebaseFcm => "firebase-fcm",
+                UserTokenProviderKey.Apn => "apn",
+                UserTokenProviderKey.Expo => "expo",
+                UserTokenProviderKey.Onesignal => "onesignal",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -244,8 +250,8 @@ sealed class ProviderKeyModelConverter : JsonConverter<ProviderKeyModel>
 /// <summary>
 /// Information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<DeviceModel>))]
-public sealed record class DeviceModel : ModelBase, IFromRaw<DeviceModel>
+[JsonConverter(typeof(ModelConverter<UserTokenDevice>))]
+public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice>
 {
     /// <summary>
     /// Id of the advertising identifier
@@ -383,22 +389,24 @@ public sealed record class DeviceModel : ModelBase, IFromRaw<DeviceModel>
         _ = this.Platform;
     }
 
-    public DeviceModel() { }
+    public UserTokenDevice() { }
 
-    public DeviceModel(IReadOnlyDictionary<string, JsonElement> properties)
+    public UserTokenDevice(IReadOnlyDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    DeviceModel(FrozenDictionary<string, JsonElement> properties)
+    UserTokenDevice(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static DeviceModel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static UserTokenDevice FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(properties));
     }
@@ -408,27 +416,27 @@ public sealed record class DeviceModel : ModelBase, IFromRaw<DeviceModel>
 /// ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false
 /// to disable expiration.
 /// </summary>
-[JsonConverter(typeof(ExpiryDateModelConverter))]
-public record class ExpiryDateModel
+[JsonConverter(typeof(UserTokenExpiryDateConverter))]
+public record class UserTokenExpiryDate
 {
     public object Value { get; private init; }
 
-    public ExpiryDateModel(string value)
+    public UserTokenExpiryDate(string value)
     {
         Value = value;
     }
 
-    public ExpiryDateModel(bool value)
+    public UserTokenExpiryDate(bool value)
     {
         Value = value;
     }
 
-    ExpiryDateModel(UnknownVariant value)
+    UserTokenExpiryDate(UnknownVariant value)
     {
         Value = value;
     }
 
-    public static ExpiryDateModel CreateUnknownVariant(JsonElement value)
+    public static UserTokenExpiryDate CreateUnknownVariant(JsonElement value)
     {
         return new(new UnknownVariant(value));
     }
@@ -457,7 +465,7 @@ public record class ExpiryDateModel
                 break;
             default:
                 throw new CourierInvalidDataException(
-                    "Data did not match any variant of ExpiryDateModel"
+                    "Data did not match any variant of UserTokenExpiryDate"
                 );
         }
     }
@@ -469,21 +477,21 @@ public record class ExpiryDateModel
             string value => @string(value),
             bool value => @bool(value),
             _ => throw new CourierInvalidDataException(
-                "Data did not match any variant of ExpiryDateModel"
+                "Data did not match any variant of UserTokenExpiryDate"
             ),
         };
     }
 
-    public static implicit operator ExpiryDateModel(string value) => new(value);
+    public static implicit operator UserTokenExpiryDate(string value) => new(value);
 
-    public static implicit operator ExpiryDateModel(bool value) => new(value);
+    public static implicit operator UserTokenExpiryDate(bool value) => new(value);
 
     public void Validate()
     {
         if (this.Value is UnknownVariant)
         {
             throw new CourierInvalidDataException(
-                "Data did not match any variant of ExpiryDateModel"
+                "Data did not match any variant of UserTokenExpiryDate"
             );
         }
     }
@@ -491,9 +499,9 @@ public record class ExpiryDateModel
     record struct UnknownVariant(JsonElement value);
 }
 
-sealed class ExpiryDateModelConverter : JsonConverter<ExpiryDateModel?>
+sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
 {
-    public override ExpiryDateModel? Read(
+    public override UserTokenExpiryDate? Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -506,7 +514,7 @@ sealed class ExpiryDateModelConverter : JsonConverter<ExpiryDateModel?>
             var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
             if (deserialized != null)
             {
-                return new ExpiryDateModel(deserialized);
+                return new UserTokenExpiryDate(deserialized);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -518,7 +526,7 @@ sealed class ExpiryDateModelConverter : JsonConverter<ExpiryDateModel?>
 
         try
         {
-            return new ExpiryDateModel(JsonSerializer.Deserialize<bool>(ref reader, options));
+            return new UserTokenExpiryDate(JsonSerializer.Deserialize<bool>(ref reader, options));
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
@@ -532,7 +540,7 @@ sealed class ExpiryDateModelConverter : JsonConverter<ExpiryDateModel?>
 
     public override void Write(
         Utf8JsonWriter writer,
-        ExpiryDateModel? value,
+        UserTokenExpiryDate? value,
         JsonSerializerOptions options
     )
     {
@@ -544,8 +552,8 @@ sealed class ExpiryDateModelConverter : JsonConverter<ExpiryDateModel?>
 /// <summary>
 /// Tracking information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<TrackingModel>))]
-public sealed record class TrackingModel : ModelBase, IFromRaw<TrackingModel>
+[JsonConverter(typeof(ModelConverter<UserTokenTracking>))]
+public sealed record class UserTokenTracking : ModelBase, IFromRaw<UserTokenTracking>
 {
     /// <summary>
     /// The IP address of the device
@@ -639,22 +647,22 @@ public sealed record class TrackingModel : ModelBase, IFromRaw<TrackingModel>
         _ = this.OsVersion;
     }
 
-    public TrackingModel() { }
+    public UserTokenTracking() { }
 
-    public TrackingModel(IReadOnlyDictionary<string, JsonElement> properties)
+    public UserTokenTracking(IReadOnlyDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TrackingModel(FrozenDictionary<string, JsonElement> properties)
+    UserTokenTracking(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static TrackingModel FromRawUnchecked(
+    public static UserTokenTracking FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {

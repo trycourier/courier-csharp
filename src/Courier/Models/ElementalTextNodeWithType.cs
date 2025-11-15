@@ -86,17 +86,17 @@ public sealed record class ElementalTextNodeWithType
         }
     }
 
-    public ApiEnum<string, Type5>? Type
+    public ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type5>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalTextNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -155,20 +155,22 @@ public sealed record class ElementalTextNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<IntersectionMember16>))]
-public sealed record class IntersectionMember16 : ModelBase, IFromRaw<IntersectionMember16>
+[JsonConverter(typeof(ModelConverter<ElementalTextNodeWithTypeIntersectionMember1>))]
+public sealed record class ElementalTextNodeWithTypeIntersectionMember1
+    : ModelBase,
+        IFromRaw<ElementalTextNodeWithTypeIntersectionMember1>
 {
-    public ApiEnum<string, Type5>? Type
+    public ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type5>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalTextNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -189,22 +191,24 @@ public sealed record class IntersectionMember16 : ModelBase, IFromRaw<Intersecti
         this.Type?.Validate();
     }
 
-    public IntersectionMember16() { }
+    public ElementalTextNodeWithTypeIntersectionMember1() { }
 
-    public IntersectionMember16(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalTextNodeWithTypeIntersectionMember1(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember16(FrozenDictionary<string, JsonElement> properties)
+    ElementalTextNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static IntersectionMember16 FromRawUnchecked(
+    public static ElementalTextNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -212,15 +216,16 @@ public sealed record class IntersectionMember16 : ModelBase, IFromRaw<Intersecti
     }
 }
 
-[JsonConverter(typeof(Type5Converter))]
-public enum Type5
+[JsonConverter(typeof(ElementalTextNodeWithTypeIntersectionMember1TypeConverter))]
+public enum ElementalTextNodeWithTypeIntersectionMember1Type
 {
     Text,
 }
 
-sealed class Type5Converter : JsonConverter<Type5>
+sealed class ElementalTextNodeWithTypeIntersectionMember1TypeConverter
+    : JsonConverter<ElementalTextNodeWithTypeIntersectionMember1Type>
 {
-    public override Type5 Read(
+    public override ElementalTextNodeWithTypeIntersectionMember1Type Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -228,18 +233,22 @@ sealed class Type5Converter : JsonConverter<Type5>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "text" => Type5.Text,
-            _ => (Type5)(-1),
+            "text" => ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+            _ => (ElementalTextNodeWithTypeIntersectionMember1Type)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Type5 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        ElementalTextNodeWithTypeIntersectionMember1Type value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Type5.Text => "text",
+                ElementalTextNodeWithTypeIntersectionMember1Type.Text => "text",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

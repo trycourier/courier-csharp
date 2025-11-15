@@ -12,7 +12,7 @@ namespace Courier.Models.Profiles;
 [JsonConverter(typeof(ModelConverter<ProfileReplaceResponse>))]
 public sealed record class ProfileReplaceResponse : ModelBase, IFromRaw<ProfileReplaceResponse>
 {
-    public required ApiEnum<string, StatusModel> Status
+    public required ApiEnum<string, ProfileReplaceResponseStatus> Status
     {
         get
         {
@@ -22,7 +22,7 @@ public sealed record class ProfileReplaceResponse : ModelBase, IFromRaw<ProfileR
                     new System::ArgumentOutOfRangeException("status", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, StatusModel>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, ProfileReplaceResponseStatus>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -64,22 +64,22 @@ public sealed record class ProfileReplaceResponse : ModelBase, IFromRaw<ProfileR
     }
 
     [SetsRequiredMembers]
-    public ProfileReplaceResponse(ApiEnum<string, StatusModel> status)
+    public ProfileReplaceResponse(ApiEnum<string, ProfileReplaceResponseStatus> status)
         : this()
     {
         this.Status = status;
     }
 }
 
-[JsonConverter(typeof(StatusModelConverter))]
-public enum StatusModel
+[JsonConverter(typeof(ProfileReplaceResponseStatusConverter))]
+public enum ProfileReplaceResponseStatus
 {
     Success,
 }
 
-sealed class StatusModelConverter : JsonConverter<StatusModel>
+sealed class ProfileReplaceResponseStatusConverter : JsonConverter<ProfileReplaceResponseStatus>
 {
-    public override StatusModel Read(
+    public override ProfileReplaceResponseStatus Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -87,14 +87,14 @@ sealed class StatusModelConverter : JsonConverter<StatusModel>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "SUCCESS" => StatusModel.Success,
-            _ => (StatusModel)(-1),
+            "SUCCESS" => ProfileReplaceResponseStatus.Success,
+            _ => (ProfileReplaceResponseStatus)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        StatusModel value,
+        ProfileReplaceResponseStatus value,
         JsonSerializerOptions options
     )
     {
@@ -102,7 +102,7 @@ sealed class StatusModelConverter : JsonConverter<StatusModel>
             writer,
             value switch
             {
-                StatusModel.Success => "SUCCESS",
+                ProfileReplaceResponseStatus.Success => "SUCCESS",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

@@ -15,7 +15,7 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
     /// <summary>
     /// The operator to use for filtering
     /// </summary>
-    public required ApiEnum<string, OperatorModel> Operator
+    public required ApiEnum<string, FilterConfigOperator> Operator
     {
         get
         {
@@ -25,7 +25,7 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
                     new System::ArgumentOutOfRangeException("operator", "Missing required argument")
                 );
 
-            return JsonSerializer.Deserialize<ApiEnum<string, OperatorModel>>(
+            return JsonSerializer.Deserialize<ApiEnum<string, FilterConfigOperator>>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -126,8 +126,8 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
 /// <summary>
 /// The operator to use for filtering
 /// </summary>
-[JsonConverter(typeof(OperatorModelConverter))]
-public enum OperatorModel
+[JsonConverter(typeof(FilterConfigOperatorConverter))]
+public enum FilterConfigOperator
 {
     EndsWith,
     Eq,
@@ -146,9 +146,9 @@ public enum OperatorModel
     Or,
 }
 
-sealed class OperatorModelConverter : JsonConverter<OperatorModel>
+sealed class FilterConfigOperatorConverter : JsonConverter<FilterConfigOperator>
 {
-    public override OperatorModel Read(
+    public override FilterConfigOperator Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -156,28 +156,28 @@ sealed class OperatorModelConverter : JsonConverter<OperatorModel>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "ENDS_WITH" => OperatorModel.EndsWith,
-            "EQ" => OperatorModel.Eq,
-            "EXISTS" => OperatorModel.Exists,
-            "GT" => OperatorModel.Gt,
-            "GTE" => OperatorModel.Gte,
-            "INCLUDES" => OperatorModel.Includes,
-            "IS_AFTER" => OperatorModel.IsAfter,
-            "IS_BEFORE" => OperatorModel.IsBefore,
-            "LT" => OperatorModel.Lt,
-            "LTE" => OperatorModel.Lte,
-            "NEQ" => OperatorModel.Neq,
-            "OMIT" => OperatorModel.Omit,
-            "STARTS_WITH" => OperatorModel.StartsWith,
-            "AND" => OperatorModel.And,
-            "OR" => OperatorModel.Or,
-            _ => (OperatorModel)(-1),
+            "ENDS_WITH" => FilterConfigOperator.EndsWith,
+            "EQ" => FilterConfigOperator.Eq,
+            "EXISTS" => FilterConfigOperator.Exists,
+            "GT" => FilterConfigOperator.Gt,
+            "GTE" => FilterConfigOperator.Gte,
+            "INCLUDES" => FilterConfigOperator.Includes,
+            "IS_AFTER" => FilterConfigOperator.IsAfter,
+            "IS_BEFORE" => FilterConfigOperator.IsBefore,
+            "LT" => FilterConfigOperator.Lt,
+            "LTE" => FilterConfigOperator.Lte,
+            "NEQ" => FilterConfigOperator.Neq,
+            "OMIT" => FilterConfigOperator.Omit,
+            "STARTS_WITH" => FilterConfigOperator.StartsWith,
+            "AND" => FilterConfigOperator.And,
+            "OR" => FilterConfigOperator.Or,
+            _ => (FilterConfigOperator)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        OperatorModel value,
+        FilterConfigOperator value,
         JsonSerializerOptions options
     )
     {
@@ -185,21 +185,21 @@ sealed class OperatorModelConverter : JsonConverter<OperatorModel>
             writer,
             value switch
             {
-                OperatorModel.EndsWith => "ENDS_WITH",
-                OperatorModel.Eq => "EQ",
-                OperatorModel.Exists => "EXISTS",
-                OperatorModel.Gt => "GT",
-                OperatorModel.Gte => "GTE",
-                OperatorModel.Includes => "INCLUDES",
-                OperatorModel.IsAfter => "IS_AFTER",
-                OperatorModel.IsBefore => "IS_BEFORE",
-                OperatorModel.Lt => "LT",
-                OperatorModel.Lte => "LTE",
-                OperatorModel.Neq => "NEQ",
-                OperatorModel.Omit => "OMIT",
-                OperatorModel.StartsWith => "STARTS_WITH",
-                OperatorModel.And => "AND",
-                OperatorModel.Or => "OR",
+                FilterConfigOperator.EndsWith => "ENDS_WITH",
+                FilterConfigOperator.Eq => "EQ",
+                FilterConfigOperator.Exists => "EXISTS",
+                FilterConfigOperator.Gt => "GT",
+                FilterConfigOperator.Gte => "GTE",
+                FilterConfigOperator.Includes => "INCLUDES",
+                FilterConfigOperator.IsAfter => "IS_AFTER",
+                FilterConfigOperator.IsBefore => "IS_BEFORE",
+                FilterConfigOperator.Lt => "LT",
+                FilterConfigOperator.Lte => "LTE",
+                FilterConfigOperator.Neq => "NEQ",
+                FilterConfigOperator.Omit => "OMIT",
+                FilterConfigOperator.StartsWith => "STARTS_WITH",
+                FilterConfigOperator.And => "AND",
+                FilterConfigOperator.Or => "OR",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
