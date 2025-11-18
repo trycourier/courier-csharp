@@ -1,5 +1,37 @@
 # Changelog
 
+## 2.0.0 (2025-11-18)
+
+Full Changelog: [v1.1.0...v2.0.0](https://github.com/trycourier/courier-csharp/compare/v1.1.0...v2.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** improve names of some types
+
+### Features
+
+* **client:** add `HttpResponse.ReadAsStream` method ([99c74e4](https://github.com/trycourier/courier-csharp/commit/99c74e418467fc19383c38f2c5d11199d8f21e4b))
+* JWT scope updates ([f4dab2e](https://github.com/trycourier/courier-csharp/commit/f4dab2ee28442df7777e2fa2774da1f1b89b4cae))
+* Test ([a0e9dde](https://github.com/trycourier/courier-csharp/commit/a0e9ddef461c91cb712fcad9831e49b8f648c6f7))
+
+
+### Chores
+
+* **client:** deprecate some symbols ([f4f7dc0](https://github.com/trycourier/courier-csharp/commit/f4f7dc036413c8333b566609e7bee1fc82b73011))
+* **internal:** codegen related update ([a330775](https://github.com/trycourier/courier-csharp/commit/a33077544f5170c34aa5c4c5a11dce86df1c43fb))
+* **internal:** update release please config ([86e6a38](https://github.com/trycourier/courier-csharp/commit/86e6a38fe6047e4d69f3ddb5782974db3a9cbfad))
+
+
+### Documentation
+
+* **internal:** add warning about implementing interface ([6483262](https://github.com/trycourier/courier-csharp/commit/6483262d707519bfb06cbad62cf47c7831911df5))
+
+
+### Refactors
+
+* **client:** improve names of some types ([0a32bcc](https://github.com/trycourier/courier-csharp/commit/0a32bcc702cef8c8f0d23d0241541a15e8bf7e34))
+* **client:** move some defaults out of `ClientOptions` ([7824dc3](https://github.com/trycourier/courier-csharp/commit/7824dc3d616f5c85de8902f64cb8401a54a5f6dd))
+
 ## 1.1.0 (2025-11-12)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/trycourier/courier-csharp/compare/v1.0.0...v1.1.0)
