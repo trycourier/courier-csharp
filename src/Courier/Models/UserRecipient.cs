@@ -162,14 +162,14 @@ public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
         }
     }
 
-    public PreferencesModel? Preferences
+    public UserRecipientPreferences? Preferences
     {
         get
         {
             if (!this._properties.TryGetValue("preferences", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<PreferencesModel?>(
+            return JsonSerializer.Deserialize<UserRecipientPreferences?>(
                 element,
                 ModelBase.SerializerOptions
             );
@@ -263,8 +263,8 @@ public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<PreferencesModel>))]
-public sealed record class PreferencesModel : ModelBase, IFromRaw<PreferencesModel>
+[JsonConverter(typeof(ModelConverter<UserRecipientPreferences>))]
+public sealed record class UserRecipientPreferences : ModelBase, IFromRaw<UserRecipientPreferences>
 {
     public required Dictionary<string, Preference> Notifications
     {
@@ -349,22 +349,22 @@ public sealed record class PreferencesModel : ModelBase, IFromRaw<PreferencesMod
         _ = this.TemplateID;
     }
 
-    public PreferencesModel() { }
+    public UserRecipientPreferences() { }
 
-    public PreferencesModel(IReadOnlyDictionary<string, JsonElement> properties)
+    public UserRecipientPreferences(IReadOnlyDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PreferencesModel(FrozenDictionary<string, JsonElement> properties)
+    UserRecipientPreferences(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static PreferencesModel FromRawUnchecked(
+    public static UserRecipientPreferences FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -372,7 +372,7 @@ public sealed record class PreferencesModel : ModelBase, IFromRaw<PreferencesMod
     }
 
     [SetsRequiredMembers]
-    public PreferencesModel(Dictionary<string, Preference> notifications)
+    public UserRecipientPreferences(Dictionary<string, Preference> notifications)
         : this()
     {
         this.Notifications = notifications;

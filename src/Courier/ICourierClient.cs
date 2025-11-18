@@ -7,6 +7,11 @@ using Courier.Services;
 
 namespace Courier;
 
+/// <summary>
+/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
+/// changes in non-major versions. We may add new methods in the future that cause
+/// existing derived classes to break.
+/// </summary>
 public interface ICourierClient
 {
     HttpClient HttpClient { get; init; }
@@ -15,9 +20,9 @@ public interface ICourierClient
 
     bool ResponseValidation { get; init; }
 
-    int MaxRetries { get; init; }
+    int? MaxRetries { get; init; }
 
-    TimeSpan Timeout { get; init; }
+    TimeSpan? Timeout { get; init; }
 
     string APIKey { get; init; }
 

@@ -198,8 +198,10 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     }
 }
 
-[JsonConverter(typeof(ModelConverter<IntersectionMember1Model>))]
-public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<IntersectionMember1Model>
+[JsonConverter(typeof(ModelConverter<ElementalChannelNodeIntersectionMember1>))]
+public sealed record class ElementalChannelNodeIntersectionMember1
+    : ModelBase,
+        IFromRaw<ElementalChannelNodeIntersectionMember1>
 {
     /// <summary>
     /// The channel the contents of this element should be applied to. Can be `email`,
@@ -261,22 +263,24 @@ public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<Inters
         _ = this.Raw;
     }
 
-    public IntersectionMember1Model() { }
+    public ElementalChannelNodeIntersectionMember1() { }
 
-    public IntersectionMember1Model(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalChannelNodeIntersectionMember1(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1Model(FrozenDictionary<string, JsonElement> properties)
+    ElementalChannelNodeIntersectionMember1(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static IntersectionMember1Model FromRawUnchecked(
+    public static ElementalChannelNodeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -284,7 +288,7 @@ public sealed record class IntersectionMember1Model : ModelBase, IFromRaw<Inters
     }
 
     [SetsRequiredMembers]
-    public IntersectionMember1Model(string channel)
+    public ElementalChannelNodeIntersectionMember1(string channel)
         : this()
     {
         this.Channel = channel;

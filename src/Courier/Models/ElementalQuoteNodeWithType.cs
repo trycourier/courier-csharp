@@ -86,17 +86,17 @@ public sealed record class ElementalQuoteNodeWithType
         }
     }
 
-    public ApiEnum<string, Type4>? Type
+    public ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type4>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalQuoteNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -155,20 +155,22 @@ public sealed record class ElementalQuoteNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<IntersectionMember15>))]
-public sealed record class IntersectionMember15 : ModelBase, IFromRaw<IntersectionMember15>
+[JsonConverter(typeof(ModelConverter<ElementalQuoteNodeWithTypeIntersectionMember1>))]
+public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1
+    : ModelBase,
+        IFromRaw<ElementalQuoteNodeWithTypeIntersectionMember1>
 {
-    public ApiEnum<string, Type4>? Type
+    public ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
             if (!this._properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ApiEnum<string, Type4>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ApiEnum<
+                string,
+                ElementalQuoteNodeWithTypeIntersectionMember1Type
+            >?>(element, ModelBase.SerializerOptions);
         }
         init
         {
@@ -189,22 +191,24 @@ public sealed record class IntersectionMember15 : ModelBase, IFromRaw<Intersecti
         this.Type?.Validate();
     }
 
-    public IntersectionMember15() { }
+    public ElementalQuoteNodeWithTypeIntersectionMember1() { }
 
-    public IntersectionMember15(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalQuoteNodeWithTypeIntersectionMember1(
+        IReadOnlyDictionary<string, JsonElement> properties
+    )
     {
         this._properties = [.. properties];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember15(FrozenDictionary<string, JsonElement> properties)
+    ElementalQuoteNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> properties)
     {
         this._properties = [.. properties];
     }
 #pragma warning restore CS8618
 
-    public static IntersectionMember15 FromRawUnchecked(
+    public static ElementalQuoteNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> properties
     )
     {
@@ -212,15 +216,16 @@ public sealed record class IntersectionMember15 : ModelBase, IFromRaw<Intersecti
     }
 }
 
-[JsonConverter(typeof(Type4Converter))]
-public enum Type4
+[JsonConverter(typeof(ElementalQuoteNodeWithTypeIntersectionMember1TypeConverter))]
+public enum ElementalQuoteNodeWithTypeIntersectionMember1Type
 {
     Quote,
 }
 
-sealed class Type4Converter : JsonConverter<Type4>
+sealed class ElementalQuoteNodeWithTypeIntersectionMember1TypeConverter
+    : JsonConverter<ElementalQuoteNodeWithTypeIntersectionMember1Type>
 {
-    public override Type4 Read(
+    public override ElementalQuoteNodeWithTypeIntersectionMember1Type Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -228,18 +233,22 @@ sealed class Type4Converter : JsonConverter<Type4>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "quote" => Type4.Quote,
-            _ => (Type4)(-1),
+            "quote" => ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+            _ => (ElementalQuoteNodeWithTypeIntersectionMember1Type)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Type4 value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        ElementalQuoteNodeWithTypeIntersectionMember1Type value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Type4.Quote => "quote",
+                ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote => "quote",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

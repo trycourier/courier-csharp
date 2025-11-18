@@ -25,7 +25,7 @@ public class InvokeServiceTest : TestBase
                         },
                         new AutomationSendStep()
                         {
-                            Action = ActionModel.Send,
+                            Action = AutomationSendStepAction.Send,
                             Brand = "brand",
                             Data = new Dictionary<string, JsonElement>()
                             {
