@@ -303,7 +303,14 @@ public sealed record class Automation : ModelBase, IFromRaw<Automation>
 [JsonConverter(typeof(StepConverter))]
 public record class Step
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
+
+    JsonElement? _json = null;
+
+    public JsonElement Json
+    {
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+    }
 
     public string? Brand
     {
@@ -337,49 +344,51 @@ public record class Step
         }
     }
 
-    public Step(AutomationDelayStep value)
+    public Step(AutomationDelayStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationSendStep value)
+    public Step(AutomationSendStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationSendListStep value)
+    public Step(AutomationSendListStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationUpdateProfileStep value)
+    public Step(AutomationUpdateProfileStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationCancelStep value)
+    public Step(AutomationCancelStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationFetchDataStep value)
+    public Step(AutomationFetchDataStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationInvokeStep value)
+    public Step(AutomationInvokeStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    Step(UnknownVariant value)
+    public Step(JsonElement json)
     {
-        Value = value;
-    }
-
-    public static Step CreateUnknownVariant(JsonElement value)
-    {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickAutomationDelay([NotNullWhen(true)] out AutomationDelayStep? value)
@@ -503,13 +512,11 @@ public record class Step
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Step");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class StepConverter : JsonConverter<Step>
@@ -520,163 +527,114 @@ sealed class StepConverter : JsonConverter<Step>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationDelayStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationSendStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationSendListStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
             var deserialized = JsonSerializer.Deserialize<AutomationUpdateProfileStep>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationUpdateProfileStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationCancelStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationFetchDataStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationInvokeStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, Step value, JsonSerializerOptions options)
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }
 

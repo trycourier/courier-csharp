@@ -813,26 +813,30 @@ public sealed record class Timeouts : ModelBase, IFromRaw<Timeouts>
 [JsonConverter(typeof(ContentConverter))]
 public record class Content
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public Content(ElementalContentSugar value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Content(ElementalContent value)
+    public Content(ElementalContentSugar value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    Content(UnknownVariant value)
+    public Content(ElementalContent value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static Content CreateUnknownVariant(JsonElement value)
+    public Content(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickElementalContentSugar([NotNullWhen(true)] out ElementalContentSugar? value)
@@ -884,13 +888,11 @@ public record class Content
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ContentConverter : JsonConverter<Content>
@@ -901,56 +903,41 @@ sealed class ContentConverter : JsonConverter<Content>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Content(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalContentSugar'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalContent>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalContent>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Content(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalContent'",
-                    e
-                )
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, Content value, JsonSerializerOptions options)
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }
 
@@ -1121,26 +1108,30 @@ public sealed record class Expiry : ModelBase, IFromRaw<Expiry>
 [JsonConverter(typeof(ExpiresInConverter))]
 public record class ExpiresIn
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public ExpiresIn(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public ExpiresIn(long value)
+    public ExpiresIn(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    ExpiresIn(UnknownVariant value)
+    public ExpiresIn(long value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static ExpiresIn CreateUnknownVariant(JsonElement value)
+    public ExpiresIn(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -1190,13 +1181,11 @@ public record class ExpiresIn
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of ExpiresIn");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
@@ -1207,35 +1196,30 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new ExpiresIn(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
         try
         {
-            return new ExpiresIn(JsonSerializer.Deserialize<long>(ref reader, options));
+            return new(JsonSerializer.Deserialize<long>(json, options));
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'long'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(
@@ -1244,8 +1228,7 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
         JsonSerializerOptions options
     )
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }
 
@@ -1912,26 +1895,30 @@ sealed class CriteriaConverter : JsonConverter<Criteria>
 [JsonConverter(typeof(ToConverter))]
 public record class To
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public To(UserRecipient value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public To(IReadOnlyList<Recipient> value)
+    public To(UserRecipient value, JsonElement? json = null)
     {
-        Value = ImmutableArray.ToImmutableArray(value);
+        this.Value = value;
+        this._json = json;
     }
 
-    To(UnknownVariant value)
+    public To(IReadOnlyList<Recipient> value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = ImmutableArray.ToImmutableArray(value);
+        this._json = json;
     }
 
-    public static To CreateUnknownVariant(JsonElement value)
+    public To(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickUserRecipient([NotNullWhen(true)] out UserRecipient? value)
@@ -1984,13 +1971,11 @@ public record class To
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of To");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ToConverter : JsonConverter<To?>
@@ -2001,51 +1986,39 @@ sealed class ToConverter : JsonConverter<To?>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UserRecipient>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<UserRecipient>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new To(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'UserRecipient'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<List<Recipient>>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<List<Recipient>>(json, options);
             if (deserialized != null)
             {
-                return new To(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'List<Recipient>'",
-                    e
-                )
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, To? value, JsonSerializerOptions options)
     {
-        object? variant = value?.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value?.Json, options);
     }
 }
