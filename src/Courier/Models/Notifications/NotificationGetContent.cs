@@ -353,26 +353,30 @@ sealed class BlockTypeConverter : JsonConverter<BlockType>
 [JsonConverter(typeof(ContentConverter))]
 public record class Content
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public Content(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Content(NotificationContentHierarchy value)
+    public Content(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    Content(UnknownVariant value)
+    public Content(NotificationContentHierarchy value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static Content CreateUnknownVariant(JsonElement value)
+    public Content(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -426,13 +430,11 @@ public record class Content
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ContentConverter : JsonConverter<Content?>
@@ -443,52 +445,43 @@ sealed class ContentConverter : JsonConverter<Content?>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
             var deserialized = JsonSerializer.Deserialize<NotificationContentHierarchy>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Content(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'NotificationContentHierarchy'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new Content(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, Content? value, JsonSerializerOptions options)
     {
-        object? variant = value?.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value?.Json, options);
     }
 }
 
@@ -565,26 +558,30 @@ public sealed record class NotificationContentHierarchy
 [JsonConverter(typeof(LocaleConverter))]
 public record class Locale
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public Locale(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Locale(LocaleNotificationContentHierarchy value)
+    public Locale(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    Locale(UnknownVariant value)
+    public Locale(LocaleNotificationContentHierarchy value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static Locale CreateUnknownVariant(JsonElement value)
+    public Locale(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -638,13 +635,11 @@ public record class Locale
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Locale");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class LocaleConverter : JsonConverter<Locale>
@@ -655,52 +650,43 @@ sealed class LocaleConverter : JsonConverter<Locale>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
             var deserialized = JsonSerializer.Deserialize<LocaleNotificationContentHierarchy>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Locale(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'LocaleNotificationContentHierarchy'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new Locale(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, Locale value, JsonSerializerOptions options)
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }
 

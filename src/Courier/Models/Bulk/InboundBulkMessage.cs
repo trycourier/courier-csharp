@@ -12,7 +12,14 @@ namespace Courier.Models.Bulk;
 [JsonConverter(typeof(InboundBulkMessageConverter))]
 public record class InboundBulkMessage
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
+
+    JsonElement? _json = null;
+
+    public JsonElement Json
+    {
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+    }
 
     public string? Brand
     {
@@ -24,24 +31,21 @@ public record class InboundBulkMessage
         get { return Match<string?>(template: (x) => x.Event, content: (x) => x.Event); }
     }
 
-    public InboundBulkMessage(InboundBulkTemplateMessage value)
+    public InboundBulkMessage(InboundBulkTemplateMessage value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public InboundBulkMessage(InboundBulkContentMessage value)
+    public InboundBulkMessage(InboundBulkContentMessage value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    InboundBulkMessage(UnknownVariant value)
+    public InboundBulkMessage(JsonElement json)
     {
-        Value = value;
-    }
-
-    public static InboundBulkMessage CreateUnknownVariant(JsonElement value)
-    {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickTemplate([NotNullWhen(true)] out InboundBulkTemplateMessage? value)
@@ -99,15 +103,13 @@ public record class InboundBulkMessage
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException(
                 "Data did not match any variant of InboundBulkMessage"
             );
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
@@ -118,53 +120,39 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
             var deserialized = JsonSerializer.Deserialize<InboundBulkTemplateMessage>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new InboundBulkMessage(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'InboundBulkTemplateMessage'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<InboundBulkContentMessage>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<InboundBulkContentMessage>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new InboundBulkMessage(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'InboundBulkContentMessage'",
-                    e
-                )
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(
@@ -173,8 +161,7 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
         JsonSerializerOptions options
     )
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }
 
@@ -525,26 +512,30 @@ public sealed record class InboundBulkContentMessage
 [JsonConverter(typeof(ContentConverter))]
 public record class Content
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public Content(ElementalContentSugar value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Content(ElementalContent value)
+    public Content(ElementalContentSugar value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    Content(UnknownVariant value)
+    public Content(ElementalContent value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static Content CreateUnknownVariant(JsonElement value)
+    public Content(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickElementalContentSugar([NotNullWhen(true)] out ElementalContentSugar? value)
@@ -596,13 +587,11 @@ public record class Content
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ContentConverter : JsonConverter<Content>
@@ -613,55 +602,40 @@ sealed class ContentConverter : JsonConverter<Content>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Content(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalContentSugar'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalContent>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalContent>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Content(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalContent'",
-                    e
-                )
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, Content value, JsonSerializerOptions options)
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }

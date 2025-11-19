@@ -419,26 +419,30 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
 [JsonConverter(typeof(UserTokenExpiryDateConverter))]
 public record class UserTokenExpiryDate
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public UserTokenExpiryDate(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public UserTokenExpiryDate(bool value)
+    public UserTokenExpiryDate(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    UserTokenExpiryDate(UnknownVariant value)
+    public UserTokenExpiryDate(bool value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static UserTokenExpiryDate CreateUnknownVariant(JsonElement value)
+    public UserTokenExpiryDate(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -488,15 +492,13 @@ public record class UserTokenExpiryDate
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException(
                 "Data did not match any variant of UserTokenExpiryDate"
             );
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
@@ -507,35 +509,30 @@ sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new UserTokenExpiryDate(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
         try
         {
-            return new UserTokenExpiryDate(JsonSerializer.Deserialize<bool>(ref reader, options));
+            return new(JsonSerializer.Deserialize<bool>(json, options));
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'bool'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(
@@ -544,8 +541,7 @@ sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        object? variant = value?.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value?.Json, options);
     }
 }
 

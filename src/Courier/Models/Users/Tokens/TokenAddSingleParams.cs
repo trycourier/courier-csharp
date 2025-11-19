@@ -461,26 +461,30 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
 [JsonConverter(typeof(ExpiryDateConverter))]
 public record class ExpiryDate
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public ExpiryDate(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public ExpiryDate(bool value)
+    public ExpiryDate(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    ExpiryDate(UnknownVariant value)
+    public ExpiryDate(bool value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static ExpiryDate CreateUnknownVariant(JsonElement value)
+    public ExpiryDate(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -530,13 +534,11 @@ public record class ExpiryDate
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of ExpiryDate");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
@@ -547,35 +549,30 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new ExpiryDate(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
         try
         {
-            return new ExpiryDate(JsonSerializer.Deserialize<bool>(ref reader, options));
+            return new(JsonSerializer.Deserialize<bool>(json, options));
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'bool'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(
@@ -584,8 +581,7 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        object? variant = value?.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value?.Json, options);
     }
 }
 
