@@ -20,7 +20,7 @@ public sealed record class AudienceUpdateParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string AudienceID { get; init; }
+    public string? AudienceID { get; init; }
 
     /// <summary>
     /// A description of the audience

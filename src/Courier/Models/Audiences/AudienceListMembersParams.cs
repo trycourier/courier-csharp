@@ -13,7 +13,7 @@ namespace Courier.Models.Audiences;
 /// </summary>
 public sealed record class AudienceListMembersParams : ParamsBase
 {
-    public required string AudienceID { get; init; }
+    public string? AudienceID { get; init; }
 
     /// <summary>
     /// A unique identifier that allows for fetching the next set of members

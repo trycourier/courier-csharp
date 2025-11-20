@@ -13,7 +13,7 @@ namespace Courier.Models.Profiles.Lists;
 /// </summary>
 public sealed record class ListRetrieveParams : ParamsBase
 {
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     /// <summary>
     /// A unique identifier that allows for fetching the next set of message statuses.

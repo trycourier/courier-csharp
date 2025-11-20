@@ -13,7 +13,7 @@ namespace Courier.Models.Lists.Subscriptions;
 /// </summary>
 public sealed record class SubscriptionListParams : ParamsBase
 {
-    public required string ListID { get; init; }
+    public string? ListID { get; init; }
 
     /// <summary>
     /// A unique identifier that allows for fetching the next set of list subscriptions

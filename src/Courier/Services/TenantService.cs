@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Tenants;
 using Courier.Services.Tenants;
 
@@ -41,6 +42,11 @@ public sealed class TenantService : ITenantService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TenantID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TenantID' cannot be null");
+        }
+
         HttpRequest<TenantRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -57,11 +63,27 @@ public sealed class TenantService : ITenantService
         return tenant;
     }
 
+    public async Task<Tenant> Retrieve(
+        string tenantID,
+        TenantRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Retrieve(parameters with { TenantID = tenantID }, cancellationToken);
+    }
+
     public async Task<Tenant> Update(
         TenantUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TenantID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TenantID' cannot be null");
+        }
+
         HttpRequest<TenantUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -76,6 +98,15 @@ public sealed class TenantService : ITenantService
             tenant.Validate();
         }
         return tenant;
+    }
+
+    public async Task<Tenant> Update(
+        string tenantID,
+        TenantUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await this.Update(parameters with { TenantID = tenantID }, cancellationToken);
     }
 
     public async Task<TenantListResponse> List(
@@ -108,6 +139,11 @@ public sealed class TenantService : ITenantService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TenantID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TenantID' cannot be null");
+        }
+
         HttpRequest<TenantDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
@@ -118,11 +154,27 @@ public sealed class TenantService : ITenantService
             .ConfigureAwait(false);
     }
 
+    public async Task Delete(
+        string tenantID,
+        TenantDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Delete(parameters with { TenantID = tenantID }, cancellationToken);
+    }
+
     public async Task<TenantListUsersResponse> ListUsers(
         TenantListUsersParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TenantID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TenantID' cannot be null");
+        }
+
         HttpRequest<TenantListUsersParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -139,5 +191,16 @@ public sealed class TenantService : ITenantService
             deserializedResponse.Validate();
         }
         return deserializedResponse;
+    }
+
+    public async Task<TenantListUsersResponse> ListUsers(
+        string tenantID,
+        TenantListUsersParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.ListUsers(parameters with { TenantID = tenantID }, cancellationToken);
     }
 }

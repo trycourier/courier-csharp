@@ -20,7 +20,7 @@ public sealed record class ListRestoreParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string ListID { get; init; }
+    public string? ListID { get; init; }
 
     public ListRestoreParams() { }
 

@@ -13,7 +13,7 @@ namespace Courier.Models.Brands;
 /// </summary>
 public sealed record class BrandDeleteParams : ParamsBase
 {
-    public required string BrandID { get; init; }
+    public string? BrandID { get; init; }
 
     public BrandDeleteParams() { }
 

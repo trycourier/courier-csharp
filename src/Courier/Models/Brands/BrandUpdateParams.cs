@@ -21,7 +21,7 @@ public sealed record class BrandUpdateParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string BrandID { get; init; }
+    public string? BrandID { get; init; }
 
     /// <summary>
     /// The name of the brand.

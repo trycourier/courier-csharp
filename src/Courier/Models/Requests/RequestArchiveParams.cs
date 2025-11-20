@@ -13,7 +13,7 @@ namespace Courier.Models.Requests;
 /// </summary>
 public sealed record class RequestArchiveParams : ParamsBase
 {
-    public required string RequestID { get; init; }
+    public string? RequestID { get; init; }
 
     public RequestArchiveParams() { }
 

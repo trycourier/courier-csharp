@@ -15,7 +15,7 @@ public sealed record class TemplateRetrieveParams : ParamsBase
 {
     public required string TenantID { get; init; }
 
-    public required string TemplateID { get; init; }
+    public string? TemplateID { get; init; }
 
     public TemplateRetrieveParams() { }
 

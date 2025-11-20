@@ -13,7 +13,7 @@ namespace Courier.Models.Profiles;
 /// </summary>
 public sealed record class ProfileDeleteParams : ParamsBase
 {
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     public ProfileDeleteParams() { }
 

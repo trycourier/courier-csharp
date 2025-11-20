@@ -13,7 +13,7 @@ namespace Courier.Models.Bulk;
 /// </summary>
 public sealed record class BulkRetrieveJobParams : ParamsBase
 {
-    public required string JobID { get; init; }
+    public string? JobID { get; init; }
 
     public BulkRetrieveJobParams() { }
 

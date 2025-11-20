@@ -12,7 +12,7 @@ public sealed record class CheckDeleteParams : ParamsBase
 {
     public required string ID { get; init; }
 
-    public required string SubmissionID { get; init; }
+    public string? SubmissionID { get; init; }
 
     public CheckDeleteParams() { }
 

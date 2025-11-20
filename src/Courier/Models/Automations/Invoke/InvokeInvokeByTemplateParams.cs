@@ -20,7 +20,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string TemplateID { get; init; }
+    public string? TemplateID { get; init; }
 
     public required string? Recipient
     {

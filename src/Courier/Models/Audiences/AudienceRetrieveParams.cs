@@ -13,7 +13,7 @@ namespace Courier.Models.Audiences;
 /// </summary>
 public sealed record class AudienceRetrieveParams : ParamsBase
 {
-    public required string AudienceID { get; init; }
+    public string? AudienceID { get; init; }
 
     public AudienceRetrieveParams() { }
 

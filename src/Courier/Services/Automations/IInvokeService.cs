@@ -33,4 +33,13 @@ public interface IInvokeService
         InvokeInvokeByTemplateParams parameters,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Invoke an automation run from an automation template.
+    /// </summary>
+    Task<AutomationInvokeResponse> InvokeByTemplate(
+        string templateID,
+        InvokeInvokeByTemplateParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

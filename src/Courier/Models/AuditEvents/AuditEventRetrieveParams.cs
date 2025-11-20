@@ -13,7 +13,7 @@ namespace Courier.Models.AuditEvents;
 /// </summary>
 public sealed record class AuditEventRetrieveParams : ParamsBase
 {
-    public required string AuditEventID { get; init; }
+    public string? AuditEventID { get; init; }
 
     public AuditEventRetrieveParams() { }
 

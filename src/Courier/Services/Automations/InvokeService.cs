@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Automations;
 using Courier.Models.Automations.Invoke;
 
@@ -50,6 +51,11 @@ public sealed class InvokeService : IInvokeService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TemplateID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TemplateID' cannot be null");
+        }
+
         HttpRequest<InvokeInvokeByTemplateParams> request = new()
         {
             Method = HttpMethod.Post,
@@ -66,5 +72,20 @@ public sealed class InvokeService : IInvokeService
             automationInvokeResponse.Validate();
         }
         return automationInvokeResponse;
+    }
+
+    public async Task<AutomationInvokeResponse> InvokeByTemplate(
+        string templateID,
+        InvokeInvokeByTemplateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await this.InvokeByTemplate(
+            parameters with
+            {
+                TemplateID = templateID,
+            },
+            cancellationToken
+        );
     }
 }

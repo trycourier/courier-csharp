@@ -15,7 +15,7 @@ public sealed record class TenantRemoveSingleParams : ParamsBase
 {
     public required string UserID { get; init; }
 
-    public required string TenantID { get; init; }
+    public string? TenantID { get; init; }
 
     public TenantRemoveSingleParams() { }
 

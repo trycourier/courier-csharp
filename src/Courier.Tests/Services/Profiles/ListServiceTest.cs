@@ -9,14 +9,14 @@ public class ListServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var list = await this.client.Profiles.Lists.Retrieve(new() { UserID = "user_id" });
+        var list = await this.client.Profiles.Lists.Retrieve("user_id");
         list.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        var list = await this.client.Profiles.Lists.Delete(new() { UserID = "user_id" });
+        var list = await this.client.Profiles.Lists.Delete("user_id");
         list.Validate();
     }
 
@@ -24,9 +24,9 @@ public class ListServiceTest : TestBase
     public async Task Subscribe_Works()
     {
         var response = await this.client.Profiles.Lists.Subscribe(
+            "user_id",
             new()
             {
-                UserID = "user_id",
                 Lists =
                 [
                     new()

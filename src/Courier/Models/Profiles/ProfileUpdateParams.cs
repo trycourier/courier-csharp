@@ -22,7 +22,7 @@ public sealed record class ProfileUpdateParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     /// <summary>
     /// List of patch operations to apply to the profile.

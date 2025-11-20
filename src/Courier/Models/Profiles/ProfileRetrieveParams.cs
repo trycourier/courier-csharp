@@ -13,7 +13,7 @@ namespace Courier.Models.Profiles;
 /// </summary>
 public sealed record class ProfileRetrieveParams : ParamsBase
 {
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     public ProfileRetrieveParams() { }
 

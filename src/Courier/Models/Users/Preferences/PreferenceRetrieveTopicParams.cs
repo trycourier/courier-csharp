@@ -15,7 +15,7 @@ public sealed record class PreferenceRetrieveTopicParams : ParamsBase
 {
     public required string UserID { get; init; }
 
-    public required string TopicID { get; init; }
+    public string? TopicID { get; init; }
 
     /// <summary>
     /// Query the preferences of a user for this specific tenant context.

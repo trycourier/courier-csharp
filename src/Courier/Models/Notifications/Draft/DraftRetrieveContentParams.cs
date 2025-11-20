@@ -10,7 +10,7 @@ namespace Courier.Models.Notifications.Draft;
 
 public sealed record class DraftRetrieveContentParams : ParamsBase
 {
-    public required string ID { get; init; }
+    public string? ID { get; init; }
 
     public DraftRetrieveContentParams() { }
 

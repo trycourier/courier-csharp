@@ -13,7 +13,7 @@ namespace Courier.Models.Users.Tokens;
 /// </summary>
 public sealed record class TokenAddMultipleParams : ParamsBase
 {
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     public TokenAddMultipleParams() { }
 

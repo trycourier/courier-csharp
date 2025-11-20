@@ -8,9 +8,7 @@ public class TokenServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var token = await this.client.Users.Tokens.Retrieve(
-            new() { UserID = "user_id", Token = "token" }
-        );
+        var token = await this.client.Users.Tokens.Retrieve("token", new() { UserID = "user_id" });
         token.Validate();
     }
 
@@ -18,10 +16,10 @@ public class TokenServiceTest : TestBase
     public async Task Update_Works()
     {
         await this.client.Users.Tokens.Update(
+            "token",
             new()
             {
                 UserID = "user_id",
-                Token = "token",
                 Patch =
                 [
                     new()
@@ -38,7 +36,7 @@ public class TokenServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task List_Works()
     {
-        var userTokens = await this.client.Users.Tokens.List(new() { UserID = "user_id" });
+        var userTokens = await this.client.Users.Tokens.List("user_id");
         foreach (var item in userTokens)
         {
             item.Validate();
@@ -48,23 +46,23 @@ public class TokenServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Users.Tokens.Delete(new() { UserID = "user_id", Token = "token" });
+        await this.client.Users.Tokens.Delete("token", new() { UserID = "user_id" });
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task AddMultiple_Works()
     {
-        await this.client.Users.Tokens.AddMultiple(new() { UserID = "user_id" });
+        await this.client.Users.Tokens.AddMultiple("user_id");
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task AddSingle_Works()
     {
         await this.client.Users.Tokens.AddSingle(
+            "token",
             new()
             {
                 UserID = "user_id",
-                Token = "token",
                 Token1 = "token",
                 ProviderKey = ProviderKey.FirebaseFcm,
             }

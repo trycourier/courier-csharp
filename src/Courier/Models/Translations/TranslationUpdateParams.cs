@@ -23,7 +23,7 @@ public sealed record class TranslationUpdateParams : ParamsBase
 
     public required string Domain { get; init; }
 
-    public required string Locale { get; init; }
+    public string? Locale { get; init; }
 
     public required string Body
     {

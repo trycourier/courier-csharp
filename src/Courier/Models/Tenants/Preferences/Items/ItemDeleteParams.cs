@@ -15,7 +15,7 @@ public sealed record class ItemDeleteParams : ParamsBase
 {
     public required string TenantID { get; init; }
 
-    public required string TopicID { get; init; }
+    public string? TopicID { get; init; }
 
     public ItemDeleteParams() { }
 
