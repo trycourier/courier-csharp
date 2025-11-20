@@ -29,4 +29,9 @@ public interface INotificationService
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     );
+    Task<NotificationGetContent> RetrieveContent(
+        string id,
+        NotificationRetrieveContentParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }

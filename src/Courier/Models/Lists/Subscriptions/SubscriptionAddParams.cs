@@ -22,7 +22,7 @@ public sealed record class SubscriptionAddParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string ListID { get; init; }
+    public string? ListID { get; init; }
 
     public required List<PutSubscriptionsRecipient> Recipients
     {

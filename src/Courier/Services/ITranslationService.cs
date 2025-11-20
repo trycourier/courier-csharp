@@ -24,7 +24,25 @@ public interface ITranslationService
     );
 
     /// <summary>
+    /// Get translations by locale
+    /// </summary>
+    Task<string> Retrieve(
+        string locale,
+        TranslationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Update a translation
     /// </summary>
     Task Update(TranslationUpdateParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Update a translation
+    /// </summary>
+    Task Update(
+        string locale,
+        TranslationUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

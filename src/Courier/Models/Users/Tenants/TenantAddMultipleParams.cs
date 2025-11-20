@@ -24,7 +24,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     public required List<TenantAssociation> Tenants
     {

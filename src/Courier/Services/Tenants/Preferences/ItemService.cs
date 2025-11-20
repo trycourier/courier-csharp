@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Tenants.Preferences.Items;
 
 namespace Courier.Services.Tenants.Preferences;
@@ -26,6 +27,11 @@ public sealed class ItemService : IItemService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TopicID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TopicID' cannot be null");
+        }
+
         HttpRequest<ItemUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -36,11 +42,25 @@ public sealed class ItemService : IItemService
             .ConfigureAwait(false);
     }
 
+    public async Task Update(
+        string topicID,
+        ItemUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Update(parameters with { TopicID = topicID }, cancellationToken);
+    }
+
     public async Task Delete(
         ItemDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TopicID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TopicID' cannot be null");
+        }
+
         HttpRequest<ItemDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
@@ -49,5 +69,14 @@ public sealed class ItemService : IItemService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
+    }
+
+    public async Task Delete(
+        string topicID,
+        ItemDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Delete(parameters with { TopicID = topicID }, cancellationToken);
     }
 }

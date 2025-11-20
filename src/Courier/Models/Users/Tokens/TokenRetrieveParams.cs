@@ -15,7 +15,7 @@ public sealed record class TokenRetrieveParams : ParamsBase
 {
     public required string UserID { get; init; }
 
-    public required string Token { get; init; }
+    public string? Token { get; init; }
 
     public TokenRetrieveParams() { }
 

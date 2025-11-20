@@ -13,7 +13,7 @@ namespace Courier.Models.Tenants;
 /// </summary>
 public sealed record class TenantListUsersParams : ParamsBase
 {
-    public required string TenantID { get; init; }
+    public string? TenantID { get; init; }
 
     /// <summary>
     /// Continue the pagination with the next cursor

@@ -15,7 +15,7 @@ public sealed record class TranslationRetrieveParams : ParamsBase
 {
     public required string Domain { get; init; }
 
-    public required string Locale { get; init; }
+    public string? Locale { get; init; }
 
     public TranslationRetrieveParams() { }
 

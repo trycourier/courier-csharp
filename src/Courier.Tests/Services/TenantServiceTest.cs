@@ -7,16 +7,14 @@ public class TenantServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var tenant = await this.client.Tenants.Retrieve(new() { TenantID = "tenant_id" });
+        var tenant = await this.client.Tenants.Retrieve("tenant_id");
         tenant.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Update_Works()
     {
-        var tenant = await this.client.Tenants.Update(
-            new() { TenantID = "tenant_id", Name = "name" }
-        );
+        var tenant = await this.client.Tenants.Update("tenant_id", new() { Name = "name" });
         tenant.Validate();
     }
 
@@ -30,13 +28,13 @@ public class TenantServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Tenants.Delete(new() { TenantID = "tenant_id" });
+        await this.client.Tenants.Delete("tenant_id");
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task ListUsers_Works()
     {
-        var response = await this.client.Tenants.ListUsers(new() { TenantID = "tenant_id" });
+        var response = await this.client.Tenants.ListUsers("tenant_id");
         response.Validate();
     }
 }

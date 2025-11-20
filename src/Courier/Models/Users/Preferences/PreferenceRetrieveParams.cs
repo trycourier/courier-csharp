@@ -13,7 +13,7 @@ namespace Courier.Models.Users.Preferences;
 /// </summary>
 public sealed record class PreferenceRetrieveParams : ParamsBase
 {
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     /// <summary>
     /// Query the preferences of a user for this specific tenant context.

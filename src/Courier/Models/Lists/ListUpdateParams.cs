@@ -21,7 +21,7 @@ public sealed record class ListUpdateParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string ListID { get; init; }
+    public string? ListID { get; init; }
 
     public required string Name
     {

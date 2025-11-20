@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Brands;
 
 namespace Courier.Services;
@@ -47,6 +48,11 @@ public sealed class BrandService : IBrandService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.BrandID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.BrandID' cannot be null");
+        }
+
         HttpRequest<BrandRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -63,11 +69,27 @@ public sealed class BrandService : IBrandService
         return brand;
     }
 
+    public async Task<Brand> Retrieve(
+        string brandID,
+        BrandRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Retrieve(parameters with { BrandID = brandID }, cancellationToken);
+    }
+
     public async Task<Brand> Update(
         BrandUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.BrandID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.BrandID' cannot be null");
+        }
+
         HttpRequest<BrandUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -82,6 +104,15 @@ public sealed class BrandService : IBrandService
             brand.Validate();
         }
         return brand;
+    }
+
+    public async Task<Brand> Update(
+        string brandID,
+        BrandUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await this.Update(parameters with { BrandID = brandID }, cancellationToken);
     }
 
     public async Task<BrandListResponse> List(
@@ -114,6 +145,11 @@ public sealed class BrandService : IBrandService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.BrandID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.BrandID' cannot be null");
+        }
+
         HttpRequest<BrandDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
@@ -122,5 +158,16 @@ public sealed class BrandService : IBrandService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
+    }
+
+    public async Task Delete(
+        string brandID,
+        BrandDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Delete(parameters with { BrandID = brandID }, cancellationToken);
     }
 }

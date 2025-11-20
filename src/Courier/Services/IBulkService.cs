@@ -21,6 +21,15 @@ public interface IBulkService
     Task AddUsers(BulkAddUsersParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Ingest user data into a Bulk Job
+    /// </summary>
+    Task AddUsers(
+        string jobID,
+        BulkAddUsersParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Create a bulk job
     /// </summary>
     Task<BulkCreateJobResponse> CreateJob(
@@ -37,6 +46,15 @@ public interface IBulkService
     );
 
     /// <summary>
+    /// Get Bulk Job Users
+    /// </summary>
+    Task<BulkListUsersResponse> ListUsers(
+        string jobID,
+        BulkListUsersParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Get a bulk job
     /// </summary>
     Task<BulkRetrieveJobResponse> RetrieveJob(
@@ -45,7 +63,25 @@ public interface IBulkService
     );
 
     /// <summary>
+    /// Get a bulk job
+    /// </summary>
+    Task<BulkRetrieveJobResponse> RetrieveJob(
+        string jobID,
+        BulkRetrieveJobParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Run a bulk job
     /// </summary>
     Task RunJob(BulkRunJobParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Run a bulk job
+    /// </summary>
+    Task RunJob(
+        string jobID,
+        BulkRunJobParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }

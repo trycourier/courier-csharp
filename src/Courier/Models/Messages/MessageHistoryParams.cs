@@ -13,7 +13,7 @@ namespace Courier.Models.Messages;
 /// </summary>
 public sealed record class MessageHistoryParams : ParamsBase
 {
-    public required string MessageID { get; init; }
+    public string? MessageID { get; init; }
 
     /// <summary>
     /// A supported Message History type that will filter the events returned.

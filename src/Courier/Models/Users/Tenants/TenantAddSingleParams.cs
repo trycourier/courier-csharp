@@ -25,7 +25,7 @@ public sealed record class TenantAddSingleParams : ParamsBase
 
     public required string UserID { get; init; }
 
-    public required string TenantID { get; init; }
+    public string? TenantID { get; init; }
 
     public Dictionary<string, JsonElement>? Profile
     {

@@ -13,7 +13,7 @@ namespace Courier.Models.Bulk;
 /// </summary>
 public sealed record class BulkListUsersParams : ParamsBase
 {
-    public required string JobID { get; init; }
+    public string? JobID { get; init; }
 
     /// <summary>
     /// A unique identifier that allows for fetching the next set of users added to

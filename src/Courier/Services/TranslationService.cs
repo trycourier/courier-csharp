@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Translations;
 
 namespace Courier.Services;
@@ -26,6 +27,11 @@ public sealed class TranslationService : ITranslationService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.Locale == null)
+        {
+            throw new CourierInvalidDataException("'parameters.Locale' cannot be null");
+        }
+
         HttpRequest<TranslationRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -37,11 +43,25 @@ public sealed class TranslationService : ITranslationService
         return await response.Deserialize<string>(cancellationToken).ConfigureAwait(false);
     }
 
+    public async Task<string> Retrieve(
+        string locale,
+        TranslationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await this.Retrieve(parameters with { Locale = locale }, cancellationToken);
+    }
+
     public async Task Update(
         TranslationUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.Locale == null)
+        {
+            throw new CourierInvalidDataException("'parameters.Locale' cannot be null");
+        }
+
         HttpRequest<TranslationUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -50,5 +70,14 @@ public sealed class TranslationService : ITranslationService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
+    }
+
+    public async Task Update(
+        string locale,
+        TranslationUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Update(parameters with { Locale = locale }, cancellationToken);
     }
 }

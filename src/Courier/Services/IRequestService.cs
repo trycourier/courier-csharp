@@ -19,4 +19,13 @@ public interface IRequestService
     /// Archive message
     /// </summary>
     Task Archive(RequestArchiveParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Archive message
+    /// </summary>
+    Task Archive(
+        string requestID,
+        RequestArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }

@@ -24,7 +24,7 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public required string UserID { get; init; }
 
-    public required string Token { get; init; }
+    public string? Token { get; init; }
 
     public required List<Patch> Patch
     {

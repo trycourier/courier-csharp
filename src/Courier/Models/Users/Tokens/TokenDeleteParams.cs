@@ -15,7 +15,7 @@ public sealed record class TokenDeleteParams : ParamsBase
 {
     public required string UserID { get; init; }
 
-    public required string Token { get; init; }
+    public string? Token { get; init; }
 
     public TokenDeleteParams() { }
 

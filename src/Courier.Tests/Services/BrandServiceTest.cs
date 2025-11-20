@@ -14,14 +14,14 @@ public class BrandServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var brand = await this.client.Brands.Retrieve(new() { BrandID = "brand_id" });
+        var brand = await this.client.Brands.Retrieve("brand_id");
         brand.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Update_Works()
     {
-        var brand = await this.client.Brands.Update(new() { BrandID = "brand_id", Name = "name" });
+        var brand = await this.client.Brands.Update("brand_id", new() { Name = "name" });
         brand.Validate();
     }
 
@@ -35,6 +35,6 @@ public class BrandServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Brands.Delete(new() { BrandID = "brand_id" });
+        await this.client.Brands.Delete("brand_id");
     }
 }

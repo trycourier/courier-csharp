@@ -20,7 +20,7 @@ public sealed record class CheckUpdateParams : ParamsBase
 
     public required string ID { get; init; }
 
-    public required string SubmissionID { get; init; }
+    public string? SubmissionID { get; init; }
 
     public required List<BaseCheck> Checks
     {

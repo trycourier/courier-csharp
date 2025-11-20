@@ -24,7 +24,7 @@ public sealed record class ItemUpdateParams : ParamsBase
 
     public required string TenantID { get; init; }
 
-    public required string TopicID { get; init; }
+    public string? TopicID { get; init; }
 
     public required ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status> Status
     {

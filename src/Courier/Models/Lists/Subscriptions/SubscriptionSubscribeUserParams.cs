@@ -23,7 +23,7 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
 
     public required string ListID { get; init; }
 
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     public RecipientPreferences? Preferences
     {

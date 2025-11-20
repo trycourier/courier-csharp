@@ -27,9 +27,27 @@ public interface IListService
     );
 
     /// <summary>
+    /// Returns a list based on the list ID provided.
+    /// </summary>
+    Task<SubscriptionList> Retrieve(
+        string listID,
+        ListRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Create or replace an existing list with the supplied values.
     /// </summary>
     Task Update(ListUpdateParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Create or replace an existing list with the supplied values.
+    /// </summary>
+    Task Update(
+        string listID,
+        ListUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Returns all of the lists, with the ability to filter based on a pattern.
@@ -45,7 +63,25 @@ public interface IListService
     Task Delete(ListDeleteParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Delete a list by list ID.
+    /// </summary>
+    Task Delete(
+        string listID,
+        ListDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Restore a previously deleted list.
     /// </summary>
     Task Restore(ListRestoreParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Restore a previously deleted list.
+    /// </summary>
+    Task Restore(
+        string listID,
+        ListRestoreParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }

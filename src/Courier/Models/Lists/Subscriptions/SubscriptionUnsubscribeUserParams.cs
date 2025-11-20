@@ -15,7 +15,7 @@ public sealed record class SubscriptionUnsubscribeUserParams : ParamsBase
 {
     public required string ListID { get; init; }
 
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     public SubscriptionUnsubscribeUserParams() { }
 

@@ -13,7 +13,7 @@ namespace Courier.Models.Lists;
 /// </summary>
 public sealed record class ListDeleteParams : ParamsBase
 {
-    public required string ListID { get; init; }
+    public string? ListID { get; init; }
 
     public ListDeleteParams() { }
 

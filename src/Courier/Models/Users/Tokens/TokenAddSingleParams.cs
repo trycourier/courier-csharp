@@ -24,7 +24,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
 
     public required string UserID { get; init; }
 
-    public required string Token { get; init; }
+    public string? Token { get; init; }
 
     /// <summary>
     /// Full body of the token. Must match token in URL path parameter.

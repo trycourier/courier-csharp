@@ -13,7 +13,7 @@ namespace Courier.Models.Messages;
 /// </summary>
 public sealed record class MessageContentParams : ParamsBase
 {
-    public required string MessageID { get; init; }
+    public string? MessageID { get; init; }
 
     public MessageContentParams() { }
 

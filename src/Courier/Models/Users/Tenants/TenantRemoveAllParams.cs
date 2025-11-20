@@ -13,7 +13,7 @@ namespace Courier.Models.Users.Tenants;
 /// </summary>
 public sealed record class TenantRemoveAllParams : ParamsBase
 {
-    public required string UserID { get; init; }
+    public string? UserID { get; init; }
 
     public TenantRemoveAllParams() { }
 

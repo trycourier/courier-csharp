@@ -29,9 +29,27 @@ public interface IBrandService
     );
 
     /// <summary>
+    /// Fetch a specific brand by brand ID.
+    /// </summary>
+    Task<Brand> Retrieve(
+        string brandID,
+        BrandRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Replace an existing brand with the supplied values.
     /// </summary>
     Task<Brand> Update(BrandUpdateParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Replace an existing brand with the supplied values.
+    /// </summary>
+    Task<Brand> Update(
+        string brandID,
+        BrandUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Get the list of brands.
@@ -45,4 +63,13 @@ public interface IBrandService
     /// Delete a brand by brand ID.
     /// </summary>
     Task Delete(BrandDeleteParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Delete a brand by brand ID.
+    /// </summary>
+    Task Delete(
+        string brandID,
+        BrandDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }

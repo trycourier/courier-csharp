@@ -21,7 +21,7 @@ public sealed record class BulkAddUsersParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string JobID { get; init; }
+    public string? JobID { get; init; }
 
     public required List<InboundBulkMessageUser> Users
     {

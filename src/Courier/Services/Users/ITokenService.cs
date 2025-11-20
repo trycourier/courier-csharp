@@ -25,9 +25,27 @@ public interface ITokenService
     );
 
     /// <summary>
+    /// Get single token available for a `:token`
+    /// </summary>
+    Task<TokenRetrieveResponse> Retrieve(
+        string token,
+        TokenRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Apply a JSON Patch (RFC 6902) to the specified token.
     /// </summary>
     Task Update(TokenUpdateParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Apply a JSON Patch (RFC 6902) to the specified token.
+    /// </summary>
+    Task Update(
+        string token,
+        TokenUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Gets all tokens available for a :user_id
@@ -38,9 +56,27 @@ public interface ITokenService
     );
 
     /// <summary>
+    /// Gets all tokens available for a :user_id
+    /// </summary>
+    Task<List<UserToken>> List(
+        string userID,
+        TokenListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Delete User Token
     /// </summary>
     Task Delete(TokenDeleteParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Delete User Token
+    /// </summary>
+    Task Delete(
+        string token,
+        TokenDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Adds multiple tokens to a user and overwrites matching existing tokens.
@@ -51,7 +87,25 @@ public interface ITokenService
     );
 
     /// <summary>
+    /// Adds multiple tokens to a user and overwrites matching existing tokens.
+    /// </summary>
+    Task AddMultiple(
+        string userID,
+        TokenAddMultipleParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Adds a single token to a user and overwrites a matching existing token.
     /// </summary>
     Task AddSingle(TokenAddSingleParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Adds a single token to a user and overwrites a matching existing token.
+    /// </summary>
+    Task AddSingle(
+        string token,
+        TokenAddSingleParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

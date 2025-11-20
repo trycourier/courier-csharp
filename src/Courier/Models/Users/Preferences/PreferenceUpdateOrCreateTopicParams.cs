@@ -24,7 +24,7 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
 
     public required string UserID { get; init; }
 
-    public required string TopicID { get; init; }
+    public string? TopicID { get; init; }
 
     public required Topic Topic
     {

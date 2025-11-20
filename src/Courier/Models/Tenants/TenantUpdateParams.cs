@@ -21,7 +21,7 @@ public sealed record class TenantUpdateParams : ParamsBase
         get { return this._bodyProperties.Freeze(); }
     }
 
-    public required string TenantID { get; init; }
+    public string? TenantID { get; init; }
 
     /// <summary>
     /// Name of the tenant.

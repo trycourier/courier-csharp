@@ -25,10 +25,28 @@ public interface ITemplateService
     );
 
     /// <summary>
+    /// Get a Template in Tenant
+    /// </summary>
+    Task<BaseTemplateTenantAssociation> Retrieve(
+        string templateID,
+        TemplateRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// List Templates in Tenant
     /// </summary>
     Task<TemplateListResponse> List(
         TemplateListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// List Templates in Tenant
+    /// </summary>
+    Task<TemplateListResponse> List(
+        string tenantID,
+        TemplateListParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 }

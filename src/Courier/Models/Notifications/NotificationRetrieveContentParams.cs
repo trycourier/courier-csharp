@@ -10,7 +10,7 @@ namespace Courier.Models.Notifications;
 
 public sealed record class NotificationRetrieveContentParams : ParamsBase
 {
-    public required string ID { get; init; }
+    public string? ID { get; init; }
 
     public NotificationRetrieveContentParams() { }
 
