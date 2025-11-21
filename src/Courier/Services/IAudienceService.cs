@@ -24,10 +24,28 @@ public interface IAudienceService
     );
 
     /// <summary>
+    /// Returns the specified audience by id.
+    /// </summary>
+    Task<Audience> Retrieve(
+        string audienceID,
+        AudienceRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Creates or updates audience.
     /// </summary>
     Task<AudienceUpdateResponse> Update(
         AudienceUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Creates or updates audience.
+    /// </summary>
+    Task<AudienceUpdateResponse> Update(
+        string audienceID,
+        AudienceUpdateParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
@@ -45,10 +63,28 @@ public interface IAudienceService
     Task Delete(AudienceDeleteParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Deletes the specified audience.
+    /// </summary>
+    Task Delete(
+        string audienceID,
+        AudienceDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Get list of members of an audience.
     /// </summary>
     Task<AudienceListMembersResponse> ListMembers(
         AudienceListMembersParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Get list of members of an audience.
+    /// </summary>
+    Task<AudienceListMembersResponse> ListMembers(
+        string audienceID,
+        AudienceListMembersParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 }

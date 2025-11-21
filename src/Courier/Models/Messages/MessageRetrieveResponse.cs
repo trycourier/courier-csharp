@@ -20,7 +20,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -34,7 +34,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -49,7 +49,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("clicked", out JsonElement element))
+            if (!this._rawData.TryGetValue("clicked", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'clicked' cannot be null",
                     new ArgumentOutOfRangeException("clicked", "Missing required argument")
@@ -59,7 +59,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["clicked"] = JsonSerializer.SerializeToElement(
+            this._rawData["clicked"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -74,7 +74,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("delivered", out JsonElement element))
+            if (!this._rawData.TryGetValue("delivered", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'delivered' cannot be null",
                     new ArgumentOutOfRangeException("delivered", "Missing required argument")
@@ -84,7 +84,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["delivered"] = JsonSerializer.SerializeToElement(
+            this._rawData["delivered"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -99,7 +99,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("enqueued", out JsonElement element))
+            if (!this._rawData.TryGetValue("enqueued", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'enqueued' cannot be null",
                     new ArgumentOutOfRangeException("enqueued", "Missing required argument")
@@ -109,7 +109,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["enqueued"] = JsonSerializer.SerializeToElement(
+            this._rawData["enqueued"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -123,7 +123,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("event", out JsonElement element))
+            if (!this._rawData.TryGetValue("event", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'event' cannot be null",
                     new ArgumentOutOfRangeException("event", "Missing required argument")
@@ -137,7 +137,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["event"] = JsonSerializer.SerializeToElement(
+            this._rawData["event"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -151,7 +151,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("notification", out JsonElement element))
+            if (!this._rawData.TryGetValue("notification", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'notification' cannot be null",
                     new ArgumentOutOfRangeException("notification", "Missing required argument")
@@ -165,7 +165,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["notification"] = JsonSerializer.SerializeToElement(
+            this._rawData["notification"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -180,7 +180,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("opened", out JsonElement element))
+            if (!this._rawData.TryGetValue("opened", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'opened' cannot be null",
                     new ArgumentOutOfRangeException("opened", "Missing required argument")
@@ -190,7 +190,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["opened"] = JsonSerializer.SerializeToElement(
+            this._rawData["opened"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -204,7 +204,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("recipient", out JsonElement element))
+            if (!this._rawData.TryGetValue("recipient", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'recipient' cannot be null",
                     new ArgumentOutOfRangeException("recipient", "Missing required argument")
@@ -218,7 +218,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["recipient"] = JsonSerializer.SerializeToElement(
+            this._rawData["recipient"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -233,7 +233,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("sent", out JsonElement element))
+            if (!this._rawData.TryGetValue("sent", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'sent' cannot be null",
                     new ArgumentOutOfRangeException("sent", "Missing required argument")
@@ -243,7 +243,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["sent"] = JsonSerializer.SerializeToElement(
+            this._rawData["sent"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -257,7 +257,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new ArgumentOutOfRangeException("status", "Missing required argument")
@@ -270,7 +270,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -284,14 +284,14 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("error", out JsonElement element))
+            if (!this._rawData.TryGetValue("error", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["error"] = JsonSerializer.SerializeToElement(
+            this._rawData["error"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -305,7 +305,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("reason", out JsonElement element))
+            if (!this._rawData.TryGetValue("reason", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, Reason>?>(
@@ -315,7 +315,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["reason"] = JsonSerializer.SerializeToElement(
+            this._rawData["reason"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -326,7 +326,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     {
         get
         {
-            if (!this._properties.TryGetValue("providers", out JsonElement element))
+            if (!this._rawData.TryGetValue("providers", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>?>(
@@ -336,7 +336,7 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
         }
         init
         {
-            this._properties["providers"] = JsonSerializer.SerializeToElement(
+            this._rawData["providers"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -381,24 +381,24 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
 
     public MessageRetrieveResponse() { }
 
-    public MessageRetrieveResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public MessageRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageRetrieveResponse(FrozenDictionary<string, JsonElement> properties)
+    MessageRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static MessageRetrieveResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -411,7 +411,7 @@ public sealed record class IntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("providers", out JsonElement element))
+            if (!this._rawData.TryGetValue("providers", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>?>(
@@ -421,7 +421,7 @@ public sealed record class IntersectionMember1
         }
         init
         {
-            this._properties["providers"] = JsonSerializer.SerializeToElement(
+            this._rawData["providers"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -435,23 +435,23 @@ public sealed record class IntersectionMember1
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> properties)
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Messages.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

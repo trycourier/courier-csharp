@@ -14,7 +14,7 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
     {
         get
         {
-            if (!this._properties.TryGetValue("primary", out JsonElement element))
+            if (!this._rawData.TryGetValue("primary", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
@@ -26,7 +26,7 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
                 return;
             }
 
-            this._properties["primary"] = JsonSerializer.SerializeToElement(
+            this._rawData["primary"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -37,7 +37,7 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
     {
         get
         {
-            if (!this._properties.TryGetValue("secondary", out JsonElement element))
+            if (!this._rawData.TryGetValue("secondary", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
@@ -49,7 +49,7 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
                 return;
             }
 
-            this._properties["secondary"] = JsonSerializer.SerializeToElement(
+            this._rawData["secondary"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -64,21 +64,21 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
 
     public BrandColors() { }
 
-    public BrandColors(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandColors(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandColors(FrozenDictionary<string, JsonElement> properties)
+    BrandColors(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

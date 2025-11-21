@@ -7,9 +7,7 @@ public class AuditEventServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var auditEvent = await this.client.AuditEvents.Retrieve(
-            new() { AuditEventID = "audit-event-id" }
-        );
+        var auditEvent = await this.client.AuditEvents.Retrieve("audit-event-id");
         auditEvent.Validate();
     }
 

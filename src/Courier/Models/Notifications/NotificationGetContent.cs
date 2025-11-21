@@ -16,14 +16,14 @@ public sealed record class NotificationGetContent : ModelBase, IFromRaw<Notifica
     {
         get
         {
-            if (!this._properties.TryGetValue("blocks", out JsonElement element))
+            if (!this._rawData.TryGetValue("blocks", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<Block>?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["blocks"] = JsonSerializer.SerializeToElement(
+            this._rawData["blocks"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -34,14 +34,14 @@ public sealed record class NotificationGetContent : ModelBase, IFromRaw<Notifica
     {
         get
         {
-            if (!this._properties.TryGetValue("channels", out JsonElement element))
+            if (!this._rawData.TryGetValue("channels", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<Channel>?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["channels"] = JsonSerializer.SerializeToElement(
+            this._rawData["channels"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -52,14 +52,14 @@ public sealed record class NotificationGetContent : ModelBase, IFromRaw<Notifica
     {
         get
         {
-            if (!this._properties.TryGetValue("checksum", out JsonElement element))
+            if (!this._rawData.TryGetValue("checksum", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["checksum"] = JsonSerializer.SerializeToElement(
+            this._rawData["checksum"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -81,24 +81,24 @@ public sealed record class NotificationGetContent : ModelBase, IFromRaw<Notifica
 
     public NotificationGetContent() { }
 
-    public NotificationGetContent(IReadOnlyDictionary<string, JsonElement> properties)
+    public NotificationGetContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationGetContent(FrozenDictionary<string, JsonElement> properties)
+    NotificationGetContent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static NotificationGetContent FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -109,7 +109,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new System::ArgumentOutOfRangeException("id", "Missing required argument")
@@ -123,7 +123,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -134,7 +134,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
+            if (!this._rawData.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
                     new System::ArgumentOutOfRangeException("type", "Missing required argument")
@@ -147,7 +147,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
         }
         init
         {
-            this._properties["type"] = JsonSerializer.SerializeToElement(
+            this._rawData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -158,14 +158,14 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this._properties.TryGetValue("alias", out JsonElement element))
+            if (!this._rawData.TryGetValue("alias", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["alias"] = JsonSerializer.SerializeToElement(
+            this._rawData["alias"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -176,14 +176,14 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this._properties.TryGetValue("checksum", out JsonElement element))
+            if (!this._rawData.TryGetValue("checksum", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["checksum"] = JsonSerializer.SerializeToElement(
+            this._rawData["checksum"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -194,14 +194,14 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this._properties.TryGetValue("content", out JsonElement element))
+            if (!this._rawData.TryGetValue("content", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Content?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["content"] = JsonSerializer.SerializeToElement(
+            this._rawData["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -212,14 +212,14 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this._properties.TryGetValue("context", out JsonElement element))
+            if (!this._rawData.TryGetValue("context", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["context"] = JsonSerializer.SerializeToElement(
+            this._rawData["context"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -230,7 +230,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         get
         {
-            if (!this._properties.TryGetValue("locales", out JsonElement element))
+            if (!this._rawData.TryGetValue("locales", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, Locale>?>(
@@ -240,7 +240,7 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
         }
         init
         {
-            this._properties["locales"] = JsonSerializer.SerializeToElement(
+            this._rawData["locales"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -266,22 +266,22 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
 
     public Block() { }
 
-    public Block(IReadOnlyDictionary<string, JsonElement> properties)
+    public Block(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Block(FrozenDictionary<string, JsonElement> properties)
+    Block(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -353,26 +353,30 @@ sealed class BlockTypeConverter : JsonConverter<BlockType>
 [JsonConverter(typeof(ContentConverter))]
 public record class Content
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public Content(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Content(NotificationContentHierarchy value)
+    public Content(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    Content(UnknownVariant value)
+    public Content(NotificationContentHierarchy value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static Content CreateUnknownVariant(JsonElement value)
+    public Content(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -426,13 +430,11 @@ public record class Content
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ContentConverter : JsonConverter<Content?>
@@ -443,52 +445,43 @@ sealed class ContentConverter : JsonConverter<Content?>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
             var deserialized = JsonSerializer.Deserialize<NotificationContentHierarchy>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Content(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'NotificationContentHierarchy'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new Content(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, Content? value, JsonSerializerOptions options)
     {
-        object? variant = value?.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value?.Json, options);
     }
 }
 
@@ -501,14 +494,14 @@ public sealed record class NotificationContentHierarchy
     {
         get
         {
-            if (!this._properties.TryGetValue("children", out JsonElement element))
+            if (!this._rawData.TryGetValue("children", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["children"] = JsonSerializer.SerializeToElement(
+            this._rawData["children"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -519,14 +512,14 @@ public sealed record class NotificationContentHierarchy
     {
         get
         {
-            if (!this._properties.TryGetValue("parent", out JsonElement element))
+            if (!this._rawData.TryGetValue("parent", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["parent"] = JsonSerializer.SerializeToElement(
+            this._rawData["parent"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -541,50 +534,54 @@ public sealed record class NotificationContentHierarchy
 
     public NotificationContentHierarchy() { }
 
-    public NotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> properties)
+    public NotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationContentHierarchy(FrozenDictionary<string, JsonElement> properties)
+    NotificationContentHierarchy(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static NotificationContentHierarchy FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
 [JsonConverter(typeof(LocaleConverter))]
 public record class Locale
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public Locale(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Locale(LocaleNotificationContentHierarchy value)
+    public Locale(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    Locale(UnknownVariant value)
+    public Locale(LocaleNotificationContentHierarchy value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static Locale CreateUnknownVariant(JsonElement value)
+    public Locale(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -638,13 +635,11 @@ public record class Locale
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Locale");
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class LocaleConverter : JsonConverter<Locale>
@@ -655,52 +650,43 @@ sealed class LocaleConverter : JsonConverter<Locale>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
             var deserialized = JsonSerializer.Deserialize<LocaleNotificationContentHierarchy>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Locale(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'LocaleNotificationContentHierarchy'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new Locale(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, Locale value, JsonSerializerOptions options)
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }
 
@@ -713,14 +699,14 @@ public sealed record class LocaleNotificationContentHierarchy
     {
         get
         {
-            if (!this._properties.TryGetValue("children", out JsonElement element))
+            if (!this._rawData.TryGetValue("children", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["children"] = JsonSerializer.SerializeToElement(
+            this._rawData["children"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -731,14 +717,14 @@ public sealed record class LocaleNotificationContentHierarchy
     {
         get
         {
-            if (!this._properties.TryGetValue("parent", out JsonElement element))
+            if (!this._rawData.TryGetValue("parent", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["parent"] = JsonSerializer.SerializeToElement(
+            this._rawData["parent"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -753,24 +739,24 @@ public sealed record class LocaleNotificationContentHierarchy
 
     public LocaleNotificationContentHierarchy() { }
 
-    public LocaleNotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> properties)
+    public LocaleNotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    LocaleNotificationContentHierarchy(FrozenDictionary<string, JsonElement> properties)
+    LocaleNotificationContentHierarchy(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static LocaleNotificationContentHierarchy FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -781,7 +767,7 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new System::ArgumentOutOfRangeException("id", "Missing required argument")
@@ -795,7 +781,7 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -806,14 +792,14 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
     {
         get
         {
-            if (!this._properties.TryGetValue("checksum", out JsonElement element))
+            if (!this._rawData.TryGetValue("checksum", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["checksum"] = JsonSerializer.SerializeToElement(
+            this._rawData["checksum"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -824,7 +810,7 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
     {
         get
         {
-            if (!this._properties.TryGetValue("content", out JsonElement element))
+            if (!this._rawData.TryGetValue("content", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ChannelContent?>(
@@ -834,7 +820,7 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
         }
         init
         {
-            this._properties["content"] = JsonSerializer.SerializeToElement(
+            this._rawData["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -845,7 +831,7 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
     {
         get
         {
-            if (!this._properties.TryGetValue("locales", out JsonElement element))
+            if (!this._rawData.TryGetValue("locales", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, LocalesItem>?>(
@@ -855,7 +841,7 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
         }
         init
         {
-            this._properties["locales"] = JsonSerializer.SerializeToElement(
+            this._rawData["locales"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -866,14 +852,14 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
+            if (!this._rawData.TryGetValue("type", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["type"] = JsonSerializer.SerializeToElement(
+            this._rawData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -897,22 +883,22 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
 
     public Channel() { }
 
-    public Channel(IReadOnlyDictionary<string, JsonElement> properties)
+    public Channel(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Channel(FrozenDictionary<string, JsonElement> properties)
+    Channel(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Channel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Channel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -930,14 +916,14 @@ public sealed record class ChannelContent : ModelBase, IFromRaw<ChannelContent>
     {
         get
         {
-            if (!this._properties.TryGetValue("subject", out JsonElement element))
+            if (!this._rawData.TryGetValue("subject", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["subject"] = JsonSerializer.SerializeToElement(
+            this._rawData["subject"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -948,14 +934,14 @@ public sealed record class ChannelContent : ModelBase, IFromRaw<ChannelContent>
     {
         get
         {
-            if (!this._properties.TryGetValue("title", out JsonElement element))
+            if (!this._rawData.TryGetValue("title", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["title"] = JsonSerializer.SerializeToElement(
+            this._rawData["title"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -970,24 +956,22 @@ public sealed record class ChannelContent : ModelBase, IFromRaw<ChannelContent>
 
     public ChannelContent() { }
 
-    public ChannelContent(IReadOnlyDictionary<string, JsonElement> properties)
+    public ChannelContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ChannelContent(FrozenDictionary<string, JsonElement> properties)
+    ChannelContent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static ChannelContent FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static ChannelContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -998,14 +982,14 @@ public sealed record class LocalesItem : ModelBase, IFromRaw<LocalesItem>
     {
         get
         {
-            if (!this._properties.TryGetValue("subject", out JsonElement element))
+            if (!this._rawData.TryGetValue("subject", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["subject"] = JsonSerializer.SerializeToElement(
+            this._rawData["subject"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1016,14 +1000,14 @@ public sealed record class LocalesItem : ModelBase, IFromRaw<LocalesItem>
     {
         get
         {
-            if (!this._properties.TryGetValue("title", out JsonElement element))
+            if (!this._rawData.TryGetValue("title", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["title"] = JsonSerializer.SerializeToElement(
+            this._rawData["title"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -1038,21 +1022,21 @@ public sealed record class LocalesItem : ModelBase, IFromRaw<LocalesItem>
 
     public LocalesItem() { }
 
-    public LocalesItem(IReadOnlyDictionary<string, JsonElement> properties)
+    public LocalesItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    LocalesItem(FrozenDictionary<string, JsonElement> properties)
+    LocalesItem(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static LocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static LocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

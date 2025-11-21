@@ -16,7 +16,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new System::ArgumentOutOfRangeException("status", "Missing required argument")
@@ -29,7 +29,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
         }
         init
         {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -40,7 +40,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         get
         {
-            if (!this._properties.TryGetValue("channel_preferences", out JsonElement element))
+            if (!this._rawData.TryGetValue("channel_preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<ChannelPreference>?>(
@@ -50,7 +50,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
         }
         init
         {
-            this._properties["channel_preferences"] = JsonSerializer.SerializeToElement(
+            this._rawData["channel_preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -61,14 +61,14 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         get
         {
-            if (!this._properties.TryGetValue("rules", out JsonElement element))
+            if (!this._rawData.TryGetValue("rules", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<Rule>?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["rules"] = JsonSerializer.SerializeToElement(
+            this._rawData["rules"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -79,7 +79,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         get
         {
-            if (!this._properties.TryGetValue("source", out JsonElement element))
+            if (!this._rawData.TryGetValue("source", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, Source>?>(
@@ -89,7 +89,7 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
         }
         init
         {
-            this._properties["source"] = JsonSerializer.SerializeToElement(
+            this._rawData["source"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -112,22 +112,22 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
 
     public Preference() { }
 
-    public Preference(IReadOnlyDictionary<string, JsonElement> properties)
+    public Preference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Preference(FrozenDictionary<string, JsonElement> properties)
+    Preference(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Preference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Preference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

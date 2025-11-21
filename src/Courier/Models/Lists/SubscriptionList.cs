@@ -16,7 +16,7 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -41,7 +41,7 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         get
         {
-            if (!this._properties.TryGetValue("name", out JsonElement element))
+            if (!this._rawData.TryGetValue("name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'name' cannot be null",
                     new ArgumentOutOfRangeException("name", "Missing required argument")
@@ -55,7 +55,7 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
         }
         init
         {
-            this._properties["name"] = JsonSerializer.SerializeToElement(
+            this._rawData["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -66,14 +66,14 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         get
         {
-            if (!this._properties.TryGetValue("created", out JsonElement element))
+            if (!this._rawData.TryGetValue("created", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["created"] = JsonSerializer.SerializeToElement(
+            this._rawData["created"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -84,14 +84,14 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         get
         {
-            if (!this._properties.TryGetValue("updated", out JsonElement element))
+            if (!this._rawData.TryGetValue("updated", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["updated"] = JsonSerializer.SerializeToElement(
+            this._rawData["updated"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -108,23 +108,23 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
 
     public SubscriptionList() { }
 
-    public SubscriptionList(IReadOnlyDictionary<string, JsonElement> properties)
+    public SubscriptionList(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SubscriptionList(FrozenDictionary<string, JsonElement> properties)
+    SubscriptionList(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static SubscriptionList FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

@@ -19,7 +19,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -33,7 +33,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -47,7 +47,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     {
         get
         {
-            if (!this._properties.TryGetValue("name", out JsonElement element))
+            if (!this._rawData.TryGetValue("name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'name' cannot be null",
                     new ArgumentOutOfRangeException("name", "Missing required argument")
@@ -61,7 +61,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
         }
         init
         {
-            this._properties["name"] = JsonSerializer.SerializeToElement(
+            this._rawData["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -75,14 +75,14 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     {
         get
         {
-            if (!this._properties.TryGetValue("brand_id", out JsonElement element))
+            if (!this._rawData.TryGetValue("brand_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["brand_id"] = JsonSerializer.SerializeToElement(
+            this._rawData["brand_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -97,7 +97,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     {
         get
         {
-            if (!this._properties.TryGetValue("default_preferences", out JsonElement element))
+            if (!this._rawData.TryGetValue("default_preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<DefaultPreferences?>(
@@ -107,7 +107,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
         }
         init
         {
-            this._properties["default_preferences"] = JsonSerializer.SerializeToElement(
+            this._rawData["default_preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -121,14 +121,14 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     {
         get
         {
-            if (!this._properties.TryGetValue("parent_tenant_id", out JsonElement element))
+            if (!this._rawData.TryGetValue("parent_tenant_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["parent_tenant_id"] = JsonSerializer.SerializeToElement(
+            this._rawData["parent_tenant_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -138,11 +138,11 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     /// <summary>
     /// Arbitrary properties accessible to a template.
     /// </summary>
-    public Dictionary<string, JsonElement>? Properties1
+    public Dictionary<string, JsonElement>? Properties
     {
         get
         {
-            if (!this._properties.TryGetValue("properties", out JsonElement element))
+            if (!this._rawData.TryGetValue("properties", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -152,7 +152,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
         }
         init
         {
-            this._properties["properties"] = JsonSerializer.SerializeToElement(
+            this._rawData["properties"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -166,7 +166,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     {
         get
         {
-            if (!this._properties.TryGetValue("user_profile", out JsonElement element))
+            if (!this._rawData.TryGetValue("user_profile", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -176,7 +176,7 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
         }
         init
         {
-            this._properties["user_profile"] = JsonSerializer.SerializeToElement(
+            this._rawData["user_profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -190,27 +190,27 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
         _ = this.BrandID;
         this.DefaultPreferences?.Validate();
         _ = this.ParentTenantID;
-        _ = this.Properties1;
+        _ = this.Properties;
         _ = this.UserProfile;
     }
 
     public Tenant() { }
 
-    public Tenant(IReadOnlyDictionary<string, JsonElement> properties)
+    public Tenant(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Tenant(FrozenDictionary<string, JsonElement> properties)
+    Tenant(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Tenant FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Tenant FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

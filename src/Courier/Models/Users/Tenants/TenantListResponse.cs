@@ -20,7 +20,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
     {
         get
         {
-            if (!this._properties.TryGetValue("has_more", out JsonElement element))
+            if (!this._rawData.TryGetValue("has_more", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'has_more' cannot be null",
                     new System::ArgumentOutOfRangeException("has_more", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
         }
         init
         {
-            this._properties["has_more"] = JsonSerializer.SerializeToElement(
+            this._rawData["has_more"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -44,7 +44,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
+            if (!this._rawData.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
                     new System::ArgumentOutOfRangeException("type", "Missing required argument")
@@ -56,7 +56,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
         }
         init
         {
-            this._properties["type"] = JsonSerializer.SerializeToElement(
+            this._rawData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -70,7 +70,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
     {
         get
         {
-            if (!this._properties.TryGetValue("url", out JsonElement element))
+            if (!this._rawData.TryGetValue("url", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'url' cannot be null",
                     new System::ArgumentOutOfRangeException("url", "Missing required argument")
@@ -84,7 +84,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
         }
         init
         {
-            this._properties["url"] = JsonSerializer.SerializeToElement(
+            this._rawData["url"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -99,14 +99,14 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
     {
         get
         {
-            if (!this._properties.TryGetValue("cursor", out JsonElement element))
+            if (!this._rawData.TryGetValue("cursor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["cursor"] = JsonSerializer.SerializeToElement(
+            this._rawData["cursor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -117,7 +117,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
     {
         get
         {
-            if (!this._properties.TryGetValue("items", out JsonElement element))
+            if (!this._rawData.TryGetValue("items", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<Tenants::TenantAssociation>?>(
@@ -127,7 +127,7 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
         }
         init
         {
-            this._properties["items"] = JsonSerializer.SerializeToElement(
+            this._rawData["items"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -142,14 +142,14 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
     {
         get
         {
-            if (!this._properties.TryGetValue("next_url", out JsonElement element))
+            if (!this._rawData.TryGetValue("next_url", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["next_url"] = JsonSerializer.SerializeToElement(
+            this._rawData["next_url"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -171,24 +171,24 @@ public sealed record class TenantListResponse : ModelBase, IFromRaw<TenantListRe
 
     public TenantListResponse() { }
 
-    public TenantListResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public TenantListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TenantListResponse(FrozenDictionary<string, JsonElement> properties)
+    TenantListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static TenantListResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 

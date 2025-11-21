@@ -9,9 +9,7 @@ public class SubscriptionServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task List_Works()
     {
-        var subscriptions = await this.client.Lists.Subscriptions.List(
-            new() { ListID = "list_id" }
-        );
+        var subscriptions = await this.client.Lists.Subscriptions.List("list_id");
         subscriptions.Validate();
     }
 
@@ -19,9 +17,9 @@ public class SubscriptionServiceTest : TestBase
     public async Task Add_Works()
     {
         await this.client.Lists.Subscriptions.Add(
+            "list_id",
             new()
             {
-                ListID = "list_id",
                 Recipients =
                 [
                     new()
@@ -70,9 +68,9 @@ public class SubscriptionServiceTest : TestBase
     public async Task Subscribe_Works()
     {
         await this.client.Lists.Subscriptions.Subscribe(
+            "list_id",
             new()
             {
-                ListID = "list_id",
                 Recipients =
                 [
                     new()
@@ -121,7 +119,8 @@ public class SubscriptionServiceTest : TestBase
     public async Task SubscribeUser_Works()
     {
         await this.client.Lists.Subscriptions.SubscribeUser(
-            new() { ListID = "list_id", UserID = "user_id" }
+            "user_id",
+            new() { ListID = "list_id" }
         );
     }
 
@@ -129,7 +128,8 @@ public class SubscriptionServiceTest : TestBase
     public async Task UnsubscribeUser_Works()
     {
         await this.client.Lists.Subscriptions.UnsubscribeUser(
-            new() { ListID = "list_id", UserID = "user_id" }
+            "user_id",
+            new() { ListID = "list_id" }
         );
     }
 }

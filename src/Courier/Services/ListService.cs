@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Lists;
 using Courier.Services.Lists;
 
@@ -34,6 +35,11 @@ public sealed class ListService : IListService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.ListID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ListID' cannot be null");
+        }
+
         HttpRequest<ListRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -52,11 +58,27 @@ public sealed class ListService : IListService
         return subscriptionList;
     }
 
+    public async Task<SubscriptionList> Retrieve(
+        string listID,
+        ListRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Retrieve(parameters with { ListID = listID }, cancellationToken);
+    }
+
     public async Task Update(
         ListUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.ListID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ListID' cannot be null");
+        }
+
         HttpRequest<ListUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -65,6 +87,15 @@ public sealed class ListService : IListService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
+    }
+
+    public async Task Update(
+        string listID,
+        ListUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Update(parameters with { ListID = listID }, cancellationToken);
     }
 
     public async Task<ListListResponse> List(
@@ -97,6 +128,11 @@ public sealed class ListService : IListService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.ListID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ListID' cannot be null");
+        }
+
         HttpRequest<ListDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
@@ -107,11 +143,27 @@ public sealed class ListService : IListService
             .ConfigureAwait(false);
     }
 
+    public async Task Delete(
+        string listID,
+        ListDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Delete(parameters with { ListID = listID }, cancellationToken);
+    }
+
     public async Task Restore(
         ListRestoreParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.ListID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ListID' cannot be null");
+        }
+
         HttpRequest<ListRestoreParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -120,5 +172,16 @@ public sealed class ListService : IListService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
+    }
+
+    public async Task Restore(
+        string listID,
+        ListRestoreParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Restore(parameters with { ListID = listID }, cancellationToken);
     }
 }

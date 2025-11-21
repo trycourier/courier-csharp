@@ -24,6 +24,15 @@ public interface IAuditEventService
     );
 
     /// <summary>
+    /// Fetch a specific audit event by ID.
+    /// </summary>
+    Task<AuditEvent> Retrieve(
+        string auditEventID,
+        AuditEventRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Fetch the list of audit events
     /// </summary>
     Task<AuditEventListResponse> List(

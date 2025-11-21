@@ -16,7 +16,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
     {
         get
         {
-            if (!this._properties.TryGetValue("actor", out JsonElement element))
+            if (!this._rawData.TryGetValue("actor", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'actor' cannot be null",
                     new ArgumentOutOfRangeException("actor", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
         }
         init
         {
-            this._properties["actor"] = JsonSerializer.SerializeToElement(
+            this._rawData["actor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -41,7 +41,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
     {
         get
         {
-            if (!this._properties.TryGetValue("auditEventId", out JsonElement element))
+            if (!this._rawData.TryGetValue("auditEventId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'auditEventId' cannot be null",
                     new ArgumentOutOfRangeException("auditEventId", "Missing required argument")
@@ -55,7 +55,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
         }
         init
         {
-            this._properties["auditEventId"] = JsonSerializer.SerializeToElement(
+            this._rawData["auditEventId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -66,7 +66,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
     {
         get
         {
-            if (!this._properties.TryGetValue("source", out JsonElement element))
+            if (!this._rawData.TryGetValue("source", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'source' cannot be null",
                     new ArgumentOutOfRangeException("source", "Missing required argument")
@@ -80,7 +80,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
         }
         init
         {
-            this._properties["source"] = JsonSerializer.SerializeToElement(
+            this._rawData["source"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -91,7 +91,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
     {
         get
         {
-            if (!this._properties.TryGetValue("target", out JsonElement element))
+            if (!this._rawData.TryGetValue("target", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'target' cannot be null",
                     new ArgumentOutOfRangeException("target", "Missing required argument")
@@ -105,7 +105,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
         }
         init
         {
-            this._properties["target"] = JsonSerializer.SerializeToElement(
+            this._rawData["target"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -116,7 +116,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
     {
         get
         {
-            if (!this._properties.TryGetValue("timestamp", out JsonElement element))
+            if (!this._rawData.TryGetValue("timestamp", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'timestamp' cannot be null",
                     new ArgumentOutOfRangeException("timestamp", "Missing required argument")
@@ -130,7 +130,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
         }
         init
         {
-            this._properties["timestamp"] = JsonSerializer.SerializeToElement(
+            this._rawData["timestamp"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -141,7 +141,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
+            if (!this._rawData.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
                     new ArgumentOutOfRangeException("type", "Missing required argument")
@@ -155,7 +155,7 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
         }
         init
         {
-            this._properties["type"] = JsonSerializer.SerializeToElement(
+            this._rawData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -174,22 +174,22 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
 
     public AuditEvent() { }
 
-    public AuditEvent(IReadOnlyDictionary<string, JsonElement> properties)
+    public AuditEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AuditEvent(FrozenDictionary<string, JsonElement> properties)
+    AuditEvent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static AuditEvent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static AuditEvent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -200,7 +200,7 @@ public sealed record class Actor : ModelBase, IFromRaw<Actor>
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -214,7 +214,7 @@ public sealed record class Actor : ModelBase, IFromRaw<Actor>
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -225,14 +225,14 @@ public sealed record class Actor : ModelBase, IFromRaw<Actor>
     {
         get
         {
-            if (!this._properties.TryGetValue("email", out JsonElement element))
+            if (!this._rawData.TryGetValue("email", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["email"] = JsonSerializer.SerializeToElement(
+            this._rawData["email"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -247,22 +247,22 @@ public sealed record class Actor : ModelBase, IFromRaw<Actor>
 
     public Actor() { }
 
-    public Actor(IReadOnlyDictionary<string, JsonElement> properties)
+    public Actor(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Actor(FrozenDictionary<string, JsonElement> properties)
+    Actor(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Actor FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Actor FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

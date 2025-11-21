@@ -16,7 +16,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
     {
         get
         {
-            if (!this._properties.TryGetValue("elements", out JsonElement element))
+            if (!this._rawData.TryGetValue("elements", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'elements' cannot be null",
                     new ArgumentOutOfRangeException("elements", "Missing required argument")
@@ -33,7 +33,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
         }
         init
         {
-            this._properties["elements"] = JsonSerializer.SerializeToElement(
+            this._rawData["elements"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -47,7 +47,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
     {
         get
         {
-            if (!this._properties.TryGetValue("version", out JsonElement element))
+            if (!this._rawData.TryGetValue("version", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'version' cannot be null",
                     new ArgumentOutOfRangeException("version", "Missing required argument")
@@ -61,7 +61,7 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
         }
         init
         {
-            this._properties["version"] = JsonSerializer.SerializeToElement(
+            this._rawData["version"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -72,14 +72,14 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
     {
         get
         {
-            if (!this._properties.TryGetValue("brand", out JsonElement element))
+            if (!this._rawData.TryGetValue("brand", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["brand"] = JsonSerializer.SerializeToElement(
+            this._rawData["brand"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -98,23 +98,23 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
 
     public ElementalContent() { }
 
-    public ElementalContent(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalContent(FrozenDictionary<string, JsonElement> properties)
+    ElementalContent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalContent FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

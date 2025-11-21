@@ -20,4 +20,9 @@ public interface IDraftService
         DraftRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     );
+    Task<NotificationGetContent> RetrieveContent(
+        string id,
+        DraftRetrieveContentParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }

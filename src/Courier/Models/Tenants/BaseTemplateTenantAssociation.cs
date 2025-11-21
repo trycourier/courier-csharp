@@ -21,7 +21,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -35,7 +35,7 @@ public sealed record class BaseTemplateTenantAssociation
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -49,7 +49,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this._properties.TryGetValue("created_at", out JsonElement element))
+            if (!this._rawData.TryGetValue("created_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'created_at' cannot be null",
                     new ArgumentOutOfRangeException("created_at", "Missing required argument")
@@ -63,7 +63,7 @@ public sealed record class BaseTemplateTenantAssociation
         }
         init
         {
-            this._properties["created_at"] = JsonSerializer.SerializeToElement(
+            this._rawData["created_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -77,7 +77,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this._properties.TryGetValue("published_at", out JsonElement element))
+            if (!this._rawData.TryGetValue("published_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'published_at' cannot be null",
                     new ArgumentOutOfRangeException("published_at", "Missing required argument")
@@ -91,7 +91,7 @@ public sealed record class BaseTemplateTenantAssociation
         }
         init
         {
-            this._properties["published_at"] = JsonSerializer.SerializeToElement(
+            this._rawData["published_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -105,7 +105,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this._properties.TryGetValue("updated_at", out JsonElement element))
+            if (!this._rawData.TryGetValue("updated_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated_at' cannot be null",
                     new ArgumentOutOfRangeException("updated_at", "Missing required argument")
@@ -119,7 +119,7 @@ public sealed record class BaseTemplateTenantAssociation
         }
         init
         {
-            this._properties["updated_at"] = JsonSerializer.SerializeToElement(
+            this._rawData["updated_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -133,7 +133,7 @@ public sealed record class BaseTemplateTenantAssociation
     {
         get
         {
-            if (!this._properties.TryGetValue("version", out JsonElement element))
+            if (!this._rawData.TryGetValue("version", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'version' cannot be null",
                     new ArgumentOutOfRangeException("version", "Missing required argument")
@@ -147,7 +147,7 @@ public sealed record class BaseTemplateTenantAssociation
         }
         init
         {
-            this._properties["version"] = JsonSerializer.SerializeToElement(
+            this._rawData["version"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -165,23 +165,23 @@ public sealed record class BaseTemplateTenantAssociation
 
     public BaseTemplateTenantAssociation() { }
 
-    public BaseTemplateTenantAssociation(IReadOnlyDictionary<string, JsonElement> properties)
+    public BaseTemplateTenantAssociation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BaseTemplateTenantAssociation(FrozenDictionary<string, JsonElement> properties)
+    BaseTemplateTenantAssociation(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static BaseTemplateTenantAssociation FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

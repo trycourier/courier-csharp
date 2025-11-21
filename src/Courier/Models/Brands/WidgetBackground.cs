@@ -14,14 +14,14 @@ public sealed record class WidgetBackground : ModelBase, IFromRaw<WidgetBackgrou
     {
         get
         {
-            if (!this._properties.TryGetValue("bottomColor", out JsonElement element))
+            if (!this._rawData.TryGetValue("bottomColor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["bottomColor"] = JsonSerializer.SerializeToElement(
+            this._rawData["bottomColor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -32,14 +32,14 @@ public sealed record class WidgetBackground : ModelBase, IFromRaw<WidgetBackgrou
     {
         get
         {
-            if (!this._properties.TryGetValue("topColor", out JsonElement element))
+            if (!this._rawData.TryGetValue("topColor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["topColor"] = JsonSerializer.SerializeToElement(
+            this._rawData["topColor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -54,23 +54,23 @@ public sealed record class WidgetBackground : ModelBase, IFromRaw<WidgetBackgrou
 
     public WidgetBackground() { }
 
-    public WidgetBackground(IReadOnlyDictionary<string, JsonElement> properties)
+    public WidgetBackground(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    WidgetBackground(FrozenDictionary<string, JsonElement> properties)
+    WidgetBackground(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static WidgetBackground FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

@@ -16,7 +16,7 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -41,7 +41,7 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
     {
         get
         {
-            if (!this._properties.TryGetValue("created", out JsonElement element))
+            if (!this._rawData.TryGetValue("created", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'created' cannot be null",
                     new ArgumentOutOfRangeException("created", "Missing required argument")
@@ -51,7 +51,7 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
         }
         init
         {
-            this._properties["created"] = JsonSerializer.SerializeToElement(
+            this._rawData["created"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -62,7 +62,7 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
     {
         get
         {
-            if (!this._properties.TryGetValue("name", out JsonElement element))
+            if (!this._rawData.TryGetValue("name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'name' cannot be null",
                     new ArgumentOutOfRangeException("name", "Missing required argument")
@@ -76,7 +76,7 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
         }
         init
         {
-            this._properties["name"] = JsonSerializer.SerializeToElement(
+            this._rawData["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -87,7 +87,7 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
     {
         get
         {
-            if (!this._properties.TryGetValue("updated", out JsonElement element))
+            if (!this._rawData.TryGetValue("updated", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated' cannot be null",
                     new ArgumentOutOfRangeException("updated", "Missing required argument")
@@ -97,7 +97,7 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
         }
         init
         {
-            this._properties["updated"] = JsonSerializer.SerializeToElement(
+            this._rawData["updated"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -108,14 +108,14 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
     {
         get
         {
-            if (!this._properties.TryGetValue("published", out JsonElement element))
+            if (!this._rawData.TryGetValue("published", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["published"] = JsonSerializer.SerializeToElement(
+            this._rawData["published"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -126,14 +126,14 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
     {
         get
         {
-            if (!this._properties.TryGetValue("settings", out JsonElement element))
+            if (!this._rawData.TryGetValue("settings", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<BrandSettings?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["settings"] = JsonSerializer.SerializeToElement(
+            this._rawData["settings"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -144,14 +144,14 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
     {
         get
         {
-            if (!this._properties.TryGetValue("snippets", out JsonElement element))
+            if (!this._rawData.TryGetValue("snippets", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<BrandSnippets?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["snippets"] = JsonSerializer.SerializeToElement(
+            this._rawData["snippets"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -162,14 +162,14 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
     {
         get
         {
-            if (!this._properties.TryGetValue("version", out JsonElement element))
+            if (!this._rawData.TryGetValue("version", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["version"] = JsonSerializer.SerializeToElement(
+            this._rawData["version"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -190,21 +190,21 @@ public sealed record class Brand : ModelBase, IFromRaw<Brand>
 
     public Brand() { }
 
-    public Brand(IReadOnlyDictionary<string, JsonElement> properties)
+    public Brand(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Brand(FrozenDictionary<string, JsonElement> properties)
+    Brand(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Brand FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Brand FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

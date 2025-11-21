@@ -29,9 +29,27 @@ public interface ITenantService
     );
 
     /// <summary>
+    /// Get a Tenant
+    /// </summary>
+    Task<Tenant> Retrieve(
+        string tenantID,
+        TenantRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Create or Replace a Tenant
     /// </summary>
     Task<Tenant> Update(
+        TenantUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Create or Replace a Tenant
+    /// </summary>
+    Task<Tenant> Update(
+        string tenantID,
         TenantUpdateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -50,10 +68,28 @@ public interface ITenantService
     Task Delete(TenantDeleteParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Delete a Tenant
+    /// </summary>
+    Task Delete(
+        string tenantID,
+        TenantDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Get Users in Tenant
     /// </summary>
     Task<TenantListUsersResponse> ListUsers(
         TenantListUsersParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Get Users in Tenant
+    /// </summary>
+    Task<TenantListUsersResponse> ListUsers(
+        string tenantID,
+        TenantListUsersParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 }

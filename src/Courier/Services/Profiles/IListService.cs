@@ -26,6 +26,15 @@ public interface IListService
     );
 
     /// <summary>
+    /// Returns the subscribed lists for a specified user.
+    /// </summary>
+    Task<ListRetrieveResponse> Retrieve(
+        string userID,
+        ListRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Removes all list subscriptions for given user.
     /// </summary>
     Task<ListDeleteResponse> Delete(
@@ -34,10 +43,29 @@ public interface IListService
     );
 
     /// <summary>
+    /// Removes all list subscriptions for given user.
+    /// </summary>
+    Task<ListDeleteResponse> Delete(
+        string userID,
+        ListDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Subscribes the given user to one or more lists. If the list does not exist,
     /// it will be created.
     /// </summary>
     Task<ListSubscribeResponse> Subscribe(
+        ListSubscribeParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Subscribes the given user to one or more lists. If the list does not exist,
+    /// it will be created.
+    /// </summary>
+    Task<ListSubscribeResponse> Subscribe(
+        string userID,
         ListSubscribeParams parameters,
         CancellationToken cancellationToken = default
     );

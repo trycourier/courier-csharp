@@ -21,14 +21,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("archived", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("archived", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["archived"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["archived"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -42,14 +42,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("cursor", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("cursor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["cursor"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["cursor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -63,14 +63,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("enqueued_after", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("enqueued_after", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["enqueued_after"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["enqueued_after"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -84,14 +84,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("event", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("event", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["event"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["event"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -105,14 +105,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("list", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("list", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["list"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["list"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -127,14 +127,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("messageId", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("messageId", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["messageId"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["messageId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -148,14 +148,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("notification", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("notification", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["notification"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["notification"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -170,7 +170,7 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("provider", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("provider", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
@@ -182,7 +182,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            this._queryProperties["provider"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["provider"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -196,14 +196,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("recipient", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("recipient", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["recipient"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["recipient"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -218,7 +218,7 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("status", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("status", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
@@ -230,7 +230,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            this._queryProperties["status"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -245,7 +245,7 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("tag", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("tag", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
@@ -257,7 +257,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            this._queryProperties["tag"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["tag"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -272,14 +272,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("tags", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("tags", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["tags"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["tags"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -293,14 +293,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("tenant_id", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("tenant_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["tenant_id"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["tenant_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -314,14 +314,14 @@ public sealed record class MessageListParams : ParamsBase
     {
         get
         {
-            if (!this._queryProperties.TryGetValue("traceId", out JsonElement element))
+            if (!this._rawQueryData.TryGetValue("traceId", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._queryProperties["traceId"] = JsonSerializer.SerializeToElement(
+            this._rawQueryData["traceId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -331,34 +331,34 @@ public sealed record class MessageListParams : ParamsBase
     public MessageListParams() { }
 
     public MessageListParams(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     MessageListParams(
-        FrozenDictionary<string, JsonElement> headerProperties,
-        FrozenDictionary<string, JsonElement> queryProperties
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
     }
 #pragma warning restore CS8618
 
     public static MessageListParams FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
         return new(
-            FrozenDictionary.ToFrozenDictionary(headerProperties),
-            FrozenDictionary.ToFrozenDictionary(queryProperties)
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData)
         );
     }
 
@@ -373,7 +373,7 @@ public sealed record class MessageListParams : ParamsBase
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
         ParamsBase.AddDefaultHeaders(request, options);
-        foreach (var item in this.HeaderProperties)
+        foreach (var item in this.RawHeaderData)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }

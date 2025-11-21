@@ -21,7 +21,14 @@ namespace Courier.Models;
 [JsonConverter(typeof(ElementalNodeConverter))]
 public record class ElementalNode
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
+
+    JsonElement? _json = null;
+
+    public JsonElement Json
+    {
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+    }
 
     public IReadOnlyList<string>? Channels
     {
@@ -87,49 +94,51 @@ public record class ElementalNode
         }
     }
 
-    public ElementalNode(ElementalTextNodeWithType value)
+    public ElementalNode(ElementalTextNodeWithType value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public ElementalNode(ElementalMetaNodeWithType value)
+    public ElementalNode(ElementalMetaNodeWithType value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public ElementalNode(ElementalChannelNodeWithType value)
+    public ElementalNode(ElementalChannelNodeWithType value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public ElementalNode(ElementalImageNodeWithType value)
+    public ElementalNode(ElementalImageNodeWithType value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public ElementalNode(ElementalActionNodeWithType value)
+    public ElementalNode(ElementalActionNodeWithType value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public ElementalNode(ElementalDividerNodeWithType value)
+    public ElementalNode(ElementalDividerNodeWithType value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public ElementalNode(ElementalQuoteNodeWithType value)
+    public ElementalNode(ElementalQuoteNodeWithType value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    ElementalNode(UnknownVariant value)
+    public ElementalNode(JsonElement json)
     {
-        Value = value;
-    }
-
-    public static ElementalNode CreateUnknownVariant(JsonElement value)
-    {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickTextNodeWithType([NotNullWhen(true)] out ElementalTextNodeWithType? value)
@@ -261,15 +270,13 @@ public record class ElementalNode
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException(
                 "Data did not match any variant of ElementalNode"
             );
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
@@ -280,163 +287,121 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new ElementalNode(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalTextNodeWithType'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new ElementalNode(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalMetaNodeWithType'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new ElementalNode(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalChannelNodeWithType'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new ElementalNode(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalImageNodeWithType'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new ElementalNode(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalActionNodeWithType'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new ElementalNode(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalDividerNodeWithType'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new ElementalNode(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'ElementalQuoteNodeWithType'",
-                    e
-                )
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(
@@ -445,7 +410,6 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         JsonSerializerOptions options
     )
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }

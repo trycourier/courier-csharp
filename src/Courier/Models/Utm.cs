@@ -14,14 +14,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this._properties.TryGetValue("campaign", out JsonElement element))
+            if (!this._rawData.TryGetValue("campaign", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["campaign"] = JsonSerializer.SerializeToElement(
+            this._rawData["campaign"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -32,14 +32,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this._properties.TryGetValue("content", out JsonElement element))
+            if (!this._rawData.TryGetValue("content", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["content"] = JsonSerializer.SerializeToElement(
+            this._rawData["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -50,14 +50,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this._properties.TryGetValue("medium", out JsonElement element))
+            if (!this._rawData.TryGetValue("medium", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["medium"] = JsonSerializer.SerializeToElement(
+            this._rawData["medium"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -68,14 +68,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this._properties.TryGetValue("source", out JsonElement element))
+            if (!this._rawData.TryGetValue("source", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["source"] = JsonSerializer.SerializeToElement(
+            this._rawData["source"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -86,14 +86,14 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         get
         {
-            if (!this._properties.TryGetValue("term", out JsonElement element))
+            if (!this._rawData.TryGetValue("term", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["term"] = JsonSerializer.SerializeToElement(
+            this._rawData["term"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -111,21 +111,21 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
 
     public Utm() { }
 
-    public Utm(IReadOnlyDictionary<string, JsonElement> properties)
+    public Utm(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Utm(FrozenDictionary<string, JsonElement> properties)
+    Utm(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Utm FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Utm FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

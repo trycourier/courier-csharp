@@ -18,7 +18,7 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse
     {
         get
         {
-            if (!this._properties.TryGetValue("message", out JsonElement element))
+            if (!this._rawData.TryGetValue("message", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'message' cannot be null",
                     new ArgumentOutOfRangeException("message", "Missing required argument")
@@ -32,7 +32,7 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse
         }
         init
         {
-            this._properties["message"] = JsonSerializer.SerializeToElement(
+            this._rawData["message"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -46,26 +46,24 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse
 
     public PreferenceUpdateOrCreateTopicResponse() { }
 
-    public PreferenceUpdateOrCreateTopicResponse(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public PreferenceUpdateOrCreateTopicResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PreferenceUpdateOrCreateTopicResponse(FrozenDictionary<string, JsonElement> properties)
+    PreferenceUpdateOrCreateTopicResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static PreferenceUpdateOrCreateTopicResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

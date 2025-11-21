@@ -16,7 +16,7 @@ public sealed record class ProfileCreateResponse : ModelBase, IFromRaw<ProfileCr
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new System::ArgumentOutOfRangeException("status", "Missing required argument")
@@ -29,7 +29,7 @@ public sealed record class ProfileCreateResponse : ModelBase, IFromRaw<ProfileCr
         }
         init
         {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,24 +43,24 @@ public sealed record class ProfileCreateResponse : ModelBase, IFromRaw<ProfileCr
 
     public ProfileCreateResponse() { }
 
-    public ProfileCreateResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public ProfileCreateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProfileCreateResponse(FrozenDictionary<string, JsonElement> properties)
+    ProfileCreateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ProfileCreateResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

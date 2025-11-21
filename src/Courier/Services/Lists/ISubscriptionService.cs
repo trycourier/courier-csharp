@@ -24,16 +24,45 @@ public interface ISubscriptionService
     );
 
     /// <summary>
+    /// Get the list's subscriptions.
+    /// </summary>
+    Task<SubscriptionListResponse> List(
+        string listID,
+        SubscriptionListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Subscribes additional users to the list, without modifying existing subscriptions.
     /// If the list does not exist, it will be automatically created.
     /// </summary>
     Task Add(SubscriptionAddParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Subscribes additional users to the list, without modifying existing subscriptions.
+    /// If the list does not exist, it will be automatically created.
+    /// </summary>
+    Task Add(
+        string listID,
+        SubscriptionAddParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Subscribes the users to the list, overwriting existing subscriptions. If
     /// the list does not exist, it will be automatically created.
     /// </summary>
     Task Subscribe(
+        SubscriptionSubscribeParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Subscribes the users to the list, overwriting existing subscriptions. If
+    /// the list does not exist, it will be automatically created.
+    /// </summary>
+    Task Subscribe(
+        string listID,
         SubscriptionSubscribeParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -48,9 +77,28 @@ public interface ISubscriptionService
     );
 
     /// <summary>
+    /// Subscribe a user to an existing list (note: if the List does not exist, it
+    /// will be automatically created).
+    /// </summary>
+    Task SubscribeUser(
+        string userID,
+        SubscriptionSubscribeUserParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Delete a subscription to a list by list ID and user ID.
     /// </summary>
     Task UnsubscribeUser(
+        SubscriptionUnsubscribeUserParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Delete a subscription to a list by list ID and user ID.
+    /// </summary>
+    Task UnsubscribeUser(
+        string userID,
         SubscriptionUnsubscribeUserParams parameters,
         CancellationToken cancellationToken = default
     );

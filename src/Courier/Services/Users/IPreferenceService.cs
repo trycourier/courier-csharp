@@ -24,6 +24,15 @@ public interface IPreferenceService
     );
 
     /// <summary>
+    /// Fetch all user preferences.
+    /// </summary>
+    Task<PreferenceRetrieveResponse> Retrieve(
+        string userID,
+        PreferenceRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Fetch user preferences for a specific subscription topic.
     /// </summary>
     Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
@@ -32,9 +41,27 @@ public interface IPreferenceService
     );
 
     /// <summary>
+    /// Fetch user preferences for a specific subscription topic.
+    /// </summary>
+    Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
+        string topicID,
+        PreferenceRetrieveTopicParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Update or Create user preferences for a specific subscription topic.
     /// </summary>
     Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
+        PreferenceUpdateOrCreateTopicParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Update or Create user preferences for a specific subscription topic.
+    /// </summary>
+    Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
+        string topicID,
         PreferenceUpdateOrCreateTopicParams parameters,
         CancellationToken cancellationToken = default
     );

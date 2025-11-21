@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -10,26 +9,30 @@ namespace Courier.Models;
 [JsonConverter(typeof(MessageRoutingChannelConverter))]
 public record class MessageRoutingChannel
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public MessageRoutingChannel(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public MessageRoutingChannel(MessageRouting value)
+    public MessageRoutingChannel(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    MessageRoutingChannel(UnknownVariant value)
+    public MessageRoutingChannel(MessageRouting value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static MessageRoutingChannel CreateUnknownVariant(JsonElement value)
+    public MessageRoutingChannel(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -85,15 +88,13 @@ public record class MessageRoutingChannel
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException(
                 "Data did not match any variant of MessageRoutingChannel"
             );
         }
     }
-
-    record struct UnknownVariant(JsonElement value);
 }
 
 sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChannel>
@@ -104,43 +105,35 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<MessageRouting>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<MessageRouting>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new MessageRoutingChannel(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'MessageRouting'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new MessageRoutingChannel(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(
@@ -149,7 +142,6 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
         JsonSerializerOptions options
     )
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }

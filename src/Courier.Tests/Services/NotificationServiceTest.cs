@@ -14,9 +14,7 @@ public class NotificationServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RetrieveContent_Works()
     {
-        var notificationGetContent = await this.client.Notifications.RetrieveContent(
-            new() { ID = "id" }
-        );
+        var notificationGetContent = await this.client.Notifications.RetrieveContent("id");
         notificationGetContent.Validate();
     }
 }

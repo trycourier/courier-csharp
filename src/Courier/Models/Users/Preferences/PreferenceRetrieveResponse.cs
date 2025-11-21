@@ -21,7 +21,7 @@ public sealed record class PreferenceRetrieveResponse
     {
         get
         {
-            if (!this._properties.TryGetValue("items", out JsonElement element))
+            if (!this._rawData.TryGetValue("items", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'items' cannot be null",
                     new ArgumentOutOfRangeException("items", "Missing required argument")
@@ -38,7 +38,7 @@ public sealed record class PreferenceRetrieveResponse
         }
         init
         {
-            this._properties["items"] = JsonSerializer.SerializeToElement(
+            this._rawData["items"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -52,7 +52,7 @@ public sealed record class PreferenceRetrieveResponse
     {
         get
         {
-            if (!this._properties.TryGetValue("paging", out JsonElement element))
+            if (!this._rawData.TryGetValue("paging", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'paging' cannot be null",
                     new ArgumentOutOfRangeException("paging", "Missing required argument")
@@ -66,7 +66,7 @@ public sealed record class PreferenceRetrieveResponse
         }
         init
         {
-            this._properties["paging"] = JsonSerializer.SerializeToElement(
+            this._rawData["paging"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -84,23 +84,23 @@ public sealed record class PreferenceRetrieveResponse
 
     public PreferenceRetrieveResponse() { }
 
-    public PreferenceRetrieveResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public PreferenceRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PreferenceRetrieveResponse(FrozenDictionary<string, JsonElement> properties)
+    PreferenceRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static PreferenceRetrieveResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

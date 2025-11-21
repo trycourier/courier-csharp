@@ -8,7 +8,7 @@ public class PreferenceServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var preference = await this.client.Users.Preferences.Retrieve(new() { UserID = "user_id" });
+        var preference = await this.client.Users.Preferences.Retrieve("user_id");
         preference.Validate();
     }
 
@@ -16,7 +16,8 @@ public class PreferenceServiceTest : TestBase
     public async Task RetrieveTopic_Works()
     {
         var response = await this.client.Users.Preferences.RetrieveTopic(
-            new() { UserID = "user_id", TopicID = "topic_id" }
+            "topic_id",
+            new() { UserID = "user_id" }
         );
         response.Validate();
     }
@@ -25,10 +26,10 @@ public class PreferenceServiceTest : TestBase
     public async Task UpdateOrCreateTopic_Works()
     {
         var response = await this.client.Users.Preferences.UpdateOrCreateTopic(
+            "topic_id",
             new()
             {
                 UserID = "user_id",
-                TopicID = "topic_id",
                 Topic = new()
                 {
                     Status = PreferenceStatus.OptedIn,

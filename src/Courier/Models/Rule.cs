@@ -16,7 +16,7 @@ public sealed record class Rule : ModelBase, IFromRaw<Rule>
     {
         get
         {
-            if (!this._properties.TryGetValue("until", out JsonElement element))
+            if (!this._rawData.TryGetValue("until", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'until' cannot be null",
                     new ArgumentOutOfRangeException("until", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class Rule : ModelBase, IFromRaw<Rule>
         }
         init
         {
-            this._properties["until"] = JsonSerializer.SerializeToElement(
+            this._rawData["until"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -41,14 +41,14 @@ public sealed record class Rule : ModelBase, IFromRaw<Rule>
     {
         get
         {
-            if (!this._properties.TryGetValue("start", out JsonElement element))
+            if (!this._rawData.TryGetValue("start", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["start"] = JsonSerializer.SerializeToElement(
+            this._rawData["start"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -63,22 +63,22 @@ public sealed record class Rule : ModelBase, IFromRaw<Rule>
 
     public Rule() { }
 
-    public Rule(IReadOnlyDictionary<string, JsonElement> properties)
+    public Rule(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Rule(FrozenDictionary<string, JsonElement> properties)
+    Rule(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Rule FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Rule FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Notifications;
 using Courier.Services.Notifications;
 
@@ -66,6 +67,11 @@ public sealed class NotificationService : INotificationService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
         HttpRequest<NotificationRetrieveContentParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -82,5 +88,16 @@ public sealed class NotificationService : INotificationService
             notificationGetContent.Validate();
         }
         return notificationGetContent;
+    }
+
+    public async Task<NotificationGetContent> RetrieveContent(
+        string id,
+        NotificationRetrieveContentParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.RetrieveContent(parameters with { ID = id }, cancellationToken);
     }
 }

@@ -12,9 +12,9 @@ public class BulkServiceTest : TestBase
     public async Task AddUsers_Works()
     {
         await this.client.Bulk.AddUsers(
+            "job_id",
             new()
             {
-                JobID = "job_id",
                 Users =
                 [
                     new()
@@ -150,20 +150,20 @@ public class BulkServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task ListUsers_Works()
     {
-        var response = await this.client.Bulk.ListUsers(new() { JobID = "job_id" });
+        var response = await this.client.Bulk.ListUsers("job_id");
         response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RetrieveJob_Works()
     {
-        var response = await this.client.Bulk.RetrieveJob(new() { JobID = "job_id" });
+        var response = await this.client.Bulk.RetrieveJob("job_id");
         response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RunJob_Works()
     {
-        await this.client.Bulk.RunJob(new() { JobID = "job_id" });
+        await this.client.Bulk.RunJob("job_id");
     }
 }

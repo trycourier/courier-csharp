@@ -16,14 +16,14 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("footer", out JsonElement element))
+            if (!this._rawData.TryGetValue("footer", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<EmailFooter?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["footer"] = JsonSerializer.SerializeToElement(
+            this._rawData["footer"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -34,14 +34,14 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("head", out JsonElement element))
+            if (!this._rawData.TryGetValue("head", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<EmailHead?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["head"] = JsonSerializer.SerializeToElement(
+            this._rawData["head"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -52,14 +52,14 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("header", out JsonElement element))
+            if (!this._rawData.TryGetValue("header", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<EmailHeader?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["header"] = JsonSerializer.SerializeToElement(
+            this._rawData["header"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -70,7 +70,7 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("templateOverride", out JsonElement element))
+            if (!this._rawData.TryGetValue("templateOverride", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<TemplateOverride?>(
@@ -80,7 +80,7 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
         }
         init
         {
-            this._properties["templateOverride"] = JsonSerializer.SerializeToElement(
+            this._rawData["templateOverride"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -97,24 +97,24 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
 
     public BrandSettingsEmail() { }
 
-    public BrandSettingsEmail(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandSettingsEmail(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSettingsEmail(FrozenDictionary<string, JsonElement> properties)
+    BrandSettingsEmail(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static BrandSettingsEmail FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -125,7 +125,7 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("enabled", out JsonElement element))
+            if (!this._rawData.TryGetValue("enabled", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'enabled' cannot be null",
                     new ArgumentOutOfRangeException("enabled", "Missing required argument")
@@ -135,7 +135,7 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
         }
         init
         {
-            this._properties["enabled"] = JsonSerializer.SerializeToElement(
+            this._rawData["enabled"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -146,14 +146,14 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("backgroundColor", out JsonElement element))
+            if (!this._rawData.TryGetValue("backgroundColor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["backgroundColor"] = JsonSerializer.SerializeToElement(
+            this._rawData["backgroundColor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -164,14 +164,14 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("blocksBackgroundColor", out JsonElement element))
+            if (!this._rawData.TryGetValue("blocksBackgroundColor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["blocksBackgroundColor"] = JsonSerializer.SerializeToElement(
+            this._rawData["blocksBackgroundColor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -182,14 +182,14 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("footer", out JsonElement element))
+            if (!this._rawData.TryGetValue("footer", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["footer"] = JsonSerializer.SerializeToElement(
+            this._rawData["footer"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -200,14 +200,14 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("head", out JsonElement element))
+            if (!this._rawData.TryGetValue("head", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["head"] = JsonSerializer.SerializeToElement(
+            this._rawData["head"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -218,14 +218,14 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("header", out JsonElement element))
+            if (!this._rawData.TryGetValue("header", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["header"] = JsonSerializer.SerializeToElement(
+            this._rawData["header"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -236,14 +236,14 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("width", out JsonElement element))
+            if (!this._rawData.TryGetValue("width", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["width"] = JsonSerializer.SerializeToElement(
+            this._rawData["width"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -254,7 +254,7 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("mjml", out JsonElement element))
+            if (!this._rawData.TryGetValue("mjml", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'mjml' cannot be null",
                     new ArgumentOutOfRangeException("mjml", "Missing required argument")
@@ -268,7 +268,7 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
         }
         init
         {
-            this._properties["mjml"] = JsonSerializer.SerializeToElement(
+            this._rawData["mjml"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -279,14 +279,14 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("footerBackgroundColor", out JsonElement element))
+            if (!this._rawData.TryGetValue("footerBackgroundColor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["footerBackgroundColor"] = JsonSerializer.SerializeToElement(
+            this._rawData["footerBackgroundColor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -297,14 +297,14 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     {
         get
         {
-            if (!this._properties.TryGetValue("footerFullWidth", out JsonElement element))
+            if (!this._rawData.TryGetValue("footerFullWidth", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["footerFullWidth"] = JsonSerializer.SerializeToElement(
+            this._rawData["footerFullWidth"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -339,24 +339,24 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
 
     public TemplateOverride() { }
 
-    public TemplateOverride(IReadOnlyDictionary<string, JsonElement> properties)
+    public TemplateOverride(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TemplateOverride(FrozenDictionary<string, JsonElement> properties)
+    TemplateOverride(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static TemplateOverride FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -369,7 +369,7 @@ public sealed record class IntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("mjml", out JsonElement element))
+            if (!this._rawData.TryGetValue("mjml", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'mjml' cannot be null",
                     new ArgumentOutOfRangeException("mjml", "Missing required argument")
@@ -383,7 +383,7 @@ public sealed record class IntersectionMember1
         }
         init
         {
-            this._properties["mjml"] = JsonSerializer.SerializeToElement(
+            this._rawData["mjml"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -394,14 +394,14 @@ public sealed record class IntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("footerBackgroundColor", out JsonElement element))
+            if (!this._rawData.TryGetValue("footerBackgroundColor", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["footerBackgroundColor"] = JsonSerializer.SerializeToElement(
+            this._rawData["footerBackgroundColor"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -412,14 +412,14 @@ public sealed record class IntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("footerFullWidth", out JsonElement element))
+            if (!this._rawData.TryGetValue("footerFullWidth", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["footerFullWidth"] = JsonSerializer.SerializeToElement(
+            this._rawData["footerFullWidth"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -435,24 +435,24 @@ public sealed record class IntersectionMember1
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> properties)
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Brands.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

@@ -10,9 +10,9 @@ public class ProfileServiceTest : TestBase
     public async Task Create_Works()
     {
         var profile = await this.client.Profiles.Create(
+            "user_id",
             new()
             {
-                UserID = "user_id",
                 Profile = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -25,7 +25,7 @@ public class ProfileServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var profile = await this.client.Profiles.Retrieve(new() { UserID = "user_id" });
+        var profile = await this.client.Profiles.Retrieve("user_id");
         profile.Validate();
     }
 
@@ -33,9 +33,9 @@ public class ProfileServiceTest : TestBase
     public async Task Update_Works()
     {
         await this.client.Profiles.Update(
+            "user_id",
             new()
             {
-                UserID = "user_id",
                 Patch =
                 [
                     new()
@@ -52,16 +52,16 @@ public class ProfileServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Profiles.Delete(new() { UserID = "user_id" });
+        await this.client.Profiles.Delete("user_id");
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Replace_Works()
     {
         var response = await this.client.Profiles.Replace(
+            "user_id",
             new()
             {
-                UserID = "user_id",
                 Profile = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },

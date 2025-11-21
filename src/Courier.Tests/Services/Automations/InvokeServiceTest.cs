@@ -50,7 +50,8 @@ public class InvokeServiceTest : TestBase
     public async Task InvokeByTemplate_Works()
     {
         var automationInvokeResponse = await this.client.Automations.Invoke.InvokeByTemplate(
-            new() { TemplateID = "templateId", Recipient = "recipient" }
+            "templateId",
+            new() { Recipient = "recipient" }
         );
         automationInvokeResponse.Validate();
     }

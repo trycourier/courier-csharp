@@ -19,11 +19,26 @@ public interface ICheckService
         CheckUpdateParams parameters,
         CancellationToken cancellationToken = default
     );
+    Task<CheckUpdateResponse> Update(
+        string submissionID,
+        CheckUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     Task<CheckListResponse> List(
         CheckListParams parameters,
         CancellationToken cancellationToken = default
     );
+    Task<CheckListResponse> List(
+        string submissionID,
+        CheckListParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     Task Delete(CheckDeleteParams parameters, CancellationToken cancellationToken = default);
+    Task Delete(
+        string submissionID,
+        CheckDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

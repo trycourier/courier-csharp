@@ -14,14 +14,14 @@ public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
     {
         get
         {
-            if (!this._properties.TryGetValue("content", out JsonElement element))
+            if (!this._rawData.TryGetValue("content", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["content"] = JsonSerializer.SerializeToElement(
+            this._rawData["content"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -32,14 +32,14 @@ public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
     {
         get
         {
-            if (!this._properties.TryGetValue("inheritDefault", out JsonElement element))
+            if (!this._rawData.TryGetValue("inheritDefault", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["inheritDefault"] = JsonSerializer.SerializeToElement(
+            this._rawData["inheritDefault"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -54,21 +54,21 @@ public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
 
     public EmailFooter() { }
 
-    public EmailFooter(IReadOnlyDictionary<string, JsonElement> properties)
+    public EmailFooter(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    EmailFooter(FrozenDictionary<string, JsonElement> properties)
+    EmailFooter(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

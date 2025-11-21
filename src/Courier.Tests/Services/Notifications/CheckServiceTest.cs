@@ -9,10 +9,10 @@ public class CheckServiceTest : TestBase
     public async Task Update_Works()
     {
         var check = await this.client.Notifications.Checks.Update(
+            "submissionId",
             new()
             {
                 ID = "id",
-                SubmissionID = "submissionId",
                 Checks =
                 [
                     new()
@@ -31,7 +31,8 @@ public class CheckServiceTest : TestBase
     public async Task List_Works()
     {
         var checks = await this.client.Notifications.Checks.List(
-            new() { ID = "id", SubmissionID = "submissionId" }
+            "submissionId",
+            new() { ID = "id" }
         );
         checks.Validate();
     }
@@ -39,8 +40,6 @@ public class CheckServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Notifications.Checks.Delete(
-            new() { ID = "id", SubmissionID = "submissionId" }
-        );
+        await this.client.Notifications.Checks.Delete("submissionId", new() { ID = "id" });
     }
 }

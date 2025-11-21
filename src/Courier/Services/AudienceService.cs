@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Audiences;
 
 namespace Courier.Services;
@@ -26,6 +27,11 @@ public sealed class AudienceService : IAudienceService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.AudienceID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.AudienceID' cannot be null");
+        }
+
         HttpRequest<AudienceRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -44,11 +50,27 @@ public sealed class AudienceService : IAudienceService
         return audience;
     }
 
+    public async Task<Audience> Retrieve(
+        string audienceID,
+        AudienceRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Retrieve(parameters with { AudienceID = audienceID }, cancellationToken);
+    }
+
     public async Task<AudienceUpdateResponse> Update(
         AudienceUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.AudienceID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.AudienceID' cannot be null");
+        }
+
         HttpRequest<AudienceUpdateParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -65,6 +87,17 @@ public sealed class AudienceService : IAudienceService
             audience.Validate();
         }
         return audience;
+    }
+
+    public async Task<AudienceUpdateResponse> Update(
+        string audienceID,
+        AudienceUpdateParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Update(parameters with { AudienceID = audienceID }, cancellationToken);
     }
 
     public async Task<AudienceListResponse> List(
@@ -97,6 +130,11 @@ public sealed class AudienceService : IAudienceService
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.AudienceID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.AudienceID' cannot be null");
+        }
+
         HttpRequest<AudienceDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
@@ -107,11 +145,27 @@ public sealed class AudienceService : IAudienceService
             .ConfigureAwait(false);
     }
 
+    public async Task Delete(
+        string audienceID,
+        AudienceDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Delete(parameters with { AudienceID = audienceID }, cancellationToken);
+    }
+
     public async Task<AudienceListMembersResponse> ListMembers(
         AudienceListMembersParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.AudienceID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.AudienceID' cannot be null");
+        }
+
         HttpRequest<AudienceListMembersParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -128,5 +182,22 @@ public sealed class AudienceService : IAudienceService
             deserializedResponse.Validate();
         }
         return deserializedResponse;
+    }
+
+    public async Task<AudienceListMembersResponse> ListMembers(
+        string audienceID,
+        AudienceListMembersParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.ListMembers(
+            parameters with
+            {
+                AudienceID = audienceID,
+            },
+            cancellationToken
+        );
     }
 }

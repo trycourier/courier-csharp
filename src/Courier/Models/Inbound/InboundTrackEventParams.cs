@@ -16,10 +16,10 @@ namespace Courier.Models.Inbound;
 /// </summary>
 public sealed record class InboundTrackEventParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
-    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
-        get { return this._bodyProperties.Freeze(); }
+        get { return this._rawBodyData.Freeze(); }
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("event", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("event", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'event' cannot be null",
                     new System::ArgumentOutOfRangeException("event", "Missing required argument")
@@ -44,7 +44,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
         }
         init
         {
-            this._bodyProperties["event"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["event"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -59,7 +59,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("messageId", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("messageId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'messageId' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -76,7 +76,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
         }
         init
         {
-            this._bodyProperties["messageId"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["messageId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -87,7 +87,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("properties", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("properties", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'properties' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -107,7 +107,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
         }
         init
         {
-            this._bodyProperties["properties"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["properties"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -118,7 +118,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("type", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
                     new System::ArgumentOutOfRangeException("type", "Missing required argument")
@@ -131,7 +131,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
         }
         init
         {
-            this._bodyProperties["type"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -145,14 +145,14 @@ public sealed record class InboundTrackEventParams : ParamsBase
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("userId", out JsonElement element))
+            if (!this._rawBodyData.TryGetValue("userId", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._bodyProperties["userId"] = JsonSerializer.SerializeToElement(
+            this._rawBodyData["userId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -162,40 +162,40 @@ public sealed record class InboundTrackEventParams : ParamsBase
     public InboundTrackEventParams() { }
 
     public InboundTrackEventParams(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     InboundTrackEventParams(
-        FrozenDictionary<string, JsonElement> headerProperties,
-        FrozenDictionary<string, JsonElement> queryProperties,
-        FrozenDictionary<string, JsonElement> bodyProperties
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 #pragma warning restore CS8618
 
     public static InboundTrackEventParams FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
         return new(
-            FrozenDictionary.ToFrozenDictionary(headerProperties),
-            FrozenDictionary.ToFrozenDictionary(queryProperties),
-            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            FrozenDictionary.ToFrozenDictionary(rawBodyData)
         );
     }
 
@@ -209,17 +209,13 @@ public sealed record class InboundTrackEventParams : ParamsBase
 
     internal override StringContent? BodyContent()
     {
-        return new(
-            JsonSerializer.Serialize(this.BodyProperties),
-            Encoding.UTF8,
-            "application/json"
-        );
+        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
         ParamsBase.AddDefaultHeaders(request, options);
-        foreach (var item in this.HeaderProperties)
+        foreach (var item in this.RawHeaderData)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }

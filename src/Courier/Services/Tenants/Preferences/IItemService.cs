@@ -21,7 +21,25 @@ public interface IItemService
     Task Update(ItemUpdateParams parameters, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Create or Replace Default Preferences For Topic
+    /// </summary>
+    Task Update(
+        string topicID,
+        ItemUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Remove Default Preferences For Topic
     /// </summary>
     Task Delete(ItemDeleteParams parameters, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Remove Default Preferences For Topic
+    /// </summary>
+    Task Delete(
+        string topicID,
+        ItemDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

@@ -16,7 +16,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -41,7 +41,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new ArgumentOutOfRangeException("status", "Missing required argument")
@@ -54,7 +54,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
         }
         init
         {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -65,7 +65,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
+            if (!this._rawData.TryGetValue("type", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'type' cannot be null",
                     new ArgumentOutOfRangeException("type", "Missing required argument")
@@ -77,7 +77,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
         }
         init
         {
-            this._properties["type"] = JsonSerializer.SerializeToElement(
+            this._rawData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -88,7 +88,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
     {
         get
         {
-            if (!this._properties.TryGetValue("updated", out JsonElement element))
+            if (!this._rawData.TryGetValue("updated", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated' cannot be null",
                     new ArgumentOutOfRangeException("updated", "Missing required argument")
@@ -98,7 +98,7 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
         }
         init
         {
-            this._properties["updated"] = JsonSerializer.SerializeToElement(
+            this._rawData["updated"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -123,22 +123,22 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
 
     public Check() { }
 
-    public Check(IReadOnlyDictionary<string, JsonElement> properties)
+    public Check(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Check(FrozenDictionary<string, JsonElement> properties)
+    Check(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Check FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Check FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -151,7 +151,7 @@ public sealed record class IntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("updated", out JsonElement element))
+            if (!this._rawData.TryGetValue("updated", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated' cannot be null",
                     new ArgumentOutOfRangeException("updated", "Missing required argument")
@@ -161,7 +161,7 @@ public sealed record class IntersectionMember1
         }
         init
         {
-            this._properties["updated"] = JsonSerializer.SerializeToElement(
+            this._rawData["updated"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -175,24 +175,24 @@ public sealed record class IntersectionMember1
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> properties)
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Notifications.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

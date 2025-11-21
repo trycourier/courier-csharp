@@ -16,7 +16,7 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'status' cannot be null",
                     new System::ArgumentOutOfRangeException("status", "Missing required argument")
@@ -29,7 +29,7 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
         }
         init
         {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,7 +43,7 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
     {
         get
         {
-            if (!this._properties.TryGetValue("custom_routing", out JsonElement element))
+            if (!this._rawData.TryGetValue("custom_routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
@@ -53,7 +53,7 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
         }
         init
         {
-            this._properties["custom_routing"] = JsonSerializer.SerializeToElement(
+            this._rawData["custom_routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -68,14 +68,14 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
     {
         get
         {
-            if (!this._properties.TryGetValue("has_custom_routing", out JsonElement element))
+            if (!this._rawData.TryGetValue("has_custom_routing", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["has_custom_routing"] = JsonSerializer.SerializeToElement(
+            this._rawData["has_custom_routing"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -94,24 +94,24 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
 
     public SubscriptionTopicNew() { }
 
-    public SubscriptionTopicNew(IReadOnlyDictionary<string, JsonElement> properties)
+    public SubscriptionTopicNew(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SubscriptionTopicNew(FrozenDictionary<string, JsonElement> properties)
+    SubscriptionTopicNew(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static SubscriptionTopicNew FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

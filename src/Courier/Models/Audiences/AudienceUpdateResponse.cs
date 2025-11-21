@@ -16,7 +16,7 @@ public sealed record class AudienceUpdateResponse : ModelBase, IFromRaw<Audience
     {
         get
         {
-            if (!this._properties.TryGetValue("audience", out JsonElement element))
+            if (!this._rawData.TryGetValue("audience", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'audience' cannot be null",
                     new ArgumentOutOfRangeException("audience", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class AudienceUpdateResponse : ModelBase, IFromRaw<Audience
         }
         init
         {
-            this._properties["audience"] = JsonSerializer.SerializeToElement(
+            this._rawData["audience"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -44,24 +44,24 @@ public sealed record class AudienceUpdateResponse : ModelBase, IFromRaw<Audience
 
     public AudienceUpdateResponse() { }
 
-    public AudienceUpdateResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public AudienceUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AudienceUpdateResponse(FrozenDictionary<string, JsonElement> properties)
+    AudienceUpdateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AudienceUpdateResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

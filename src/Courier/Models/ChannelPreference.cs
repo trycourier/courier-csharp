@@ -16,7 +16,7 @@ public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPrefer
     {
         get
         {
-            if (!this._properties.TryGetValue("channel", out JsonElement element))
+            if (!this._rawData.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
                     new ArgumentOutOfRangeException("channel", "Missing required argument")
@@ -29,7 +29,7 @@ public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPrefer
         }
         init
         {
-            this._properties["channel"] = JsonSerializer.SerializeToElement(
+            this._rawData["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,24 +43,24 @@ public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPrefer
 
     public ChannelPreference() { }
 
-    public ChannelPreference(IReadOnlyDictionary<string, JsonElement> properties)
+    public ChannelPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ChannelPreference(FrozenDictionary<string, JsonElement> properties)
+    ChannelPreference(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ChannelPreference FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

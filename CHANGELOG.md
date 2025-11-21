@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.1.0 (2025-11-21)
+
+Full Changelog: [v2.0.0...v2.1.0](https://github.com/trycourier/courier-csharp/compare/v2.0.0...v2.1.0)
+
+### Features
+
+* **client:** additional methods for positional params ([6a429c3](https://github.com/trycourier/courier-csharp/commit/6a429c3601a83cef722920ee08dd5f85da6c9620))
+
+
+### Chores
+
+* **client:** change name of underlying properties for models and params ([7cce984](https://github.com/trycourier/courier-csharp/commit/7cce9845fa5ef2f5096cb17e5ec36699f45f6d9d))
+* **internal:** update release please config ([69e425f](https://github.com/trycourier/courier-csharp/commit/69e425f0ce6d15ea5c100e2b69dd15abb3177269))
+
+
+### Refactors
+
+* **client:** make unknown variants implicit ([c336420](https://github.com/trycourier/courier-csharp/commit/c336420f9f9f4c60f1f7108fb3ec010d193c46d1))
+
 ## 2.0.0 (2025-11-18)
 
 Full Changelog: [v1.1.0...v2.0.0](https://github.com/trycourier/courier-csharp/compare/v1.1.0...v2.0.0)

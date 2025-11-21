@@ -7,14 +7,14 @@ public class ListServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var subscriptionList = await this.client.Lists.Retrieve(new() { ListID = "list_id" });
+        var subscriptionList = await this.client.Lists.Retrieve("list_id");
         subscriptionList.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Update_Works()
     {
-        await this.client.Lists.Update(new() { ListID = "list_id", Name = "name" });
+        await this.client.Lists.Update("list_id", new() { Name = "name" });
     }
 
     [Fact(Skip = "Prism tests are disabled")]
@@ -27,12 +27,12 @@ public class ListServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Lists.Delete(new() { ListID = "list_id" });
+        await this.client.Lists.Delete("list_id");
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Restore_Works()
     {
-        await this.client.Lists.Restore(new() { ListID = "list_id" });
+        await this.client.Lists.Restore("list_id");
     }
 }

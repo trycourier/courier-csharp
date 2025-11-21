@@ -22,7 +22,7 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
     {
         get
         {
-            if (!this._properties.TryGetValue("body", out JsonElement element))
+            if (!this._rawData.TryGetValue("body", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'body' cannot be null",
                     new ArgumentOutOfRangeException("body", "Missing required argument")
@@ -36,7 +36,7 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
         }
         init
         {
-            this._properties["body"] = JsonSerializer.SerializeToElement(
+            this._rawData["body"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -50,7 +50,7 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
     {
         get
         {
-            if (!this._properties.TryGetValue("title", out JsonElement element))
+            if (!this._rawData.TryGetValue("title", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'title' cannot be null",
                     new ArgumentOutOfRangeException("title", "Missing required argument")
@@ -64,7 +64,7 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
         }
         init
         {
-            this._properties["title"] = JsonSerializer.SerializeToElement(
+            this._rawData["title"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -79,23 +79,23 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
 
     public ElementalContentSugar() { }
 
-    public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalContentSugar(FrozenDictionary<string, JsonElement> properties)
+    ElementalContentSugar(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalContentSugar FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
