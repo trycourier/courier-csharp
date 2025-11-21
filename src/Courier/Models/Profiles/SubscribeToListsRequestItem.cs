@@ -18,7 +18,7 @@ public sealed record class SubscribeToListsRequestItem
     {
         get
         {
-            if (!this._properties.TryGetValue("listId", out JsonElement element))
+            if (!this._rawData.TryGetValue("listId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'listId' cannot be null",
                     new ArgumentOutOfRangeException("listId", "Missing required argument")
@@ -32,7 +32,7 @@ public sealed record class SubscribeToListsRequestItem
         }
         init
         {
-            this._properties["listId"] = JsonSerializer.SerializeToElement(
+            this._rawData["listId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,7 +43,7 @@ public sealed record class SubscribeToListsRequestItem
     {
         get
         {
-            if (!this._properties.TryGetValue("preferences", out JsonElement element))
+            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<RecipientPreferences?>(
@@ -53,7 +53,7 @@ public sealed record class SubscribeToListsRequestItem
         }
         init
         {
-            this._properties["preferences"] = JsonSerializer.SerializeToElement(
+            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -68,24 +68,24 @@ public sealed record class SubscribeToListsRequestItem
 
     public SubscribeToListsRequestItem() { }
 
-    public SubscribeToListsRequestItem(IReadOnlyDictionary<string, JsonElement> properties)
+    public SubscribeToListsRequestItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SubscribeToListsRequestItem(FrozenDictionary<string, JsonElement> properties)
+    SubscribeToListsRequestItem(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static SubscribeToListsRequestItem FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

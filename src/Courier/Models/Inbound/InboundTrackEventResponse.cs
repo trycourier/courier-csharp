@@ -22,7 +22,7 @@ public sealed record class InboundTrackEventResponse
     {
         get
         {
-            if (!this._properties.TryGetValue("messageId", out JsonElement element))
+            if (!this._rawData.TryGetValue("messageId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'messageId' cannot be null",
                     new ArgumentOutOfRangeException("messageId", "Missing required argument")
@@ -36,7 +36,7 @@ public sealed record class InboundTrackEventResponse
         }
         init
         {
-            this._properties["messageId"] = JsonSerializer.SerializeToElement(
+            this._rawData["messageId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -50,24 +50,24 @@ public sealed record class InboundTrackEventResponse
 
     public InboundTrackEventResponse() { }
 
-    public InboundTrackEventResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public InboundTrackEventResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    InboundTrackEventResponse(FrozenDictionary<string, JsonElement> properties)
+    InboundTrackEventResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static InboundTrackEventResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

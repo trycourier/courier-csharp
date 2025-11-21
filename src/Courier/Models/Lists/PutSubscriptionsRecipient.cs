@@ -18,7 +18,7 @@ public sealed record class PutSubscriptionsRecipient
     {
         get
         {
-            if (!this._properties.TryGetValue("recipientId", out JsonElement element))
+            if (!this._rawData.TryGetValue("recipientId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'recipientId' cannot be null",
                     new ArgumentOutOfRangeException("recipientId", "Missing required argument")
@@ -32,7 +32,7 @@ public sealed record class PutSubscriptionsRecipient
         }
         init
         {
-            this._properties["recipientId"] = JsonSerializer.SerializeToElement(
+            this._rawData["recipientId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -43,7 +43,7 @@ public sealed record class PutSubscriptionsRecipient
     {
         get
         {
-            if (!this._properties.TryGetValue("preferences", out JsonElement element))
+            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<RecipientPreferences?>(
@@ -53,7 +53,7 @@ public sealed record class PutSubscriptionsRecipient
         }
         init
         {
-            this._properties["preferences"] = JsonSerializer.SerializeToElement(
+            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -68,24 +68,24 @@ public sealed record class PutSubscriptionsRecipient
 
     public PutSubscriptionsRecipient() { }
 
-    public PutSubscriptionsRecipient(IReadOnlyDictionary<string, JsonElement> properties)
+    public PutSubscriptionsRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PutSubscriptionsRecipient(FrozenDictionary<string, JsonElement> properties)
+    PutSubscriptionsRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static PutSubscriptionsRecipient FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

@@ -19,7 +19,7 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
     {
         get
         {
-            if (!this._properties.TryGetValue("operator", out JsonElement element))
+            if (!this._rawData.TryGetValue("operator", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'operator' cannot be null",
                     new System::ArgumentOutOfRangeException("operator", "Missing required argument")
@@ -32,7 +32,7 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
         }
         init
         {
-            this._properties["operator"] = JsonSerializer.SerializeToElement(
+            this._rawData["operator"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -46,7 +46,7 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
     {
         get
         {
-            if (!this._properties.TryGetValue("path", out JsonElement element))
+            if (!this._rawData.TryGetValue("path", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'path' cannot be null",
                     new System::ArgumentOutOfRangeException("path", "Missing required argument")
@@ -60,7 +60,7 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
         }
         init
         {
-            this._properties["path"] = JsonSerializer.SerializeToElement(
+            this._rawData["path"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -74,7 +74,7 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
     {
         get
         {
-            if (!this._properties.TryGetValue("value", out JsonElement element))
+            if (!this._rawData.TryGetValue("value", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'value' cannot be null",
                     new System::ArgumentOutOfRangeException("value", "Missing required argument")
@@ -88,7 +88,7 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
         }
         init
         {
-            this._properties["value"] = JsonSerializer.SerializeToElement(
+            this._rawData["value"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -104,22 +104,22 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
 
     public Filter() { }
 
-    public Filter(IReadOnlyDictionary<string, JsonElement> properties)
+    public Filter(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Filter(FrozenDictionary<string, JsonElement> properties)
+    Filter(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 

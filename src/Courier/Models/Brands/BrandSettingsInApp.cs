@@ -16,7 +16,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("colors", out JsonElement element))
+            if (!this._rawData.TryGetValue("colors", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'colors' cannot be null",
                     new System::ArgumentOutOfRangeException("colors", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
         }
         init
         {
-            this._properties["colors"] = JsonSerializer.SerializeToElement(
+            this._rawData["colors"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -41,7 +41,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("icons", out JsonElement element))
+            if (!this._rawData.TryGetValue("icons", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'icons' cannot be null",
                     new System::ArgumentOutOfRangeException("icons", "Missing required argument")
@@ -55,7 +55,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
         }
         init
         {
-            this._properties["icons"] = JsonSerializer.SerializeToElement(
+            this._rawData["icons"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -66,7 +66,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("widgetBackground", out JsonElement element))
+            if (!this._rawData.TryGetValue("widgetBackground", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'widgetBackground' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -86,7 +86,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
         }
         init
         {
-            this._properties["widgetBackground"] = JsonSerializer.SerializeToElement(
+            this._rawData["widgetBackground"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -97,14 +97,14 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("borderRadius", out JsonElement element))
+            if (!this._rawData.TryGetValue("borderRadius", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["borderRadius"] = JsonSerializer.SerializeToElement(
+            this._rawData["borderRadius"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -115,14 +115,14 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("disableMessageIcon", out JsonElement element))
+            if (!this._rawData.TryGetValue("disableMessageIcon", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["disableMessageIcon"] = JsonSerializer.SerializeToElement(
+            this._rawData["disableMessageIcon"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -133,14 +133,14 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("fontFamily", out JsonElement element))
+            if (!this._rawData.TryGetValue("fontFamily", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["fontFamily"] = JsonSerializer.SerializeToElement(
+            this._rawData["fontFamily"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -151,7 +151,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     {
         get
         {
-            if (!this._properties.TryGetValue("placement", out JsonElement element))
+            if (!this._rawData.TryGetValue("placement", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, Placement>?>(
@@ -161,7 +161,7 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
         }
         init
         {
-            this._properties["placement"] = JsonSerializer.SerializeToElement(
+            this._rawData["placement"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -181,24 +181,24 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
 
     public BrandSettingsInApp() { }
 
-    public BrandSettingsInApp(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandSettingsInApp(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSettingsInApp(FrozenDictionary<string, JsonElement> properties)
+    BrandSettingsInApp(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static BrandSettingsInApp FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 

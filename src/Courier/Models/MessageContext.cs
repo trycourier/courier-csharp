@@ -17,14 +17,14 @@ public sealed record class MessageContext : ModelBase, IFromRaw<MessageContext>
     {
         get
         {
-            if (!this._properties.TryGetValue("tenant_id", out JsonElement element))
+            if (!this._rawData.TryGetValue("tenant_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["tenant_id"] = JsonSerializer.SerializeToElement(
+            this._rawData["tenant_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -38,23 +38,21 @@ public sealed record class MessageContext : ModelBase, IFromRaw<MessageContext>
 
     public MessageContext() { }
 
-    public MessageContext(IReadOnlyDictionary<string, JsonElement> properties)
+    public MessageContext(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageContext(FrozenDictionary<string, JsonElement> properties)
+    MessageContext(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static MessageContext FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static MessageContext FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

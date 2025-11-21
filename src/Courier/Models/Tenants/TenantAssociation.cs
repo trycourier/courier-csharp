@@ -19,7 +19,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this._properties.TryGetValue("tenant_id", out JsonElement element))
+            if (!this._rawData.TryGetValue("tenant_id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'tenant_id' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -36,7 +36,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
         }
         init
         {
-            this._properties["tenant_id"] = JsonSerializer.SerializeToElement(
+            this._rawData["tenant_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -50,7 +50,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this._properties.TryGetValue("profile", out JsonElement element))
+            if (!this._rawData.TryGetValue("profile", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -60,7 +60,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
         }
         init
         {
-            this._properties["profile"] = JsonSerializer.SerializeToElement(
+            this._rawData["profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -71,7 +71,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
+            if (!this._rawData.TryGetValue("type", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<
@@ -81,7 +81,7 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
         }
         init
         {
-            this._properties["type"] = JsonSerializer.SerializeToElement(
+            this._rawData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -95,14 +95,14 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         get
         {
-            if (!this._properties.TryGetValue("user_id", out JsonElement element))
+            if (!this._rawData.TryGetValue("user_id", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["user_id"] = JsonSerializer.SerializeToElement(
+            this._rawData["user_id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -119,24 +119,24 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
 
     public TenantAssociation() { }
 
-    public TenantAssociation(IReadOnlyDictionary<string, JsonElement> properties)
+    public TenantAssociation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TenantAssociation(FrozenDictionary<string, JsonElement> properties)
+    TenantAssociation(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static TenantAssociation FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

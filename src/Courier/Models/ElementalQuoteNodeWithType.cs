@@ -18,14 +18,14 @@ public sealed record class ElementalQuoteNodeWithType
     {
         get
         {
-            if (!this._properties.TryGetValue("channels", out JsonElement element))
+            if (!this._rawData.TryGetValue("channels", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["channels"] = JsonSerializer.SerializeToElement(
+            this._rawData["channels"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -36,14 +36,14 @@ public sealed record class ElementalQuoteNodeWithType
     {
         get
         {
-            if (!this._properties.TryGetValue("if", out JsonElement element))
+            if (!this._rawData.TryGetValue("if", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["if"] = JsonSerializer.SerializeToElement(
+            this._rawData["if"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -54,14 +54,14 @@ public sealed record class ElementalQuoteNodeWithType
     {
         get
         {
-            if (!this._properties.TryGetValue("loop", out JsonElement element))
+            if (!this._rawData.TryGetValue("loop", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["loop"] = JsonSerializer.SerializeToElement(
+            this._rawData["loop"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -72,14 +72,14 @@ public sealed record class ElementalQuoteNodeWithType
     {
         get
         {
-            if (!this._properties.TryGetValue("ref", out JsonElement element))
+            if (!this._rawData.TryGetValue("ref", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["ref"] = JsonSerializer.SerializeToElement(
+            this._rawData["ref"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -90,7 +90,7 @@ public sealed record class ElementalQuoteNodeWithType
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
+            if (!this._rawData.TryGetValue("type", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<
@@ -105,7 +105,7 @@ public sealed record class ElementalQuoteNodeWithType
                 return;
             }
 
-            this._properties["type"] = JsonSerializer.SerializeToElement(
+            this._rawData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -134,24 +134,24 @@ public sealed record class ElementalQuoteNodeWithType
 
     public ElementalQuoteNodeWithType() { }
 
-    public ElementalQuoteNodeWithType(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalQuoteNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalQuoteNodeWithType(FrozenDictionary<string, JsonElement> properties)
+    ElementalQuoteNodeWithType(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalQuoteNodeWithType FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -164,7 +164,7 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
+            if (!this._rawData.TryGetValue("type", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<
@@ -179,7 +179,7 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1
                 return;
             }
 
-            this._properties["type"] = JsonSerializer.SerializeToElement(
+            this._rawData["type"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -194,25 +194,25 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1
     public ElementalQuoteNodeWithTypeIntersectionMember1() { }
 
     public ElementalQuoteNodeWithTypeIntersectionMember1(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalQuoteNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    ElementalQuoteNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalQuoteNodeWithTypeIntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
