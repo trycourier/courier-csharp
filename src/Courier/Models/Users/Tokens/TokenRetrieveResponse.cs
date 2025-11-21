@@ -19,7 +19,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     {
         get
         {
-            if (!this._properties.TryGetValue("token", out JsonElement element))
+            if (!this._rawData.TryGetValue("token", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'token' cannot be null",
                     new System::ArgumentOutOfRangeException("token", "Missing required argument")
@@ -33,7 +33,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         }
         init
         {
-            this._properties["token"] = JsonSerializer.SerializeToElement(
+            this._rawData["token"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -44,7 +44,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     {
         get
         {
-            if (!this._properties.TryGetValue("provider_key", out JsonElement element))
+            if (!this._rawData.TryGetValue("provider_key", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'provider_key' cannot be null",
                     new System::ArgumentOutOfRangeException(
@@ -60,7 +60,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         }
         init
         {
-            this._properties["provider_key"] = JsonSerializer.SerializeToElement(
+            this._rawData["provider_key"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -74,7 +74,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     {
         get
         {
-            if (!this._properties.TryGetValue("device", out JsonElement element))
+            if (!this._rawData.TryGetValue("device", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<UserTokenDevice?>(
@@ -84,7 +84,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         }
         init
         {
-            this._properties["device"] = JsonSerializer.SerializeToElement(
+            this._rawData["device"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -99,7 +99,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     {
         get
         {
-            if (!this._properties.TryGetValue("expiry_date", out JsonElement element))
+            if (!this._rawData.TryGetValue("expiry_date", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<UserTokenExpiryDate?>(
@@ -109,7 +109,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         }
         init
         {
-            this._properties["expiry_date"] = JsonSerializer.SerializeToElement(
+            this._rawData["expiry_date"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -119,11 +119,11 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     /// <summary>
     /// Properties about the token.
     /// </summary>
-    public JsonElement? Properties1
+    public JsonElement? Properties
     {
         get
         {
-            if (!this._properties.TryGetValue("properties", out JsonElement element))
+            if (!this._rawData.TryGetValue("properties", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
@@ -135,7 +135,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
                 return;
             }
 
-            this._properties["properties"] = JsonSerializer.SerializeToElement(
+            this._rawData["properties"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -149,7 +149,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     {
         get
         {
-            if (!this._properties.TryGetValue("tracking", out JsonElement element))
+            if (!this._rawData.TryGetValue("tracking", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<UserTokenTracking?>(
@@ -159,7 +159,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         }
         init
         {
-            this._properties["tracking"] = JsonSerializer.SerializeToElement(
+            this._rawData["tracking"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -170,7 +170,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, Status>?>(
@@ -180,7 +180,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         }
         init
         {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -194,14 +194,14 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     {
         get
         {
-            if (!this._properties.TryGetValue("status_reason", out JsonElement element))
+            if (!this._rawData.TryGetValue("status_reason", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["status_reason"] = JsonSerializer.SerializeToElement(
+            this._rawData["status_reason"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -215,7 +215,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
             ProviderKey = tokenRetrieveResponse.ProviderKey,
             Device = tokenRetrieveResponse.Device,
             ExpiryDate = tokenRetrieveResponse.ExpiryDate,
-            Properties1 = tokenRetrieveResponse.Properties1,
+            Properties = tokenRetrieveResponse.Properties,
             Tracking = tokenRetrieveResponse.Tracking,
         };
 
@@ -225,7 +225,7 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
         this.ProviderKey.Validate();
         this.Device?.Validate();
         this.ExpiryDate?.Validate();
-        _ = this.Properties1;
+        _ = this.Properties;
         this.Tracking?.Validate();
         this.Status?.Validate();
         _ = this.StatusReason;
@@ -233,24 +233,24 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
 
     public TokenRetrieveResponse() { }
 
-    public TokenRetrieveResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public TokenRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TokenRetrieveResponse(FrozenDictionary<string, JsonElement> properties)
+    TokenRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static TokenRetrieveResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
@@ -263,7 +263,7 @@ public sealed record class IntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
+            if (!this._rawData.TryGetValue("status", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<ApiEnum<string, Status>?>(
@@ -273,7 +273,7 @@ public sealed record class IntersectionMember1
         }
         init
         {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
+            this._rawData["status"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -287,14 +287,14 @@ public sealed record class IntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("status_reason", out JsonElement element))
+            if (!this._rawData.TryGetValue("status_reason", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["status_reason"] = JsonSerializer.SerializeToElement(
+            this._rawData["status_reason"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -309,24 +309,24 @@ public sealed record class IntersectionMember1
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> properties)
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Users.Tokens.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 

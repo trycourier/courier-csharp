@@ -27,14 +27,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this._properties.TryGetValue("channels", out JsonElement element))
+            if (!this._rawData.TryGetValue("channels", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["channels"] = JsonSerializer.SerializeToElement(
+            this._rawData["channels"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -45,14 +45,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this._properties.TryGetValue("if", out JsonElement element))
+            if (!this._rawData.TryGetValue("if", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["if"] = JsonSerializer.SerializeToElement(
+            this._rawData["if"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -63,14 +63,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this._properties.TryGetValue("loop", out JsonElement element))
+            if (!this._rawData.TryGetValue("loop", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["loop"] = JsonSerializer.SerializeToElement(
+            this._rawData["loop"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -81,14 +81,14 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this._properties.TryGetValue("ref", out JsonElement element))
+            if (!this._rawData.TryGetValue("ref", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         init
         {
-            this._properties["ref"] = JsonSerializer.SerializeToElement(
+            this._rawData["ref"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -103,7 +103,7 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this._properties.TryGetValue("channel", out JsonElement element))
+            if (!this._rawData.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
                     new ArgumentOutOfRangeException("channel", "Missing required argument")
@@ -117,7 +117,7 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
         }
         init
         {
-            this._properties["channel"] = JsonSerializer.SerializeToElement(
+            this._rawData["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -132,7 +132,7 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     {
         get
         {
-            if (!this._properties.TryGetValue("raw", out JsonElement element))
+            if (!this._rawData.TryGetValue("raw", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -142,7 +142,7 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
         }
         init
         {
-            this._properties["raw"] = JsonSerializer.SerializeToElement(
+            this._rawData["raw"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -170,24 +170,24 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
 
     public ElementalChannelNode() { }
 
-    public ElementalChannelNode(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalChannelNode(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalChannelNode(FrozenDictionary<string, JsonElement> properties)
+    ElementalChannelNode(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalChannelNode FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -211,7 +211,7 @@ public sealed record class ElementalChannelNodeIntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("channel", out JsonElement element))
+            if (!this._rawData.TryGetValue("channel", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'channel' cannot be null",
                     new ArgumentOutOfRangeException("channel", "Missing required argument")
@@ -225,7 +225,7 @@ public sealed record class ElementalChannelNodeIntersectionMember1
         }
         init
         {
-            this._properties["channel"] = JsonSerializer.SerializeToElement(
+            this._rawData["channel"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -240,7 +240,7 @@ public sealed record class ElementalChannelNodeIntersectionMember1
     {
         get
         {
-            if (!this._properties.TryGetValue("raw", out JsonElement element))
+            if (!this._rawData.TryGetValue("raw", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
@@ -250,7 +250,7 @@ public sealed record class ElementalChannelNodeIntersectionMember1
         }
         init
         {
-            this._properties["raw"] = JsonSerializer.SerializeToElement(
+            this._rawData["raw"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -265,26 +265,24 @@ public sealed record class ElementalChannelNodeIntersectionMember1
 
     public ElementalChannelNodeIntersectionMember1() { }
 
-    public ElementalChannelNodeIntersectionMember1(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public ElementalChannelNodeIntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalChannelNodeIntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    ElementalChannelNodeIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalChannelNodeIntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

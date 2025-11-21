@@ -16,7 +16,7 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
     {
         get
         {
-            if (!this._properties.TryGetValue("token", out JsonElement element))
+            if (!this._rawData.TryGetValue("token", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'token' cannot be null",
                     new ArgumentOutOfRangeException("token", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
         }
         init
         {
-            this._properties["token"] = JsonSerializer.SerializeToElement(
+            this._rawData["token"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -44,24 +44,24 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
 
     public AuthIssueTokenResponse() { }
 
-    public AuthIssueTokenResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public AuthIssueTokenResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AuthIssueTokenResponse(FrozenDictionary<string, JsonElement> properties)
+    AuthIssueTokenResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AuthIssueTokenResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

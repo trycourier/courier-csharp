@@ -16,7 +16,7 @@ public sealed record class BulkCreateJobResponse : ModelBase, IFromRaw<BulkCreat
     {
         get
         {
-            if (!this._properties.TryGetValue("jobId", out JsonElement element))
+            if (!this._rawData.TryGetValue("jobId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'jobId' cannot be null",
                     new ArgumentOutOfRangeException("jobId", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class BulkCreateJobResponse : ModelBase, IFromRaw<BulkCreat
         }
         init
         {
-            this._properties["jobId"] = JsonSerializer.SerializeToElement(
+            this._rawData["jobId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -44,24 +44,24 @@ public sealed record class BulkCreateJobResponse : ModelBase, IFromRaw<BulkCreat
 
     public BulkCreateJobResponse() { }
 
-    public BulkCreateJobResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public BulkCreateJobResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BulkCreateJobResponse(FrozenDictionary<string, JsonElement> properties)
+    BulkCreateJobResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static BulkCreateJobResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

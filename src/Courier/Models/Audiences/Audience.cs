@@ -19,7 +19,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
     {
         get
         {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
+            if (!this._rawData.TryGetValue("id", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'id' cannot be null",
                     new ArgumentOutOfRangeException("id", "Missing required argument")
@@ -33,7 +33,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
         }
         init
         {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
+            this._rawData["id"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -44,7 +44,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
     {
         get
         {
-            if (!this._properties.TryGetValue("created_at", out JsonElement element))
+            if (!this._rawData.TryGetValue("created_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'created_at' cannot be null",
                     new ArgumentOutOfRangeException("created_at", "Missing required argument")
@@ -58,7 +58,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
         }
         init
         {
-            this._properties["created_at"] = JsonSerializer.SerializeToElement(
+            this._rawData["created_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -72,7 +72,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
     {
         get
         {
-            if (!this._properties.TryGetValue("description", out JsonElement element))
+            if (!this._rawData.TryGetValue("description", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'description' cannot be null",
                     new ArgumentOutOfRangeException("description", "Missing required argument")
@@ -86,7 +86,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
         }
         init
         {
-            this._properties["description"] = JsonSerializer.SerializeToElement(
+            this._rawData["description"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -100,7 +100,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
     {
         get
         {
-            if (!this._properties.TryGetValue("filter", out JsonElement element))
+            if (!this._rawData.TryGetValue("filter", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'filter' cannot be null",
                     new ArgumentOutOfRangeException("filter", "Missing required argument")
@@ -114,7 +114,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
         }
         init
         {
-            this._properties["filter"] = JsonSerializer.SerializeToElement(
+            this._rawData["filter"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -128,7 +128,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
     {
         get
         {
-            if (!this._properties.TryGetValue("name", out JsonElement element))
+            if (!this._rawData.TryGetValue("name", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'name' cannot be null",
                     new ArgumentOutOfRangeException("name", "Missing required argument")
@@ -142,7 +142,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
         }
         init
         {
-            this._properties["name"] = JsonSerializer.SerializeToElement(
+            this._rawData["name"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -153,7 +153,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
     {
         get
         {
-            if (!this._properties.TryGetValue("updated_at", out JsonElement element))
+            if (!this._rawData.TryGetValue("updated_at", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'updated_at' cannot be null",
                     new ArgumentOutOfRangeException("updated_at", "Missing required argument")
@@ -167,7 +167,7 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
         }
         init
         {
-            this._properties["updated_at"] = JsonSerializer.SerializeToElement(
+            this._rawData["updated_at"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -186,21 +186,21 @@ public sealed record class Audience : ModelBase, IFromRaw<Audience>
 
     public Audience() { }
 
-    public Audience(IReadOnlyDictionary<string, JsonElement> properties)
+    public Audience(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Audience(FrozenDictionary<string, JsonElement> properties)
+    Audience(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Audience FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Audience FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

@@ -16,7 +16,7 @@ public sealed record class CheckUpdateResponse : ModelBase, IFromRaw<CheckUpdate
     {
         get
         {
-            if (!this._properties.TryGetValue("checks", out JsonElement element))
+            if (!this._rawData.TryGetValue("checks", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'checks' cannot be null",
                     new ArgumentOutOfRangeException("checks", "Missing required argument")
@@ -30,7 +30,7 @@ public sealed record class CheckUpdateResponse : ModelBase, IFromRaw<CheckUpdate
         }
         init
         {
-            this._properties["checks"] = JsonSerializer.SerializeToElement(
+            this._rawData["checks"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -47,24 +47,24 @@ public sealed record class CheckUpdateResponse : ModelBase, IFromRaw<CheckUpdate
 
     public CheckUpdateResponse() { }
 
-    public CheckUpdateResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public CheckUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    CheckUpdateResponse(FrozenDictionary<string, JsonElement> properties)
+    CheckUpdateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static CheckUpdateResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

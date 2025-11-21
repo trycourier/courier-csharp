@@ -22,7 +22,7 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
     {
         get
         {
-            if (!this._properties.TryGetValue("requestId", out JsonElement element))
+            if (!this._rawData.TryGetValue("requestId", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'requestId' cannot be null",
                     new ArgumentOutOfRangeException("requestId", "Missing required argument")
@@ -36,7 +36,7 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
         }
         init
         {
-            this._properties["requestId"] = JsonSerializer.SerializeToElement(
+            this._rawData["requestId"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -50,24 +50,24 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
 
     public SendMessageResponse() { }
 
-    public SendMessageResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public SendMessageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SendMessageResponse(FrozenDictionary<string, JsonElement> properties)
+    SendMessageResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static SendMessageResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]

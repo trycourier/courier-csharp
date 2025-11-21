@@ -16,7 +16,7 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
     {
         get
         {
-            if (!this._properties.TryGetValue("profile", out JsonElement element))
+            if (!this._rawData.TryGetValue("profile", out JsonElement element))
                 throw new CourierInvalidDataException(
                     "'profile' cannot be null",
                     new ArgumentOutOfRangeException("profile", "Missing required argument")
@@ -33,7 +33,7 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
         }
         init
         {
-            this._properties["profile"] = JsonSerializer.SerializeToElement(
+            this._rawData["profile"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -44,7 +44,7 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
     {
         get
         {
-            if (!this._properties.TryGetValue("preferences", out JsonElement element))
+            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<RecipientPreferences?>(
@@ -54,7 +54,7 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
         }
         init
         {
-            this._properties["preferences"] = JsonSerializer.SerializeToElement(
+            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -69,23 +69,23 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
 
     public ProfileRetrieveResponse() { }
 
-    public ProfileRetrieveResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public ProfileRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProfileRetrieveResponse(FrozenDictionary<string, JsonElement> properties)
+    ProfileRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ProfileRetrieveResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }

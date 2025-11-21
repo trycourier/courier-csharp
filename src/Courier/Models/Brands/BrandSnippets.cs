@@ -14,7 +14,7 @@ public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
     {
         get
         {
-            if (!this._properties.TryGetValue("items", out JsonElement element))
+            if (!this._rawData.TryGetValue("items", out JsonElement element))
                 return null;
 
             return JsonSerializer.Deserialize<List<BrandSnippet>?>(
@@ -24,7 +24,7 @@ public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
         }
         init
         {
-            this._properties["items"] = JsonSerializer.SerializeToElement(
+            this._rawData["items"] = JsonSerializer.SerializeToElement(
                 value,
                 ModelBase.SerializerOptions
             );
@@ -41,23 +41,21 @@ public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
 
     public BrandSnippets() { }
 
-    public BrandSnippets(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandSnippets(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSnippets(FrozenDictionary<string, JsonElement> properties)
+    BrandSnippets(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static BrandSnippets FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static BrandSnippets FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
