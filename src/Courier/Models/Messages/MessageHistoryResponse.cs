@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageHistoryResponse>))]
-public sealed record class MessageHistoryResponse : ModelBase, IFromRaw<MessageHistoryResponse>
+[JsonConverter(typeof(ModelConverter<MessageHistoryResponse, MessageHistoryResponseFromRaw>))]
+public sealed record class MessageHistoryResponse : ModelBase
 {
     public required List<Dictionary<string, JsonElement>> Results
     {
@@ -73,4 +73,11 @@ public sealed record class MessageHistoryResponse : ModelBase, IFromRaw<MessageH
     {
         this.Results = results;
     }
+}
+
+class MessageHistoryResponseFromRaw : IFromRaw<MessageHistoryResponse>
+{
+    public MessageHistoryResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => MessageHistoryResponse.FromRawUnchecked(rawData);
 }

@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Preference>))]
-public sealed record class Preference : ModelBase, IFromRaw<Preference>
+[JsonConverter(typeof(ModelConverter<Preference, PreferenceFromRaw>))]
+public sealed record class Preference : ModelBase
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
@@ -136,6 +136,12 @@ public sealed record class Preference : ModelBase, IFromRaw<Preference>
     {
         this.Status = status;
     }
+}
+
+class PreferenceFromRaw : IFromRaw<Preference>
+{
+    public Preference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Preference.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(SourceConverter))]

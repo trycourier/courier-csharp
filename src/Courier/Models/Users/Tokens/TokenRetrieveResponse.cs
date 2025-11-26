@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Users.Tokens;
 
-[JsonConverter(typeof(ModelConverter<TokenRetrieveResponse>))]
-public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetrieveResponse>
+[JsonConverter(typeof(ModelConverter<TokenRetrieveResponse, TokenRetrieveResponseFromRaw>))]
+public sealed record class TokenRetrieveResponse : ModelBase
 {
     /// <summary>
     /// Full body of the token. Must match token in URL path parameter.
@@ -254,10 +254,20 @@ public sealed record class TokenRetrieveResponse : ModelBase, IFromRaw<TokenRetr
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Users.Tokens.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Users.Tokens.IntersectionMember1>
+class TokenRetrieveResponseFromRaw : IFromRaw<TokenRetrieveResponse>
+{
+    public TokenRetrieveResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => TokenRetrieveResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Users.Tokens.IntersectionMember1,
+        global::Courier.Models.Users.Tokens.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     public ApiEnum<string, Status>? Status
     {
@@ -328,6 +338,13 @@ public sealed record class IntersectionMember1
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Users.Tokens.IntersectionMember1>
+{
+    public global::Courier.Models.Users.Tokens.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Users.Tokens.IntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(StatusConverter))]

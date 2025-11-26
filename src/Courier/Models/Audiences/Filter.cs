@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<Filter>))]
-public sealed record class Filter : ModelBase, IFromRaw<Filter>
+[JsonConverter(typeof(ModelConverter<Filter, FilterFromRaw>))]
+public sealed record class Filter : ModelBase
 {
     /// <summary>
     /// The operator to use for filtering
@@ -121,6 +121,12 @@ public sealed record class Filter : ModelBase, IFromRaw<Filter>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class FilterFromRaw : IFromRaw<Filter>
+{
+    public Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Filter.FromRawUnchecked(rawData);
 }
 
 /// <summary>

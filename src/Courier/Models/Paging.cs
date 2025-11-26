@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Paging>))]
-public sealed record class Paging : ModelBase, IFromRaw<Paging>
+[JsonConverter(typeof(ModelConverter<Paging, PagingFromRaw>))]
+public sealed record class Paging : ModelBase
 {
     public required bool More
     {
@@ -83,4 +83,10 @@ public sealed record class Paging : ModelBase, IFromRaw<Paging>
     {
         this.More = more;
     }
+}
+
+class PagingFromRaw : IFromRaw<Paging>
+{
+    public Paging FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Paging.FromRawUnchecked(rawData);
 }

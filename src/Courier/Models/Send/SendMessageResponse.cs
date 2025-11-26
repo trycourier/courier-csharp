@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Send;
 
-[JsonConverter(typeof(ModelConverter<SendMessageResponse>))]
-public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessageResponse>
+[JsonConverter(typeof(ModelConverter<SendMessageResponse, SendMessageResponseFromRaw>))]
+public sealed record class SendMessageResponse : ModelBase
 {
     /// <summary>
     /// A successful call to `POST /send` returns a `202` status code along with a
@@ -76,4 +76,10 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
     {
         this.RequestID = requestID;
     }
+}
+
+class SendMessageResponseFromRaw : IFromRaw<SendMessageResponse>
+{
+    public SendMessageResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        SendMessageResponse.FromRawUnchecked(rawData);
 }

@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<UserRecipient>))]
-public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
+[JsonConverter(typeof(ModelConverter<UserRecipient, UserRecipientFromRaw>))]
+public sealed record class UserRecipient : ModelBase
 {
     /// <summary>
     /// Deprecated - Use `tenant_id` instead.
@@ -261,8 +261,14 @@ public sealed record class UserRecipient : ModelBase, IFromRaw<UserRecipient>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<UserRecipientPreferences>))]
-public sealed record class UserRecipientPreferences : ModelBase, IFromRaw<UserRecipientPreferences>
+class UserRecipientFromRaw : IFromRaw<UserRecipient>
+{
+    public UserRecipient FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        UserRecipient.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<UserRecipientPreferences, UserRecipientPreferencesFromRaw>))]
+public sealed record class UserRecipientPreferences : ModelBase
 {
     public required Dictionary<string, Preference> Notifications
     {
@@ -375,4 +381,11 @@ public sealed record class UserRecipientPreferences : ModelBase, IFromRaw<UserRe
     {
         this.Notifications = notifications;
     }
+}
+
+class UserRecipientPreferencesFromRaw : IFromRaw<UserRecipientPreferences>
+{
+    public UserRecipientPreferences FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => UserRecipientPreferences.FromRawUnchecked(rawData);
 }

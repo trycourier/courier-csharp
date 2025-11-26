@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageRetrieveResponse>))]
-public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<MessageRetrieveResponse>
+[JsonConverter(typeof(ModelConverter<MessageRetrieveResponse, MessageRetrieveResponseFromRaw>))]
+public sealed record class MessageRetrieveResponse : ModelBase
 {
     /// <summary>
     /// A unique identifier associated with the message you wish to retrieve (results
@@ -402,10 +402,20 @@ public sealed record class MessageRetrieveResponse : ModelBase, IFromRaw<Message
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Messages.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Messages.IntersectionMember1>
+class MessageRetrieveResponseFromRaw : IFromRaw<MessageRetrieveResponse>
+{
+    public MessageRetrieveResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => MessageRetrieveResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Messages.IntersectionMember1,
+        global::Courier.Models.Messages.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     public List<Dictionary<string, JsonElement>>? Providers
     {
@@ -454,4 +464,11 @@ public sealed record class IntersectionMember1
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Messages.IntersectionMember1>
+{
+    public global::Courier.Models.Messages.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Messages.IntersectionMember1.FromRawUnchecked(rawData);
 }

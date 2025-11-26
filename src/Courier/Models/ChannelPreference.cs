@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ChannelPreference>))]
-public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPreference>
+[JsonConverter(typeof(ModelConverter<ChannelPreference, ChannelPreferenceFromRaw>))]
+public sealed record class ChannelPreference : ModelBase
 {
     public required ApiEnum<string, ChannelClassification> Channel
     {
@@ -69,4 +69,10 @@ public sealed record class ChannelPreference : ModelBase, IFromRaw<ChannelPrefer
     {
         this.Channel = channel;
     }
+}
+
+class ChannelPreferenceFromRaw : IFromRaw<ChannelPreference>
+{
+    public ChannelPreference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ChannelPreference.FromRawUnchecked(rawData);
 }

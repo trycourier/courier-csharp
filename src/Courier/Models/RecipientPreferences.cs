@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<RecipientPreferences>))]
-public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientPreferences>
+[JsonConverter(typeof(ModelConverter<RecipientPreferences, RecipientPreferencesFromRaw>))]
+public sealed record class RecipientPreferences : ModelBase
 {
     public Dictionary<string, NotificationPreferenceDetails>? Categories
     {
@@ -91,4 +91,11 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class RecipientPreferencesFromRaw : IFromRaw<RecipientPreferences>
+{
+    public RecipientPreferences FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => RecipientPreferences.FromRawUnchecked(rawData);
 }

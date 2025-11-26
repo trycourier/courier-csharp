@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<AudienceUpdateResponse>))]
-public sealed record class AudienceUpdateResponse : ModelBase, IFromRaw<AudienceUpdateResponse>
+[JsonConverter(typeof(ModelConverter<AudienceUpdateResponse, AudienceUpdateResponseFromRaw>))]
+public sealed record class AudienceUpdateResponse : ModelBase
 {
     public required Audience Audience
     {
@@ -70,4 +70,11 @@ public sealed record class AudienceUpdateResponse : ModelBase, IFromRaw<Audience
     {
         this.Audience = audience;
     }
+}
+
+class AudienceUpdateResponseFromRaw : IFromRaw<AudienceUpdateResponse>
+{
+    public AudienceUpdateResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AudienceUpdateResponse.FromRawUnchecked(rawData);
 }

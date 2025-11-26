@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<BulkCreateJobResponse>))]
-public sealed record class BulkCreateJobResponse : ModelBase, IFromRaw<BulkCreateJobResponse>
+[JsonConverter(typeof(ModelConverter<BulkCreateJobResponse, BulkCreateJobResponseFromRaw>))]
+public sealed record class BulkCreateJobResponse : ModelBase
 {
     public required string JobID
     {
@@ -70,4 +70,11 @@ public sealed record class BulkCreateJobResponse : ModelBase, IFromRaw<BulkCreat
     {
         this.JobID = jobID;
     }
+}
+
+class BulkCreateJobResponseFromRaw : IFromRaw<BulkCreateJobResponse>
+{
+    public BulkCreateJobResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => BulkCreateJobResponse.FromRawUnchecked(rawData);
 }

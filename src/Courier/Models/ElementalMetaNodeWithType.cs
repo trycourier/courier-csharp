@@ -9,10 +9,8 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalMetaNodeWithType>))]
-public sealed record class ElementalMetaNodeWithType
-    : ModelBase,
-        IFromRaw<ElementalMetaNodeWithType>
+[JsonConverter(typeof(ModelConverter<ElementalMetaNodeWithType, ElementalMetaNodeWithTypeFromRaw>))]
+public sealed record class ElementalMetaNodeWithType : ModelBase
 {
     public List<string>? Channels
     {
@@ -155,10 +153,20 @@ public sealed record class ElementalMetaNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ElementalMetaNodeWithTypeIntersectionMember1>))]
-public sealed record class ElementalMetaNodeWithTypeIntersectionMember1
-    : ModelBase,
-        IFromRaw<ElementalMetaNodeWithTypeIntersectionMember1>
+class ElementalMetaNodeWithTypeFromRaw : IFromRaw<ElementalMetaNodeWithType>
+{
+    public ElementalMetaNodeWithType FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalMetaNodeWithType.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        ElementalMetaNodeWithTypeIntersectionMember1,
+        ElementalMetaNodeWithTypeIntersectionMember1FromRaw
+    >)
+)]
+public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelBase
 {
     public ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>? Type
     {
@@ -214,6 +222,14 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalMetaNodeWithTypeIntersectionMember1FromRaw
+    : IFromRaw<ElementalMetaNodeWithTypeIntersectionMember1>
+{
+    public ElementalMetaNodeWithTypeIntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalMetaNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ElementalMetaNodeWithTypeIntersectionMember1TypeConverter))]

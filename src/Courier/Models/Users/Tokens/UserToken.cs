@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Users.Tokens;
 
-[JsonConverter(typeof(ModelConverter<UserToken>))]
-public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
+[JsonConverter(typeof(ModelConverter<UserToken, UserTokenFromRaw>))]
+public sealed record class UserToken : ModelBase
 {
     /// <summary>
     /// Full body of the token. Must match token in URL path parameter.
@@ -197,6 +197,12 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     }
 }
 
+class UserTokenFromRaw : IFromRaw<UserToken>
+{
+    public UserToken FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        UserToken.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(UserTokenProviderKeyConverter))]
 public enum UserTokenProviderKey
 {
@@ -250,8 +256,8 @@ sealed class UserTokenProviderKeyConverter : JsonConverter<UserTokenProviderKey>
 /// <summary>
 /// Information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<UserTokenDevice>))]
-public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice>
+[JsonConverter(typeof(ModelConverter<UserTokenDevice, UserTokenDeviceFromRaw>))]
+public sealed record class UserTokenDevice : ModelBase
 {
     /// <summary>
     /// Id of the advertising identifier
@@ -410,6 +416,12 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
     }
 }
 
+class UserTokenDeviceFromRaw : IFromRaw<UserTokenDevice>
+{
+    public UserTokenDevice FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        UserTokenDevice.FromRawUnchecked(rawData);
+}
+
 /// <summary>
 /// ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false
 /// to disable expiration.
@@ -546,8 +558,8 @@ sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
 /// <summary>
 /// Tracking information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<UserTokenTracking>))]
-public sealed record class UserTokenTracking : ModelBase, IFromRaw<UserTokenTracking>
+[JsonConverter(typeof(ModelConverter<UserTokenTracking, UserTokenTrackingFromRaw>))]
+public sealed record class UserTokenTracking : ModelBase
 {
     /// <summary>
     /// The IP address of the device
@@ -662,4 +674,10 @@ public sealed record class UserTokenTracking : ModelBase, IFromRaw<UserTokenTrac
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class UserTokenTrackingFromRaw : IFromRaw<UserTokenTracking>
+{
+    public UserTokenTracking FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        UserTokenTracking.FromRawUnchecked(rawData);
 }

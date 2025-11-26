@@ -117,8 +117,8 @@ public sealed record class ProfileUpdateParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Patch>))]
-public sealed record class Patch : ModelBase, IFromRaw<Patch>
+[JsonConverter(typeof(ModelConverter<Patch, PatchFromRaw>))]
+public sealed record class Patch : ModelBase
 {
     /// <summary>
     /// The operation to perform.
@@ -230,4 +230,10 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class PatchFromRaw : IFromRaw<Patch>
+{
+    public Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Patch.FromRawUnchecked(rawData);
 }

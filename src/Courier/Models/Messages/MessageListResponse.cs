@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageListResponse>))]
-public sealed record class MessageListResponse : ModelBase, IFromRaw<MessageListResponse>
+[JsonConverter(typeof(ModelConverter<MessageListResponse, MessageListResponseFromRaw>))]
+public sealed record class MessageListResponse : ModelBase
 {
     /// <summary>
     /// Paging information for the result set.
@@ -101,4 +101,10 @@ public sealed record class MessageListResponse : ModelBase, IFromRaw<MessageList
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class MessageListResponseFromRaw : IFromRaw<MessageListResponse>
+{
+    public MessageListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        MessageListResponse.FromRawUnchecked(rawData);
 }

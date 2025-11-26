@@ -20,10 +20,10 @@ namespace Courier.Models;
 /// an individual element on a per channel basis. See the  [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
 /// for more details.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<ElementalChannelNodeWithType>))]
-public sealed record class ElementalChannelNodeWithType
-    : ModelBase,
-        IFromRaw<ElementalChannelNodeWithType>
+[JsonConverter(
+    typeof(ModelConverter<ElementalChannelNodeWithType, ElementalChannelNodeWithTypeFromRaw>)
+)]
+public sealed record class ElementalChannelNodeWithType : ModelBase
 {
     public List<string>? Channels
     {
@@ -231,10 +231,20 @@ public sealed record class ElementalChannelNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ElementalChannelNodeWithTypeIntersectionMember1>))]
-public sealed record class ElementalChannelNodeWithTypeIntersectionMember1
-    : ModelBase,
-        IFromRaw<ElementalChannelNodeWithTypeIntersectionMember1>
+class ElementalChannelNodeWithTypeFromRaw : IFromRaw<ElementalChannelNodeWithType>
+{
+    public ElementalChannelNodeWithType FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalChannelNodeWithType.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        ElementalChannelNodeWithTypeIntersectionMember1,
+        ElementalChannelNodeWithTypeIntersectionMember1FromRaw
+    >)
+)]
+public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : ModelBase
 {
     public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
@@ -290,6 +300,14 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalChannelNodeWithTypeIntersectionMember1FromRaw
+    : IFromRaw<ElementalChannelNodeWithTypeIntersectionMember1>
+{
+    public ElementalChannelNodeWithTypeIntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalChannelNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ElementalChannelNodeWithTypeIntersectionMember1TypeConverter))]

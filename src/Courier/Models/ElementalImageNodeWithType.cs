@@ -9,10 +9,10 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalImageNodeWithType>))]
-public sealed record class ElementalImageNodeWithType
-    : ModelBase,
-        IFromRaw<ElementalImageNodeWithType>
+[JsonConverter(
+    typeof(ModelConverter<ElementalImageNodeWithType, ElementalImageNodeWithTypeFromRaw>)
+)]
+public sealed record class ElementalImageNodeWithType : ModelBase
 {
     public List<string>? Channels
     {
@@ -155,10 +155,20 @@ public sealed record class ElementalImageNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ElementalImageNodeWithTypeIntersectionMember1>))]
-public sealed record class ElementalImageNodeWithTypeIntersectionMember1
-    : ModelBase,
-        IFromRaw<ElementalImageNodeWithTypeIntersectionMember1>
+class ElementalImageNodeWithTypeFromRaw : IFromRaw<ElementalImageNodeWithType>
+{
+    public ElementalImageNodeWithType FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalImageNodeWithType.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        ElementalImageNodeWithTypeIntersectionMember1,
+        ElementalImageNodeWithTypeIntersectionMember1FromRaw
+    >)
+)]
+public sealed record class ElementalImageNodeWithTypeIntersectionMember1 : ModelBase
 {
     public ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>? Type
     {
@@ -214,6 +224,14 @@ public sealed record class ElementalImageNodeWithTypeIntersectionMember1
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalImageNodeWithTypeIntersectionMember1FromRaw
+    : IFromRaw<ElementalImageNodeWithTypeIntersectionMember1>
+{
+    public ElementalImageNodeWithTypeIntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalImageNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ElementalImageNodeWithTypeIntersectionMember1TypeConverter))]

@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<SubscriptionTopicNew>))]
-public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<SubscriptionTopicNew>
+[JsonConverter(typeof(ModelConverter<SubscriptionTopicNew, SubscriptionTopicNewFromRaw>))]
+public sealed record class SubscriptionTopicNew : ModelBase
 {
     public required ApiEnum<string, Status> Status
     {
@@ -120,6 +120,13 @@ public sealed record class SubscriptionTopicNew : ModelBase, IFromRaw<Subscripti
     {
         this.Status = status;
     }
+}
+
+class SubscriptionTopicNewFromRaw : IFromRaw<SubscriptionTopicNew>
+{
+    public SubscriptionTopicNew FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SubscriptionTopicNew.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(StatusConverter))]

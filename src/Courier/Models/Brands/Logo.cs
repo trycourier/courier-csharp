@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<Logo>))]
-public sealed record class Logo : ModelBase, IFromRaw<Logo>
+[JsonConverter(typeof(ModelConverter<Logo, LogoFromRaw>))]
+public sealed record class Logo : ModelBase
 {
     public string? Href
     {
@@ -71,4 +71,10 @@ public sealed record class Logo : ModelBase, IFromRaw<Logo>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class LogoFromRaw : IFromRaw<Logo>
+{
+    public Logo FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Logo.FromRawUnchecked(rawData);
 }

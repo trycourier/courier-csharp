@@ -290,8 +290,8 @@ sealed class ProviderKeyConverter : JsonConverter<ProviderKey>
 /// <summary>
 /// Information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Device>))]
-public sealed record class Device : ModelBase, IFromRaw<Device>
+[JsonConverter(typeof(ModelConverter<Device, DeviceFromRaw>))]
+public sealed record class Device : ModelBase
 {
     /// <summary>
     /// Id of the advertising identifier
@@ -450,6 +450,12 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
     }
 }
 
+class DeviceFromRaw : IFromRaw<Device>
+{
+    public Device FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Device.FromRawUnchecked(rawData);
+}
+
 /// <summary>
 /// ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false
 /// to disable expiration.
@@ -584,8 +590,8 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
 /// <summary>
 /// Tracking information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Tracking>))]
-public sealed record class Tracking : ModelBase, IFromRaw<Tracking>
+[JsonConverter(typeof(ModelConverter<Tracking, TrackingFromRaw>))]
+public sealed record class Tracking : ModelBase
 {
     /// <summary>
     /// The IP address of the device
@@ -698,4 +704,10 @@ public sealed record class Tracking : ModelBase, IFromRaw<Tracking>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class TrackingFromRaw : IFromRaw<Tracking>
+{
+    public Tracking FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Tracking.FromRawUnchecked(rawData);
 }

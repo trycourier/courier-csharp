@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Utm>))]
-public sealed record class Utm : ModelBase, IFromRaw<Utm>
+[JsonConverter(typeof(ModelConverter<Utm, UtmFromRaw>))]
+public sealed record class Utm : ModelBase
 {
     public string? Campaign
     {
@@ -128,4 +128,10 @@ public sealed record class Utm : ModelBase, IFromRaw<Utm>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class UtmFromRaw : IFromRaw<Utm>
+{
+    public Utm FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Utm.FromRawUnchecked(rawData);
 }

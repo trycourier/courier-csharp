@@ -119,8 +119,8 @@ public sealed record class SendMessageParams : ParamsBase
 /// The message property has the following primary top-level properties. They define
 /// the destination and content of the message.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Message>))]
-public sealed record class Message : ModelBase, IFromRaw<Message>
+[JsonConverter(typeof(ModelConverter<Message, MessageFromRaw>))]
+public sealed record class Message : ModelBase
 {
     public string? BrandID
     {
@@ -461,8 +461,14 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ChannelsItem>))]
-public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
+class MessageFromRaw : IFromRaw<Message>
+{
+    public Message FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Message.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<ChannelsItem, ChannelsItemFromRaw>))]
+public sealed record class ChannelsItem : ModelBase
 {
     /// <summary>
     /// Brand id used for rendering.
@@ -643,8 +649,14 @@ public sealed record class ChannelsItem : ModelBase, IFromRaw<ChannelsItem>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Metadata>))]
-public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
+class ChannelsItemFromRaw : IFromRaw<ChannelsItem>
+{
+    public ChannelsItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ChannelsItem.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Metadata, MetadataFromRaw>))]
+public sealed record class Metadata : ModelBase
 {
     public Utm? Utm
     {
@@ -688,6 +700,12 @@ public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class MetadataFromRaw : IFromRaw<Metadata>
+{
+    public Metadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Metadata.FromRawUnchecked(rawData);
 }
 
 /// <summary>
@@ -737,8 +755,8 @@ sealed class RoutingMethodConverter : JsonConverter<RoutingMethod>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Timeouts>))]
-public sealed record class Timeouts : ModelBase, IFromRaw<Timeouts>
+[JsonConverter(typeof(ModelConverter<Timeouts, TimeoutsFromRaw>))]
+public sealed record class Timeouts : ModelBase
 {
     public long? Channel
     {
@@ -801,6 +819,12 @@ public sealed record class Timeouts : ModelBase, IFromRaw<Timeouts>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class TimeoutsFromRaw : IFromRaw<Timeouts>
+{
+    public Timeouts FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Timeouts.FromRawUnchecked(rawData);
 }
 
 /// <summary>
@@ -937,8 +961,8 @@ sealed class ContentConverter : JsonConverter<Content>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Delay>))]
-public sealed record class Delay : ModelBase, IFromRaw<Delay>
+[JsonConverter(typeof(ModelConverter<Delay, DelayFromRaw>))]
+public sealed record class Delay : ModelBase
 {
     /// <summary>
     /// The duration of the delay in milliseconds.
@@ -1009,8 +1033,14 @@ public sealed record class Delay : ModelBase, IFromRaw<Delay>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Expiry>))]
-public sealed record class Expiry : ModelBase, IFromRaw<Expiry>
+class DelayFromRaw : IFromRaw<Delay>
+{
+    public Delay FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Delay.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Expiry, ExpiryFromRaw>))]
+public sealed record class Expiry : ModelBase
 {
     /// <summary>
     /// Duration in ms or ISO8601 duration (e.g. P1DT4H).
@@ -1096,6 +1126,12 @@ public sealed record class Expiry : ModelBase, IFromRaw<Expiry>
     {
         this.ExpiresIn = expiresIn;
     }
+}
+
+class ExpiryFromRaw : IFromRaw<Expiry>
+{
+    public Expiry FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Expiry.FromRawUnchecked(rawData);
 }
 
 /// <summary>
@@ -1228,8 +1264,8 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<MessageMetadata>))]
-public sealed record class MessageMetadata : ModelBase, IFromRaw<MessageMetadata>
+[JsonConverter(typeof(ModelConverter<MessageMetadata, MessageMetadataFromRaw>))]
+public sealed record class MessageMetadata : ModelBase
 {
     public string? Event
     {
@@ -1332,10 +1368,19 @@ public sealed record class MessageMetadata : ModelBase, IFromRaw<MessageMetadata
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Send.Preferences>))]
-public sealed record class Preferences
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Send.Preferences>
+class MessageMetadataFromRaw : IFromRaw<MessageMetadata>
+{
+    public MessageMetadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        MessageMetadata.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Send.Preferences,
+        global::Courier.Models.Send.PreferencesFromRaw
+    >)
+)]
+public sealed record class Preferences : ModelBase
 {
     /// <summary>
     /// The subscription topic to apply to the message.
@@ -1403,8 +1448,15 @@ public sealed record class Preferences
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ProvidersItem>))]
-public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
+class PreferencesFromRaw : IFromRaw<global::Courier.Models.Send.Preferences>
+{
+    public global::Courier.Models.Send.Preferences FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Send.Preferences.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<ProvidersItem, ProvidersItemFromRaw>))]
+public sealed record class ProvidersItem : ModelBase
 {
     /// <summary>
     /// JS conditional with access to data/profile.
@@ -1519,8 +1571,14 @@ public sealed record class ProvidersItem : ModelBase, IFromRaw<ProvidersItem>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ProvidersItemMetadata>))]
-public sealed record class ProvidersItemMetadata : ModelBase, IFromRaw<ProvidersItemMetadata>
+class ProvidersItemFromRaw : IFromRaw<ProvidersItem>
+{
+    public ProvidersItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ProvidersItem.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<ProvidersItemMetadata, ProvidersItemMetadataFromRaw>))]
+public sealed record class ProvidersItemMetadata : ModelBase
 {
     public Utm? Utm
     {
@@ -1568,11 +1626,18 @@ public sealed record class ProvidersItemMetadata : ModelBase, IFromRaw<Providers
     }
 }
 
+class ProvidersItemMetadataFromRaw : IFromRaw<ProvidersItemMetadata>
+{
+    public ProvidersItemMetadata FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ProvidersItemMetadata.FromRawUnchecked(rawData);
+}
+
 /// <summary>
 /// Customize which channels/providers Courier may deliver the message through.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Routing>))]
-public sealed record class Routing : ModelBase, IFromRaw<Routing>
+[JsonConverter(typeof(ModelConverter<Routing, RoutingFromRaw>))]
+public sealed record class Routing : ModelBase
 {
     /// <summary>
     /// A list of channels or providers (or nested routing rules).
@@ -1659,6 +1724,12 @@ public sealed record class Routing : ModelBase, IFromRaw<Routing>
     }
 }
 
+class RoutingFromRaw : IFromRaw<Routing>
+{
+    public Routing FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Routing.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(global::Courier.Models.Send.MethodConverter))]
 public enum Method
 {
@@ -1703,8 +1774,8 @@ sealed class MethodConverter : JsonConverter<global::Courier.Models.Send.Method>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Timeout>))]
-public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
+[JsonConverter(typeof(ModelConverter<Timeout, TimeoutFromRaw>))]
+public sealed record class Timeout : ModelBase
 {
     public Dictionary<string, long>? Channel
     {
@@ -1833,6 +1904,12 @@ public sealed record class Timeout : ModelBase, IFromRaw<Timeout>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class TimeoutFromRaw : IFromRaw<Timeout>
+{
+    public Timeout FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Timeout.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(CriteriaConverter))]

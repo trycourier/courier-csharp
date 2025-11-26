@@ -138,8 +138,8 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Topic>))]
-public sealed record class Topic : ModelBase, IFromRaw<Topic>
+[JsonConverter(typeof(ModelConverter<Topic, TopicFromRaw>))]
+public sealed record class Topic : ModelBase
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
@@ -243,4 +243,10 @@ public sealed record class Topic : ModelBase, IFromRaw<Topic>
     {
         this.Status = status;
     }
+}
+
+class TopicFromRaw : IFromRaw<Topic>
+{
+    public Topic FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Topic.FromRawUnchecked(rawData);
 }

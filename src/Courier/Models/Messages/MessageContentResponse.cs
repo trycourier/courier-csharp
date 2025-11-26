@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageContentResponse>))]
-public sealed record class MessageContentResponse : ModelBase, IFromRaw<MessageContentResponse>
+[JsonConverter(typeof(ModelConverter<MessageContentResponse, MessageContentResponseFromRaw>))]
+public sealed record class MessageContentResponse : ModelBase
 {
     /// <summary>
     /// An array of render output of a previously sent message.
@@ -78,8 +78,15 @@ public sealed record class MessageContentResponse : ModelBase, IFromRaw<MessageC
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Result>))]
-public sealed record class Result : ModelBase, IFromRaw<Result>
+class MessageContentResponseFromRaw : IFromRaw<MessageContentResponse>
+{
+    public MessageContentResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => MessageContentResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Result, ResultFromRaw>))]
+public sealed record class Result : ModelBase
 {
     /// <summary>
     /// The channel used for rendering the message.
@@ -193,11 +200,17 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
     }
 }
 
+class ResultFromRaw : IFromRaw<Result>
+{
+    public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Result.FromRawUnchecked(rawData);
+}
+
 /// <summary>
 /// Content details of the rendered message.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Content>))]
-public sealed record class Content : ModelBase, IFromRaw<Content>
+[JsonConverter(typeof(ModelConverter<Content, ContentFromRaw>))]
+public sealed record class Content : ModelBase
 {
     /// <summary>
     /// The blocks of the rendered message.
@@ -401,8 +414,14 @@ public sealed record class Content : ModelBase, IFromRaw<Content>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Block>))]
-public sealed record class Block : ModelBase, IFromRaw<Block>
+class ContentFromRaw : IFromRaw<Content>
+{
+    public Content FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Content.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Block, BlockFromRaw>))]
+public sealed record class Block : ModelBase
 {
     /// <summary>
     /// The block text of the rendered message block.
@@ -485,4 +504,10 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BlockFromRaw : IFromRaw<Block>
+{
+    public Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Block.FromRawUnchecked(rawData);
 }

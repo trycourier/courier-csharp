@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<Tenant>))]
-public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
+[JsonConverter(typeof(ModelConverter<Tenant, TenantFromRaw>))]
+public sealed record class Tenant : ModelBase
 {
     /// <summary>
     /// Id of the tenant.
@@ -213,4 +213,10 @@ public sealed record class Tenant : ModelBase, IFromRaw<Tenant>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class TenantFromRaw : IFromRaw<Tenant>
+{
+    public Tenant FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Tenant.FromRawUnchecked(rawData);
 }

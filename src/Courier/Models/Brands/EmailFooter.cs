@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<EmailFooter>))]
-public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
+[JsonConverter(typeof(ModelConverter<EmailFooter, EmailFooterFromRaw>))]
+public sealed record class EmailFooter : ModelBase
 {
     public string? Content
     {
@@ -71,4 +71,10 @@ public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class EmailFooterFromRaw : IFromRaw<EmailFooter>
+{
+    public EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        EmailFooter.FromRawUnchecked(rawData);
 }

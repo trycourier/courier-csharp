@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<MessageRouting>))]
-public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
+[JsonConverter(typeof(ModelConverter<MessageRouting, MessageRoutingFromRaw>))]
+public sealed record class MessageRouting : ModelBase
 {
     public required List<MessageRoutingChannel> Channels
     {
@@ -92,6 +92,12 @@ public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class MessageRoutingFromRaw : IFromRaw<MessageRouting>
+{
+    public MessageRouting FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        MessageRouting.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(MethodConverter))]

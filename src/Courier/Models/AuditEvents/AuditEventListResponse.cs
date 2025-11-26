@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.AuditEvents;
 
-[JsonConverter(typeof(ModelConverter<AuditEventListResponse>))]
-public sealed record class AuditEventListResponse : ModelBase, IFromRaw<AuditEventListResponse>
+[JsonConverter(typeof(ModelConverter<AuditEventListResponse, AuditEventListResponseFromRaw>))]
+public sealed record class AuditEventListResponse : ModelBase
 {
     public required Paging Paging
     {
@@ -95,4 +95,11 @@ public sealed record class AuditEventListResponse : ModelBase, IFromRaw<AuditEve
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AuditEventListResponseFromRaw : IFromRaw<AuditEventListResponse>
+{
+    public AuditEventListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AuditEventListResponse.FromRawUnchecked(rawData);
 }

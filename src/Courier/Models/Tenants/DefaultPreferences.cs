@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<DefaultPreferences>))]
-public sealed record class DefaultPreferences : ModelBase, IFromRaw<DefaultPreferences>
+[JsonConverter(typeof(ModelConverter<DefaultPreferences, DefaultPreferencesFromRaw>))]
+public sealed record class DefaultPreferences : ModelBase
 {
     public List<Item>? Items
     {
@@ -61,8 +61,14 @@ public sealed record class DefaultPreferences : ModelBase, IFromRaw<DefaultPrefe
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Item>))]
-public sealed record class Item : ModelBase, IFromRaw<Item>
+class DefaultPreferencesFromRaw : IFromRaw<DefaultPreferences>
+{
+    public DefaultPreferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        DefaultPreferences.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Item, ItemFromRaw>))]
+public sealed record class Item : ModelBase
 {
     public required ApiEnum<string, Status> Status
     {
@@ -202,10 +208,19 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Tenants.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Tenants.IntersectionMember1>
+class ItemFromRaw : IFromRaw<Item>
+{
+    public Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Item.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Tenants.IntersectionMember1,
+        global::Courier.Models.Tenants.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     /// <summary>
     /// Topic ID
@@ -268,4 +283,11 @@ public sealed record class IntersectionMember1
     {
         this.ID = id;
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Tenants.IntersectionMember1>
+{
+    public global::Courier.Models.Tenants.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Tenants.IntersectionMember1.FromRawUnchecked(rawData);
 }

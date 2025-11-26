@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<MessageContext>))]
-public sealed record class MessageContext : ModelBase, IFromRaw<MessageContext>
+[JsonConverter(typeof(ModelConverter<MessageContext, MessageContextFromRaw>))]
+public sealed record class MessageContext : ModelBase
 {
     /// <summary>
     /// Tenant id used to load brand/default preferences/context.
@@ -55,4 +55,10 @@ public sealed record class MessageContext : ModelBase, IFromRaw<MessageContext>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class MessageContextFromRaw : IFromRaw<MessageContext>
+{
+    public MessageContext FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        MessageContext.FromRawUnchecked(rawData);
 }

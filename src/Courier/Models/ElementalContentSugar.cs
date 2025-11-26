@@ -12,8 +12,8 @@ namespace Courier.Models;
 /// <summary>
 /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<ElementalContentSugar>))]
-public sealed record class ElementalContentSugar : ModelBase, IFromRaw<ElementalContentSugar>
+[JsonConverter(typeof(ModelConverter<ElementalContentSugar, ElementalContentSugarFromRaw>))]
+public sealed record class ElementalContentSugar : ModelBase
 {
     /// <summary>
     /// The text content displayed in the notification.
@@ -98,4 +98,11 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalContentSugarFromRaw : IFromRaw<ElementalContentSugar>
+{
+    public ElementalContentSugar FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalContentSugar.FromRawUnchecked(rawData);
 }

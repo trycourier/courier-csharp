@@ -9,10 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Inbound;
 
-[JsonConverter(typeof(ModelConverter<InboundTrackEventResponse>))]
-public sealed record class InboundTrackEventResponse
-    : ModelBase,
-        IFromRaw<InboundTrackEventResponse>
+[JsonConverter(typeof(ModelConverter<InboundTrackEventResponse, InboundTrackEventResponseFromRaw>))]
+public sealed record class InboundTrackEventResponse : ModelBase
 {
     /// <summary>
     /// A successful call returns a `202` status code along with a `requestId` in
@@ -76,4 +74,11 @@ public sealed record class InboundTrackEventResponse
     {
         this.MessageID = messageID;
     }
+}
+
+class InboundTrackEventResponseFromRaw : IFromRaw<InboundTrackEventResponse>
+{
+    public InboundTrackEventResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => InboundTrackEventResponse.FromRawUnchecked(rawData);
 }

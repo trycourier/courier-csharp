@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalContent>))]
-public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalContent>
+[JsonConverter(typeof(ModelConverter<ElementalContent, ElementalContentFromRaw>))]
+public sealed record class ElementalContent : ModelBase
 {
     public required List<ElementalNode> Elements
     {
@@ -117,4 +117,10 @@ public sealed record class ElementalContent : ModelBase, IFromRaw<ElementalConte
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalContentFromRaw : IFromRaw<ElementalContent>
+{
+    public ElementalContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ElementalContent.FromRawUnchecked(rawData);
 }

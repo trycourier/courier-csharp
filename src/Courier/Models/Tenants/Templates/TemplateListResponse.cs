@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Tenants.Templates;
 
-[JsonConverter(typeof(ModelConverter<TemplateListResponse>))]
-public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateListResponse>
+[JsonConverter(typeof(ModelConverter<TemplateListResponse, TemplateListResponseFromRaw>))]
+public sealed record class TemplateListResponse : ModelBase
 {
     /// <summary>
     /// Set to true when there are more pages that can be retrieved.
@@ -191,6 +191,13 @@ public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateLi
     }
 }
 
+class TemplateListResponseFromRaw : IFromRaw<TemplateListResponse>
+{
+    public TemplateListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => TemplateListResponse.FromRawUnchecked(rawData);
+}
+
 /// <summary>
 /// Always set to `list`. Represents the type of this object.
 /// </summary>
@@ -235,8 +242,13 @@ sealed class TypeConverter : JsonConverter<global::Courier.Models.Tenants.Templa
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Tenants.Templates.Item>))]
-public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Tenants.Templates.Item>
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Tenants.Templates.Item,
+        global::Courier.Models.Tenants.Templates.ItemFromRaw
+    >)
+)]
+public sealed record class Item : ModelBase
 {
     /// <summary>
     /// The template's id
@@ -460,12 +472,20 @@ public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Ten
     }
 }
 
+class ItemFromRaw : IFromRaw<global::Courier.Models.Tenants.Templates.Item>
+{
+    public global::Courier.Models.Tenants.Templates.Item FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Tenants.Templates.Item.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(
-    typeof(ModelConverter<global::Courier.Models.Tenants.Templates.IntersectionMember1>)
+    typeof(ModelConverter<
+        global::Courier.Models.Tenants.Templates.IntersectionMember1,
+        global::Courier.Models.Tenants.Templates.IntersectionMember1FromRaw
+    >)
 )]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Tenants.Templates.IntersectionMember1>
+public sealed record class IntersectionMember1 : ModelBase
 {
     /// <summary>
     /// The template's data containing it's routing configs
@@ -530,11 +550,19 @@ public sealed record class IntersectionMember1
     }
 }
 
+class IntersectionMember1FromRaw
+    : IFromRaw<global::Courier.Models.Tenants.Templates.IntersectionMember1>
+{
+    public global::Courier.Models.Tenants.Templates.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Tenants.Templates.IntersectionMember1.FromRawUnchecked(rawData);
+}
+
 /// <summary>
 /// The template's data containing it's routing configs
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Data>))]
-public sealed record class Data : ModelBase, IFromRaw<Data>
+[JsonConverter(typeof(ModelConverter<Data, DataFromRaw>))]
+public sealed record class Data : ModelBase
 {
     public required MessageRouting Routing
     {
@@ -592,4 +620,10 @@ public sealed record class Data : ModelBase, IFromRaw<Data>
     {
         this.Routing = routing;
     }
+}
+
+class DataFromRaw : IFromRaw<Data>
+{
+    public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Data.FromRawUnchecked(rawData);
 }

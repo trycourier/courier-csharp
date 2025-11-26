@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Profiles;
 
-[JsonConverter(typeof(ModelConverter<ProfileReplaceResponse>))]
-public sealed record class ProfileReplaceResponse : ModelBase, IFromRaw<ProfileReplaceResponse>
+[JsonConverter(typeof(ModelConverter<ProfileReplaceResponse, ProfileReplaceResponseFromRaw>))]
+public sealed record class ProfileReplaceResponse : ModelBase
 {
     public required ApiEnum<string, ProfileReplaceResponseStatus> Status
     {
@@ -69,6 +69,13 @@ public sealed record class ProfileReplaceResponse : ModelBase, IFromRaw<ProfileR
     {
         this.Status = status;
     }
+}
+
+class ProfileReplaceResponseFromRaw : IFromRaw<ProfileReplaceResponse>
+{
+    public ProfileReplaceResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ProfileReplaceResponse.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ProfileReplaceResponseStatusConverter))]

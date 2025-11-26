@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandColors>))]
-public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
+[JsonConverter(typeof(ModelConverter<BrandColors, BrandColorsFromRaw>))]
+public sealed record class BrandColors : ModelBase
 {
     public string? Primary
     {
@@ -81,4 +81,10 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BrandColorsFromRaw : IFromRaw<BrandColors>
+{
+    public BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandColors.FromRawUnchecked(rawData);
 }

@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSnippets>))]
-public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
+[JsonConverter(typeof(ModelConverter<BrandSnippets, BrandSnippetsFromRaw>))]
+public sealed record class BrandSnippets : ModelBase
 {
     public List<BrandSnippet>? Items
     {
@@ -58,4 +58,10 @@ public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BrandSnippetsFromRaw : IFromRaw<BrandSnippets>
+{
+    public BrandSnippets FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandSnippets.FromRawUnchecked(rawData);
 }

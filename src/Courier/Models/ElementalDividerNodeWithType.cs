@@ -9,10 +9,10 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalDividerNodeWithType>))]
-public sealed record class ElementalDividerNodeWithType
-    : ModelBase,
-        IFromRaw<ElementalDividerNodeWithType>
+[JsonConverter(
+    typeof(ModelConverter<ElementalDividerNodeWithType, ElementalDividerNodeWithTypeFromRaw>)
+)]
+public sealed record class ElementalDividerNodeWithType : ModelBase
 {
     public List<string>? Channels
     {
@@ -155,10 +155,20 @@ public sealed record class ElementalDividerNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ElementalDividerNodeWithTypeIntersectionMember1>))]
-public sealed record class ElementalDividerNodeWithTypeIntersectionMember1
-    : ModelBase,
-        IFromRaw<ElementalDividerNodeWithTypeIntersectionMember1>
+class ElementalDividerNodeWithTypeFromRaw : IFromRaw<ElementalDividerNodeWithType>
+{
+    public ElementalDividerNodeWithType FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalDividerNodeWithType.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        ElementalDividerNodeWithTypeIntersectionMember1,
+        ElementalDividerNodeWithTypeIntersectionMember1FromRaw
+    >)
+)]
+public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : ModelBase
 {
     public ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type>? Type
     {
@@ -214,6 +224,14 @@ public sealed record class ElementalDividerNodeWithTypeIntersectionMember1
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalDividerNodeWithTypeIntersectionMember1FromRaw
+    : IFromRaw<ElementalDividerNodeWithTypeIntersectionMember1>
+{
+    public ElementalDividerNodeWithTypeIntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalDividerNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ElementalDividerNodeWithTypeIntersectionMember1TypeConverter))]

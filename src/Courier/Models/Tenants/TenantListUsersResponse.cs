@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<TenantListUsersResponse>))]
-public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantListUsersResponse>
+[JsonConverter(typeof(ModelConverter<TenantListUsersResponse, TenantListUsersResponseFromRaw>))]
+public sealed record class TenantListUsersResponse : ModelBase
 {
     /// <summary>
     /// Set to true when there are more pages that can be retrieved.
@@ -190,6 +190,13 @@ public sealed record class TenantListUsersResponse : ModelBase, IFromRaw<TenantL
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class TenantListUsersResponseFromRaw : IFromRaw<TenantListUsersResponse>
+{
+    public TenantListUsersResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => TenantListUsersResponse.FromRawUnchecked(rawData);
 }
 
 /// <summary>

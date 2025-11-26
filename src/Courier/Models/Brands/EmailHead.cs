@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<EmailHead>))]
-public sealed record class EmailHead : ModelBase, IFromRaw<EmailHead>
+[JsonConverter(typeof(ModelConverter<EmailHead, EmailHeadFromRaw>))]
+public sealed record class EmailHead : ModelBase
 {
     public required bool InheritDefault
     {
@@ -83,4 +83,10 @@ public sealed record class EmailHead : ModelBase, IFromRaw<EmailHead>
     {
         this.InheritDefault = inheritDefault;
     }
+}
+
+class EmailHeadFromRaw : IFromRaw<EmailHead>
+{
+    public EmailHead FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        EmailHead.FromRawUnchecked(rawData);
 }
