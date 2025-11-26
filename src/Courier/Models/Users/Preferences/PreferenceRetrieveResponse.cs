@@ -9,10 +9,10 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Users.Preferences;
 
-[JsonConverter(typeof(ModelConverter<PreferenceRetrieveResponse>))]
-public sealed record class PreferenceRetrieveResponse
-    : ModelBase,
-        IFromRaw<PreferenceRetrieveResponse>
+[JsonConverter(
+    typeof(ModelConverter<PreferenceRetrieveResponse, PreferenceRetrieveResponseFromRaw>)
+)]
+public sealed record class PreferenceRetrieveResponse : ModelBase
 {
     /// <summary>
     /// The Preferences associated with the user_id.
@@ -103,4 +103,11 @@ public sealed record class PreferenceRetrieveResponse
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class PreferenceRetrieveResponseFromRaw : IFromRaw<PreferenceRetrieveResponse>
+{
+    public PreferenceRetrieveResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => PreferenceRetrieveResponse.FromRawUnchecked(rawData);
 }

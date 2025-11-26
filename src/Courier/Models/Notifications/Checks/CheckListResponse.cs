@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Notifications.Checks;
 
-[JsonConverter(typeof(ModelConverter<CheckListResponse>))]
-public sealed record class CheckListResponse : ModelBase, IFromRaw<CheckListResponse>
+[JsonConverter(typeof(ModelConverter<CheckListResponse, CheckListResponseFromRaw>))]
+public sealed record class CheckListResponse : ModelBase
 {
     public required List<Check> Checks
     {
@@ -73,4 +73,10 @@ public sealed record class CheckListResponse : ModelBase, IFromRaw<CheckListResp
     {
         this.Checks = checks;
     }
+}
+
+class CheckListResponseFromRaw : IFromRaw<CheckListResponse>
+{
+    public CheckListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        CheckListResponse.FromRawUnchecked(rawData);
 }

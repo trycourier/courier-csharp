@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<EmailHeader>))]
-public sealed record class EmailHeader : ModelBase, IFromRaw<EmailHeader>
+[JsonConverter(typeof(ModelConverter<EmailHeader, EmailHeaderFromRaw>))]
+public sealed record class EmailHeader : ModelBase
 {
     public required Logo Logo
     {
@@ -106,4 +106,10 @@ public sealed record class EmailHeader : ModelBase, IFromRaw<EmailHeader>
     {
         this.Logo = logo;
     }
+}
+
+class EmailHeaderFromRaw : IFromRaw<EmailHeader>
+{
+    public EmailHeader FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        EmailHeader.FromRawUnchecked(rawData);
 }

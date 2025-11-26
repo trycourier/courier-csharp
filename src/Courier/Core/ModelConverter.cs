@@ -5,8 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Courier.Core;
 
-sealed class ModelConverter<TModel> : JsonConverter<TModel>
-    where TModel : ModelBase, IFromRaw<TModel>
+sealed class ModelConverter<TModel, TFromRaw> : JsonConverter<TModel>
+    where TModel : ModelBase
+    where TFromRaw : IFromRaw<TModel>, new()
 {
     public override TModel? Read(
         ref Utf8JsonReader reader,
@@ -21,7 +22,7 @@ sealed class ModelConverter<TModel> : JsonConverter<TModel>
         if (rawData == null)
             return null;
 
-        return TModel.FromRawUnchecked(rawData);
+        return new TFromRaw().FromRawUnchecked(rawData);
     }
 
     public override void Write(Utf8JsonWriter writer, TModel value, JsonSerializerOptions options)

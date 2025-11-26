@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Notifications;
 
-[JsonConverter(typeof(ModelConverter<NotificationGetContent>))]
-public sealed record class NotificationGetContent : ModelBase, IFromRaw<NotificationGetContent>
+[JsonConverter(typeof(ModelConverter<NotificationGetContent, NotificationGetContentFromRaw>))]
+public sealed record class NotificationGetContent : ModelBase
 {
     public List<Block>? Blocks
     {
@@ -102,8 +102,15 @@ public sealed record class NotificationGetContent : ModelBase, IFromRaw<Notifica
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Block>))]
-public sealed record class Block : ModelBase, IFromRaw<Block>
+class NotificationGetContentFromRaw : IFromRaw<NotificationGetContent>
+{
+    public NotificationGetContent FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => NotificationGetContent.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Block, BlockFromRaw>))]
+public sealed record class Block : ModelBase
 {
     public required string ID
     {
@@ -283,6 +290,12 @@ public sealed record class Block : ModelBase, IFromRaw<Block>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BlockFromRaw : IFromRaw<Block>
+{
+    public Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Block.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(BlockTypeConverter))]
@@ -485,10 +498,10 @@ sealed class ContentConverter : JsonConverter<Content?>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<NotificationContentHierarchy>))]
-public sealed record class NotificationContentHierarchy
-    : ModelBase,
-        IFromRaw<NotificationContentHierarchy>
+[JsonConverter(
+    typeof(ModelConverter<NotificationContentHierarchy, NotificationContentHierarchyFromRaw>)
+)]
+public sealed record class NotificationContentHierarchy : ModelBase
 {
     public string? Children
     {
@@ -553,6 +566,13 @@ public sealed record class NotificationContentHierarchy
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class NotificationContentHierarchyFromRaw : IFromRaw<NotificationContentHierarchy>
+{
+    public NotificationContentHierarchy FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => NotificationContentHierarchy.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(LocaleConverter))]
@@ -690,10 +710,13 @@ sealed class LocaleConverter : JsonConverter<Locale>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<LocaleNotificationContentHierarchy>))]
-public sealed record class LocaleNotificationContentHierarchy
-    : ModelBase,
-        IFromRaw<LocaleNotificationContentHierarchy>
+[JsonConverter(
+    typeof(ModelConverter<
+        LocaleNotificationContentHierarchy,
+        LocaleNotificationContentHierarchyFromRaw
+    >)
+)]
+public sealed record class LocaleNotificationContentHierarchy : ModelBase
 {
     public string? Children
     {
@@ -760,8 +783,15 @@ public sealed record class LocaleNotificationContentHierarchy
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Channel>))]
-public sealed record class Channel : ModelBase, IFromRaw<Channel>
+class LocaleNotificationContentHierarchyFromRaw : IFromRaw<LocaleNotificationContentHierarchy>
+{
+    public LocaleNotificationContentHierarchy FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => LocaleNotificationContentHierarchy.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Channel, ChannelFromRaw>))]
+public sealed record class Channel : ModelBase
 {
     public required string ID
     {
@@ -909,8 +939,14 @@ public sealed record class Channel : ModelBase, IFromRaw<Channel>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ChannelContent>))]
-public sealed record class ChannelContent : ModelBase, IFromRaw<ChannelContent>
+class ChannelFromRaw : IFromRaw<Channel>
+{
+    public Channel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Channel.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<ChannelContent, ChannelContentFromRaw>))]
+public sealed record class ChannelContent : ModelBase
 {
     public string? Subject
     {
@@ -975,8 +1011,14 @@ public sealed record class ChannelContent : ModelBase, IFromRaw<ChannelContent>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<LocalesItem>))]
-public sealed record class LocalesItem : ModelBase, IFromRaw<LocalesItem>
+class ChannelContentFromRaw : IFromRaw<ChannelContent>
+{
+    public ChannelContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ChannelContent.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<LocalesItem, LocalesItemFromRaw>))]
+public sealed record class LocalesItem : ModelBase
 {
     public string? Subject
     {
@@ -1039,4 +1081,10 @@ public sealed record class LocalesItem : ModelBase, IFromRaw<LocalesItem>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class LocalesItemFromRaw : IFromRaw<LocalesItem>
+{
+    public LocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        LocalesItem.FromRawUnchecked(rawData);
 }

@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Notifications;
 
-[JsonConverter(typeof(ModelConverter<Check>))]
-public sealed record class Check : ModelBase, IFromRaw<Check>
+[JsonConverter(typeof(ModelConverter<Check, CheckFromRaw>))]
+public sealed record class Check : ModelBase
 {
     public required string ID
     {
@@ -142,10 +142,19 @@ public sealed record class Check : ModelBase, IFromRaw<Check>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Notifications.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Notifications.IntersectionMember1>
+class CheckFromRaw : IFromRaw<Check>
+{
+    public Check FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Check.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Notifications.IntersectionMember1,
+        global::Courier.Models.Notifications.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     public required long Updated
     {
@@ -201,4 +210,12 @@ public sealed record class IntersectionMember1
     {
         this.Updated = updated;
     }
+}
+
+class IntersectionMember1FromRaw
+    : IFromRaw<global::Courier.Models.Notifications.IntersectionMember1>
+{
+    public global::Courier.Models.Notifications.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Notifications.IntersectionMember1.FromRawUnchecked(rawData);
 }

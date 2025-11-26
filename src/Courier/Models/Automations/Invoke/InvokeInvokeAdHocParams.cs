@@ -213,8 +213,8 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Automation>))]
-public sealed record class Automation : ModelBase, IFromRaw<Automation>
+[JsonConverter(typeof(ModelConverter<Automation, AutomationFromRaw>))]
+public sealed record class Automation : ModelBase
 {
     public required List<Step> Steps
     {
@@ -294,6 +294,12 @@ public sealed record class Automation : ModelBase, IFromRaw<Automation>
     {
         this.Steps = steps;
     }
+}
+
+class AutomationFromRaw : IFromRaw<Automation>
+{
+    public Automation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Automation.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(StepConverter))]
@@ -634,8 +640,8 @@ sealed class StepConverter : JsonConverter<Step>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationDelayStep>))]
-public sealed record class AutomationDelayStep : ModelBase, IFromRaw<AutomationDelayStep>
+[JsonConverter(typeof(ModelConverter<AutomationDelayStep, AutomationDelayStepFromRaw>))]
+public sealed record class AutomationDelayStep : ModelBase
 {
     public required ApiEnum<string, Action> Action
     {
@@ -734,6 +740,12 @@ public sealed record class AutomationDelayStep : ModelBase, IFromRaw<AutomationD
     }
 }
 
+class AutomationDelayStepFromRaw : IFromRaw<AutomationDelayStep>
+{
+    public AutomationDelayStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        AutomationDelayStep.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(ActionConverter))]
 public enum Action
 {
@@ -771,8 +783,8 @@ sealed class ActionConverter : JsonConverter<Action>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationSendStep>))]
-public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSendStep>
+[JsonConverter(typeof(ModelConverter<AutomationSendStep, AutomationSendStepFromRaw>))]
+public sealed record class AutomationSendStep : ModelBase
 {
     public required ApiEnum<string, AutomationSendStepAction> Action
     {
@@ -934,6 +946,12 @@ public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSe
     }
 }
 
+class AutomationSendStepFromRaw : IFromRaw<AutomationSendStep>
+{
+    public AutomationSendStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        AutomationSendStep.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(AutomationSendStepActionConverter))]
 public enum AutomationSendStepAction
 {
@@ -975,8 +993,8 @@ sealed class AutomationSendStepActionConverter : JsonConverter<AutomationSendSte
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationSendListStep>))]
-public sealed record class AutomationSendListStep : ModelBase, IFromRaw<AutomationSendListStep>
+[JsonConverter(typeof(ModelConverter<AutomationSendListStep, AutomationSendListStepFromRaw>))]
+public sealed record class AutomationSendListStep : ModelBase
 {
     public required ApiEnum<string, AutomationSendListStepAction> Action
     {
@@ -1097,6 +1115,13 @@ public sealed record class AutomationSendListStep : ModelBase, IFromRaw<Automati
     }
 }
 
+class AutomationSendListStepFromRaw : IFromRaw<AutomationSendListStep>
+{
+    public AutomationSendListStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationSendListStep.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(AutomationSendListStepActionConverter))]
 public enum AutomationSendListStepAction
 {
@@ -1138,10 +1163,10 @@ sealed class AutomationSendListStepActionConverter : JsonConverter<AutomationSen
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationUpdateProfileStep>))]
-public sealed record class AutomationUpdateProfileStep
-    : ModelBase,
-        IFromRaw<AutomationUpdateProfileStep>
+[JsonConverter(
+    typeof(ModelConverter<AutomationUpdateProfileStep, AutomationUpdateProfileStepFromRaw>)
+)]
+public sealed record class AutomationUpdateProfileStep : ModelBase
 {
     public required ApiEnum<string, AutomationUpdateProfileStepAction> Action
     {
@@ -1265,6 +1290,13 @@ public sealed record class AutomationUpdateProfileStep
     }
 }
 
+class AutomationUpdateProfileStepFromRaw : IFromRaw<AutomationUpdateProfileStep>
+{
+    public AutomationUpdateProfileStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationUpdateProfileStep.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(AutomationUpdateProfileStepActionConverter))]
 public enum AutomationUpdateProfileStepAction
 {
@@ -1353,8 +1385,8 @@ sealed class MergeConverter : JsonConverter<Merge>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationCancelStep>))]
-public sealed record class AutomationCancelStep : ModelBase, IFromRaw<AutomationCancelStep>
+[JsonConverter(typeof(ModelConverter<AutomationCancelStep, AutomationCancelStepFromRaw>))]
+public sealed record class AutomationCancelStep : ModelBase
 {
     public required ApiEnum<string, AutomationCancelStepAction> Action
     {
@@ -1437,6 +1469,13 @@ public sealed record class AutomationCancelStep : ModelBase, IFromRaw<Automation
     }
 }
 
+class AutomationCancelStepFromRaw : IFromRaw<AutomationCancelStep>
+{
+    public AutomationCancelStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationCancelStep.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(AutomationCancelStepActionConverter))]
 public enum AutomationCancelStepAction
 {
@@ -1478,8 +1517,8 @@ sealed class AutomationCancelStepActionConverter : JsonConverter<AutomationCance
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationFetchDataStep>))]
-public sealed record class AutomationFetchDataStep : ModelBase, IFromRaw<AutomationFetchDataStep>
+[JsonConverter(typeof(ModelConverter<AutomationFetchDataStep, AutomationFetchDataStepFromRaw>))]
+public sealed record class AutomationFetchDataStep : ModelBase
 {
     public required ApiEnum<string, AutomationFetchDataStepAction> Action
     {
@@ -1581,6 +1620,13 @@ public sealed record class AutomationFetchDataStep : ModelBase, IFromRaw<Automat
     }
 }
 
+class AutomationFetchDataStepFromRaw : IFromRaw<AutomationFetchDataStep>
+{
+    public AutomationFetchDataStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationFetchDataStep.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(AutomationFetchDataStepActionConverter))]
 public enum AutomationFetchDataStepAction
 {
@@ -1622,8 +1668,8 @@ sealed class AutomationFetchDataStepActionConverter : JsonConverter<AutomationFe
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Webhook>))]
-public sealed record class Webhook : ModelBase, IFromRaw<Webhook>
+[JsonConverter(typeof(ModelConverter<Webhook, WebhookFromRaw>))]
+public sealed record class Webhook : ModelBase
 {
     public required ApiEnum<string, global::Courier.Models.Automations.Invoke.Method> Method
     {
@@ -1741,6 +1787,12 @@ public sealed record class Webhook : ModelBase, IFromRaw<Webhook>
     }
 }
 
+class WebhookFromRaw : IFromRaw<Webhook>
+{
+    public Webhook FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Webhook.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(global::Courier.Models.Automations.Invoke.MethodConverter))]
 public enum Method
 {
@@ -1841,8 +1893,8 @@ sealed class MergeStrategyConverter : JsonConverter<MergeStrategy>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationInvokeStep>))]
-public sealed record class AutomationInvokeStep : ModelBase, IFromRaw<AutomationInvokeStep>
+[JsonConverter(typeof(ModelConverter<AutomationInvokeStep, AutomationInvokeStepFromRaw>))]
+public sealed record class AutomationInvokeStep : ModelBase
 {
     public required ApiEnum<string, AutomationInvokeStepAction> Action
     {
@@ -1920,6 +1972,13 @@ public sealed record class AutomationInvokeStep : ModelBase, IFromRaw<Automation
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AutomationInvokeStepFromRaw : IFromRaw<AutomationInvokeStep>
+{
+    public AutomationInvokeStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationInvokeStep.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(AutomationInvokeStepActionConverter))]

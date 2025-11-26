@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSettingsEmail>))]
-public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSettingsEmail>
+[JsonConverter(typeof(ModelConverter<BrandSettingsEmail, BrandSettingsEmailFromRaw>))]
+public sealed record class BrandSettingsEmail : ModelBase
 {
     public EmailFooter? Footer
     {
@@ -118,8 +118,14 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
     }
 }
 
-[JsonConverter(typeof(ModelConverter<TemplateOverride>))]
-public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverride>
+class BrandSettingsEmailFromRaw : IFromRaw<BrandSettingsEmail>
+{
+    public BrandSettingsEmail FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandSettingsEmail.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<TemplateOverride, TemplateOverrideFromRaw>))]
+public sealed record class TemplateOverride : ModelBase
 {
     public required bool Enabled
     {
@@ -360,10 +366,19 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Brands.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Brands.IntersectionMember1>
+class TemplateOverrideFromRaw : IFromRaw<TemplateOverride>
+{
+    public TemplateOverride FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        TemplateOverride.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Brands.IntersectionMember1,
+        global::Courier.Models.Brands.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     public required BrandTemplate Mjml
     {
@@ -461,4 +476,11 @@ public sealed record class IntersectionMember1
     {
         this.Mjml = mjml;
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Brands.IntersectionMember1>
+{
+    public global::Courier.Models.Brands.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Brands.IntersectionMember1.FromRawUnchecked(rawData);
 }

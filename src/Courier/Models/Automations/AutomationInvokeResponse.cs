@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Automations;
 
-[JsonConverter(typeof(ModelConverter<AutomationInvokeResponse>))]
-public sealed record class AutomationInvokeResponse : ModelBase, IFromRaw<AutomationInvokeResponse>
+[JsonConverter(typeof(ModelConverter<AutomationInvokeResponse, AutomationInvokeResponseFromRaw>))]
+public sealed record class AutomationInvokeResponse : ModelBase
 {
     public required string RunID
     {
@@ -70,4 +70,11 @@ public sealed record class AutomationInvokeResponse : ModelBase, IFromRaw<Automa
     {
         this.RunID = runID;
     }
+}
+
+class AutomationInvokeResponseFromRaw : IFromRaw<AutomationInvokeResponse>
+{
+    public AutomationInvokeResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationInvokeResponse.FromRawUnchecked(rawData);
 }

@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Auth;
 
-[JsonConverter(typeof(ModelConverter<AuthIssueTokenResponse>))]
-public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssueTokenResponse>
+[JsonConverter(typeof(ModelConverter<AuthIssueTokenResponse, AuthIssueTokenResponseFromRaw>))]
+public sealed record class AuthIssueTokenResponse : ModelBase
 {
     public required string Token
     {
@@ -70,4 +70,11 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
     {
         this.Token = token;
     }
+}
+
+class AuthIssueTokenResponseFromRaw : IFromRaw<AuthIssueTokenResponse>
+{
+    public AuthIssueTokenResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AuthIssueTokenResponse.FromRawUnchecked(rawData);
 }

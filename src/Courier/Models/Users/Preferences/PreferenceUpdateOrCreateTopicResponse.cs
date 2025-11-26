@@ -9,10 +9,13 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Users.Preferences;
 
-[JsonConverter(typeof(ModelConverter<PreferenceUpdateOrCreateTopicResponse>))]
-public sealed record class PreferenceUpdateOrCreateTopicResponse
-    : ModelBase,
-        IFromRaw<PreferenceUpdateOrCreateTopicResponse>
+[JsonConverter(
+    typeof(ModelConverter<
+        PreferenceUpdateOrCreateTopicResponse,
+        PreferenceUpdateOrCreateTopicResponseFromRaw
+    >)
+)]
+public sealed record class PreferenceUpdateOrCreateTopicResponse : ModelBase
 {
     public required string Message
     {
@@ -72,4 +75,11 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse
     {
         this.Message = message;
     }
+}
+
+class PreferenceUpdateOrCreateTopicResponseFromRaw : IFromRaw<PreferenceUpdateOrCreateTopicResponse>
+{
+    public PreferenceUpdateOrCreateTopicResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => PreferenceUpdateOrCreateTopicResponse.FromRawUnchecked(rawData);
 }

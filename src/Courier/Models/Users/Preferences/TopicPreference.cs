@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Users.Preferences;
 
-[JsonConverter(typeof(ModelConverter<TopicPreference>))]
-public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference>
+[JsonConverter(typeof(ModelConverter<TopicPreference, TopicPreferenceFromRaw>))]
+public sealed record class TopicPreference : ModelBase
 {
     public required ApiEnum<string, PreferenceStatus> DefaultStatus
     {
@@ -184,4 +184,10 @@ public sealed record class TopicPreference : ModelBase, IFromRaw<TopicPreference
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class TopicPreferenceFromRaw : IFromRaw<TopicPreference>
+{
+    public TopicPreference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        TopicPreference.FromRawUnchecked(rawData);
 }

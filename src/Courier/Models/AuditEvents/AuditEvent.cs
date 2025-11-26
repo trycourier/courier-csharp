@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.AuditEvents;
 
-[JsonConverter(typeof(ModelConverter<AuditEvent>))]
-public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
+[JsonConverter(typeof(ModelConverter<AuditEvent, AuditEventFromRaw>))]
+public sealed record class AuditEvent : ModelBase
 {
     public required Actor Actor
     {
@@ -193,8 +193,14 @@ public sealed record class AuditEvent : ModelBase, IFromRaw<AuditEvent>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Actor>))]
-public sealed record class Actor : ModelBase, IFromRaw<Actor>
+class AuditEventFromRaw : IFromRaw<AuditEvent>
+{
+    public AuditEvent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        AuditEvent.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Actor, ActorFromRaw>))]
+public sealed record class Actor : ModelBase
 {
     public required string ID
     {
@@ -271,4 +277,10 @@ public sealed record class Actor : ModelBase, IFromRaw<Actor>
     {
         this.ID = id;
     }
+}
+
+class ActorFromRaw : IFromRaw<Actor>
+{
+    public Actor FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Actor.FromRawUnchecked(rawData);
 }

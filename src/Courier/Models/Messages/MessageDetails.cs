@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageDetails>))]
-public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
+[JsonConverter(typeof(ModelConverter<MessageDetails, MessageDetailsFromRaw>))]
+public sealed record class MessageDetails : ModelBase
 {
     /// <summary>
     /// A unique identifier associated with the message you wish to retrieve (results
@@ -366,6 +366,12 @@ public sealed record class MessageDetails : ModelBase, IFromRaw<MessageDetails>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class MessageDetailsFromRaw : IFromRaw<MessageDetails>
+{
+    public MessageDetails FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        MessageDetails.FromRawUnchecked(rawData);
 }
 
 /// <summary>

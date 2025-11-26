@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalBaseNode>))]
-public sealed record class ElementalBaseNode : ModelBase, IFromRaw<ElementalBaseNode>
+[JsonConverter(typeof(ModelConverter<ElementalBaseNode, ElementalBaseNodeFromRaw>))]
+public sealed record class ElementalBaseNode : ModelBase
 {
     public List<string>? Channels
     {
@@ -111,4 +111,10 @@ public sealed record class ElementalBaseNode : ModelBase, IFromRaw<ElementalBase
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalBaseNodeFromRaw : IFromRaw<ElementalBaseNode>
+{
+    public ElementalBaseNode FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ElementalBaseNode.FromRawUnchecked(rawData);
 }

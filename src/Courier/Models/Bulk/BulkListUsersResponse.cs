@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<BulkListUsersResponse>))]
-public sealed record class BulkListUsersResponse : ModelBase, IFromRaw<BulkListUsersResponse>
+[JsonConverter(typeof(ModelConverter<BulkListUsersResponse, BulkListUsersResponseFromRaw>))]
+public sealed record class BulkListUsersResponse : ModelBase
 {
     public required List<Item> Items
     {
@@ -94,8 +94,15 @@ public sealed record class BulkListUsersResponse : ModelBase, IFromRaw<BulkListU
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Item>))]
-public sealed record class Item : ModelBase, IFromRaw<Item>
+class BulkListUsersResponseFromRaw : IFromRaw<BulkListUsersResponse>
+{
+    public BulkListUsersResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => BulkListUsersResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Item, ItemFromRaw>))]
+public sealed record class Item : ModelBase
 {
     public JsonElement? Data
     {
@@ -301,10 +308,19 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Bulk.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Bulk.IntersectionMember1>
+class ItemFromRaw : IFromRaw<Item>
+{
+    public Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Item.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Bulk.IntersectionMember1,
+        global::Courier.Models.Bulk.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     public required ApiEnum<string, Status> Status
     {
@@ -382,6 +398,13 @@ public sealed record class IntersectionMember1
     {
         this.Status = status;
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Bulk.IntersectionMember1>
+{
+    public global::Courier.Models.Bulk.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Bulk.IntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(StatusConverter))]

@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<WidgetBackground>))]
-public sealed record class WidgetBackground : ModelBase, IFromRaw<WidgetBackground>
+[JsonConverter(typeof(ModelConverter<WidgetBackground, WidgetBackgroundFromRaw>))]
+public sealed record class WidgetBackground : ModelBase
 {
     public string? BottomColor
     {
@@ -73,4 +73,10 @@ public sealed record class WidgetBackground : ModelBase, IFromRaw<WidgetBackgrou
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class WidgetBackgroundFromRaw : IFromRaw<WidgetBackground>
+{
+    public WidgetBackground FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        WidgetBackground.FromRawUnchecked(rawData);
 }

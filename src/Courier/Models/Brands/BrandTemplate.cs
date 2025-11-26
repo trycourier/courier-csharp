@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandTemplate>))]
-public sealed record class BrandTemplate : ModelBase, IFromRaw<BrandTemplate>
+[JsonConverter(typeof(ModelConverter<BrandTemplate, BrandTemplateFromRaw>))]
+public sealed record class BrandTemplate : ModelBase
 {
     public required bool Enabled
     {
@@ -178,4 +178,10 @@ public sealed record class BrandTemplate : ModelBase, IFromRaw<BrandTemplate>
     {
         this.Enabled = enabled;
     }
+}
+
+class BrandTemplateFromRaw : IFromRaw<BrandTemplate>
+{
+    public BrandTemplate FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandTemplate.FromRawUnchecked(rawData);
 }

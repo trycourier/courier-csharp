@@ -9,10 +9,10 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<BaseTemplateTenantAssociation>))]
-public sealed record class BaseTemplateTenantAssociation
-    : ModelBase,
-        IFromRaw<BaseTemplateTenantAssociation>
+[JsonConverter(
+    typeof(ModelConverter<BaseTemplateTenantAssociation, BaseTemplateTenantAssociationFromRaw>)
+)]
+public sealed record class BaseTemplateTenantAssociation : ModelBase
 {
     /// <summary>
     /// The template's id
@@ -184,4 +184,11 @@ public sealed record class BaseTemplateTenantAssociation
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BaseTemplateTenantAssociationFromRaw : IFromRaw<BaseTemplateTenantAssociation>
+{
+    public BaseTemplateTenantAssociation FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => BaseTemplateTenantAssociation.FromRawUnchecked(rawData);
 }

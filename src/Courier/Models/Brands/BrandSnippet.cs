@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSnippet>))]
-public sealed record class BrandSnippet : ModelBase, IFromRaw<BrandSnippet>
+[JsonConverter(typeof(ModelConverter<BrandSnippet, BrandSnippetFromRaw>))]
+public sealed record class BrandSnippet : ModelBase
 {
     public required string Name
     {
@@ -87,4 +87,10 @@ public sealed record class BrandSnippet : ModelBase, IFromRaw<BrandSnippet>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BrandSnippetFromRaw : IFromRaw<BrandSnippet>
+{
+    public BrandSnippet FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandSnippet.FromRawUnchecked(rawData);
 }

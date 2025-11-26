@@ -9,10 +9,10 @@ using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<NotificationPreferenceDetails>))]
-public sealed record class NotificationPreferenceDetails
-    : ModelBase,
-        IFromRaw<NotificationPreferenceDetails>
+[JsonConverter(
+    typeof(ModelConverter<NotificationPreferenceDetails, NotificationPreferenceDetailsFromRaw>)
+)]
+public sealed record class NotificationPreferenceDetails : ModelBase
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
@@ -118,4 +118,11 @@ public sealed record class NotificationPreferenceDetails
     {
         this.Status = status;
     }
+}
+
+class NotificationPreferenceDetailsFromRaw : IFromRaw<NotificationPreferenceDetails>
+{
+    public NotificationPreferenceDetails FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => NotificationPreferenceDetails.FromRawUnchecked(rawData);
 }

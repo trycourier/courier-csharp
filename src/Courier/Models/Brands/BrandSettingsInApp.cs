@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSettingsInApp>))]
-public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSettingsInApp>
+[JsonConverter(typeof(ModelConverter<BrandSettingsInApp, BrandSettingsInAppFromRaw>))]
+public sealed record class BrandSettingsInApp : ModelBase
 {
     public required BrandColors Colors
     {
@@ -200,6 +200,12 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BrandSettingsInAppFromRaw : IFromRaw<BrandSettingsInApp>
+{
+    public BrandSettingsInApp FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandSettingsInApp.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(PlacementConverter))]

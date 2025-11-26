@@ -165,10 +165,10 @@ sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<InboundBulkTemplateMessage>))]
-public sealed record class InboundBulkTemplateMessage
-    : ModelBase,
-        IFromRaw<InboundBulkTemplateMessage>
+[JsonConverter(
+    typeof(ModelConverter<InboundBulkTemplateMessage, InboundBulkTemplateMessageFromRaw>)
+)]
+public sealed record class InboundBulkTemplateMessage : ModelBase
 {
     public required string Template
     {
@@ -334,10 +334,15 @@ public sealed record class InboundBulkTemplateMessage
     }
 }
 
-[JsonConverter(typeof(ModelConverter<InboundBulkContentMessage>))]
-public sealed record class InboundBulkContentMessage
-    : ModelBase,
-        IFromRaw<InboundBulkContentMessage>
+class InboundBulkTemplateMessageFromRaw : IFromRaw<InboundBulkTemplateMessage>
+{
+    public InboundBulkTemplateMessage FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => InboundBulkTemplateMessage.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<InboundBulkContentMessage, InboundBulkContentMessageFromRaw>))]
+public sealed record class InboundBulkContentMessage : ModelBase
 {
     /// <summary>
     /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
@@ -504,6 +509,13 @@ public sealed record class InboundBulkContentMessage
     {
         this.Content = content;
     }
+}
+
+class InboundBulkContentMessageFromRaw : IFromRaw<InboundBulkContentMessage>
+{
+    public InboundBulkContentMessage FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => InboundBulkContentMessage.FromRawUnchecked(rawData);
 }
 
 /// <summary>

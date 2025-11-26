@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<BulkRetrieveJobResponse>))]
-public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRetrieveJobResponse>
+[JsonConverter(typeof(ModelConverter<BulkRetrieveJobResponse, BulkRetrieveJobResponseFromRaw>))]
+public sealed record class BulkRetrieveJobResponse : ModelBase
 {
     public required Job Job
     {
@@ -72,8 +72,15 @@ public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRet
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Job>))]
-public sealed record class Job : ModelBase, IFromRaw<Job>
+class BulkRetrieveJobResponseFromRaw : IFromRaw<BulkRetrieveJobResponse>
+{
+    public BulkRetrieveJobResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => BulkRetrieveJobResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Job, JobFromRaw>))]
+public sealed record class Job : ModelBase
 {
     public required InboundBulkMessage Definition
     {
@@ -221,6 +228,12 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class JobFromRaw : IFromRaw<Job>
+{
+    public Job FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Job.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(JobStatusConverter))]

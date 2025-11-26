@@ -9,10 +9,8 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalTextNodeWithType>))]
-public sealed record class ElementalTextNodeWithType
-    : ModelBase,
-        IFromRaw<ElementalTextNodeWithType>
+[JsonConverter(typeof(ModelConverter<ElementalTextNodeWithType, ElementalTextNodeWithTypeFromRaw>))]
+public sealed record class ElementalTextNodeWithType : ModelBase
 {
     public List<string>? Channels
     {
@@ -155,10 +153,20 @@ public sealed record class ElementalTextNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ElementalTextNodeWithTypeIntersectionMember1>))]
-public sealed record class ElementalTextNodeWithTypeIntersectionMember1
-    : ModelBase,
-        IFromRaw<ElementalTextNodeWithTypeIntersectionMember1>
+class ElementalTextNodeWithTypeFromRaw : IFromRaw<ElementalTextNodeWithType>
+{
+    public ElementalTextNodeWithType FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalTextNodeWithType.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        ElementalTextNodeWithTypeIntersectionMember1,
+        ElementalTextNodeWithTypeIntersectionMember1FromRaw
+    >)
+)]
+public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : ModelBase
 {
     public ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>? Type
     {
@@ -214,6 +222,14 @@ public sealed record class ElementalTextNodeWithTypeIntersectionMember1
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalTextNodeWithTypeIntersectionMember1FromRaw
+    : IFromRaw<ElementalTextNodeWithTypeIntersectionMember1>
+{
+    public ElementalTextNodeWithTypeIntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalTextNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ElementalTextNodeWithTypeIntersectionMember1TypeConverter))]

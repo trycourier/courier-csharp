@@ -9,10 +9,10 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Profiles;
 
-[JsonConverter(typeof(ModelConverter<SubscribeToListsRequestItem>))]
-public sealed record class SubscribeToListsRequestItem
-    : ModelBase,
-        IFromRaw<SubscribeToListsRequestItem>
+[JsonConverter(
+    typeof(ModelConverter<SubscribeToListsRequestItem, SubscribeToListsRequestItemFromRaw>)
+)]
+public sealed record class SubscribeToListsRequestItem : ModelBase
 {
     public required string ListID
     {
@@ -94,4 +94,11 @@ public sealed record class SubscribeToListsRequestItem
     {
         this.ListID = listID;
     }
+}
+
+class SubscribeToListsRequestItemFromRaw : IFromRaw<SubscribeToListsRequestItem>
+{
+    public SubscribeToListsRequestItem FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => SubscribeToListsRequestItem.FromRawUnchecked(rawData);
 }

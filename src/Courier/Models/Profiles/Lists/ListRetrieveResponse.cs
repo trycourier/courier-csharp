@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Profiles.Lists;
 
-[JsonConverter(typeof(ModelConverter<ListRetrieveResponse>))]
-public sealed record class ListRetrieveResponse : ModelBase, IFromRaw<ListRetrieveResponse>
+[JsonConverter(typeof(ModelConverter<ListRetrieveResponse, ListRetrieveResponseFromRaw>))]
+public sealed record class ListRetrieveResponse : ModelBase
 {
     public required Paging Paging
     {
@@ -97,8 +97,15 @@ public sealed record class ListRetrieveResponse : ModelBase, IFromRaw<ListRetrie
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Result>))]
-public sealed record class Result : ModelBase, IFromRaw<Result>
+class ListRetrieveResponseFromRaw : IFromRaw<ListRetrieveResponse>
+{
+    public ListRetrieveResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ListRetrieveResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Result, ResultFromRaw>))]
+public sealed record class Result : ModelBase
 {
     public required string ID
     {
@@ -258,4 +265,10 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ResultFromRaw : IFromRaw<Result>
+{
+    public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Result.FromRawUnchecked(rawData);
 }

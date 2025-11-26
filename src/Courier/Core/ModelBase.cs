@@ -123,5 +123,10 @@ public abstract record class ModelBase
 /// </summary>
 interface IFromRaw<T>
 {
-    static abstract T FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData);
+    /// <summary>
+    /// NOTE: This interface is in the style of a factory instance instead of using
+    /// abstract static methods because .NET Standard 2.0 doesn't support abstract
+    /// static methods.
+    /// </summary>
+    abstract T FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData);
 }

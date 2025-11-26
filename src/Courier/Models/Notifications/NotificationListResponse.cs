@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Notifications;
 
-[JsonConverter(typeof(ModelConverter<NotificationListResponse>))]
-public sealed record class NotificationListResponse : ModelBase, IFromRaw<NotificationListResponse>
+[JsonConverter(typeof(ModelConverter<NotificationListResponse, NotificationListResponseFromRaw>))]
+public sealed record class NotificationListResponse : ModelBase
 {
     public required Paging Paging
     {
@@ -94,8 +94,15 @@ public sealed record class NotificationListResponse : ModelBase, IFromRaw<Notifi
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Result>))]
-public sealed record class Result : ModelBase, IFromRaw<Result>
+class NotificationListResponseFromRaw : IFromRaw<NotificationListResponse>
+{
+    public NotificationListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => NotificationListResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Result, ResultFromRaw>))]
+public sealed record class Result : ModelBase
 {
     public required string ID
     {
@@ -308,8 +315,14 @@ public sealed record class Result : ModelBase, IFromRaw<Result>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Tags>))]
-public sealed record class Tags : ModelBase, IFromRaw<Tags>
+class ResultFromRaw : IFromRaw<Result>
+{
+    public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Result.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Tags, TagsFromRaw>))]
+public sealed record class Tags : ModelBase
 {
     public required List<Data> Data
     {
@@ -372,8 +385,14 @@ public sealed record class Tags : ModelBase, IFromRaw<Tags>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Data>))]
-public sealed record class Data : ModelBase, IFromRaw<Data>
+class TagsFromRaw : IFromRaw<Tags>
+{
+    public Tags FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Tags.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Data, DataFromRaw>))]
+public sealed record class Data : ModelBase
 {
     public required string ID
     {
@@ -450,4 +469,10 @@ public sealed record class Data : ModelBase, IFromRaw<Data>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class DataFromRaw : IFromRaw<Data>
+{
+    public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Data.FromRawUnchecked(rawData);
 }

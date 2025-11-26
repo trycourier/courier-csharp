@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Rule>))]
-public sealed record class Rule : ModelBase, IFromRaw<Rule>
+[JsonConverter(typeof(ModelConverter<Rule, RuleFromRaw>))]
+public sealed record class Rule : ModelBase
 {
     public required string Until
     {
@@ -87,4 +87,10 @@ public sealed record class Rule : ModelBase, IFromRaw<Rule>
     {
         this.Until = until;
     }
+}
+
+class RuleFromRaw : IFromRaw<Rule>
+{
+    public Rule FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Rule.FromRawUnchecked(rawData);
 }

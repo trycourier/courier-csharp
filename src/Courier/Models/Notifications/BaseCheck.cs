@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Notifications;
 
-[JsonConverter(typeof(ModelConverter<BaseCheck>))]
-public sealed record class BaseCheck : ModelBase, IFromRaw<BaseCheck>
+[JsonConverter(typeof(ModelConverter<BaseCheck, BaseCheckFromRaw>))]
+public sealed record class BaseCheck : ModelBase
 {
     public required string ID
     {
@@ -110,6 +110,12 @@ public sealed record class BaseCheck : ModelBase, IFromRaw<BaseCheck>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BaseCheckFromRaw : IFromRaw<BaseCheck>
+{
+    public BaseCheck FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BaseCheck.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(StatusConverter))]

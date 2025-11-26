@@ -9,10 +9,10 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalActionNodeWithType>))]
-public sealed record class ElementalActionNodeWithType
-    : ModelBase,
-        IFromRaw<ElementalActionNodeWithType>
+[JsonConverter(
+    typeof(ModelConverter<ElementalActionNodeWithType, ElementalActionNodeWithTypeFromRaw>)
+)]
+public sealed record class ElementalActionNodeWithType : ModelBase
 {
     public List<string>? Channels
     {
@@ -155,8 +155,15 @@ public sealed record class ElementalActionNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<IntersectionMember1>))]
-public sealed record class IntersectionMember1 : ModelBase, IFromRaw<IntersectionMember1>
+class ElementalActionNodeWithTypeFromRaw : IFromRaw<ElementalActionNodeWithType>
+{
+    public ElementalActionNodeWithType FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalActionNodeWithType.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<IntersectionMember1, IntersectionMember1FromRaw>))]
+public sealed record class IntersectionMember1 : ModelBase
 {
     public ApiEnum<string, global::Courier.Models.Type>? Type
     {
@@ -210,6 +217,12 @@ public sealed record class IntersectionMember1 : ModelBase, IFromRaw<Intersectio
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<IntersectionMember1>
+{
+    public IntersectionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        IntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(TypeConverter))]

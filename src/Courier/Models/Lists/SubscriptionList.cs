@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Lists;
 
-[JsonConverter(typeof(ModelConverter<SubscriptionList>))]
-public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionList>
+[JsonConverter(typeof(ModelConverter<SubscriptionList, SubscriptionListFromRaw>))]
+public sealed record class SubscriptionList : ModelBase
 {
     public required string ID
     {
@@ -127,4 +127,10 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class SubscriptionListFromRaw : IFromRaw<SubscriptionList>
+{
+    public SubscriptionList FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        SubscriptionList.FromRawUnchecked(rawData);
 }

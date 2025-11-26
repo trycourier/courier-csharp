@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<TenantAssociation>))]
-public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssociation>
+[JsonConverter(typeof(ModelConverter<TenantAssociation, TenantAssociationFromRaw>))]
+public sealed record class TenantAssociation : ModelBase
 {
     /// <summary>
     /// Tenant ID for the association between tenant and user
@@ -145,6 +145,12 @@ public sealed record class TenantAssociation : ModelBase, IFromRaw<TenantAssocia
     {
         this.TenantID = tenantID;
     }
+}
+
+class TenantAssociationFromRaw : IFromRaw<TenantAssociation>
+{
+    public TenantAssociation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        TenantAssociation.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(global::Courier.Models.Tenants.TypeConverter))]

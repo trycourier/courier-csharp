@@ -20,8 +20,8 @@ namespace Courier.Models;
 /// an individual element on a per channel basis. See the  [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
 /// for more details.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<ElementalChannelNode>))]
-public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalChannelNode>
+[JsonConverter(typeof(ModelConverter<ElementalChannelNode, ElementalChannelNodeFromRaw>))]
+public sealed record class ElementalChannelNode : ModelBase
 {
     public List<string>? Channels
     {
@@ -198,10 +198,20 @@ public sealed record class ElementalChannelNode : ModelBase, IFromRaw<ElementalC
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ElementalChannelNodeIntersectionMember1>))]
-public sealed record class ElementalChannelNodeIntersectionMember1
-    : ModelBase,
-        IFromRaw<ElementalChannelNodeIntersectionMember1>
+class ElementalChannelNodeFromRaw : IFromRaw<ElementalChannelNode>
+{
+    public ElementalChannelNode FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalChannelNode.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        ElementalChannelNodeIntersectionMember1,
+        ElementalChannelNodeIntersectionMember1FromRaw
+    >)
+)]
+public sealed record class ElementalChannelNodeIntersectionMember1 : ModelBase
 {
     /// <summary>
     /// The channel the contents of this element should be applied to. Can be `email`,
@@ -291,4 +301,12 @@ public sealed record class ElementalChannelNodeIntersectionMember1
     {
         this.Channel = channel;
     }
+}
+
+class ElementalChannelNodeIntersectionMember1FromRaw
+    : IFromRaw<ElementalChannelNodeIntersectionMember1>
+{
+    public ElementalChannelNodeIntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalChannelNodeIntersectionMember1.FromRawUnchecked(rawData);
 }

@@ -9,8 +9,8 @@ using Courier.Exceptions;
 
 namespace Courier.Models.Profiles;
 
-[JsonConverter(typeof(ModelConverter<ProfileRetrieveResponse>))]
-public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<ProfileRetrieveResponse>
+[JsonConverter(typeof(ModelConverter<ProfileRetrieveResponse, ProfileRetrieveResponseFromRaw>))]
+public sealed record class ProfileRetrieveResponse : ModelBase
 {
     public required Dictionary<string, JsonElement> Profile
     {
@@ -88,4 +88,11 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ProfileRetrieveResponseFromRaw : IFromRaw<ProfileRetrieveResponse>
+{
+    public ProfileRetrieveResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ProfileRetrieveResponse.FromRawUnchecked(rawData);
 }

@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<Icons>))]
-public sealed record class Icons : ModelBase, IFromRaw<Icons>
+[JsonConverter(typeof(ModelConverter<Icons, IconsFromRaw>))]
+public sealed record class Icons : ModelBase
 {
     public string? Bell
     {
@@ -71,4 +71,10 @@ public sealed record class Icons : ModelBase, IFromRaw<Icons>
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class IconsFromRaw : IFromRaw<Icons>
+{
+    public Icons FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Icons.FromRawUnchecked(rawData);
 }

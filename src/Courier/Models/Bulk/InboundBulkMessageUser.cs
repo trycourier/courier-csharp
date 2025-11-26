@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<InboundBulkMessageUser>))]
-public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundBulkMessageUser>
+[JsonConverter(typeof(ModelConverter<InboundBulkMessageUser, InboundBulkMessageUserFromRaw>))]
+public sealed record class InboundBulkMessageUser : ModelBase
 {
     public JsonElement? Data
     {
@@ -143,4 +143,11 @@ public sealed record class InboundBulkMessageUser : ModelBase, IFromRaw<InboundB
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class InboundBulkMessageUserFromRaw : IFromRaw<InboundBulkMessageUser>
+{
+    public InboundBulkMessageUser FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => InboundBulkMessageUser.FromRawUnchecked(rawData);
 }
