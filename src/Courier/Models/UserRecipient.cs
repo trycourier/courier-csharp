@@ -57,7 +57,7 @@ public sealed record class UserRecipient : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
@@ -270,7 +270,7 @@ class UserRecipientFromRaw : IFromRaw<UserRecipient>
 [JsonConverter(typeof(ModelConverter<UserRecipientPreferences, UserRecipientPreferencesFromRaw>))]
 public sealed record class UserRecipientPreferences : ModelBase
 {
-    public required Dictionary<string, Preference> Notifications
+    public required IReadOnlyDictionary<string, Preference> Notifications
     {
         get
         {
@@ -298,7 +298,7 @@ public sealed record class UserRecipientPreferences : ModelBase
         }
     }
 
-    public Dictionary<string, Preference>? Categories
+    public IReadOnlyDictionary<string, Preference>? Categories
     {
         get
         {

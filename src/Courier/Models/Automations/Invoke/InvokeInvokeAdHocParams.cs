@@ -70,7 +70,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
@@ -91,7 +91,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Profile
+    public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
@@ -216,7 +216,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
 [JsonConverter(typeof(ModelConverter<Automation, AutomationFromRaw>))]
 public sealed record class Automation : ModelBase
 {
-    public required List<Step> Steps
+    public required IReadOnlyList<Step> Steps
     {
         get
         {
@@ -828,7 +828,7 @@ public sealed record class AutomationSendStep : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
@@ -849,7 +849,7 @@ public sealed record class AutomationSendStep : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Profile
+    public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
@@ -1063,7 +1063,7 @@ public sealed record class AutomationSendListStep : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
@@ -1192,7 +1192,7 @@ public sealed record class AutomationUpdateProfileStep : ModelBase
         }
     }
 
-    public required Dictionary<string, JsonElement> Profile
+    public required IReadOnlyDictionary<string, JsonElement> Profile
     {
         get
         {
@@ -1737,7 +1737,7 @@ public sealed record class Webhook : ModelBase
         }
     }
 
-    public Dictionary<string, string>? Headers
+    public IReadOnlyDictionary<string, string>? Headers
     {
         get
         {

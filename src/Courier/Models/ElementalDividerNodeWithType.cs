@@ -14,7 +14,7 @@ namespace Courier.Models;
 )]
 public sealed record class ElementalDividerNodeWithType : ModelBase
 {
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
         get
         {

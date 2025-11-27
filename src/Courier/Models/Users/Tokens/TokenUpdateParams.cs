@@ -26,7 +26,7 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public string? Token { get; init; }
 
-    public required List<Patch> Patch
+    public required IReadOnlyList<Patch> Patch
     {
         get
         {

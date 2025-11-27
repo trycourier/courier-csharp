@@ -10,7 +10,7 @@ namespace Courier.Models.Brands;
 [JsonConverter(typeof(ModelConverter<BrandSnippets, BrandSnippetsFromRaw>))]
 public sealed record class BrandSnippets : ModelBase
 {
-    public List<BrandSnippet>? Items
+    public IReadOnlyList<BrandSnippet>? Items
     {
         get
         {

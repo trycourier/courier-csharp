@@ -10,7 +10,7 @@ namespace Courier.Models;
 [JsonConverter(typeof(ModelConverter<RecipientPreferences, RecipientPreferencesFromRaw>))]
 public sealed record class RecipientPreferences : ModelBase
 {
-    public Dictionary<string, NotificationPreferenceDetails>? Categories
+    public IReadOnlyDictionary<string, NotificationPreferenceDetails>? Categories
     {
         get
         {
@@ -31,7 +31,7 @@ public sealed record class RecipientPreferences : ModelBase
         }
     }
 
-    public Dictionary<string, NotificationPreferenceDetails>? Notifications
+    public IReadOnlyDictionary<string, NotificationPreferenceDetails>? Notifications
     {
         get
         {

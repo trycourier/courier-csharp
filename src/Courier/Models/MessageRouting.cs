@@ -12,7 +12,7 @@ namespace Courier.Models;
 [JsonConverter(typeof(ModelConverter<MessageRouting, MessageRoutingFromRaw>))]
 public sealed record class MessageRouting : ModelBase
 {
-    public required List<MessageRoutingChannel> Channels
+    public required IReadOnlyList<MessageRoutingChannel> Channels
     {
         get
         {

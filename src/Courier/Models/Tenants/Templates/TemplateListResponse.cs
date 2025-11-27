@@ -112,7 +112,7 @@ public sealed record class TemplateListResponse : ModelBase
         }
     }
 
-    public List<global::Courier.Models.Tenants.Templates.Item>? Items
+    public IReadOnlyList<global::Courier.Models.Tenants.Templates.Item>? Items
     {
         get
         {

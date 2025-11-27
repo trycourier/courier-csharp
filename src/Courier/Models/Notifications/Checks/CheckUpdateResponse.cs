@@ -12,7 +12,7 @@ namespace Courier.Models.Notifications.Checks;
 [JsonConverter(typeof(ModelConverter<CheckUpdateResponse, CheckUpdateResponseFromRaw>))]
 public sealed record class CheckUpdateResponse : ModelBase
 {
-    public required List<Check> Checks
+    public required IReadOnlyList<Check> Checks
     {
         get
         {

@@ -144,7 +144,7 @@ public sealed record class Message : ModelBase
     /// Define run-time configuration for channels. Valid ChannelId's: email, sms,
     /// push, inbox, direct_message, banner, webhook.
     /// </summary>
-    public Dictionary<string, ChannelsItem>? Channels
+    public IReadOnlyDictionary<string, ChannelsItem>? Channels
     {
         get
         {
@@ -212,7 +212,7 @@ public sealed record class Message : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
@@ -311,7 +311,7 @@ public sealed record class Message : ModelBase
         }
     }
 
-    public Dictionary<string, ProvidersItem>? Providers
+    public IReadOnlyDictionary<string, ProvidersItem>? Providers
     {
         get
         {
@@ -533,7 +533,7 @@ public sealed record class ChannelsItem : ModelBase
     /// <summary>
     /// Channel specific overrides.
     /// </summary>
-    public Dictionary<string, JsonElement>? Override
+    public IReadOnlyDictionary<string, JsonElement>? Override
     {
         get
         {
@@ -557,7 +557,7 @@ public sealed record class ChannelsItem : ModelBase
     /// <summary>
     /// Providers enabled for this channel.
     /// </summary>
-    public List<string>? Providers
+    public IReadOnlyList<string>? Providers
     {
         get
         {
@@ -1285,7 +1285,7 @@ public sealed record class MessageMetadata : ModelBase
         }
     }
 
-    public List<string>? Tags
+    public IReadOnlyList<string>? Tags
     {
         get
         {
@@ -1503,7 +1503,7 @@ public sealed record class ProvidersItem : ModelBase
     /// <summary>
     /// Provider-specific overrides.
     /// </summary>
-    public Dictionary<string, JsonElement>? Override
+    public IReadOnlyDictionary<string, JsonElement>? Override
     {
         get
         {
@@ -1642,7 +1642,7 @@ public sealed record class Routing : ModelBase
     /// <summary>
     /// A list of channels or providers (or nested routing rules).
     /// </summary>
-    public required List<MessageRoutingChannel> Channels
+    public required IReadOnlyList<MessageRoutingChannel> Channels
     {
         get
         {
@@ -1777,7 +1777,7 @@ sealed class MethodConverter : JsonConverter<global::Courier.Models.Send.Method>
 [JsonConverter(typeof(ModelConverter<Timeout, TimeoutFromRaw>))]
 public sealed record class Timeout : ModelBase
 {
-    public Dictionary<string, long>? Channel
+    public IReadOnlyDictionary<string, long>? Channel
     {
         get
         {
@@ -1855,7 +1855,7 @@ public sealed record class Timeout : ModelBase
         }
     }
 
-    public Dictionary<string, long>? Provider
+    public IReadOnlyDictionary<string, long>? Provider
     {
         get
         {

@@ -15,7 +15,7 @@ public sealed record class MessageContentResponse : ModelBase
     /// <summary>
     /// An array of render output of a previously sent message.
     /// </summary>
-    public required List<Result> Results
+    public required IReadOnlyList<Result> Results
     {
         get
         {
@@ -215,7 +215,7 @@ public sealed record class Content : ModelBase
     /// <summary>
     /// The blocks of the rendered message.
     /// </summary>
-    public required List<Block> Blocks
+    public required IReadOnlyList<Block> Blocks
     {
         get
         {

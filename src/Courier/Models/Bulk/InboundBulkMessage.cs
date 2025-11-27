@@ -213,7 +213,7 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
@@ -252,7 +252,7 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
         }
     }
 
-    public Dictionary<string, Dictionary<string, JsonElement>>? Locale
+    public IReadOnlyDictionary<string, Dictionary<string, JsonElement>>? Locale
     {
         get
         {
@@ -273,7 +273,7 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Override
+    public IReadOnlyDictionary<string, JsonElement>? Override
     {
         get
         {
@@ -390,7 +390,7 @@ public sealed record class InboundBulkContentMessage : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
@@ -429,7 +429,7 @@ public sealed record class InboundBulkContentMessage : ModelBase
         }
     }
 
-    public Dictionary<string, Dictionary<string, JsonElement>>? Locale
+    public IReadOnlyDictionary<string, Dictionary<string, JsonElement>>? Locale
     {
         get
         {
@@ -450,7 +450,7 @@ public sealed record class InboundBulkContentMessage : ModelBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Override
+    public IReadOnlyDictionary<string, JsonElement>? Override
     {
         get
         {

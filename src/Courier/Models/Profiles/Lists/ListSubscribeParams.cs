@@ -24,7 +24,7 @@ public sealed record class ListSubscribeParams : ParamsBase
 
     public string? UserID { get; init; }
 
-    public required List<SubscribeToListsRequestItem> Lists
+    public required IReadOnlyList<SubscribeToListsRequestItem> Lists
     {
         get
         {

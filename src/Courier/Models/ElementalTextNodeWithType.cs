@@ -12,7 +12,7 @@ namespace Courier.Models;
 [JsonConverter(typeof(ModelConverter<ElementalTextNodeWithType, ElementalTextNodeWithTypeFromRaw>))]
 public sealed record class ElementalTextNodeWithType : ModelBase
 {
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
         get
         {

@@ -38,7 +38,7 @@ public sealed record class NotificationPreferenceDetails : ModelBase
         }
     }
 
-    public List<ChannelPreference>? ChannelPreferences
+    public IReadOnlyList<ChannelPreference>? ChannelPreferences
     {
         get
         {
@@ -59,7 +59,7 @@ public sealed record class NotificationPreferenceDetails : ModelBase
         }
     }
 
-    public List<Rule>? Rules
+    public IReadOnlyList<Rule>? Rules
     {
         get
         {

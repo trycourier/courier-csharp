@@ -39,7 +39,7 @@ public sealed record class SubscriptionTopicNew : ModelBase
     /// <summary>
     /// The default channels to send to this tenant when has_custom_routing is enabled
     /// </summary>
-    public List<ApiEnum<string, ChannelClassification>>? CustomRouting
+    public IReadOnlyList<ApiEnum<string, ChannelClassification>>? CustomRouting
     {
         get
         {

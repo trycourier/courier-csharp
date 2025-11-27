@@ -43,7 +43,7 @@ public sealed record class MessageListResponse : ModelBase
     /// <summary>
     /// An array of messages with their details.
     /// </summary>
-    public required List<MessageDetails> Results
+    public required IReadOnlyList<MessageDetails> Results
     {
         get
         {

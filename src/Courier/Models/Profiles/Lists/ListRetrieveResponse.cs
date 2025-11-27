@@ -40,7 +40,7 @@ public sealed record class ListRetrieveResponse : ModelBase
     /// <summary>
     /// An array of lists
     /// </summary>
-    public required List<Result> Results
+    public required IReadOnlyList<Result> Results
     {
         get
         {

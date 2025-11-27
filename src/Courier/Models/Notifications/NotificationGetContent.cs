@@ -12,7 +12,7 @@ namespace Courier.Models.Notifications;
 [JsonConverter(typeof(ModelConverter<NotificationGetContent, NotificationGetContentFromRaw>))]
 public sealed record class NotificationGetContent : ModelBase
 {
-    public List<Block>? Blocks
+    public IReadOnlyList<Block>? Blocks
     {
         get
         {
@@ -30,7 +30,7 @@ public sealed record class NotificationGetContent : ModelBase
         }
     }
 
-    public List<Channel>? Channels
+    public IReadOnlyList<Channel>? Channels
     {
         get
         {
@@ -233,7 +233,7 @@ public sealed record class Block : ModelBase
         }
     }
 
-    public Dictionary<string, Locale>? Locales
+    public IReadOnlyDictionary<string, Locale>? Locales
     {
         get
         {
@@ -857,7 +857,7 @@ public sealed record class Channel : ModelBase
         }
     }
 
-    public Dictionary<string, LocalesItem>? Locales
+    public IReadOnlyDictionary<string, LocalesItem>? Locales
     {
         get
         {

@@ -58,7 +58,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
@@ -79,7 +79,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
         }
     }
 
-    public Dictionary<string, JsonElement>? Profile
+    public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {

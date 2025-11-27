@@ -25,7 +25,7 @@ namespace Courier.Models;
 )]
 public sealed record class ElementalChannelNodeWithType : ModelBase
 {
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
         get
         {
@@ -130,7 +130,7 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is required.
     /// </summary>
-    public Dictionary<string, JsonElement>? Raw
+    public IReadOnlyDictionary<string, JsonElement>? Raw
     {
         get
         {
