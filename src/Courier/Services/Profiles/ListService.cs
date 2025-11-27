@@ -8,8 +8,10 @@ using Courier.Models.Profiles.Lists;
 
 namespace Courier.Services.Profiles;
 
+/// <inheritdoc />
 public sealed class ListService : global::Courier.Services.Profiles.IListService
 {
+    /// <inheritdoc/>
     public global::Courier.Services.Profiles.IListService WithOptions(
         Func<ClientOptions, ClientOptions> modifier
     )
@@ -26,6 +28,7 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<ListRetrieveResponse> Retrieve(
         ListRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -54,6 +57,7 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
         return list;
     }
 
+    /// <inheritdoc/>
     public async Task<ListRetrieveResponse> Retrieve(
         string userID,
         ListRetrieveParams? parameters = null,
@@ -65,6 +69,7 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
         return await this.Retrieve(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<ListDeleteResponse> Delete(
         ListDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -93,6 +98,7 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
         return list;
     }
 
+    /// <inheritdoc/>
     public async Task<ListDeleteResponse> Delete(
         string userID,
         ListDeleteParams? parameters = null,
@@ -104,6 +110,7 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
         return await this.Delete(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<ListSubscribeResponse> Subscribe(
         ListSubscribeParams parameters,
         CancellationToken cancellationToken = default
@@ -132,6 +139,7 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<ListSubscribeResponse> Subscribe(
         string userID,
         ListSubscribeParams parameters,

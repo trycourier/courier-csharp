@@ -8,8 +8,10 @@ using Courier.Models.Translations;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class TranslationService : ITranslationService
 {
+    /// <inheritdoc/>
     public ITranslationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new TranslationService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class TranslationService : ITranslationService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<string> Retrieve(
         TranslationRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -43,6 +46,7 @@ public sealed class TranslationService : ITranslationService
         return await response.Deserialize<string>(cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task<string> Retrieve(
         string locale,
         TranslationRetrieveParams parameters,
@@ -52,6 +56,7 @@ public sealed class TranslationService : ITranslationService
         return await this.Retrieve(parameters with { Locale = locale }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         TranslationUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -72,6 +77,7 @@ public sealed class TranslationService : ITranslationService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         string locale,
         TranslationUpdateParams parameters,

@@ -4,8 +4,10 @@ using Courier.Services.Tenants.Preferences;
 
 namespace Courier.Services.Tenants;
 
+/// <inheritdoc />
 public sealed class PreferenceService : IPreferenceService
 {
+    /// <inheritdoc/>
     public IPreferenceService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new PreferenceService(this._client.WithOptions(modifier));

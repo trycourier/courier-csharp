@@ -13,6 +13,11 @@ namespace Courier.Services.Lists;
 /// </summary>
 public interface ISubscriptionService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ISubscriptionService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -23,9 +28,7 @@ public interface ISubscriptionService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get the list's subscriptions.
-    /// </summary>
+    /// <inheritdoc cref="List(SubscriptionListParams, CancellationToken)"/>
     Task<SubscriptionListResponse> List(
         string listID,
         SubscriptionListParams? parameters = null,
@@ -38,10 +41,7 @@ public interface ISubscriptionService
     /// </summary>
     Task Add(SubscriptionAddParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Subscribes additional users to the list, without modifying existing subscriptions.
-    /// If the list does not exist, it will be automatically created.
-    /// </summary>
+    /// <inheritdoc cref="Add(SubscriptionAddParams, CancellationToken)"/>
     Task Add(
         string listID,
         SubscriptionAddParams parameters,
@@ -57,10 +57,7 @@ public interface ISubscriptionService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Subscribes the users to the list, overwriting existing subscriptions. If
-    /// the list does not exist, it will be automatically created.
-    /// </summary>
+    /// <inheritdoc cref="Subscribe(SubscriptionSubscribeParams, CancellationToken)"/>
     Task Subscribe(
         string listID,
         SubscriptionSubscribeParams parameters,
@@ -76,10 +73,7 @@ public interface ISubscriptionService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Subscribe a user to an existing list (note: if the List does not exist, it
-    /// will be automatically created).
-    /// </summary>
+    /// <inheritdoc cref="SubscribeUser(SubscriptionSubscribeUserParams, CancellationToken)"/>
     Task SubscribeUser(
         string userID,
         SubscriptionSubscribeUserParams parameters,
@@ -94,9 +88,7 @@ public interface ISubscriptionService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Delete a subscription to a list by list ID and user ID.
-    /// </summary>
+    /// <inheritdoc cref="UnsubscribeUser(SubscriptionUnsubscribeUserParams, CancellationToken)"/>
     Task UnsubscribeUser(
         string userID,
         SubscriptionUnsubscribeUserParams parameters,

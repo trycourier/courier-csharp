@@ -8,8 +8,10 @@ using Courier.Models.Bulk;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class BulkService : IBulkService
 {
+    /// <inheritdoc/>
     public IBulkService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new BulkService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class BulkService : IBulkService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task AddUsers(
         BulkAddUsersParams parameters,
         CancellationToken cancellationToken = default
@@ -42,6 +45,7 @@ public sealed class BulkService : IBulkService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task AddUsers(
         string jobID,
         BulkAddUsersParams parameters,
@@ -51,6 +55,7 @@ public sealed class BulkService : IBulkService
         await this.AddUsers(parameters with { JobID = jobID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<BulkCreateJobResponse> CreateJob(
         BulkCreateJobParams parameters,
         CancellationToken cancellationToken = default
@@ -74,6 +79,7 @@ public sealed class BulkService : IBulkService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<BulkListUsersResponse> ListUsers(
         BulkListUsersParams parameters,
         CancellationToken cancellationToken = default
@@ -102,6 +108,7 @@ public sealed class BulkService : IBulkService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<BulkListUsersResponse> ListUsers(
         string jobID,
         BulkListUsersParams? parameters = null,
@@ -113,6 +120,7 @@ public sealed class BulkService : IBulkService
         return await this.ListUsers(parameters with { JobID = jobID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<BulkRetrieveJobResponse> RetrieveJob(
         BulkRetrieveJobParams parameters,
         CancellationToken cancellationToken = default
@@ -141,6 +149,7 @@ public sealed class BulkService : IBulkService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<BulkRetrieveJobResponse> RetrieveJob(
         string jobID,
         BulkRetrieveJobParams? parameters = null,
@@ -152,6 +161,7 @@ public sealed class BulkService : IBulkService
         return await this.RetrieveJob(parameters with { JobID = jobID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task RunJob(
         BulkRunJobParams parameters,
         CancellationToken cancellationToken = default
@@ -172,6 +182,7 @@ public sealed class BulkService : IBulkService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task RunJob(
         string jobID,
         BulkRunJobParams? parameters = null,

@@ -8,8 +8,10 @@ using Courier.Models.Tenants.Preferences.Items;
 
 namespace Courier.Services.Tenants.Preferences;
 
+/// <inheritdoc />
 public sealed class ItemService : IItemService
 {
+    /// <inheritdoc/>
     public IItemService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ItemService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class ItemService : IItemService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         ItemUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -42,6 +45,7 @@ public sealed class ItemService : IItemService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         string topicID,
         ItemUpdateParams parameters,
@@ -51,6 +55,7 @@ public sealed class ItemService : IItemService
         await this.Update(parameters with { TopicID = topicID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         ItemDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -71,6 +76,7 @@ public sealed class ItemService : IItemService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         string topicID,
         ItemDeleteParams parameters,

@@ -14,6 +14,11 @@ namespace Courier.Services;
 /// </summary>
 public interface ITenantService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ITenantService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IPreferenceService Preferences { get; }
@@ -28,9 +33,7 @@ public interface ITenantService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get a Tenant
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(TenantRetrieveParams, CancellationToken)"/>
     Task<Tenant> Retrieve(
         string tenantID,
         TenantRetrieveParams? parameters = null,
@@ -45,9 +48,7 @@ public interface ITenantService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Create or Replace a Tenant
-    /// </summary>
+    /// <inheritdoc cref="Update(TenantUpdateParams, CancellationToken)"/>
     Task<Tenant> Update(
         string tenantID,
         TenantUpdateParams parameters,
@@ -67,9 +68,7 @@ public interface ITenantService
     /// </summary>
     Task Delete(TenantDeleteParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Delete a Tenant
-    /// </summary>
+    /// <inheritdoc cref="Delete(TenantDeleteParams, CancellationToken)"/>
     Task Delete(
         string tenantID,
         TenantDeleteParams? parameters = null,
@@ -84,9 +83,7 @@ public interface ITenantService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get Users in Tenant
-    /// </summary>
+    /// <inheritdoc cref="ListUsers(TenantListUsersParams, CancellationToken)"/>
     Task<TenantListUsersResponse> ListUsers(
         string tenantID,
         TenantListUsersParams? parameters = null,

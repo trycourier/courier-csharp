@@ -13,6 +13,11 @@ namespace Courier.Services;
 /// </summary>
 public interface IAudienceService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IAudienceService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -23,9 +28,7 @@ public interface IAudienceService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Returns the specified audience by id.
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(AudienceRetrieveParams, CancellationToken)"/>
     Task<Audience> Retrieve(
         string audienceID,
         AudienceRetrieveParams? parameters = null,
@@ -40,9 +43,7 @@ public interface IAudienceService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Creates or updates audience.
-    /// </summary>
+    /// <inheritdoc cref="Update(AudienceUpdateParams, CancellationToken)"/>
     Task<AudienceUpdateResponse> Update(
         string audienceID,
         AudienceUpdateParams? parameters = null,
@@ -62,9 +63,7 @@ public interface IAudienceService
     /// </summary>
     Task Delete(AudienceDeleteParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Deletes the specified audience.
-    /// </summary>
+    /// <inheritdoc cref="Delete(AudienceDeleteParams, CancellationToken)"/>
     Task Delete(
         string audienceID,
         AudienceDeleteParams? parameters = null,
@@ -79,9 +78,7 @@ public interface IAudienceService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get list of members of an audience.
-    /// </summary>
+    /// <inheritdoc cref="ListMembers(AudienceListMembersParams, CancellationToken)"/>
     Task<AudienceListMembersResponse> ListMembers(
         string audienceID,
         AudienceListMembersParams? parameters = null,

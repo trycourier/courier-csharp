@@ -9,8 +9,10 @@ using Courier.Services.Lists;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class ListService : IListService
 {
+    /// <inheritdoc/>
     public IListService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ListService(this._client.WithOptions(modifier));
@@ -30,6 +32,7 @@ public sealed class ListService : IListService
         get { return _subscriptions.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<SubscriptionList> Retrieve(
         ListRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -58,6 +61,7 @@ public sealed class ListService : IListService
         return subscriptionList;
     }
 
+    /// <inheritdoc/>
     public async Task<SubscriptionList> Retrieve(
         string listID,
         ListRetrieveParams? parameters = null,
@@ -69,6 +73,7 @@ public sealed class ListService : IListService
         return await this.Retrieve(parameters with { ListID = listID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         ListUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -89,6 +94,7 @@ public sealed class ListService : IListService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         string listID,
         ListUpdateParams parameters,
@@ -98,6 +104,7 @@ public sealed class ListService : IListService
         await this.Update(parameters with { ListID = listID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<ListListResponse> List(
         ListListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -123,6 +130,7 @@ public sealed class ListService : IListService
         return lists;
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         ListDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -143,6 +151,7 @@ public sealed class ListService : IListService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         string listID,
         ListDeleteParams? parameters = null,
@@ -154,6 +163,7 @@ public sealed class ListService : IListService
         await this.Delete(parameters with { ListID = listID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Restore(
         ListRestoreParams parameters,
         CancellationToken cancellationToken = default
@@ -174,6 +184,7 @@ public sealed class ListService : IListService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Restore(
         string listID,
         ListRestoreParams? parameters = null,

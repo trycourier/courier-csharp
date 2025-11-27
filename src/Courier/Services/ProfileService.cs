@@ -9,8 +9,10 @@ using Profiles = Courier.Services.Profiles;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class ProfileService : IProfileService
 {
+    /// <inheritdoc/>
     public IProfileService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ProfileService(this._client.WithOptions(modifier));
@@ -30,6 +32,7 @@ public sealed class ProfileService : IProfileService
         get { return _lists.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<ProfileCreateResponse> Create(
         ProfileCreateParams parameters,
         CancellationToken cancellationToken = default
@@ -58,6 +61,7 @@ public sealed class ProfileService : IProfileService
         return profile;
     }
 
+    /// <inheritdoc/>
     public async Task<ProfileCreateResponse> Create(
         string userID,
         ProfileCreateParams parameters,
@@ -67,6 +71,7 @@ public sealed class ProfileService : IProfileService
         return await this.Create(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<ProfileRetrieveResponse> Retrieve(
         ProfileRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -95,6 +100,7 @@ public sealed class ProfileService : IProfileService
         return profile;
     }
 
+    /// <inheritdoc/>
     public async Task<ProfileRetrieveResponse> Retrieve(
         string userID,
         ProfileRetrieveParams? parameters = null,
@@ -106,6 +112,7 @@ public sealed class ProfileService : IProfileService
         return await this.Retrieve(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         ProfileUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -126,6 +133,7 @@ public sealed class ProfileService : IProfileService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         string userID,
         ProfileUpdateParams parameters,
@@ -135,6 +143,7 @@ public sealed class ProfileService : IProfileService
         await this.Update(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         ProfileDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -155,6 +164,7 @@ public sealed class ProfileService : IProfileService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         string userID,
         ProfileDeleteParams? parameters = null,
@@ -166,6 +176,7 @@ public sealed class ProfileService : IProfileService
         await this.Delete(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<ProfileReplaceResponse> Replace(
         ProfileReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -194,6 +205,7 @@ public sealed class ProfileService : IProfileService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<ProfileReplaceResponse> Replace(
         string userID,
         ProfileReplaceParams parameters,

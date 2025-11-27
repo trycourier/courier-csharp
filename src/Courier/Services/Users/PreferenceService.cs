@@ -8,8 +8,10 @@ using Courier.Models.Users.Preferences;
 
 namespace Courier.Services.Users;
 
+/// <inheritdoc />
 public sealed class PreferenceService : IPreferenceService
 {
+    /// <inheritdoc/>
     public IPreferenceService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new PreferenceService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class PreferenceService : IPreferenceService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<PreferenceRetrieveResponse> Retrieve(
         PreferenceRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class PreferenceService : IPreferenceService
         return preference;
     }
 
+    /// <inheritdoc/>
     public async Task<PreferenceRetrieveResponse> Retrieve(
         string userID,
         PreferenceRetrieveParams? parameters = null,
@@ -61,6 +65,7 @@ public sealed class PreferenceService : IPreferenceService
         return await this.Retrieve(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
         PreferenceRetrieveTopicParams parameters,
         CancellationToken cancellationToken = default
@@ -89,6 +94,7 @@ public sealed class PreferenceService : IPreferenceService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
         string topicID,
         PreferenceRetrieveTopicParams parameters,
@@ -98,6 +104,7 @@ public sealed class PreferenceService : IPreferenceService
         return await this.RetrieveTopic(parameters with { TopicID = topicID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
         PreferenceUpdateOrCreateTopicParams parameters,
         CancellationToken cancellationToken = default
@@ -126,6 +133,7 @@ public sealed class PreferenceService : IPreferenceService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
         string topicID,
         PreferenceUpdateOrCreateTopicParams parameters,

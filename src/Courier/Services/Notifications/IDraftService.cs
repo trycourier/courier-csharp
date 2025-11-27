@@ -14,12 +14,19 @@ namespace Courier.Services.Notifications;
 /// </summary>
 public interface IDraftService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IDraftService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     Task<NotificationGetContent> RetrieveContent(
         DraftRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     );
+
+    /// <inheritdoc cref="RetrieveContent(DraftRetrieveContentParams, CancellationToken)"/>
     Task<NotificationGetContent> RetrieveContent(
         string id,
         DraftRetrieveContentParams? parameters = null,

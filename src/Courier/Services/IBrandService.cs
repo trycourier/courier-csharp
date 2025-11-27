@@ -13,6 +13,11 @@ namespace Courier.Services;
 /// </summary>
 public interface IBrandService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IBrandService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -28,9 +33,7 @@ public interface IBrandService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Fetch a specific brand by brand ID.
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(BrandRetrieveParams, CancellationToken)"/>
     Task<Brand> Retrieve(
         string brandID,
         BrandRetrieveParams? parameters = null,
@@ -42,9 +45,7 @@ public interface IBrandService
     /// </summary>
     Task<Brand> Update(BrandUpdateParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Replace an existing brand with the supplied values.
-    /// </summary>
+    /// <inheritdoc cref="Update(BrandUpdateParams, CancellationToken)"/>
     Task<Brand> Update(
         string brandID,
         BrandUpdateParams parameters,
@@ -64,9 +65,7 @@ public interface IBrandService
     /// </summary>
     Task Delete(BrandDeleteParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Delete a brand by brand ID.
-    /// </summary>
+    /// <inheritdoc cref="Delete(BrandDeleteParams, CancellationToken)"/>
     Task Delete(
         string brandID,
         BrandDeleteParams? parameters = null,

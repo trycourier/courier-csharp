@@ -14,6 +14,11 @@ namespace Courier.Services;
 /// </summary>
 public interface IListService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IListService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     ISubscriptionService Subscriptions { get; }
@@ -26,9 +31,7 @@ public interface IListService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Returns a list based on the list ID provided.
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(ListRetrieveParams, CancellationToken)"/>
     Task<SubscriptionList> Retrieve(
         string listID,
         ListRetrieveParams? parameters = null,
@@ -40,9 +43,7 @@ public interface IListService
     /// </summary>
     Task Update(ListUpdateParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Create or replace an existing list with the supplied values.
-    /// </summary>
+    /// <inheritdoc cref="Update(ListUpdateParams, CancellationToken)"/>
     Task Update(
         string listID,
         ListUpdateParams parameters,
@@ -62,9 +63,7 @@ public interface IListService
     /// </summary>
     Task Delete(ListDeleteParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Delete a list by list ID.
-    /// </summary>
+    /// <inheritdoc cref="Delete(ListDeleteParams, CancellationToken)"/>
     Task Delete(
         string listID,
         ListDeleteParams? parameters = null,
@@ -76,9 +75,7 @@ public interface IListService
     /// </summary>
     Task Restore(ListRestoreParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Restore a previously deleted list.
-    /// </summary>
+    /// <inheritdoc cref="Restore(ListRestoreParams, CancellationToken)"/>
     Task Restore(
         string listID,
         ListRestoreParams? parameters = null,

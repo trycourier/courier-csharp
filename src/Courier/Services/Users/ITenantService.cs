@@ -13,6 +13,11 @@ namespace Courier.Services.Users;
 /// </summary>
 public interface ITenantService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     global::Courier.Services.Users.ITenantService WithOptions(
         Func<ClientOptions, ClientOptions> modifier
     );
@@ -25,9 +30,7 @@ public interface ITenantService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Returns a paginated list of user tenant associations.
-    /// </summary>
+    /// <inheritdoc cref="List(TenantListParams, CancellationToken)"/>
     Task<TenantListResponse> List(
         string userID,
         TenantListParams? parameters = null,
@@ -44,11 +47,7 @@ public interface ITenantService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// This endpoint is used to add a user to multiple tenants in one call. A custom
-    /// profile can also be supplied for each tenant.  This profile will be merged
-    /// with the user's main  profile when sending to the user with that tenant.
-    /// </summary>
+    /// <inheritdoc cref="AddMultiple(TenantAddMultipleParams, CancellationToken)"/>
     Task AddMultiple(
         string userID,
         TenantAddMultipleParams parameters,
@@ -64,13 +63,7 @@ public interface ITenantService
     /// </summary>
     Task AddSingle(TenantAddSingleParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// This endpoint is used to add a single tenant.
-    ///
-    /// <para>A custom profile can also be supplied with the tenant.  This profile
-    /// will be merged with the user's main profile  when sending to the user with
-    /// that tenant.</para>
-    /// </summary>
+    /// <inheritdoc cref="AddSingle(TenantAddSingleParams, CancellationToken)"/>
     Task AddSingle(
         string tenantID,
         TenantAddSingleParams parameters,
@@ -82,9 +75,7 @@ public interface ITenantService
     /// </summary>
     Task RemoveAll(TenantRemoveAllParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Removes a user from any tenants they may have been associated with.
-    /// </summary>
+    /// <inheritdoc cref="RemoveAll(TenantRemoveAllParams, CancellationToken)"/>
     Task RemoveAll(
         string userID,
         TenantRemoveAllParams? parameters = null,
@@ -99,9 +90,7 @@ public interface ITenantService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Removes a user from the supplied tenant.
-    /// </summary>
+    /// <inheritdoc cref="RemoveSingle(TenantRemoveSingleParams, CancellationToken)"/>
     Task RemoveSingle(
         string tenantID,
         TenantRemoveSingleParams parameters,

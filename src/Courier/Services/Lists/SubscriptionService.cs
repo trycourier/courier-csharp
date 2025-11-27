@@ -8,8 +8,10 @@ using Courier.Models.Lists.Subscriptions;
 
 namespace Courier.Services.Lists;
 
+/// <inheritdoc />
 public sealed class SubscriptionService : ISubscriptionService
 {
+    /// <inheritdoc/>
     public ISubscriptionService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new SubscriptionService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class SubscriptionService : ISubscriptionService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<SubscriptionListResponse> List(
         SubscriptionListParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class SubscriptionService : ISubscriptionService
         return subscriptions;
     }
 
+    /// <inheritdoc/>
     public async Task<SubscriptionListResponse> List(
         string listID,
         SubscriptionListParams? parameters = null,
@@ -61,6 +65,7 @@ public sealed class SubscriptionService : ISubscriptionService
         return await this.List(parameters with { ListID = listID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Add(
         SubscriptionAddParams parameters,
         CancellationToken cancellationToken = default
@@ -81,6 +86,7 @@ public sealed class SubscriptionService : ISubscriptionService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Add(
         string listID,
         SubscriptionAddParams parameters,
@@ -90,6 +96,7 @@ public sealed class SubscriptionService : ISubscriptionService
         await this.Add(parameters with { ListID = listID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Subscribe(
         SubscriptionSubscribeParams parameters,
         CancellationToken cancellationToken = default
@@ -110,6 +117,7 @@ public sealed class SubscriptionService : ISubscriptionService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Subscribe(
         string listID,
         SubscriptionSubscribeParams parameters,
@@ -119,6 +127,7 @@ public sealed class SubscriptionService : ISubscriptionService
         await this.Subscribe(parameters with { ListID = listID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task SubscribeUser(
         SubscriptionSubscribeUserParams parameters,
         CancellationToken cancellationToken = default
@@ -139,6 +148,7 @@ public sealed class SubscriptionService : ISubscriptionService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task SubscribeUser(
         string userID,
         SubscriptionSubscribeUserParams parameters,
@@ -148,6 +158,7 @@ public sealed class SubscriptionService : ISubscriptionService
         await this.SubscribeUser(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task UnsubscribeUser(
         SubscriptionUnsubscribeUserParams parameters,
         CancellationToken cancellationToken = default
@@ -168,6 +179,7 @@ public sealed class SubscriptionService : ISubscriptionService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task UnsubscribeUser(
         string userID,
         SubscriptionUnsubscribeUserParams parameters,

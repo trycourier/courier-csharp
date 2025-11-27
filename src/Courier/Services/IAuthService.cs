@@ -13,6 +13,11 @@ namespace Courier.Services;
 /// </summary>
 public interface IAuthService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IAuthService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>

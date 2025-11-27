@@ -9,8 +9,10 @@ using Courier.Services.Tenants;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class TenantService : ITenantService
 {
+    /// <inheritdoc/>
     public ITenantService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new TenantService(this._client.WithOptions(modifier));
@@ -37,6 +39,7 @@ public sealed class TenantService : ITenantService
         get { return _templates.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<Tenant> Retrieve(
         TenantRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -63,6 +66,7 @@ public sealed class TenantService : ITenantService
         return tenant;
     }
 
+    /// <inheritdoc/>
     public async Task<Tenant> Retrieve(
         string tenantID,
         TenantRetrieveParams? parameters = null,
@@ -74,6 +78,7 @@ public sealed class TenantService : ITenantService
         return await this.Retrieve(parameters with { TenantID = tenantID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<Tenant> Update(
         TenantUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -100,6 +105,7 @@ public sealed class TenantService : ITenantService
         return tenant;
     }
 
+    /// <inheritdoc/>
     public async Task<Tenant> Update(
         string tenantID,
         TenantUpdateParams parameters,
@@ -109,6 +115,7 @@ public sealed class TenantService : ITenantService
         return await this.Update(parameters with { TenantID = tenantID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<TenantListResponse> List(
         TenantListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -134,6 +141,7 @@ public sealed class TenantService : ITenantService
         return tenants;
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         TenantDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -154,6 +162,7 @@ public sealed class TenantService : ITenantService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         string tenantID,
         TenantDeleteParams? parameters = null,
@@ -165,6 +174,7 @@ public sealed class TenantService : ITenantService
         await this.Delete(parameters with { TenantID = tenantID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<TenantListUsersResponse> ListUsers(
         TenantListUsersParams parameters,
         CancellationToken cancellationToken = default
@@ -193,6 +203,7 @@ public sealed class TenantService : ITenantService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<TenantListUsersResponse> ListUsers(
         string tenantID,
         TenantListUsersParams? parameters = null,

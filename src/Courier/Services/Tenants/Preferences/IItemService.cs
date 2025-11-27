@@ -13,6 +13,11 @@ namespace Courier.Services.Tenants.Preferences;
 /// </summary>
 public interface IItemService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IItemService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -20,9 +25,7 @@ public interface IItemService
     /// </summary>
     Task Update(ItemUpdateParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Create or Replace Default Preferences For Topic
-    /// </summary>
+    /// <inheritdoc cref="Update(ItemUpdateParams, CancellationToken)"/>
     Task Update(
         string topicID,
         ItemUpdateParams parameters,
@@ -34,9 +37,7 @@ public interface IItemService
     /// </summary>
     Task Delete(ItemDeleteParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Remove Default Preferences For Topic
-    /// </summary>
+    /// <inheritdoc cref="Delete(ItemDeleteParams, CancellationToken)"/>
     Task Delete(
         string topicID,
         ItemDeleteParams parameters,

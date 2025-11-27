@@ -8,8 +8,10 @@ using Courier.Models.Audiences;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class AudienceService : IAudienceService
 {
+    /// <inheritdoc/>
     public IAudienceService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AudienceService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class AudienceService : IAudienceService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<Audience> Retrieve(
         AudienceRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class AudienceService : IAudienceService
         return audience;
     }
 
+    /// <inheritdoc/>
     public async Task<Audience> Retrieve(
         string audienceID,
         AudienceRetrieveParams? parameters = null,
@@ -61,6 +65,7 @@ public sealed class AudienceService : IAudienceService
         return await this.Retrieve(parameters with { AudienceID = audienceID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<AudienceUpdateResponse> Update(
         AudienceUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -89,6 +94,7 @@ public sealed class AudienceService : IAudienceService
         return audience;
     }
 
+    /// <inheritdoc/>
     public async Task<AudienceUpdateResponse> Update(
         string audienceID,
         AudienceUpdateParams? parameters = null,
@@ -100,6 +106,7 @@ public sealed class AudienceService : IAudienceService
         return await this.Update(parameters with { AudienceID = audienceID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<AudienceListResponse> List(
         AudienceListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -125,6 +132,7 @@ public sealed class AudienceService : IAudienceService
         return audiences;
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         AudienceDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -145,6 +153,7 @@ public sealed class AudienceService : IAudienceService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         string audienceID,
         AudienceDeleteParams? parameters = null,
@@ -156,6 +165,7 @@ public sealed class AudienceService : IAudienceService
         await this.Delete(parameters with { AudienceID = audienceID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<AudienceListMembersResponse> ListMembers(
         AudienceListMembersParams parameters,
         CancellationToken cancellationToken = default
@@ -184,6 +194,7 @@ public sealed class AudienceService : IAudienceService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<AudienceListMembersResponse> ListMembers(
         string audienceID,
         AudienceListMembersParams? parameters = null,

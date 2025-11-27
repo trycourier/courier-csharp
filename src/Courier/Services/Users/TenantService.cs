@@ -8,8 +8,10 @@ using Courier.Models.Users.Tenants;
 
 namespace Courier.Services.Users;
 
+/// <inheritdoc />
 public sealed class TenantService : global::Courier.Services.Users.ITenantService
 {
+    /// <inheritdoc/>
     public global::Courier.Services.Users.ITenantService WithOptions(
         Func<ClientOptions, ClientOptions> modifier
     )
@@ -24,6 +26,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<TenantListResponse> List(
         TenantListParams parameters,
         CancellationToken cancellationToken = default
@@ -52,6 +55,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         return tenants;
     }
 
+    /// <inheritdoc/>
     public async Task<TenantListResponse> List(
         string userID,
         TenantListParams? parameters = null,
@@ -63,6 +67,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         return await this.List(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task AddMultiple(
         TenantAddMultipleParams parameters,
         CancellationToken cancellationToken = default
@@ -83,6 +88,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task AddMultiple(
         string userID,
         TenantAddMultipleParams parameters,
@@ -92,6 +98,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         await this.AddMultiple(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task AddSingle(
         TenantAddSingleParams parameters,
         CancellationToken cancellationToken = default
@@ -112,6 +119,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task AddSingle(
         string tenantID,
         TenantAddSingleParams parameters,
@@ -121,6 +129,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         await this.AddSingle(parameters with { TenantID = tenantID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task RemoveAll(
         TenantRemoveAllParams parameters,
         CancellationToken cancellationToken = default
@@ -141,6 +150,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task RemoveAll(
         string userID,
         TenantRemoveAllParams? parameters = null,
@@ -152,6 +162,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         await this.RemoveAll(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task RemoveSingle(
         TenantRemoveSingleParams parameters,
         CancellationToken cancellationToken = default
@@ -172,6 +183,7 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task RemoveSingle(
         string tenantID,
         TenantRemoveSingleParams parameters,
