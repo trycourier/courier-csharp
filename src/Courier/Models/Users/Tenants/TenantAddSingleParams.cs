@@ -27,7 +27,7 @@ public sealed record class TenantAddSingleParams : ParamsBase
 
     public string? TenantID { get; init; }
 
-    public Dictionary<string, JsonElement>? Profile
+    public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {

@@ -12,7 +12,7 @@ namespace Courier.Models;
 [JsonConverter(typeof(ModelConverter<ElementalContent, ElementalContentFromRaw>))]
 public sealed record class ElementalContent : ModelBase
 {
-    public required List<ElementalNode> Elements
+    public required IReadOnlyList<ElementalNode> Elements
     {
         get
         {

@@ -14,7 +14,7 @@ namespace Courier.Models;
 )]
 public sealed record class ElementalActionNodeWithType : ModelBase
 {
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
         get
         {

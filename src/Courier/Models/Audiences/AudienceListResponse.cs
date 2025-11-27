@@ -12,7 +12,7 @@ namespace Courier.Models.Audiences;
 [JsonConverter(typeof(ModelConverter<AudienceListResponse, AudienceListResponseFromRaw>))]
 public sealed record class AudienceListResponse : ModelBase
 {
-    public required List<Audience> Items
+    public required IReadOnlyList<Audience> Items
     {
         get
         {

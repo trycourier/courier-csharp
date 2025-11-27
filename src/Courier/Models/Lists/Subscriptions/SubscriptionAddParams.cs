@@ -24,7 +24,7 @@ public sealed record class SubscriptionAddParams : ParamsBase
 
     public string? ListID { get; init; }
 
-    public required List<PutSubscriptionsRecipient> Recipients
+    public required IReadOnlyList<PutSubscriptionsRecipient> Recipients
     {
         get
         {

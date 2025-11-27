@@ -37,7 +37,7 @@ public sealed record class NotificationListResponse : ModelBase
         }
     }
 
-    public required List<Result> Results
+    public required IReadOnlyList<Result> Results
     {
         get
         {
@@ -324,7 +324,7 @@ class ResultFromRaw : IFromRaw<Result>
 [JsonConverter(typeof(ModelConverter<Tags, TagsFromRaw>))]
 public sealed record class Tags : ModelBase
 {
-    public required List<Data> Data
+    public required IReadOnlyList<Data> Data
     {
         get
         {

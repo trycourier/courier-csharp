@@ -12,7 +12,7 @@ namespace Courier.Models.Messages;
 [JsonConverter(typeof(ModelConverter<MessageHistoryResponse, MessageHistoryResponseFromRaw>))]
 public sealed record class MessageHistoryResponse : ModelBase
 {
-    public required List<Dictionary<string, JsonElement>> Results
+    public required IReadOnlyList<Dictionary<string, JsonElement>> Results
     {
         get
         {

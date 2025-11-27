@@ -37,7 +37,7 @@ public sealed record class BrandListResponse : ModelBase
         }
     }
 
-    public required List<Brand> Results
+    public required IReadOnlyList<Brand> Results
     {
         get
         {

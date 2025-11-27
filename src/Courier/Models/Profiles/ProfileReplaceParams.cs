@@ -27,7 +27,7 @@ public sealed record class ProfileReplaceParams : ParamsBase
 
     public string? UserID { get; init; }
 
-    public required Dictionary<string, JsonElement> Profile
+    public required IReadOnlyDictionary<string, JsonElement> Profile
     {
         get
         {

@@ -166,7 +166,7 @@ public sealed record class MessageListParams : ParamsBase
     /// The key assocated to the provider you want to filter on. E.g., sendgrid, inbox,
     /// twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
     /// </summary>
-    public List<string?>? Provider
+    public IReadOnlyList<string?>? Provider
     {
         get
         {
@@ -214,7 +214,7 @@ public sealed record class MessageListParams : ParamsBase
     /// An indicator of the current status of the message. Allows multiple values
     /// to be set in query parameters.
     /// </summary>
-    public List<string?>? Status
+    public IReadOnlyList<string?>? Status
     {
         get
         {
@@ -241,7 +241,7 @@ public sealed record class MessageListParams : ParamsBase
     /// A tag placed in the metadata.tags during a notification send. Allows multiple
     /// values to be set in query parameters.
     /// </summary>
-    public List<string?>? Tag
+    public IReadOnlyList<string?>? Tag
     {
         get
         {

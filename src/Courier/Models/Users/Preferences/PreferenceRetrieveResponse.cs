@@ -17,7 +17,7 @@ public sealed record class PreferenceRetrieveResponse : ModelBase
     /// <summary>
     /// The Preferences associated with the user_id.
     /// </summary>
-    public required List<TopicPreference> Items
+    public required IReadOnlyList<TopicPreference> Items
     {
         get
         {

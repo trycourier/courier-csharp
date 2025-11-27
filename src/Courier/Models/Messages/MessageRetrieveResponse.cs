@@ -322,7 +322,7 @@ public sealed record class MessageRetrieveResponse : ModelBase
         }
     }
 
-    public List<Dictionary<string, JsonElement>>? Providers
+    public IReadOnlyList<Dictionary<string, JsonElement>>? Providers
     {
         get
         {
@@ -417,7 +417,7 @@ class MessageRetrieveResponseFromRaw : IFromRaw<MessageRetrieveResponse>
 )]
 public sealed record class IntersectionMember1 : ModelBase
 {
-    public List<Dictionary<string, JsonElement>>? Providers
+    public IReadOnlyList<Dictionary<string, JsonElement>>? Providers
     {
         get
         {

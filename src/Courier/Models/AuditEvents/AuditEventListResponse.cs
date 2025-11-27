@@ -37,7 +37,7 @@ public sealed record class AuditEventListResponse : ModelBase
         }
     }
 
-    public required List<AuditEvent> Results
+    public required IReadOnlyList<AuditEvent> Results
     {
         get
         {

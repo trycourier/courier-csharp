@@ -14,7 +14,7 @@ namespace Courier.Models.Audiences;
 )]
 public sealed record class AudienceListMembersResponse : ModelBase
 {
-    public required List<Item> Items
+    public required IReadOnlyList<Item> Items
     {
         get
         {

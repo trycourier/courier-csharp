@@ -83,7 +83,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
         }
     }
 
-    public required Dictionary<string, JsonElement> Properties
+    public required IReadOnlyDictionary<string, JsonElement> Properties
     {
         get
         {

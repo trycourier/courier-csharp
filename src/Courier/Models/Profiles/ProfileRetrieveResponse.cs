@@ -12,7 +12,7 @@ namespace Courier.Models.Profiles;
 [JsonConverter(typeof(ModelConverter<ProfileRetrieveResponse, ProfileRetrieveResponseFromRaw>))]
 public sealed record class ProfileRetrieveResponse : ModelBase
 {
-    public required Dictionary<string, JsonElement> Profile
+    public required IReadOnlyDictionary<string, JsonElement> Profile
     {
         get
         {

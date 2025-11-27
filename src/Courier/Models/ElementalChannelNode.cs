@@ -23,7 +23,7 @@ namespace Courier.Models;
 [JsonConverter(typeof(ModelConverter<ElementalChannelNode, ElementalChannelNodeFromRaw>))]
 public sealed record class ElementalChannelNode : ModelBase
 {
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
         get
         {
@@ -128,7 +128,7 @@ public sealed record class ElementalChannelNode : ModelBase
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is required.
     /// </summary>
-    public Dictionary<string, JsonElement>? Raw
+    public IReadOnlyDictionary<string, JsonElement>? Raw
     {
         get
         {
@@ -246,7 +246,7 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : ModelBase
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is required.
     /// </summary>
-    public Dictionary<string, JsonElement>? Raw
+    public IReadOnlyDictionary<string, JsonElement>? Raw
     {
         get
         {

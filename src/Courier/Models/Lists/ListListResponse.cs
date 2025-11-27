@@ -12,7 +12,7 @@ namespace Courier.Models.Lists;
 [JsonConverter(typeof(ModelConverter<ListListResponse, ListListResponseFromRaw>))]
 public sealed record class ListListResponse : ModelBase
 {
-    public required List<SubscriptionList> Items
+    public required IReadOnlyList<SubscriptionList> Items
     {
         get
         {

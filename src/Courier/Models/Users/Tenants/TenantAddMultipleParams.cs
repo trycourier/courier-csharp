@@ -26,7 +26,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
 
     public string? UserID { get; init; }
 
-    public required List<TenantAssociation> Tenants
+    public required IReadOnlyList<TenantAssociation> Tenants
     {
         get
         {

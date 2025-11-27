@@ -39,7 +39,7 @@ public sealed record class TenantListResponse : ModelBase
     /// <summary>
     /// An array of Tenants
     /// </summary>
-    public required List<Tenant> Items
+    public required IReadOnlyList<Tenant> Items
     {
         get
         {

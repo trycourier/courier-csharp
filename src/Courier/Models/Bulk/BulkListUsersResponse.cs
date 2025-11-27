@@ -12,7 +12,7 @@ namespace Courier.Models.Bulk;
 [JsonConverter(typeof(ModelConverter<BulkListUsersResponse, BulkListUsersResponseFromRaw>))]
 public sealed record class BulkListUsersResponse : ModelBase
 {
-    public required List<Item> Items
+    public required IReadOnlyList<Item> Items
     {
         get
         {

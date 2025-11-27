@@ -12,7 +12,7 @@ namespace Courier.Models.Tenants;
 [JsonConverter(typeof(ModelConverter<DefaultPreferences, DefaultPreferencesFromRaw>))]
 public sealed record class DefaultPreferences : ModelBase
 {
-    public List<Item>? Items
+    public IReadOnlyList<Item>? Items
     {
         get
         {
@@ -97,7 +97,7 @@ public sealed record class Item : ModelBase
     /// <summary>
     /// The default channels to send to this tenant when has_custom_routing is enabled
     /// </summary>
-    public List<ApiEnum<string, ChannelClassification>>? CustomRouting
+    public IReadOnlyList<ApiEnum<string, ChannelClassification>>? CustomRouting
     {
         get
         {

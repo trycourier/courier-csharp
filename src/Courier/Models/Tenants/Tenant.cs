@@ -138,7 +138,7 @@ public sealed record class Tenant : ModelBase
     /// <summary>
     /// Arbitrary properties accessible to a template.
     /// </summary>
-    public Dictionary<string, JsonElement>? Properties
+    public IReadOnlyDictionary<string, JsonElement>? Properties
     {
         get
         {
@@ -162,7 +162,7 @@ public sealed record class Tenant : ModelBase
     /// <summary>
     /// A user profile object merged with user profile on send.
     /// </summary>
-    public Dictionary<string, JsonElement>? UserProfile
+    public IReadOnlyDictionary<string, JsonElement>? UserProfile
     {
         get
         {

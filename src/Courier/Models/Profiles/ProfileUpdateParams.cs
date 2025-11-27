@@ -27,7 +27,7 @@ public sealed record class ProfileUpdateParams : ParamsBase
     /// <summary>
     /// List of patch operations to apply to the profile.
     /// </summary>
-    public required List<Patch> Patch
+    public required IReadOnlyList<Patch> Patch
     {
         get
         {

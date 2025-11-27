@@ -46,7 +46,7 @@ public sealed record class TenantAssociation : ModelBase
     /// <summary>
     /// Additional metadata to be applied to a user profile when used in a tenant context
     /// </summary>
-    public Dictionary<string, JsonElement>? Profile
+    public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {

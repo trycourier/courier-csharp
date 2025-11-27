@@ -113,7 +113,7 @@ public sealed record class TenantListResponse : ModelBase
         }
     }
 
-    public List<Tenants::TenantAssociation>? Items
+    public IReadOnlyList<Tenants::TenantAssociation>? Items
     {
         get
         {

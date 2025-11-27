@@ -23,7 +23,7 @@ public sealed record class BulkAddUsersParams : ParamsBase
 
     public string? JobID { get; init; }
 
-    public required List<InboundBulkMessageUser> Users
+    public required IReadOnlyList<InboundBulkMessageUser> Users
     {
         get
         {
