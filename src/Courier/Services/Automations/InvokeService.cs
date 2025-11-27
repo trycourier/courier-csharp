@@ -9,8 +9,10 @@ using Courier.Models.Automations.Invoke;
 
 namespace Courier.Services.Automations;
 
+/// <inheritdoc />
 public sealed class InvokeService : IInvokeService
 {
+    /// <inheritdoc/>
     public IInvokeService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new InvokeService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class InvokeService : IInvokeService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<AutomationInvokeResponse> InvokeAdHoc(
         InvokeInvokeAdHocParams parameters,
         CancellationToken cancellationToken = default
@@ -46,6 +49,7 @@ public sealed class InvokeService : IInvokeService
         return automationInvokeResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<AutomationInvokeResponse> InvokeByTemplate(
         InvokeInvokeByTemplateParams parameters,
         CancellationToken cancellationToken = default
@@ -74,6 +78,7 @@ public sealed class InvokeService : IInvokeService
         return automationInvokeResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<AutomationInvokeResponse> InvokeByTemplate(
         string templateID,
         InvokeInvokeByTemplateParams parameters,

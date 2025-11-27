@@ -9,8 +9,10 @@ using Courier.Services.Notifications;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class NotificationService : INotificationService
 {
+    /// <inheritdoc/>
     public INotificationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new NotificationService(this._client.WithOptions(modifier));
@@ -37,6 +39,7 @@ public sealed class NotificationService : INotificationService
         get { return _checks.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<NotificationListResponse> List(
         NotificationListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -62,6 +65,7 @@ public sealed class NotificationService : INotificationService
         return notifications;
     }
 
+    /// <inheritdoc/>
     public async Task<NotificationGetContent> RetrieveContent(
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
@@ -90,6 +94,7 @@ public sealed class NotificationService : INotificationService
         return notificationGetContent;
     }
 
+    /// <inheritdoc/>
     public async Task<NotificationGetContent> RetrieveContent(
         string id,
         NotificationRetrieveContentParams? parameters = null,

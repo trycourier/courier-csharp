@@ -11,6 +11,11 @@ namespace Courier.Services;
 /// </summary>
 public interface IUserService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IUserService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     Users::IPreferenceService Preferences { get; }

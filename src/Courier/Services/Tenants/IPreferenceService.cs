@@ -11,6 +11,11 @@ namespace Courier.Services.Tenants;
 /// </summary>
 public interface IPreferenceService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IPreferenceService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IItemService Items { get; }

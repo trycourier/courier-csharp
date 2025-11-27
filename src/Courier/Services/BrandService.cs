@@ -8,8 +8,10 @@ using Courier.Models.Brands;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class BrandService : IBrandService
 {
+    /// <inheritdoc/>
     public IBrandService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new BrandService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class BrandService : IBrandService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<Brand> Create(
         BrandCreateParams parameters,
         CancellationToken cancellationToken = default
@@ -43,6 +46,7 @@ public sealed class BrandService : IBrandService
         return brand;
     }
 
+    /// <inheritdoc/>
     public async Task<Brand> Retrieve(
         BrandRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -69,6 +73,7 @@ public sealed class BrandService : IBrandService
         return brand;
     }
 
+    /// <inheritdoc/>
     public async Task<Brand> Retrieve(
         string brandID,
         BrandRetrieveParams? parameters = null,
@@ -80,6 +85,7 @@ public sealed class BrandService : IBrandService
         return await this.Retrieve(parameters with { BrandID = brandID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<Brand> Update(
         BrandUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -106,6 +112,7 @@ public sealed class BrandService : IBrandService
         return brand;
     }
 
+    /// <inheritdoc/>
     public async Task<Brand> Update(
         string brandID,
         BrandUpdateParams parameters,
@@ -115,6 +122,7 @@ public sealed class BrandService : IBrandService
         return await this.Update(parameters with { BrandID = brandID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<BrandListResponse> List(
         BrandListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -140,6 +148,7 @@ public sealed class BrandService : IBrandService
         return brands;
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         BrandDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -160,6 +169,7 @@ public sealed class BrandService : IBrandService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         string brandID,
         BrandDeleteParams? parameters = null,

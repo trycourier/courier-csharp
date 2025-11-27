@@ -14,6 +14,11 @@ namespace Courier.Services.Automations;
 /// </summary>
 public interface IInvokeService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IInvokeService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -34,9 +39,7 @@ public interface IInvokeService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Invoke an automation run from an automation template.
-    /// </summary>
+    /// <inheritdoc cref="InvokeByTemplate(InvokeInvokeByTemplateParams, CancellationToken)"/>
     Task<AutomationInvokeResponse> InvokeByTemplate(
         string templateID,
         InvokeInvokeByTemplateParams parameters,

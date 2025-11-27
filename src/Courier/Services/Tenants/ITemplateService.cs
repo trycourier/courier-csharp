@@ -14,6 +14,11 @@ namespace Courier.Services.Tenants;
 /// </summary>
 public interface ITemplateService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ITemplateService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -24,9 +29,7 @@ public interface ITemplateService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get a Template in Tenant
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(TemplateRetrieveParams, CancellationToken)"/>
     Task<BaseTemplateTenantAssociation> Retrieve(
         string templateID,
         TemplateRetrieveParams parameters,
@@ -41,9 +44,7 @@ public interface ITemplateService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// List Templates in Tenant
-    /// </summary>
+    /// <inheritdoc cref="List(TemplateListParams, CancellationToken)"/>
     Task<TemplateListResponse> List(
         string tenantID,
         TemplateListParams? parameters = null,

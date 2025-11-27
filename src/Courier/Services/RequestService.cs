@@ -8,8 +8,10 @@ using Courier.Models.Requests;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class RequestService : IRequestService
 {
+    /// <inheritdoc/>
     public IRequestService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new RequestService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class RequestService : IRequestService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task Archive(
         RequestArchiveParams parameters,
         CancellationToken cancellationToken = default
@@ -42,6 +45,7 @@ public sealed class RequestService : IRequestService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Archive(
         string requestID,
         RequestArchiveParams? parameters = null,

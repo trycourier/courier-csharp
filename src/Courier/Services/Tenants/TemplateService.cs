@@ -9,8 +9,10 @@ using Courier.Models.Tenants.Templates;
 
 namespace Courier.Services.Tenants;
 
+/// <inheritdoc />
 public sealed class TemplateService : ITemplateService
 {
+    /// <inheritdoc/>
     public ITemplateService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new TemplateService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class TemplateService : ITemplateService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<BaseTemplateTenantAssociation> Retrieve(
         TemplateRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -51,6 +54,7 @@ public sealed class TemplateService : ITemplateService
         return baseTemplateTenantAssociation;
     }
 
+    /// <inheritdoc/>
     public async Task<BaseTemplateTenantAssociation> Retrieve(
         string templateID,
         TemplateRetrieveParams parameters,
@@ -60,6 +64,7 @@ public sealed class TemplateService : ITemplateService
         return await this.Retrieve(parameters with { TemplateID = templateID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<TemplateListResponse> List(
         TemplateListParams parameters,
         CancellationToken cancellationToken = default
@@ -88,6 +93,7 @@ public sealed class TemplateService : ITemplateService
         return templates;
     }
 
+    /// <inheritdoc/>
     public async Task<TemplateListResponse> List(
         string tenantID,
         TemplateListParams? parameters = null,

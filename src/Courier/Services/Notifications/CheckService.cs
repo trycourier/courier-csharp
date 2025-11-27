@@ -8,8 +8,10 @@ using Courier.Models.Notifications.Checks;
 
 namespace Courier.Services.Notifications;
 
+/// <inheritdoc />
 public sealed class CheckService : ICheckService
 {
+    /// <inheritdoc/>
     public ICheckService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new CheckService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class CheckService : ICheckService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<CheckUpdateResponse> Update(
         CheckUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class CheckService : ICheckService
         return check;
     }
 
+    /// <inheritdoc/>
     public async Task<CheckUpdateResponse> Update(
         string submissionID,
         CheckUpdateParams parameters,
@@ -65,6 +69,7 @@ public sealed class CheckService : ICheckService
         );
     }
 
+    /// <inheritdoc/>
     public async Task<CheckListResponse> List(
         CheckListParams parameters,
         CancellationToken cancellationToken = default
@@ -93,6 +98,7 @@ public sealed class CheckService : ICheckService
         return checks;
     }
 
+    /// <inheritdoc/>
     public async Task<CheckListResponse> List(
         string submissionID,
         CheckListParams parameters,
@@ -102,6 +108,7 @@ public sealed class CheckService : ICheckService
         return await this.List(parameters with { SubmissionID = submissionID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         CheckDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -122,6 +129,7 @@ public sealed class CheckService : ICheckService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         string submissionID,
         CheckDeleteParams parameters,

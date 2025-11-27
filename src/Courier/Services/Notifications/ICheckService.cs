@@ -13,12 +13,19 @@ namespace Courier.Services.Notifications;
 /// </summary>
 public interface ICheckService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ICheckService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     Task<CheckUpdateResponse> Update(
         CheckUpdateParams parameters,
         CancellationToken cancellationToken = default
     );
+
+    /// <inheritdoc cref="Update(CheckUpdateParams, CancellationToken)"/>
     Task<CheckUpdateResponse> Update(
         string submissionID,
         CheckUpdateParams parameters,
@@ -29,6 +36,8 @@ public interface ICheckService
         CheckListParams parameters,
         CancellationToken cancellationToken = default
     );
+
+    /// <inheritdoc cref="List(CheckListParams, CancellationToken)"/>
     Task<CheckListResponse> List(
         string submissionID,
         CheckListParams parameters,
@@ -36,6 +45,8 @@ public interface ICheckService
     );
 
     Task Delete(CheckDeleteParams parameters, CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="Delete(CheckDeleteParams, CancellationToken)"/>
     Task Delete(
         string submissionID,
         CheckDeleteParams parameters,

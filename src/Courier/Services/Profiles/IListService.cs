@@ -13,6 +13,11 @@ namespace Courier.Services.Profiles;
 /// </summary>
 public interface IListService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     global::Courier.Services.Profiles.IListService WithOptions(
         Func<ClientOptions, ClientOptions> modifier
     );
@@ -25,9 +30,7 @@ public interface IListService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Returns the subscribed lists for a specified user.
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(ListRetrieveParams, CancellationToken)"/>
     Task<ListRetrieveResponse> Retrieve(
         string userID,
         ListRetrieveParams? parameters = null,
@@ -42,9 +45,7 @@ public interface IListService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Removes all list subscriptions for given user.
-    /// </summary>
+    /// <inheritdoc cref="Delete(ListDeleteParams, CancellationToken)"/>
     Task<ListDeleteResponse> Delete(
         string userID,
         ListDeleteParams? parameters = null,
@@ -60,10 +61,7 @@ public interface IListService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Subscribes the given user to one or more lists. If the list does not exist,
-    /// it will be created.
-    /// </summary>
+    /// <inheritdoc cref="Subscribe(ListSubscribeParams, CancellationToken)"/>
     Task<ListSubscribeResponse> Subscribe(
         string userID,
         ListSubscribeParams parameters,

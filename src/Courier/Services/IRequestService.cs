@@ -13,6 +13,11 @@ namespace Courier.Services;
 /// </summary>
 public interface IRequestService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IRequestService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -20,9 +25,7 @@ public interface IRequestService
     /// </summary>
     Task Archive(RequestArchiveParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Archive message
-    /// </summary>
+    /// <inheritdoc cref="Archive(RequestArchiveParams, CancellationToken)"/>
     Task Archive(
         string requestID,
         RequestArchiveParams? parameters = null,

@@ -8,8 +8,10 @@ using Courier.Models.AuditEvents;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class AuditEventService : IAuditEventService
 {
+    /// <inheritdoc/>
     public IAuditEventService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AuditEventService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class AuditEventService : IAuditEventService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<AuditEvent> Retrieve(
         AuditEventRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class AuditEventService : IAuditEventService
         return auditEvent;
     }
 
+    /// <inheritdoc/>
     public async Task<AuditEvent> Retrieve(
         string auditEventID,
         AuditEventRetrieveParams? parameters = null,
@@ -67,6 +71,7 @@ public sealed class AuditEventService : IAuditEventService
         );
     }
 
+    /// <inheritdoc/>
     public async Task<AuditEventListResponse> List(
         AuditEventListParams? parameters = null,
         CancellationToken cancellationToken = default

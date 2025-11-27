@@ -9,8 +9,10 @@ using Courier.Models.Notifications.Draft;
 
 namespace Courier.Services.Notifications;
 
+/// <inheritdoc />
 public sealed class DraftService : IDraftService
 {
+    /// <inheritdoc/>
     public IDraftService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new DraftService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class DraftService : IDraftService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<NotificationGetContent> RetrieveContent(
         DraftRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
@@ -51,6 +54,7 @@ public sealed class DraftService : IDraftService
         return notificationGetContent;
     }
 
+    /// <inheritdoc/>
     public async Task<NotificationGetContent> RetrieveContent(
         string id,
         DraftRetrieveContentParams? parameters = null,

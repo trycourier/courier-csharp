@@ -4,8 +4,10 @@ using Courier.Services.Automations;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class AutomationService : IAutomationService
 {
+    /// <inheritdoc/>
     public IAutomationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AutomationService(this._client.WithOptions(modifier));

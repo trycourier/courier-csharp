@@ -8,8 +8,10 @@ using Courier.Models.Messages;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class MessageService : IMessageService
 {
+    /// <inheritdoc/>
     public IMessageService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new MessageService(this._client.WithOptions(modifier));
@@ -22,6 +24,7 @@ public sealed class MessageService : IMessageService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<MessageRetrieveResponse> Retrieve(
         MessageRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +53,7 @@ public sealed class MessageService : IMessageService
         return message;
     }
 
+    /// <inheritdoc/>
     public async Task<MessageRetrieveResponse> Retrieve(
         string messageID,
         MessageRetrieveParams? parameters = null,
@@ -61,6 +65,7 @@ public sealed class MessageService : IMessageService
         return await this.Retrieve(parameters with { MessageID = messageID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<MessageListResponse> List(
         MessageListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -86,6 +91,7 @@ public sealed class MessageService : IMessageService
         return messages;
     }
 
+    /// <inheritdoc/>
     public async Task<MessageDetails> Cancel(
         MessageCancelParams parameters,
         CancellationToken cancellationToken = default
@@ -114,6 +120,7 @@ public sealed class MessageService : IMessageService
         return messageDetails;
     }
 
+    /// <inheritdoc/>
     public async Task<MessageDetails> Cancel(
         string messageID,
         MessageCancelParams? parameters = null,
@@ -125,6 +132,7 @@ public sealed class MessageService : IMessageService
         return await this.Cancel(parameters with { MessageID = messageID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<MessageContentResponse> Content(
         MessageContentParams parameters,
         CancellationToken cancellationToken = default
@@ -153,6 +161,7 @@ public sealed class MessageService : IMessageService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<MessageContentResponse> Content(
         string messageID,
         MessageContentParams? parameters = null,
@@ -164,6 +173,7 @@ public sealed class MessageService : IMessageService
         return await this.Content(parameters with { MessageID = messageID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<MessageHistoryResponse> History(
         MessageHistoryParams parameters,
         CancellationToken cancellationToken = default
@@ -192,6 +202,7 @@ public sealed class MessageService : IMessageService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
     public async Task<MessageHistoryResponse> History(
         string messageID,
         MessageHistoryParams? parameters = null,

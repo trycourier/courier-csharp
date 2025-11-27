@@ -14,6 +14,11 @@ namespace Courier.Services.Users;
 /// </summary>
 public interface ITokenService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ITokenService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -24,9 +29,7 @@ public interface ITokenService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Get single token available for a `:token`
-    /// </summary>
+    /// <inheritdoc cref="Retrieve(TokenRetrieveParams, CancellationToken)"/>
     Task<TokenRetrieveResponse> Retrieve(
         string token,
         TokenRetrieveParams parameters,
@@ -38,9 +41,7 @@ public interface ITokenService
     /// </summary>
     Task Update(TokenUpdateParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Apply a JSON Patch (RFC 6902) to the specified token.
-    /// </summary>
+    /// <inheritdoc cref="Update(TokenUpdateParams, CancellationToken)"/>
     Task Update(
         string token,
         TokenUpdateParams parameters,
@@ -55,9 +56,7 @@ public interface ITokenService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Gets all tokens available for a :user_id
-    /// </summary>
+    /// <inheritdoc cref="List(TokenListParams, CancellationToken)"/>
     Task<List<UserToken>> List(
         string userID,
         TokenListParams? parameters = null,
@@ -69,9 +68,7 @@ public interface ITokenService
     /// </summary>
     Task Delete(TokenDeleteParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Delete User Token
-    /// </summary>
+    /// <inheritdoc cref="Delete(TokenDeleteParams, CancellationToken)"/>
     Task Delete(
         string token,
         TokenDeleteParams parameters,
@@ -86,9 +83,7 @@ public interface ITokenService
         CancellationToken cancellationToken = default
     );
 
-    /// <summary>
-    /// Adds multiple tokens to a user and overwrites matching existing tokens.
-    /// </summary>
+    /// <inheritdoc cref="AddMultiple(TokenAddMultipleParams, CancellationToken)"/>
     Task AddMultiple(
         string userID,
         TokenAddMultipleParams? parameters = null,
@@ -100,9 +95,7 @@ public interface ITokenService
     /// </summary>
     Task AddSingle(TokenAddSingleParams parameters, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Adds a single token to a user and overwrites a matching existing token.
-    /// </summary>
+    /// <inheritdoc cref="AddSingle(TokenAddSingleParams, CancellationToken)"/>
     Task AddSingle(
         string token,
         TokenAddSingleParams parameters,

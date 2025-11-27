@@ -7,8 +7,10 @@ using Courier.Models.Send;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class SendService : ISendService
 {
+    /// <inheritdoc/>
     public ISendService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new SendService(this._client.WithOptions(modifier));
@@ -21,6 +23,7 @@ public sealed class SendService : ISendService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<SendMessageResponse> Message(
         SendMessageParams parameters,
         CancellationToken cancellationToken = default

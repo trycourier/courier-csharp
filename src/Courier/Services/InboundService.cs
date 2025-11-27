@@ -7,8 +7,10 @@ using Courier.Models.Inbound;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class InboundService : IInboundService
 {
+    /// <inheritdoc/>
     public IInboundService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new InboundService(this._client.WithOptions(modifier));
@@ -21,6 +23,7 @@ public sealed class InboundService : IInboundService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<InboundTrackEventResponse> TrackEvent(
         InboundTrackEventParams parameters,
         CancellationToken cancellationToken = default

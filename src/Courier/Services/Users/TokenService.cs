@@ -9,8 +9,10 @@ using Courier.Models.Users.Tokens;
 
 namespace Courier.Services.Users;
 
+/// <inheritdoc />
 public sealed class TokenService : ITokenService
 {
+    /// <inheritdoc/>
     public ITokenService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new TokenService(this._client.WithOptions(modifier));
@@ -23,6 +25,7 @@ public sealed class TokenService : ITokenService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<TokenRetrieveResponse> Retrieve(
         TokenRetrieveParams parameters,
         CancellationToken cancellationToken = default
@@ -51,6 +54,7 @@ public sealed class TokenService : ITokenService
         return token;
     }
 
+    /// <inheritdoc/>
     public async Task<TokenRetrieveResponse> Retrieve(
         string token,
         TokenRetrieveParams parameters,
@@ -60,6 +64,7 @@ public sealed class TokenService : ITokenService
         return await this.Retrieve(parameters with { Token = token }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         TokenUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -80,6 +85,7 @@ public sealed class TokenService : ITokenService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Update(
         string token,
         TokenUpdateParams parameters,
@@ -89,6 +95,7 @@ public sealed class TokenService : ITokenService
         await this.Update(parameters with { Token = token }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task<List<UserToken>> List(
         TokenListParams parameters,
         CancellationToken cancellationToken = default
@@ -120,6 +127,7 @@ public sealed class TokenService : ITokenService
         return userTokens;
     }
 
+    /// <inheritdoc/>
     public async Task<List<UserToken>> List(
         string userID,
         TokenListParams? parameters = null,
@@ -131,6 +139,7 @@ public sealed class TokenService : ITokenService
         return await this.List(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         TokenDeleteParams parameters,
         CancellationToken cancellationToken = default
@@ -151,6 +160,7 @@ public sealed class TokenService : ITokenService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task Delete(
         string token,
         TokenDeleteParams parameters,
@@ -160,6 +170,7 @@ public sealed class TokenService : ITokenService
         await this.Delete(parameters with { Token = token }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task AddMultiple(
         TokenAddMultipleParams parameters,
         CancellationToken cancellationToken = default
@@ -180,6 +191,7 @@ public sealed class TokenService : ITokenService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task AddMultiple(
         string userID,
         TokenAddMultipleParams? parameters = null,
@@ -191,6 +203,7 @@ public sealed class TokenService : ITokenService
         await this.AddMultiple(parameters with { UserID = userID }, cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task AddSingle(
         TokenAddSingleParams parameters,
         CancellationToken cancellationToken = default
@@ -211,6 +224,7 @@ public sealed class TokenService : ITokenService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public async Task AddSingle(
         string token,
         TokenAddSingleParams parameters,
