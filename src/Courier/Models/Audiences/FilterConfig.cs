@@ -26,9 +26,13 @@ public sealed record class FilterConfig : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, FilterConfigOperator>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'operator' cannot be null",
+                    new System::ArgumentNullException("operator")
+                );
         }
         init
         {

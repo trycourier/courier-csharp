@@ -148,9 +148,13 @@ public sealed record class Block : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, BlockType>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'type' cannot be null",
+                    new System::ArgumentNullException("type")
+                );
         }
         init
         {
@@ -448,6 +452,16 @@ public record class Content
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
     }
+
+    public virtual bool Equals(Content? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 sealed class ContentConverter : JsonConverter<Content?>
@@ -659,6 +673,16 @@ public record class Locale
         {
             throw new CourierInvalidDataException("Data did not match any variant of Locale");
         }
+    }
+
+    public virtual bool Equals(Locale? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

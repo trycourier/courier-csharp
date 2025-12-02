@@ -95,6 +95,16 @@ public record class MessageRoutingChannel
             );
         }
     }
+
+    public virtual bool Equals(MessageRoutingChannel? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChannel>

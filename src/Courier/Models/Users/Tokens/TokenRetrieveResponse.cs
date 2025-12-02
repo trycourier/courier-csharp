@@ -54,9 +54,13 @@ public sealed record class TokenRetrieveResponse : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'provider_key' cannot be null",
+                    new System::ArgumentNullException("provider_key")
+                );
         }
         init
         {

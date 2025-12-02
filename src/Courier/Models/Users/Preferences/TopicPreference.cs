@@ -23,9 +23,13 @@ public sealed record class TopicPreference : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'default_status' cannot be null",
+                    new ArgumentNullException("default_status")
+                );
         }
         init
         {
@@ -47,9 +51,13 @@ public sealed record class TopicPreference : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new ArgumentNullException("status")
+                );
         }
         init
         {

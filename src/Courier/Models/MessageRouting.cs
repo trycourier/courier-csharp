@@ -51,9 +51,13 @@ public sealed record class MessageRouting : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Method>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'method' cannot be null",
+                    new System::ArgumentNullException("method")
+                );
         }
         init
         {

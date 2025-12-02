@@ -23,8 +23,12 @@ public sealed record class ListDeleteResponse : ModelBase
                 );
 
             return JsonSerializer.Deserialize<
-                ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
-            >(element, ModelBase.SerializerOptions);
+                    ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
+                >(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new System::ArgumentNullException("status")
+                );
         }
         init
         {

@@ -68,9 +68,13 @@ public sealed record class TokenAddSingleParams : ParamsBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, ProviderKey>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'provider_key' cannot be null",
+                    new System::ArgumentNullException("provider_key")
+                );
         }
         init
         {
@@ -540,6 +544,16 @@ public record class ExpiryDate
         {
             throw new CourierInvalidDataException("Data did not match any variant of ExpiryDate");
         }
+    }
+
+    public virtual bool Equals(ExpiryDate? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

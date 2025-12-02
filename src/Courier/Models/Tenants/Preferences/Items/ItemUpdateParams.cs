@@ -37,8 +37,12 @@ public sealed record class ItemUpdateParams : ParamsBase
                 );
 
             return JsonSerializer.Deserialize<
-                ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status>
-            >(element, ModelBase.SerializerOptions);
+                    ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status>
+                >(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new System::ArgumentNullException("status")
+                );
         }
         init
         {

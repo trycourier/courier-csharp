@@ -187,9 +187,13 @@ public sealed record class Job : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new System::ArgumentNullException("status")
+                );
         }
         init
         {

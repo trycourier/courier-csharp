@@ -23,9 +23,13 @@ public sealed record class ChannelPreference : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, ChannelClassification>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'channel' cannot be null",
+                    new ArgumentNullException("channel")
+                );
         }
         init
         {

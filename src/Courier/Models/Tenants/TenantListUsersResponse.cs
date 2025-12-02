@@ -50,9 +50,13 @@ public sealed record class TenantListUsersResponse : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, TenantListUsersResponseType>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'type' cannot be null",
+                    new System::ArgumentNullException("type")
+                );
         }
         init
         {
