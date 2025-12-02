@@ -77,7 +77,7 @@ public sealed class TokenService : ITokenService
 
         HttpRequest<TokenUpdateParams> request = new()
         {
-            Method = HttpMethod.Patch,
+            Method = CourierClient.PatchMethod,
             Params = parameters,
         };
         using var response = await this
