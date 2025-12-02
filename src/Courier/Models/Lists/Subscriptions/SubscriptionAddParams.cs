@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Lists.Subscriptions;
 
@@ -28,28 +27,12 @@ public sealed record class SubscriptionAddParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("recipients", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'recipients' cannot be null",
-                    new ArgumentOutOfRangeException("recipients", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<PutSubscriptionsRecipient>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'recipients' cannot be null",
-                    new ArgumentNullException("recipients")
-                );
-        }
-        init
-        {
-            this._rawBodyData["recipients"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<List<PutSubscriptionsRecipient>>(
+                this.RawBodyData,
+                "recipients"
             );
         }
+        init { ModelBase.Set(this._rawBodyData, "recipients", value); }
     }
 
     public SubscriptionAddParams() { }

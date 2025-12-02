@@ -12,13 +12,7 @@ public sealed record class BrandColors : ModelBase
 {
     public string? Primary
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("primary", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "primary"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class BrandColors : ModelBase
                 return;
             }
 
-            this._rawData["primary"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "primary", value);
         }
     }
 
     public string? Secondary
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("secondary", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "secondary"); }
         init
         {
             if (value == null)
@@ -49,10 +34,7 @@ public sealed record class BrandColors : ModelBase
                 return;
             }
 
-            this._rawData["secondary"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "secondary", value);
         }
     }
 

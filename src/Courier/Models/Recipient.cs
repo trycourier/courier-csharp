@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models;
 
@@ -17,20 +15,8 @@ public sealed record class Recipient : ModelBase
     /// </summary>
     public string? AccountID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("account_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["account_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "account_id"); }
+        init { ModelBase.Set(this._rawData, "account_id", value); }
     }
 
     /// <summary>
@@ -38,44 +24,20 @@ public sealed record class Recipient : ModelBase
     /// </summary>
     public MessageContext? Context
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("context", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<MessageContext?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["context"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<MessageContext>(this.RawData, "context"); }
+        init { ModelBase.Set(this._rawData, "context", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            if (!this._rawData.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "data"
             );
         }
-        init
-        {
-            this._rawData["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -83,20 +45,8 @@ public sealed record class Recipient : ModelBase
     /// </summary>
     public string? Email
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("email", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["email"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "email"); }
+        init { ModelBase.Set(this._rawData, "email", value); }
     }
 
     /// <summary>
@@ -104,20 +54,8 @@ public sealed record class Recipient : ModelBase
     /// </summary>
     public string? ListID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("list_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["list_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "list_id"); }
+        init { ModelBase.Set(this._rawData, "list_id", value); }
     }
 
     /// <summary>
@@ -125,20 +63,8 @@ public sealed record class Recipient : ModelBase
     /// </summary>
     public string? Locale
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("locale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["locale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "locale"); }
+        init { ModelBase.Set(this._rawData, "locale", value); }
     }
 
     /// <summary>
@@ -146,38 +72,14 @@ public sealed record class Recipient : ModelBase
     /// </summary>
     public string? PhoneNumber
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("phone_number", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["phone_number"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "phone_number"); }
+        init { ModelBase.Set(this._rawData, "phone_number", value); }
     }
 
     public Preferences? Preferences
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Preferences?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Preferences>(this.RawData, "preferences"); }
+        init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
     /// <summary>
@@ -185,20 +87,8 @@ public sealed record class Recipient : ModelBase
     /// </summary>
     public string? TenantID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("tenant_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "tenant_id"); }
+        init { ModelBase.Set(this._rawData, "tenant_id", value); }
     }
 
     /// <summary>
@@ -207,20 +97,8 @@ public sealed record class Recipient : ModelBase
     /// </summary>
     public string? UserID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("user_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["user_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "user_id"); }
+        init { ModelBase.Set(this._rawData, "user_id", value); }
     }
 
     public override void Validate()
@@ -271,67 +149,30 @@ public sealed record class Preferences : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("notifications", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'notifications' cannot be null",
-                    new ArgumentOutOfRangeException("notifications", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Dictionary<string, Preference>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'notifications' cannot be null",
-                    new ArgumentNullException("notifications")
-                );
-        }
-        init
-        {
-            this._rawData["notifications"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<Dictionary<string, Preference>>(
+                this.RawData,
+                "notifications"
             );
         }
+        init { ModelBase.Set(this._rawData, "notifications", value); }
     }
 
     public IReadOnlyDictionary<string, Preference>? Categories
     {
         get
         {
-            if (!this._rawData.TryGetValue("categories", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, Preference>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, Preference>>(
+                this.RawData,
+                "categories"
             );
         }
-        init
-        {
-            this._rawData["categories"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "categories", value); }
     }
 
     public string? TemplateID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("templateId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["templateId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "templateId"); }
+        init { ModelBase.Set(this._rawData, "templateId", value); }
     }
 
     public override void Validate()

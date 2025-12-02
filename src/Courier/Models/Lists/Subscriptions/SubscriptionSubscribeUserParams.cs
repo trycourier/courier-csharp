@@ -29,21 +29,12 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<RecipientPreferences?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<RecipientPreferences>(
+                this.RawBodyData,
+                "preferences"
             );
         }
-        init
-        {
-            this._rawBodyData["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "preferences", value); }
     }
 
     public SubscriptionSubscribeUserParams() { }

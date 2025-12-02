@@ -27,74 +27,26 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
 {
     public IReadOnlyList<string>? Channels
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("channels", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("if", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["if"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
+        init { ModelBase.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("loop", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["loop"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
+        init { ModelBase.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("ref", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["ref"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
+        init { ModelBase.Set(this._rawData, "ref", value); }
     }
 
     /// <summary>
@@ -103,27 +55,8 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
     /// </summary>
     public required string Channel
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("channel", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new System::ArgumentOutOfRangeException("channel", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new System::ArgumentNullException("channel")
-                );
-        }
-        init
-        {
-            this._rawData["channel"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "channel"); }
+        init { ModelBase.Set(this._rawData, "channel", value); }
     }
 
     /// <summary>
@@ -134,34 +67,18 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("raw", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(this.RawData, "raw");
         }
-        init
-        {
-            this._rawData["raw"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "raw", value); }
     }
 
     public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                ElementalChannelNodeWithTypeIntersectionMember1Type
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
+            >(this.RawData, "type");
         }
         init
         {
@@ -170,10 +87,7 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
                 return;
             }
 
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "type", value);
         }
     }
 
@@ -250,13 +164,9 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Mod
     {
         get
         {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                ElementalChannelNodeWithTypeIntersectionMember1Type
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
+            >(this.RawData, "type");
         }
         init
         {
@@ -265,10 +175,7 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Mod
                 return;
             }
 
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "type", value);
         }
     }
 

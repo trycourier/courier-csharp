@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Translations;
 
@@ -27,27 +26,8 @@ public sealed record class TranslationUpdateParams : ParamsBase
 
     public required string Body
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("body", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'body' cannot be null",
-                    new ArgumentOutOfRangeException("body", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'body' cannot be null",
-                    new ArgumentNullException("body")
-                );
-        }
-        init
-        {
-            this._rawBodyData["body"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "body"); }
+        init { ModelBase.Set(this._rawBodyData, "body", value); }
     }
 
     public TranslationUpdateParams() { }

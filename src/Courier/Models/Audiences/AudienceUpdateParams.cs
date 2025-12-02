@@ -27,20 +27,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public string? Description
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("description", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["description"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "description"); }
+        init { ModelBase.Set(this._rawBodyData, "description", value); }
     }
 
     /// <summary>
@@ -48,20 +36,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public Filter? Filter
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("filter", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Filter?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["filter"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Filter>(this.RawBodyData, "filter"); }
+        init { ModelBase.Set(this._rawBodyData, "filter", value); }
     }
 
     /// <summary>
@@ -69,20 +45,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public string? Name
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("name", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "name"); }
+        init { ModelBase.Set(this._rawBodyData, "name", value); }
     }
 
     public AudienceUpdateParams() { }

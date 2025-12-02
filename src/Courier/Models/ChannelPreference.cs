@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models;
 
@@ -16,28 +14,12 @@ public sealed record class ChannelPreference : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("channel", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new ArgumentOutOfRangeException("channel", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, ChannelClassification>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new ArgumentNullException("channel")
-                );
-        }
-        init
-        {
-            this._rawData["channel"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, ChannelClassification>>(
+                this.RawData,
+                "channel"
             );
         }
+        init { ModelBase.Set(this._rawData, "channel", value); }
     }
 
     public override void Validate()

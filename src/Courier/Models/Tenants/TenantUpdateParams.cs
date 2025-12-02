@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Tenants;
 
@@ -28,27 +27,8 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public required string Name
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("name", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentOutOfRangeException("name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentNullException("name")
-                );
-        }
-        init
-        {
-            this._rawBodyData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "name"); }
+        init { ModelBase.Set(this._rawBodyData, "name", value); }
     }
 
     /// <summary>
@@ -56,20 +36,8 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public string? BrandID
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("brand_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["brand_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "brand_id"); }
+        init { ModelBase.Set(this._rawBodyData, "brand_id", value); }
     }
 
     /// <summary>
@@ -80,21 +48,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("default_preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<DefaultPreferences?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<DefaultPreferences>(
+                this.RawBodyData,
+                "default_preferences"
             );
         }
-        init
-        {
-            this._rawBodyData["default_preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "default_preferences", value); }
     }
 
     /// <summary>
@@ -102,20 +61,8 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public string? ParentTenantID
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("parent_tenant_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["parent_tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "parent_tenant_id"); }
+        init { ModelBase.Set(this._rawBodyData, "parent_tenant_id", value); }
     }
 
     /// <summary>
@@ -125,21 +72,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("properties", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "properties"
             );
         }
-        init
-        {
-            this._rawBodyData["properties"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "properties", value); }
     }
 
     /// <summary>
@@ -149,21 +87,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("user_profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "user_profile"
             );
         }
-        init
-        {
-            this._rawBodyData["user_profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "user_profile", value); }
     }
 
     public TenantUpdateParams() { }

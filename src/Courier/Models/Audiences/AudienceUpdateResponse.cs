@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Audiences;
 
@@ -14,27 +12,8 @@ public sealed record class AudienceUpdateResponse : ModelBase
 {
     public required Audience Audience
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("audience", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'audience' cannot be null",
-                    new ArgumentOutOfRangeException("audience", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Audience>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'audience' cannot be null",
-                    new ArgumentNullException("audience")
-                );
-        }
-        init
-        {
-            this._rawData["audience"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Audience>(this.RawData, "audience"); }
+        init { ModelBase.Set(this._rawData, "audience", value); }
     }
 
     public override void Validate()

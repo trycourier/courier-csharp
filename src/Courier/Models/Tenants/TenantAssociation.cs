@@ -17,30 +17,8 @@ public sealed record class TenantAssociation : ModelBase
     /// </summary>
     public required string TenantID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("tenant_id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'tenant_id' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "tenant_id",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'tenant_id' cannot be null",
-                    new System::ArgumentNullException("tenant_id")
-                );
-        }
-        init
-        {
-            this._rawData["tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "tenant_id"); }
+        init { ModelBase.Set(this._rawData, "tenant_id", value); }
     }
 
     /// <summary>
@@ -50,42 +28,24 @@ public sealed record class TenantAssociation : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "profile"
             );
         }
-        init
-        {
-            this._rawData["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "profile", value); }
     }
 
     public ApiEnum<string, global::Courier.Models.Tenants.Type>? Type
     {
         get
         {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                global::Courier.Models.Tenants.Type
-            >?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, global::Courier.Models.Tenants.Type>>(
+                this.RawData,
+                "type"
             );
         }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -93,20 +53,8 @@ public sealed record class TenantAssociation : ModelBase
     /// </summary>
     public string? UserID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("user_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["user_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "user_id"); }
+        init { ModelBase.Set(this._rawData, "user_id", value); }
     }
 
     public override void Validate()

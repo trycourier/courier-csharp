@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Messages;
 
@@ -17,27 +15,8 @@ public sealed record class MessageContentResponse : ModelBase
     /// </summary>
     public required IReadOnlyList<Result> Results
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("results", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'results' cannot be null",
-                    new ArgumentOutOfRangeException("results", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Result>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'results' cannot be null",
-                    new ArgumentNullException("results")
-                );
-        }
-        init
-        {
-            this._rawData["results"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Result>>(this.RawData, "results"); }
+        init { ModelBase.Set(this._rawData, "results", value); }
     }
 
     public override void Validate()
@@ -93,27 +72,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required string Channel
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("channel", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new ArgumentOutOfRangeException("channel", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new ArgumentNullException("channel")
-                );
-        }
-        init
-        {
-            this._rawData["channel"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "channel"); }
+        init { ModelBase.Set(this._rawData, "channel", value); }
     }
 
     /// <summary>
@@ -121,27 +81,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required string ChannelID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("channel_id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channel_id' cannot be null",
-                    new ArgumentOutOfRangeException("channel_id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'channel_id' cannot be null",
-                    new ArgumentNullException("channel_id")
-                );
-        }
-        init
-        {
-            this._rawData["channel_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "channel_id"); }
+        init { ModelBase.Set(this._rawData, "channel_id", value); }
     }
 
     /// <summary>
@@ -149,27 +90,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required Content Content
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("content", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'content' cannot be null",
-                    new ArgumentOutOfRangeException("content", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'content' cannot be null",
-                    new ArgumentNullException("content")
-                );
-        }
-        init
-        {
-            this._rawData["content"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Content>(this.RawData, "content"); }
+        init { ModelBase.Set(this._rawData, "content", value); }
     }
 
     public override void Validate()
@@ -217,27 +139,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required IReadOnlyList<Block> Blocks
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("blocks", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'blocks' cannot be null",
-                    new ArgumentOutOfRangeException("blocks", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Block>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'blocks' cannot be null",
-                    new ArgumentNullException("blocks")
-                );
-        }
-        init
-        {
-            this._rawData["blocks"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Block>>(this.RawData, "blocks"); }
+        init { ModelBase.Set(this._rawData, "blocks", value); }
     }
 
     /// <summary>
@@ -245,27 +148,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string Body
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("body", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'body' cannot be null",
-                    new ArgumentOutOfRangeException("body", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'body' cannot be null",
-                    new ArgumentNullException("body")
-                );
-        }
-        init
-        {
-            this._rawData["body"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "body"); }
+        init { ModelBase.Set(this._rawData, "body", value); }
     }
 
     /// <summary>
@@ -273,27 +157,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string HTML
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("html", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'html' cannot be null",
-                    new ArgumentOutOfRangeException("html", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'html' cannot be null",
-                    new ArgumentNullException("html")
-                );
-        }
-        init
-        {
-            this._rawData["html"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "html"); }
+        init { ModelBase.Set(this._rawData, "html", value); }
     }
 
     /// <summary>
@@ -301,27 +166,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string Subject
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subject", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'subject' cannot be null",
-                    new ArgumentOutOfRangeException("subject", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'subject' cannot be null",
-                    new ArgumentNullException("subject")
-                );
-        }
-        init
-        {
-            this._rawData["subject"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "subject"); }
+        init { ModelBase.Set(this._rawData, "subject", value); }
     }
 
     /// <summary>
@@ -329,27 +175,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string Text
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("text", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'text' cannot be null",
-                    new ArgumentOutOfRangeException("text", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'text' cannot be null",
-                    new ArgumentNullException("text")
-                );
-        }
-        init
-        {
-            this._rawData["text"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "text"); }
+        init { ModelBase.Set(this._rawData, "text", value); }
     }
 
     /// <summary>
@@ -357,27 +184,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string Title
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("title", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'title' cannot be null",
-                    new ArgumentOutOfRangeException("title", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'title' cannot be null",
-                    new ArgumentNullException("title")
-                );
-        }
-        init
-        {
-            this._rawData["title"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "title"); }
+        init { ModelBase.Set(this._rawData, "title", value); }
     }
 
     public override void Validate()
@@ -428,27 +236,8 @@ public sealed record class Block : ModelBase
     /// </summary>
     public required string Text
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("text", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'text' cannot be null",
-                    new ArgumentOutOfRangeException("text", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'text' cannot be null",
-                    new ArgumentNullException("text")
-                );
-        }
-        init
-        {
-            this._rawData["text"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "text"); }
+        init { ModelBase.Set(this._rawData, "text", value); }
     }
 
     /// <summary>
@@ -456,27 +245,8 @@ public sealed record class Block : ModelBase
     /// </summary>
     public required string Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new ArgumentNullException("type")
-                );
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     public override void Validate()

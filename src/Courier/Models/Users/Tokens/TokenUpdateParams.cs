@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Users.Tokens;
 
@@ -28,27 +27,8 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public required IReadOnlyList<Patch> Patch
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("patch", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'patch' cannot be null",
-                    new ArgumentOutOfRangeException("patch", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Patch>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'patch' cannot be null",
-                    new ArgumentNullException("patch")
-                );
-        }
-        init
-        {
-            this._rawBodyData["patch"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Patch>>(this.RawBodyData, "patch"); }
+        init { ModelBase.Set(this._rawBodyData, "patch", value); }
     }
 
     public TokenUpdateParams() { }
@@ -125,27 +105,8 @@ public sealed record class Patch : ModelBase
     /// </summary>
     public required string Op
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("op", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'op' cannot be null",
-                    new ArgumentOutOfRangeException("op", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'op' cannot be null",
-                    new ArgumentNullException("op")
-                );
-        }
-        init
-        {
-            this._rawData["op"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "op"); }
+        init { ModelBase.Set(this._rawData, "op", value); }
     }
 
     /// <summary>
@@ -153,27 +114,8 @@ public sealed record class Patch : ModelBase
     /// </summary>
     public required string Path
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("path", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'path' cannot be null",
-                    new ArgumentOutOfRangeException("path", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'path' cannot be null",
-                    new ArgumentNullException("path")
-                );
-        }
-        init
-        {
-            this._rawData["path"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
+        init { ModelBase.Set(this._rawData, "path", value); }
     }
 
     /// <summary>
@@ -181,20 +123,8 @@ public sealed record class Patch : ModelBase
     /// </summary>
     public string? Value
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("value", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["value"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "value"); }
+        init { ModelBase.Set(this._rawData, "value", value); }
     }
 
     public override void Validate()

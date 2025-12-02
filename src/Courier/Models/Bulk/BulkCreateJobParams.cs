@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Bulk;
 
@@ -23,30 +22,8 @@ public sealed record class BulkCreateJobParams : ParamsBase
 
     public required InboundBulkMessage Message
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("message", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'message' cannot be null",
-                    new ArgumentOutOfRangeException("message", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<InboundBulkMessage>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'message' cannot be null",
-                    new ArgumentNullException("message")
-                );
-        }
-        init
-        {
-            this._rawBodyData["message"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<InboundBulkMessage>(this.RawBodyData, "message"); }
+        init { ModelBase.Set(this._rawBodyData, "message", value); }
     }
 
     public BulkCreateJobParams() { }

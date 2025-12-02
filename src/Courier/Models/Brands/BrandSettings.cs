@@ -12,62 +12,20 @@ public sealed record class BrandSettings : ModelBase
 {
     public BrandColors? Colors
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("colors", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandColors?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["colors"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandColors>(this.RawData, "colors"); }
+        init { ModelBase.Set(this._rawData, "colors", value); }
     }
 
     public BrandSettingsEmail? Email
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("email", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandSettingsEmail?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["email"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandSettingsEmail>(this.RawData, "email"); }
+        init { ModelBase.Set(this._rawData, "email", value); }
     }
 
     public BrandSettingsInApp? Inapp
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("inapp", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandSettingsInApp?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["inapp"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandSettingsInApp>(this.RawData, "inapp"); }
+        init { ModelBase.Set(this._rawData, "inapp", value); }
     }
 
     public override void Validate()

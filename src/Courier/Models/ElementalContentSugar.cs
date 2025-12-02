@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models;
 
@@ -20,27 +18,8 @@ public sealed record class ElementalContentSugar : ModelBase
     /// </summary>
     public required string Body
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("body", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'body' cannot be null",
-                    new ArgumentOutOfRangeException("body", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'body' cannot be null",
-                    new ArgumentNullException("body")
-                );
-        }
-        init
-        {
-            this._rawData["body"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "body"); }
+        init { ModelBase.Set(this._rawData, "body", value); }
     }
 
     /// <summary>
@@ -48,27 +27,8 @@ public sealed record class ElementalContentSugar : ModelBase
     /// </summary>
     public required string Title
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("title", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'title' cannot be null",
-                    new ArgumentOutOfRangeException("title", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'title' cannot be null",
-                    new ArgumentNullException("title")
-                );
-        }
-        init
-        {
-            this._rawData["title"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "title"); }
+        init { ModelBase.Set(this._rawData, "title", value); }
     }
 
     public override void Validate()

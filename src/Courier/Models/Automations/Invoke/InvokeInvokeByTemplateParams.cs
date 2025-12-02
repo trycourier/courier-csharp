@@ -24,98 +24,44 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
 
     public required string? Recipient
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("recipient", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["recipient"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "recipient"); }
+        init { ModelBase.Set(this._rawBodyData, "recipient", value); }
     }
 
     public string? Brand
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("brand", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["brand"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "brand"); }
+        init { ModelBase.Set(this._rawBodyData, "brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "data"
             );
         }
-        init
-        {
-            this._rawBodyData["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "data", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "profile"
             );
         }
-        init
-        {
-            this._rawBodyData["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "profile", value); }
     }
 
     public string? Template
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("template", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["template"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "template"); }
+        init { ModelBase.Set(this._rawBodyData, "template", value); }
     }
 
     public InvokeInvokeByTemplateParams() { }

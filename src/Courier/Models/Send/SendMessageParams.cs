@@ -29,27 +29,8 @@ public sealed record class SendMessageParams : ParamsBase
     /// </summary>
     public required Message Message
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("message", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'message' cannot be null",
-                    new System::ArgumentOutOfRangeException("message", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Message>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'message' cannot be null",
-                    new System::ArgumentNullException("message")
-                );
-        }
-        init
-        {
-            this._rawBodyData["message"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Message>(this.RawBodyData, "message"); }
+        init { ModelBase.Set(this._rawBodyData, "message", value); }
     }
 
     public SendMessageParams() { }
@@ -124,20 +105,8 @@ public sealed record class Message : ModelBase
 {
     public string? BrandID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("brand_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["brand_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand_id"); }
+        init { ModelBase.Set(this._rawData, "brand_id", value); }
     }
 
     /// <summary>
@@ -148,21 +117,12 @@ public sealed record class Message : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("channels", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, ChannelsItem>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, ChannelsItem>>(
+                this.RawData,
+                "channels"
             );
         }
-        init
-        {
-            this._rawData["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     /// <summary>
@@ -170,13 +130,7 @@ public sealed record class Message : ModelBase
     /// </summary>
     public Content? Content
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("content", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Content?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<Content>(this.RawData, "content"); }
         init
         {
             if (value == null)
@@ -184,152 +138,68 @@ public sealed record class Message : ModelBase
                 return;
             }
 
-            this._rawData["content"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "content", value);
         }
     }
 
     public MessageContext? Context
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("context", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<MessageContext?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["context"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<MessageContext>(this.RawData, "context"); }
+        init { ModelBase.Set(this._rawData, "context", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            if (!this._rawData.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "data"
             );
         }
-        init
-        {
-            this._rawData["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "data", value); }
     }
 
     public Delay? Delay
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("delay", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Delay?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["delay"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Delay>(this.RawData, "delay"); }
+        init { ModelBase.Set(this._rawData, "delay", value); }
     }
 
     public Expiry? Expiry
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("expiry", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Expiry?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["expiry"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Expiry>(this.RawData, "expiry"); }
+        init { ModelBase.Set(this._rawData, "expiry", value); }
     }
 
     public MessageMetadata? Metadata
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("metadata", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<MessageMetadata?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["metadata"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<MessageMetadata>(this.RawData, "metadata"); }
+        init { ModelBase.Set(this._rawData, "metadata", value); }
     }
 
     public global::Courier.Models.Send.Preferences? Preferences
     {
         get
         {
-            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<global::Courier.Models.Send.Preferences?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<global::Courier.Models.Send.Preferences>(
+                this.RawData,
+                "preferences"
             );
         }
-        init
-        {
-            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
     public IReadOnlyDictionary<string, ProvidersItem>? Providers
     {
         get
         {
-            if (!this._rawData.TryGetValue("providers", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, ProvidersItem>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, ProvidersItem>>(
+                this.RawData,
+                "providers"
             );
         }
-        init
-        {
-            this._rawData["providers"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "providers", value); }
     }
 
     /// <summary>
@@ -337,56 +207,20 @@ public sealed record class Message : ModelBase
     /// </summary>
     public Routing? Routing
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Routing?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Routing>(this.RawData, "routing"); }
+        init { ModelBase.Set(this._rawData, "routing", value); }
     }
 
     public string? Template
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("template", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["template"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "template"); }
+        init { ModelBase.Set(this._rawData, "template", value); }
     }
 
     public Timeout? Timeout
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("timeout", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Timeout?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["timeout"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Timeout>(this.RawData, "timeout"); }
+        init { ModelBase.Set(this._rawData, "timeout", value); }
     }
 
     /// <summary>
@@ -394,20 +228,8 @@ public sealed record class Message : ModelBase
     /// </summary>
     public To? To
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("to", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<To?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["to"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<To>(this.RawData, "to"); }
+        init { ModelBase.Set(this._rawData, "to", value); }
     }
 
     public override void Validate()
@@ -475,20 +297,8 @@ public sealed record class ChannelsItem : ModelBase
     /// </summary>
     public string? BrandID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("brand_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["brand_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand_id"); }
+        init { ModelBase.Set(this._rawData, "brand_id", value); }
     }
 
     /// <summary>
@@ -496,38 +306,14 @@ public sealed record class ChannelsItem : ModelBase
     /// </summary>
     public string? If
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("if", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["if"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
+        init { ModelBase.Set(this._rawData, "if", value); }
     }
 
     public Metadata? Metadata
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("metadata", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Metadata?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["metadata"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Metadata>(this.RawData, "metadata"); }
+        init { ModelBase.Set(this._rawData, "metadata", value); }
     }
 
     /// <summary>
@@ -537,21 +323,12 @@ public sealed record class ChannelsItem : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("override", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "override"
             );
         }
-        init
-        {
-            this._rawData["override"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "override", value); }
     }
 
     /// <summary>
@@ -559,20 +336,8 @@ public sealed record class ChannelsItem : ModelBase
     /// </summary>
     public IReadOnlyList<string>? Providers
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("providers", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["providers"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "providers"); }
+        init { ModelBase.Set(this._rawData, "providers", value); }
     }
 
     /// <summary>
@@ -582,39 +347,18 @@ public sealed record class ChannelsItem : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("routing_method", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, RoutingMethod>>(
+                this.RawData,
+                "routing_method"
             );
         }
-        init
-        {
-            this._rawData["routing_method"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "routing_method", value); }
     }
 
     public Timeouts? Timeouts
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("timeouts", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Timeouts?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["timeouts"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Timeouts>(this.RawData, "timeouts"); }
+        init { ModelBase.Set(this._rawData, "timeouts", value); }
     }
 
     public override void Validate()
@@ -660,20 +404,8 @@ public sealed record class Metadata : ModelBase
 {
     public Utm? Utm
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("utm", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Utm?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["utm"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Utm>(this.RawData, "utm"); }
+        init { ModelBase.Set(this._rawData, "utm", value); }
     }
 
     public override void Validate()
@@ -760,38 +492,14 @@ public sealed record class Timeouts : ModelBase
 {
     public long? Channel
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("channel", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["channel"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "channel"); }
+        init { ModelBase.Set(this._rawData, "channel", value); }
     }
 
     public long? Provider
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("provider", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["provider"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "provider"); }
+        init { ModelBase.Set(this._rawData, "provider", value); }
     }
 
     public override void Validate()
@@ -979,20 +687,8 @@ public sealed record class Delay : ModelBase
     /// </summary>
     public long? Duration
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("duration", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["duration"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "duration"); }
+        init { ModelBase.Set(this._rawData, "duration", value); }
     }
 
     /// <summary>
@@ -1000,20 +696,8 @@ public sealed record class Delay : ModelBase
     /// </summary>
     public string? Until
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("until", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["until"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "until"); }
+        init { ModelBase.Set(this._rawData, "until", value); }
     }
 
     public override void Validate()
@@ -1057,30 +741,8 @@ public sealed record class Expiry : ModelBase
     /// </summary>
     public required ExpiresIn ExpiresIn
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("expires_in", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'expires_in' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "expires_in",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<ExpiresIn>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'expires_in' cannot be null",
-                    new System::ArgumentNullException("expires_in")
-                );
-        }
-        init
-        {
-            this._rawData["expires_in"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ExpiresIn>(this.RawData, "expires_in"); }
+        init { ModelBase.Set(this._rawData, "expires_in", value); }
     }
 
     /// <summary>
@@ -1088,20 +750,8 @@ public sealed record class Expiry : ModelBase
     /// </summary>
     public string? ExpiresAt
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("expires_at", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["expires_at"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "expires_at"); }
+        init { ModelBase.Set(this._rawData, "expires_at", value); }
     }
 
     public override void Validate()
@@ -1289,74 +939,26 @@ public sealed record class MessageMetadata : ModelBase
 {
     public string? Event
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("event", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["event"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "event"); }
+        init { ModelBase.Set(this._rawData, "event", value); }
     }
 
     public IReadOnlyList<string>? Tags
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("tags", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["tags"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "tags"); }
+        init { ModelBase.Set(this._rawData, "tags", value); }
     }
 
     public string? TraceID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("trace_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["trace_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "trace_id"); }
+        init { ModelBase.Set(this._rawData, "trace_id", value); }
     }
 
     public Utm? Utm
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("utm", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Utm?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["utm"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Utm>(this.RawData, "utm"); }
+        init { ModelBase.Set(this._rawData, "utm", value); }
     }
 
     public override void Validate()
@@ -1407,30 +1009,8 @@ public sealed record class Preferences : ModelBase
     /// </summary>
     public required string SubscriptionTopicID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("subscription_topic_id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'subscription_topic_id' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "subscription_topic_id",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'subscription_topic_id' cannot be null",
-                    new System::ArgumentNullException("subscription_topic_id")
-                );
-        }
-        init
-        {
-            this._rawData["subscription_topic_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "subscription_topic_id"); }
+        init { ModelBase.Set(this._rawData, "subscription_topic_id", value); }
     }
 
     public override void Validate()
@@ -1483,41 +1063,14 @@ public sealed record class ProvidersItem : ModelBase
     /// </summary>
     public string? If
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("if", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["if"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
+        init { ModelBase.Set(this._rawData, "if", value); }
     }
 
     public ProvidersItemMetadata? Metadata
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("metadata", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ProvidersItemMetadata?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["metadata"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ProvidersItemMetadata>(this.RawData, "metadata"); }
+        init { ModelBase.Set(this._rawData, "metadata", value); }
     }
 
     /// <summary>
@@ -1527,39 +1080,18 @@ public sealed record class ProvidersItem : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("override", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "override"
             );
         }
-        init
-        {
-            this._rawData["override"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "override", value); }
     }
 
     public long? Timeouts
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("timeouts", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["timeouts"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "timeouts"); }
+        init { ModelBase.Set(this._rawData, "timeouts", value); }
     }
 
     public override void Validate()
@@ -1602,20 +1134,8 @@ public sealed record class ProvidersItemMetadata : ModelBase
 {
     public Utm? Utm
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("utm", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Utm?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["utm"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Utm>(this.RawData, "utm"); }
+        init { ModelBase.Set(this._rawData, "utm", value); }
     }
 
     public override void Validate()
@@ -1666,56 +1186,21 @@ public sealed record class Routing : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("channels", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channels' cannot be null",
-                    new System::ArgumentOutOfRangeException("channels", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<MessageRoutingChannel>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'channels' cannot be null",
-                    new System::ArgumentNullException("channels")
-                );
+            return ModelBase.GetNotNullClass<List<MessageRoutingChannel>>(this.RawData, "channels");
         }
-        init
-        {
-            this._rawData["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     public required ApiEnum<string, global::Courier.Models.Send.Method> Method
     {
         get
         {
-            if (!this._rawData.TryGetValue("method", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'method' cannot be null",
-                    new System::ArgumentOutOfRangeException("method", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, global::Courier.Models.Send.Method>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'method' cannot be null",
-                    new System::ArgumentNullException("method")
-                );
-        }
-        init
-        {
-            this._rawData["method"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, global::Courier.Models.Send.Method>>(
+                this.RawData,
+                "method"
             );
         }
+        init { ModelBase.Set(this._rawData, "method", value); }
     }
 
     public override void Validate()
@@ -1805,99 +1290,39 @@ public sealed record class Timeout : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("channel", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, long>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<Dictionary<string, long>>(this.RawData, "channel");
         }
-        init
-        {
-            this._rawData["channel"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "channel", value); }
     }
 
     public ApiEnum<string, Criteria>? Criteria
     {
         get
         {
-            if (!this._rawData.TryGetValue("criteria", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Criteria>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<ApiEnum<string, Criteria>>(this.RawData, "criteria");
         }
-        init
-        {
-            this._rawData["criteria"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "criteria", value); }
     }
 
     public long? Escalation
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("escalation", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["escalation"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "escalation"); }
+        init { ModelBase.Set(this._rawData, "escalation", value); }
     }
 
     public long? Message
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("message", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["message"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "message"); }
+        init { ModelBase.Set(this._rawData, "message", value); }
     }
 
     public IReadOnlyDictionary<string, long>? Provider
     {
         get
         {
-            if (!this._rawData.TryGetValue("provider", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, long>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<Dictionary<string, long>>(this.RawData, "provider");
         }
-        init
-        {
-            this._rawData["provider"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "provider", value); }
     }
 
     public override void Validate()

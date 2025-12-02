@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Auth;
 
@@ -28,27 +27,8 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     /// </summary>
     public required string ExpiresIn
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("expires_in", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'expires_in' cannot be null",
-                    new ArgumentOutOfRangeException("expires_in", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'expires_in' cannot be null",
-                    new ArgumentNullException("expires_in")
-                );
-        }
-        init
-        {
-            this._rawBodyData["expires_in"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "expires_in"); }
+        init { ModelBase.Set(this._rawBodyData, "expires_in", value); }
     }
 
     /// <summary>
@@ -67,27 +47,8 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     /// </summary>
     public required string Scope
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("scope", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'scope' cannot be null",
-                    new ArgumentOutOfRangeException("scope", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'scope' cannot be null",
-                    new ArgumentNullException("scope")
-                );
-        }
-        init
-        {
-            this._rawBodyData["scope"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "scope"); }
+        init { ModelBase.Set(this._rawBodyData, "scope", value); }
     }
 
     public AuthIssueTokenParams() { }

@@ -182,126 +182,56 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
 {
     public required string Template
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("template", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'template' cannot be null",
-                    new System::ArgumentOutOfRangeException("template", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'template' cannot be null",
-                    new System::ArgumentNullException("template")
-                );
-        }
-        init
-        {
-            this._rawData["template"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "template"); }
+        init { ModelBase.Set(this._rawData, "template", value); }
     }
 
     public string? Brand
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("brand", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["brand"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand"); }
+        init { ModelBase.Set(this._rawData, "brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            if (!this._rawData.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "data"
             );
         }
-        init
-        {
-            this._rawData["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "data", value); }
     }
 
     public string? Event
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("event", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["event"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "event"); }
+        init { ModelBase.Set(this._rawData, "event", value); }
     }
 
     public IReadOnlyDictionary<string, Dictionary<string, JsonElement>>? Locale
     {
         get
         {
-            if (!this._rawData.TryGetValue("locale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, JsonElement>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, Dictionary<string, JsonElement>>>(
+                this.RawData,
+                "locale"
             );
         }
-        init
-        {
-            this._rawData["locale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "locale", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Override
     {
         get
         {
-            if (!this._rawData.TryGetValue("override", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "override"
             );
         }
-        init
-        {
-            this._rawData["override"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "override", value); }
     }
 
     public override void Validate()
@@ -359,126 +289,56 @@ public sealed record class InboundBulkContentMessage : ModelBase
     /// </summary>
     public required Content Content
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("content", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'content' cannot be null",
-                    new System::ArgumentOutOfRangeException("content", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'content' cannot be null",
-                    new System::ArgumentNullException("content")
-                );
-        }
-        init
-        {
-            this._rawData["content"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Content>(this.RawData, "content"); }
+        init { ModelBase.Set(this._rawData, "content", value); }
     }
 
     public string? Brand
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("brand", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["brand"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand"); }
+        init { ModelBase.Set(this._rawData, "brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            if (!this._rawData.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "data"
             );
         }
-        init
-        {
-            this._rawData["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "data", value); }
     }
 
     public string? Event
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("event", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["event"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "event"); }
+        init { ModelBase.Set(this._rawData, "event", value); }
     }
 
     public IReadOnlyDictionary<string, Dictionary<string, JsonElement>>? Locale
     {
         get
         {
-            if (!this._rawData.TryGetValue("locale", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, JsonElement>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, Dictionary<string, JsonElement>>>(
+                this.RawData,
+                "locale"
             );
         }
-        init
-        {
-            this._rawData["locale"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "locale", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Override
     {
         get
         {
-            if (!this._rawData.TryGetValue("override", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "override"
             );
         }
-        init
-        {
-            this._rawData["override"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "override", value); }
     }
 
     public override void Validate()

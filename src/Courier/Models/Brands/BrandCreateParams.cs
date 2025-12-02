@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
@@ -23,81 +22,26 @@ public sealed record class BrandCreateParams : ParamsBase
 
     public required string Name
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("name", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentOutOfRangeException("name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentNullException("name")
-                );
-        }
-        init
-        {
-            this._rawBodyData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "name"); }
+        init { ModelBase.Set(this._rawBodyData, "name", value); }
     }
 
     public string? ID
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "id"); }
+        init { ModelBase.Set(this._rawBodyData, "id", value); }
     }
 
     public BrandSettings? Settings
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("settings", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandSettings?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["settings"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandSettings>(this.RawBodyData, "settings"); }
+        init { ModelBase.Set(this._rawBodyData, "settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("snippets", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandSnippets?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["snippets"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandSnippets>(this.RawBodyData, "snippets"); }
+        init { ModelBase.Set(this._rawBodyData, "snippets", value); }
     }
 
     public BrandCreateParams() { }

@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models;
 
@@ -14,45 +12,14 @@ public sealed record class Rule : ModelBase
 {
     public required string Until
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("until", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'until' cannot be null",
-                    new ArgumentOutOfRangeException("until", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'until' cannot be null",
-                    new ArgumentNullException("until")
-                );
-        }
-        init
-        {
-            this._rawData["until"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "until"); }
+        init { ModelBase.Set(this._rawData, "until", value); }
     }
 
     public string? Start
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("start", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["start"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "start"); }
+        init { ModelBase.Set(this._rawData, "start", value); }
     }
 
     public override void Validate()

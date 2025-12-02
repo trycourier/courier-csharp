@@ -22,20 +22,8 @@ public sealed record class PreferenceRetrieveTopicParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("tenant_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
+        init { ModelBase.Set(this._rawQueryData, "tenant_id", value); }
     }
 
     public PreferenceRetrieveTopicParams() { }

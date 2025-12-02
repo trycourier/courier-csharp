@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Lists;
 
@@ -14,48 +12,17 @@ public sealed record class PutSubscriptionsRecipient : ModelBase
 {
     public required string RecipientID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("recipientId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'recipientId' cannot be null",
-                    new ArgumentOutOfRangeException("recipientId", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'recipientId' cannot be null",
-                    new ArgumentNullException("recipientId")
-                );
-        }
-        init
-        {
-            this._rawData["recipientId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "recipientId"); }
+        init { ModelBase.Set(this._rawData, "recipientId", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<RecipientPreferences?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init
-        {
-            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
     public override void Validate()

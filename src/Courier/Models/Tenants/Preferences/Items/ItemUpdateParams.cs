@@ -30,27 +30,11 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<
-                    ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status>
-                >(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentNullException("status")
-                );
+            return ModelBase.GetNotNullClass<
+                ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status>
+            >(this.RawBodyData, "status");
         }
-        init
-        {
-            this._rawBodyData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "status", value); }
     }
 
     /// <summary>
@@ -60,21 +44,12 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("custom_routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+                this.RawBodyData,
+                "custom_routing"
             );
         }
-        init
-        {
-            this._rawBodyData["custom_routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "custom_routing", value); }
     }
 
     /// <summary>
@@ -83,20 +58,8 @@ public sealed record class ItemUpdateParams : ParamsBase
     /// </summary>
     public bool? HasCustomRouting
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("has_custom_routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["has_custom_routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "has_custom_routing"); }
+        init { ModelBase.Set(this._rawBodyData, "has_custom_routing", value); }
     }
 
     public ItemUpdateParams() { }

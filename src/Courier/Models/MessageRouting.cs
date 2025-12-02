@@ -16,56 +16,15 @@ public sealed record class MessageRouting : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("channels", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channels' cannot be null",
-                    new System::ArgumentOutOfRangeException("channels", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<MessageRoutingChannel>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'channels' cannot be null",
-                    new System::ArgumentNullException("channels")
-                );
+            return ModelBase.GetNotNullClass<List<MessageRoutingChannel>>(this.RawData, "channels");
         }
-        init
-        {
-            this._rawData["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     public required ApiEnum<string, Method> Method
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("method", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'method' cannot be null",
-                    new System::ArgumentOutOfRangeException("method", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Method>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'method' cannot be null",
-                    new System::ArgumentNullException("method")
-                );
-        }
-        init
-        {
-            this._rawData["method"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Method>>(this.RawData, "method"); }
+        init { ModelBase.Set(this._rawData, "method", value); }
     }
 
     public override void Validate()

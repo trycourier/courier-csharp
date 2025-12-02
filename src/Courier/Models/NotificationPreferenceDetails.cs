@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models;
 
@@ -18,67 +16,30 @@ public sealed record class NotificationPreferenceDetails : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new ArgumentNullException("status")
-                );
-        }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+                this.RawData,
+                "status"
             );
         }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public IReadOnlyList<ChannelPreference>? ChannelPreferences
     {
         get
         {
-            if (!this._rawData.TryGetValue("channel_preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ChannelPreference>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ChannelPreference>>(
+                this.RawData,
+                "channel_preferences"
             );
         }
-        init
-        {
-            this._rawData["channel_preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "channel_preferences", value); }
     }
 
     public IReadOnlyList<Rule>? Rules
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("rules", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<Rule>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["rules"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<Rule>>(this.RawData, "rules"); }
+        init { ModelBase.Set(this._rawData, "rules", value); }
     }
 
     public override void Validate()

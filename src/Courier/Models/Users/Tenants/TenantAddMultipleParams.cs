@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 using Courier.Models.Tenants;
 
 namespace Courier.Models.Users.Tenants;
@@ -30,28 +29,9 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("tenants", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'tenants' cannot be null",
-                    new ArgumentOutOfRangeException("tenants", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<TenantAssociation>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'tenants' cannot be null",
-                    new ArgumentNullException("tenants")
-                );
+            return ModelBase.GetNotNullClass<List<TenantAssociation>>(this.RawBodyData, "tenants");
         }
-        init
-        {
-            this._rawBodyData["tenants"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "tenants", value); }
     }
 
     public TenantAddMultipleParams() { }
