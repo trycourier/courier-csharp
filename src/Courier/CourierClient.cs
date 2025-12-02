@@ -65,6 +65,8 @@ public sealed class CourierClient : ICourierClient
         init { this._options.APIKey = value; }
     }
 
+    internal static HttpMethod PatchMethod = new("PATCH");
+
     /// <inheritdoc/>
     public ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
