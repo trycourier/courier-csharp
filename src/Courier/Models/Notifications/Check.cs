@@ -48,9 +48,13 @@ public sealed record class Check : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new ArgumentNullException("status")
+                );
         }
         init
         {
@@ -72,8 +76,12 @@ public sealed record class Check : ModelBase
                 );
 
             return JsonSerializer.Deserialize<
-                ApiEnum<string, global::Courier.Models.Notifications.Type>
-            >(element, ModelBase.SerializerOptions);
+                    ApiEnum<string, global::Courier.Models.Notifications.Type>
+                >(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'type' cannot be null",
+                    new ArgumentNullException("type")
+                );
         }
         init
         {

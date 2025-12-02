@@ -519,6 +519,16 @@ public record class Step
             throw new CourierInvalidDataException("Data did not match any variant of Step");
         }
     }
+
+    public virtual bool Equals(Step? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 sealed class StepConverter : JsonConverter<Step>
@@ -654,9 +664,13 @@ public sealed record class AutomationDelayStep : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Action>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'action' cannot be null",
+                    new System::ArgumentNullException("action")
+                );
         }
         init
         {
@@ -797,9 +811,13 @@ public sealed record class AutomationSendStep : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, AutomationSendStepAction>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'action' cannot be null",
+                    new System::ArgumentNullException("action")
+                );
         }
         init
         {
@@ -1007,9 +1025,13 @@ public sealed record class AutomationSendListStep : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, AutomationSendListStepAction>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'action' cannot be null",
+                    new System::ArgumentNullException("action")
+                );
         }
         init
         {
@@ -1179,9 +1201,13 @@ public sealed record class AutomationUpdateProfileStep : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, AutomationUpdateProfileStepAction>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'action' cannot be null",
+                    new System::ArgumentNullException("action")
+                );
         }
         init
         {
@@ -1399,9 +1425,13 @@ public sealed record class AutomationCancelStep : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, AutomationCancelStepAction>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'action' cannot be null",
+                    new System::ArgumentNullException("action")
+                );
         }
         init
         {
@@ -1531,9 +1561,13 @@ public sealed record class AutomationFetchDataStep : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, AutomationFetchDataStepAction>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'action' cannot be null",
+                    new System::ArgumentNullException("action")
+                );
         }
         init
         {
@@ -1682,8 +1716,12 @@ public sealed record class Webhook : ModelBase
                 );
 
             return JsonSerializer.Deserialize<
-                ApiEnum<string, global::Courier.Models.Automations.Invoke.Method>
-            >(element, ModelBase.SerializerOptions);
+                    ApiEnum<string, global::Courier.Models.Automations.Invoke.Method>
+                >(element, ModelBase.SerializerOptions)
+                ?? throw new CourierInvalidDataException(
+                    "'method' cannot be null",
+                    new System::ArgumentNullException("method")
+                );
         }
         init
         {
@@ -1907,9 +1945,13 @@ public sealed record class AutomationInvokeStep : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, AutomationInvokeStepAction>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'action' cannot be null",
+                    new System::ArgumentNullException("action")
+                );
         }
         init
         {

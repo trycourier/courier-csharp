@@ -125,9 +125,13 @@ public sealed record class InboundTrackEventParams : ParamsBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, global::Courier.Models.Inbound.Type>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'type' cannot be null",
+                    new System::ArgumentNullException("type")
+                );
         }
         init
         {

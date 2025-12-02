@@ -26,9 +26,13 @@ public sealed record class Filter : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Operator>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'operator' cannot be null",
+                    new System::ArgumentNullException("operator")
+                );
         }
         init
         {

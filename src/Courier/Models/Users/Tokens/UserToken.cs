@@ -54,9 +54,13 @@ public sealed record class UserToken : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'provider_key' cannot be null",
+                    new System::ArgumentNullException("provider_key")
+                );
         }
         init
         {
@@ -508,6 +512,16 @@ public record class UserTokenExpiryDate
                 "Data did not match any variant of UserTokenExpiryDate"
             );
         }
+    }
+
+    public virtual bool Equals(UserTokenExpiryDate? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

@@ -264,9 +264,13 @@ public sealed record class MessageRetrieveResponse : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new ArgumentNullException("status")
+                );
         }
         init
         {

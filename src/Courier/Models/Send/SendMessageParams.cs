@@ -913,6 +913,16 @@ public record class Content
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
     }
+
+    public virtual bool Equals(Content? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 sealed class ContentConverter : JsonConverter<Content>
@@ -1217,6 +1227,16 @@ public record class ExpiresIn
         {
             throw new CourierInvalidDataException("Data did not match any variant of ExpiresIn");
         }
+    }
+
+    public virtual bool Equals(ExpiresIn? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -1681,9 +1701,13 @@ public sealed record class Routing : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, global::Courier.Models.Send.Method>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'method' cannot be null",
+                    new System::ArgumentNullException("method")
+                );
         }
         init
         {
@@ -2044,6 +2068,16 @@ public record class To
         {
             throw new CourierInvalidDataException("Data did not match any variant of To");
         }
+    }
+
+    public virtual bool Equals(To? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

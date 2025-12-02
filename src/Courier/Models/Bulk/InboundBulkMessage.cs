@@ -110,6 +110,16 @@ public record class InboundBulkMessage
             );
         }
     }
+
+    public virtual bool Equals(InboundBulkMessage? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 sealed class InboundBulkMessageConverter : JsonConverter<InboundBulkMessage>
@@ -603,6 +613,16 @@ public record class Content
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
+    }
+
+    public virtual bool Equals(Content? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

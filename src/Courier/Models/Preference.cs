@@ -23,9 +23,13 @@ public sealed record class Preference : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new System::ArgumentNullException("status")
+                );
         }
         init
         {

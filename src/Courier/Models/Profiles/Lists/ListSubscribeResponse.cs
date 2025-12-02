@@ -23,9 +23,13 @@ public sealed record class ListSubscribeResponse : ModelBase
                 );
 
             return JsonSerializer.Deserialize<ApiEnum<string, ListSubscribeResponseStatus>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+                    element,
+                    ModelBase.SerializerOptions
+                )
+                ?? throw new CourierInvalidDataException(
+                    "'status' cannot be null",
+                    new System::ArgumentNullException("status")
+                );
         }
         init
         {
