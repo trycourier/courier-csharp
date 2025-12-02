@@ -17,23 +17,8 @@ public sealed record class TenantListResponse : ModelBase
     /// </summary>
     public required bool HasMore
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("has_more", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'has_more' cannot be null",
-                    new System::ArgumentOutOfRangeException("has_more", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["has_more"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "has_more"); }
+        init { ModelBase.Set(this._rawData, "has_more", value); }
     }
 
     /// <summary>
@@ -41,27 +26,8 @@ public sealed record class TenantListResponse : ModelBase
     /// </summary>
     public required IReadOnlyList<Tenant> Items
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("items", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'items' cannot be null",
-                    new System::ArgumentOutOfRangeException("items", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Tenant>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'items' cannot be null",
-                    new System::ArgumentNullException("items")
-                );
-        }
-        init
-        {
-            this._rawData["items"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Tenant>>(this.RawData, "items"); }
+        init { ModelBase.Set(this._rawData, "items", value); }
     }
 
     /// <summary>
@@ -71,28 +37,12 @@ public sealed record class TenantListResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, TenantListResponseType>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentNullException("type")
-                );
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, TenantListResponseType>>(
+                this.RawData,
+                "type"
             );
         }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -100,27 +50,8 @@ public sealed record class TenantListResponse : ModelBase
     /// </summary>
     public required string URL
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("url", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'url' cannot be null",
-                    new System::ArgumentOutOfRangeException("url", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'url' cannot be null",
-                    new System::ArgumentNullException("url")
-                );
-        }
-        init
-        {
-            this._rawData["url"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "url"); }
+        init { ModelBase.Set(this._rawData, "url", value); }
     }
 
     /// <summary>
@@ -129,20 +60,8 @@ public sealed record class TenantListResponse : ModelBase
     /// </summary>
     public string? Cursor
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("cursor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["cursor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "cursor"); }
+        init { ModelBase.Set(this._rawData, "cursor", value); }
     }
 
     /// <summary>
@@ -151,20 +70,8 @@ public sealed record class TenantListResponse : ModelBase
     /// </summary>
     public string? NextURL
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("next_url", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["next_url"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "next_url"); }
+        init { ModelBase.Set(this._rawData, "next_url", value); }
     }
 
     public override void Validate()

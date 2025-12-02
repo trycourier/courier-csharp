@@ -17,58 +17,20 @@ public sealed record class UserToken : ModelBase
     /// </summary>
     public required string Token
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("token", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'token' cannot be null",
-                    new System::ArgumentOutOfRangeException("token", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'token' cannot be null",
-                    new System::ArgumentNullException("token")
-                );
-        }
-        init
-        {
-            this._rawData["token"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "token"); }
+        init { ModelBase.Set(this._rawData, "token", value); }
     }
 
     public required ApiEnum<string, UserTokenProviderKey> ProviderKey
     {
         get
         {
-            if (!this._rawData.TryGetValue("provider_key", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'provider_key' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "provider_key",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'provider_key' cannot be null",
-                    new System::ArgumentNullException("provider_key")
-                );
-        }
-        init
-        {
-            this._rawData["provider_key"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
+                this.RawData,
+                "provider_key"
             );
         }
+        init { ModelBase.Set(this._rawData, "provider_key", value); }
     }
 
     /// <summary>
@@ -76,23 +38,8 @@ public sealed record class UserToken : ModelBase
     /// </summary>
     public UserTokenDevice? Device
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("device", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserTokenDevice?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["device"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<UserTokenDevice>(this.RawData, "device"); }
+        init { ModelBase.Set(this._rawData, "device", value); }
     }
 
     /// <summary>
@@ -101,23 +48,8 @@ public sealed record class UserToken : ModelBase
     /// </summary>
     public UserTokenExpiryDate? ExpiryDate
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("expiry_date", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserTokenExpiryDate?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["expiry_date"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<UserTokenExpiryDate>(this.RawData, "expiry_date"); }
+        init { ModelBase.Set(this._rawData, "expiry_date", value); }
     }
 
     /// <summary>
@@ -125,13 +57,7 @@ public sealed record class UserToken : ModelBase
     /// </summary>
     public JsonElement? Properties
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("properties", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "properties"); }
         init
         {
             if (value == null)
@@ -139,10 +65,7 @@ public sealed record class UserToken : ModelBase
                 return;
             }
 
-            this._rawData["properties"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "properties", value);
         }
     }
 
@@ -151,23 +74,8 @@ public sealed record class UserToken : ModelBase
     /// </summary>
     public UserTokenTracking? Tracking
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("tracking", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserTokenTracking?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["tracking"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<UserTokenTracking>(this.RawData, "tracking"); }
+        init { ModelBase.Set(this._rawData, "tracking", value); }
     }
 
     public override void Validate()
@@ -268,20 +176,8 @@ public sealed record class UserTokenDevice : ModelBase
     /// </summary>
     public string? AdID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("ad_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["ad_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ad_id"); }
+        init { ModelBase.Set(this._rawData, "ad_id", value); }
     }
 
     /// <summary>
@@ -289,20 +185,8 @@ public sealed record class UserTokenDevice : ModelBase
     /// </summary>
     public string? AppID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("app_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["app_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "app_id"); }
+        init { ModelBase.Set(this._rawData, "app_id", value); }
     }
 
     /// <summary>
@@ -310,20 +194,8 @@ public sealed record class UserTokenDevice : ModelBase
     /// </summary>
     public string? DeviceID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("device_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["device_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "device_id"); }
+        init { ModelBase.Set(this._rawData, "device_id", value); }
     }
 
     /// <summary>
@@ -331,20 +203,8 @@ public sealed record class UserTokenDevice : ModelBase
     /// </summary>
     public string? Manufacturer
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("manufacturer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["manufacturer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "manufacturer"); }
+        init { ModelBase.Set(this._rawData, "manufacturer", value); }
     }
 
     /// <summary>
@@ -352,20 +212,8 @@ public sealed record class UserTokenDevice : ModelBase
     /// </summary>
     public string? Model
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("model", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["model"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "model"); }
+        init { ModelBase.Set(this._rawData, "model", value); }
     }
 
     /// <summary>
@@ -373,20 +221,8 @@ public sealed record class UserTokenDevice : ModelBase
     /// </summary>
     public string? Platform
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("platform", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["platform"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "platform"); }
+        init { ModelBase.Set(this._rawData, "platform", value); }
     }
 
     public override void Validate()
@@ -580,20 +416,8 @@ public sealed record class UserTokenTracking : ModelBase
     /// </summary>
     public string? IP
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("ip", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["ip"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ip"); }
+        init { ModelBase.Set(this._rawData, "ip", value); }
     }
 
     /// <summary>
@@ -601,20 +425,8 @@ public sealed record class UserTokenTracking : ModelBase
     /// </summary>
     public string? Lat
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("lat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "lat"); }
+        init { ModelBase.Set(this._rawData, "lat", value); }
     }
 
     /// <summary>
@@ -622,20 +434,8 @@ public sealed record class UserTokenTracking : ModelBase
     /// </summary>
     public string? Long
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("long", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["long"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "long"); }
+        init { ModelBase.Set(this._rawData, "long", value); }
     }
 
     /// <summary>
@@ -643,20 +443,8 @@ public sealed record class UserTokenTracking : ModelBase
     /// </summary>
     public string? OsVersion
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("os_version", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["os_version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "os_version"); }
+        init { ModelBase.Set(this._rawData, "os_version", value); }
     }
 
     public override void Validate()

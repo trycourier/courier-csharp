@@ -12,38 +12,14 @@ public sealed record class WidgetBackground : ModelBase
 {
     public string? BottomColor
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("bottomColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["bottomColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "bottomColor"); }
+        init { ModelBase.Set(this._rawData, "bottomColor", value); }
     }
 
     public string? TopColor
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("topColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["topColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "topColor"); }
+        init { ModelBase.Set(this._rawData, "topColor", value); }
     }
 
     public override void Validate()

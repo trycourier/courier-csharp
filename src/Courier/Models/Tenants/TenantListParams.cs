@@ -18,20 +18,8 @@ public sealed record class TenantListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("cursor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["cursor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "cursor"); }
+        init { ModelBase.Set(this._rawQueryData, "cursor", value); }
     }
 
     /// <summary>
@@ -39,20 +27,8 @@ public sealed record class TenantListParams : ParamsBase
     /// </summary>
     public long? Limit
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("limit", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["limit"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawQueryData, "limit"); }
+        init { ModelBase.Set(this._rawQueryData, "limit", value); }
     }
 
     /// <summary>
@@ -60,20 +36,8 @@ public sealed record class TenantListParams : ParamsBase
     /// </summary>
     public string? ParentTenantID
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("parent_tenant_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["parent_tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "parent_tenant_id"); }
+        init { ModelBase.Set(this._rawQueryData, "parent_tenant_id", value); }
     }
 
     public TenantListParams() { }

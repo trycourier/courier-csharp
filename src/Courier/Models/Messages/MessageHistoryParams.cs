@@ -20,20 +20,8 @@ public sealed record class MessageHistoryParams : ParamsBase
     /// </summary>
     public string? Type
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "type"); }
+        init { ModelBase.Set(this._rawQueryData, "type", value); }
     }
 
     public MessageHistoryParams() { }

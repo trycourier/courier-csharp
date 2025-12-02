@@ -14,87 +14,35 @@ public sealed record class ElementalTextNodeWithType : ModelBase
 {
     public IReadOnlyList<string>? Channels
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("channels", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("if", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["if"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
+        init { ModelBase.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("loop", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["loop"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
+        init { ModelBase.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("ref", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["ref"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
+        init { ModelBase.Set(this._rawData, "ref", value); }
     }
 
     public ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                ElementalTextNodeWithTypeIntersectionMember1Type
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
+            >(this.RawData, "type");
         }
         init
         {
@@ -103,10 +51,7 @@ public sealed record class ElementalTextNodeWithType : ModelBase
                 return;
             }
 
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "type", value);
         }
     }
 
@@ -172,13 +117,9 @@ public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : ModelB
     {
         get
         {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                ElementalTextNodeWithTypeIntersectionMember1Type
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
+            >(this.RawData, "type");
         }
         init
         {
@@ -187,10 +128,7 @@ public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : ModelB
                 return;
             }
 
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "type", value);
         }
     }
 

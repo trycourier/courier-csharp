@@ -14,82 +14,25 @@ public sealed record class BaseCheck : ModelBase
 {
     public required string ID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new System::ArgumentNullException("id")
-                );
-        }
-        init
-        {
-            this._rawData["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     public required ApiEnum<string, Status> Status
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentNullException("status")
-                );
-        }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public required ApiEnum<string, global::Courier.Models.Notifications.Type> Type
     {
         get
         {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<
-                    ApiEnum<string, global::Courier.Models.Notifications.Type>
-                >(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentNullException("type")
-                );
+            return ModelBase.GetNotNullClass<
+                ApiEnum<string, global::Courier.Models.Notifications.Type>
+            >(this.RawData, "type");
         }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     public override void Validate()

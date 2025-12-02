@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Profiles;
 
@@ -28,28 +27,12 @@ public sealed record class ProfileCreateParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("profile", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'profile' cannot be null",
-                    new ArgumentOutOfRangeException("profile", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'profile' cannot be null",
-                    new ArgumentNullException("profile")
-                );
-        }
-        init
-        {
-            this._rawBodyData["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "profile"
             );
         }
+        init { ModelBase.Set(this._rawBodyData, "profile", value); }
     }
 
     public ProfileCreateParams() { }

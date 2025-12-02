@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Bulk;
 
@@ -14,27 +12,8 @@ public sealed record class BulkCreateJobResponse : ModelBase
 {
     public required string JobID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("jobId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'jobId' cannot be null",
-                    new ArgumentOutOfRangeException("jobId", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'jobId' cannot be null",
-                    new ArgumentNullException("jobId")
-                );
-        }
-        init
-        {
-            this._rawData["jobId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "jobId"); }
+        init { ModelBase.Set(this._rawData, "jobId", value); }
     }
 
     public override void Validate()

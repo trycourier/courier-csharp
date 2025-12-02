@@ -12,38 +12,14 @@ public sealed record class Logo : ModelBase
 {
     public string? Href
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("href", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["href"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "href"); }
+        init { ModelBase.Set(this._rawData, "href", value); }
     }
 
     public string? Image
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("image", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["image"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "image"); }
+        init { ModelBase.Set(this._rawData, "image", value); }
     }
 
     public override void Validate()

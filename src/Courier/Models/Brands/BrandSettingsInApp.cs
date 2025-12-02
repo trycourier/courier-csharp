@@ -14,158 +14,53 @@ public sealed record class BrandSettingsInApp : ModelBase
 {
     public required BrandColors Colors
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("colors", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'colors' cannot be null",
-                    new System::ArgumentOutOfRangeException("colors", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<BrandColors>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'colors' cannot be null",
-                    new System::ArgumentNullException("colors")
-                );
-        }
-        init
-        {
-            this._rawData["colors"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<BrandColors>(this.RawData, "colors"); }
+        init { ModelBase.Set(this._rawData, "colors", value); }
     }
 
     public required Icons Icons
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("icons", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'icons' cannot be null",
-                    new System::ArgumentOutOfRangeException("icons", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Icons>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'icons' cannot be null",
-                    new System::ArgumentNullException("icons")
-                );
-        }
-        init
-        {
-            this._rawData["icons"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Icons>(this.RawData, "icons"); }
+        init { ModelBase.Set(this._rawData, "icons", value); }
     }
 
     public required WidgetBackground WidgetBackground
     {
         get
         {
-            if (!this._rawData.TryGetValue("widgetBackground", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'widgetBackground' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "widgetBackground",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<WidgetBackground>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'widgetBackground' cannot be null",
-                    new System::ArgumentNullException("widgetBackground")
-                );
+            return ModelBase.GetNotNullClass<WidgetBackground>(this.RawData, "widgetBackground");
         }
-        init
-        {
-            this._rawData["widgetBackground"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "widgetBackground", value); }
     }
 
     public string? BorderRadius
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("borderRadius", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["borderRadius"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "borderRadius"); }
+        init { ModelBase.Set(this._rawData, "borderRadius", value); }
     }
 
     public bool? DisableMessageIcon
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("disableMessageIcon", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["disableMessageIcon"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "disableMessageIcon"); }
+        init { ModelBase.Set(this._rawData, "disableMessageIcon", value); }
     }
 
     public string? FontFamily
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("fontFamily", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["fontFamily"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "fontFamily"); }
+        init { ModelBase.Set(this._rawData, "fontFamily", value); }
     }
 
     public ApiEnum<string, Placement>? Placement
     {
         get
         {
-            if (!this._rawData.TryGetValue("placement", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Placement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, Placement>>(
+                this.RawData,
+                "placement"
             );
         }
-        init
-        {
-            this._rawData["placement"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "placement", value); }
     }
 
     public override void Validate()

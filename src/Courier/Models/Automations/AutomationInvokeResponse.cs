@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Automations;
 
@@ -14,27 +12,8 @@ public sealed record class AutomationInvokeResponse : ModelBase
 {
     public required string RunID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("runId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'runId' cannot be null",
-                    new ArgumentOutOfRangeException("runId", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'runId' cannot be null",
-                    new ArgumentNullException("runId")
-                );
-        }
-        init
-        {
-            this._rawData["runId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "runId"); }
+        init { ModelBase.Set(this._rawData, "runId", value); }
     }
 
     public override void Validate()

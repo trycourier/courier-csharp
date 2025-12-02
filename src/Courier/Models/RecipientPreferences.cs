@@ -14,42 +14,24 @@ public sealed record class RecipientPreferences : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("categories", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
+                this.RawData,
+                "categories"
             );
         }
-        init
-        {
-            this._rawData["categories"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "categories", value); }
     }
 
     public IReadOnlyDictionary<string, NotificationPreferenceDetails>? Notifications
     {
         get
         {
-            if (!this._rawData.TryGetValue("notifications", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
+                this.RawData,
+                "notifications"
             );
         }
-        init
-        {
-            this._rawData["notifications"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "notifications", value); }
     }
 
     public override void Validate()

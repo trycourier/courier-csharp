@@ -28,27 +28,8 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public required string Event
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("event", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'event' cannot be null",
-                    new System::ArgumentOutOfRangeException("event", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'event' cannot be null",
-                    new System::ArgumentNullException("event")
-                );
-        }
-        init
-        {
-            this._rawBodyData["event"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "event"); }
+        init { ModelBase.Set(this._rawBodyData, "event", value); }
     }
 
     /// <summary>
@@ -57,89 +38,32 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public required string MessageID
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("messageId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'messageId' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "messageId",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'messageId' cannot be null",
-                    new System::ArgumentNullException("messageId")
-                );
-        }
-        init
-        {
-            this._rawBodyData["messageId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "messageId"); }
+        init { ModelBase.Set(this._rawBodyData, "messageId", value); }
     }
 
     public required IReadOnlyDictionary<string, JsonElement> Properties
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("properties", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'properties' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "properties",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'properties' cannot be null",
-                    new System::ArgumentNullException("properties")
-                );
-        }
-        init
-        {
-            this._rawBodyData["properties"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "properties"
             );
         }
+        init { ModelBase.Set(this._rawBodyData, "properties", value); }
     }
 
     public required ApiEnum<string, global::Courier.Models.Inbound.Type> Type
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("type", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, global::Courier.Models.Inbound.Type>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentNullException("type")
-                );
-        }
-        init
-        {
-            this._rawBodyData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, global::Courier.Models.Inbound.Type>>(
+                this.RawBodyData,
+                "type"
             );
         }
+        init { ModelBase.Set(this._rawBodyData, "type", value); }
     }
 
     /// <summary>
@@ -147,20 +71,8 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public string? UserID
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("userId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["userId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "userId"); }
+        init { ModelBase.Set(this._rawBodyData, "userId", value); }
     }
 
     public InboundTrackEventParams() { }

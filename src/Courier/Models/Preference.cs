@@ -16,88 +16,36 @@ public sealed record class Preference : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentNullException("status")
-                );
-        }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+                this.RawData,
+                "status"
             );
         }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public IReadOnlyList<ChannelPreference>? ChannelPreferences
     {
         get
         {
-            if (!this._rawData.TryGetValue("channel_preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ChannelPreference>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ChannelPreference>>(
+                this.RawData,
+                "channel_preferences"
             );
         }
-        init
-        {
-            this._rawData["channel_preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "channel_preferences", value); }
     }
 
     public IReadOnlyList<Rule>? Rules
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("rules", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<Rule>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["rules"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<Rule>>(this.RawData, "rules"); }
+        init { ModelBase.Set(this._rawData, "rules", value); }
     }
 
     public ApiEnum<string, Source>? Source
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("source", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Source>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["source"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ApiEnum<string, Source>>(this.RawData, "source"); }
+        init { ModelBase.Set(this._rawData, "source", value); }
     }
 
     public override void Validate()

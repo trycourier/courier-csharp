@@ -14,27 +14,8 @@ public sealed record class BulkRetrieveJobResponse : ModelBase
 {
     public required Job Job
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("job", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'job' cannot be null",
-                    new System::ArgumentOutOfRangeException("job", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Job>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'job' cannot be null",
-                    new System::ArgumentNullException("job")
-                );
-        }
-        init
-        {
-            this._rawData["job"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Job>(this.RawData, "job"); }
+        init { ModelBase.Set(this._rawData, "job", value); }
     }
 
     public override void Validate()
@@ -84,124 +65,35 @@ public sealed record class Job : ModelBase
 {
     public required InboundBulkMessage Definition
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("definition", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'definition' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "definition",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<InboundBulkMessage>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'definition' cannot be null",
-                    new System::ArgumentNullException("definition")
-                );
-        }
-        init
-        {
-            this._rawData["definition"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<InboundBulkMessage>(this.RawData, "definition"); }
+        init { ModelBase.Set(this._rawData, "definition", value); }
     }
 
     public required long Enqueued
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("enqueued", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'enqueued' cannot be null",
-                    new System::ArgumentOutOfRangeException("enqueued", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["enqueued"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "enqueued"); }
+        init { ModelBase.Set(this._rawData, "enqueued", value); }
     }
 
     public required long Failures
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("failures", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'failures' cannot be null",
-                    new System::ArgumentOutOfRangeException("failures", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["failures"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "failures"); }
+        init { ModelBase.Set(this._rawData, "failures", value); }
     }
 
     public required long Received
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("received", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'received' cannot be null",
-                    new System::ArgumentOutOfRangeException("received", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["received"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "received"); }
+        init { ModelBase.Set(this._rawData, "received", value); }
     }
 
     public required ApiEnum<string, JobStatus> Status
     {
         get
         {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentNullException("status")
-                );
+            return ModelBase.GetNotNullClass<ApiEnum<string, JobStatus>>(this.RawData, "status");
         }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public override void Validate()

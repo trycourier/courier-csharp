@@ -31,21 +31,12 @@ public sealed record class TenantAddSingleParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "profile"
             );
         }
-        init
-        {
-            this._rawBodyData["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "profile", value); }
     }
 
     public TenantAddSingleParams() { }

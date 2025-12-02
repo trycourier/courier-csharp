@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Notifications.Checks;
 
@@ -24,27 +23,8 @@ public sealed record class CheckUpdateParams : ParamsBase
 
     public required IReadOnlyList<BaseCheck> Checks
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("checks", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'checks' cannot be null",
-                    new ArgumentOutOfRangeException("checks", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<BaseCheck>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'checks' cannot be null",
-                    new ArgumentNullException("checks")
-                );
-        }
-        init
-        {
-            this._rawBodyData["checks"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<BaseCheck>>(this.RawBodyData, "checks"); }
+        init { ModelBase.Set(this._rawBodyData, "checks", value); }
     }
 
     public CheckUpdateParams() { }

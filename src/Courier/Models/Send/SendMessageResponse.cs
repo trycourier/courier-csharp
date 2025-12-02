@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Send;
 
@@ -20,27 +18,8 @@ public sealed record class SendMessageResponse : ModelBase
     /// </summary>
     public required string RequestID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("requestId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'requestId' cannot be null",
-                    new ArgumentOutOfRangeException("requestId", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'requestId' cannot be null",
-                    new ArgumentNullException("requestId")
-                );
-        }
-        init
-        {
-            this._rawData["requestId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "requestId"); }
+        init { ModelBase.Set(this._rawData, "requestId", value); }
     }
 
     public override void Validate()

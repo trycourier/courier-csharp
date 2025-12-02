@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Users.Preferences;
 
@@ -16,27 +14,8 @@ public sealed record class PreferenceRetrieveTopicResponse : ModelBase
 {
     public required TopicPreference Topic
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("topic", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'topic' cannot be null",
-                    new ArgumentOutOfRangeException("topic", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<TopicPreference>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'topic' cannot be null",
-                    new ArgumentNullException("topic")
-                );
-        }
-        init
-        {
-            this._rawData["topic"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<TopicPreference>(this.RawData, "topic"); }
+        init { ModelBase.Set(this._rawData, "topic", value); }
     }
 
     public override void Validate()

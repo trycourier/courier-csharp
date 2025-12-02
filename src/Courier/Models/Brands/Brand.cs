@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
@@ -14,166 +12,50 @@ public sealed record class Brand : ModelBase
 {
     public required string ID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentOutOfRangeException("id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentNullException("id")
-                );
-        }
-        init
-        {
-            this._rawData["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     public required long Created
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("created", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'created' cannot be null",
-                    new ArgumentOutOfRangeException("created", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["created"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "created"); }
+        init { ModelBase.Set(this._rawData, "created", value); }
     }
 
     public required string Name
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentOutOfRangeException("name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentNullException("name")
-                );
-        }
-        init
-        {
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "name"); }
+        init { ModelBase.Set(this._rawData, "name", value); }
     }
 
     public required long Updated
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("updated", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'updated' cannot be null",
-                    new ArgumentOutOfRangeException("updated", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["updated"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "updated"); }
+        init { ModelBase.Set(this._rawData, "updated", value); }
     }
 
     public long? Published
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("published", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["published"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "published"); }
+        init { ModelBase.Set(this._rawData, "published", value); }
     }
 
     public BrandSettings? Settings
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("settings", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandSettings?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["settings"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandSettings>(this.RawData, "settings"); }
+        init { ModelBase.Set(this._rawData, "settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("snippets", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandSnippets?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["snippets"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandSnippets>(this.RawData, "snippets"); }
+        init { ModelBase.Set(this._rawData, "snippets", value); }
     }
 
     public string? Version
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("version", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "version"); }
+        init { ModelBase.Set(this._rawData, "version", value); }
     }
 
     public override void Validate()

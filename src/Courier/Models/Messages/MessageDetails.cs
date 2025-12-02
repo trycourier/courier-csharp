@@ -18,27 +18,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required string ID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new System::ArgumentNullException("id")
-                );
-        }
-        init
-        {
-            this._rawData["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     /// <summary>
@@ -47,23 +28,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Clicked
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("clicked", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'clicked' cannot be null",
-                    new System::ArgumentOutOfRangeException("clicked", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["clicked"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "clicked"); }
+        init { ModelBase.Set(this._rawData, "clicked", value); }
     }
 
     /// <summary>
@@ -72,26 +38,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Delivered
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("delivered", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'delivered' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "delivered",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["delivered"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "delivered"); }
+        init { ModelBase.Set(this._rawData, "delivered", value); }
     }
 
     /// <summary>
@@ -100,23 +48,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Enqueued
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("enqueued", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'enqueued' cannot be null",
-                    new System::ArgumentOutOfRangeException("enqueued", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["enqueued"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "enqueued"); }
+        init { ModelBase.Set(this._rawData, "enqueued", value); }
     }
 
     /// <summary>
@@ -124,27 +57,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required string Event
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("event", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'event' cannot be null",
-                    new System::ArgumentOutOfRangeException("event", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'event' cannot be null",
-                    new System::ArgumentNullException("event")
-                );
-        }
-        init
-        {
-            this._rawData["event"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "event"); }
+        init { ModelBase.Set(this._rawData, "event", value); }
     }
 
     /// <summary>
@@ -152,30 +66,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required string Notification
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("notification", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'notification' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "notification",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'notification' cannot be null",
-                    new System::ArgumentNullException("notification")
-                );
-        }
-        init
-        {
-            this._rawData["notification"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "notification"); }
+        init { ModelBase.Set(this._rawData, "notification", value); }
     }
 
     /// <summary>
@@ -184,23 +76,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Opened
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("opened", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'opened' cannot be null",
-                    new System::ArgumentOutOfRangeException("opened", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["opened"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "opened"); }
+        init { ModelBase.Set(this._rawData, "opened", value); }
     }
 
     /// <summary>
@@ -208,30 +85,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required string Recipient
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("recipient", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'recipient' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "recipient",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'recipient' cannot be null",
-                    new System::ArgumentNullException("recipient")
-                );
-        }
-        init
-        {
-            this._rawData["recipient"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "recipient"); }
+        init { ModelBase.Set(this._rawData, "recipient", value); }
     }
 
     /// <summary>
@@ -240,23 +95,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Sent
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("sent", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'sent' cannot be null",
-                    new System::ArgumentOutOfRangeException("sent", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["sent"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "sent"); }
+        init { ModelBase.Set(this._rawData, "sent", value); }
     }
 
     /// <summary>
@@ -264,30 +104,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required ApiEnum<string, Status> Status
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentNullException("status")
-                );
-        }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
@@ -295,20 +113,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public string? Error
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("error", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["error"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "error"); }
+        init { ModelBase.Set(this._rawData, "error", value); }
     }
 
     /// <summary>
@@ -316,23 +122,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public ApiEnum<string, Reason>? Reason
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("reason", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Reason>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["reason"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ApiEnum<string, Reason>>(this.RawData, "reason"); }
+        init { ModelBase.Set(this._rawData, "reason", value); }
     }
 
     public override void Validate()

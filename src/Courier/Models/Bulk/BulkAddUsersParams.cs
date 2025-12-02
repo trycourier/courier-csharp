@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Bulk;
 
@@ -27,28 +26,12 @@ public sealed record class BulkAddUsersParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("users", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'users' cannot be null",
-                    new ArgumentOutOfRangeException("users", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<InboundBulkMessageUser>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'users' cannot be null",
-                    new ArgumentNullException("users")
-                );
-        }
-        init
-        {
-            this._rawBodyData["users"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<List<InboundBulkMessageUser>>(
+                this.RawBodyData,
+                "users"
             );
         }
+        init { ModelBase.Set(this._rawBodyData, "users", value); }
     }
 
     public BulkAddUsersParams() { }

@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Notifications.Checks;
 
@@ -14,27 +12,8 @@ public sealed record class CheckListResponse : ModelBase
 {
     public required IReadOnlyList<Check> Checks
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("checks", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'checks' cannot be null",
-                    new ArgumentOutOfRangeException("checks", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Check>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'checks' cannot be null",
-                    new ArgumentNullException("checks")
-                );
-        }
-        init
-        {
-            this._rawData["checks"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Check>>(this.RawData, "checks"); }
+        init { ModelBase.Set(this._rawData, "checks", value); }
     }
 
     public override void Validate()

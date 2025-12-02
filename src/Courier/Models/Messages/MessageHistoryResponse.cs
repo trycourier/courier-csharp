@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Messages;
 
@@ -16,28 +14,12 @@ public sealed record class MessageHistoryResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("results", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'results' cannot be null",
-                    new ArgumentOutOfRangeException("results", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'results' cannot be null",
-                    new ArgumentNullException("results")
-                );
-        }
-        init
-        {
-            this._rawData["results"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<List<Dictionary<string, JsonElement>>>(
+                this.RawData,
+                "results"
             );
         }
+        init { ModelBase.Set(this._rawData, "results", value); }
     }
 
     public override void Validate()

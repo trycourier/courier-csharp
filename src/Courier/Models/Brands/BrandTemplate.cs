@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
@@ -14,131 +12,44 @@ public sealed record class BrandTemplate : ModelBase
 {
     public required bool Enabled
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("enabled", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'enabled' cannot be null",
-                    new ArgumentOutOfRangeException("enabled", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["enabled"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "enabled"); }
+        init { ModelBase.Set(this._rawData, "enabled", value); }
     }
 
     public string? BackgroundColor
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("backgroundColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["backgroundColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "backgroundColor"); }
+        init { ModelBase.Set(this._rawData, "backgroundColor", value); }
     }
 
     public string? BlocksBackgroundColor
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("blocksBackgroundColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["blocksBackgroundColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "blocksBackgroundColor"); }
+        init { ModelBase.Set(this._rawData, "blocksBackgroundColor", value); }
     }
 
     public string? Footer
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("footer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["footer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "footer"); }
+        init { ModelBase.Set(this._rawData, "footer", value); }
     }
 
     public string? Head
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("head", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["head"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "head"); }
+        init { ModelBase.Set(this._rawData, "head", value); }
     }
 
     public string? Header
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("header", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["header"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "header"); }
+        init { ModelBase.Set(this._rawData, "header", value); }
     }
 
     public string? Width
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("width", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["width"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "width"); }
+        init { ModelBase.Set(this._rawData, "width", value); }
     }
 
     public override void Validate()

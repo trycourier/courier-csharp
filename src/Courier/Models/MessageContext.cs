@@ -15,20 +15,8 @@ public sealed record class MessageContext : ModelBase
     /// </summary>
     public string? TenantID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("tenant_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "tenant_id"); }
+        init { ModelBase.Set(this._rawData, "tenant_id", value); }
     }
 
     public override void Validate()

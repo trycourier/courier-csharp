@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Users.Preferences;
 
@@ -16,106 +14,36 @@ public sealed record class TopicPreference : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("default_status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'default_status' cannot be null",
-                    new ArgumentOutOfRangeException("default_status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'default_status' cannot be null",
-                    new ArgumentNullException("default_status")
-                );
-        }
-        init
-        {
-            this._rawData["default_status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+                this.RawData,
+                "default_status"
             );
         }
+        init { ModelBase.Set(this._rawData, "default_status", value); }
     }
 
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new ArgumentNullException("status")
-                );
-        }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+                this.RawData,
+                "status"
             );
         }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public required string TopicID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("topic_id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'topic_id' cannot be null",
-                    new ArgumentOutOfRangeException("topic_id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'topic_id' cannot be null",
-                    new ArgumentNullException("topic_id")
-                );
-        }
-        init
-        {
-            this._rawData["topic_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "topic_id"); }
+        init { ModelBase.Set(this._rawData, "topic_id", value); }
     }
 
     public required string TopicName
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("topic_name", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'topic_name' cannot be null",
-                    new ArgumentOutOfRangeException("topic_name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'topic_name' cannot be null",
-                    new ArgumentNullException("topic_name")
-                );
-        }
-        init
-        {
-            this._rawData["topic_name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "topic_name"); }
+        init { ModelBase.Set(this._rawData, "topic_name", value); }
     }
 
     /// <summary>
@@ -125,39 +53,18 @@ public sealed record class TopicPreference : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("custom_routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+                this.RawData,
+                "custom_routing"
             );
         }
-        init
-        {
-            this._rawData["custom_routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "custom_routing", value); }
     }
 
     public bool? HasCustomRouting
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("has_custom_routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["has_custom_routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
+        init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
     }
 
     public override void Validate()

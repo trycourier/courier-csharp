@@ -14,52 +14,14 @@ public sealed record class BulkListUsersResponse : ModelBase
 {
     public required IReadOnlyList<Item> Items
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("items", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'items' cannot be null",
-                    new System::ArgumentOutOfRangeException("items", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Item>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'items' cannot be null",
-                    new System::ArgumentNullException("items")
-                );
-        }
-        init
-        {
-            this._rawData["items"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Item>>(this.RawData, "items"); }
+        init { ModelBase.Set(this._rawData, "items", value); }
     }
 
     public required Paging Paging
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("paging", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'paging' cannot be null",
-                    new System::ArgumentOutOfRangeException("paging", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Paging>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'paging' cannot be null",
-                    new System::ArgumentNullException("paging")
-                );
-        }
-        init
-        {
-            this._rawData["paging"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { ModelBase.Set(this._rawData, "paging", value); }
     }
 
     public override void Validate()
@@ -106,13 +68,7 @@ public sealed record class Item : ModelBase
 {
     public JsonElement? Data
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "data"); }
         init
         {
             if (value == null)
@@ -120,10 +76,7 @@ public sealed record class Item : ModelBase
                 return;
             }
 
-            this._rawData["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "data", value);
         }
     }
 
@@ -131,13 +84,7 @@ public sealed record class Item : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<RecipientPreferences?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
         init
         {
@@ -146,22 +93,13 @@ public sealed record class Item : ModelBase
                 return;
             }
 
-            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "preferences", value);
         }
     }
 
     public JsonElement? Profile
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "profile"); }
         init
         {
             if (value == null)
@@ -169,40 +107,19 @@ public sealed record class Item : ModelBase
                 return;
             }
 
-            this._rawData["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "profile", value);
         }
     }
 
     public string? Recipient
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("recipient", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["recipient"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "recipient"); }
+        init { ModelBase.Set(this._rawData, "recipient", value); }
     }
 
     public UserRecipient? To
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("to", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserRecipient?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<UserRecipient>(this.RawData, "to"); }
         init
         {
             if (value == null)
@@ -210,57 +127,20 @@ public sealed record class Item : ModelBase
                 return;
             }
 
-            this._rawData["to"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "to", value);
         }
     }
 
     public required ApiEnum<string, Status> Status
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentNullException("status")
-                );
-        }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public string? MessageID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("messageId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["messageId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "messageId"); }
+        init { ModelBase.Set(this._rawData, "messageId", value); }
     }
 
     public static implicit operator InboundBulkMessageUser(Item item) =>
@@ -328,48 +208,14 @@ public sealed record class IntersectionMember1 : ModelBase
 {
     public required ApiEnum<string, Status> Status
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentNullException("status")
-                );
-        }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public string? MessageID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("messageId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["messageId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "messageId"); }
+        init { ModelBase.Set(this._rawData, "messageId", value); }
     }
 
     public override void Validate()

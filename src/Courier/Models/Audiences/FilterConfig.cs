@@ -19,28 +19,12 @@ public sealed record class FilterConfig : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("operator", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'operator' cannot be null",
-                    new System::ArgumentOutOfRangeException("operator", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, FilterConfigOperator>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'operator' cannot be null",
-                    new System::ArgumentNullException("operator")
-                );
-        }
-        init
-        {
-            this._rawData["operator"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, FilterConfigOperator>>(
+                this.RawData,
+                "operator"
             );
         }
+        init { ModelBase.Set(this._rawData, "operator", value); }
     }
 
     /// <summary>
@@ -48,27 +32,8 @@ public sealed record class FilterConfig : ModelBase
     /// </summary>
     public required string Path
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("path", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'path' cannot be null",
-                    new System::ArgumentOutOfRangeException("path", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'path' cannot be null",
-                    new System::ArgumentNullException("path")
-                );
-        }
-        init
-        {
-            this._rawData["path"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
+        init { ModelBase.Set(this._rawData, "path", value); }
     }
 
     /// <summary>
@@ -76,27 +41,8 @@ public sealed record class FilterConfig : ModelBase
     /// </summary>
     public required string Value
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("value", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'value' cannot be null",
-                    new System::ArgumentOutOfRangeException("value", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'value' cannot be null",
-                    new System::ArgumentNullException("value")
-                );
-        }
-        init
-        {
-            this._rawData["value"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "value"); }
+        init { ModelBase.Set(this._rawData, "value", value); }
     }
 
     public override void Validate()

@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Inbound;
 
@@ -18,27 +16,8 @@ public sealed record class InboundTrackEventResponse : ModelBase
     /// </summary>
     public required string MessageID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("messageId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'messageId' cannot be null",
-                    new ArgumentOutOfRangeException("messageId", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'messageId' cannot be null",
-                    new ArgumentNullException("messageId")
-                );
-        }
-        init
-        {
-            this._rawData["messageId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "messageId"); }
+        init { ModelBase.Set(this._rawData, "messageId", value); }
     }
 
     public override void Validate()

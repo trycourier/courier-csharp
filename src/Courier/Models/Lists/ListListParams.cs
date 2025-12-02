@@ -18,20 +18,8 @@ public sealed record class ListListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("cursor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["cursor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "cursor"); }
+        init { ModelBase.Set(this._rawQueryData, "cursor", value); }
     }
 
     /// <summary>
@@ -42,20 +30,8 @@ public sealed record class ListListParams : ParamsBase
     /// </summary>
     public string? Pattern
     {
-        get
-        {
-            if (!this._rawQueryData.TryGetValue("pattern", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawQueryData["pattern"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "pattern"); }
+        init { ModelBase.Set(this._rawQueryData, "pattern", value); }
     }
 
     public ListListParams() { }

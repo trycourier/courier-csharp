@@ -12,13 +12,7 @@ public sealed record class InboundBulkMessageUser : ModelBase
 {
     public JsonElement? Data
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "data"); }
         init
         {
             if (value == null)
@@ -26,10 +20,7 @@ public sealed record class InboundBulkMessageUser : ModelBase
                 return;
             }
 
-            this._rawData["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "data", value);
         }
     }
 
@@ -37,32 +28,14 @@ public sealed record class InboundBulkMessageUser : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<RecipientPreferences?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init
-        {
-            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
     public JsonElement? Profile
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "profile"); }
         init
         {
             if (value == null)
@@ -70,47 +43,20 @@ public sealed record class InboundBulkMessageUser : ModelBase
                 return;
             }
 
-            this._rawData["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "profile", value);
         }
     }
 
     public string? Recipient
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("recipient", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["recipient"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "recipient"); }
+        init { ModelBase.Set(this._rawData, "recipient", value); }
     }
 
     public UserRecipient? To
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("to", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserRecipient?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["to"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<UserRecipient>(this.RawData, "to"); }
+        init { ModelBase.Set(this._rawData, "to", value); }
     }
 
     public override void Validate()

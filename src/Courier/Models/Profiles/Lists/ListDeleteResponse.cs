@@ -16,27 +16,11 @@ public sealed record class ListDeleteResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<
-                    ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
-                >(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentNullException("status")
-                );
+            return ModelBase.GetNotNullClass<
+                ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
+            >(this.RawData, "status");
         }
-        init
-        {
-            this._rawData["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public override void Validate()

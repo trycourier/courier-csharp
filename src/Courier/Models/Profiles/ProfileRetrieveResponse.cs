@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Profiles;
 
@@ -16,49 +14,21 @@ public sealed record class ProfileRetrieveResponse : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("profile", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'profile' cannot be null",
-                    new ArgumentOutOfRangeException("profile", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'profile' cannot be null",
-                    new ArgumentNullException("profile")
-                );
-        }
-        init
-        {
-            this._rawData["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "profile"
             );
         }
+        init { ModelBase.Set(this._rawData, "profile", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            if (!this._rawData.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<RecipientPreferences?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init
-        {
-            this._rawData["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
     public override void Validate()
