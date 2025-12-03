@@ -178,15 +178,9 @@ public sealed record class Message : ModelBase
         init { ModelBase.Set(this._rawData, "metadata", value); }
     }
 
-    public global::Courier.Models.Send.Preferences? Preferences
+    public Preferences? Preferences
     {
-        get
-        {
-            return ModelBase.GetNullableClass<global::Courier.Models.Send.Preferences>(
-                this.RawData,
-                "preferences"
-            );
-        }
+        get { return ModelBase.GetNullableClass<Preferences>(this.RawData, "preferences"); }
         init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
@@ -996,12 +990,7 @@ class MessageMetadataFromRaw : IFromRaw<MessageMetadata>
         MessageMetadata.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(ModelConverter<
-        global::Courier.Models.Send.Preferences,
-        global::Courier.Models.Send.PreferencesFromRaw
-    >)
-)]
+[JsonConverter(typeof(ModelConverter<Preferences, PreferencesFromRaw>))]
 public sealed record class Preferences : ModelBase
 {
     /// <summary>
@@ -1033,9 +1022,7 @@ public sealed record class Preferences : ModelBase
     }
 #pragma warning restore CS8618
 
-    public static global::Courier.Models.Send.Preferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    public static Preferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
@@ -1048,11 +1035,10 @@ public sealed record class Preferences : ModelBase
     }
 }
 
-class PreferencesFromRaw : IFromRaw<global::Courier.Models.Send.Preferences>
+class PreferencesFromRaw : IFromRaw<Preferences>
 {
-    public global::Courier.Models.Send.Preferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Courier.Models.Send.Preferences.FromRawUnchecked(rawData);
+    public Preferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Preferences.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ModelConverter<ProvidersItem, ProvidersItemFromRaw>))]

@@ -76,15 +76,9 @@ public sealed record class UserRecipient : ModelBase
         init { ModelBase.Set(this._rawData, "phone_number", value); }
     }
 
-    public UserRecipientPreferences? Preferences
+    public ProfilePreferences? Preferences
     {
-        get
-        {
-            return ModelBase.GetNullableClass<UserRecipientPreferences>(
-                this.RawData,
-                "preferences"
-            );
-        }
+        get { return ModelBase.GetNullableClass<ProfilePreferences>(this.RawData, "preferences"); }
         init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
@@ -146,90 +140,4 @@ class UserRecipientFromRaw : IFromRaw<UserRecipient>
 {
     public UserRecipient FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         UserRecipient.FromRawUnchecked(rawData);
-}
-
-[JsonConverter(typeof(ModelConverter<UserRecipientPreferences, UserRecipientPreferencesFromRaw>))]
-public sealed record class UserRecipientPreferences : ModelBase
-{
-    public required IReadOnlyDictionary<string, Preference> Notifications
-    {
-        get
-        {
-            return ModelBase.GetNotNullClass<Dictionary<string, Preference>>(
-                this.RawData,
-                "notifications"
-            );
-        }
-        init { ModelBase.Set(this._rawData, "notifications", value); }
-    }
-
-    public IReadOnlyDictionary<string, Preference>? Categories
-    {
-        get
-        {
-            return ModelBase.GetNullableClass<Dictionary<string, Preference>>(
-                this.RawData,
-                "categories"
-            );
-        }
-        init { ModelBase.Set(this._rawData, "categories", value); }
-    }
-
-    public string? TemplateID
-    {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "templateId"); }
-        init { ModelBase.Set(this._rawData, "templateId", value); }
-    }
-
-    public override void Validate()
-    {
-        foreach (var item in this.Notifications.Values)
-        {
-            item.Validate();
-        }
-        if (this.Categories != null)
-        {
-            foreach (var item in this.Categories.Values)
-            {
-                item.Validate();
-            }
-        }
-        _ = this.TemplateID;
-    }
-
-    public UserRecipientPreferences() { }
-
-    public UserRecipientPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = [.. rawData];
-    }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    UserRecipientPreferences(FrozenDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = [.. rawData];
-    }
-#pragma warning restore CS8618
-
-    public static UserRecipientPreferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
-    {
-        return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public UserRecipientPreferences(Dictionary<string, Preference> notifications)
-        : this()
-    {
-        this.Notifications = notifications;
-    }
-}
-
-class UserRecipientPreferencesFromRaw : IFromRaw<UserRecipientPreferences>
-{
-    public UserRecipientPreferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => UserRecipientPreferences.FromRawUnchecked(rawData);
 }
