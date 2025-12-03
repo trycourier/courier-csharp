@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json;
 using Courier.Core;
 using Courier.Models;
 
@@ -35,6 +36,205 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
         Assert.Equal(expectedRef, model.Ref);
         Assert.Equal(expectedType, model.Type);
     }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(json);
+        Assert.NotNull(deserialized);
+
+        List<string> expectedChannels = ["string"];
+        string expectedIf = "if";
+        string expectedLoop = "loop";
+        string expectedRef = "ref";
+        ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type> expectedType =
+            ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote;
+
+        Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
+        for (int i = 0; i < expectedChannels.Count; i++)
+        {
+            Assert.Equal(expectedChannels[i], deserialized.Channels[i]);
+        }
+        Assert.Equal(expectedIf, deserialized.If);
+        Assert.Equal(expectedLoop, deserialized.Loop);
+        Assert.Equal(expectedRef, deserialized.Ref);
+        Assert.Equal(expectedType, deserialized.Type);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+        };
+
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+
+            // Null should be interpreted as omitted for these properties
+            Type = null,
+        };
+
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+
+            // Null should be interpreted as omitted for these properties
+            Type = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+
+        Assert.Null(model.Channels);
+        Assert.False(model.RawData.ContainsKey("channels"));
+        Assert.Null(model.If);
+        Assert.False(model.RawData.ContainsKey("if"));
+        Assert.Null(model.Loop);
+        Assert.False(model.RawData.ContainsKey("loop"));
+        Assert.Null(model.Ref);
+        Assert.False(model.RawData.ContainsKey("ref"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+
+            Channels = null,
+            If = null,
+            Loop = null,
+            Ref = null,
+        };
+
+        Assert.Null(model.Channels);
+        Assert.True(model.RawData.ContainsKey("channels"));
+        Assert.Null(model.If);
+        Assert.True(model.RawData.ContainsKey("if"));
+        Assert.Null(model.Loop);
+        Assert.True(model.RawData.ContainsKey("loop"));
+        Assert.Null(model.Ref);
+        Assert.True(model.RawData.ContainsKey("ref"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ElementalQuoteNodeWithType
+        {
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+
+            Channels = null,
+            If = null,
+            Loop = null,
+            Ref = null,
+        };
+
+        model.Validate();
+    }
 }
 
 public class ElementalQuoteNodeWithTypeIntersectionMember1Test : TestBase
@@ -51,5 +251,92 @@ public class ElementalQuoteNodeWithTypeIntersectionMember1Test : TestBase
             ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote;
 
         Assert.Equal(expectedType, model.Type);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ElementalQuoteNodeWithTypeIntersectionMember1
+        {
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized =
+            JsonSerializer.Deserialize<ElementalQuoteNodeWithTypeIntersectionMember1>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ElementalQuoteNodeWithTypeIntersectionMember1
+        {
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized =
+            JsonSerializer.Deserialize<ElementalQuoteNodeWithTypeIntersectionMember1>(json);
+        Assert.NotNull(deserialized);
+
+        ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type> expectedType =
+            ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote;
+
+        Assert.Equal(expectedType, deserialized.Type);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ElementalQuoteNodeWithTypeIntersectionMember1
+        {
+            Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ElementalQuoteNodeWithTypeIntersectionMember1 { };
+
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ElementalQuoteNodeWithTypeIntersectionMember1 { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ElementalQuoteNodeWithTypeIntersectionMember1
+        {
+            // Null should be interpreted as omitted for these properties
+            Type = null,
+        };
+
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ElementalQuoteNodeWithTypeIntersectionMember1
+        {
+            // Null should be interpreted as omitted for these properties
+            Type = null,
+        };
+
+        model.Validate();
     }
 }

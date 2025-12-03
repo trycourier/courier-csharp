@@ -65,6 +65,327 @@ public class UserTokenTest : TestBase
         );
         Assert.Equal(expectedTracking, model.Tracking);
     }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserToken>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserToken>(json);
+        Assert.NotNull(deserialized);
+
+        string expectedToken = "token";
+        ApiEnum<string, UserTokenProviderKey> expectedProviderKey =
+            UserTokenProviderKey.FirebaseFcm;
+        UserTokenDevice expectedDevice = new()
+        {
+            AdID = "ad_id",
+            AppID = "app_id",
+            DeviceID = "device_id",
+            Manufacturer = "manufacturer",
+            Model = "model",
+            Platform = "platform",
+        };
+        UserTokenExpiryDate expectedExpiryDate = "string";
+        JsonElement expectedProperties = JsonSerializer.Deserialize<JsonElement>("{}");
+        UserTokenTracking expectedTracking = new()
+        {
+            IP = "ip",
+            Lat = "lat",
+            Long = "long",
+            OsVersion = "os_version",
+        };
+
+        Assert.Equal(expectedToken, deserialized.Token);
+        Assert.Equal(expectedProviderKey, deserialized.ProviderKey);
+        Assert.Equal(expectedDevice, deserialized.Device);
+        Assert.Equal(expectedExpiryDate, deserialized.ExpiryDate);
+        Assert.True(
+            deserialized.Properties.HasValue
+                && JsonElement.DeepEquals(expectedProperties, deserialized.Properties.Value)
+        );
+        Assert.Equal(expectedTracking, deserialized.Tracking);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        Assert.Null(model.Properties);
+        Assert.False(model.RawData.ContainsKey("properties"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            Properties = null,
+        };
+
+        Assert.Null(model.Properties);
+        Assert.False(model.RawData.ContainsKey("properties"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            Properties = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        Assert.Null(model.Device);
+        Assert.False(model.RawData.ContainsKey("device"));
+        Assert.Null(model.ExpiryDate);
+        Assert.False(model.RawData.ContainsKey("expiry_date"));
+        Assert.Null(model.Tracking);
+        Assert.False(model.RawData.ContainsKey("tracking"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+
+            Device = null,
+            ExpiryDate = null,
+            Tracking = null,
+        };
+
+        Assert.Null(model.Device);
+        Assert.True(model.RawData.ContainsKey("device"));
+        Assert.Null(model.ExpiryDate);
+        Assert.True(model.RawData.ContainsKey("expiry_date"));
+        Assert.Null(model.Tracking);
+        Assert.True(model.RawData.ContainsKey("tracking"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+
+            Device = null,
+            ExpiryDate = null,
+            Tracking = null,
+        };
+
+        model.Validate();
+    }
 }
 
 public class UserTokenDeviceTest : TestBase
@@ -96,6 +417,143 @@ public class UserTokenDeviceTest : TestBase
         Assert.Equal(expectedModel, model.Model);
         Assert.Equal(expectedPlatform, model.Platform);
     }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new UserTokenDevice
+        {
+            AdID = "ad_id",
+            AppID = "app_id",
+            DeviceID = "device_id",
+            Manufacturer = "manufacturer",
+            Model = "model",
+            Platform = "platform",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserTokenDevice>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new UserTokenDevice
+        {
+            AdID = "ad_id",
+            AppID = "app_id",
+            DeviceID = "device_id",
+            Manufacturer = "manufacturer",
+            Model = "model",
+            Platform = "platform",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserTokenDevice>(json);
+        Assert.NotNull(deserialized);
+
+        string expectedAdID = "ad_id";
+        string expectedAppID = "app_id";
+        string expectedDeviceID = "device_id";
+        string expectedManufacturer = "manufacturer";
+        string expectedModel = "model";
+        string expectedPlatform = "platform";
+
+        Assert.Equal(expectedAdID, deserialized.AdID);
+        Assert.Equal(expectedAppID, deserialized.AppID);
+        Assert.Equal(expectedDeviceID, deserialized.DeviceID);
+        Assert.Equal(expectedManufacturer, deserialized.Manufacturer);
+        Assert.Equal(expectedModel, deserialized.Model);
+        Assert.Equal(expectedPlatform, deserialized.Platform);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new UserTokenDevice
+        {
+            AdID = "ad_id",
+            AppID = "app_id",
+            DeviceID = "device_id",
+            Manufacturer = "manufacturer",
+            Model = "model",
+            Platform = "platform",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new UserTokenDevice { };
+
+        Assert.Null(model.AdID);
+        Assert.False(model.RawData.ContainsKey("ad_id"));
+        Assert.Null(model.AppID);
+        Assert.False(model.RawData.ContainsKey("app_id"));
+        Assert.Null(model.DeviceID);
+        Assert.False(model.RawData.ContainsKey("device_id"));
+        Assert.Null(model.Manufacturer);
+        Assert.False(model.RawData.ContainsKey("manufacturer"));
+        Assert.Null(model.Model);
+        Assert.False(model.RawData.ContainsKey("model"));
+        Assert.Null(model.Platform);
+        Assert.False(model.RawData.ContainsKey("platform"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new UserTokenDevice { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new UserTokenDevice
+        {
+            AdID = null,
+            AppID = null,
+            DeviceID = null,
+            Manufacturer = null,
+            Model = null,
+            Platform = null,
+        };
+
+        Assert.Null(model.AdID);
+        Assert.True(model.RawData.ContainsKey("ad_id"));
+        Assert.Null(model.AppID);
+        Assert.True(model.RawData.ContainsKey("app_id"));
+        Assert.Null(model.DeviceID);
+        Assert.True(model.RawData.ContainsKey("device_id"));
+        Assert.Null(model.Manufacturer);
+        Assert.True(model.RawData.ContainsKey("manufacturer"));
+        Assert.Null(model.Model);
+        Assert.True(model.RawData.ContainsKey("model"));
+        Assert.Null(model.Platform);
+        Assert.True(model.RawData.ContainsKey("platform"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new UserTokenDevice
+        {
+            AdID = null,
+            AppID = null,
+            DeviceID = null,
+            Manufacturer = null,
+            Model = null,
+            Platform = null,
+        };
+
+        model.Validate();
+    }
 }
 
 public class UserTokenTrackingTest : TestBase
@@ -120,5 +578,120 @@ public class UserTokenTrackingTest : TestBase
         Assert.Equal(expectedLat, model.Lat);
         Assert.Equal(expectedLong, model.Long);
         Assert.Equal(expectedOsVersion, model.OsVersion);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new UserTokenTracking
+        {
+            IP = "ip",
+            Lat = "lat",
+            Long = "long",
+            OsVersion = "os_version",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserTokenTracking>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new UserTokenTracking
+        {
+            IP = "ip",
+            Lat = "lat",
+            Long = "long",
+            OsVersion = "os_version",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserTokenTracking>(json);
+        Assert.NotNull(deserialized);
+
+        string expectedIP = "ip";
+        string expectedLat = "lat";
+        string expectedLong = "long";
+        string expectedOsVersion = "os_version";
+
+        Assert.Equal(expectedIP, deserialized.IP);
+        Assert.Equal(expectedLat, deserialized.Lat);
+        Assert.Equal(expectedLong, deserialized.Long);
+        Assert.Equal(expectedOsVersion, deserialized.OsVersion);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new UserTokenTracking
+        {
+            IP = "ip",
+            Lat = "lat",
+            Long = "long",
+            OsVersion = "os_version",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new UserTokenTracking { };
+
+        Assert.Null(model.IP);
+        Assert.False(model.RawData.ContainsKey("ip"));
+        Assert.Null(model.Lat);
+        Assert.False(model.RawData.ContainsKey("lat"));
+        Assert.Null(model.Long);
+        Assert.False(model.RawData.ContainsKey("long"));
+        Assert.Null(model.OsVersion);
+        Assert.False(model.RawData.ContainsKey("os_version"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new UserTokenTracking { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new UserTokenTracking
+        {
+            IP = null,
+            Lat = null,
+            Long = null,
+            OsVersion = null,
+        };
+
+        Assert.Null(model.IP);
+        Assert.True(model.RawData.ContainsKey("ip"));
+        Assert.Null(model.Lat);
+        Assert.True(model.RawData.ContainsKey("lat"));
+        Assert.Null(model.Long);
+        Assert.True(model.RawData.ContainsKey("long"));
+        Assert.Null(model.OsVersion);
+        Assert.True(model.RawData.ContainsKey("os_version"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new UserTokenTracking
+        {
+            IP = null,
+            Lat = null,
+            Long = null,
+            OsVersion = null,
+        };
+
+        model.Validate();
     }
 }
