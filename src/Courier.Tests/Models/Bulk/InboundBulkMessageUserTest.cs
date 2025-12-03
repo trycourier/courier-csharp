@@ -165,9 +165,11 @@ public class InboundBulkMessageUserTest : TestBase
             UserID = "user_id",
         };
 
-        Assert.True(JsonElement.DeepEquals(expectedData, model.Data));
+        Assert.True(model.Data.HasValue && JsonElement.DeepEquals(expectedData, model.Data.Value));
         Assert.Equal(expectedPreferences, model.Preferences);
-        Assert.True(JsonElement.DeepEquals(expectedProfile, model.Profile));
+        Assert.True(
+            model.Profile.HasValue && JsonElement.DeepEquals(expectedProfile, model.Profile.Value)
+        );
         Assert.Equal(expectedRecipient, model.Recipient);
         Assert.Equal(expectedTo, model.To);
     }

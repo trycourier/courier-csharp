@@ -63,7 +63,10 @@ public class TokenRetrieveResponseTest : TestBase
         Assert.Equal(expectedProviderKey, model.ProviderKey);
         Assert.Equal(expectedDevice, model.Device);
         Assert.Equal(expectedExpiryDate, model.ExpiryDate);
-        Assert.True(JsonElement.DeepEquals(expectedProperties, model.Properties));
+        Assert.True(
+            model.Properties.HasValue
+                && JsonElement.DeepEquals(expectedProperties, model.Properties.Value)
+        );
         Assert.Equal(expectedTracking, model.Tracking);
         Assert.Equal(expectedStatus, model.Status);
         Assert.Equal(expectedStatusReason, model.StatusReason);
