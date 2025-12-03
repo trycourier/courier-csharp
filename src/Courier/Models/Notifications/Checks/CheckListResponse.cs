@@ -1,40 +1,19 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Notifications.Checks;
 
-[JsonConverter(typeof(ModelConverter<CheckListResponse>))]
-public sealed record class CheckListResponse : ModelBase, IFromRaw<CheckListResponse>
+[JsonConverter(typeof(ModelConverter<CheckListResponse, CheckListResponseFromRaw>))]
+public sealed record class CheckListResponse : ModelBase
 {
-    public required List<Check> Checks
+    public required IReadOnlyList<Check> Checks
     {
-        get
-        {
-            if (!this._properties.TryGetValue("checks", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'checks' cannot be null",
-                    new ArgumentOutOfRangeException("checks", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Check>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'checks' cannot be null",
-                    new ArgumentNullException("checks")
-                );
-        }
-        init
-        {
-            this._properties["checks"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Check>>(this.RawData, "checks"); }
+        init { ModelBase.Set(this._rawData, "checks", value); }
     }
 
     public override void Validate()
@@ -47,24 +26,24 @@ public sealed record class CheckListResponse : ModelBase, IFromRaw<CheckListResp
 
     public CheckListResponse() { }
 
-    public CheckListResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public CheckListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    CheckListResponse(FrozenDictionary<string, JsonElement> properties)
+    CheckListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static CheckListResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -73,4 +52,10 @@ public sealed record class CheckListResponse : ModelBase, IFromRaw<CheckListResp
     {
         this.Checks = checks;
     }
+}
+
+class CheckListResponseFromRaw : IFromRaw<CheckListResponse>
+{
+    public CheckListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        CheckListResponse.FromRawUnchecked(rawData);
 }

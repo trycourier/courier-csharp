@@ -7,8 +7,10 @@ using Courier.Models.Auth;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class AuthService : IAuthService
 {
+    /// <inheritdoc/>
     public IAuthService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AuthService(this._client.WithOptions(modifier));
@@ -21,6 +23,7 @@ public sealed class AuthService : IAuthService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<AuthIssueTokenResponse> IssueToken(
         AuthIssueTokenParams parameters,
         CancellationToken cancellationToken = default

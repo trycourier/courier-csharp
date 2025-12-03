@@ -1,40 +1,19 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Automations;
 
-[JsonConverter(typeof(ModelConverter<AutomationInvokeResponse>))]
-public sealed record class AutomationInvokeResponse : ModelBase, IFromRaw<AutomationInvokeResponse>
+[JsonConverter(typeof(ModelConverter<AutomationInvokeResponse, AutomationInvokeResponseFromRaw>))]
+public sealed record class AutomationInvokeResponse : ModelBase
 {
     public required string RunID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("runId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'runId' cannot be null",
-                    new ArgumentOutOfRangeException("runId", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'runId' cannot be null",
-                    new ArgumentNullException("runId")
-                );
-        }
-        init
-        {
-            this._properties["runId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "runId"); }
+        init { ModelBase.Set(this._rawData, "runId", value); }
     }
 
     public override void Validate()
@@ -44,24 +23,24 @@ public sealed record class AutomationInvokeResponse : ModelBase, IFromRaw<Automa
 
     public AutomationInvokeResponse() { }
 
-    public AutomationInvokeResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public AutomationInvokeResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AutomationInvokeResponse(FrozenDictionary<string, JsonElement> properties)
+    AutomationInvokeResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AutomationInvokeResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -70,4 +49,11 @@ public sealed record class AutomationInvokeResponse : ModelBase, IFromRaw<Automa
     {
         this.RunID = runID;
     }
+}
+
+class AutomationInvokeResponseFromRaw : IFromRaw<AutomationInvokeResponse>
+{
+    public AutomationInvokeResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationInvokeResponse.FromRawUnchecked(rawData);
 }

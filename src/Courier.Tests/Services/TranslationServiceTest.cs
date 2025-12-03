@@ -7,19 +7,12 @@ public class TranslationServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        await this.client.Translations.Retrieve(new() { Domain = "domain", Locale = "locale" });
+        await this.client.Translations.Retrieve("locale", new() { Domain = "domain" });
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Update_Works()
     {
-        await this.client.Translations.Update(
-            new()
-            {
-                Domain = "domain",
-                Locale = "locale",
-                Body = "body",
-            }
-        );
+        await this.client.Translations.Update("locale", new() { Domain = "domain", Body = "body" });
     }
 }

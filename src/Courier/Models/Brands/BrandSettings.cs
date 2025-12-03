@@ -7,67 +7,25 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSettings>))]
-public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
+[JsonConverter(typeof(ModelConverter<BrandSettings, BrandSettingsFromRaw>))]
+public sealed record class BrandSettings : ModelBase
 {
     public BrandColors? Colors
     {
-        get
-        {
-            if (!this._properties.TryGetValue("colors", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandColors?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["colors"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandColors>(this.RawData, "colors"); }
+        init { ModelBase.Set(this._rawData, "colors", value); }
     }
 
     public BrandSettingsEmail? Email
     {
-        get
-        {
-            if (!this._properties.TryGetValue("email", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandSettingsEmail?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["email"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandSettingsEmail>(this.RawData, "email"); }
+        init { ModelBase.Set(this._rawData, "email", value); }
     }
 
     public BrandSettingsInApp? Inapp
     {
-        get
-        {
-            if (!this._properties.TryGetValue("inapp", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BrandSettingsInApp?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["inapp"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BrandSettingsInApp>(this.RawData, "inapp"); }
+        init { ModelBase.Set(this._rawData, "inapp", value); }
     }
 
     public override void Validate()
@@ -79,23 +37,27 @@ public sealed record class BrandSettings : ModelBase, IFromRaw<BrandSettings>
 
     public BrandSettings() { }
 
-    public BrandSettings(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandSettings(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSettings(FrozenDictionary<string, JsonElement> properties)
+    BrandSettings(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static BrandSettings FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static BrandSettings FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BrandSettingsFromRaw : IFromRaw<BrandSettings>
+{
+    public BrandSettings FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandSettings.FromRawUnchecked(rawData);
 }

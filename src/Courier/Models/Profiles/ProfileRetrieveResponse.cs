@@ -1,64 +1,34 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Profiles;
 
-[JsonConverter(typeof(ModelConverter<ProfileRetrieveResponse>))]
-public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<ProfileRetrieveResponse>
+[JsonConverter(typeof(ModelConverter<ProfileRetrieveResponse, ProfileRetrieveResponseFromRaw>))]
+public sealed record class ProfileRetrieveResponse : ModelBase
 {
-    public required Dictionary<string, JsonElement> Profile
+    public required IReadOnlyDictionary<string, JsonElement> Profile
     {
         get
         {
-            if (!this._properties.TryGetValue("profile", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'profile' cannot be null",
-                    new ArgumentOutOfRangeException("profile", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'profile' cannot be null",
-                    new ArgumentNullException("profile")
-                );
-        }
-        init
-        {
-            this._properties["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "profile"
             );
         }
+        init { ModelBase.Set(this._rawData, "profile", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            if (!this._properties.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<RecipientPreferences?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init
-        {
-            this._properties["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
     public override void Validate()
@@ -69,23 +39,30 @@ public sealed record class ProfileRetrieveResponse : ModelBase, IFromRaw<Profile
 
     public ProfileRetrieveResponse() { }
 
-    public ProfileRetrieveResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public ProfileRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProfileRetrieveResponse(FrozenDictionary<string, JsonElement> properties)
+    ProfileRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ProfileRetrieveResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ProfileRetrieveResponseFromRaw : IFromRaw<ProfileRetrieveResponse>
+{
+    public ProfileRetrieveResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ProfileRetrieveResponse.FromRawUnchecked(rawData);
 }

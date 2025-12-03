@@ -7,28 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSnippets>))]
-public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
+[JsonConverter(typeof(ModelConverter<BrandSnippets, BrandSnippetsFromRaw>))]
+public sealed record class BrandSnippets : ModelBase
 {
-    public List<BrandSnippet>? Items
+    public IReadOnlyList<BrandSnippet>? Items
     {
-        get
-        {
-            if (!this._properties.TryGetValue("items", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<BrandSnippet>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["items"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<BrandSnippet>>(this.RawData, "items"); }
+        init { ModelBase.Set(this._rawData, "items", value); }
     }
 
     public override void Validate()
@@ -41,23 +26,27 @@ public sealed record class BrandSnippets : ModelBase, IFromRaw<BrandSnippets>
 
     public BrandSnippets() { }
 
-    public BrandSnippets(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandSnippets(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSnippets(FrozenDictionary<string, JsonElement> properties)
+    BrandSnippets(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static BrandSnippets FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static BrandSnippets FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BrandSnippetsFromRaw : IFromRaw<BrandSnippets>
+{
+    public BrandSnippets FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandSnippets.FromRawUnchecked(rawData);
 }

@@ -1,43 +1,25 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageHistoryResponse>))]
-public sealed record class MessageHistoryResponse : ModelBase, IFromRaw<MessageHistoryResponse>
+[JsonConverter(typeof(ModelConverter<MessageHistoryResponse, MessageHistoryResponseFromRaw>))]
+public sealed record class MessageHistoryResponse : ModelBase
 {
-    public required List<Dictionary<string, JsonElement>> Results
+    public required IReadOnlyList<Dictionary<string, JsonElement>> Results
     {
         get
         {
-            if (!this._properties.TryGetValue("results", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'results' cannot be null",
-                    new ArgumentOutOfRangeException("results", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'results' cannot be null",
-                    new ArgumentNullException("results")
-                );
-        }
-        init
-        {
-            this._properties["results"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<List<Dictionary<string, JsonElement>>>(
+                this.RawData,
+                "results"
             );
         }
+        init { ModelBase.Set(this._rawData, "results", value); }
     }
 
     public override void Validate()
@@ -47,24 +29,24 @@ public sealed record class MessageHistoryResponse : ModelBase, IFromRaw<MessageH
 
     public MessageHistoryResponse() { }
 
-    public MessageHistoryResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public MessageHistoryResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageHistoryResponse(FrozenDictionary<string, JsonElement> properties)
+    MessageHistoryResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static MessageHistoryResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -73,4 +55,11 @@ public sealed record class MessageHistoryResponse : ModelBase, IFromRaw<MessageH
     {
         this.Results = results;
     }
+}
+
+class MessageHistoryResponseFromRaw : IFromRaw<MessageHistoryResponse>
+{
+    public MessageHistoryResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => MessageHistoryResponse.FromRawUnchecked(rawData);
 }

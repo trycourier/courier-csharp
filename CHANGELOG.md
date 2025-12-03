@@ -1,5 +1,61 @@
 # Changelog
 
+## 3.0.0 (2025-12-03)
+
+Full Changelog: [v2.0.0...v3.0.0](https://github.com/trycourier/courier-csharp/compare/v2.0.0...v3.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** use readonly types for properties
+
+### Features
+
+* **client:** additional methods for positional params ([6a429c3](https://github.com/trycourier/courier-csharp/commit/6a429c3601a83cef722920ee08dd5f85da6c9620))
+* **client:** improve csproj ([db90bf5](https://github.com/trycourier/courier-csharp/commit/db90bf5d8f304d2cdef03e30f04155ce4f76920c))
+* **client:** support .NET Standard 2.0 ([ee78b7f](https://github.com/trycourier/courier-csharp/commit/ee78b7f540d501ffd037157fd83d86a7aee84a7d))
+* **internal:** add additional object tests ([2eff9c9](https://github.com/trycourier/courier-csharp/commit/2eff9c9d3a785032619317de9bd1488bb148992c))
+
+
+### Bug Fixes
+
+* **client:** check response status when `MaxRetries = 0` ([50dda8e](https://github.com/trycourier/courier-csharp/commit/50dda8ee8d6673ccd073190a91d074018d6f6aad))
+* **client:** fix duplicate Go struct resulting from name derivations schema ([54e642d](https://github.com/trycourier/courier-csharp/commit/54e642dd40d477190053b4dd5bb0f0864a7e1bfe))
+* **client:** handling of null value type ([4a24e81](https://github.com/trycourier/courier-csharp/commit/4a24e81cc6f994b3ac59332ef82cbf6344360929))
+* **client:** support patch properly on .net standard 2.0 ([4576b6b](https://github.com/trycourier/courier-csharp/commit/4576b6b6325c4797b2f8484c150f41f7eb1e3a1a))
+* **client:** use `JsonElement` in more places ([aedf080](https://github.com/trycourier/courier-csharp/commit/aedf08000a0e17f209e3caf9e9b451cbc8546ab1))
+* **client:** use readonly types for properties ([bf4c4a0](https://github.com/trycourier/courier-csharp/commit/bf4c4a07b76c6a58c42c70989fbcaa4d43f6deee))
+* **internal:** don't format csproj files ([b10fc7b](https://github.com/trycourier/courier-csharp/commit/b10fc7b5288317cfafd4bb5c39247e6661dce614))
+* **internal:** install csharpier during ci lint phase ([b31b046](https://github.com/trycourier/courier-csharp/commit/b31b046edd1655ff1cdff6f737200fa504c4be29))
+* **internal:** minor project fixes ([8032f51](https://github.com/trycourier/courier-csharp/commit/8032f51e9e77a28cb5510ed6da9656ba84b54625))
+* **internal:** running net462 tests on ci ([5de3b0d](https://github.com/trycourier/courier-csharp/commit/5de3b0d99985a69d024e795dbd598cd7dbc2ebf7))
+
+
+### Performance Improvements
+
+* **client:** use async deserialization in `HttpResponse` ([fd07a51](https://github.com/trycourier/courier-csharp/commit/fd07a51a33cd5b21fc8afac1dca6828c7ce2fb7b))
+
+
+### Chores
+
+* **client:** change name of underlying properties for models and params ([7cce984](https://github.com/trycourier/courier-csharp/commit/7cce9845fa5ef2f5096cb17e5ec36699f45f6d9d))
+* **internal:** equality and more unit tests ([24f3333](https://github.com/trycourier/courier-csharp/commit/24f333368798b816c052988679e18908fb321353))
+* **internal:** remove redundant keyword ([9775992](https://github.com/trycourier/courier-csharp/commit/9775992cdcb6fcdf8b4aa13ae42d005a9b66db4f))
+* **internal:** suppress diagnostic for .netstandard2.0 ([48265c0](https://github.com/trycourier/courier-csharp/commit/48265c01a8b8316e68680d9b701899372412883a))
+* **internal:** update csproj formatting ([fe313dc](https://github.com/trycourier/courier-csharp/commit/fe313dcc15889707657db29c8590c528476fe7fb))
+* **internal:** update release please config ([69e425f](https://github.com/trycourier/courier-csharp/commit/69e425f0ce6d15ea5c100e2b69dd15abb3177269))
+
+
+### Documentation
+
+* add more comments ([e7586af](https://github.com/trycourier/courier-csharp/commit/e7586afa54cd801600f0bc962894a2537bb4918e))
+
+
+### Refactors
+
+* **client:** make unknown variants implicit ([c336420](https://github.com/trycourier/courier-csharp/commit/c336420f9f9f4c60f1f7108fb3ec010d193c46d1))
+* **internal:** remove abstract static methods ([8f7e8a0](https://github.com/trycourier/courier-csharp/commit/8f7e8a05bd9b5534c958062eaa404cd4a987b3f0))
+* **internal:** share get/set logic ([4a24e81](https://github.com/trycourier/courier-csharp/commit/4a24e81cc6f994b3ac59332ef82cbf6344360929))
+
 ## 2.0.0 (2025-11-18)
 
 Full Changelog: [v1.1.0...v2.0.0](https://github.com/trycourier/courier-csharp/compare/v1.1.0...v2.0.0)

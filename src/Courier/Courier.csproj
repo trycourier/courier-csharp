@@ -1,37 +1,51 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>
-      The official .NET library for the Courier C# service API.
-    </Description>
-    <AssemblyTitle>SDK Code Generation Courier C#</AssemblyTitle>
+    <!-- Metadata -->
+    <AssemblyTitle>Courier C#</AssemblyTitle>
+    <AssemblyName>Courier</AssemblyName>
+    <VersionPrefix>3.0.0</VersionPrefix>
+    <Authors>Courier</Authors>
+    <Company>Courier</Company>
+    <Description>The official .NET library for the Courier API.</Description>
+    <PackageTags>sdk;api;http;library</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <Nullable>enable</Nullable>
-    <VersionPrefix>2.0.0</VersionPrefix>
-    <TargetFrameworks>net8.0</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
-    <!-- Generate an XML documentation file for the project. -->
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright 2025 Courier</Copyright>
+    <PackageProjectUrl>https://www.courier.com/docs</PackageProjectUrl>
     <RepositoryUrl>https://www.github.com/trycourier/courier-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <!-- Embed source files that are not tracked by the source control manager in the PDB -->
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <!-- Disable missing XML documentation warnings -->
+    <OutputType>Library</OutputType>
+
+    <!-- Documentation-->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- Disable missing XML documentation warnings. -->
     <NoWarn>$(NoWarn),1570,1573,1574,1591</NoWarn>
-    <!-- Disable deprecation warnings since we may reference our own deprecated symbols -->
-    <NoWarn>$(NoWarn),0618</NoWarn>
-    <!-- Disable JSON warnings (beta) -->
-    <NoWarn>$(NoWarn),IL2026,IL3050</NoWarn>
+
+    <!-- Source link -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <DebugType>embedded</DebugType>
+
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <LangVersion>12</LangVersion>
     <Configurations>Debug;Release</Configurations>
-    <IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
-    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+    <BuildPackage>true</BuildPackage>
+    <Deterministic>true</Deterministic>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <ImplicitUsings>disable</ImplicitUsings>
+    <!-- Disable deprecation warnings since we may reference our own deprecated symbols. -->
+    <NoWarn>$(NoWarn),0618</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="Courier.Tests"/>
     <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
-  </ItemGroup>
-  <ItemGroup>
+    <InternalsVisibleTo Include="Courier.Tests"/>
     <PackageReference Include="System.Text.Json" Version="9.0.9"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0"/>
   </ItemGroup>
 </Project>

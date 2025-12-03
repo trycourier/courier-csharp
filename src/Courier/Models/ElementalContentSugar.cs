@@ -1,46 +1,25 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models;
 
 /// <summary>
 /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<ElementalContentSugar>))]
-public sealed record class ElementalContentSugar : ModelBase, IFromRaw<ElementalContentSugar>
+[JsonConverter(typeof(ModelConverter<ElementalContentSugar, ElementalContentSugarFromRaw>))]
+public sealed record class ElementalContentSugar : ModelBase
 {
     /// <summary>
     /// The text content displayed in the notification.
     /// </summary>
     public required string Body
     {
-        get
-        {
-            if (!this._properties.TryGetValue("body", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'body' cannot be null",
-                    new ArgumentOutOfRangeException("body", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'body' cannot be null",
-                    new ArgumentNullException("body")
-                );
-        }
-        init
-        {
-            this._properties["body"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "body"); }
+        init { ModelBase.Set(this._rawData, "body", value); }
     }
 
     /// <summary>
@@ -48,27 +27,8 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
     /// </summary>
     public required string Title
     {
-        get
-        {
-            if (!this._properties.TryGetValue("title", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'title' cannot be null",
-                    new ArgumentOutOfRangeException("title", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'title' cannot be null",
-                    new ArgumentNullException("title")
-                );
-        }
-        init
-        {
-            this._properties["title"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "title"); }
+        init { ModelBase.Set(this._rawData, "title", value); }
     }
 
     public override void Validate()
@@ -79,23 +39,30 @@ public sealed record class ElementalContentSugar : ModelBase, IFromRaw<Elemental
 
     public ElementalContentSugar() { }
 
-    public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalContentSugar(FrozenDictionary<string, JsonElement> properties)
+    ElementalContentSugar(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalContentSugar FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalContentSugarFromRaw : IFromRaw<ElementalContentSugar>
+{
+    public ElementalContentSugar FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalContentSugar.FromRawUnchecked(rawData);
 }

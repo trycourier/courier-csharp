@@ -1,68 +1,25 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.AuditEvents;
 
-[JsonConverter(typeof(ModelConverter<AuditEventListResponse>))]
-public sealed record class AuditEventListResponse : ModelBase, IFromRaw<AuditEventListResponse>
+[JsonConverter(typeof(ModelConverter<AuditEventListResponse, AuditEventListResponseFromRaw>))]
+public sealed record class AuditEventListResponse : ModelBase
 {
     public required Paging Paging
     {
-        get
-        {
-            if (!this._properties.TryGetValue("paging", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'paging' cannot be null",
-                    new ArgumentOutOfRangeException("paging", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Paging>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'paging' cannot be null",
-                    new ArgumentNullException("paging")
-                );
-        }
-        init
-        {
-            this._properties["paging"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { ModelBase.Set(this._rawData, "paging", value); }
     }
 
-    public required List<AuditEvent> Results
+    public required IReadOnlyList<AuditEvent> Results
     {
-        get
-        {
-            if (!this._properties.TryGetValue("results", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'results' cannot be null",
-                    new ArgumentOutOfRangeException("results", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<AuditEvent>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'results' cannot be null",
-                    new ArgumentNullException("results")
-                );
-        }
-        init
-        {
-            this._properties["results"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<AuditEvent>>(this.RawData, "results"); }
+        init { ModelBase.Set(this._rawData, "results", value); }
     }
 
     public override void Validate()
@@ -76,23 +33,30 @@ public sealed record class AuditEventListResponse : ModelBase, IFromRaw<AuditEve
 
     public AuditEventListResponse() { }
 
-    public AuditEventListResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public AuditEventListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AuditEventListResponse(FrozenDictionary<string, JsonElement> properties)
+    AuditEventListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AuditEventListResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AuditEventListResponseFromRaw : IFromRaw<AuditEventListResponse>
+{
+    public AuditEventListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AuditEventListResponse.FromRawUnchecked(rawData);
 }

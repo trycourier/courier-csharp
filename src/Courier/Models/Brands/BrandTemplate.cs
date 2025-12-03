@@ -1,144 +1,55 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandTemplate>))]
-public sealed record class BrandTemplate : ModelBase, IFromRaw<BrandTemplate>
+[JsonConverter(typeof(ModelConverter<BrandTemplate, BrandTemplateFromRaw>))]
+public sealed record class BrandTemplate : ModelBase
 {
     public required bool Enabled
     {
-        get
-        {
-            if (!this._properties.TryGetValue("enabled", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'enabled' cannot be null",
-                    new ArgumentOutOfRangeException("enabled", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["enabled"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "enabled"); }
+        init { ModelBase.Set(this._rawData, "enabled", value); }
     }
 
     public string? BackgroundColor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("backgroundColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["backgroundColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "backgroundColor"); }
+        init { ModelBase.Set(this._rawData, "backgroundColor", value); }
     }
 
     public string? BlocksBackgroundColor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("blocksBackgroundColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["blocksBackgroundColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "blocksBackgroundColor"); }
+        init { ModelBase.Set(this._rawData, "blocksBackgroundColor", value); }
     }
 
     public string? Footer
     {
-        get
-        {
-            if (!this._properties.TryGetValue("footer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["footer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "footer"); }
+        init { ModelBase.Set(this._rawData, "footer", value); }
     }
 
     public string? Head
     {
-        get
-        {
-            if (!this._properties.TryGetValue("head", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["head"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "head"); }
+        init { ModelBase.Set(this._rawData, "head", value); }
     }
 
     public string? Header
     {
-        get
-        {
-            if (!this._properties.TryGetValue("header", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["header"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "header"); }
+        init { ModelBase.Set(this._rawData, "header", value); }
     }
 
     public string? Width
     {
-        get
-        {
-            if (!this._properties.TryGetValue("width", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["width"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "width"); }
+        init { ModelBase.Set(this._rawData, "width", value); }
     }
 
     public override void Validate()
@@ -154,24 +65,22 @@ public sealed record class BrandTemplate : ModelBase, IFromRaw<BrandTemplate>
 
     public BrandTemplate() { }
 
-    public BrandTemplate(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandTemplate(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandTemplate(FrozenDictionary<string, JsonElement> properties)
+    BrandTemplate(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static BrandTemplate FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static BrandTemplate FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -180,4 +89,10 @@ public sealed record class BrandTemplate : ModelBase, IFromRaw<BrandTemplate>
     {
         this.Enabled = enabled;
     }
+}
+
+class BrandTemplateFromRaw : IFromRaw<BrandTemplate>
+{
+    public BrandTemplate FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandTemplate.FromRawUnchecked(rawData);
 }

@@ -1,40 +1,19 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<AudienceUpdateResponse>))]
-public sealed record class AudienceUpdateResponse : ModelBase, IFromRaw<AudienceUpdateResponse>
+[JsonConverter(typeof(ModelConverter<AudienceUpdateResponse, AudienceUpdateResponseFromRaw>))]
+public sealed record class AudienceUpdateResponse : ModelBase
 {
     public required Audience Audience
     {
-        get
-        {
-            if (!this._properties.TryGetValue("audience", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'audience' cannot be null",
-                    new ArgumentOutOfRangeException("audience", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Audience>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'audience' cannot be null",
-                    new ArgumentNullException("audience")
-                );
-        }
-        init
-        {
-            this._properties["audience"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Audience>(this.RawData, "audience"); }
+        init { ModelBase.Set(this._rawData, "audience", value); }
     }
 
     public override void Validate()
@@ -44,24 +23,24 @@ public sealed record class AudienceUpdateResponse : ModelBase, IFromRaw<Audience
 
     public AudienceUpdateResponse() { }
 
-    public AudienceUpdateResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public AudienceUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AudienceUpdateResponse(FrozenDictionary<string, JsonElement> properties)
+    AudienceUpdateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AudienceUpdateResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -70,4 +49,11 @@ public sealed record class AudienceUpdateResponse : ModelBase, IFromRaw<Audience
     {
         this.Audience = audience;
     }
+}
+
+class AudienceUpdateResponseFromRaw : IFromRaw<AudienceUpdateResponse>
+{
+    public AudienceUpdateResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AudienceUpdateResponse.FromRawUnchecked(rawData);
 }

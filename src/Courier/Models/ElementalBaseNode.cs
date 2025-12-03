@@ -7,79 +7,31 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalBaseNode>))]
-public sealed record class ElementalBaseNode : ModelBase, IFromRaw<ElementalBaseNode>
+[JsonConverter(typeof(ModelConverter<ElementalBaseNode, ElementalBaseNodeFromRaw>))]
+public sealed record class ElementalBaseNode : ModelBase
 {
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
-        get
-        {
-            if (!this._properties.TryGetValue("channels", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get
-        {
-            if (!this._properties.TryGetValue("if", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["if"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
+        init { ModelBase.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get
-        {
-            if (!this._properties.TryGetValue("loop", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["loop"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
+        init { ModelBase.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get
-        {
-            if (!this._properties.TryGetValue("ref", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["ref"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
+        init { ModelBase.Set(this._rawData, "ref", value); }
     }
 
     public override void Validate()
@@ -92,23 +44,29 @@ public sealed record class ElementalBaseNode : ModelBase, IFromRaw<ElementalBase
 
     public ElementalBaseNode() { }
 
-    public ElementalBaseNode(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalBaseNode(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalBaseNode(FrozenDictionary<string, JsonElement> properties)
+    ElementalBaseNode(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalBaseNode FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalBaseNodeFromRaw : IFromRaw<ElementalBaseNode>
+{
+    public ElementalBaseNode FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ElementalBaseNode.FromRawUnchecked(rawData);
 }

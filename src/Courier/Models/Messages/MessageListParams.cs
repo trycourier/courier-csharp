@@ -19,20 +19,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public bool? Archived
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("archived", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["archived"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "archived"); }
+        init { ModelBase.Set(this._rawQueryData, "archived", value); }
     }
 
     /// <summary>
@@ -40,20 +28,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("cursor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["cursor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "cursor"); }
+        init { ModelBase.Set(this._rawQueryData, "cursor", value); }
     }
 
     /// <summary>
@@ -61,20 +37,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? EnqueuedAfter
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("enqueued_after", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["enqueued_after"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "enqueued_after"); }
+        init { ModelBase.Set(this._rawQueryData, "enqueued_after", value); }
     }
 
     /// <summary>
@@ -82,20 +46,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Event
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("event", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["event"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "event"); }
+        init { ModelBase.Set(this._rawQueryData, "event", value); }
     }
 
     /// <summary>
@@ -103,20 +55,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? List
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("list", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["list"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "list"); }
+        init { ModelBase.Set(this._rawQueryData, "list", value); }
     }
 
     /// <summary>
@@ -125,20 +65,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? MessageID
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("messageId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["messageId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "messageId"); }
+        init { ModelBase.Set(this._rawQueryData, "messageId", value); }
     }
 
     /// <summary>
@@ -146,35 +74,17 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Notification
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("notification", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["notification"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "notification"); }
+        init { ModelBase.Set(this._rawQueryData, "notification", value); }
     }
 
     /// <summary>
     /// The key assocated to the provider you want to filter on. E.g., sendgrid, inbox,
     /// twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
     /// </summary>
-    public List<string?>? Provider
+    public IReadOnlyList<string?>? Provider
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("provider", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string?>>(this.RawQueryData, "provider"); }
         init
         {
             if (value == null)
@@ -182,10 +92,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            this._queryProperties["provider"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "provider", value);
         }
     }
 
@@ -194,35 +101,17 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Recipient
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("recipient", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["recipient"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "recipient"); }
+        init { ModelBase.Set(this._rawQueryData, "recipient", value); }
     }
 
     /// <summary>
     /// An indicator of the current status of the message. Allows multiple values
     /// to be set in query parameters.
     /// </summary>
-    public List<string?>? Status
+    public IReadOnlyList<string?>? Status
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("status", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string?>>(this.RawQueryData, "status"); }
         init
         {
             if (value == null)
@@ -230,10 +119,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            this._queryProperties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "status", value);
         }
     }
 
@@ -241,15 +127,9 @@ public sealed record class MessageListParams : ParamsBase
     /// A tag placed in the metadata.tags during a notification send. Allows multiple
     /// values to be set in query parameters.
     /// </summary>
-    public List<string?>? Tag
+    public IReadOnlyList<string?>? Tag
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("tag", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string?>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string?>>(this.RawQueryData, "tag"); }
         init
         {
             if (value == null)
@@ -257,10 +137,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            this._queryProperties["tag"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawQueryData, "tag", value);
         }
     }
 
@@ -270,20 +147,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Tags
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("tags", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["tags"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "tags"); }
+        init { ModelBase.Set(this._rawQueryData, "tags", value); }
     }
 
     /// <summary>
@@ -291,20 +156,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("tenant_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
+        init { ModelBase.Set(this._rawQueryData, "tenant_id", value); }
     }
 
     /// <summary>
@@ -312,53 +165,41 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? TraceID
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("traceId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["traceId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "traceId"); }
+        init { ModelBase.Set(this._rawQueryData, "traceId", value); }
     }
 
     public MessageListParams() { }
 
     public MessageListParams(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     MessageListParams(
-        FrozenDictionary<string, JsonElement> headerProperties,
-        FrozenDictionary<string, JsonElement> queryProperties
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
     }
 #pragma warning restore CS8618
 
     public static MessageListParams FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
         return new(
-            FrozenDictionary.ToFrozenDictionary(headerProperties),
-            FrozenDictionary.ToFrozenDictionary(queryProperties)
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData)
         );
     }
 
@@ -373,7 +214,7 @@ public sealed record class MessageListParams : ParamsBase
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
         ParamsBase.AddDefaultHeaders(request, options);
-        foreach (var item in this.HeaderProperties)
+        foreach (var item in this.RawHeaderData)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }

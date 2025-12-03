@@ -1,101 +1,37 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Lists;
 
-[JsonConverter(typeof(ModelConverter<SubscriptionList>))]
-public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionList>
+[JsonConverter(typeof(ModelConverter<SubscriptionList, SubscriptionListFromRaw>))]
+public sealed record class SubscriptionList : ModelBase
 {
     public required string ID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentOutOfRangeException("id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentNullException("id")
-                );
-        }
-        init
-        {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     public required string Name
     {
-        get
-        {
-            if (!this._properties.TryGetValue("name", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentOutOfRangeException("name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentNullException("name")
-                );
-        }
-        init
-        {
-            this._properties["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "name"); }
+        init { ModelBase.Set(this._rawData, "name", value); }
     }
 
     public string? Created
     {
-        get
-        {
-            if (!this._properties.TryGetValue("created", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["created"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "created"); }
+        init { ModelBase.Set(this._rawData, "created", value); }
     }
 
     public string? Updated
     {
-        get
-        {
-            if (!this._properties.TryGetValue("updated", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["updated"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "updated"); }
+        init { ModelBase.Set(this._rawData, "updated", value); }
     }
 
     public override void Validate()
@@ -108,23 +44,29 @@ public sealed record class SubscriptionList : ModelBase, IFromRaw<SubscriptionLi
 
     public SubscriptionList() { }
 
-    public SubscriptionList(IReadOnlyDictionary<string, JsonElement> properties)
+    public SubscriptionList(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SubscriptionList(FrozenDictionary<string, JsonElement> properties)
+    SubscriptionList(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static SubscriptionList FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class SubscriptionListFromRaw : IFromRaw<SubscriptionList>
+{
+    public SubscriptionList FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        SubscriptionList.FromRawUnchecked(rawData);
 }

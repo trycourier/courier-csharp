@@ -9,163 +9,58 @@ using System = System;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSettingsInApp>))]
-public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSettingsInApp>
+[JsonConverter(typeof(ModelConverter<BrandSettingsInApp, BrandSettingsInAppFromRaw>))]
+public sealed record class BrandSettingsInApp : ModelBase
 {
     public required BrandColors Colors
     {
-        get
-        {
-            if (!this._properties.TryGetValue("colors", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'colors' cannot be null",
-                    new System::ArgumentOutOfRangeException("colors", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<BrandColors>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'colors' cannot be null",
-                    new System::ArgumentNullException("colors")
-                );
-        }
-        init
-        {
-            this._properties["colors"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<BrandColors>(this.RawData, "colors"); }
+        init { ModelBase.Set(this._rawData, "colors", value); }
     }
 
     public required Icons Icons
     {
-        get
-        {
-            if (!this._properties.TryGetValue("icons", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'icons' cannot be null",
-                    new System::ArgumentOutOfRangeException("icons", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Icons>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'icons' cannot be null",
-                    new System::ArgumentNullException("icons")
-                );
-        }
-        init
-        {
-            this._properties["icons"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Icons>(this.RawData, "icons"); }
+        init { ModelBase.Set(this._rawData, "icons", value); }
     }
 
     public required WidgetBackground WidgetBackground
     {
         get
         {
-            if (!this._properties.TryGetValue("widgetBackground", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'widgetBackground' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "widgetBackground",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<WidgetBackground>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'widgetBackground' cannot be null",
-                    new System::ArgumentNullException("widgetBackground")
-                );
+            return ModelBase.GetNotNullClass<WidgetBackground>(this.RawData, "widgetBackground");
         }
-        init
-        {
-            this._properties["widgetBackground"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "widgetBackground", value); }
     }
 
     public string? BorderRadius
     {
-        get
-        {
-            if (!this._properties.TryGetValue("borderRadius", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["borderRadius"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "borderRadius"); }
+        init { ModelBase.Set(this._rawData, "borderRadius", value); }
     }
 
     public bool? DisableMessageIcon
     {
-        get
-        {
-            if (!this._properties.TryGetValue("disableMessageIcon", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["disableMessageIcon"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "disableMessageIcon"); }
+        init { ModelBase.Set(this._rawData, "disableMessageIcon", value); }
     }
 
     public string? FontFamily
     {
-        get
-        {
-            if (!this._properties.TryGetValue("fontFamily", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["fontFamily"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "fontFamily"); }
+        init { ModelBase.Set(this._rawData, "fontFamily", value); }
     }
 
     public ApiEnum<string, Placement>? Placement
     {
         get
         {
-            if (!this._properties.TryGetValue("placement", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Placement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, Placement>>(
+                this.RawData,
+                "placement"
             );
         }
-        init
-        {
-            this._properties["placement"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "placement", value); }
     }
 
     public override void Validate()
@@ -181,25 +76,31 @@ public sealed record class BrandSettingsInApp : ModelBase, IFromRaw<BrandSetting
 
     public BrandSettingsInApp() { }
 
-    public BrandSettingsInApp(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandSettingsInApp(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSettingsInApp(FrozenDictionary<string, JsonElement> properties)
+    BrandSettingsInApp(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static BrandSettingsInApp FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BrandSettingsInAppFromRaw : IFromRaw<BrandSettingsInApp>
+{
+    public BrandSettingsInApp FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandSettingsInApp.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(PlacementConverter))]

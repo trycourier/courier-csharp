@@ -7,43 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<WidgetBackground>))]
-public sealed record class WidgetBackground : ModelBase, IFromRaw<WidgetBackground>
+[JsonConverter(typeof(ModelConverter<WidgetBackground, WidgetBackgroundFromRaw>))]
+public sealed record class WidgetBackground : ModelBase
 {
     public string? BottomColor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("bottomColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["bottomColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "bottomColor"); }
+        init { ModelBase.Set(this._rawData, "bottomColor", value); }
     }
 
     public string? TopColor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("topColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["topColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "topColor"); }
+        init { ModelBase.Set(this._rawData, "topColor", value); }
     }
 
     public override void Validate()
@@ -54,23 +30,29 @@ public sealed record class WidgetBackground : ModelBase, IFromRaw<WidgetBackgrou
 
     public WidgetBackground() { }
 
-    public WidgetBackground(IReadOnlyDictionary<string, JsonElement> properties)
+    public WidgetBackground(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    WidgetBackground(FrozenDictionary<string, JsonElement> properties)
+    WidgetBackground(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static WidgetBackground FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class WidgetBackgroundFromRaw : IFromRaw<WidgetBackground>
+{
+    public WidgetBackground FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        WidgetBackground.FromRawUnchecked(rawData);
 }

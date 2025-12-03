@@ -9,94 +9,40 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalMetaNodeWithType>))]
-public sealed record class ElementalMetaNodeWithType
-    : ModelBase,
-        IFromRaw<ElementalMetaNodeWithType>
+[JsonConverter(typeof(ModelConverter<ElementalMetaNodeWithType, ElementalMetaNodeWithTypeFromRaw>))]
+public sealed record class ElementalMetaNodeWithType : ModelBase
 {
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
-        get
-        {
-            if (!this._properties.TryGetValue("channels", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get
-        {
-            if (!this._properties.TryGetValue("if", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["if"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
+        init { ModelBase.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get
-        {
-            if (!this._properties.TryGetValue("loop", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["loop"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
+        init { ModelBase.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get
-        {
-            if (!this._properties.TryGetValue("ref", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["ref"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
+        init { ModelBase.Set(this._rawData, "ref", value); }
     }
 
     public ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                ElementalMetaNodeWithTypeIntersectionMember1Type
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>
+            >(this.RawData, "type");
         }
         init
         {
@@ -105,10 +51,7 @@ public sealed record class ElementalMetaNodeWithType
                 return;
             }
 
-            this._properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "type", value);
         }
     }
 
@@ -134,43 +77,49 @@ public sealed record class ElementalMetaNodeWithType
 
     public ElementalMetaNodeWithType() { }
 
-    public ElementalMetaNodeWithType(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalMetaNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalMetaNodeWithType(FrozenDictionary<string, JsonElement> properties)
+    ElementalMetaNodeWithType(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalMetaNodeWithType FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ElementalMetaNodeWithTypeIntersectionMember1>))]
-public sealed record class ElementalMetaNodeWithTypeIntersectionMember1
-    : ModelBase,
-        IFromRaw<ElementalMetaNodeWithTypeIntersectionMember1>
+class ElementalMetaNodeWithTypeFromRaw : IFromRaw<ElementalMetaNodeWithType>
+{
+    public ElementalMetaNodeWithType FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalMetaNodeWithType.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        ElementalMetaNodeWithTypeIntersectionMember1,
+        ElementalMetaNodeWithTypeIntersectionMember1FromRaw
+    >)
+)]
+public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelBase
 {
     public ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                ElementalMetaNodeWithTypeIntersectionMember1Type
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>
+            >(this.RawData, "type");
         }
         init
         {
@@ -179,10 +128,7 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1
                 return;
             }
 
-            this._properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "type", value);
         }
     }
 
@@ -194,26 +140,34 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1
     public ElementalMetaNodeWithTypeIntersectionMember1() { }
 
     public ElementalMetaNodeWithTypeIntersectionMember1(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalMetaNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    ElementalMetaNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalMetaNodeWithTypeIntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalMetaNodeWithTypeIntersectionMember1FromRaw
+    : IFromRaw<ElementalMetaNodeWithTypeIntersectionMember1>
+{
+    public ElementalMetaNodeWithTypeIntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalMetaNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ElementalMetaNodeWithTypeIntersectionMember1TypeConverter))]

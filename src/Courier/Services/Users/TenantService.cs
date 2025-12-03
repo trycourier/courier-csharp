@@ -3,12 +3,15 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Users.Tenants;
 
 namespace Courier.Services.Users;
 
+/// <inheritdoc />
 public sealed class TenantService : global::Courier.Services.Users.ITenantService
 {
+    /// <inheritdoc/>
     public global::Courier.Services.Users.ITenantService WithOptions(
         Func<ClientOptions, ClientOptions> modifier
     )
@@ -23,11 +26,17 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<TenantListResponse> List(
         TenantListParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.UserID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
+        }
+
         HttpRequest<TenantListParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -46,11 +55,29 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         return tenants;
     }
 
+    /// <inheritdoc/>
+    public async Task<TenantListResponse> List(
+        string userID,
+        TenantListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.List(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task AddMultiple(
         TenantAddMultipleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.UserID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
+        }
+
         HttpRequest<TenantAddMultipleParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -61,11 +88,27 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
+    public async Task AddMultiple(
+        string userID,
+        TenantAddMultipleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.AddMultiple(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task AddSingle(
         TenantAddSingleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TenantID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TenantID' cannot be null");
+        }
+
         HttpRequest<TenantAddSingleParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -76,11 +119,27 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
+    public async Task AddSingle(
+        string tenantID,
+        TenantAddSingleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.AddSingle(parameters with { TenantID = tenantID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task RemoveAll(
         TenantRemoveAllParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.UserID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
+        }
+
         HttpRequest<TenantRemoveAllParams> request = new()
         {
             Method = HttpMethod.Delete,
@@ -91,11 +150,29 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
+    public async Task RemoveAll(
+        string userID,
+        TenantRemoveAllParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.RemoveAll(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task RemoveSingle(
         TenantRemoveSingleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.TenantID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TenantID' cannot be null");
+        }
+
         HttpRequest<TenantRemoveSingleParams> request = new()
         {
             Method = HttpMethod.Delete,
@@ -104,5 +181,15 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task RemoveSingle(
+        string tenantID,
+        TenantRemoveSingleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.RemoveSingle(parameters with { TenantID = tenantID }, cancellationToken);
     }
 }

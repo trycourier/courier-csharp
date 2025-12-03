@@ -9,31 +9,13 @@ using System = System;
 
 namespace Courier.Models.Profiles;
 
-[JsonConverter(typeof(ModelConverter<ProfileCreateResponse>))]
-public sealed record class ProfileCreateResponse : ModelBase, IFromRaw<ProfileCreateResponse>
+[JsonConverter(typeof(ModelConverter<ProfileCreateResponse, ProfileCreateResponseFromRaw>))]
+public sealed record class ProfileCreateResponse : ModelBase
 {
     public required ApiEnum<string, Status> Status
     {
-        get
-        {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public override void Validate()
@@ -43,24 +25,24 @@ public sealed record class ProfileCreateResponse : ModelBase, IFromRaw<ProfileCr
 
     public ProfileCreateResponse() { }
 
-    public ProfileCreateResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public ProfileCreateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProfileCreateResponse(FrozenDictionary<string, JsonElement> properties)
+    ProfileCreateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ProfileCreateResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -69,6 +51,13 @@ public sealed record class ProfileCreateResponse : ModelBase, IFromRaw<ProfileCr
     {
         this.Status = status;
     }
+}
+
+class ProfileCreateResponseFromRaw : IFromRaw<ProfileCreateResponse>
+{
+    public ProfileCreateResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ProfileCreateResponse.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(StatusConverter))]

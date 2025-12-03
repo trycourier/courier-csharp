@@ -1,16 +1,14 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Send;
 
-[JsonConverter(typeof(ModelConverter<SendMessageResponse>))]
-public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessageResponse>
+[JsonConverter(typeof(ModelConverter<SendMessageResponse, SendMessageResponseFromRaw>))]
+public sealed record class SendMessageResponse : ModelBase
 {
     /// <summary>
     /// A successful call to `POST /send` returns a `202` status code along with a
@@ -20,27 +18,8 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
     /// </summary>
     public required string RequestID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("requestId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'requestId' cannot be null",
-                    new ArgumentOutOfRangeException("requestId", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'requestId' cannot be null",
-                    new ArgumentNullException("requestId")
-                );
-        }
-        init
-        {
-            this._properties["requestId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "requestId"); }
+        init { ModelBase.Set(this._rawData, "requestId", value); }
     }
 
     public override void Validate()
@@ -50,24 +29,24 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
 
     public SendMessageResponse() { }
 
-    public SendMessageResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public SendMessageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    SendMessageResponse(FrozenDictionary<string, JsonElement> properties)
+    SendMessageResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static SendMessageResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -76,4 +55,10 @@ public sealed record class SendMessageResponse : ModelBase, IFromRaw<SendMessage
     {
         this.RequestID = requestID;
     }
+}
+
+class SendMessageResponseFromRaw : IFromRaw<SendMessageResponse>
+{
+    public SendMessageResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        SendMessageResponse.FromRawUnchecked(rawData);
 }

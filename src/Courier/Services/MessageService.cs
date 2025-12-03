@@ -3,12 +3,15 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Messages;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class MessageService : IMessageService
 {
+    /// <inheritdoc/>
     public IMessageService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new MessageService(this._client.WithOptions(modifier));
@@ -21,11 +24,17 @@ public sealed class MessageService : IMessageService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<MessageRetrieveResponse> Retrieve(
         MessageRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.MessageID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.MessageID' cannot be null");
+        }
+
         HttpRequest<MessageRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -44,6 +53,19 @@ public sealed class MessageService : IMessageService
         return message;
     }
 
+    /// <inheritdoc/>
+    public async Task<MessageRetrieveResponse> Retrieve(
+        string messageID,
+        MessageRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Retrieve(parameters with { MessageID = messageID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<MessageListResponse> List(
         MessageListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -69,11 +91,17 @@ public sealed class MessageService : IMessageService
         return messages;
     }
 
+    /// <inheritdoc/>
     public async Task<MessageDetails> Cancel(
         MessageCancelParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.MessageID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.MessageID' cannot be null");
+        }
+
         HttpRequest<MessageCancelParams> request = new()
         {
             Method = HttpMethod.Post,
@@ -92,11 +120,29 @@ public sealed class MessageService : IMessageService
         return messageDetails;
     }
 
+    /// <inheritdoc/>
+    public async Task<MessageDetails> Cancel(
+        string messageID,
+        MessageCancelParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Cancel(parameters with { MessageID = messageID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<MessageContentResponse> Content(
         MessageContentParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.MessageID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.MessageID' cannot be null");
+        }
+
         HttpRequest<MessageContentParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -115,11 +161,29 @@ public sealed class MessageService : IMessageService
         return deserializedResponse;
     }
 
+    /// <inheritdoc/>
+    public async Task<MessageContentResponse> Content(
+        string messageID,
+        MessageContentParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Content(parameters with { MessageID = messageID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<MessageHistoryResponse> History(
         MessageHistoryParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.MessageID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.MessageID' cannot be null");
+        }
+
         HttpRequest<MessageHistoryParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -136,5 +200,17 @@ public sealed class MessageService : IMessageService
             deserializedResponse.Validate();
         }
         return deserializedResponse;
+    }
+
+    /// <inheritdoc/>
+    public async Task<MessageHistoryResponse> History(
+        string messageID,
+        MessageHistoryParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.History(parameters with { MessageID = messageID }, cancellationToken);
     }
 }

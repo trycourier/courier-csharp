@@ -1,40 +1,19 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Auth;
 
-[JsonConverter(typeof(ModelConverter<AuthIssueTokenResponse>))]
-public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssueTokenResponse>
+[JsonConverter(typeof(ModelConverter<AuthIssueTokenResponse, AuthIssueTokenResponseFromRaw>))]
+public sealed record class AuthIssueTokenResponse : ModelBase
 {
     public required string Token
     {
-        get
-        {
-            if (!this._properties.TryGetValue("token", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'token' cannot be null",
-                    new ArgumentOutOfRangeException("token", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'token' cannot be null",
-                    new ArgumentNullException("token")
-                );
-        }
-        init
-        {
-            this._properties["token"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "token"); }
+        init { ModelBase.Set(this._rawData, "token", value); }
     }
 
     public override void Validate()
@@ -44,24 +23,24 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
 
     public AuthIssueTokenResponse() { }
 
-    public AuthIssueTokenResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public AuthIssueTokenResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AuthIssueTokenResponse(FrozenDictionary<string, JsonElement> properties)
+    AuthIssueTokenResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AuthIssueTokenResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -70,4 +49,11 @@ public sealed record class AuthIssueTokenResponse : ModelBase, IFromRaw<AuthIssu
     {
         this.Token = token;
     }
+}
+
+class AuthIssueTokenResponseFromRaw : IFromRaw<AuthIssueTokenResponse>
+{
+    public AuthIssueTokenResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AuthIssueTokenResponse.FromRawUnchecked(rawData);
 }

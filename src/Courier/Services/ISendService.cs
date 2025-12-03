@@ -13,6 +13,11 @@ namespace Courier.Services;
 /// </summary>
 public interface ISendService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ISendService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>

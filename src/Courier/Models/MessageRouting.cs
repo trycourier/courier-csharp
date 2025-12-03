@@ -9,59 +9,22 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<MessageRouting>))]
-public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
+[JsonConverter(typeof(ModelConverter<MessageRouting, MessageRoutingFromRaw>))]
+public sealed record class MessageRouting : ModelBase
 {
-    public required List<MessageRoutingChannel> Channels
+    public required IReadOnlyList<MessageRoutingChannel> Channels
     {
         get
         {
-            if (!this._properties.TryGetValue("channels", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channels' cannot be null",
-                    new System::ArgumentOutOfRangeException("channels", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<MessageRoutingChannel>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'channels' cannot be null",
-                    new System::ArgumentNullException("channels")
-                );
+            return ModelBase.GetNotNullClass<List<MessageRoutingChannel>>(this.RawData, "channels");
         }
-        init
-        {
-            this._properties["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     public required ApiEnum<string, Method> Method
     {
-        get
-        {
-            if (!this._properties.TryGetValue("method", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'method' cannot be null",
-                    new System::ArgumentOutOfRangeException("method", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Method>>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["method"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Method>>(this.RawData, "method"); }
+        init { ModelBase.Set(this._rawData, "method", value); }
     }
 
     public override void Validate()
@@ -75,25 +38,29 @@ public sealed record class MessageRouting : ModelBase, IFromRaw<MessageRouting>
 
     public MessageRouting() { }
 
-    public MessageRouting(IReadOnlyDictionary<string, JsonElement> properties)
+    public MessageRouting(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageRouting(FrozenDictionary<string, JsonElement> properties)
+    MessageRouting(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static MessageRouting FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static MessageRouting FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class MessageRoutingFromRaw : IFromRaw<MessageRouting>
+{
+    public MessageRouting FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        MessageRouting.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(MethodConverter))]

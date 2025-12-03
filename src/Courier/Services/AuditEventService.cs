@@ -3,12 +3,15 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.AuditEvents;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class AuditEventService : IAuditEventService
 {
+    /// <inheritdoc/>
     public IAuditEventService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AuditEventService(this._client.WithOptions(modifier));
@@ -21,11 +24,17 @@ public sealed class AuditEventService : IAuditEventService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task<AuditEvent> Retrieve(
         AuditEventRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.AuditEventID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.AuditEventID' cannot be null");
+        }
+
         HttpRequest<AuditEventRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -44,6 +53,25 @@ public sealed class AuditEventService : IAuditEventService
         return auditEvent;
     }
 
+    /// <inheritdoc/>
+    public async Task<AuditEvent> Retrieve(
+        string auditEventID,
+        AuditEventRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Retrieve(
+            parameters with
+            {
+                AuditEventID = auditEventID,
+            },
+            cancellationToken
+        );
+    }
+
+    /// <inheritdoc/>
     public async Task<AuditEventListResponse> List(
         AuditEventListParams? parameters = null,
         CancellationToken cancellationToken = default

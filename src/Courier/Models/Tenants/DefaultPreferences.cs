@@ -1,33 +1,19 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<DefaultPreferences>))]
-public sealed record class DefaultPreferences : ModelBase, IFromRaw<DefaultPreferences>
+[JsonConverter(typeof(ModelConverter<DefaultPreferences, DefaultPreferencesFromRaw>))]
+public sealed record class DefaultPreferences : ModelBase
 {
-    public List<Item>? Items
+    public IReadOnlyList<Item>? Items
     {
-        get
-        {
-            if (!this._properties.TryGetValue("items", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<Item>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["items"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<Item>>(this.RawData, "items"); }
+        init { ModelBase.Set(this._rawData, "items", value); }
     }
 
     public override void Validate()
@@ -40,76 +26,55 @@ public sealed record class DefaultPreferences : ModelBase, IFromRaw<DefaultPrefe
 
     public DefaultPreferences() { }
 
-    public DefaultPreferences(IReadOnlyDictionary<string, JsonElement> properties)
+    public DefaultPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    DefaultPreferences(FrozenDictionary<string, JsonElement> properties)
+    DefaultPreferences(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static DefaultPreferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Item>))]
-public sealed record class Item : ModelBase, IFromRaw<Item>
+class DefaultPreferencesFromRaw : IFromRaw<DefaultPreferences>
+{
+    public DefaultPreferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        DefaultPreferences.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Item, ItemFromRaw>))]
+public sealed record class Item : ModelBase
 {
     public required ApiEnum<string, Status> Status
     {
-        get
-        {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
     /// The default channels to send to this tenant when has_custom_routing is enabled
     /// </summary>
-    public List<ApiEnum<string, ChannelClassification>>? CustomRouting
+    public IReadOnlyList<ApiEnum<string, ChannelClassification>>? CustomRouting
     {
         get
         {
-            if (!this._properties.TryGetValue("custom_routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+                this.RawData,
+                "custom_routing"
             );
         }
-        init
-        {
-            this._properties["custom_routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "custom_routing", value); }
     }
 
     /// <summary>
@@ -118,20 +83,8 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
     /// </summary>
     public bool? HasCustomRouting
     {
-        get
-        {
-            if (!this._properties.TryGetValue("has_custom_routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["has_custom_routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
+        init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
     }
 
     /// <summary>
@@ -139,27 +92,8 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
     /// </summary>
     public required string ID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentOutOfRangeException("id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentNullException("id")
-                );
-        }
-        init
-        {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     public static implicit operator SubscriptionTopicNew(Item item) =>
@@ -183,56 +117,46 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
 
     public Item() { }
 
-    public Item(IReadOnlyDictionary<string, JsonElement> properties)
+    public Item(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Item(FrozenDictionary<string, JsonElement> properties)
+    Item(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Tenants.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Tenants.IntersectionMember1>
+class ItemFromRaw : IFromRaw<Item>
+{
+    public Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Item.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Tenants.IntersectionMember1,
+        global::Courier.Models.Tenants.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     /// <summary>
     /// Topic ID
     /// </summary>
     public required string ID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentOutOfRangeException("id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new ArgumentNullException("id")
-                );
-        }
-        init
-        {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     public override void Validate()
@@ -242,24 +166,24 @@ public sealed record class IntersectionMember1
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> properties)
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Tenants.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -268,4 +192,11 @@ public sealed record class IntersectionMember1
     {
         this.ID = id;
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Tenants.IntersectionMember1>
+{
+    public global::Courier.Models.Tenants.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Tenants.IntersectionMember1.FromRawUnchecked(rawData);
 }

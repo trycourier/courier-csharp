@@ -3,13 +3,16 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Notifications;
 using Courier.Services.Notifications;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class NotificationService : INotificationService
 {
+    /// <inheritdoc/>
     public INotificationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new NotificationService(this._client.WithOptions(modifier));
@@ -36,6 +39,7 @@ public sealed class NotificationService : INotificationService
         get { return _checks.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<NotificationListResponse> List(
         NotificationListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -61,11 +65,17 @@ public sealed class NotificationService : INotificationService
         return notifications;
     }
 
+    /// <inheritdoc/>
     public async Task<NotificationGetContent> RetrieveContent(
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
         HttpRequest<NotificationRetrieveContentParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -82,5 +92,17 @@ public sealed class NotificationService : INotificationService
             notificationGetContent.Validate();
         }
         return notificationGetContent;
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationGetContent> RetrieveContent(
+        string id,
+        NotificationRetrieveContentParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.RetrieveContent(parameters with { ID = id }, cancellationToken);
     }
 }

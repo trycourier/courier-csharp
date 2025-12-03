@@ -20,81 +20,33 @@ namespace Courier.Models;
 /// an individual element on a per channel basis. See the  [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
 /// for more details.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<ElementalChannelNodeWithType>))]
-public sealed record class ElementalChannelNodeWithType
-    : ModelBase,
-        IFromRaw<ElementalChannelNodeWithType>
+[JsonConverter(
+    typeof(ModelConverter<ElementalChannelNodeWithType, ElementalChannelNodeWithTypeFromRaw>)
+)]
+public sealed record class ElementalChannelNodeWithType : ModelBase
 {
-    public List<string>? Channels
+    public IReadOnlyList<string>? Channels
     {
-        get
-        {
-            if (!this._properties.TryGetValue("channels", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["channels"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { ModelBase.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get
-        {
-            if (!this._properties.TryGetValue("if", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["if"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
+        init { ModelBase.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get
-        {
-            if (!this._properties.TryGetValue("loop", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["loop"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
+        init { ModelBase.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get
-        {
-            if (!this._properties.TryGetValue("ref", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["ref"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
+        init { ModelBase.Set(this._rawData, "ref", value); }
     }
 
     /// <summary>
@@ -103,65 +55,30 @@ public sealed record class ElementalChannelNodeWithType
     /// </summary>
     public required string Channel
     {
-        get
-        {
-            if (!this._properties.TryGetValue("channel", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new System::ArgumentOutOfRangeException("channel", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'channel' cannot be null",
-                    new System::ArgumentNullException("channel")
-                );
-        }
-        init
-        {
-            this._properties["channel"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "channel"); }
+        init { ModelBase.Set(this._rawData, "channel", value); }
     }
 
     /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is required.
     /// </summary>
-    public Dictionary<string, JsonElement>? Raw
+    public IReadOnlyDictionary<string, JsonElement>? Raw
     {
         get
         {
-            if (!this._properties.TryGetValue("raw", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(this.RawData, "raw");
         }
-        init
-        {
-            this._properties["raw"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "raw", value); }
     }
 
     public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                ElementalChannelNodeWithTypeIntersectionMember1Type
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
+            >(this.RawData, "type");
         }
         init
         {
@@ -170,10 +87,7 @@ public sealed record class ElementalChannelNodeWithType
                 return;
             }
 
-            this._properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "type", value);
         }
     }
 
@@ -203,24 +117,24 @@ public sealed record class ElementalChannelNodeWithType
 
     public ElementalChannelNodeWithType() { }
 
-    public ElementalChannelNodeWithType(IReadOnlyDictionary<string, JsonElement> properties)
+    public ElementalChannelNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalChannelNodeWithType(FrozenDictionary<string, JsonElement> properties)
+    ElementalChannelNodeWithType(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalChannelNodeWithType FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -231,22 +145,28 @@ public sealed record class ElementalChannelNodeWithType
     }
 }
 
-[JsonConverter(typeof(ModelConverter<ElementalChannelNodeWithTypeIntersectionMember1>))]
-public sealed record class ElementalChannelNodeWithTypeIntersectionMember1
-    : ModelBase,
-        IFromRaw<ElementalChannelNodeWithTypeIntersectionMember1>
+class ElementalChannelNodeWithTypeFromRaw : IFromRaw<ElementalChannelNodeWithType>
+{
+    public ElementalChannelNodeWithType FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalChannelNodeWithType.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        ElementalChannelNodeWithTypeIntersectionMember1,
+        ElementalChannelNodeWithTypeIntersectionMember1FromRaw
+    >)
+)]
+public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : ModelBase
 {
     public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<
-                string,
-                ElementalChannelNodeWithTypeIntersectionMember1Type
-            >?>(element, ModelBase.SerializerOptions);
+            return ModelBase.GetNullableClass<
+                ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
+            >(this.RawData, "type");
         }
         init
         {
@@ -255,10 +175,7 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1
                 return;
             }
 
-            this._properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "type", value);
         }
     }
 
@@ -270,28 +187,34 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1
     public ElementalChannelNodeWithTypeIntersectionMember1() { }
 
     public ElementalChannelNodeWithTypeIntersectionMember1(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalChannelNodeWithTypeIntersectionMember1(
-        FrozenDictionary<string, JsonElement> properties
-    )
+    ElementalChannelNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ElementalChannelNodeWithTypeIntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class ElementalChannelNodeWithTypeIntersectionMember1FromRaw
+    : IFromRaw<ElementalChannelNodeWithTypeIntersectionMember1>
+{
+    public ElementalChannelNodeWithTypeIntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ElementalChannelNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ElementalChannelNodeWithTypeIntersectionMember1TypeConverter))]

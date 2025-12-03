@@ -7,18 +7,12 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandColors>))]
-public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
+[JsonConverter(typeof(ModelConverter<BrandColors, BrandColorsFromRaw>))]
+public sealed record class BrandColors : ModelBase
 {
     public string? Primary
     {
-        get
-        {
-            if (!this._properties.TryGetValue("primary", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "primary"); }
         init
         {
             if (value == null)
@@ -26,22 +20,13 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
                 return;
             }
 
-            this._properties["primary"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "primary", value);
         }
     }
 
     public string? Secondary
     {
-        get
-        {
-            if (!this._properties.TryGetValue("secondary", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "secondary"); }
         init
         {
             if (value == null)
@@ -49,10 +34,7 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
                 return;
             }
 
-            this._properties["secondary"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "secondary", value);
         }
     }
 
@@ -64,21 +46,27 @@ public sealed record class BrandColors : ModelBase, IFromRaw<BrandColors>
 
     public BrandColors() { }
 
-    public BrandColors(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandColors(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandColors(FrozenDictionary<string, JsonElement> properties)
+    BrandColors(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class BrandColorsFromRaw : IFromRaw<BrandColors>
+{
+    public BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandColors.FromRawUnchecked(rawData);
 }

@@ -13,6 +13,11 @@ namespace Courier.Services;
 /// </summary>
 public interface IAuditEventService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IAuditEventService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -20,6 +25,13 @@ public interface IAuditEventService
     /// </summary>
     Task<AuditEvent> Retrieve(
         AuditEventRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(AuditEventRetrieveParams, CancellationToken)"/>
+    Task<AuditEvent> Retrieve(
+        string auditEventID,
+        AuditEventRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 

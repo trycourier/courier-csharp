@@ -1,42 +1,21 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Users.Preferences;
 
-[JsonConverter(typeof(ModelConverter<PreferenceRetrieveTopicResponse>))]
-public sealed record class PreferenceRetrieveTopicResponse
-    : ModelBase,
-        IFromRaw<PreferenceRetrieveTopicResponse>
+[JsonConverter(
+    typeof(ModelConverter<PreferenceRetrieveTopicResponse, PreferenceRetrieveTopicResponseFromRaw>)
+)]
+public sealed record class PreferenceRetrieveTopicResponse : ModelBase
 {
     public required TopicPreference Topic
     {
-        get
-        {
-            if (!this._properties.TryGetValue("topic", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'topic' cannot be null",
-                    new ArgumentOutOfRangeException("topic", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<TopicPreference>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'topic' cannot be null",
-                    new ArgumentNullException("topic")
-                );
-        }
-        init
-        {
-            this._properties["topic"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<TopicPreference>(this.RawData, "topic"); }
+        init { ModelBase.Set(this._rawData, "topic", value); }
     }
 
     public override void Validate()
@@ -46,24 +25,24 @@ public sealed record class PreferenceRetrieveTopicResponse
 
     public PreferenceRetrieveTopicResponse() { }
 
-    public PreferenceRetrieveTopicResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public PreferenceRetrieveTopicResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PreferenceRetrieveTopicResponse(FrozenDictionary<string, JsonElement> properties)
+    PreferenceRetrieveTopicResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static PreferenceRetrieveTopicResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -72,4 +51,11 @@ public sealed record class PreferenceRetrieveTopicResponse
     {
         this.Topic = topic;
     }
+}
+
+class PreferenceRetrieveTopicResponseFromRaw : IFromRaw<PreferenceRetrieveTopicResponse>
+{
+    public PreferenceRetrieveTopicResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => PreferenceRetrieveTopicResponse.FromRawUnchecked(rawData);
 }

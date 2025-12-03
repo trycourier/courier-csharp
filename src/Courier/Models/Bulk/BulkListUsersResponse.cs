@@ -9,57 +9,19 @@ using System = System;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<BulkListUsersResponse>))]
-public sealed record class BulkListUsersResponse : ModelBase, IFromRaw<BulkListUsersResponse>
+[JsonConverter(typeof(ModelConverter<BulkListUsersResponse, BulkListUsersResponseFromRaw>))]
+public sealed record class BulkListUsersResponse : ModelBase
 {
-    public required List<Item> Items
+    public required IReadOnlyList<Item> Items
     {
-        get
-        {
-            if (!this._properties.TryGetValue("items", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'items' cannot be null",
-                    new System::ArgumentOutOfRangeException("items", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Item>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'items' cannot be null",
-                    new System::ArgumentNullException("items")
-                );
-        }
-        init
-        {
-            this._properties["items"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Item>>(this.RawData, "items"); }
+        init { ModelBase.Set(this._rawData, "items", value); }
     }
 
     public required Paging Paging
     {
-        get
-        {
-            if (!this._properties.TryGetValue("paging", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'paging' cannot be null",
-                    new System::ArgumentOutOfRangeException("paging", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Paging>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'paging' cannot be null",
-                    new System::ArgumentNullException("paging")
-                );
-        }
-        init
-        {
-            this._properties["paging"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { ModelBase.Set(this._rawData, "paging", value); }
     }
 
     public override void Validate()
@@ -73,39 +35,40 @@ public sealed record class BulkListUsersResponse : ModelBase, IFromRaw<BulkListU
 
     public BulkListUsersResponse() { }
 
-    public BulkListUsersResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public BulkListUsersResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BulkListUsersResponse(FrozenDictionary<string, JsonElement> properties)
+    BulkListUsersResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static BulkListUsersResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Item>))]
-public sealed record class Item : ModelBase, IFromRaw<Item>
+class BulkListUsersResponseFromRaw : IFromRaw<BulkListUsersResponse>
+{
+    public BulkListUsersResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => BulkListUsersResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Item, ItemFromRaw>))]
+public sealed record class Item : ModelBase
 {
     public JsonElement? Data
     {
-        get
-        {
-            if (!this._properties.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "data"); }
         init
         {
             if (value == null)
@@ -113,10 +76,7 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
                 return;
             }
 
-            this._properties["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "data", value);
         }
     }
 
@@ -124,13 +84,7 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
     {
         get
         {
-            if (!this._properties.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<RecipientPreferences?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
         init
         {
@@ -139,22 +93,13 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
                 return;
             }
 
-            this._properties["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "preferences", value);
         }
     }
 
     public JsonElement? Profile
     {
-        get
-        {
-            if (!this._properties.TryGetValue("profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "profile"); }
         init
         {
             if (value == null)
@@ -162,40 +107,19 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
                 return;
             }
 
-            this._properties["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "profile", value);
         }
     }
 
     public string? Recipient
     {
-        get
-        {
-            if (!this._properties.TryGetValue("recipient", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["recipient"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "recipient"); }
+        init { ModelBase.Set(this._rawData, "recipient", value); }
     }
 
     public UserRecipient? To
     {
-        get
-        {
-            if (!this._properties.TryGetValue("to", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserRecipient?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<UserRecipient>(this.RawData, "to"); }
         init
         {
             if (value == null)
@@ -203,53 +127,20 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
                 return;
             }
 
-            this._properties["to"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "to", value);
         }
     }
 
     public required ApiEnum<string, Status> Status
     {
-        get
-        {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public string? MessageID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("messageId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["messageId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "messageId"); }
+        init { ModelBase.Set(this._rawData, "messageId", value); }
     }
 
     public static implicit operator InboundBulkMessageUser(Item item) =>
@@ -275,22 +166,22 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
 
     public Item() { }
 
-    public Item(IReadOnlyDictionary<string, JsonElement> properties)
+    public Item(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Item(FrozenDictionary<string, JsonElement> properties)
+    Item(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -301,51 +192,30 @@ public sealed record class Item : ModelBase, IFromRaw<Item>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Bulk.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Bulk.IntersectionMember1>
+class ItemFromRaw : IFromRaw<Item>
+{
+    public Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Item.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Bulk.IntersectionMember1,
+        global::Courier.Models.Bulk.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     public required ApiEnum<string, Status> Status
     {
-        get
-        {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Status>>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public string? MessageID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("messageId", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["messageId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "messageId"); }
+        init { ModelBase.Set(this._rawData, "messageId", value); }
     }
 
     public override void Validate()
@@ -356,24 +226,24 @@ public sealed record class IntersectionMember1
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> properties)
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Bulk.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -382,6 +252,13 @@ public sealed record class IntersectionMember1
     {
         this.Status = status;
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Bulk.IntersectionMember1>
+{
+    public global::Courier.Models.Bulk.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Bulk.IntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(StatusConverter))]

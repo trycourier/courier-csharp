@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Courier.Exceptions;
 using Courier.Models.Audiences;
 using Courier.Models.Brands;
 using Courier.Models.Inbound;
@@ -20,11 +21,11 @@ namespace Courier.Core;
 
 public abstract record class ModelBase
 {
-    private protected FreezableDictionary<string, JsonElement> _properties = [];
+    private protected FreezableDictionary<string, JsonElement> _rawData = [];
 
-    public IReadOnlyDictionary<string, JsonElement> Properties
+    public IReadOnlyDictionary<string, JsonElement> RawData
     {
-        get { return this._properties.Freeze(); }
+        get { return this._rawData.Freeze(); }
     }
 
     internal static readonly JsonSerializerOptions SerializerOptions = new()
@@ -108,9 +109,140 @@ public abstract record class ModelBase
         WriteIndented = true,
     };
 
+    internal static void Set<T>(IDictionary<string, JsonElement> dictionary, string key, T value)
+    {
+        dictionary[key] = JsonSerializer.SerializeToElement(value, SerializerOptions);
+    }
+
+    internal static T GetNotNullClass<T>(
+        IReadOnlyDictionary<string, JsonElement> dictionary,
+        string key
+    )
+        where T : class
+    {
+        if (!dictionary.TryGetValue(key, out JsonElement element))
+        {
+            throw new CourierInvalidDataException($"'{key}' cannot be absent");
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<T>(element, SerializerOptions)
+                ?? throw new CourierInvalidDataException($"'{key}' cannot be null");
+        }
+        catch (JsonException e)
+        {
+            throw new CourierInvalidDataException(
+                $"'{key}' must be of type {typeof(T).FullName}",
+                e
+            );
+        }
+    }
+
+    internal static T GetNotNullStruct<T>(
+        IReadOnlyDictionary<string, JsonElement> dictionary,
+        string key
+    )
+        where T : struct
+    {
+        if (!dictionary.TryGetValue(key, out JsonElement element))
+        {
+            throw new CourierInvalidDataException($"'{key}' cannot be absent");
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<T?>(element, SerializerOptions)
+                ?? throw new CourierInvalidDataException($"'{key}' cannot be null");
+        }
+        catch (JsonException e)
+        {
+            throw new CourierInvalidDataException(
+                $"'{key}' must be of type {typeof(T).FullName}",
+                e
+            );
+        }
+    }
+
+    internal static T? GetNullableClass<T>(
+        IReadOnlyDictionary<string, JsonElement> dictionary,
+        string key
+    )
+        where T : class
+    {
+        if (!dictionary.TryGetValue(key, out JsonElement element))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<T?>(element, SerializerOptions);
+        }
+        catch (JsonException e)
+        {
+            throw new CourierInvalidDataException(
+                $"'{key}' must be of type {typeof(T).FullName}",
+                e
+            );
+        }
+    }
+
+    internal static T? GetNullableStruct<T>(
+        IReadOnlyDictionary<string, JsonElement> dictionary,
+        string key
+    )
+        where T : struct
+    {
+        if (!dictionary.TryGetValue(key, out JsonElement element))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<T?>(element, SerializerOptions);
+        }
+        catch (JsonException e)
+        {
+            throw new CourierInvalidDataException(
+                $"'{key}' must be of type {typeof(T).FullName}",
+                e
+            );
+        }
+    }
+
     public sealed override string? ToString()
     {
-        return JsonSerializer.Serialize(this.Properties, _toStringSerializerOptions);
+        return JsonSerializer.Serialize(this.RawData, _toStringSerializerOptions);
+    }
+
+    public virtual bool Equals(ModelBase? other)
+    {
+        if (other == null || this.RawData.Count != other.RawData.Count)
+        {
+            return false;
+        }
+
+        foreach (var item in this.RawData)
+        {
+            if (!other.RawData.TryGetValue(item.Key, out var otherValue))
+            {
+                return false;
+            }
+
+            if (!JsonElement.DeepEquals(item.Value, otherValue))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 
     public abstract void Validate();
@@ -123,5 +255,10 @@ public abstract record class ModelBase
 /// </summary>
 interface IFromRaw<T>
 {
-    static abstract T FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties);
+    /// <summary>
+    /// NOTE: This interface is in the style of a factory instance instead of using
+    /// abstract static methods because .NET Standard 2.0 doesn't support abstract
+    /// static methods.
+    /// </summary>
+    T FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData);
 }

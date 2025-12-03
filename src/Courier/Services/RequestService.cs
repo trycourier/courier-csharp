@@ -3,12 +3,15 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Requests;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class RequestService : IRequestService
 {
+    /// <inheritdoc/>
     public IRequestService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new RequestService(this._client.WithOptions(modifier));
@@ -21,11 +24,17 @@ public sealed class RequestService : IRequestService
         _client = client;
     }
 
+    /// <inheritdoc/>
     public async Task Archive(
         RequestArchiveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.RequestID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.RequestID' cannot be null");
+        }
+
         HttpRequest<RequestArchiveParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -34,5 +43,17 @@ public sealed class RequestService : IRequestService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Archive(
+        string requestID,
+        RequestArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Archive(parameters with { RequestID = requestID }, cancellationToken);
     }
 }

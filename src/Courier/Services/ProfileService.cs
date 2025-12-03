@@ -3,13 +3,16 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Profiles;
 using Profiles = Courier.Services.Profiles;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class ProfileService : IProfileService
 {
+    /// <inheritdoc/>
     public IProfileService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ProfileService(this._client.WithOptions(modifier));
@@ -29,11 +32,17 @@ public sealed class ProfileService : IProfileService
         get { return _lists.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<ProfileCreateResponse> Create(
         ProfileCreateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.UserID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
+        }
+
         HttpRequest<ProfileCreateParams> request = new()
         {
             Method = HttpMethod.Post,
@@ -52,11 +61,27 @@ public sealed class ProfileService : IProfileService
         return profile;
     }
 
+    /// <inheritdoc/>
+    public async Task<ProfileCreateResponse> Create(
+        string userID,
+        ProfileCreateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await this.Create(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<ProfileRetrieveResponse> Retrieve(
         ProfileRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.UserID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
+        }
+
         HttpRequest<ProfileRetrieveParams> request = new()
         {
             Method = HttpMethod.Get,
@@ -75,14 +100,32 @@ public sealed class ProfileService : IProfileService
         return profile;
     }
 
+    /// <inheritdoc/>
+    public async Task<ProfileRetrieveResponse> Retrieve(
+        string userID,
+        ProfileRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return await this.Retrieve(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task Update(
         ProfileUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.UserID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
+        }
+
         HttpRequest<ProfileUpdateParams> request = new()
         {
-            Method = HttpMethod.Patch,
+            Method = CourierClient.PatchMethod,
             Params = parameters,
         };
         using var response = await this
@@ -90,11 +133,27 @@ public sealed class ProfileService : IProfileService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
+    public async Task Update(
+        string userID,
+        ProfileUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Update(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task Delete(
         ProfileDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.UserID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
+        }
+
         HttpRequest<ProfileDeleteParams> request = new()
         {
             Method = HttpMethod.Delete,
@@ -105,11 +164,29 @@ public sealed class ProfileService : IProfileService
             .ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
+    public async Task Delete(
+        string userID,
+        ProfileDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Delete(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<ProfileReplaceResponse> Replace(
         ProfileReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
     {
+        if (parameters.UserID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
+        }
+
         HttpRequest<ProfileReplaceParams> request = new()
         {
             Method = HttpMethod.Put,
@@ -126,5 +203,15 @@ public sealed class ProfileService : IProfileService
             deserializedResponse.Validate();
         }
         return deserializedResponse;
+    }
+
+    /// <inheritdoc/>
+    public async Task<ProfileReplaceResponse> Replace(
+        string userID,
+        ProfileReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await this.Replace(parameters with { UserID = userID }, cancellationToken);
     }
 }

@@ -1,80 +1,45 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<NotificationPreferenceDetails>))]
-public sealed record class NotificationPreferenceDetails
-    : ModelBase,
-        IFromRaw<NotificationPreferenceDetails>
+[JsonConverter(
+    typeof(ModelConverter<NotificationPreferenceDetails, NotificationPreferenceDetailsFromRaw>)
+)]
+public sealed record class NotificationPreferenceDetails : ModelBase
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+                this.RawData,
+                "status"
             );
         }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
-    public List<ChannelPreference>? ChannelPreferences
+    public IReadOnlyList<ChannelPreference>? ChannelPreferences
     {
         get
         {
-            if (!this._properties.TryGetValue("channel_preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ChannelPreference>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ChannelPreference>>(
+                this.RawData,
+                "channel_preferences"
             );
         }
-        init
-        {
-            this._properties["channel_preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "channel_preferences", value); }
     }
 
-    public List<Rule>? Rules
+    public IReadOnlyList<Rule>? Rules
     {
-        get
-        {
-            if (!this._properties.TryGetValue("rules", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<Rule>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["rules"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<Rule>>(this.RawData, "rules"); }
+        init { ModelBase.Set(this._rawData, "rules", value); }
     }
 
     public override void Validate()
@@ -92,24 +57,24 @@ public sealed record class NotificationPreferenceDetails
 
     public NotificationPreferenceDetails() { }
 
-    public NotificationPreferenceDetails(IReadOnlyDictionary<string, JsonElement> properties)
+    public NotificationPreferenceDetails(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationPreferenceDetails(FrozenDictionary<string, JsonElement> properties)
+    NotificationPreferenceDetails(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static NotificationPreferenceDetails FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -118,4 +83,11 @@ public sealed record class NotificationPreferenceDetails
     {
         this.Status = status;
     }
+}
+
+class NotificationPreferenceDetailsFromRaw : IFromRaw<NotificationPreferenceDetails>
+{
+    public NotificationPreferenceDetails FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => NotificationPreferenceDetails.FromRawUnchecked(rawData);
 }

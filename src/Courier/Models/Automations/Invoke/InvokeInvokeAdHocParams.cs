@@ -18,173 +18,97 @@ namespace Courier.Models.Automations.Invoke;
 /// </summary>
 public sealed record class InvokeInvokeAdHocParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
-    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
-        get { return this._bodyProperties.Freeze(); }
+        get { return this._rawBodyData.Freeze(); }
     }
 
     public required Automation Automation
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("automation", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'automation' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "automation",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<Automation>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'automation' cannot be null",
-                    new System::ArgumentNullException("automation")
-                );
-        }
-        init
-        {
-            this._bodyProperties["automation"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Automation>(this.RawBodyData, "automation"); }
+        init { ModelBase.Set(this._rawBodyData, "automation", value); }
     }
 
     public string? Brand
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("brand", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._bodyProperties["brand"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "brand"); }
+        init { ModelBase.Set(this._rawBodyData, "brand", value); }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "data"
             );
         }
-        init
-        {
-            this._bodyProperties["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "data", value); }
     }
 
-    public Dictionary<string, JsonElement>? Profile
+    public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawBodyData,
+                "profile"
             );
         }
-        init
-        {
-            this._bodyProperties["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "profile", value); }
     }
 
     public string? Recipient
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("recipient", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._bodyProperties["recipient"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "recipient"); }
+        init { ModelBase.Set(this._rawBodyData, "recipient", value); }
     }
 
     public string? Template
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("template", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._bodyProperties["template"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "template"); }
+        init { ModelBase.Set(this._rawBodyData, "template", value); }
     }
 
     public InvokeInvokeAdHocParams() { }
 
     public InvokeInvokeAdHocParams(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     InvokeInvokeAdHocParams(
-        FrozenDictionary<string, JsonElement> headerProperties,
-        FrozenDictionary<string, JsonElement> queryProperties,
-        FrozenDictionary<string, JsonElement> bodyProperties
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 #pragma warning restore CS8618
 
     public static InvokeInvokeAdHocParams FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
         return new(
-            FrozenDictionary.ToFrozenDictionary(headerProperties),
-            FrozenDictionary.ToFrozenDictionary(queryProperties),
-            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            FrozenDictionary.ToFrozenDictionary(rawBodyData)
         );
     }
 
@@ -200,67 +124,32 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
 
     internal override StringContent? BodyContent()
     {
-        return new(
-            JsonSerializer.Serialize(this.BodyProperties),
-            Encoding.UTF8,
-            "application/json"
-        );
+        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
         ParamsBase.AddDefaultHeaders(request, options);
-        foreach (var item in this.HeaderProperties)
+        foreach (var item in this.RawHeaderData)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Automation>))]
-public sealed record class Automation : ModelBase, IFromRaw<Automation>
+[JsonConverter(typeof(ModelConverter<Automation, AutomationFromRaw>))]
+public sealed record class Automation : ModelBase
 {
-    public required List<Step> Steps
+    public required IReadOnlyList<Step> Steps
     {
-        get
-        {
-            if (!this._properties.TryGetValue("steps", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'steps' cannot be null",
-                    new System::ArgumentOutOfRangeException("steps", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Step>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'steps' cannot be null",
-                    new System::ArgumentNullException("steps")
-                );
-        }
-        init
-        {
-            this._properties["steps"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Step>>(this.RawData, "steps"); }
+        init { ModelBase.Set(this._rawData, "steps", value); }
     }
 
     public string? CancelationToken
     {
-        get
-        {
-            if (!this._properties.TryGetValue("cancelation_token", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["cancelation_token"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "cancelation_token"); }
+        init { ModelBase.Set(this._rawData, "cancelation_token", value); }
     }
 
     public override void Validate()
@@ -274,22 +163,22 @@ public sealed record class Automation : ModelBase, IFromRaw<Automation>
 
     public Automation() { }
 
-    public Automation(IReadOnlyDictionary<string, JsonElement> properties)
+    public Automation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Automation(FrozenDictionary<string, JsonElement> properties)
+    Automation(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Automation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Automation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -300,10 +189,23 @@ public sealed record class Automation : ModelBase, IFromRaw<Automation>
     }
 }
 
+class AutomationFromRaw : IFromRaw<Automation>
+{
+    public Automation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Automation.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(typeof(StepConverter))]
 public record class Step
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
+
+    JsonElement? _json = null;
+
+    public JsonElement Json
+    {
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+    }
 
     public string? Brand
     {
@@ -337,49 +239,51 @@ public record class Step
         }
     }
 
-    public Step(AutomationDelayStep value)
+    public Step(AutomationDelayStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationSendStep value)
+    public Step(AutomationSendStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationSendListStep value)
+    public Step(AutomationSendListStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationUpdateProfileStep value)
+    public Step(AutomationUpdateProfileStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationCancelStep value)
+    public Step(AutomationCancelStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationFetchDataStep value)
+    public Step(AutomationFetchDataStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public Step(AutomationInvokeStep value)
+    public Step(AutomationInvokeStep value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    Step(UnknownVariant value)
+    public Step(JsonElement json)
     {
-        Value = value;
-    }
-
-    public static Step CreateUnknownVariant(JsonElement value)
-    {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickAutomationDelay([NotNullWhen(true)] out AutomationDelayStep? value)
@@ -503,13 +407,21 @@ public record class Step
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of Step");
         }
     }
 
-    record struct UnknownVariant(JsonElement value);
+    public virtual bool Equals(Step? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 sealed class StepConverter : JsonConverter<Step>
@@ -520,227 +432,136 @@ sealed class StepConverter : JsonConverter<Step>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationDelayStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationSendStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationSendListStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
             var deserialized = JsonSerializer.Deserialize<AutomationUpdateProfileStep>(
-                ref reader,
+                json,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationUpdateProfileStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationCancelStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationFetchDataStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(
-                ref reader,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(json, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new Step(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException(
-                    "Data does not match union variant 'AutomationInvokeStep'",
-                    e
-                )
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(Utf8JsonWriter writer, Step value, JsonSerializerOptions options)
     {
-        object variant = value.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationDelayStep>))]
-public sealed record class AutomationDelayStep : ModelBase, IFromRaw<AutomationDelayStep>
+[JsonConverter(typeof(ModelConverter<AutomationDelayStep, AutomationDelayStepFromRaw>))]
+public sealed record class AutomationDelayStep : ModelBase
 {
     public required ApiEnum<string, Action> Action
     {
-        get
-        {
-            if (!this._properties.TryGetValue("action", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'action' cannot be null",
-                    new System::ArgumentOutOfRangeException("action", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Action>>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["action"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Action>>(this.RawData, "action"); }
+        init { ModelBase.Set(this._rawData, "action", value); }
     }
 
     public string? Duration
     {
-        get
-        {
-            if (!this._properties.TryGetValue("duration", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["duration"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "duration"); }
+        init { ModelBase.Set(this._rawData, "duration", value); }
     }
 
     public string? Until
     {
-        get
-        {
-            if (!this._properties.TryGetValue("until", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["until"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "until"); }
+        init { ModelBase.Set(this._rawData, "until", value); }
     }
 
     public override void Validate()
@@ -752,24 +573,24 @@ public sealed record class AutomationDelayStep : ModelBase, IFromRaw<AutomationD
 
     public AutomationDelayStep() { }
 
-    public AutomationDelayStep(IReadOnlyDictionary<string, JsonElement> properties)
+    public AutomationDelayStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AutomationDelayStep(FrozenDictionary<string, JsonElement> properties)
+    AutomationDelayStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AutomationDelayStep FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -778,6 +599,12 @@ public sealed record class AutomationDelayStep : ModelBase, IFromRaw<AutomationD
     {
         this.Action = action;
     }
+}
+
+class AutomationDelayStepFromRaw : IFromRaw<AutomationDelayStep>
+{
+    public AutomationDelayStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        AutomationDelayStep.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ActionConverter))]
@@ -817,127 +644,61 @@ sealed class ActionConverter : JsonConverter<Action>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationSendStep>))]
-public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSendStep>
+[JsonConverter(typeof(ModelConverter<AutomationSendStep, AutomationSendStepFromRaw>))]
+public sealed record class AutomationSendStep : ModelBase
 {
     public required ApiEnum<string, AutomationSendStepAction> Action
     {
         get
         {
-            if (!this._properties.TryGetValue("action", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'action' cannot be null",
-                    new System::ArgumentOutOfRangeException("action", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, AutomationSendStepAction>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationSendStepAction>>(
+                this.RawData,
+                "action"
             );
         }
-        init
-        {
-            this._properties["action"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "action", value); }
     }
 
     public string? Brand
     {
-        get
-        {
-            if (!this._properties.TryGetValue("brand", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["brand"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand"); }
+        init { ModelBase.Set(this._rawData, "brand", value); }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            if (!this._properties.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "data"
             );
         }
-        init
-        {
-            this._properties["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "data", value); }
     }
 
-    public Dictionary<string, JsonElement>? Profile
+    public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            if (!this._properties.TryGetValue("profile", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "profile"
             );
         }
-        init
-        {
-            this._properties["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "profile", value); }
     }
 
     public string? Recipient
     {
-        get
-        {
-            if (!this._properties.TryGetValue("recipient", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["recipient"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "recipient"); }
+        init { ModelBase.Set(this._rawData, "recipient", value); }
     }
 
     public string? Template
     {
-        get
-        {
-            if (!this._properties.TryGetValue("template", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["template"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "template"); }
+        init { ModelBase.Set(this._rawData, "template", value); }
     }
 
     public override void Validate()
@@ -952,24 +713,24 @@ public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSe
 
     public AutomationSendStep() { }
 
-    public AutomationSendStep(IReadOnlyDictionary<string, JsonElement> properties)
+    public AutomationSendStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AutomationSendStep(FrozenDictionary<string, JsonElement> properties)
+    AutomationSendStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AutomationSendStep FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -978,6 +739,12 @@ public sealed record class AutomationSendStep : ModelBase, IFromRaw<AutomationSe
     {
         this.Action = action;
     }
+}
+
+class AutomationSendStepFromRaw : IFromRaw<AutomationSendStep>
+{
+    public AutomationSendStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        AutomationSendStep.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(AutomationSendStepActionConverter))]
@@ -1021,95 +788,43 @@ sealed class AutomationSendStepActionConverter : JsonConverter<AutomationSendSte
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationSendListStep>))]
-public sealed record class AutomationSendListStep : ModelBase, IFromRaw<AutomationSendListStep>
+[JsonConverter(typeof(ModelConverter<AutomationSendListStep, AutomationSendListStepFromRaw>))]
+public sealed record class AutomationSendListStep : ModelBase
 {
     public required ApiEnum<string, AutomationSendListStepAction> Action
     {
         get
         {
-            if (!this._properties.TryGetValue("action", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'action' cannot be null",
-                    new System::ArgumentOutOfRangeException("action", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, AutomationSendListStepAction>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationSendListStepAction>>(
+                this.RawData,
+                "action"
             );
         }
-        init
-        {
-            this._properties["action"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "action", value); }
     }
 
     public required string List
     {
-        get
-        {
-            if (!this._properties.TryGetValue("list", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'list' cannot be null",
-                    new System::ArgumentOutOfRangeException("list", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'list' cannot be null",
-                    new System::ArgumentNullException("list")
-                );
-        }
-        init
-        {
-            this._properties["list"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "list"); }
+        init { ModelBase.Set(this._rawData, "list", value); }
     }
 
     public string? Brand
     {
-        get
-        {
-            if (!this._properties.TryGetValue("brand", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["brand"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand"); }
+        init { ModelBase.Set(this._rawData, "brand", value); }
     }
 
-    public Dictionary<string, JsonElement>? Data
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            if (!this._properties.TryGetValue("data", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "data"
             );
         }
-        init
-        {
-            this._properties["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "data", value); }
     }
 
     public override void Validate()
@@ -1122,25 +837,32 @@ public sealed record class AutomationSendListStep : ModelBase, IFromRaw<Automati
 
     public AutomationSendListStep() { }
 
-    public AutomationSendListStep(IReadOnlyDictionary<string, JsonElement> properties)
+    public AutomationSendListStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AutomationSendListStep(FrozenDictionary<string, JsonElement> properties)
+    AutomationSendListStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AutomationSendListStep FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AutomationSendListStepFromRaw : IFromRaw<AutomationSendListStep>
+{
+    public AutomationSendListStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationSendListStep.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(AutomationSendListStepActionConverter))]
@@ -1184,100 +906,45 @@ sealed class AutomationSendListStepActionConverter : JsonConverter<AutomationSen
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationUpdateProfileStep>))]
-public sealed record class AutomationUpdateProfileStep
-    : ModelBase,
-        IFromRaw<AutomationUpdateProfileStep>
+[JsonConverter(
+    typeof(ModelConverter<AutomationUpdateProfileStep, AutomationUpdateProfileStepFromRaw>)
+)]
+public sealed record class AutomationUpdateProfileStep : ModelBase
 {
     public required ApiEnum<string, AutomationUpdateProfileStepAction> Action
     {
         get
         {
-            if (!this._properties.TryGetValue("action", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'action' cannot be null",
-                    new System::ArgumentOutOfRangeException("action", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, AutomationUpdateProfileStepAction>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationUpdateProfileStepAction>>(
+                this.RawData,
+                "action"
             );
         }
-        init
-        {
-            this._properties["action"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "action", value); }
     }
 
-    public required Dictionary<string, JsonElement> Profile
+    public required IReadOnlyDictionary<string, JsonElement> Profile
     {
         get
         {
-            if (!this._properties.TryGetValue("profile", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'profile' cannot be null",
-                    new System::ArgumentOutOfRangeException("profile", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'profile' cannot be null",
-                    new System::ArgumentNullException("profile")
-                );
-        }
-        init
-        {
-            this._properties["profile"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<Dictionary<string, JsonElement>>(
+                this.RawData,
+                "profile"
             );
         }
+        init { ModelBase.Set(this._rawData, "profile", value); }
     }
 
     public ApiEnum<string, Merge>? Merge
     {
-        get
-        {
-            if (!this._properties.TryGetValue("merge", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Merge>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["merge"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ApiEnum<string, Merge>>(this.RawData, "merge"); }
+        init { ModelBase.Set(this._rawData, "merge", value); }
     }
 
     public string? RecipientID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("recipient_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["recipient_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "recipient_id"); }
+        init { ModelBase.Set(this._rawData, "recipient_id", value); }
     }
 
     public override void Validate()
@@ -1290,25 +957,32 @@ public sealed record class AutomationUpdateProfileStep
 
     public AutomationUpdateProfileStep() { }
 
-    public AutomationUpdateProfileStep(IReadOnlyDictionary<string, JsonElement> properties)
+    public AutomationUpdateProfileStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AutomationUpdateProfileStep(FrozenDictionary<string, JsonElement> properties)
+    AutomationUpdateProfileStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AutomationUpdateProfileStep FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AutomationUpdateProfileStepFromRaw : IFromRaw<AutomationUpdateProfileStep>
+{
+    public AutomationUpdateProfileStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationUpdateProfileStep.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(AutomationUpdateProfileStepActionConverter))]
@@ -1399,59 +1073,25 @@ sealed class MergeConverter : JsonConverter<Merge>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationCancelStep>))]
-public sealed record class AutomationCancelStep : ModelBase, IFromRaw<AutomationCancelStep>
+[JsonConverter(typeof(ModelConverter<AutomationCancelStep, AutomationCancelStepFromRaw>))]
+public sealed record class AutomationCancelStep : ModelBase
 {
     public required ApiEnum<string, AutomationCancelStepAction> Action
     {
         get
         {
-            if (!this._properties.TryGetValue("action", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'action' cannot be null",
-                    new System::ArgumentOutOfRangeException("action", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, AutomationCancelStepAction>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationCancelStepAction>>(
+                this.RawData,
+                "action"
             );
         }
-        init
-        {
-            this._properties["action"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "action", value); }
     }
 
     public required string CancelationToken
     {
-        get
-        {
-            if (!this._properties.TryGetValue("cancelation_token", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'cancelation_token' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "cancelation_token",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'cancelation_token' cannot be null",
-                    new System::ArgumentNullException("cancelation_token")
-                );
-        }
-        init
-        {
-            this._properties["cancelation_token"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "cancelation_token"); }
+        init { ModelBase.Set(this._rawData, "cancelation_token", value); }
     }
 
     public override void Validate()
@@ -1462,25 +1102,32 @@ public sealed record class AutomationCancelStep : ModelBase, IFromRaw<Automation
 
     public AutomationCancelStep() { }
 
-    public AutomationCancelStep(IReadOnlyDictionary<string, JsonElement> properties)
+    public AutomationCancelStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AutomationCancelStep(FrozenDictionary<string, JsonElement> properties)
+    AutomationCancelStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AutomationCancelStep FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AutomationCancelStepFromRaw : IFromRaw<AutomationCancelStep>
+{
+    public AutomationCancelStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationCancelStep.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(AutomationCancelStepActionConverter))]
@@ -1524,77 +1171,37 @@ sealed class AutomationCancelStepActionConverter : JsonConverter<AutomationCance
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationFetchDataStep>))]
-public sealed record class AutomationFetchDataStep : ModelBase, IFromRaw<AutomationFetchDataStep>
+[JsonConverter(typeof(ModelConverter<AutomationFetchDataStep, AutomationFetchDataStepFromRaw>))]
+public sealed record class AutomationFetchDataStep : ModelBase
 {
     public required ApiEnum<string, AutomationFetchDataStepAction> Action
     {
         get
         {
-            if (!this._properties.TryGetValue("action", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'action' cannot be null",
-                    new System::ArgumentOutOfRangeException("action", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, AutomationFetchDataStepAction>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationFetchDataStepAction>>(
+                this.RawData,
+                "action"
             );
         }
-        init
-        {
-            this._properties["action"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "action", value); }
     }
 
     public required Webhook Webhook
     {
-        get
-        {
-            if (!this._properties.TryGetValue("webhook", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'webhook' cannot be null",
-                    new System::ArgumentOutOfRangeException("webhook", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Webhook>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'webhook' cannot be null",
-                    new System::ArgumentNullException("webhook")
-                );
-        }
-        init
-        {
-            this._properties["webhook"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Webhook>(this.RawData, "webhook"); }
+        init { ModelBase.Set(this._rawData, "webhook", value); }
     }
 
     public ApiEnum<string, MergeStrategy>? MergeStrategy
     {
         get
         {
-            if (!this._properties.TryGetValue("merge_strategy", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, MergeStrategy>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, MergeStrategy>>(
+                this.RawData,
+                "merge_strategy"
             );
         }
-        init
-        {
-            this._properties["merge_strategy"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "merge_strategy", value); }
     }
 
     public override void Validate()
@@ -1606,25 +1213,32 @@ public sealed record class AutomationFetchDataStep : ModelBase, IFromRaw<Automat
 
     public AutomationFetchDataStep() { }
 
-    public AutomationFetchDataStep(IReadOnlyDictionary<string, JsonElement> properties)
+    public AutomationFetchDataStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AutomationFetchDataStep(FrozenDictionary<string, JsonElement> properties)
+    AutomationFetchDataStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AutomationFetchDataStep FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AutomationFetchDataStepFromRaw : IFromRaw<AutomationFetchDataStep>
+{
+    public AutomationFetchDataStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationFetchDataStep.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(AutomationFetchDataStepActionConverter))]
@@ -1668,94 +1282,39 @@ sealed class AutomationFetchDataStepActionConverter : JsonConverter<AutomationFe
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Webhook>))]
-public sealed record class Webhook : ModelBase, IFromRaw<Webhook>
+[JsonConverter(typeof(ModelConverter<Webhook, WebhookFromRaw>))]
+public sealed record class Webhook : ModelBase
 {
     public required ApiEnum<string, global::Courier.Models.Automations.Invoke.Method> Method
     {
         get
         {
-            if (!this._properties.TryGetValue("method", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'method' cannot be null",
-                    new System::ArgumentOutOfRangeException("method", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<
+            return ModelBase.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Automations.Invoke.Method>
-            >(element, ModelBase.SerializerOptions);
+            >(this.RawData, "method");
         }
-        init
-        {
-            this._properties["method"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "method", value); }
     }
 
     public required string URL
     {
-        get
-        {
-            if (!this._properties.TryGetValue("url", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'url' cannot be null",
-                    new System::ArgumentOutOfRangeException("url", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'url' cannot be null",
-                    new System::ArgumentNullException("url")
-                );
-        }
-        init
-        {
-            this._properties["url"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "url"); }
+        init { ModelBase.Set(this._rawData, "url", value); }
     }
 
     public string? Body
     {
-        get
-        {
-            if (!this._properties.TryGetValue("body", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["body"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "body"); }
+        init { ModelBase.Set(this._rawData, "body", value); }
     }
 
-    public Dictionary<string, string>? Headers
+    public IReadOnlyDictionary<string, string>? Headers
     {
         get
         {
-            if (!this._properties.TryGetValue("headers", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, string>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<Dictionary<string, string>>(this.RawData, "headers");
         }
-        init
-        {
-            this._properties["headers"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "headers", value); }
     }
 
     public override void Validate()
@@ -1768,23 +1327,29 @@ public sealed record class Webhook : ModelBase, IFromRaw<Webhook>
 
     public Webhook() { }
 
-    public Webhook(IReadOnlyDictionary<string, JsonElement> properties)
+    public Webhook(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Webhook(FrozenDictionary<string, JsonElement> properties)
+    Webhook(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Webhook FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Webhook FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class WebhookFromRaw : IFromRaw<Webhook>
+{
+    public Webhook FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Webhook.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(global::Courier.Models.Automations.Invoke.MethodConverter))]
@@ -1887,56 +1452,25 @@ sealed class MergeStrategyConverter : JsonConverter<MergeStrategy>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationInvokeStep>))]
-public sealed record class AutomationInvokeStep : ModelBase, IFromRaw<AutomationInvokeStep>
+[JsonConverter(typeof(ModelConverter<AutomationInvokeStep, AutomationInvokeStepFromRaw>))]
+public sealed record class AutomationInvokeStep : ModelBase
 {
     public required ApiEnum<string, AutomationInvokeStepAction> Action
     {
         get
         {
-            if (!this._properties.TryGetValue("action", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'action' cannot be null",
-                    new System::ArgumentOutOfRangeException("action", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, AutomationInvokeStepAction>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationInvokeStepAction>>(
+                this.RawData,
+                "action"
             );
         }
-        init
-        {
-            this._properties["action"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "action", value); }
     }
 
     public required string Template
     {
-        get
-        {
-            if (!this._properties.TryGetValue("template", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'template' cannot be null",
-                    new System::ArgumentOutOfRangeException("template", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'template' cannot be null",
-                    new System::ArgumentNullException("template")
-                );
-        }
-        init
-        {
-            this._properties["template"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "template"); }
+        init { ModelBase.Set(this._rawData, "template", value); }
     }
 
     public override void Validate()
@@ -1947,25 +1481,32 @@ public sealed record class AutomationInvokeStep : ModelBase, IFromRaw<Automation
 
     public AutomationInvokeStep() { }
 
-    public AutomationInvokeStep(IReadOnlyDictionary<string, JsonElement> properties)
+    public AutomationInvokeStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AutomationInvokeStep(FrozenDictionary<string, JsonElement> properties)
+    AutomationInvokeStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AutomationInvokeStep FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AutomationInvokeStepFromRaw : IFromRaw<AutomationInvokeStep>
+{
+    public AutomationInvokeStep FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AutomationInvokeStep.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(AutomationInvokeStepActionConverter))]

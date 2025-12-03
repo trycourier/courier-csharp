@@ -1,65 +1,25 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<AudienceListResponse>))]
-public sealed record class AudienceListResponse : ModelBase, IFromRaw<AudienceListResponse>
+[JsonConverter(typeof(ModelConverter<AudienceListResponse, AudienceListResponseFromRaw>))]
+public sealed record class AudienceListResponse : ModelBase
 {
-    public required List<Audience> Items
+    public required IReadOnlyList<Audience> Items
     {
-        get
-        {
-            if (!this._properties.TryGetValue("items", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'items' cannot be null",
-                    new ArgumentOutOfRangeException("items", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Audience>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'items' cannot be null",
-                    new ArgumentNullException("items")
-                );
-        }
-        init
-        {
-            this._properties["items"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Audience>>(this.RawData, "items"); }
+        init { ModelBase.Set(this._rawData, "items", value); }
     }
 
     public required Paging Paging
     {
-        get
-        {
-            if (!this._properties.TryGetValue("paging", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'paging' cannot be null",
-                    new ArgumentOutOfRangeException("paging", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Paging>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'paging' cannot be null",
-                    new ArgumentNullException("paging")
-                );
-        }
-        init
-        {
-            this._properties["paging"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { ModelBase.Set(this._rawData, "paging", value); }
     }
 
     public override void Validate()
@@ -73,23 +33,30 @@ public sealed record class AudienceListResponse : ModelBase, IFromRaw<AudienceLi
 
     public AudienceListResponse() { }
 
-    public AudienceListResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public AudienceListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    AudienceListResponse(FrozenDictionary<string, JsonElement> properties)
+    AudienceListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static AudienceListResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class AudienceListResponseFromRaw : IFromRaw<AudienceListResponse>
+{
+    public AudienceListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AudienceListResponse.FromRawUnchecked(rawData);
 }

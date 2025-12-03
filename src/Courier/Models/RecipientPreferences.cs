@@ -7,49 +7,31 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<RecipientPreferences>))]
-public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientPreferences>
+[JsonConverter(typeof(ModelConverter<RecipientPreferences, RecipientPreferencesFromRaw>))]
+public sealed record class RecipientPreferences : ModelBase
 {
-    public Dictionary<string, NotificationPreferenceDetails>? Categories
+    public IReadOnlyDictionary<string, NotificationPreferenceDetails>? Categories
     {
         get
         {
-            if (!this._properties.TryGetValue("categories", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
+                this.RawData,
+                "categories"
             );
         }
-        init
-        {
-            this._properties["categories"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "categories", value); }
     }
 
-    public Dictionary<string, NotificationPreferenceDetails>? Notifications
+    public IReadOnlyDictionary<string, NotificationPreferenceDetails>? Notifications
     {
         get
         {
-            if (!this._properties.TryGetValue("notifications", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Dictionary<string, NotificationPreferenceDetails>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
+                this.RawData,
+                "notifications"
             );
         }
-        init
-        {
-            this._properties["notifications"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "notifications", value); }
     }
 
     public override void Validate()
@@ -72,23 +54,30 @@ public sealed record class RecipientPreferences : ModelBase, IFromRaw<RecipientP
 
     public RecipientPreferences() { }
 
-    public RecipientPreferences(IReadOnlyDictionary<string, JsonElement> properties)
+    public RecipientPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    RecipientPreferences(FrozenDictionary<string, JsonElement> properties)
+    RecipientPreferences(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static RecipientPreferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class RecipientPreferencesFromRaw : IFromRaw<RecipientPreferences>
+{
+    public RecipientPreferences FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => RecipientPreferences.FromRawUnchecked(rawData);
 }

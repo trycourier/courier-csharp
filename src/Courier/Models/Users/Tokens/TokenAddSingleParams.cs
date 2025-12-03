@@ -16,69 +16,35 @@ namespace Courier.Models.Users.Tokens;
 /// </summary>
 public sealed record class TokenAddSingleParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
-    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
-        get { return this._bodyProperties.Freeze(); }
+        get { return this._rawBodyData.Freeze(); }
     }
 
     public required string UserID { get; init; }
 
-    public required string Token { get; init; }
+    public string? Token { get; init; }
 
     /// <summary>
     /// Full body of the token. Must match token in URL path parameter.
     /// </summary>
     public required string Token1
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("token", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'token' cannot be null",
-                    new System::ArgumentOutOfRangeException("token", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'token' cannot be null",
-                    new System::ArgumentNullException("token")
-                );
-        }
-        init
-        {
-            this._bodyProperties["token"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "token"); }
+        init { ModelBase.Set(this._rawBodyData, "token", value); }
     }
 
     public required ApiEnum<string, ProviderKey> ProviderKey
     {
         get
         {
-            if (!this._bodyProperties.TryGetValue("provider_key", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'provider_key' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "provider_key",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, ProviderKey>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, ProviderKey>>(
+                this.RawBodyData,
+                "provider_key"
             );
         }
-        init
-        {
-            this._bodyProperties["provider_key"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "provider_key", value); }
     }
 
     /// <summary>
@@ -86,20 +52,8 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public Device? Device
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("device", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Device?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._bodyProperties["device"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Device>(this.RawBodyData, "device"); }
+        init { ModelBase.Set(this._rawBodyData, "device", value); }
     }
 
     /// <summary>
@@ -108,20 +62,8 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public ExpiryDate? ExpiryDate
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("expiry_date", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ExpiryDate?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._bodyProperties["expiry_date"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ExpiryDate>(this.RawBodyData, "expiry_date"); }
+        init { ModelBase.Set(this._rawBodyData, "expiry_date", value); }
     }
 
     /// <summary>
@@ -129,13 +71,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public JsonElement? Properties
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("properties", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawBodyData, "properties"); }
         init
         {
             if (value == null)
@@ -143,10 +79,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
                 return;
             }
 
-            this._bodyProperties["properties"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "properties", value);
         }
     }
 
@@ -155,59 +88,47 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public Tracking? Tracking
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("tracking", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Tracking?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._bodyProperties["tracking"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<Tracking>(this.RawBodyData, "tracking"); }
+        init { ModelBase.Set(this._rawBodyData, "tracking", value); }
     }
 
     public TokenAddSingleParams() { }
 
     public TokenAddSingleParams(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     TokenAddSingleParams(
-        FrozenDictionary<string, JsonElement> headerProperties,
-        FrozenDictionary<string, JsonElement> queryProperties,
-        FrozenDictionary<string, JsonElement> bodyProperties
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 #pragma warning restore CS8618
 
     public static TokenAddSingleParams FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
         return new(
-            FrozenDictionary.ToFrozenDictionary(headerProperties),
-            FrozenDictionary.ToFrozenDictionary(queryProperties),
-            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            FrozenDictionary.ToFrozenDictionary(rawBodyData)
         );
     }
 
@@ -224,17 +145,13 @@ public sealed record class TokenAddSingleParams : ParamsBase
 
     internal override StringContent? BodyContent()
     {
-        return new(
-            JsonSerializer.Serialize(this.BodyProperties),
-            Encoding.UTF8,
-            "application/json"
-        );
+        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
         ParamsBase.AddDefaultHeaders(request, options);
-        foreach (var item in this.HeaderProperties)
+        foreach (var item in this.RawHeaderData)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
@@ -294,28 +211,16 @@ sealed class ProviderKeyConverter : JsonConverter<ProviderKey>
 /// <summary>
 /// Information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Device>))]
-public sealed record class Device : ModelBase, IFromRaw<Device>
+[JsonConverter(typeof(ModelConverter<Device, DeviceFromRaw>))]
+public sealed record class Device : ModelBase
 {
     /// <summary>
     /// Id of the advertising identifier
     /// </summary>
     public string? AdID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("ad_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["ad_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ad_id"); }
+        init { ModelBase.Set(this._rawData, "ad_id", value); }
     }
 
     /// <summary>
@@ -323,20 +228,8 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
     /// </summary>
     public string? AppID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("app_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["app_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "app_id"); }
+        init { ModelBase.Set(this._rawData, "app_id", value); }
     }
 
     /// <summary>
@@ -344,20 +237,8 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
     /// </summary>
     public string? DeviceID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("device_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["device_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "device_id"); }
+        init { ModelBase.Set(this._rawData, "device_id", value); }
     }
 
     /// <summary>
@@ -365,20 +246,8 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
     /// </summary>
     public string? Manufacturer
     {
-        get
-        {
-            if (!this._properties.TryGetValue("manufacturer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["manufacturer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "manufacturer"); }
+        init { ModelBase.Set(this._rawData, "manufacturer", value); }
     }
 
     /// <summary>
@@ -386,20 +255,8 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
     /// </summary>
     public string? Model
     {
-        get
-        {
-            if (!this._properties.TryGetValue("model", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["model"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "model"); }
+        init { ModelBase.Set(this._rawData, "model", value); }
     }
 
     /// <summary>
@@ -407,20 +264,8 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
     /// </summary>
     public string? Platform
     {
-        get
-        {
-            if (!this._properties.TryGetValue("platform", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["platform"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "platform"); }
+        init { ModelBase.Set(this._rawData, "platform", value); }
     }
 
     public override void Validate()
@@ -435,23 +280,29 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
 
     public Device() { }
 
-    public Device(IReadOnlyDictionary<string, JsonElement> properties)
+    public Device(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Device(FrozenDictionary<string, JsonElement> properties)
+    Device(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Device FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Device FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class DeviceFromRaw : IFromRaw<Device>
+{
+    public Device FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Device.FromRawUnchecked(rawData);
 }
 
 /// <summary>
@@ -461,26 +312,30 @@ public sealed record class Device : ModelBase, IFromRaw<Device>
 [JsonConverter(typeof(ExpiryDateConverter))]
 public record class ExpiryDate
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public ExpiryDate(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public ExpiryDate(bool value)
+    public ExpiryDate(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    ExpiryDate(UnknownVariant value)
+    public ExpiryDate(bool value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static ExpiryDate CreateUnknownVariant(JsonElement value)
+    public ExpiryDate(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -530,13 +385,21 @@ public record class ExpiryDate
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException("Data did not match any variant of ExpiryDate");
         }
     }
 
-    record struct UnknownVariant(JsonElement value);
+    public virtual bool Equals(ExpiryDate? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
@@ -547,35 +410,30 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new ExpiryDate(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
         try
         {
-            return new ExpiryDate(JsonSerializer.Deserialize<bool>(ref reader, options));
+            return new(JsonSerializer.Deserialize<bool>(json, options));
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'bool'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(
@@ -584,36 +442,23 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        object? variant = value?.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value?.Json, options);
     }
 }
 
 /// <summary>
 /// Tracking information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Tracking>))]
-public sealed record class Tracking : ModelBase, IFromRaw<Tracking>
+[JsonConverter(typeof(ModelConverter<Tracking, TrackingFromRaw>))]
+public sealed record class Tracking : ModelBase
 {
     /// <summary>
     /// The IP address of the device
     /// </summary>
     public string? IP
     {
-        get
-        {
-            if (!this._properties.TryGetValue("ip", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["ip"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ip"); }
+        init { ModelBase.Set(this._rawData, "ip", value); }
     }
 
     /// <summary>
@@ -621,20 +466,8 @@ public sealed record class Tracking : ModelBase, IFromRaw<Tracking>
     /// </summary>
     public string? Lat
     {
-        get
-        {
-            if (!this._properties.TryGetValue("lat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "lat"); }
+        init { ModelBase.Set(this._rawData, "lat", value); }
     }
 
     /// <summary>
@@ -642,20 +475,8 @@ public sealed record class Tracking : ModelBase, IFromRaw<Tracking>
     /// </summary>
     public string? Long
     {
-        get
-        {
-            if (!this._properties.TryGetValue("long", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["long"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "long"); }
+        init { ModelBase.Set(this._rawData, "long", value); }
     }
 
     /// <summary>
@@ -663,20 +484,8 @@ public sealed record class Tracking : ModelBase, IFromRaw<Tracking>
     /// </summary>
     public string? OsVersion
     {
-        get
-        {
-            if (!this._properties.TryGetValue("os_version", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["os_version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "os_version"); }
+        init { ModelBase.Set(this._rawData, "os_version", value); }
     }
 
     public override void Validate()
@@ -689,21 +498,27 @@ public sealed record class Tracking : ModelBase, IFromRaw<Tracking>
 
     public Tracking() { }
 
-    public Tracking(IReadOnlyDictionary<string, JsonElement> properties)
+    public Tracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Tracking(FrozenDictionary<string, JsonElement> properties)
+    Tracking(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Tracking FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Tracking FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class TrackingFromRaw : IFromRaw<Tracking>
+{
+    public Tracking FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Tracking.FromRawUnchecked(rawData);
 }

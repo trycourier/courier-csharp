@@ -13,6 +13,11 @@ namespace Courier.Services;
 /// </summary>
 public interface IMessageService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IMessageService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -20,6 +25,13 @@ public interface IMessageService
     /// </summary>
     Task<MessageRetrieveResponse> Retrieve(
         MessageRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(MessageRetrieveParams, CancellationToken)"/>
+    Task<MessageRetrieveResponse> Retrieve(
+        string messageID,
+        MessageRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
@@ -43,6 +55,13 @@ public interface IMessageService
         CancellationToken cancellationToken = default
     );
 
+    /// <inheritdoc cref="Cancel(MessageCancelParams, CancellationToken)"/>
+    Task<MessageDetails> Cancel(
+        string messageID,
+        MessageCancelParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Get message content
     /// </summary>
@@ -51,11 +70,25 @@ public interface IMessageService
         CancellationToken cancellationToken = default
     );
 
+    /// <inheritdoc cref="Content(MessageContentParams, CancellationToken)"/>
+    Task<MessageContentResponse> Content(
+        string messageID,
+        MessageContentParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Fetch the array of events of a message you've previously sent.
     /// </summary>
     Task<MessageHistoryResponse> History(
         MessageHistoryParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="History(MessageHistoryParams, CancellationToken)"/>
+    Task<MessageHistoryResponse> History(
+        string messageID,
+        MessageHistoryParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 }

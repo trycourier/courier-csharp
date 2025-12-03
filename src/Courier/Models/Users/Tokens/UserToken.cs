@@ -9,62 +9,28 @@ using System = System;
 
 namespace Courier.Models.Users.Tokens;
 
-[JsonConverter(typeof(ModelConverter<UserToken>))]
-public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
+[JsonConverter(typeof(ModelConverter<UserToken, UserTokenFromRaw>))]
+public sealed record class UserToken : ModelBase
 {
     /// <summary>
     /// Full body of the token. Must match token in URL path parameter.
     /// </summary>
     public required string Token
     {
-        get
-        {
-            if (!this._properties.TryGetValue("token", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'token' cannot be null",
-                    new System::ArgumentOutOfRangeException("token", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'token' cannot be null",
-                    new System::ArgumentNullException("token")
-                );
-        }
-        init
-        {
-            this._properties["token"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "token"); }
+        init { ModelBase.Set(this._rawData, "token", value); }
     }
 
     public required ApiEnum<string, UserTokenProviderKey> ProviderKey
     {
         get
         {
-            if (!this._properties.TryGetValue("provider_key", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'provider_key' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "provider_key",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
+                this.RawData,
+                "provider_key"
             );
         }
-        init
-        {
-            this._properties["provider_key"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "provider_key", value); }
     }
 
     /// <summary>
@@ -72,23 +38,8 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     /// </summary>
     public UserTokenDevice? Device
     {
-        get
-        {
-            if (!this._properties.TryGetValue("device", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserTokenDevice?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["device"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<UserTokenDevice>(this.RawData, "device"); }
+        init { ModelBase.Set(this._rawData, "device", value); }
     }
 
     /// <summary>
@@ -97,37 +48,16 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     /// </summary>
     public UserTokenExpiryDate? ExpiryDate
     {
-        get
-        {
-            if (!this._properties.TryGetValue("expiry_date", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserTokenExpiryDate?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["expiry_date"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<UserTokenExpiryDate>(this.RawData, "expiry_date"); }
+        init { ModelBase.Set(this._rawData, "expiry_date", value); }
     }
 
     /// <summary>
     /// Properties about the token.
     /// </summary>
-    public JsonElement? Properties1
+    public JsonElement? Properties
     {
-        get
-        {
-            if (!this._properties.TryGetValue("properties", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "properties"); }
         init
         {
             if (value == null)
@@ -135,10 +65,7 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
                 return;
             }
 
-            this._properties["properties"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "properties", value);
         }
     }
 
@@ -147,23 +74,8 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
     /// </summary>
     public UserTokenTracking? Tracking
     {
-        get
-        {
-            if (!this._properties.TryGetValue("tracking", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserTokenTracking?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._properties["tracking"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<UserTokenTracking>(this.RawData, "tracking"); }
+        init { ModelBase.Set(this._rawData, "tracking", value); }
     }
 
     public override void Validate()
@@ -172,29 +84,35 @@ public sealed record class UserToken : ModelBase, IFromRaw<UserToken>
         this.ProviderKey.Validate();
         this.Device?.Validate();
         this.ExpiryDate?.Validate();
-        _ = this.Properties1;
+        _ = this.Properties;
         this.Tracking?.Validate();
     }
 
     public UserToken() { }
 
-    public UserToken(IReadOnlyDictionary<string, JsonElement> properties)
+    public UserToken(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UserToken(FrozenDictionary<string, JsonElement> properties)
+    UserToken(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static UserToken FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static UserToken FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class UserTokenFromRaw : IFromRaw<UserToken>
+{
+    public UserToken FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        UserToken.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(UserTokenProviderKeyConverter))]
@@ -250,28 +168,16 @@ sealed class UserTokenProviderKeyConverter : JsonConverter<UserTokenProviderKey>
 /// <summary>
 /// Information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<UserTokenDevice>))]
-public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice>
+[JsonConverter(typeof(ModelConverter<UserTokenDevice, UserTokenDeviceFromRaw>))]
+public sealed record class UserTokenDevice : ModelBase
 {
     /// <summary>
     /// Id of the advertising identifier
     /// </summary>
     public string? AdID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("ad_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["ad_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ad_id"); }
+        init { ModelBase.Set(this._rawData, "ad_id", value); }
     }
 
     /// <summary>
@@ -279,20 +185,8 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
     /// </summary>
     public string? AppID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("app_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["app_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "app_id"); }
+        init { ModelBase.Set(this._rawData, "app_id", value); }
     }
 
     /// <summary>
@@ -300,20 +194,8 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
     /// </summary>
     public string? DeviceID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("device_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["device_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "device_id"); }
+        init { ModelBase.Set(this._rawData, "device_id", value); }
     }
 
     /// <summary>
@@ -321,20 +203,8 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
     /// </summary>
     public string? Manufacturer
     {
-        get
-        {
-            if (!this._properties.TryGetValue("manufacturer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["manufacturer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "manufacturer"); }
+        init { ModelBase.Set(this._rawData, "manufacturer", value); }
     }
 
     /// <summary>
@@ -342,20 +212,8 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
     /// </summary>
     public string? Model
     {
-        get
-        {
-            if (!this._properties.TryGetValue("model", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["model"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "model"); }
+        init { ModelBase.Set(this._rawData, "model", value); }
     }
 
     /// <summary>
@@ -363,20 +221,8 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
     /// </summary>
     public string? Platform
     {
-        get
-        {
-            if (!this._properties.TryGetValue("platform", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["platform"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "platform"); }
+        init { ModelBase.Set(this._rawData, "platform", value); }
     }
 
     public override void Validate()
@@ -391,25 +237,29 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
 
     public UserTokenDevice() { }
 
-    public UserTokenDevice(IReadOnlyDictionary<string, JsonElement> properties)
+    public UserTokenDevice(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UserTokenDevice(FrozenDictionary<string, JsonElement> properties)
+    UserTokenDevice(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static UserTokenDevice FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static UserTokenDevice FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class UserTokenDeviceFromRaw : IFromRaw<UserTokenDevice>
+{
+    public UserTokenDevice FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        UserTokenDevice.FromRawUnchecked(rawData);
 }
 
 /// <summary>
@@ -419,26 +269,30 @@ public sealed record class UserTokenDevice : ModelBase, IFromRaw<UserTokenDevice
 [JsonConverter(typeof(UserTokenExpiryDateConverter))]
 public record class UserTokenExpiryDate
 {
-    public object Value { get; private init; }
+    public object? Value { get; } = null;
 
-    public UserTokenExpiryDate(string value)
+    JsonElement? _json = null;
+
+    public JsonElement Json
     {
-        Value = value;
+        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public UserTokenExpiryDate(bool value)
+    public UserTokenExpiryDate(string value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    UserTokenExpiryDate(UnknownVariant value)
+    public UserTokenExpiryDate(bool value, JsonElement? json = null)
     {
-        Value = value;
+        this.Value = value;
+        this._json = json;
     }
 
-    public static UserTokenExpiryDate CreateUnknownVariant(JsonElement value)
+    public UserTokenExpiryDate(JsonElement json)
     {
-        return new(new UnknownVariant(value));
+        this._json = json;
     }
 
     public bool TryPickString([NotNullWhen(true)] out string? value)
@@ -488,7 +342,7 @@ public record class UserTokenExpiryDate
 
     public void Validate()
     {
-        if (this.Value is UnknownVariant)
+        if (this.Value == null)
         {
             throw new CourierInvalidDataException(
                 "Data did not match any variant of UserTokenExpiryDate"
@@ -496,7 +350,15 @@ public record class UserTokenExpiryDate
         }
     }
 
-    record struct UnknownVariant(JsonElement value);
+    public virtual bool Equals(UserTokenExpiryDate? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
@@ -507,35 +369,30 @@ sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        List<CourierInvalidDataException> exceptions = [];
-
+        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<string>(json, options);
             if (deserialized != null)
             {
-                return new UserTokenExpiryDate(deserialized);
+                return new(deserialized, json);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'string'", e)
-            );
+            // ignore
         }
 
         try
         {
-            return new UserTokenExpiryDate(JsonSerializer.Deserialize<bool>(ref reader, options));
+            return new(JsonSerializer.Deserialize<bool>(json, options));
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
-            exceptions.Add(
-                new CourierInvalidDataException("Data does not match union variant 'bool'", e)
-            );
+            // ignore
         }
 
-        throw new System::AggregateException(exceptions);
+        return new(json);
     }
 
     public override void Write(
@@ -544,36 +401,23 @@ sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
         JsonSerializerOptions options
     )
     {
-        object? variant = value?.Value;
-        JsonSerializer.Serialize(writer, variant, options);
+        JsonSerializer.Serialize(writer, value?.Json, options);
     }
 }
 
 /// <summary>
 /// Tracking information about the device the token came from.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<UserTokenTracking>))]
-public sealed record class UserTokenTracking : ModelBase, IFromRaw<UserTokenTracking>
+[JsonConverter(typeof(ModelConverter<UserTokenTracking, UserTokenTrackingFromRaw>))]
+public sealed record class UserTokenTracking : ModelBase
 {
     /// <summary>
     /// The IP address of the device
     /// </summary>
     public string? IP
     {
-        get
-        {
-            if (!this._properties.TryGetValue("ip", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["ip"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "ip"); }
+        init { ModelBase.Set(this._rawData, "ip", value); }
     }
 
     /// <summary>
@@ -581,20 +425,8 @@ public sealed record class UserTokenTracking : ModelBase, IFromRaw<UserTokenTrac
     /// </summary>
     public string? Lat
     {
-        get
-        {
-            if (!this._properties.TryGetValue("lat", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["lat"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "lat"); }
+        init { ModelBase.Set(this._rawData, "lat", value); }
     }
 
     /// <summary>
@@ -602,20 +434,8 @@ public sealed record class UserTokenTracking : ModelBase, IFromRaw<UserTokenTrac
     /// </summary>
     public string? Long
     {
-        get
-        {
-            if (!this._properties.TryGetValue("long", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["long"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "long"); }
+        init { ModelBase.Set(this._rawData, "long", value); }
     }
 
     /// <summary>
@@ -623,20 +443,8 @@ public sealed record class UserTokenTracking : ModelBase, IFromRaw<UserTokenTrac
     /// </summary>
     public string? OsVersion
     {
-        get
-        {
-            if (!this._properties.TryGetValue("os_version", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["os_version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "os_version"); }
+        init { ModelBase.Set(this._rawData, "os_version", value); }
     }
 
     public override void Validate()
@@ -649,23 +457,29 @@ public sealed record class UserTokenTracking : ModelBase, IFromRaw<UserTokenTrac
 
     public UserTokenTracking() { }
 
-    public UserTokenTracking(IReadOnlyDictionary<string, JsonElement> properties)
+    public UserTokenTracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UserTokenTracking(FrozenDictionary<string, JsonElement> properties)
+    UserTokenTracking(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static UserTokenTracking FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class UserTokenTrackingFromRaw : IFromRaw<UserTokenTracking>
+{
+    public UserTokenTracking FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        UserTokenTracking.FromRawUnchecked(rawData);
 }

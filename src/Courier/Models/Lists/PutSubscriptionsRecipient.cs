@@ -1,63 +1,28 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Lists;
 
-[JsonConverter(typeof(ModelConverter<PutSubscriptionsRecipient>))]
-public sealed record class PutSubscriptionsRecipient
-    : ModelBase,
-        IFromRaw<PutSubscriptionsRecipient>
+[JsonConverter(typeof(ModelConverter<PutSubscriptionsRecipient, PutSubscriptionsRecipientFromRaw>))]
+public sealed record class PutSubscriptionsRecipient : ModelBase
 {
     public required string RecipientID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("recipientId", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'recipientId' cannot be null",
-                    new ArgumentOutOfRangeException("recipientId", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'recipientId' cannot be null",
-                    new ArgumentNullException("recipientId")
-                );
-        }
-        init
-        {
-            this._properties["recipientId"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "recipientId"); }
+        init { ModelBase.Set(this._rawData, "recipientId", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            if (!this._properties.TryGetValue("preferences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<RecipientPreferences?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init
-        {
-            this._properties["preferences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
     public override void Validate()
@@ -68,24 +33,24 @@ public sealed record class PutSubscriptionsRecipient
 
     public PutSubscriptionsRecipient() { }
 
-    public PutSubscriptionsRecipient(IReadOnlyDictionary<string, JsonElement> properties)
+    public PutSubscriptionsRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    PutSubscriptionsRecipient(FrozenDictionary<string, JsonElement> properties)
+    PutSubscriptionsRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static PutSubscriptionsRecipient FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -94,4 +59,11 @@ public sealed record class PutSubscriptionsRecipient
     {
         this.RecipientID = recipientID;
     }
+}
+
+class PutSubscriptionsRecipientFromRaw : IFromRaw<PutSubscriptionsRecipient>
+{
+    public PutSubscriptionsRecipient FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => PutSubscriptionsRecipient.FromRawUnchecked(rawData);
 }

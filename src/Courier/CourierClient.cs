@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +11,7 @@ using Courier.Services;
 
 namespace Courier;
 
+/// <inheritdoc/>
 public sealed class CourierClient : ICourierClient
 {
     static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
@@ -23,42 +23,51 @@ public sealed class CourierClient : ICourierClient
 
     readonly ClientOptions _options;
 
+    /// <inheritdoc/>
     public HttpClient HttpClient
     {
         get { return this._options.HttpClient; }
         init { this._options.HttpClient = value; }
     }
 
+    /// <inheritdoc/>
     public Uri BaseUrl
     {
         get { return this._options.BaseUrl; }
         init { this._options.BaseUrl = value; }
     }
 
+    /// <inheritdoc/>
     public bool ResponseValidation
     {
         get { return this._options.ResponseValidation; }
         init { this._options.ResponseValidation = value; }
     }
 
+    /// <inheritdoc/>
     public int? MaxRetries
     {
         get { return this._options.MaxRetries; }
         init { this._options.MaxRetries = value; }
     }
 
+    /// <inheritdoc/>
     public TimeSpan? Timeout
     {
         get { return this._options.Timeout; }
         init { this._options.Timeout = value; }
     }
 
+    /// <inheritdoc/>
     public string APIKey
     {
         get { return this._options.APIKey; }
         init { this._options.APIKey = value; }
     }
 
+    internal static HttpMethod PatchMethod = new("PATCH");
+
+    /// <inheritdoc/>
     public ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new CourierClient(modifier(this._options));
@@ -160,6 +169,7 @@ public sealed class CourierClient : ICourierClient
         get { return _users.Value; }
     }
 
+    /// <inheritdoc/>
     public async Task<HttpResponse> Execute<T>(
         HttpRequest<T> request,
         CancellationToken cancellationToken = default
@@ -167,11 +177,6 @@ public sealed class CourierClient : ICourierClient
         where T : ParamsBase
     {
         var maxRetries = this.MaxRetries ?? ClientOptions.DefaultMaxRetries;
-        if (maxRetries <= 0)
-        {
-            return await ExecuteOnce(request, cancellationToken).ConfigureAwait(false);
-        }
-
         var retries = 0;
         while (true)
         {
@@ -283,7 +288,7 @@ public sealed class CourierClient : ICourierClient
             return null;
         }
 
-        if (float.TryParse(headerValue.AsSpan(), out var retryAfterMs))
+        if (float.TryParse(headerValue, out var retryAfterMs))
         {
             return TimeSpan.FromMilliseconds(retryAfterMs);
         }
@@ -301,11 +306,11 @@ public sealed class CourierClient : ICourierClient
             return null;
         }
 
-        if (float.TryParse(headerValue.AsSpan(), out var retryAfterSeconds))
+        if (float.TryParse(headerValue, out var retryAfterSeconds))
         {
             return TimeSpan.FromSeconds(retryAfterSeconds);
         }
-        else if (DateTimeOffset.TryParse(headerValue.AsSpan(), out var retryAfterDate))
+        else if (DateTimeOffset.TryParse(headerValue, out var retryAfterDate))
         {
             return retryAfterDate - DateTimeOffset.Now;
         }
@@ -324,19 +329,19 @@ public sealed class CourierClient : ICourierClient
             return shouldRetry;
         }
 
-        return response.Message.StatusCode switch
+        return (int)response.Message.StatusCode switch
         {
             // Retry on request timeouts
-            HttpStatusCode.RequestTimeout
+            408
             or
             // Retry on lock timeouts
-            HttpStatusCode.Conflict
+            409
             or
             // Retry on rate limits
-            HttpStatusCode.TooManyRequests
+            429
             or
             // Retry internal errors
-            >= HttpStatusCode.InternalServerError => true,
+            >= 500 => true,
             _ => false,
         };
     }

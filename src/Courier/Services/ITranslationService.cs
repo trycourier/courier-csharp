@@ -13,6 +13,11 @@ namespace Courier.Services;
 /// </summary>
 public interface ITranslationService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     ITranslationService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -23,8 +28,22 @@ public interface ITranslationService
         CancellationToken cancellationToken = default
     );
 
+    /// <inheritdoc cref="Retrieve(TranslationRetrieveParams, CancellationToken)"/>
+    Task<string> Retrieve(
+        string locale,
+        TranslationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Update a translation
     /// </summary>
     Task Update(TranslationUpdateParams parameters, CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="Update(TranslationUpdateParams, CancellationToken)"/>
+    Task Update(
+        string locale,
+        TranslationUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }

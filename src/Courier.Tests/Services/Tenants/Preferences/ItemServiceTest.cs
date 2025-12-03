@@ -9,12 +9,8 @@ public class ItemServiceTest : TestBase
     public async Task Update_Works()
     {
         await this.client.Tenants.Preferences.Items.Update(
-            new()
-            {
-                TenantID = "tenant_id",
-                TopicID = "topic_id",
-                Status = Status.OptedIn,
-            }
+            "topic_id",
+            new() { TenantID = "tenant_id", Status = Status.OptedIn }
         );
     }
 
@@ -22,7 +18,8 @@ public class ItemServiceTest : TestBase
     public async Task Delete_Works()
     {
         await this.client.Tenants.Preferences.Items.Delete(
-            new() { TenantID = "tenant_id", TopicID = "topic_id" }
+            "topic_id",
+            new() { TenantID = "tenant_id" }
         );
     }
 }

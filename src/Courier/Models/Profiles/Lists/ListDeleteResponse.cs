@@ -9,30 +9,18 @@ using System = System;
 
 namespace Courier.Models.Profiles.Lists;
 
-[JsonConverter(typeof(ModelConverter<ListDeleteResponse>))]
-public sealed record class ListDeleteResponse : ModelBase, IFromRaw<ListDeleteResponse>
+[JsonConverter(typeof(ModelConverter<ListDeleteResponse, ListDeleteResponseFromRaw>))]
+public sealed record class ListDeleteResponse : ModelBase
 {
     public required ApiEnum<string, global::Courier.Models.Profiles.Lists.Status> Status
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<
+            return ModelBase.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
-            >(element, ModelBase.SerializerOptions);
+            >(this.RawData, "status");
         }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public override void Validate()
@@ -42,24 +30,24 @@ public sealed record class ListDeleteResponse : ModelBase, IFromRaw<ListDeleteRe
 
     public ListDeleteResponse() { }
 
-    public ListDeleteResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public ListDeleteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ListDeleteResponse(FrozenDictionary<string, JsonElement> properties)
+    ListDeleteResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ListDeleteResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -68,6 +56,12 @@ public sealed record class ListDeleteResponse : ModelBase, IFromRaw<ListDeleteRe
     {
         this.Status = status;
     }
+}
+
+class ListDeleteResponseFromRaw : IFromRaw<ListDeleteResponse>
+{
+    public ListDeleteResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ListDeleteResponse.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(global::Courier.Models.Profiles.Lists.StatusConverter))]

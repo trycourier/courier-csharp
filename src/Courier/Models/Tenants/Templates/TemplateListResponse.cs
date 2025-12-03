@@ -9,31 +9,16 @@ using System = System;
 
 namespace Courier.Models.Tenants.Templates;
 
-[JsonConverter(typeof(ModelConverter<TemplateListResponse>))]
-public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateListResponse>
+[JsonConverter(typeof(ModelConverter<TemplateListResponse, TemplateListResponseFromRaw>))]
+public sealed record class TemplateListResponse : ModelBase
 {
     /// <summary>
     /// Set to true when there are more pages that can be retrieved.
     /// </summary>
     public required bool HasMore
     {
-        get
-        {
-            if (!this._properties.TryGetValue("has_more", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'has_more' cannot be null",
-                    new System::ArgumentOutOfRangeException("has_more", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["has_more"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "has_more"); }
+        init { ModelBase.Set(this._rawData, "has_more", value); }
     }
 
     /// <summary>
@@ -43,23 +28,11 @@ public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateLi
     {
         get
         {
-            if (!this._properties.TryGetValue("type", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<
+            return ModelBase.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Tenants.Templates.Type>
-            >(element, ModelBase.SerializerOptions);
+            >(this.RawData, "type");
         }
-        init
-        {
-            this._properties["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -67,27 +40,8 @@ public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateLi
     /// </summary>
     public required string URL
     {
-        get
-        {
-            if (!this._properties.TryGetValue("url", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'url' cannot be null",
-                    new System::ArgumentOutOfRangeException("url", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'url' cannot be null",
-                    new System::ArgumentNullException("url")
-                );
-        }
-        init
-        {
-            this._properties["url"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "url"); }
+        init { ModelBase.Set(this._rawData, "url", value); }
     }
 
     /// <summary>
@@ -96,41 +50,20 @@ public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateLi
     /// </summary>
     public string? Cursor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("cursor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["cursor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "cursor"); }
+        init { ModelBase.Set(this._rawData, "cursor", value); }
     }
 
-    public List<global::Courier.Models.Tenants.Templates.Item>? Items
+    public IReadOnlyList<global::Courier.Models.Tenants.Templates.Item>? Items
     {
         get
         {
-            if (!this._properties.TryGetValue("items", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<global::Courier.Models.Tenants.Templates.Item>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<global::Courier.Models.Tenants.Templates.Item>>(
+                this.RawData,
+                "items"
             );
         }
-        init
-        {
-            this._properties["items"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "items", value); }
     }
 
     /// <summary>
@@ -139,20 +72,8 @@ public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateLi
     /// </summary>
     public string? NextURL
     {
-        get
-        {
-            if (!this._properties.TryGetValue("next_url", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["next_url"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "next_url"); }
+        init { ModelBase.Set(this._rawData, "next_url", value); }
     }
 
     public override void Validate()
@@ -170,25 +91,32 @@ public sealed record class TemplateListResponse : ModelBase, IFromRaw<TemplateLi
 
     public TemplateListResponse() { }
 
-    public TemplateListResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public TemplateListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TemplateListResponse(FrozenDictionary<string, JsonElement> properties)
+    TemplateListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static TemplateListResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class TemplateListResponseFromRaw : IFromRaw<TemplateListResponse>
+{
+    public TemplateListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => TemplateListResponse.FromRawUnchecked(rawData);
 }
 
 /// <summary>
@@ -235,35 +163,21 @@ sealed class TypeConverter : JsonConverter<global::Courier.Models.Tenants.Templa
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Tenants.Templates.Item>))]
-public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Tenants.Templates.Item>
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Tenants.Templates.Item,
+        global::Courier.Models.Tenants.Templates.ItemFromRaw
+    >)
+)]
+public sealed record class Item : ModelBase
 {
     /// <summary>
     /// The template's id
     /// </summary>
     public required string ID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("id", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new System::ArgumentOutOfRangeException("id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'id' cannot be null",
-                    new System::ArgumentNullException("id")
-                );
-        }
-        init
-        {
-            this._properties["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     /// <summary>
@@ -271,30 +185,8 @@ public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Ten
     /// </summary>
     public required string CreatedAt
     {
-        get
-        {
-            if (!this._properties.TryGetValue("created_at", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'created_at' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "created_at",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'created_at' cannot be null",
-                    new System::ArgumentNullException("created_at")
-                );
-        }
-        init
-        {
-            this._properties["created_at"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "created_at"); }
+        init { ModelBase.Set(this._rawData, "created_at", value); }
     }
 
     /// <summary>
@@ -302,30 +194,8 @@ public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Ten
     /// </summary>
     public required string PublishedAt
     {
-        get
-        {
-            if (!this._properties.TryGetValue("published_at", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'published_at' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "published_at",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'published_at' cannot be null",
-                    new System::ArgumentNullException("published_at")
-                );
-        }
-        init
-        {
-            this._properties["published_at"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "published_at"); }
+        init { ModelBase.Set(this._rawData, "published_at", value); }
     }
 
     /// <summary>
@@ -333,30 +203,8 @@ public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Ten
     /// </summary>
     public required string UpdatedAt
     {
-        get
-        {
-            if (!this._properties.TryGetValue("updated_at", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'updated_at' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "updated_at",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'updated_at' cannot be null",
-                    new System::ArgumentNullException("updated_at")
-                );
-        }
-        init
-        {
-            this._properties["updated_at"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "updated_at"); }
+        init { ModelBase.Set(this._rawData, "updated_at", value); }
     }
 
     /// <summary>
@@ -364,27 +212,8 @@ public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Ten
     /// </summary>
     public required string Version
     {
-        get
-        {
-            if (!this._properties.TryGetValue("version", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'version' cannot be null",
-                    new System::ArgumentOutOfRangeException("version", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'version' cannot be null",
-                    new System::ArgumentNullException("version")
-                );
-        }
-        init
-        {
-            this._properties["version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "version"); }
+        init { ModelBase.Set(this._rawData, "version", value); }
     }
 
     /// <summary>
@@ -392,27 +221,8 @@ public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Ten
     /// </summary>
     public required Data Data
     {
-        get
-        {
-            if (!this._properties.TryGetValue("data", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'data' cannot be null",
-                    new System::ArgumentOutOfRangeException("data", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Data>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'data' cannot be null",
-                    new System::ArgumentNullException("data")
-                );
-        }
-        init
-        {
-            this._properties["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Data>(this.RawData, "data"); }
+        init { ModelBase.Set(this._rawData, "data", value); }
     }
 
     public static implicit operator BaseTemplateTenantAssociation(
@@ -439,60 +249,49 @@ public sealed record class Item : ModelBase, IFromRaw<global::Courier.Models.Ten
 
     public Item() { }
 
-    public Item(IReadOnlyDictionary<string, JsonElement> properties)
+    public Item(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Item(FrozenDictionary<string, JsonElement> properties)
+    Item(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Tenants.Templates.Item FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
+class ItemFromRaw : IFromRaw<global::Courier.Models.Tenants.Templates.Item>
+{
+    public global::Courier.Models.Tenants.Templates.Item FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Tenants.Templates.Item.FromRawUnchecked(rawData);
+}
+
 [JsonConverter(
-    typeof(ModelConverter<global::Courier.Models.Tenants.Templates.IntersectionMember1>)
+    typeof(ModelConverter<
+        global::Courier.Models.Tenants.Templates.IntersectionMember1,
+        global::Courier.Models.Tenants.Templates.IntersectionMember1FromRaw
+    >)
 )]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Tenants.Templates.IntersectionMember1>
+public sealed record class IntersectionMember1 : ModelBase
 {
     /// <summary>
     /// The template's data containing it's routing configs
     /// </summary>
     public required Data Data
     {
-        get
-        {
-            if (!this._properties.TryGetValue("data", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'data' cannot be null",
-                    new System::ArgumentOutOfRangeException("data", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Data>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'data' cannot be null",
-                    new System::ArgumentNullException("data")
-                );
-        }
-        init
-        {
-            this._properties["data"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Data>(this.RawData, "data"); }
+        init { ModelBase.Set(this._rawData, "data", value); }
     }
 
     public override void Validate()
@@ -502,24 +301,24 @@ public sealed record class IntersectionMember1
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> properties)
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Tenants.Templates.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -530,35 +329,24 @@ public sealed record class IntersectionMember1
     }
 }
 
+class IntersectionMember1FromRaw
+    : IFromRaw<global::Courier.Models.Tenants.Templates.IntersectionMember1>
+{
+    public global::Courier.Models.Tenants.Templates.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Tenants.Templates.IntersectionMember1.FromRawUnchecked(rawData);
+}
+
 /// <summary>
 /// The template's data containing it's routing configs
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Data>))]
-public sealed record class Data : ModelBase, IFromRaw<Data>
+[JsonConverter(typeof(ModelConverter<Data, DataFromRaw>))]
+public sealed record class Data : ModelBase
 {
     public required MessageRouting Routing
     {
-        get
-        {
-            if (!this._properties.TryGetValue("routing", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'routing' cannot be null",
-                    new System::ArgumentOutOfRangeException("routing", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<MessageRouting>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'routing' cannot be null",
-                    new System::ArgumentNullException("routing")
-                );
-        }
-        init
-        {
-            this._properties["routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<MessageRouting>(this.RawData, "routing"); }
+        init { ModelBase.Set(this._rawData, "routing", value); }
     }
 
     public override void Validate()
@@ -568,22 +356,22 @@ public sealed record class Data : ModelBase, IFromRaw<Data>
 
     public Data() { }
 
-    public Data(IReadOnlyDictionary<string, JsonElement> properties)
+    public Data(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Data(FrozenDictionary<string, JsonElement> properties)
+    Data(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -592,4 +380,10 @@ public sealed record class Data : ModelBase, IFromRaw<Data>
     {
         this.Routing = routing;
     }
+}
+
+class DataFromRaw : IFromRaw<Data>
+{
+    public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Data.FromRawUnchecked(rawData);
 }

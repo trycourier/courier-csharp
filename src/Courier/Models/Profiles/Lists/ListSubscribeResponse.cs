@@ -9,31 +9,19 @@ using System = System;
 
 namespace Courier.Models.Profiles.Lists;
 
-[JsonConverter(typeof(ModelConverter<ListSubscribeResponse>))]
-public sealed record class ListSubscribeResponse : ModelBase, IFromRaw<ListSubscribeResponse>
+[JsonConverter(typeof(ModelConverter<ListSubscribeResponse, ListSubscribeResponseFromRaw>))]
+public sealed record class ListSubscribeResponse : ModelBase
 {
     public required ApiEnum<string, ListSubscribeResponseStatus> Status
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, ListSubscribeResponseStatus>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, ListSubscribeResponseStatus>>(
+                this.RawData,
+                "status"
             );
         }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public override void Validate()
@@ -43,24 +31,24 @@ public sealed record class ListSubscribeResponse : ModelBase, IFromRaw<ListSubsc
 
     public ListSubscribeResponse() { }
 
-    public ListSubscribeResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public ListSubscribeResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ListSubscribeResponse(FrozenDictionary<string, JsonElement> properties)
+    ListSubscribeResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static ListSubscribeResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -69,6 +57,13 @@ public sealed record class ListSubscribeResponse : ModelBase, IFromRaw<ListSubsc
     {
         this.Status = status;
     }
+}
+
+class ListSubscribeResponseFromRaw : IFromRaw<ListSubscribeResponse>
+{
+    public ListSubscribeResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => ListSubscribeResponse.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(ListSubscribeResponseStatusConverter))]

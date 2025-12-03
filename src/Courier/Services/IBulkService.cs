@@ -13,12 +13,24 @@ namespace Courier.Services;
 /// </summary>
 public interface IBulkService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IBulkService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
     /// Ingest user data into a Bulk Job
     /// </summary>
     Task AddUsers(BulkAddUsersParams parameters, CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="AddUsers(BulkAddUsersParams, CancellationToken)"/>
+    Task AddUsers(
+        string jobID,
+        BulkAddUsersParams parameters,
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     /// Create a bulk job
@@ -36,6 +48,13 @@ public interface IBulkService
         CancellationToken cancellationToken = default
     );
 
+    /// <inheritdoc cref="ListUsers(BulkListUsersParams, CancellationToken)"/>
+    Task<BulkListUsersResponse> ListUsers(
+        string jobID,
+        BulkListUsersParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Get a bulk job
     /// </summary>
@@ -44,8 +63,22 @@ public interface IBulkService
         CancellationToken cancellationToken = default
     );
 
+    /// <inheritdoc cref="RetrieveJob(BulkRetrieveJobParams, CancellationToken)"/>
+    Task<BulkRetrieveJobResponse> RetrieveJob(
+        string jobID,
+        BulkRetrieveJobParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Run a bulk job
     /// </summary>
     Task RunJob(BulkRunJobParams parameters, CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="RunJob(BulkRunJobParams, CancellationToken)"/>
+    Task RunJob(
+        string jobID,
+        BulkRunJobParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }

@@ -7,43 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<EmailFooter>))]
-public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
+[JsonConverter(typeof(ModelConverter<EmailFooter, EmailFooterFromRaw>))]
+public sealed record class EmailFooter : ModelBase
 {
     public string? Content
     {
-        get
-        {
-            if (!this._properties.TryGetValue("content", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["content"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "content"); }
+        init { ModelBase.Set(this._rawData, "content", value); }
     }
 
     public bool? InheritDefault
     {
-        get
-        {
-            if (!this._properties.TryGetValue("inheritDefault", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["inheritDefault"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "inheritDefault"); }
+        init { ModelBase.Set(this._rawData, "inheritDefault", value); }
     }
 
     public override void Validate()
@@ -54,21 +30,27 @@ public sealed record class EmailFooter : ModelBase, IFromRaw<EmailFooter>
 
     public EmailFooter() { }
 
-    public EmailFooter(IReadOnlyDictionary<string, JsonElement> properties)
+    public EmailFooter(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    EmailFooter(FrozenDictionary<string, JsonElement> properties)
+    EmailFooter(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class EmailFooterFromRaw : IFromRaw<EmailFooter>
+{
+    public EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        EmailFooter.FromRawUnchecked(rawData);
 }

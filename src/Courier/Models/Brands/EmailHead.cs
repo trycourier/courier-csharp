@@ -1,54 +1,25 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<EmailHead>))]
-public sealed record class EmailHead : ModelBase, IFromRaw<EmailHead>
+[JsonConverter(typeof(ModelConverter<EmailHead, EmailHeadFromRaw>))]
+public sealed record class EmailHead : ModelBase
 {
     public required bool InheritDefault
     {
-        get
-        {
-            if (!this._properties.TryGetValue("inheritDefault", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'inheritDefault' cannot be null",
-                    new ArgumentOutOfRangeException("inheritDefault", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["inheritDefault"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "inheritDefault"); }
+        init { ModelBase.Set(this._rawData, "inheritDefault", value); }
     }
 
     public string? Content
     {
-        get
-        {
-            if (!this._properties.TryGetValue("content", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["content"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "content"); }
+        init { ModelBase.Set(this._rawData, "content", value); }
     }
 
     public override void Validate()
@@ -59,22 +30,22 @@ public sealed record class EmailHead : ModelBase, IFromRaw<EmailHead>
 
     public EmailHead() { }
 
-    public EmailHead(IReadOnlyDictionary<string, JsonElement> properties)
+    public EmailHead(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    EmailHead(FrozenDictionary<string, JsonElement> properties)
+    EmailHead(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static EmailHead FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static EmailHead FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -83,4 +54,10 @@ public sealed record class EmailHead : ModelBase, IFromRaw<EmailHead>
     {
         this.InheritDefault = inheritDefault;
     }
+}
+
+class EmailHeadFromRaw : IFromRaw<EmailHead>
+{
+    public EmailHead FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        EmailHead.FromRawUnchecked(rawData);
 }

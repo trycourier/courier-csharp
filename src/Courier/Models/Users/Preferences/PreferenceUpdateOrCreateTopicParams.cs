@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Users.Preferences;
 
@@ -16,39 +15,20 @@ namespace Courier.Models.Users.Preferences;
 /// </summary>
 public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
-    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
-        get { return this._bodyProperties.Freeze(); }
+        get { return this._rawBodyData.Freeze(); }
     }
 
     public required string UserID { get; init; }
 
-    public required string TopicID { get; init; }
+    public string? TopicID { get; init; }
 
     public required Topic Topic
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("topic", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'topic' cannot be null",
-                    new ArgumentOutOfRangeException("topic", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Topic>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'topic' cannot be null",
-                    new ArgumentNullException("topic")
-                );
-        }
-        init
-        {
-            this._bodyProperties["topic"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Topic>(this.RawBodyData, "topic"); }
+        init { ModelBase.Set(this._rawBodyData, "topic", value); }
     }
 
     /// <summary>
@@ -56,59 +36,47 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get
-        {
-            if (!this._queryProperties.TryGetValue("tenant_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._queryProperties["tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
+        init { ModelBase.Set(this._rawQueryData, "tenant_id", value); }
     }
 
     public PreferenceUpdateOrCreateTopicParams() { }
 
     public PreferenceUpdateOrCreateTopicParams(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     PreferenceUpdateOrCreateTopicParams(
-        FrozenDictionary<string, JsonElement> headerProperties,
-        FrozenDictionary<string, JsonElement> queryProperties,
-        FrozenDictionary<string, JsonElement> bodyProperties
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 #pragma warning restore CS8618
 
     public static PreferenceUpdateOrCreateTopicParams FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
         return new(
-            FrozenDictionary.ToFrozenDictionary(headerProperties),
-            FrozenDictionary.ToFrozenDictionary(queryProperties),
-            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            FrozenDictionary.ToFrozenDictionary(rawBodyData)
         );
     }
 
@@ -125,90 +93,53 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
 
     internal override StringContent? BodyContent()
     {
-        return new(
-            JsonSerializer.Serialize(this.BodyProperties),
-            Encoding.UTF8,
-            "application/json"
-        );
+        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
         ParamsBase.AddDefaultHeaders(request, options);
-        foreach (var item in this.HeaderProperties)
+        foreach (var item in this.RawHeaderData)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Topic>))]
-public sealed record class Topic : ModelBase, IFromRaw<Topic>
+[JsonConverter(typeof(ModelConverter<Topic, TopicFromRaw>))]
+public sealed record class Topic : ModelBase
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, PreferenceStatus>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+                this.RawData,
+                "status"
             );
         }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
     /// The Channels a user has chosen to receive notifications through for this topic
     /// </summary>
-    public List<ApiEnum<string, ChannelClassification>>? CustomRouting
+    public IReadOnlyList<ApiEnum<string, ChannelClassification>>? CustomRouting
     {
         get
         {
-            if (!this._properties.TryGetValue("custom_routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ApiEnum<string, ChannelClassification>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+                this.RawData,
+                "custom_routing"
             );
         }
-        init
-        {
-            this._properties["custom_routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "custom_routing", value); }
     }
 
     public bool? HasCustomRouting
     {
-        get
-        {
-            if (!this._properties.TryGetValue("has_custom_routing", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["has_custom_routing"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
+        init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
     }
 
     public override void Validate()
@@ -223,22 +154,22 @@ public sealed record class Topic : ModelBase, IFromRaw<Topic>
 
     public Topic() { }
 
-    public Topic(IReadOnlyDictionary<string, JsonElement> properties)
+    public Topic(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Topic(FrozenDictionary<string, JsonElement> properties)
+    Topic(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Topic FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Topic FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -247,4 +178,10 @@ public sealed record class Topic : ModelBase, IFromRaw<Topic>
     {
         this.Status = status;
     }
+}
+
+class TopicFromRaw : IFromRaw<Topic>
+{
+    public Topic FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Topic.FromRawUnchecked(rawData);
 }

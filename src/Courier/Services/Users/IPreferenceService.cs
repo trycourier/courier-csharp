@@ -13,6 +13,11 @@ namespace Courier.Services.Users;
 /// </summary>
 public interface IPreferenceService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     IPreferenceService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
@@ -20,6 +25,13 @@ public interface IPreferenceService
     /// </summary>
     Task<PreferenceRetrieveResponse> Retrieve(
         PreferenceRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(PreferenceRetrieveParams, CancellationToken)"/>
+    Task<PreferenceRetrieveResponse> Retrieve(
+        string userID,
+        PreferenceRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
@@ -31,10 +43,24 @@ public interface IPreferenceService
         CancellationToken cancellationToken = default
     );
 
+    /// <inheritdoc cref="RetrieveTopic(PreferenceRetrieveTopicParams, CancellationToken)"/>
+    Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
+        string topicID,
+        PreferenceRetrieveTopicParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Update or Create user preferences for a specific subscription topic.
     /// </summary>
     Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
+        PreferenceUpdateOrCreateTopicParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="UpdateOrCreateTopic(PreferenceUpdateOrCreateTopicParams, CancellationToken)"/>
+    Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
+        string topicID,
         PreferenceUpdateOrCreateTopicParams parameters,
         CancellationToken cancellationToken = default
     );

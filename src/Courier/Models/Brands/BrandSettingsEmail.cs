@@ -1,90 +1,40 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSettingsEmail>))]
-public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSettingsEmail>
+[JsonConverter(typeof(ModelConverter<BrandSettingsEmail, BrandSettingsEmailFromRaw>))]
+public sealed record class BrandSettingsEmail : ModelBase
 {
     public EmailFooter? Footer
     {
-        get
-        {
-            if (!this._properties.TryGetValue("footer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<EmailFooter?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["footer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<EmailFooter>(this.RawData, "footer"); }
+        init { ModelBase.Set(this._rawData, "footer", value); }
     }
 
     public EmailHead? Head
     {
-        get
-        {
-            if (!this._properties.TryGetValue("head", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<EmailHead?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["head"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<EmailHead>(this.RawData, "head"); }
+        init { ModelBase.Set(this._rawData, "head", value); }
     }
 
     public EmailHeader? Header
     {
-        get
-        {
-            if (!this._properties.TryGetValue("header", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<EmailHeader?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["header"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<EmailHeader>(this.RawData, "header"); }
+        init { ModelBase.Set(this._rawData, "header", value); }
     }
 
     public TemplateOverride? TemplateOverride
     {
         get
         {
-            if (!this._properties.TryGetValue("templateOverride", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<TemplateOverride?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<TemplateOverride>(this.RawData, "templateOverride");
         }
-        init
-        {
-            this._properties["templateOverride"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "templateOverride", value); }
     }
 
     public override void Validate()
@@ -97,218 +47,94 @@ public sealed record class BrandSettingsEmail : ModelBase, IFromRaw<BrandSetting
 
     public BrandSettingsEmail() { }
 
-    public BrandSettingsEmail(IReadOnlyDictionary<string, JsonElement> properties)
+    public BrandSettingsEmail(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BrandSettingsEmail(FrozenDictionary<string, JsonElement> properties)
+    BrandSettingsEmail(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static BrandSettingsEmail FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-[JsonConverter(typeof(ModelConverter<TemplateOverride>))]
-public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverride>
+class BrandSettingsEmailFromRaw : IFromRaw<BrandSettingsEmail>
+{
+    public BrandSettingsEmail FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        BrandSettingsEmail.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<TemplateOverride, TemplateOverrideFromRaw>))]
+public sealed record class TemplateOverride : ModelBase
 {
     public required bool Enabled
     {
-        get
-        {
-            if (!this._properties.TryGetValue("enabled", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'enabled' cannot be null",
-                    new ArgumentOutOfRangeException("enabled", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["enabled"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "enabled"); }
+        init { ModelBase.Set(this._rawData, "enabled", value); }
     }
 
     public string? BackgroundColor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("backgroundColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["backgroundColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "backgroundColor"); }
+        init { ModelBase.Set(this._rawData, "backgroundColor", value); }
     }
 
     public string? BlocksBackgroundColor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("blocksBackgroundColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["blocksBackgroundColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "blocksBackgroundColor"); }
+        init { ModelBase.Set(this._rawData, "blocksBackgroundColor", value); }
     }
 
     public string? Footer
     {
-        get
-        {
-            if (!this._properties.TryGetValue("footer", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["footer"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "footer"); }
+        init { ModelBase.Set(this._rawData, "footer", value); }
     }
 
     public string? Head
     {
-        get
-        {
-            if (!this._properties.TryGetValue("head", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["head"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "head"); }
+        init { ModelBase.Set(this._rawData, "head", value); }
     }
 
     public string? Header
     {
-        get
-        {
-            if (!this._properties.TryGetValue("header", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["header"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "header"); }
+        init { ModelBase.Set(this._rawData, "header", value); }
     }
 
     public string? Width
     {
-        get
-        {
-            if (!this._properties.TryGetValue("width", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["width"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "width"); }
+        init { ModelBase.Set(this._rawData, "width", value); }
     }
 
     public required BrandTemplate Mjml
     {
-        get
-        {
-            if (!this._properties.TryGetValue("mjml", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'mjml' cannot be null",
-                    new ArgumentOutOfRangeException("mjml", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<BrandTemplate>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'mjml' cannot be null",
-                    new ArgumentNullException("mjml")
-                );
-        }
-        init
-        {
-            this._properties["mjml"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<BrandTemplate>(this.RawData, "mjml"); }
+        init { ModelBase.Set(this._rawData, "mjml", value); }
     }
 
     public string? FooterBackgroundColor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("footerBackgroundColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["footerBackgroundColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "footerBackgroundColor"); }
+        init { ModelBase.Set(this._rawData, "footerBackgroundColor", value); }
     }
 
     public bool? FooterFullWidth
     {
-        get
-        {
-            if (!this._properties.TryGetValue("footerFullWidth", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["footerFullWidth"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "footerFullWidth"); }
+        init { ModelBase.Set(this._rawData, "footerFullWidth", value); }
     }
 
     public static implicit operator BrandTemplate(TemplateOverride templateOverride) =>
@@ -339,91 +165,57 @@ public sealed record class TemplateOverride : ModelBase, IFromRaw<TemplateOverri
 
     public TemplateOverride() { }
 
-    public TemplateOverride(IReadOnlyDictionary<string, JsonElement> properties)
+    public TemplateOverride(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    TemplateOverride(FrozenDictionary<string, JsonElement> properties)
+    TemplateOverride(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static TemplateOverride FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-[JsonConverter(typeof(ModelConverter<global::Courier.Models.Brands.IntersectionMember1>))]
-public sealed record class IntersectionMember1
-    : ModelBase,
-        IFromRaw<global::Courier.Models.Brands.IntersectionMember1>
+class TemplateOverrideFromRaw : IFromRaw<TemplateOverride>
+{
+    public TemplateOverride FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        TemplateOverride.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(
+    typeof(ModelConverter<
+        global::Courier.Models.Brands.IntersectionMember1,
+        global::Courier.Models.Brands.IntersectionMember1FromRaw
+    >)
+)]
+public sealed record class IntersectionMember1 : ModelBase
 {
     public required BrandTemplate Mjml
     {
-        get
-        {
-            if (!this._properties.TryGetValue("mjml", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'mjml' cannot be null",
-                    new ArgumentOutOfRangeException("mjml", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<BrandTemplate>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'mjml' cannot be null",
-                    new ArgumentNullException("mjml")
-                );
-        }
-        init
-        {
-            this._properties["mjml"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<BrandTemplate>(this.RawData, "mjml"); }
+        init { ModelBase.Set(this._rawData, "mjml", value); }
     }
 
     public string? FooterBackgroundColor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("footerBackgroundColor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["footerBackgroundColor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "footerBackgroundColor"); }
+        init { ModelBase.Set(this._rawData, "footerBackgroundColor", value); }
     }
 
     public bool? FooterFullWidth
     {
-        get
-        {
-            if (!this._properties.TryGetValue("footerFullWidth", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["footerFullWidth"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "footerFullWidth"); }
+        init { ModelBase.Set(this._rawData, "footerFullWidth", value); }
     }
 
     public override void Validate()
@@ -435,24 +227,24 @@ public sealed record class IntersectionMember1
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> properties)
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    IntersectionMember1(FrozenDictionary<string, JsonElement> properties)
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static global::Courier.Models.Brands.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -461,4 +253,11 @@ public sealed record class IntersectionMember1
     {
         this.Mjml = mjml;
     }
+}
+
+class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Brands.IntersectionMember1>
+{
+    public global::Courier.Models.Brands.IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => global::Courier.Models.Brands.IntersectionMember1.FromRawUnchecked(rawData);
 }

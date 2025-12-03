@@ -14,6 +14,11 @@ namespace Courier.Services;
 /// </summary>
 public interface INotificationService
 {
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
     INotificationService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IDraftService Draft { get; }
@@ -27,6 +32,13 @@ public interface INotificationService
 
     Task<NotificationGetContent> RetrieveContent(
         NotificationRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="RetrieveContent(NotificationRetrieveContentParams, CancellationToken)"/>
+    Task<NotificationGetContent> RetrieveContent(
+        string id,
+        NotificationRetrieveContentParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 }

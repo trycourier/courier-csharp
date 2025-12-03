@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<FilterConfig>))]
-public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
+[JsonConverter(typeof(ModelConverter<FilterConfig, FilterConfigFromRaw>))]
+public sealed record class FilterConfig : ModelBase
 {
     /// <summary>
     /// The operator to use for filtering
@@ -19,24 +19,12 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
     {
         get
         {
-            if (!this._properties.TryGetValue("operator", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'operator' cannot be null",
-                    new System::ArgumentOutOfRangeException("operator", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, FilterConfigOperator>>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, FilterConfigOperator>>(
+                this.RawData,
+                "operator"
             );
         }
-        init
-        {
-            this._properties["operator"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "operator", value); }
     }
 
     /// <summary>
@@ -44,27 +32,8 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
     /// </summary>
     public required string Path
     {
-        get
-        {
-            if (!this._properties.TryGetValue("path", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'path' cannot be null",
-                    new System::ArgumentOutOfRangeException("path", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'path' cannot be null",
-                    new System::ArgumentNullException("path")
-                );
-        }
-        init
-        {
-            this._properties["path"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
+        init { ModelBase.Set(this._rawData, "path", value); }
     }
 
     /// <summary>
@@ -72,27 +41,8 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
     /// </summary>
     public required string Value
     {
-        get
-        {
-            if (!this._properties.TryGetValue("value", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'value' cannot be null",
-                    new System::ArgumentOutOfRangeException("value", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'value' cannot be null",
-                    new System::ArgumentNullException("value")
-                );
-        }
-        init
-        {
-            this._properties["value"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "value"); }
+        init { ModelBase.Set(this._rawData, "value", value); }
     }
 
     public override void Validate()
@@ -104,23 +54,29 @@ public sealed record class FilterConfig : ModelBase, IFromRaw<FilterConfig>
 
     public FilterConfig() { }
 
-    public FilterConfig(IReadOnlyDictionary<string, JsonElement> properties)
+    public FilterConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    FilterConfig(FrozenDictionary<string, JsonElement> properties)
+    FilterConfig(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static FilterConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static FilterConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class FilterConfigFromRaw : IFromRaw<FilterConfig>
+{
+    public FilterConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        FilterConfig.FromRawUnchecked(rawData);
 }
 
 /// <summary>

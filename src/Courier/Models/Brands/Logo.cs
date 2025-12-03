@@ -7,43 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<Logo>))]
-public sealed record class Logo : ModelBase, IFromRaw<Logo>
+[JsonConverter(typeof(ModelConverter<Logo, LogoFromRaw>))]
+public sealed record class Logo : ModelBase
 {
     public string? Href
     {
-        get
-        {
-            if (!this._properties.TryGetValue("href", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["href"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "href"); }
+        init { ModelBase.Set(this._rawData, "href", value); }
     }
 
     public string? Image
     {
-        get
-        {
-            if (!this._properties.TryGetValue("image", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["image"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "image"); }
+        init { ModelBase.Set(this._rawData, "image", value); }
     }
 
     public override void Validate()
@@ -54,21 +30,27 @@ public sealed record class Logo : ModelBase, IFromRaw<Logo>
 
     public Logo() { }
 
-    public Logo(IReadOnlyDictionary<string, JsonElement> properties)
+    public Logo(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Logo(FrozenDictionary<string, JsonElement> properties)
+    Logo(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Logo FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Logo FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class LogoFromRaw : IFromRaw<Logo>
+{
+    public Logo FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Logo.FromRawUnchecked(rawData);
 }

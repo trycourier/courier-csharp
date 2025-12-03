@@ -9,32 +9,13 @@ using System = System;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<BulkRetrieveJobResponse>))]
-public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRetrieveJobResponse>
+[JsonConverter(typeof(ModelConverter<BulkRetrieveJobResponse, BulkRetrieveJobResponseFromRaw>))]
+public sealed record class BulkRetrieveJobResponse : ModelBase
 {
     public required Job Job
     {
-        get
-        {
-            if (!this._properties.TryGetValue("job", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'job' cannot be null",
-                    new System::ArgumentOutOfRangeException("job", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Job>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'job' cannot be null",
-                    new System::ArgumentNullException("job")
-                );
-        }
-        init
-        {
-            this._properties["job"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Job>(this.RawData, "job"); }
+        init { ModelBase.Set(this._rawData, "job", value); }
     }
 
     public override void Validate()
@@ -44,24 +25,24 @@ public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRet
 
     public BulkRetrieveJobResponse() { }
 
-    public BulkRetrieveJobResponse(IReadOnlyDictionary<string, JsonElement> properties)
+    public BulkRetrieveJobResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    BulkRetrieveJobResponse(FrozenDictionary<string, JsonElement> properties)
+    BulkRetrieveJobResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
     public static BulkRetrieveJobResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
+        IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -72,125 +53,47 @@ public sealed record class BulkRetrieveJobResponse : ModelBase, IFromRaw<BulkRet
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Job>))]
-public sealed record class Job : ModelBase, IFromRaw<Job>
+class BulkRetrieveJobResponseFromRaw : IFromRaw<BulkRetrieveJobResponse>
+{
+    public BulkRetrieveJobResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => BulkRetrieveJobResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(ModelConverter<Job, JobFromRaw>))]
+public sealed record class Job : ModelBase
 {
     public required InboundBulkMessage Definition
     {
-        get
-        {
-            if (!this._properties.TryGetValue("definition", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'definition' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "definition",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<InboundBulkMessage>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new CourierInvalidDataException(
-                    "'definition' cannot be null",
-                    new System::ArgumentNullException("definition")
-                );
-        }
-        init
-        {
-            this._properties["definition"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<InboundBulkMessage>(this.RawData, "definition"); }
+        init { ModelBase.Set(this._rawData, "definition", value); }
     }
 
     public required long Enqueued
     {
-        get
-        {
-            if (!this._properties.TryGetValue("enqueued", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'enqueued' cannot be null",
-                    new System::ArgumentOutOfRangeException("enqueued", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["enqueued"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "enqueued"); }
+        init { ModelBase.Set(this._rawData, "enqueued", value); }
     }
 
     public required long Failures
     {
-        get
-        {
-            if (!this._properties.TryGetValue("failures", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'failures' cannot be null",
-                    new System::ArgumentOutOfRangeException("failures", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["failures"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "failures"); }
+        init { ModelBase.Set(this._rawData, "failures", value); }
     }
 
     public required long Received
     {
-        get
-        {
-            if (!this._properties.TryGetValue("received", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'received' cannot be null",
-                    new System::ArgumentOutOfRangeException("received", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["received"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "received"); }
+        init { ModelBase.Set(this._rawData, "received", value); }
     }
 
     public required ApiEnum<string, JobStatus> Status
     {
         get
         {
-            if (!this._properties.TryGetValue("status", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'status' cannot be null",
-                    new System::ArgumentOutOfRangeException("status", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNotNullClass<ApiEnum<string, JobStatus>>(this.RawData, "status");
         }
-        init
-        {
-            this._properties["status"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "status", value); }
     }
 
     public override void Validate()
@@ -204,23 +107,29 @@ public sealed record class Job : ModelBase, IFromRaw<Job>
 
     public Job() { }
 
-    public Job(IReadOnlyDictionary<string, JsonElement> properties)
+    public Job(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Job(FrozenDictionary<string, JsonElement> properties)
+    Job(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Job FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Job FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class JobFromRaw : IFromRaw<Job>
+{
+    public Job FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Job.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(JobStatusConverter))]

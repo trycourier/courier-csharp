@@ -1,54 +1,25 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Paging>))]
-public sealed record class Paging : ModelBase, IFromRaw<Paging>
+[JsonConverter(typeof(ModelConverter<Paging, PagingFromRaw>))]
+public sealed record class Paging : ModelBase
 {
     public required bool More
     {
-        get
-        {
-            if (!this._properties.TryGetValue("more", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'more' cannot be null",
-                    new ArgumentOutOfRangeException("more", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["more"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "more"); }
+        init { ModelBase.Set(this._rawData, "more", value); }
     }
 
     public string? Cursor
     {
-        get
-        {
-            if (!this._properties.TryGetValue("cursor", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["cursor"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "cursor"); }
+        init { ModelBase.Set(this._rawData, "cursor", value); }
     }
 
     public override void Validate()
@@ -59,22 +30,22 @@ public sealed record class Paging : ModelBase, IFromRaw<Paging>
 
     public Paging() { }
 
-    public Paging(IReadOnlyDictionary<string, JsonElement> properties)
+    public Paging(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Paging(FrozenDictionary<string, JsonElement> properties)
+    Paging(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Paging FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Paging FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
@@ -83,4 +54,10 @@ public sealed record class Paging : ModelBase, IFromRaw<Paging>
     {
         this.More = more;
     }
+}
+
+class PagingFromRaw : IFromRaw<Paging>
+{
+    public Paging FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Paging.FromRawUnchecked(rawData);
 }

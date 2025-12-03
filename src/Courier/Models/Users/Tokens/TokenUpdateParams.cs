@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
-using Courier.Exceptions;
 
 namespace Courier.Models.Users.Tokens;
 
@@ -16,78 +15,59 @@ namespace Courier.Models.Users.Tokens;
 /// </summary>
 public sealed record class TokenUpdateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _bodyProperties = [];
-    public IReadOnlyDictionary<string, JsonElement> BodyProperties
+    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
-        get { return this._bodyProperties.Freeze(); }
+        get { return this._rawBodyData.Freeze(); }
     }
 
     public required string UserID { get; init; }
 
-    public required string Token { get; init; }
+    public string? Token { get; init; }
 
-    public required List<Patch> Patch
+    public required IReadOnlyList<Patch> Patch
     {
-        get
-        {
-            if (!this._bodyProperties.TryGetValue("patch", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'patch' cannot be null",
-                    new ArgumentOutOfRangeException("patch", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<Patch>>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'patch' cannot be null",
-                    new ArgumentNullException("patch")
-                );
-        }
-        init
-        {
-            this._bodyProperties["patch"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<Patch>>(this.RawBodyData, "patch"); }
+        init { ModelBase.Set(this._rawBodyData, "patch", value); }
     }
 
     public TokenUpdateParams() { }
 
     public TokenUpdateParams(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     TokenUpdateParams(
-        FrozenDictionary<string, JsonElement> headerProperties,
-        FrozenDictionary<string, JsonElement> queryProperties,
-        FrozenDictionary<string, JsonElement> bodyProperties
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._headerProperties = [.. headerProperties];
-        this._queryProperties = [.. queryProperties];
-        this._bodyProperties = [.. bodyProperties];
+        this._rawHeaderData = [.. rawHeaderData];
+        this._rawQueryData = [.. rawQueryData];
+        this._rawBodyData = [.. rawBodyData];
     }
 #pragma warning restore CS8618
 
     public static TokenUpdateParams FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> headerProperties,
-        IReadOnlyDictionary<string, JsonElement> queryProperties,
-        IReadOnlyDictionary<string, JsonElement> bodyProperties
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
         return new(
-            FrozenDictionary.ToFrozenDictionary(headerProperties),
-            FrozenDictionary.ToFrozenDictionary(queryProperties),
-            FrozenDictionary.ToFrozenDictionary(bodyProperties)
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            FrozenDictionary.ToFrozenDictionary(rawBodyData)
         );
     }
 
@@ -104,52 +84,29 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     internal override StringContent? BodyContent()
     {
-        return new(
-            JsonSerializer.Serialize(this.BodyProperties),
-            Encoding.UTF8,
-            "application/json"
-        );
+        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
     {
         ParamsBase.AddDefaultHeaders(request, options);
-        foreach (var item in this.HeaderProperties)
+        foreach (var item in this.RawHeaderData)
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Patch>))]
-public sealed record class Patch : ModelBase, IFromRaw<Patch>
+[JsonConverter(typeof(ModelConverter<Patch, PatchFromRaw>))]
+public sealed record class Patch : ModelBase
 {
     /// <summary>
     /// The operation to perform.
     /// </summary>
     public required string Op
     {
-        get
-        {
-            if (!this._properties.TryGetValue("op", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'op' cannot be null",
-                    new ArgumentOutOfRangeException("op", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'op' cannot be null",
-                    new ArgumentNullException("op")
-                );
-        }
-        init
-        {
-            this._properties["op"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "op"); }
+        init { ModelBase.Set(this._rawData, "op", value); }
     }
 
     /// <summary>
@@ -157,27 +114,8 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
     /// </summary>
     public required string Path
     {
-        get
-        {
-            if (!this._properties.TryGetValue("path", out JsonElement element))
-                throw new CourierInvalidDataException(
-                    "'path' cannot be null",
-                    new ArgumentOutOfRangeException("path", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new CourierInvalidDataException(
-                    "'path' cannot be null",
-                    new ArgumentNullException("path")
-                );
-        }
-        init
-        {
-            this._properties["path"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
+        init { ModelBase.Set(this._rawData, "path", value); }
     }
 
     /// <summary>
@@ -185,20 +123,8 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
     /// </summary>
     public string? Value
     {
-        get
-        {
-            if (!this._properties.TryGetValue("value", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["value"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "value"); }
+        init { ModelBase.Set(this._rawData, "value", value); }
     }
 
     public override void Validate()
@@ -210,21 +136,27 @@ public sealed record class Patch : ModelBase, IFromRaw<Patch>
 
     public Patch() { }
 
-    public Patch(IReadOnlyDictionary<string, JsonElement> properties)
+    public Patch(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Patch(FrozenDictionary<string, JsonElement> properties)
+    Patch(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class PatchFromRaw : IFromRaw<Patch>
+{
+    public Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Patch.FromRawUnchecked(rawData);
 }

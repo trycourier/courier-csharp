@@ -7,28 +7,16 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<MessageContext>))]
-public sealed record class MessageContext : ModelBase, IFromRaw<MessageContext>
+[JsonConverter(typeof(ModelConverter<MessageContext, MessageContextFromRaw>))]
+public sealed record class MessageContext : ModelBase
 {
     /// <summary>
     /// Tenant id used to load brand/default preferences/context.
     /// </summary>
     public string? TenantID
     {
-        get
-        {
-            if (!this._properties.TryGetValue("tenant_id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["tenant_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "tenant_id"); }
+        init { ModelBase.Set(this._rawData, "tenant_id", value); }
     }
 
     public override void Validate()
@@ -38,23 +26,27 @@ public sealed record class MessageContext : ModelBase, IFromRaw<MessageContext>
 
     public MessageContext() { }
 
-    public MessageContext(IReadOnlyDictionary<string, JsonElement> properties)
+    public MessageContext(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    MessageContext(FrozenDictionary<string, JsonElement> properties)
+    MessageContext(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static MessageContext FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> properties
-    )
+    public static MessageContext FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class MessageContextFromRaw : IFromRaw<MessageContext>
+{
+    public MessageContext FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        MessageContext.FromRawUnchecked(rawData);
 }

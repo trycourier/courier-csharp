@@ -4,8 +4,10 @@ using Users = Courier.Services.Users;
 
 namespace Courier.Services;
 
+/// <inheritdoc />
 public sealed class UserService : IUserService
 {
+    /// <inheritdoc/>
     public IUserService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new UserService(this._client.WithOptions(modifier));

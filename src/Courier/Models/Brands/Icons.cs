@@ -7,43 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<Icons>))]
-public sealed record class Icons : ModelBase, IFromRaw<Icons>
+[JsonConverter(typeof(ModelConverter<Icons, IconsFromRaw>))]
+public sealed record class Icons : ModelBase
 {
     public string? Bell
     {
-        get
-        {
-            if (!this._properties.TryGetValue("bell", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["bell"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "bell"); }
+        init { ModelBase.Set(this._rawData, "bell", value); }
     }
 
     public string? Message
     {
-        get
-        {
-            if (!this._properties.TryGetValue("message", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._properties["message"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "message"); }
+        init { ModelBase.Set(this._rawData, "message", value); }
     }
 
     public override void Validate()
@@ -54,21 +30,27 @@ public sealed record class Icons : ModelBase, IFromRaw<Icons>
 
     public Icons() { }
 
-    public Icons(IReadOnlyDictionary<string, JsonElement> properties)
+    public Icons(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Icons(FrozenDictionary<string, JsonElement> properties)
+    Icons(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._properties = [.. properties];
+        this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    public static Icons FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> properties)
+    public static Icons FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        return new(FrozenDictionary.ToFrozenDictionary(properties));
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+}
+
+class IconsFromRaw : IFromRaw<Icons>
+{
+    public Icons FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Icons.FromRawUnchecked(rawData);
 }

@@ -30,18 +30,18 @@ public abstract record class ParamsBase
         };
     }
 
-    private protected FreezableDictionary<string, JsonElement> _queryProperties = [];
+    private protected FreezableDictionary<string, JsonElement> _rawQueryData = [];
 
-    public IReadOnlyDictionary<string, JsonElement> QueryProperties
+    public IReadOnlyDictionary<string, JsonElement> RawQueryData
     {
-        get { return this._queryProperties.Freeze(); }
+        get { return this._rawQueryData.Freeze(); }
     }
 
-    private protected FreezableDictionary<string, JsonElement> _headerProperties = [];
+    private protected FreezableDictionary<string, JsonElement> _rawHeaderData = [];
 
-    public IReadOnlyDictionary<string, JsonElement> HeaderProperties
+    public IReadOnlyDictionary<string, JsonElement> RawHeaderData
     {
-        get { return this._headerProperties.Freeze(); }
+        get { return this._rawHeaderData.Freeze(); }
     }
 
     public abstract Uri Url(ClientOptions options);
@@ -153,7 +153,7 @@ public abstract record class ParamsBase
     protected string QueryString(ClientOptions options)
     {
         NameValueCollection collection = [];
-        foreach (var item in this.QueryProperties)
+        foreach (var item in this.RawQueryData)
         {
             ParamsBase.AddQueryElementToCollection(collection, item.Key, item.Value);
         }
@@ -208,11 +208,14 @@ public abstract record class ParamsBase
             Architecture.X86 => "x32",
             Architecture.X64 => "x64",
             Architecture.Arm => "arm",
-            Architecture.Arm64 or Architecture.Armv6 => "arm64",
+            Architecture.Arm64 => "arm64",
+#if !NETSTANDARD2_0
+            Architecture.Armv6 => "arm64",
             Architecture.Wasm
             or Architecture.S390x
             or Architecture.LoongArch64
             or Architecture.Ppc64le => $"other:{RuntimeInformation.OSArchitecture}",
+#endif
             _ => "unknown",
         };
 
@@ -249,8 +252,8 @@ public abstract record class ParamsBase
             return new() { Name = runtimeDescription, Version = "unknown" };
         }
 
-        var name = runtimeDescription[..lastSpaceIndex].Trim();
-        var version = runtimeDescription[(lastSpaceIndex + 1)..].Trim();
+        var name = runtimeDescription.Substring(0, lastSpaceIndex).Trim();
+        var version = runtimeDescription.Substring(lastSpaceIndex + 1).Trim();
         return new()
         {
             Name = name.Length == 0 ? "unknown" : name,
