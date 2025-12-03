@@ -2,6 +2,7 @@ using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Collections = System.Collections;
 
 namespace Courier.Core;
@@ -34,7 +35,7 @@ class FreezableDictionary<K, V> : IDictionary<K, V>
 
     public FreezableDictionary(IReadOnlyDictionary<K, V> dictionary)
     {
-        _dictionary = new Dictionary<K, V>(dictionary);
+        _dictionary = Enumerable.ToDictionary(dictionary, e => e.Key, e => e.Value);
     }
 
     public FreezableDictionary(FrozenDictionary<K, V> frozen)
@@ -126,7 +127,12 @@ class FreezableDictionary<K, V> : IDictionary<K, V>
         return _mutableDictionary.Remove(item.Key);
     }
 
-    public bool TryGetValue(K key, [MaybeNullWhenAttribute(false)] out V value)
+    public bool TryGetValue(K key,
+#if NET
+        [MaybeNullWhen(false)]
+#endif
+
+        out V value)
     {
         return _dictionary.TryGetValue(key, out value);
     }

@@ -19,7 +19,7 @@ public record struct ApiEnum<TRaw, TEnum>(JsonElement Json)
 
     public readonly void Validate()
     {
-        if (!Enum.IsDefined(Value()))
+        if (!Enum.IsDefined(typeof(TEnum), Value()))
         {
             throw new CourierInvalidDataException("Invalid enum value");
         }
