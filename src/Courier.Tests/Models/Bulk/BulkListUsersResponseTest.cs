@@ -218,6 +218,442 @@ public class BulkListUsersResponseTest : TestBase
         }
         Assert.Equal(expectedPaging, model.Paging);
     }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new BulkListUsersResponse
+        {
+            Items =
+            [
+                new()
+                {
+                    Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<
+                            string,
+                            Models::NotificationPreferenceDetails
+                        >()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                    Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Recipient = "recipient",
+                    To = new()
+                    {
+                        AccountID = "account_id",
+                        Context = new() { TenantID = "tenant_id" },
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Email = "email",
+                        ListID = "list_id",
+                        Locale = "locale",
+                        PhoneNumber = "phone_number",
+                        Preferences = new()
+                        {
+                            Notifications = new Dictionary<string, Models::Preference>()
+                            {
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = Models::PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(Models::ChannelClassification.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Models::Source.Subscription,
+                                    }
+                                },
+                            },
+                            Categories = new Dictionary<string, Models::Preference>()
+                            {
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = Models::PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(Models::ChannelClassification.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Models::Source.Subscription,
+                                    }
+                                },
+                            },
+                            TemplateID = "templateId",
+                        },
+                        TenantID = "tenant_id",
+                        UserID = "user_id",
+                    },
+                    Status = Status.Pending,
+                    MessageID = "messageId",
+                },
+            ],
+            Paging = new() { More = true, Cursor = "cursor" },
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BulkListUsersResponse>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new BulkListUsersResponse
+        {
+            Items =
+            [
+                new()
+                {
+                    Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<
+                            string,
+                            Models::NotificationPreferenceDetails
+                        >()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                    Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Recipient = "recipient",
+                    To = new()
+                    {
+                        AccountID = "account_id",
+                        Context = new() { TenantID = "tenant_id" },
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Email = "email",
+                        ListID = "list_id",
+                        Locale = "locale",
+                        PhoneNumber = "phone_number",
+                        Preferences = new()
+                        {
+                            Notifications = new Dictionary<string, Models::Preference>()
+                            {
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = Models::PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(Models::ChannelClassification.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Models::Source.Subscription,
+                                    }
+                                },
+                            },
+                            Categories = new Dictionary<string, Models::Preference>()
+                            {
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = Models::PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(Models::ChannelClassification.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Models::Source.Subscription,
+                                    }
+                                },
+                            },
+                            TemplateID = "templateId",
+                        },
+                        TenantID = "tenant_id",
+                        UserID = "user_id",
+                    },
+                    Status = Status.Pending,
+                    MessageID = "messageId",
+                },
+            ],
+            Paging = new() { More = true, Cursor = "cursor" },
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BulkListUsersResponse>(json);
+        Assert.NotNull(deserialized);
+
+        List<Item> expectedItems =
+        [
+            new()
+            {
+                Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                Preferences = new()
+                {
+                    Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                            }
+                        },
+                    },
+                    Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                            }
+                        },
+                    },
+                },
+                Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                Recipient = "recipient",
+                To = new()
+                {
+                    AccountID = "account_id",
+                    Context = new() { TenantID = "tenant_id" },
+                    Data = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Email = "email",
+                    ListID = "list_id",
+                    Locale = "locale",
+                    PhoneNumber = "phone_number",
+                    Preferences = new()
+                    {
+                        Notifications = new Dictionary<string, Models::Preference>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                    Source = Models::Source.Subscription,
+                                }
+                            },
+                        },
+                        Categories = new Dictionary<string, Models::Preference>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                    Source = Models::Source.Subscription,
+                                }
+                            },
+                        },
+                        TemplateID = "templateId",
+                    },
+                    TenantID = "tenant_id",
+                    UserID = "user_id",
+                },
+                Status = Status.Pending,
+                MessageID = "messageId",
+            },
+        ];
+        Models::Paging expectedPaging = new() { More = true, Cursor = "cursor" };
+
+        Assert.Equal(expectedItems.Count, deserialized.Items.Count);
+        for (int i = 0; i < expectedItems.Count; i++)
+        {
+            Assert.Equal(expectedItems[i], deserialized.Items[i]);
+        }
+        Assert.Equal(expectedPaging, deserialized.Paging);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new BulkListUsersResponse
+        {
+            Items =
+            [
+                new()
+                {
+                    Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<
+                            string,
+                            Models::NotificationPreferenceDetails
+                        >()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                    Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Recipient = "recipient",
+                    To = new()
+                    {
+                        AccountID = "account_id",
+                        Context = new() { TenantID = "tenant_id" },
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Email = "email",
+                        ListID = "list_id",
+                        Locale = "locale",
+                        PhoneNumber = "phone_number",
+                        Preferences = new()
+                        {
+                            Notifications = new Dictionary<string, Models::Preference>()
+                            {
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = Models::PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(Models::ChannelClassification.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Models::Source.Subscription,
+                                    }
+                                },
+                            },
+                            Categories = new Dictionary<string, Models::Preference>()
+                            {
+                                {
+                                    "foo",
+                                    new()
+                                    {
+                                        Status = Models::PreferenceStatus.OptedIn,
+                                        ChannelPreferences =
+                                        [
+                                            new(Models::ChannelClassification.DirectMessage),
+                                        ],
+                                        Rules = [new() { Until = "until", Start = "start" }],
+                                        Source = Models::Source.Subscription,
+                                    }
+                                },
+                            },
+                            TemplateID = "templateId",
+                        },
+                        TenantID = "tenant_id",
+                        UserID = "user_id",
+                    },
+                    Status = Status.Pending,
+                    MessageID = "messageId",
+                },
+            ],
+            Paging = new() { More = true, Cursor = "cursor" },
+        };
+
+        model.Validate();
+    }
 }
 
 public class ItemTest : TestBase
@@ -400,6 +836,836 @@ public class ItemTest : TestBase
         Assert.Equal(expectedStatus, model.Status);
         Assert.Equal(expectedMessageID, model.MessageID);
     }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Item
+        {
+            Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Recipient = "recipient",
+            To = new()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+            Status = Status.Pending,
+            MessageID = "messageId",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Item>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Item
+        {
+            Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Recipient = "recipient",
+            To = new()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+            Status = Status.Pending,
+            MessageID = "messageId",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Item>(json);
+        Assert.NotNull(deserialized);
+
+        JsonElement expectedData = JsonSerializer.Deserialize<JsonElement>("{}");
+        Models::RecipientPreferences expectedPreferences = new()
+        {
+            Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        Status = Models::PreferenceStatus.OptedIn,
+                        ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                        Rules = [new() { Until = "until", Start = "start" }],
+                    }
+                },
+            },
+            Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        Status = Models::PreferenceStatus.OptedIn,
+                        ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                        Rules = [new() { Until = "until", Start = "start" }],
+                    }
+                },
+            },
+        };
+        JsonElement expectedProfile = JsonSerializer.Deserialize<JsonElement>("{}");
+        string expectedRecipient = "recipient";
+        Models::UserRecipient expectedTo = new()
+        {
+            AccountID = "account_id",
+            Context = new() { TenantID = "tenant_id" },
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Email = "email",
+            ListID = "list_id",
+            Locale = "locale",
+            PhoneNumber = "phone_number",
+            Preferences = new()
+            {
+                Notifications = new Dictionary<string, Models::Preference>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                            Source = Models::Source.Subscription,
+                        }
+                    },
+                },
+                Categories = new Dictionary<string, Models::Preference>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                            Source = Models::Source.Subscription,
+                        }
+                    },
+                },
+                TemplateID = "templateId",
+            },
+            TenantID = "tenant_id",
+            UserID = "user_id",
+        };
+        ApiEnum<string, Status> expectedStatus = Status.Pending;
+        string expectedMessageID = "messageId";
+
+        Assert.True(
+            deserialized.Data.HasValue
+                && JsonElement.DeepEquals(expectedData, deserialized.Data.Value)
+        );
+        Assert.Equal(expectedPreferences, deserialized.Preferences);
+        Assert.True(
+            deserialized.Profile.HasValue
+                && JsonElement.DeepEquals(expectedProfile, deserialized.Profile.Value)
+        );
+        Assert.Equal(expectedRecipient, deserialized.Recipient);
+        Assert.Equal(expectedTo, deserialized.To);
+        Assert.Equal(expectedStatus, deserialized.Status);
+        Assert.Equal(expectedMessageID, deserialized.MessageID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Item
+        {
+            Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Recipient = "recipient",
+            To = new()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+            Status = Status.Pending,
+            MessageID = "messageId",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Item
+        {
+            Recipient = "recipient",
+            Status = Status.Pending,
+            MessageID = "messageId",
+        };
+
+        Assert.Null(model.Data);
+        Assert.False(model.RawData.ContainsKey("data"));
+        Assert.Null(model.Preferences);
+        Assert.False(model.RawData.ContainsKey("preferences"));
+        Assert.Null(model.Profile);
+        Assert.False(model.RawData.ContainsKey("profile"));
+        Assert.Null(model.To);
+        Assert.False(model.RawData.ContainsKey("to"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Item
+        {
+            Recipient = "recipient",
+            Status = Status.Pending,
+            MessageID = "messageId",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Item
+        {
+            Recipient = "recipient",
+            Status = Status.Pending,
+            MessageID = "messageId",
+
+            // Null should be interpreted as omitted for these properties
+            Data = null,
+            Preferences = null,
+            Profile = null,
+            To = null,
+        };
+
+        Assert.Null(model.Data);
+        Assert.False(model.RawData.ContainsKey("data"));
+        Assert.Null(model.Preferences);
+        Assert.False(model.RawData.ContainsKey("preferences"));
+        Assert.Null(model.Profile);
+        Assert.False(model.RawData.ContainsKey("profile"));
+        Assert.Null(model.To);
+        Assert.False(model.RawData.ContainsKey("to"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Item
+        {
+            Recipient = "recipient",
+            Status = Status.Pending,
+            MessageID = "messageId",
+
+            // Null should be interpreted as omitted for these properties
+            Data = null,
+            Preferences = null,
+            Profile = null,
+            To = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Item
+        {
+            Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            To = new()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+            Status = Status.Pending,
+        };
+
+        Assert.Null(model.Recipient);
+        Assert.False(model.RawData.ContainsKey("recipient"));
+        Assert.Null(model.MessageID);
+        Assert.False(model.RawData.ContainsKey("messageId"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Item
+        {
+            Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            To = new()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+            Status = Status.Pending,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new Item
+        {
+            Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            To = new()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+            Status = Status.Pending,
+
+            Recipient = null,
+            MessageID = null,
+        };
+
+        Assert.Null(model.Recipient);
+        Assert.True(model.RawData.ContainsKey("recipient"));
+        Assert.Null(model.MessageID);
+        Assert.True(model.RawData.ContainsKey("messageId"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Item
+        {
+            Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, Models::NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            To = new()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+            Status = Status.Pending,
+
+            Recipient = null,
+            MessageID = null,
+        };
+
+        model.Validate();
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -414,5 +1680,84 @@ public class IntersectionMember1Test : TestBase
 
         Assert.Equal(expectedStatus, model.Status);
         Assert.Equal(expectedMessageID, model.MessageID);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new IntersectionMember1 { Status = Status.Pending, MessageID = "messageId" };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new IntersectionMember1 { Status = Status.Pending, MessageID = "messageId" };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+        Assert.NotNull(deserialized);
+
+        ApiEnum<string, Status> expectedStatus = Status.Pending;
+        string expectedMessageID = "messageId";
+
+        Assert.Equal(expectedStatus, deserialized.Status);
+        Assert.Equal(expectedMessageID, deserialized.MessageID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new IntersectionMember1 { Status = Status.Pending, MessageID = "messageId" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new IntersectionMember1 { Status = Status.Pending };
+
+        Assert.Null(model.MessageID);
+        Assert.False(model.RawData.ContainsKey("messageId"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new IntersectionMember1 { Status = Status.Pending };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new IntersectionMember1
+        {
+            Status = Status.Pending,
+
+            MessageID = null,
+        };
+
+        Assert.Null(model.MessageID);
+        Assert.True(model.RawData.ContainsKey("messageId"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new IntersectionMember1
+        {
+            Status = Status.Pending,
+
+            MessageID = null,
+        };
+
+        model.Validate();
     }
 }

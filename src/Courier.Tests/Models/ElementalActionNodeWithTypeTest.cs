@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json;
 using Courier.Core;
 using Courier.Models;
 
@@ -34,6 +35,198 @@ public class ElementalActionNodeWithTypeTest : TestBase
         Assert.Equal(expectedRef, model.Ref);
         Assert.Equal(expectedType, model.Type);
     }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = Type.Action,
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = Type.Action,
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(json);
+        Assert.NotNull(deserialized);
+
+        List<string> expectedChannels = ["string"];
+        string expectedIf = "if";
+        string expectedLoop = "loop";
+        string expectedRef = "ref";
+        ApiEnum<string, Type> expectedType = Type.Action;
+
+        Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
+        for (int i = 0; i < expectedChannels.Count; i++)
+        {
+            Assert.Equal(expectedChannels[i], deserialized.Channels[i]);
+        }
+        Assert.Equal(expectedIf, deserialized.If);
+        Assert.Equal(expectedLoop, deserialized.Loop);
+        Assert.Equal(expectedRef, deserialized.Ref);
+        Assert.Equal(expectedType, deserialized.Type);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = Type.Action,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+        };
+
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+
+            // Null should be interpreted as omitted for these properties
+            Type = null,
+        };
+
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+
+            // Null should be interpreted as omitted for these properties
+            Type = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ElementalActionNodeWithType { Type = Type.Action };
+
+        Assert.Null(model.Channels);
+        Assert.False(model.RawData.ContainsKey("channels"));
+        Assert.Null(model.If);
+        Assert.False(model.RawData.ContainsKey("if"));
+        Assert.Null(model.Loop);
+        Assert.False(model.RawData.ContainsKey("loop"));
+        Assert.Null(model.Ref);
+        Assert.False(model.RawData.ContainsKey("ref"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ElementalActionNodeWithType { Type = Type.Action };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Type = Type.Action,
+
+            Channels = null,
+            If = null,
+            Loop = null,
+            Ref = null,
+        };
+
+        Assert.Null(model.Channels);
+        Assert.True(model.RawData.ContainsKey("channels"));
+        Assert.Null(model.If);
+        Assert.True(model.RawData.ContainsKey("if"));
+        Assert.Null(model.Loop);
+        Assert.True(model.RawData.ContainsKey("loop"));
+        Assert.Null(model.Ref);
+        Assert.True(model.RawData.ContainsKey("ref"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Type = Type.Action,
+
+            Channels = null,
+            If = null,
+            Loop = null,
+            Ref = null,
+        };
+
+        model.Validate();
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -46,5 +239,80 @@ public class IntersectionMember1Test : TestBase
         ApiEnum<string, Type> expectedType = Type.Action;
 
         Assert.Equal(expectedType, model.Type);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new IntersectionMember1 { Type = Type.Action };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new IntersectionMember1 { Type = Type.Action };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+        Assert.NotNull(deserialized);
+
+        ApiEnum<string, Type> expectedType = Type.Action;
+
+        Assert.Equal(expectedType, deserialized.Type);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new IntersectionMember1 { Type = Type.Action };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new IntersectionMember1 { };
+
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new IntersectionMember1 { };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new IntersectionMember1
+        {
+            // Null should be interpreted as omitted for these properties
+            Type = null,
+        };
+
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new IntersectionMember1
+        {
+            // Null should be interpreted as omitted for these properties
+            Type = null,
+        };
+
+        model.Validate();
     }
 }

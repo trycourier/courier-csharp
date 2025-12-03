@@ -40,4 +40,135 @@ public class TenantAssociationTest : TestBase
         Assert.Equal(expectedType, model.Type);
         Assert.Equal(expectedUserID, model.UserID);
     }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new TenantAssociation
+        {
+            TenantID = "tenant_id",
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = Type.User,
+            UserID = "user_id",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TenantAssociation>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new TenantAssociation
+        {
+            TenantID = "tenant_id",
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = Type.User,
+            UserID = "user_id",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TenantAssociation>(json);
+        Assert.NotNull(deserialized);
+
+        string expectedTenantID = "tenant_id";
+        Dictionary<string, JsonElement> expectedProfile = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
+        ApiEnum<string, Type> expectedType = Type.User;
+        string expectedUserID = "user_id";
+
+        Assert.Equal(expectedTenantID, deserialized.TenantID);
+        Assert.Equal(expectedProfile.Count, deserialized.Profile.Count);
+        foreach (var item in expectedProfile)
+        {
+            Assert.True(deserialized.Profile.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, deserialized.Profile[item.Key]));
+        }
+        Assert.Equal(expectedType, deserialized.Type);
+        Assert.Equal(expectedUserID, deserialized.UserID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new TenantAssociation
+        {
+            TenantID = "tenant_id",
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = Type.User,
+            UserID = "user_id",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new TenantAssociation { TenantID = "tenant_id" };
+
+        Assert.Null(model.Profile);
+        Assert.False(model.RawData.ContainsKey("profile"));
+        Assert.Null(model.Type);
+        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.UserID);
+        Assert.False(model.RawData.ContainsKey("user_id"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new TenantAssociation { TenantID = "tenant_id" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new TenantAssociation
+        {
+            TenantID = "tenant_id",
+
+            Profile = null,
+            Type = null,
+            UserID = null,
+        };
+
+        Assert.Null(model.Profile);
+        Assert.True(model.RawData.ContainsKey("profile"));
+        Assert.Null(model.Type);
+        Assert.True(model.RawData.ContainsKey("type"));
+        Assert.Null(model.UserID);
+        Assert.True(model.RawData.ContainsKey("user_id"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new TenantAssociation
+        {
+            TenantID = "tenant_id",
+
+            Profile = null,
+            Type = null,
+            UserID = null,
+        };
+
+        model.Validate();
+    }
 }
