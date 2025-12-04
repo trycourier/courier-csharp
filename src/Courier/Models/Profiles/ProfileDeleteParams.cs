@@ -17,6 +17,9 @@ public sealed record class ProfileDeleteParams : ParamsBase
 
     public ProfileDeleteParams() { }
 
+    public ProfileDeleteParams(ProfileDeleteParams profileDeleteParams)
+        : base(profileDeleteParams) { }
+
     public ProfileDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

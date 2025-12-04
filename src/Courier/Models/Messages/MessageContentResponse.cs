@@ -30,6 +30,9 @@ public sealed record class MessageContentResponse : ModelBase
 
     public MessageContentResponse() { }
 
+    public MessageContentResponse(MessageContentResponse messageContentResponse)
+        : base(messageContentResponse) { }
+
     public MessageContentResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -106,6 +109,9 @@ public sealed record class Result : ModelBase
     }
 
     public Result() { }
+
+    public Result(Result result)
+        : base(result) { }
 
     public Result(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -210,6 +216,9 @@ public sealed record class Content : ModelBase
 
     public Content() { }
 
+    public Content(Content content)
+        : base(content) { }
+
     public Content(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -266,6 +275,9 @@ public sealed record class Block : ModelBase
     }
 
     public Block() { }
+
+    public Block(Block block)
+        : base(block) { }
 
     public Block(IReadOnlyDictionary<string, JsonElement> rawData)
     {

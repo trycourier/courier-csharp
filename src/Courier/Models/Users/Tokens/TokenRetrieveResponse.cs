@@ -119,6 +119,9 @@ public sealed record class TokenRetrieveResponse : ModelBase
 
     public TokenRetrieveResponse() { }
 
+    public TokenRetrieveResponse(TokenRetrieveResponse tokenRetrieveResponse)
+        : base(tokenRetrieveResponse) { }
+
     public TokenRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -180,6 +183,11 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 
     public IntersectionMember1() { }
+
+    public IntersectionMember1(
+        global::Courier.Models.Users.Tokens.IntersectionMember1 intersectionMember1
+    )
+        : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {

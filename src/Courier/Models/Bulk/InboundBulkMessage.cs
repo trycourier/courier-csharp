@@ -328,6 +328,9 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
 
     public InboundBulkTemplateMessage() { }
 
+    public InboundBulkTemplateMessage(InboundBulkTemplateMessage inboundBulkTemplateMessage)
+        : base(inboundBulkTemplateMessage) { }
+
     public InboundBulkTemplateMessage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -437,6 +440,9 @@ public sealed record class InboundBulkContentMessage : ModelBase
     }
 
     public InboundBulkContentMessage() { }
+
+    public InboundBulkContentMessage(InboundBulkContentMessage inboundBulkContentMessage)
+        : base(inboundBulkContentMessage) { }
 
     public InboundBulkContentMessage(IReadOnlyDictionary<string, JsonElement> rawData)
     {

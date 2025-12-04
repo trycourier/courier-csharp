@@ -40,6 +40,14 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
     public SubscriptionSubscribeUserParams() { }
 
     public SubscriptionSubscribeUserParams(
+        SubscriptionSubscribeUserParams subscriptionSubscribeUserParams
+    )
+        : base(subscriptionSubscribeUserParams)
+    {
+        this._rawBodyData = [.. subscriptionSubscribeUserParams._rawBodyData];
+    }
+
+    public SubscriptionSubscribeUserParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData

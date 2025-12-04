@@ -17,6 +17,9 @@ public sealed record class BrandRetrieveParams : ParamsBase
 
     public BrandRetrieveParams() { }
 
+    public BrandRetrieveParams(BrandRetrieveParams brandRetrieveParams)
+        : base(brandRetrieveParams) { }
+
     public BrandRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

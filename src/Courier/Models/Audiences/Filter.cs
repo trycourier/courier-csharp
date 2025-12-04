@@ -52,6 +52,9 @@ public sealed record class Filter : ModelBase
 
     public Filter() { }
 
+    public Filter(Filter filter)
+        : base(filter) { }
+
     public Filter(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

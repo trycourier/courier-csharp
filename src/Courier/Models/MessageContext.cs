@@ -27,6 +27,9 @@ public sealed record class MessageContext : ModelBase
 
     public MessageContext() { }
 
+    public MessageContext(MessageContext messageContext)
+        : base(messageContext) { }
+
     public MessageContext(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

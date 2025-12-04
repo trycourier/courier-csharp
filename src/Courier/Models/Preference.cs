@@ -65,6 +65,9 @@ public sealed record class Preference : ModelBase
 
     public Preference() { }
 
+    public Preference(Preference preference)
+        : base(preference) { }
+
     public Preference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

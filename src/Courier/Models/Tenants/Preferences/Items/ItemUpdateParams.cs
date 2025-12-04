@@ -64,6 +64,12 @@ public sealed record class ItemUpdateParams : ParamsBase
 
     public ItemUpdateParams() { }
 
+    public ItemUpdateParams(ItemUpdateParams itemUpdateParams)
+        : base(itemUpdateParams)
+    {
+        this._rawBodyData = [.. itemUpdateParams._rawBodyData];
+    }
+
     public ItemUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

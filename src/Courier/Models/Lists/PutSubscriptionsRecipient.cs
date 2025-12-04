@@ -34,6 +34,9 @@ public sealed record class PutSubscriptionsRecipient : ModelBase
 
     public PutSubscriptionsRecipient() { }
 
+    public PutSubscriptionsRecipient(PutSubscriptionsRecipient putSubscriptionsRecipient)
+        : base(putSubscriptionsRecipient) { }
+
     public PutSubscriptionsRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

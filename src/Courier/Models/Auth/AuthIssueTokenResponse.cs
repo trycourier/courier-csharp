@@ -24,6 +24,9 @@ public sealed record class AuthIssueTokenResponse : ModelBase
 
     public AuthIssueTokenResponse() { }
 
+    public AuthIssueTokenResponse(AuthIssueTokenResponse authIssueTokenResponse)
+        : base(authIssueTokenResponse) { }
+
     public AuthIssueTokenResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

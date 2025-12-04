@@ -28,6 +28,12 @@ public sealed record class BulkCreateJobParams : ParamsBase
 
     public BulkCreateJobParams() { }
 
+    public BulkCreateJobParams(BulkCreateJobParams bulkCreateJobParams)
+        : base(bulkCreateJobParams)
+    {
+        this._rawBodyData = [.. bulkCreateJobParams._rawBodyData];
+    }
+
     public BulkCreateJobParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

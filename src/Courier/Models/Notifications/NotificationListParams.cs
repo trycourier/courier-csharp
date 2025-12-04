@@ -27,6 +27,9 @@ public sealed record class NotificationListParams : ParamsBase
 
     public NotificationListParams() { }
 
+    public NotificationListParams(NotificationListParams notificationListParams)
+        : base(notificationListParams) { }
+
     public NotificationListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

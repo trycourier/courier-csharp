@@ -24,6 +24,9 @@ public sealed record class AutomationInvokeResponse : ModelBase
 
     public AutomationInvokeResponse() { }
 
+    public AutomationInvokeResponse(AutomationInvokeResponse automationInvokeResponse)
+        : base(automationInvokeResponse) { }
+
     public AutomationInvokeResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

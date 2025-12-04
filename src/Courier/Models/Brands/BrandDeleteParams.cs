@@ -17,6 +17,9 @@ public sealed record class BrandDeleteParams : ParamsBase
 
     public BrandDeleteParams() { }
 
+    public BrandDeleteParams(BrandDeleteParams brandDeleteParams)
+        : base(brandDeleteParams) { }
+
     public BrandDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

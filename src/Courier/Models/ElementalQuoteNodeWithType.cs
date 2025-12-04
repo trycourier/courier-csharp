@@ -80,6 +80,9 @@ public sealed record class ElementalQuoteNodeWithType : ModelBase
 
     public ElementalQuoteNodeWithType() { }
 
+    public ElementalQuoteNodeWithType(ElementalQuoteNodeWithType elementalQuoteNodeWithType)
+        : base(elementalQuoteNodeWithType) { }
+
     public ElementalQuoteNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -144,6 +147,11 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : Model
     }
 
     public ElementalQuoteNodeWithTypeIntersectionMember1() { }
+
+    public ElementalQuoteNodeWithTypeIntersectionMember1(
+        ElementalQuoteNodeWithTypeIntersectionMember1 elementalQuoteNodeWithTypeIntersectionMember1
+    )
+        : base(elementalQuoteNodeWithTypeIntersectionMember1) { }
 
     public ElementalQuoteNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

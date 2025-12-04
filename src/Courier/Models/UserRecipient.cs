@@ -118,6 +118,9 @@ public sealed record class UserRecipient : ModelBase
 
     public UserRecipient() { }
 
+    public UserRecipient(UserRecipient userRecipient)
+        : base(userRecipient) { }
+
     public UserRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

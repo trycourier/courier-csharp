@@ -106,6 +106,9 @@ public sealed record class Tenant : ModelBase
 
     public Tenant() { }
 
+    public Tenant(Tenant tenant)
+        : base(tenant) { }
+
     public Tenant(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

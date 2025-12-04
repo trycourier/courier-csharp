@@ -51,6 +51,12 @@ public sealed record class AudienceUpdateParams : ParamsBase
 
     public AudienceUpdateParams() { }
 
+    public AudienceUpdateParams(AudienceUpdateParams audienceUpdateParams)
+        : base(audienceUpdateParams)
+    {
+        this._rawBodyData = [.. audienceUpdateParams._rawBodyData];
+    }
+
     public AudienceUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

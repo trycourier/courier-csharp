@@ -46,6 +46,9 @@ public sealed record class NotificationGetContent : ModelBase
 
     public NotificationGetContent() { }
 
+    public NotificationGetContent(NotificationGetContent notificationGetContent)
+        : base(notificationGetContent) { }
+
     public NotificationGetContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -143,6 +146,9 @@ public sealed record class Block : ModelBase
     }
 
     public Block() { }
+
+    public Block(Block block)
+        : base(block) { }
 
     public Block(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -488,6 +494,9 @@ public sealed record class NotificationContentHierarchy : ModelBase
 
     public NotificationContentHierarchy() { }
 
+    public NotificationContentHierarchy(NotificationContentHierarchy notificationContentHierarchy)
+        : base(notificationContentHierarchy) { }
+
     public NotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -773,6 +782,11 @@ public sealed record class LocaleNotificationContentHierarchy : ModelBase
 
     public LocaleNotificationContentHierarchy() { }
 
+    public LocaleNotificationContentHierarchy(
+        LocaleNotificationContentHierarchy localeNotificationContentHierarchy
+    )
+        : base(localeNotificationContentHierarchy) { }
+
     public LocaleNotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -860,6 +874,9 @@ public sealed record class Channel : ModelBase
 
     public Channel() { }
 
+    public Channel(Channel channel)
+        : base(channel) { }
+
     public Channel(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -918,6 +935,9 @@ public sealed record class ChannelContent : ModelBase
 
     public ChannelContent() { }
 
+    public ChannelContent(ChannelContent channelContent)
+        : base(channelContent) { }
+
     public ChannelContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -968,6 +988,9 @@ public sealed record class LocalesItem : ModelBase
     }
 
     public LocalesItem() { }
+
+    public LocalesItem(LocalesItem localesItem)
+        : base(localesItem) { }
 
     public LocalesItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {

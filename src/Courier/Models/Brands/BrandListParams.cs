@@ -24,6 +24,9 @@ public sealed record class BrandListParams : ParamsBase
 
     public BrandListParams() { }
 
+    public BrandListParams(BrandListParams brandListParams)
+        : base(brandListParams) { }
+
     public BrandListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

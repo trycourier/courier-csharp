@@ -17,6 +17,9 @@ public sealed record class TenantRetrieveParams : ParamsBase
 
     public TenantRetrieveParams() { }
 
+    public TenantRetrieveParams(TenantRetrieveParams tenantRetrieveParams)
+        : base(tenantRetrieveParams) { }
+
     public TenantRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

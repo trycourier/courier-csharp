@@ -31,6 +31,9 @@ public sealed record class Paging : ModelBase
 
     public Paging() { }
 
+    public Paging(Paging paging)
+        : base(paging) { }
+
     public Paging(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

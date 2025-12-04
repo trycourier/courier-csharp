@@ -24,6 +24,9 @@ public sealed record class BulkCreateJobResponse : ModelBase
 
     public BulkCreateJobResponse() { }
 
+    public BulkCreateJobResponse(BulkCreateJobResponse bulkCreateJobResponse)
+        : base(bulkCreateJobResponse) { }
+
     public BulkCreateJobResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

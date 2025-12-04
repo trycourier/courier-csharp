@@ -77,6 +77,9 @@ public sealed record class BrandSettingsInApp : ModelBase
 
     public BrandSettingsInApp() { }
 
+    public BrandSettingsInApp(BrandSettingsInApp brandSettingsInApp)
+        : base(brandSettingsInApp) { }
+
     public BrandSettingsInApp(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

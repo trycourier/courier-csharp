@@ -41,6 +41,12 @@ public sealed record class TenantAddSingleParams : ParamsBase
 
     public TenantAddSingleParams() { }
 
+    public TenantAddSingleParams(TenantAddSingleParams tenantAddSingleParams)
+        : base(tenantAddSingleParams)
+    {
+        this._rawBodyData = [.. tenantAddSingleParams._rawBodyData];
+    }
+
     public TenantAddSingleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

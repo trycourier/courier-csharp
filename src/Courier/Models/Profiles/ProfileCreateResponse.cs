@@ -26,6 +26,9 @@ public sealed record class ProfileCreateResponse : ModelBase
 
     public ProfileCreateResponse() { }
 
+    public ProfileCreateResponse(ProfileCreateResponse profileCreateResponse)
+        : base(profileCreateResponse) { }
+
     public ProfileCreateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

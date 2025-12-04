@@ -175,6 +175,9 @@ public sealed record class MessageRetrieveResponse : ModelBase
 
     public MessageRetrieveResponse() { }
 
+    public MessageRetrieveResponse(MessageRetrieveResponse messageRetrieveResponse)
+        : base(messageRetrieveResponse) { }
+
     public MessageRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -232,6 +235,11 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 
     public IntersectionMember1() { }
+
+    public IntersectionMember1(
+        global::Courier.Models.Messages.IntersectionMember1 intersectionMember1
+    )
+        : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {

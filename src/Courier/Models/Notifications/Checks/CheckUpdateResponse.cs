@@ -27,6 +27,9 @@ public sealed record class CheckUpdateResponse : ModelBase
 
     public CheckUpdateResponse() { }
 
+    public CheckUpdateResponse(CheckUpdateResponse checkUpdateResponse)
+        : base(checkUpdateResponse) { }
+
     public CheckUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -71,6 +71,9 @@ public sealed record class InboundBulkMessageUser : ModelBase
 
     public InboundBulkMessageUser() { }
 
+    public InboundBulkMessageUser(InboundBulkMessageUser inboundBulkMessageUser)
+        : base(inboundBulkMessageUser) { }
+
     public InboundBulkMessageUser(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

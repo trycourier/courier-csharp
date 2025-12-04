@@ -39,6 +39,9 @@ public sealed record class MessageRouting : ModelBase
 
     public MessageRouting() { }
 
+    public MessageRouting(MessageRouting messageRouting)
+        : base(messageRouting) { }
+
     public MessageRouting(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

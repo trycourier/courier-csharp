@@ -36,6 +36,12 @@ public sealed record class BulkAddUsersParams : ParamsBase
 
     public BulkAddUsersParams() { }
 
+    public BulkAddUsersParams(BulkAddUsersParams bulkAddUsersParams)
+        : base(bulkAddUsersParams)
+    {
+        this._rawBodyData = [.. bulkAddUsersParams._rawBodyData];
+    }
+
     public BulkAddUsersParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

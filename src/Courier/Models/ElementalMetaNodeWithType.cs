@@ -78,6 +78,9 @@ public sealed record class ElementalMetaNodeWithType : ModelBase
 
     public ElementalMetaNodeWithType() { }
 
+    public ElementalMetaNodeWithType(ElementalMetaNodeWithType elementalMetaNodeWithType)
+        : base(elementalMetaNodeWithType) { }
+
     public ElementalMetaNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -142,6 +145,11 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelB
     }
 
     public ElementalMetaNodeWithTypeIntersectionMember1() { }
+
+    public ElementalMetaNodeWithTypeIntersectionMember1(
+        ElementalMetaNodeWithTypeIntersectionMember1 elementalMetaNodeWithTypeIntersectionMember1
+    )
+        : base(elementalMetaNodeWithTypeIntersectionMember1) { }
 
     public ElementalMetaNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

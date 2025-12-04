@@ -17,6 +17,9 @@ public sealed record class AuditEventRetrieveParams : ParamsBase
 
     public AuditEventRetrieveParams() { }
 
+    public AuditEventRetrieveParams(AuditEventRetrieveParams auditEventRetrieveParams)
+        : base(auditEventRetrieveParams) { }
+
     public AuditEventRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

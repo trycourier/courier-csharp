@@ -17,6 +17,9 @@ public sealed record class ListRetrieveParams : ParamsBase
 
     public ListRetrieveParams() { }
 
+    public ListRetrieveParams(ListRetrieveParams listRetrieveParams)
+        : base(listRetrieveParams) { }
+
     public ListRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

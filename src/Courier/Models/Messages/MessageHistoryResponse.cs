@@ -30,6 +30,9 @@ public sealed record class MessageHistoryResponse : ModelBase
 
     public MessageHistoryResponse() { }
 
+    public MessageHistoryResponse(MessageHistoryResponse messageHistoryResponse)
+        : base(messageHistoryResponse) { }
+
     public MessageHistoryResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

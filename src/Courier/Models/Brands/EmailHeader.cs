@@ -38,6 +38,9 @@ public sealed record class EmailHeader : ModelBase
 
     public EmailHeader() { }
 
+    public EmailHeader(EmailHeader emailHeader)
+        : base(emailHeader) { }
+
     public EmailHeader(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

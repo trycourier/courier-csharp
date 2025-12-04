@@ -30,6 +30,9 @@ public sealed record class SendMessageResponse : ModelBase
 
     public SendMessageResponse() { }
 
+    public SendMessageResponse(SendMessageResponse sendMessageResponse)
+        : base(sendMessageResponse) { }
+
     public SendMessageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

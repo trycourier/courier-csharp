@@ -28,6 +28,11 @@ public abstract record class ModelBase
 {
     private protected FreezableDictionary<string, JsonElement> _rawData = [];
 
+    protected ModelBase(ModelBase modelBase)
+    {
+        this._rawData = [.. modelBase._rawData];
+    }
+
     /// <summary>
     /// The backing JSON properties of the instance.
     /// </summary>

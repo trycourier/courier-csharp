@@ -27,6 +27,9 @@ public sealed record class CheckListResponse : ModelBase
 
     public CheckListResponse() { }
 
+    public CheckListResponse(CheckListResponse checkListResponse)
+        : base(checkListResponse) { }
+
     public CheckListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

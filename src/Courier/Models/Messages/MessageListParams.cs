@@ -171,6 +171,9 @@ public sealed record class MessageListParams : ParamsBase
 
     public MessageListParams() { }
 
+    public MessageListParams(MessageListParams messageListParams)
+        : base(messageListParams) { }
+
     public MessageListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -34,6 +34,12 @@ public sealed record class ProfileUpdateParams : ParamsBase
 
     public ProfileUpdateParams() { }
 
+    public ProfileUpdateParams(ProfileUpdateParams profileUpdateParams)
+        : base(profileUpdateParams)
+    {
+        this._rawBodyData = [.. profileUpdateParams._rawBodyData];
+    }
+
     public ProfileUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -137,6 +143,9 @@ public sealed record class Patch : ModelBase
     }
 
     public Patch() { }
+
+    public Patch(Patch patch)
+        : base(patch) { }
 
     public Patch(IReadOnlyDictionary<string, JsonElement> rawData)
     {

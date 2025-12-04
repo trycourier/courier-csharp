@@ -31,6 +31,9 @@ public sealed record class ListDeleteResponse : ModelBase
 
     public ListDeleteResponse() { }
 
+    public ListDeleteResponse(ListDeleteResponse listDeleteResponse)
+        : base(listDeleteResponse) { }
+
     public ListDeleteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

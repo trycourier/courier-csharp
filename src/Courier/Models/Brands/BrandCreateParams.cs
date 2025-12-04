@@ -46,6 +46,12 @@ public sealed record class BrandCreateParams : ParamsBase
 
     public BrandCreateParams() { }
 
+    public BrandCreateParams(BrandCreateParams brandCreateParams)
+        : base(brandCreateParams)
+    {
+        this._rawBodyData = [.. brandCreateParams._rawBodyData];
+    }
+
     public BrandCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

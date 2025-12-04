@@ -145,6 +145,9 @@ public sealed record class MessageDetails : ModelBase
 
     public MessageDetails() { }
 
+    public MessageDetails(MessageDetails messageDetails)
+        : base(messageDetails) { }
+
     public MessageDetails(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

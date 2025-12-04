@@ -31,6 +31,9 @@ public sealed record class Icons : ModelBase
 
     public Icons() { }
 
+    public Icons(Icons icons)
+        : base(icons) { }
+
     public Icons(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -17,6 +17,9 @@ public sealed record class RequestArchiveParams : ParamsBase
 
     public RequestArchiveParams() { }
 
+    public RequestArchiveParams(RequestArchiveParams requestArchiveParams)
+        : base(requestArchiveParams) { }
+
     public RequestArchiveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

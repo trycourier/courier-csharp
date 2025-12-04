@@ -97,6 +97,12 @@ public sealed record class TenantUpdateParams : ParamsBase
 
     public TenantUpdateParams() { }
 
+    public TenantUpdateParams(TenantUpdateParams tenantUpdateParams)
+        : base(tenantUpdateParams)
+    {
+        this._rawBodyData = [.. tenantUpdateParams._rawBodyData];
+    }
+
     public TenantUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

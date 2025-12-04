@@ -19,6 +19,9 @@ public sealed record class ItemDeleteParams : ParamsBase
 
     public ItemDeleteParams() { }
 
+    public ItemDeleteParams(ItemDeleteParams itemDeleteParams)
+        : base(itemDeleteParams) { }
+
     public ItemDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

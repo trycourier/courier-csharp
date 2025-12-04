@@ -19,6 +19,9 @@ public sealed record class TemplateRetrieveParams : ParamsBase
 
     public TemplateRetrieveParams() { }
 
+    public TemplateRetrieveParams(TemplateRetrieveParams templateRetrieveParams)
+        : base(templateRetrieveParams) { }
+
     public TemplateRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

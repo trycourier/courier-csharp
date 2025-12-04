@@ -81,6 +81,9 @@ public sealed record class ElementalActionNodeWithType : ModelBase
 
     public ElementalActionNodeWithType() { }
 
+    public ElementalActionNodeWithType(ElementalActionNodeWithType elementalActionNodeWithType)
+        : base(elementalActionNodeWithType) { }
+
     public ElementalActionNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -141,6 +144,9 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 
     public IntersectionMember1() { }
+
+    public IntersectionMember1(IntersectionMember1 intersectionMember1)
+        : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {

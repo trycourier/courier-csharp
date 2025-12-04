@@ -29,6 +29,11 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : ModelBase
 
     public PreferenceUpdateOrCreateTopicResponse() { }
 
+    public PreferenceUpdateOrCreateTopicResponse(
+        PreferenceUpdateOrCreateTopicResponse preferenceUpdateOrCreateTopicResponse
+    )
+        : base(preferenceUpdateOrCreateTopicResponse) { }
+
     public PreferenceUpdateOrCreateTopicResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

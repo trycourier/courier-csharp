@@ -36,6 +36,9 @@ public sealed record class ListListParams : ParamsBase
 
     public ListListParams() { }
 
+    public ListListParams(ListListParams listListParams)
+        : base(listListParams) { }
+
     public ListListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

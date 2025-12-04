@@ -58,6 +58,11 @@ public sealed record class NotificationPreferenceDetails : ModelBase
 
     public NotificationPreferenceDetails() { }
 
+    public NotificationPreferenceDetails(
+        NotificationPreferenceDetails notificationPreferenceDetails
+    )
+        : base(notificationPreferenceDetails) { }
+
     public NotificationPreferenceDetails(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

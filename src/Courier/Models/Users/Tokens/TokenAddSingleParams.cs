@@ -94,6 +94,12 @@ public sealed record class TokenAddSingleParams : ParamsBase
 
     public TokenAddSingleParams() { }
 
+    public TokenAddSingleParams(TokenAddSingleParams tokenAddSingleParams)
+        : base(tokenAddSingleParams)
+    {
+        this._rawBodyData = [.. tokenAddSingleParams._rawBodyData];
+    }
+
     public TokenAddSingleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -281,6 +287,9 @@ public sealed record class Device : ModelBase
     }
 
     public Device() { }
+
+    public Device(Device device)
+        : base(device) { }
 
     public Device(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -583,6 +592,9 @@ public sealed record class Tracking : ModelBase
     }
 
     public Tracking() { }
+
+    public Tracking(Tracking tracking)
+        : base(tracking) { }
 
     public Tracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -37,6 +37,12 @@ public sealed record class ListSubscribeParams : ParamsBase
 
     public ListSubscribeParams() { }
 
+    public ListSubscribeParams(ListSubscribeParams listSubscribeParams)
+        : base(listSubscribeParams)
+    {
+        this._rawBodyData = [.. listSubscribeParams._rawBodyData];
+    }
+
     public ListSubscribeParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

@@ -55,6 +55,9 @@ public sealed record class FilterConfig : ModelBase
 
     public FilterConfig() { }
 
+    public FilterConfig(FilterConfig filterConfig)
+        : base(filterConfig) { }
+
     public FilterConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

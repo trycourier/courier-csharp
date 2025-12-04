@@ -32,6 +32,9 @@ public sealed record class ListSubscribeResponse : ModelBase
 
     public ListSubscribeResponse() { }
 
+    public ListSubscribeResponse(ListSubscribeResponse listSubscribeResponse)
+        : base(listSubscribeResponse) { }
+
     public ListSubscribeResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -37,6 +37,12 @@ public sealed record class ProfileCreateParams : ParamsBase
 
     public ProfileCreateParams() { }
 
+    public ProfileCreateParams(ProfileCreateParams profileCreateParams)
+        : base(profileCreateParams)
+    {
+        this._rawBodyData = [.. profileCreateParams._rawBodyData];
+    }
+
     public ProfileCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

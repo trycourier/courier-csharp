@@ -53,6 +53,12 @@ public sealed record class AuthIssueTokenParams : ParamsBase
 
     public AuthIssueTokenParams() { }
 
+    public AuthIssueTokenParams(AuthIssueTokenParams authIssueTokenParams)
+        : base(authIssueTokenParams)
+    {
+        this._rawBodyData = [.. authIssueTokenParams._rawBodyData];
+    }
+
     public AuthIssueTokenParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

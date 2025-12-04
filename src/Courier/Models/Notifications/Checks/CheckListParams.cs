@@ -16,6 +16,9 @@ public sealed record class CheckListParams : ParamsBase
 
     public CheckListParams() { }
 
+    public CheckListParams(CheckListParams checkListParams)
+        : base(checkListParams) { }
+
     public CheckListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

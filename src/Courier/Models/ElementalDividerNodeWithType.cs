@@ -80,6 +80,9 @@ public sealed record class ElementalDividerNodeWithType : ModelBase
 
     public ElementalDividerNodeWithType() { }
 
+    public ElementalDividerNodeWithType(ElementalDividerNodeWithType elementalDividerNodeWithType)
+        : base(elementalDividerNodeWithType) { }
+
     public ElementalDividerNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -144,6 +147,11 @@ public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : Mod
     }
 
     public ElementalDividerNodeWithTypeIntersectionMember1() { }
+
+    public ElementalDividerNodeWithTypeIntersectionMember1(
+        ElementalDividerNodeWithTypeIntersectionMember1 elementalDividerNodeWithTypeIntersectionMember1
+    )
+        : base(elementalDividerNodeWithTypeIntersectionMember1) { }
 
     public ElementalDividerNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

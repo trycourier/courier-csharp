@@ -19,6 +19,9 @@ public sealed record class TokenRetrieveParams : ParamsBase
 
     public TokenRetrieveParams() { }
 
+    public TokenRetrieveParams(TokenRetrieveParams tokenRetrieveParams)
+        : base(tokenRetrieveParams) { }
+
     public TokenRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

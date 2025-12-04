@@ -40,6 +40,12 @@ public sealed record class ProfileReplaceParams : ParamsBase
 
     public ProfileReplaceParams() { }
 
+    public ProfileReplaceParams(ProfileReplaceParams profileReplaceParams)
+        : base(profileReplaceParams)
+    {
+        this._rawBodyData = [.. profileReplaceParams._rawBodyData];
+    }
+
     public ProfileReplaceParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

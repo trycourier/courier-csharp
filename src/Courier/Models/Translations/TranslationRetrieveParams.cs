@@ -19,6 +19,9 @@ public sealed record class TranslationRetrieveParams : ParamsBase
 
     public TranslationRetrieveParams() { }
 
+    public TranslationRetrieveParams(TranslationRetrieveParams translationRetrieveParams)
+        : base(translationRetrieveParams) { }
+
     public TranslationRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
