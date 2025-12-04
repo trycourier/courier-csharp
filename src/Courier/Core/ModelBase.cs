@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Exceptions;
+using Courier.Models;
 using Courier.Models.Audiences;
 using Courier.Models.Brands;
-using Courier.Models.Inbound;
-using Courier.Models.Send;
-using Courier.Models.Tenants.Preferences.Items;
-using Bulk = Courier.Models.Bulk;
+using Courier.Models.Bulk;
+using Inbound = Courier.Models.Inbound;
 using Invoke = Courier.Models.Automations.Invoke;
+using Items = Courier.Models.Tenants.Preferences.Items;
 using Lists = Courier.Models.Profiles.Lists;
 using Messages = Courier.Models.Messages;
-using Models = Courier.Models;
 using Notifications = Courier.Models.Notifications;
 using Profiles = Courier.Models.Profiles;
+using Send = Courier.Models.Send;
 using Templates = Courier.Models.Tenants.Templates;
 using Tenants = Courier.Models.Tenants;
 using Tokens = Courier.Models.Users.Tokens;
@@ -32,40 +32,22 @@ public abstract record class ModelBase
     {
         Converters =
         {
-            new ApiEnumConverter<string, Models::Alignment>(),
-            new ApiEnumConverter<string, Models::ChannelClassification>(),
-            new ApiEnumConverter<string, Models::Type>(),
-            new ApiEnumConverter<
-                string,
-                Models::ElementalChannelNodeWithTypeIntersectionMember1Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                Models::ElementalDividerNodeWithTypeIntersectionMember1Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                Models::ElementalImageNodeWithTypeIntersectionMember1Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                Models::ElementalMetaNodeWithTypeIntersectionMember1Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                Models::ElementalQuoteNodeWithTypeIntersectionMember1Type
-            >(),
-            new ApiEnumConverter<
-                string,
-                Models::ElementalTextNodeWithTypeIntersectionMember1Type
-            >(),
-            new ApiEnumConverter<string, Models::Method>(),
-            new ApiEnumConverter<string, Models::Source>(),
-            new ApiEnumConverter<string, Models::PreferenceStatus>(),
-            new ApiEnumConverter<string, Models::TextStyle>(),
-            new ApiEnumConverter<string, RoutingMethod>(),
+            new ApiEnumConverter<string, Alignment>(),
+            new ApiEnumConverter<string, ChannelClassification>(),
+            new ApiEnumConverter<string, Type>(),
+            new ApiEnumConverter<string, ElementalChannelNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, ElementalDividerNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, ElementalImageNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, ElementalMetaNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, ElementalTextNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, Method>(),
-            new ApiEnumConverter<string, Criteria>(),
+            new ApiEnumConverter<string, Source>(),
+            new ApiEnumConverter<string, PreferenceStatus>(),
+            new ApiEnumConverter<string, TextStyle>(),
+            new ApiEnumConverter<string, Send::RoutingMethod>(),
+            new ApiEnumConverter<string, Send::Method>(),
+            new ApiEnumConverter<string, Send::Criteria>(),
             new ApiEnumConverter<string, Operator>(),
             new ApiEnumConverter<string, FilterConfigOperator>(),
             new ApiEnumConverter<string, Invoke::Action>(),
@@ -79,9 +61,9 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Invoke::MergeStrategy>(),
             new ApiEnumConverter<string, Invoke::AutomationInvokeStepAction>(),
             new ApiEnumConverter<string, Placement>(),
-            new ApiEnumConverter<string, Bulk::Status>(),
-            new ApiEnumConverter<string, Bulk::JobStatus>(),
-            new ApiEnumConverter<string, Type>(),
+            new ApiEnumConverter<string, Status>(),
+            new ApiEnumConverter<string, JobStatus>(),
+            new ApiEnumConverter<string, Inbound::Type>(),
             new ApiEnumConverter<string, Messages::Status>(),
             new ApiEnumConverter<string, Messages::Reason>(),
             new ApiEnumConverter<string, Notifications::Status>(),
@@ -95,7 +77,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Tenants::Type>(),
             new ApiEnumConverter<string, Tenants::TenantListResponseType>(),
             new ApiEnumConverter<string, Tenants::TenantListUsersResponseType>(),
-            new ApiEnumConverter<string, Status>(),
+            new ApiEnumConverter<string, Items::Status>(),
             new ApiEnumConverter<string, Templates::Type>(),
             new ApiEnumConverter<string, global::Courier.Models.Users.Tenants.Type>(),
             new ApiEnumConverter<string, Tokens::UserTokenProviderKey>(),
