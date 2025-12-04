@@ -34,6 +34,9 @@ public sealed record class AudienceListResponse : ModelBase
 
     public AudienceListResponse() { }
 
+    public AudienceListResponse(AudienceListResponse audienceListResponse)
+        : base(audienceListResponse) { }
+
     public AudienceListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

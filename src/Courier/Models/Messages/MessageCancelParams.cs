@@ -20,6 +20,9 @@ public sealed record class MessageCancelParams : ParamsBase
 
     public MessageCancelParams() { }
 
+    public MessageCancelParams(MessageCancelParams messageCancelParams)
+        : base(messageCancelParams) { }
+
     public MessageCancelParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

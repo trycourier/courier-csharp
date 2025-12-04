@@ -36,6 +36,9 @@ public sealed record class SubscribeToListsRequestItem : ModelBase
 
     public SubscribeToListsRequestItem() { }
 
+    public SubscribeToListsRequestItem(SubscribeToListsRequestItem subscribeToListsRequestItem)
+        : base(subscribeToListsRequestItem) { }
+
     public SubscribeToListsRequestItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -48,6 +48,9 @@ public sealed record class BrandSettingsEmail : ModelBase
 
     public BrandSettingsEmail() { }
 
+    public BrandSettingsEmail(BrandSettingsEmail brandSettingsEmail)
+        : base(brandSettingsEmail) { }
+
     public BrandSettingsEmail(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -169,6 +172,9 @@ public sealed record class TemplateOverride : ModelBase
 
     public TemplateOverride() { }
 
+    public TemplateOverride(TemplateOverride templateOverride)
+        : base(templateOverride) { }
+
     public TemplateOverride(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -233,6 +239,11 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 
     public IntersectionMember1() { }
+
+    public IntersectionMember1(
+        global::Courier.Models.Brands.IntersectionMember1 intersectionMember1
+    )
+        : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {

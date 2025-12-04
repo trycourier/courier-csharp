@@ -45,6 +45,9 @@ public sealed record class BaseCheck : ModelBase
 
     public BaseCheck() { }
 
+    public BaseCheck(BaseCheck baseCheck)
+        : base(baseCheck) { }
+
     public BaseCheck(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -55,6 +55,9 @@ public sealed record class RecipientPreferences : ModelBase
 
     public RecipientPreferences() { }
 
+    public RecipientPreferences(RecipientPreferences recipientPreferences)
+        : base(recipientPreferences) { }
+
     public RecipientPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

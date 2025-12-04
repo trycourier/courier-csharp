@@ -78,6 +78,9 @@ public sealed record class ElementalTextNodeWithType : ModelBase
 
     public ElementalTextNodeWithType() { }
 
+    public ElementalTextNodeWithType(ElementalTextNodeWithType elementalTextNodeWithType)
+        : base(elementalTextNodeWithType) { }
+
     public ElementalTextNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -142,6 +145,11 @@ public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : ModelB
     }
 
     public ElementalTextNodeWithTypeIntersectionMember1() { }
+
+    public ElementalTextNodeWithTypeIntersectionMember1(
+        ElementalTextNodeWithTypeIntersectionMember1 elementalTextNodeWithTypeIntersectionMember1
+    )
+        : base(elementalTextNodeWithTypeIntersectionMember1) { }
 
     public ElementalTextNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

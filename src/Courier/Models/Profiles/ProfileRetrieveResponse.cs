@@ -40,6 +40,9 @@ public sealed record class ProfileRetrieveResponse : ModelBase
 
     public ProfileRetrieveResponse() { }
 
+    public ProfileRetrieveResponse(ProfileRetrieveResponse profileRetrieveResponse)
+        : base(profileRetrieveResponse) { }
+
     public ProfileRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

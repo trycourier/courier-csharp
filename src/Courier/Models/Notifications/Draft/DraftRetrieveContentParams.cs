@@ -14,6 +14,9 @@ public sealed record class DraftRetrieveContentParams : ParamsBase
 
     public DraftRetrieveContentParams() { }
 
+    public DraftRetrieveContentParams(DraftRetrieveContentParams draftRetrieveContentParams)
+        : base(draftRetrieveContentParams) { }
+
     public DraftRetrieveContentParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

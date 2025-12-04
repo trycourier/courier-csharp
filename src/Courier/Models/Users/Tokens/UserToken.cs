@@ -91,6 +91,9 @@ public sealed record class UserToken : ModelBase
 
     public UserToken() { }
 
+    public UserToken(UserToken userToken)
+        : base(userToken) { }
+
     public UserToken(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -240,6 +243,9 @@ public sealed record class UserTokenDevice : ModelBase
     }
 
     public UserTokenDevice() { }
+
+    public UserTokenDevice(UserTokenDevice userTokenDevice)
+        : base(userTokenDevice) { }
 
     public UserTokenDevice(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -544,6 +550,9 @@ public sealed record class UserTokenTracking : ModelBase
     }
 
     public UserTokenTracking() { }
+
+    public UserTokenTracking(UserTokenTracking userTokenTracking)
+        : base(userTokenTracking) { }
 
     public UserTokenTracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {

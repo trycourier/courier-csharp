@@ -28,6 +28,9 @@ public sealed record class InboundTrackEventResponse : ModelBase
 
     public InboundTrackEventResponse() { }
 
+    public InboundTrackEventResponse(InboundTrackEventResponse inboundTrackEventResponse)
+        : base(inboundTrackEventResponse) { }
+
     public InboundTrackEventResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

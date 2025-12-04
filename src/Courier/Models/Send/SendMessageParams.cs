@@ -35,6 +35,12 @@ public sealed record class SendMessageParams : ParamsBase
 
     public SendMessageParams() { }
 
+    public SendMessageParams(SendMessageParams sendMessageParams)
+        : base(sendMessageParams)
+    {
+        this._rawBodyData = [.. sendMessageParams._rawBodyData];
+    }
+
     public SendMessageParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -260,6 +266,9 @@ public sealed record class Message : ModelBase
 
     public Message() { }
 
+    public Message(Message message)
+        : base(message) { }
+
     public Message(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -373,6 +382,9 @@ public sealed record class ChannelsItem : ModelBase
 
     public ChannelsItem() { }
 
+    public ChannelsItem(ChannelsItem channelsItem)
+        : base(channelsItem) { }
+
     public ChannelsItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -416,6 +428,9 @@ public sealed record class Metadata : ModelBase
     }
 
     public Metadata() { }
+
+    public Metadata(Metadata metadata)
+        : base(metadata) { }
 
     public Metadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -514,6 +529,9 @@ public sealed record class Timeouts : ModelBase
     }
 
     public Timeouts() { }
+
+    public Timeouts(Timeouts timeouts)
+        : base(timeouts) { }
 
     public Timeouts(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -797,6 +815,9 @@ public sealed record class Delay : ModelBase
 
     public Delay() { }
 
+    public Delay(Delay delay)
+        : base(delay) { }
+
     public Delay(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -853,6 +874,9 @@ public sealed record class Expiry : ModelBase
     }
 
     public Expiry() { }
+
+    public Expiry(Expiry expiry)
+        : base(expiry) { }
 
     public Expiry(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1147,6 +1171,9 @@ public sealed record class MessageMetadata : ModelBase
 
     public MessageMetadata() { }
 
+    public MessageMetadata(MessageMetadata messageMetadata)
+        : base(messageMetadata) { }
+
     public MessageMetadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -1193,6 +1220,9 @@ public sealed record class Preferences : ModelBase
     }
 
     public Preferences() { }
+
+    public Preferences(Preferences preferences)
+        : base(preferences) { }
 
     public Preferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1278,6 +1308,9 @@ public sealed record class ProvidersItem : ModelBase
 
     public ProvidersItem() { }
 
+    public ProvidersItem(ProvidersItem providersItem)
+        : base(providersItem) { }
+
     public ProvidersItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -1321,6 +1354,9 @@ public sealed record class ProvidersItemMetadata : ModelBase
     }
 
     public ProvidersItemMetadata() { }
+
+    public ProvidersItemMetadata(ProvidersItemMetadata providersItemMetadata)
+        : base(providersItemMetadata) { }
 
     public ProvidersItemMetadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1393,6 +1429,9 @@ public sealed record class Routing : ModelBase
     }
 
     public Routing() { }
+
+    public Routing(Routing routing)
+        : base(routing) { }
 
     public Routing(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1518,6 +1557,9 @@ public sealed record class Timeout : ModelBase
     }
 
     public Timeout() { }
+
+    public Timeout(Timeout timeout)
+        : base(timeout) { }
 
     public Timeout(IReadOnlyDictionary<string, JsonElement> rawData)
     {

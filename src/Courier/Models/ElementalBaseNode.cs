@@ -45,6 +45,9 @@ public sealed record class ElementalBaseNode : ModelBase
 
     public ElementalBaseNode() { }
 
+    public ElementalBaseNode(ElementalBaseNode elementalBaseNode)
+        : base(elementalBaseNode) { }
+
     public ElementalBaseNode(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

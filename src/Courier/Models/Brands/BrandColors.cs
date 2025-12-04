@@ -47,6 +47,9 @@ public sealed record class BrandColors : ModelBase
 
     public BrandColors() { }
 
+    public BrandColors(BrandColors brandColors)
+        : base(brandColors) { }
+
     public BrandColors(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

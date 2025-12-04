@@ -15,6 +15,11 @@ public sealed record class NotificationRetrieveContentParams : ParamsBase
     public NotificationRetrieveContentParams() { }
 
     public NotificationRetrieveContentParams(
+        NotificationRetrieveContentParams notificationRetrieveContentParams
+    )
+        : base(notificationRetrieveContentParams) { }
+
+    public NotificationRetrieveContentParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )

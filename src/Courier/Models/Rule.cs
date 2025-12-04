@@ -31,6 +31,9 @@ public sealed record class Rule : ModelBase
 
     public Rule() { }
 
+    public Rule(Rule rule)
+        : base(rule) { }
+
     public Rule(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

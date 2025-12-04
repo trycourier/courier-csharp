@@ -33,6 +33,12 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public TokenUpdateParams() { }
 
+    public TokenUpdateParams(TokenUpdateParams tokenUpdateParams)
+        : base(tokenUpdateParams)
+    {
+        this._rawBodyData = [.. tokenUpdateParams._rawBodyData];
+    }
+
     public TokenUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -137,6 +143,9 @@ public sealed record class Patch : ModelBase
     }
 
     public Patch() { }
+
+    public Patch(Patch patch)
+        : base(patch) { }
 
     public Patch(IReadOnlyDictionary<string, JsonElement> rawData)
     {

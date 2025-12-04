@@ -19,6 +19,9 @@ public sealed record class TokenDeleteParams : ParamsBase
 
     public TokenDeleteParams() { }
 
+    public TokenDeleteParams(TokenDeleteParams tokenDeleteParams)
+        : base(tokenDeleteParams) { }
+
     public TokenDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

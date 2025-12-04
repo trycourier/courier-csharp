@@ -31,6 +31,9 @@ public sealed record class WidgetBackground : ModelBase
 
     public WidgetBackground() { }
 
+    public WidgetBackground(WidgetBackground widgetBackground)
+        : base(widgetBackground) { }
+
     public WidgetBackground(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

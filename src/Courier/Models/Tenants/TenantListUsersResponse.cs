@@ -87,6 +87,9 @@ public sealed record class TenantListUsersResponse : ModelBase
 
     public TenantListUsersResponse() { }
 
+    public TenantListUsersResponse(TenantListUsersResponse tenantListUsersResponse)
+        : base(tenantListUsersResponse) { }
+
     public TenantListUsersResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

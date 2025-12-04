@@ -92,6 +92,9 @@ public sealed record class TemplateListResponse : ModelBase
 
     public TemplateListResponse() { }
 
+    public TemplateListResponse(TemplateListResponse templateListResponse)
+        : base(templateListResponse) { }
+
     public TemplateListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -253,6 +256,9 @@ public sealed record class Item : ModelBase
 
     public Item() { }
 
+    public Item(global::Courier.Models.Tenants.Templates.Item item)
+        : base(item) { }
+
     public Item(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -307,6 +313,11 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 
     public IntersectionMember1() { }
+
+    public IntersectionMember1(
+        global::Courier.Models.Tenants.Templates.IntersectionMember1 intersectionMember1
+    )
+        : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -365,6 +376,9 @@ public sealed record class Data : ModelBase
     }
 
     public Data() { }
+
+    public Data(Data data)
+        : base(data) { }
 
     public Data(IReadOnlyDictionary<string, JsonElement> rawData)
     {

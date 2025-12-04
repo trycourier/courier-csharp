@@ -59,6 +59,9 @@ public sealed record class AuditEvent : ModelBase
 
     public AuditEvent() { }
 
+    public AuditEvent(AuditEvent auditEvent)
+        : base(auditEvent) { }
+
     public AuditEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -109,6 +112,9 @@ public sealed record class Actor : ModelBase
     }
 
     public Actor() { }
+
+    public Actor(Actor actor)
+        : base(actor) { }
 
     public Actor(IReadOnlyDictionary<string, JsonElement> rawData)
     {

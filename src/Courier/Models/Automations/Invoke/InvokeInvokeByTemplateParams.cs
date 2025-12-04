@@ -66,6 +66,12 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
 
     public InvokeInvokeByTemplateParams() { }
 
+    public InvokeInvokeByTemplateParams(InvokeInvokeByTemplateParams invokeInvokeByTemplateParams)
+        : base(invokeInvokeByTemplateParams)
+    {
+        this._rawBodyData = [.. invokeInvokeByTemplateParams._rawBodyData];
+    }
+
     public InvokeInvokeByTemplateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

@@ -19,6 +19,9 @@ public sealed record class TenantRemoveSingleParams : ParamsBase
 
     public TenantRemoveSingleParams() { }
 
+    public TenantRemoveSingleParams(TenantRemoveSingleParams tenantRemoveSingleParams)
+        : base(tenantRemoveSingleParams) { }
+
     public TenantRemoveSingleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

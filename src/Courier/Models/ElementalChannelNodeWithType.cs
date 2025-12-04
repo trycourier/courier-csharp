@@ -118,6 +118,9 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
 
     public ElementalChannelNodeWithType() { }
 
+    public ElementalChannelNodeWithType(ElementalChannelNodeWithType elementalChannelNodeWithType)
+        : base(elementalChannelNodeWithType) { }
+
     public ElementalChannelNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -189,6 +192,11 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Mod
     }
 
     public ElementalChannelNodeWithTypeIntersectionMember1() { }
+
+    public ElementalChannelNodeWithTypeIntersectionMember1(
+        ElementalChannelNodeWithTypeIntersectionMember1 elementalChannelNodeWithTypeIntersectionMember1
+    )
+        : base(elementalChannelNodeWithTypeIntersectionMember1) { }
 
     public ElementalChannelNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

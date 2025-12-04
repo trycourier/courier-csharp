@@ -59,6 +59,9 @@ public sealed record class ProfilePreferences : ModelBase
 
     public ProfilePreferences() { }
 
+    public ProfilePreferences(ProfilePreferences profilePreferences)
+        : base(profilePreferences) { }
+
     public ProfilePreferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

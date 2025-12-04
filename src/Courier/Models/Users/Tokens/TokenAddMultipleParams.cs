@@ -17,6 +17,9 @@ public sealed record class TokenAddMultipleParams : ParamsBase
 
     public TokenAddMultipleParams() { }
 
+    public TokenAddMultipleParams(TokenAddMultipleParams tokenAddMultipleParams)
+        : base(tokenAddMultipleParams) { }
+
     public TokenAddMultipleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

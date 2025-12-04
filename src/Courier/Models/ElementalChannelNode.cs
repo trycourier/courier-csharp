@@ -90,6 +90,9 @@ public sealed record class ElementalChannelNode : ModelBase
 
     public ElementalChannelNode() { }
 
+    public ElementalChannelNode(ElementalChannelNode elementalChannelNode)
+        : base(elementalChannelNode) { }
+
     public ElementalChannelNode(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -166,6 +169,11 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : ModelBase
     }
 
     public ElementalChannelNodeIntersectionMember1() { }
+
+    public ElementalChannelNodeIntersectionMember1(
+        ElementalChannelNodeIntersectionMember1 elementalChannelNodeIntersectionMember1
+    )
+        : base(elementalChannelNodeIntersectionMember1) { }
 
     public ElementalChannelNodeIntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {

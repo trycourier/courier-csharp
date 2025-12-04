@@ -56,6 +56,9 @@ public sealed record class SubscriptionTopicNew : ModelBase
 
     public SubscriptionTopicNew() { }
 
+    public SubscriptionTopicNew(SubscriptionTopicNew subscriptionTopicNew)
+        : base(subscriptionTopicNew) { }
+
     public SubscriptionTopicNew(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

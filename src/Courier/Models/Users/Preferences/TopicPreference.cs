@@ -83,6 +83,9 @@ public sealed record class TopicPreference : ModelBase
 
     public TopicPreference() { }
 
+    public TopicPreference(TopicPreference topicPreference)
+        : base(topicPreference) { }
+
     public TopicPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

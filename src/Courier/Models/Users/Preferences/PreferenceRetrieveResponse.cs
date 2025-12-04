@@ -42,6 +42,9 @@ public sealed record class PreferenceRetrieveResponse : ModelBase
 
     public PreferenceRetrieveResponse() { }
 
+    public PreferenceRetrieveResponse(PreferenceRetrieveResponse preferenceRetrieveResponse)
+        : base(preferenceRetrieveResponse) { }
+
     public PreferenceRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

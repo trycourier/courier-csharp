@@ -31,6 +31,9 @@ public sealed record class EmailFooter : ModelBase
 
     public EmailFooter() { }
 
+    public EmailFooter(EmailFooter emailFooter)
+        : base(emailFooter) { }
+
     public EmailFooter(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

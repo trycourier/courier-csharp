@@ -24,6 +24,9 @@ public sealed record class AudienceUpdateResponse : ModelBase
 
     public AudienceUpdateResponse() { }
 
+    public AudienceUpdateResponse(AudienceUpdateResponse audienceUpdateResponse)
+        : base(audienceUpdateResponse) { }
+
     public AudienceUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

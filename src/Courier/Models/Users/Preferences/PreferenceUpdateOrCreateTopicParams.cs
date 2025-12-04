@@ -43,6 +43,14 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     public PreferenceUpdateOrCreateTopicParams() { }
 
     public PreferenceUpdateOrCreateTopicParams(
+        PreferenceUpdateOrCreateTopicParams preferenceUpdateOrCreateTopicParams
+    )
+        : base(preferenceUpdateOrCreateTopicParams)
+    {
+        this._rawBodyData = [.. preferenceUpdateOrCreateTopicParams._rawBodyData];
+    }
+
+    public PreferenceUpdateOrCreateTopicParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -155,6 +163,9 @@ public sealed record class Topic : ModelBase
     }
 
     public Topic() { }
+
+    public Topic(Topic topic)
+        : base(topic) { }
 
     public Topic(IReadOnlyDictionary<string, JsonElement> rawData)
     {

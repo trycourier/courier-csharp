@@ -45,6 +45,12 @@ public sealed record class BrandUpdateParams : ParamsBase
 
     public BrandUpdateParams() { }
 
+    public BrandUpdateParams(BrandUpdateParams brandUpdateParams)
+        : base(brandUpdateParams)
+    {
+        this._rawBodyData = [.. brandUpdateParams._rawBodyData];
+    }
+
     public BrandUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

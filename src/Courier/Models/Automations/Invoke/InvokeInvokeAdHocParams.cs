@@ -74,6 +74,12 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
 
     public InvokeInvokeAdHocParams() { }
 
+    public InvokeInvokeAdHocParams(InvokeInvokeAdHocParams invokeInvokeAdHocParams)
+        : base(invokeInvokeAdHocParams)
+    {
+        this._rawBodyData = [.. invokeInvokeAdHocParams._rawBodyData];
+    }
+
     public InvokeInvokeAdHocParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -164,6 +170,9 @@ public sealed record class Automation : ModelBase
     }
 
     public Automation() { }
+
+    public Automation(Automation automation)
+        : base(automation) { }
 
     public Automation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -744,6 +753,9 @@ public sealed record class AutomationDelayStep : ModelBase
 
     public AutomationDelayStep() { }
 
+    public AutomationDelayStep(AutomationDelayStep automationDelayStep)
+        : base(automationDelayStep) { }
+
     public AutomationDelayStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -887,6 +899,9 @@ public sealed record class AutomationSendStep : ModelBase
 
     public AutomationSendStep() { }
 
+    public AutomationSendStep(AutomationSendStep automationSendStep)
+        : base(automationSendStep) { }
+
     public AutomationSendStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -1014,6 +1029,9 @@ public sealed record class AutomationSendListStep : ModelBase
 
     public AutomationSendListStep() { }
 
+    public AutomationSendListStep(AutomationSendListStep automationSendListStep)
+        : base(automationSendListStep) { }
+
     public AutomationSendListStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -1136,6 +1154,9 @@ public sealed record class AutomationUpdateProfileStep : ModelBase
     }
 
     public AutomationUpdateProfileStep() { }
+
+    public AutomationUpdateProfileStep(AutomationUpdateProfileStep automationUpdateProfileStep)
+        : base(automationUpdateProfileStep) { }
 
     public AutomationUpdateProfileStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1285,6 +1306,9 @@ public sealed record class AutomationCancelStep : ModelBase
 
     public AutomationCancelStep() { }
 
+    public AutomationCancelStep(AutomationCancelStep automationCancelStep)
+        : base(automationCancelStep) { }
+
     public AutomationCancelStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -1398,6 +1422,9 @@ public sealed record class AutomationFetchDataStep : ModelBase
     }
 
     public AutomationFetchDataStep() { }
+
+    public AutomationFetchDataStep(AutomationFetchDataStep automationFetchDataStep)
+        : base(automationFetchDataStep) { }
 
     public AutomationFetchDataStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1515,6 +1542,9 @@ public sealed record class Webhook : ModelBase
     }
 
     public Webhook() { }
+
+    public Webhook(Webhook webhook)
+        : base(webhook) { }
 
     public Webhook(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1672,6 +1702,9 @@ public sealed record class AutomationInvokeStep : ModelBase
     }
 
     public AutomationInvokeStep() { }
+
+    public AutomationInvokeStep(AutomationInvokeStep automationInvokeStep)
+        : base(automationInvokeStep) { }
 
     public AutomationInvokeStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {

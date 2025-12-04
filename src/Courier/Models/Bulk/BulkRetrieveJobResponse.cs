@@ -26,6 +26,9 @@ public sealed record class BulkRetrieveJobResponse : ModelBase
 
     public BulkRetrieveJobResponse() { }
 
+    public BulkRetrieveJobResponse(BulkRetrieveJobResponse bulkRetrieveJobResponse)
+        : base(bulkRetrieveJobResponse) { }
+
     public BulkRetrieveJobResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -110,6 +113,9 @@ public sealed record class Job : ModelBase
     }
 
     public Job() { }
+
+    public Job(Job job)
+        : base(job) { }
 
     public Job(IReadOnlyDictionary<string, JsonElement> rawData)
     {

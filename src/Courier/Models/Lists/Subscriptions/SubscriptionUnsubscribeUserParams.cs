@@ -20,6 +20,11 @@ public sealed record class SubscriptionUnsubscribeUserParams : ParamsBase
     public SubscriptionUnsubscribeUserParams() { }
 
     public SubscriptionUnsubscribeUserParams(
+        SubscriptionUnsubscribeUserParams subscriptionUnsubscribeUserParams
+    )
+        : base(subscriptionUnsubscribeUserParams) { }
+
+    public SubscriptionUnsubscribeUserParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )

@@ -34,6 +34,9 @@ public sealed record class NotificationListResponse : ModelBase
 
     public NotificationListResponse() { }
 
+    public NotificationListResponse(NotificationListResponse notificationListResponse)
+        : base(notificationListResponse) { }
+
     public NotificationListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -130,6 +133,9 @@ public sealed record class Result : ModelBase
 
     public Result() { }
 
+    public Result(Result result)
+        : base(result) { }
+
     public Result(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -176,6 +182,9 @@ public sealed record class Tags : ModelBase
     }
 
     public Tags() { }
+
+    public Tags(Tags tags)
+        : base(tags) { }
 
     public Tags(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -234,6 +243,9 @@ public sealed record class Data : ModelBase
     }
 
     public Data() { }
+
+    public Data(Data data)
+        : base(data) { }
 
     public Data(IReadOnlyDictionary<string, JsonElement> rawData)
     {

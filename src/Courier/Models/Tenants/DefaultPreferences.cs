@@ -27,6 +27,9 @@ public sealed record class DefaultPreferences : ModelBase
 
     public DefaultPreferences() { }
 
+    public DefaultPreferences(DefaultPreferences defaultPreferences)
+        : base(defaultPreferences) { }
+
     public DefaultPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -121,6 +124,9 @@ public sealed record class Item : ModelBase
 
     public Item() { }
 
+    public Item(Item item)
+        : base(item) { }
+
     public Item(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -172,6 +178,11 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 
     public IntersectionMember1() { }
+
+    public IntersectionMember1(
+        global::Courier.Models.Tenants.IntersectionMember1 intersectionMember1
+    )
+        : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {

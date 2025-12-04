@@ -24,6 +24,9 @@ public sealed record class AudienceListParams : ParamsBase
 
     public AudienceListParams() { }
 
+    public AudienceListParams(AudienceListParams audienceListParams)
+        : base(audienceListParams) { }
+
     public AudienceListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -32,6 +32,9 @@ public sealed record class ProfileReplaceResponse : ModelBase
 
     public ProfileReplaceResponse() { }
 
+    public ProfileReplaceResponse(ProfileReplaceResponse profileReplaceResponse)
+        : base(profileReplaceResponse) { }
+
     public ProfileReplaceResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

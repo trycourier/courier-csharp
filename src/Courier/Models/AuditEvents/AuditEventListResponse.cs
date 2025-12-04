@@ -34,6 +34,9 @@ public sealed record class AuditEventListResponse : ModelBase
 
     public AuditEventListResponse() { }
 
+    public AuditEventListResponse(AuditEventListResponse auditEventListResponse)
+        : base(auditEventListResponse) { }
+
     public AuditEventListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

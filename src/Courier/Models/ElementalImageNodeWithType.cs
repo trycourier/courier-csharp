@@ -80,6 +80,9 @@ public sealed record class ElementalImageNodeWithType : ModelBase
 
     public ElementalImageNodeWithType() { }
 
+    public ElementalImageNodeWithType(ElementalImageNodeWithType elementalImageNodeWithType)
+        : base(elementalImageNodeWithType) { }
+
     public ElementalImageNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -144,6 +147,11 @@ public sealed record class ElementalImageNodeWithTypeIntersectionMember1 : Model
     }
 
     public ElementalImageNodeWithTypeIntersectionMember1() { }
+
+    public ElementalImageNodeWithTypeIntersectionMember1(
+        ElementalImageNodeWithTypeIntersectionMember1 elementalImageNodeWithTypeIntersectionMember1
+    )
+        : base(elementalImageNodeWithTypeIntersectionMember1) { }
 
     public ElementalImageNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

@@ -52,6 +52,9 @@ public sealed record class Utm : ModelBase
 
     public Utm() { }
 
+    public Utm(Utm utm)
+        : base(utm) { }
+
     public Utm(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

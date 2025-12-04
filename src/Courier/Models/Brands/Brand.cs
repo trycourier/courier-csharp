@@ -73,6 +73,9 @@ public sealed record class Brand : ModelBase
 
     public Brand() { }
 
+    public Brand(Brand brand)
+        : base(brand) { }
+
     public Brand(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -17,6 +17,9 @@ public sealed record class BulkRunJobParams : ParamsBase
 
     public BulkRunJobParams() { }
 
+    public BulkRunJobParams(BulkRunJobParams bulkRunJobParams)
+        : base(bulkRunJobParams) { }
+
     public BulkRunJobParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

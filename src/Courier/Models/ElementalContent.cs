@@ -44,6 +44,9 @@ public sealed record class ElementalContent : ModelBase
 
     public ElementalContent() { }
 
+    public ElementalContent(ElementalContent elementalContent)
+        : base(elementalContent) { }
+
     public ElementalContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

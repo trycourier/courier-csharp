@@ -17,6 +17,9 @@ public sealed record class MessageRetrieveParams : ParamsBase
 
     public MessageRetrieveParams() { }
 
+    public MessageRetrieveParams(MessageRetrieveParams messageRetrieveParams)
+        : base(messageRetrieveParams) { }
+
     public MessageRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

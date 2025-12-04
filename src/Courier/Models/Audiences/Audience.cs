@@ -71,6 +71,9 @@ public sealed record class Audience : ModelBase
 
     public Audience() { }
 
+    public Audience(Audience audience)
+        : base(audience) { }
+
     public Audience(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

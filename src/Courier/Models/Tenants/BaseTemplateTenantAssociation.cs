@@ -69,6 +69,11 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
 
     public BaseTemplateTenantAssociation() { }
 
+    public BaseTemplateTenantAssociation(
+        BaseTemplateTenantAssociation baseTemplateTenantAssociation
+    )
+        : base(baseTemplateTenantAssociation) { }
+
     public BaseTemplateTenantAssociation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

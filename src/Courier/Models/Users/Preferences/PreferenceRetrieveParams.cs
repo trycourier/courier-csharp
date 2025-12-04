@@ -26,6 +26,9 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
 
     public PreferenceRetrieveParams() { }
 
+    public PreferenceRetrieveParams(PreferenceRetrieveParams preferenceRetrieveParams)
+        : base(preferenceRetrieveParams) { }
+
     public PreferenceRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

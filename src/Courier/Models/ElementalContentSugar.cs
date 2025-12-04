@@ -40,6 +40,9 @@ public sealed record class ElementalContentSugar : ModelBase
 
     public ElementalContentSugar() { }
 
+    public ElementalContentSugar(ElementalContentSugar elementalContentSugar)
+        : base(elementalContentSugar) { }
+
     public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

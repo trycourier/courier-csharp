@@ -77,6 +77,12 @@ public sealed record class InboundTrackEventParams : ParamsBase
 
     public InboundTrackEventParams() { }
 
+    public InboundTrackEventParams(InboundTrackEventParams inboundTrackEventParams)
+        : base(inboundTrackEventParams)
+    {
+        this._rawBodyData = [.. inboundTrackEventParams._rawBodyData];
+    }
+
     public InboundTrackEventParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

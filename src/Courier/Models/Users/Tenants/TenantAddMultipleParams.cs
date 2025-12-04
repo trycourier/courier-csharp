@@ -36,6 +36,12 @@ public sealed record class TenantAddMultipleParams : ParamsBase
 
     public TenantAddMultipleParams() { }
 
+    public TenantAddMultipleParams(TenantAddMultipleParams tenantAddMultipleParams)
+        : base(tenantAddMultipleParams)
+    {
+        this._rawBodyData = [.. tenantAddMultipleParams._rawBodyData];
+    }
+
     public TenantAddMultipleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

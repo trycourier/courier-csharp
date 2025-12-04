@@ -30,6 +30,9 @@ public sealed record class ChannelPreference : ModelBase
 
     public ChannelPreference() { }
 
+    public ChannelPreference(ChannelPreference channelPreference)
+        : base(channelPreference) { }
+
     public ChannelPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

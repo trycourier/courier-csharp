@@ -17,6 +17,9 @@ public sealed record class MessageContentParams : ParamsBase
 
     public MessageContentParams() { }
 
+    public MessageContentParams(MessageContentParams messageContentParams)
+        : base(messageContentParams) { }
+
     public MessageContentParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

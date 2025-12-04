@@ -40,6 +40,9 @@ public sealed record class MessageListResponse : ModelBase
 
     public MessageListResponse() { }
 
+    public MessageListResponse(MessageListResponse messageListResponse)
+        : base(messageListResponse) { }
+
     public MessageListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

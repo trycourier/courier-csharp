@@ -31,6 +31,9 @@ public sealed record class Logo : ModelBase
 
     public Logo() { }
 
+    public Logo(Logo logo)
+        : base(logo) { }
+
     public Logo(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

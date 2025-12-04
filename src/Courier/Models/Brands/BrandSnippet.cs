@@ -31,6 +31,9 @@ public sealed record class BrandSnippet : ModelBase
 
     public BrandSnippet() { }
 
+    public BrandSnippet(BrandSnippet brandSnippet)
+        : base(brandSnippet) { }
+
     public BrandSnippet(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -27,6 +27,9 @@ public sealed record class BulkListUsersParams : ParamsBase
 
     public BulkListUsersParams() { }
 
+    public BulkListUsersParams(BulkListUsersParams bulkListUsersParams)
+        : base(bulkListUsersParams) { }
+
     public BulkListUsersParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

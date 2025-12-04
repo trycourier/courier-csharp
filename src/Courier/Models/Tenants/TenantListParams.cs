@@ -42,6 +42,9 @@ public sealed record class TenantListParams : ParamsBase
 
     public TenantListParams() { }
 
+    public TenantListParams(TenantListParams tenantListParams)
+        : base(tenantListParams) { }
+
     public TenantListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
