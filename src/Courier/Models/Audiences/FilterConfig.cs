@@ -45,6 +45,7 @@ public sealed record class FilterConfig : ModelBase
         init { ModelBase.Set(this._rawData, "value", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Operator.Validate();
@@ -67,6 +68,7 @@ public sealed record class FilterConfig : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="FilterConfigFromRaw.FromRawUnchecked"/>
     public static FilterConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -75,6 +77,7 @@ public sealed record class FilterConfig : ModelBase
 
 class FilterConfigFromRaw : IFromRaw<FilterConfig>
 {
+    /// <inheritdoc/>
     public FilterConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         FilterConfig.FromRawUnchecked(rawData);
 }

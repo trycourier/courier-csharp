@@ -47,6 +47,7 @@ public sealed record class Check : ModelBase
             Type = check.Type,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -70,6 +71,7 @@ public sealed record class Check : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="CheckFromRaw.FromRawUnchecked"/>
     public static Check FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -78,6 +80,7 @@ public sealed record class Check : ModelBase
 
 class CheckFromRaw : IFromRaw<Check>
 {
+    /// <inheritdoc/>
     public Check FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Check.FromRawUnchecked(rawData);
 }
@@ -96,6 +99,7 @@ public sealed record class IntersectionMember1 : ModelBase
         init { ModelBase.Set(this._rawData, "updated", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Updated;
@@ -116,6 +120,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Courier.Models.Notifications.IntersectionMember1FromRaw.FromRawUnchecked"/>
     public static global::Courier.Models.Notifications.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -134,6 +139,7 @@ public sealed record class IntersectionMember1 : ModelBase
 class IntersectionMember1FromRaw
     : IFromRaw<global::Courier.Models.Notifications.IntersectionMember1>
 {
+    /// <inheritdoc/>
     public global::Courier.Models.Notifications.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Courier.Models.Notifications.IntersectionMember1.FromRawUnchecked(rawData);

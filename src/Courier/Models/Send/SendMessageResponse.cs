@@ -22,6 +22,7 @@ public sealed record class SendMessageResponse : ModelBase
         init { ModelBase.Set(this._rawData, "requestId", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.RequestID;
@@ -42,6 +43,7 @@ public sealed record class SendMessageResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="SendMessageResponseFromRaw.FromRawUnchecked"/>
     public static SendMessageResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -59,6 +61,7 @@ public sealed record class SendMessageResponse : ModelBase
 
 class SendMessageResponseFromRaw : IFromRaw<SendMessageResponse>
 {
+    /// <inheritdoc/>
     public SendMessageResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         SendMessageResponse.FromRawUnchecked(rawData);
 }

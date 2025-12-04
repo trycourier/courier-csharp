@@ -68,6 +68,7 @@ public sealed record class ElementalQuoteNodeWithType : ModelBase
             Ref = elementalQuoteNodeWithType.Ref,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channels;
@@ -92,6 +93,7 @@ public sealed record class ElementalQuoteNodeWithType : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalQuoteNodeWithTypeFromRaw.FromRawUnchecked"/>
     public static ElementalQuoteNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -102,6 +104,7 @@ public sealed record class ElementalQuoteNodeWithType : ModelBase
 
 class ElementalQuoteNodeWithTypeFromRaw : IFromRaw<ElementalQuoteNodeWithType>
 {
+    /// <inheritdoc/>
     public ElementalQuoteNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalQuoteNodeWithType.FromRawUnchecked(rawData);
@@ -134,6 +137,7 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : Model
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Type?.Validate();
@@ -156,6 +160,7 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : Model
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalQuoteNodeWithTypeIntersectionMember1FromRaw.FromRawUnchecked"/>
     public static ElementalQuoteNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -167,6 +172,7 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : Model
 class ElementalQuoteNodeWithTypeIntersectionMember1FromRaw
     : IFromRaw<ElementalQuoteNodeWithTypeIntersectionMember1>
 {
+    /// <inheritdoc/>
     public ElementalQuoteNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalQuoteNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);

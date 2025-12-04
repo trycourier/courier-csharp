@@ -34,6 +34,7 @@ public sealed record class ElementalBaseNode : ModelBase
         init { ModelBase.Set(this._rawData, "ref", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channels;
@@ -57,6 +58,7 @@ public sealed record class ElementalBaseNode : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalBaseNodeFromRaw.FromRawUnchecked"/>
     public static ElementalBaseNode FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -67,6 +69,7 @@ public sealed record class ElementalBaseNode : ModelBase
 
 class ElementalBaseNodeFromRaw : IFromRaw<ElementalBaseNode>
 {
+    /// <inheritdoc/>
     public ElementalBaseNode FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ElementalBaseNode.FromRawUnchecked(rawData);
 }

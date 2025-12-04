@@ -21,6 +21,7 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : ModelBase
         init { ModelBase.Set(this._rawData, "message", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Message;
@@ -41,6 +42,7 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PreferenceUpdateOrCreateTopicResponseFromRaw.FromRawUnchecked"/>
     public static PreferenceUpdateOrCreateTopicResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -58,6 +60,7 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : ModelBase
 
 class PreferenceUpdateOrCreateTopicResponseFromRaw : IFromRaw<PreferenceUpdateOrCreateTopicResponse>
 {
+    /// <inheritdoc/>
     public PreferenceUpdateOrCreateTopicResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => PreferenceUpdateOrCreateTopicResponse.FromRawUnchecked(rawData);

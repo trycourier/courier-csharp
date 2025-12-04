@@ -16,6 +16,7 @@ public sealed record class AutomationInvokeResponse : ModelBase
         init { ModelBase.Set(this._rawData, "runId", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.RunID;
@@ -36,6 +37,7 @@ public sealed record class AutomationInvokeResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationInvokeResponseFromRaw.FromRawUnchecked"/>
     public static AutomationInvokeResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -53,6 +55,7 @@ public sealed record class AutomationInvokeResponse : ModelBase
 
 class AutomationInvokeResponseFromRaw : IFromRaw<AutomationInvokeResponse>
 {
+    /// <inheritdoc/>
     public AutomationInvokeResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AutomationInvokeResponse.FromRawUnchecked(rawData);

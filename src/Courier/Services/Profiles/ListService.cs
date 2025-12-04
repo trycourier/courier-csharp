@@ -8,7 +8,7 @@ using Courier.Models.Profiles.Lists;
 
 namespace Courier.Services.Profiles;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ListService : global::Courier.Services.Profiles.IListService
 {
     /// <inheritdoc/>

@@ -8,7 +8,7 @@ using Courier.Models.Translations;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class TranslationService : ITranslationService
 {
     /// <inheritdoc/>

@@ -8,7 +8,7 @@ using Courier.Models.Audiences;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class AudienceService : IAudienceService
 {
     /// <inheritdoc/>

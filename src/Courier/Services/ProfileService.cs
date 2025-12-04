@@ -9,7 +9,7 @@ using Profiles = Courier.Services.Profiles;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ProfileService : IProfileService
 {
     /// <inheritdoc/>

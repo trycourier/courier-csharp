@@ -4,7 +4,7 @@ using Courier.Services.Automations;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class AutomationService : IAutomationService
 {
     /// <inheritdoc/>

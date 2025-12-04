@@ -19,6 +19,7 @@ public sealed record class MessageContentResponse : ModelBase
         init { ModelBase.Set(this._rawData, "results", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Results)
@@ -42,6 +43,7 @@ public sealed record class MessageContentResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageContentResponseFromRaw.FromRawUnchecked"/>
     public static MessageContentResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -59,6 +61,7 @@ public sealed record class MessageContentResponse : ModelBase
 
 class MessageContentResponseFromRaw : IFromRaw<MessageContentResponse>
 {
+    /// <inheritdoc/>
     public MessageContentResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => MessageContentResponse.FromRawUnchecked(rawData);
@@ -94,6 +97,7 @@ public sealed record class Result : ModelBase
         init { ModelBase.Set(this._rawData, "content", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channel;
@@ -116,6 +120,7 @@ public sealed record class Result : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ResultFromRaw.FromRawUnchecked"/>
     public static Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -124,6 +129,7 @@ public sealed record class Result : ModelBase
 
 class ResultFromRaw : IFromRaw<Result>
 {
+    /// <inheritdoc/>
     public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Result.FromRawUnchecked(rawData);
 }
@@ -188,6 +194,7 @@ public sealed record class Content : ModelBase
         init { ModelBase.Set(this._rawData, "title", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Blocks)
@@ -216,6 +223,7 @@ public sealed record class Content : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ContentFromRaw.FromRawUnchecked"/>
     public static Content FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -224,6 +232,7 @@ public sealed record class Content : ModelBase
 
 class ContentFromRaw : IFromRaw<Content>
 {
+    /// <inheritdoc/>
     public Content FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Content.FromRawUnchecked(rawData);
 }
@@ -249,6 +258,7 @@ public sealed record class Block : ModelBase
         init { ModelBase.Set(this._rawData, "type", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Text;
@@ -270,6 +280,7 @@ public sealed record class Block : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BlockFromRaw.FromRawUnchecked"/>
     public static Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -278,6 +289,7 @@ public sealed record class Block : ModelBase
 
 class BlockFromRaw : IFromRaw<Block>
 {
+    /// <inheritdoc/>
     public Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Block.FromRawUnchecked(rawData);
 }

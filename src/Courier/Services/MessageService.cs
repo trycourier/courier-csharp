@@ -8,7 +8,7 @@ using Courier.Models.Messages;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class MessageService : IMessageService
 {
     /// <inheritdoc/>

@@ -9,7 +9,7 @@ using Courier.Models.Automations.Invoke;
 
 namespace Courier.Services.Automations;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class InvokeService : IInvokeService
 {
     /// <inheritdoc/>

@@ -31,6 +31,7 @@ public sealed record class ElementalContent : ModelBase
         init { ModelBase.Set(this._rawData, "brand", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Elements)
@@ -56,6 +57,7 @@ public sealed record class ElementalContent : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalContentFromRaw.FromRawUnchecked"/>
     public static ElementalContent FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -66,6 +68,7 @@ public sealed record class ElementalContent : ModelBase
 
 class ElementalContentFromRaw : IFromRaw<ElementalContent>
 {
+    /// <inheritdoc/>
     public ElementalContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ElementalContent.FromRawUnchecked(rawData);
 }

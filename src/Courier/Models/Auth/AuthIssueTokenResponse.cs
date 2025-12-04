@@ -16,6 +16,7 @@ public sealed record class AuthIssueTokenResponse : ModelBase
         init { ModelBase.Set(this._rawData, "token", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Token;
@@ -36,6 +37,7 @@ public sealed record class AuthIssueTokenResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AuthIssueTokenResponseFromRaw.FromRawUnchecked"/>
     public static AuthIssueTokenResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -53,6 +55,7 @@ public sealed record class AuthIssueTokenResponse : ModelBase
 
 class AuthIssueTokenResponseFromRaw : IFromRaw<AuthIssueTokenResponse>
 {
+    /// <inheritdoc/>
     public AuthIssueTokenResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AuthIssueTokenResponse.FromRawUnchecked(rawData);

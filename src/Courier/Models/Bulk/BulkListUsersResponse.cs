@@ -24,6 +24,7 @@ public sealed record class BulkListUsersResponse : ModelBase
         init { ModelBase.Set(this._rawData, "paging", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Items)
@@ -48,6 +49,7 @@ public sealed record class BulkListUsersResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BulkListUsersResponseFromRaw.FromRawUnchecked"/>
     public static BulkListUsersResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -58,6 +60,7 @@ public sealed record class BulkListUsersResponse : ModelBase
 
 class BulkListUsersResponseFromRaw : IFromRaw<BulkListUsersResponse>
 {
+    /// <inheritdoc/>
     public BulkListUsersResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => BulkListUsersResponse.FromRawUnchecked(rawData);
@@ -153,6 +156,7 @@ public sealed record class Item : ModelBase
             To = item.To,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Data;
@@ -179,6 +183,7 @@ public sealed record class Item : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ItemFromRaw.FromRawUnchecked"/>
     public static Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -194,6 +199,7 @@ public sealed record class Item : ModelBase
 
 class ItemFromRaw : IFromRaw<Item>
 {
+    /// <inheritdoc/>
     public Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Item.FromRawUnchecked(rawData);
 }
@@ -218,6 +224,7 @@ public sealed record class IntersectionMember1 : ModelBase
         init { ModelBase.Set(this._rawData, "messageId", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Status.Validate();
@@ -239,6 +246,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Courier.Models.Bulk.IntersectionMember1FromRaw.FromRawUnchecked"/>
     public static global::Courier.Models.Bulk.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -256,6 +264,7 @@ public sealed record class IntersectionMember1 : ModelBase
 
 class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Bulk.IntersectionMember1>
 {
+    /// <inheritdoc/>
     public global::Courier.Models.Bulk.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Courier.Models.Bulk.IntersectionMember1.FromRawUnchecked(rawData);

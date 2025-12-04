@@ -40,6 +40,7 @@ public sealed record class Utm : ModelBase
         init { ModelBase.Set(this._rawData, "term", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Campaign;
@@ -64,6 +65,7 @@ public sealed record class Utm : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="UtmFromRaw.FromRawUnchecked"/>
     public static Utm FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -72,6 +74,7 @@ public sealed record class Utm : ModelBase
 
 class UtmFromRaw : IFromRaw<Utm>
 {
+    /// <inheritdoc/>
     public Utm FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Utm.FromRawUnchecked(rawData);
 }

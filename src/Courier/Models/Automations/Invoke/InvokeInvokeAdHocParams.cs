@@ -99,6 +99,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static InvokeInvokeAdHocParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -152,6 +153,7 @@ public sealed record class Automation : ModelBase
         init { ModelBase.Set(this._rawData, "cancelation_token", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Steps)
@@ -176,6 +178,7 @@ public sealed record class Automation : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationFromRaw.FromRawUnchecked"/>
     public static Automation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -191,6 +194,7 @@ public sealed record class Automation : ModelBase
 
 class AutomationFromRaw : IFromRaw<Automation>
 {
+    /// <inheritdoc/>
     public Automation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Automation.FromRawUnchecked(rawData);
 }
@@ -286,24 +290,84 @@ public record class Step
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AutomationDelayStep"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAutomationDelay(out var value)) {
+    ///     // `value` is of type `AutomationDelayStep`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickAutomationDelay([NotNullWhen(true)] out AutomationDelayStep? value)
     {
         value = this.Value as AutomationDelayStep;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AutomationSendStep"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAutomationSend(out var value)) {
+    ///     // `value` is of type `AutomationSendStep`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickAutomationSend([NotNullWhen(true)] out AutomationSendStep? value)
     {
         value = this.Value as AutomationSendStep;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AutomationSendListStep"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAutomationSendList(out var value)) {
+    ///     // `value` is of type `AutomationSendListStep`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickAutomationSendList([NotNullWhen(true)] out AutomationSendListStep? value)
     {
         value = this.Value as AutomationSendListStep;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AutomationUpdateProfileStep"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAutomationUpdateProfile(out var value)) {
+    ///     // `value` is of type `AutomationUpdateProfileStep`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickAutomationUpdateProfile(
         [NotNullWhen(true)] out AutomationUpdateProfileStep? value
     )
@@ -312,24 +376,94 @@ public record class Step
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AutomationCancelStep"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAutomationCancel(out var value)) {
+    ///     // `value` is of type `AutomationCancelStep`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickAutomationCancel([NotNullWhen(true)] out AutomationCancelStep? value)
     {
         value = this.Value as AutomationCancelStep;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AutomationFetchDataStep"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAutomationFetchData(out var value)) {
+    ///     // `value` is of type `AutomationFetchDataStep`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickAutomationFetchData([NotNullWhen(true)] out AutomationFetchDataStep? value)
     {
         value = this.Value as AutomationFetchDataStep;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AutomationInvokeStep"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAutomationInvoke(out var value)) {
+    ///     // `value` is of type `AutomationInvokeStep`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickAutomationInvoke([NotNullWhen(true)] out AutomationInvokeStep? value)
     {
         value = this.Value as AutomationInvokeStep;
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (AutomationDelayStep value) => {...},
+    ///     (AutomationSendStep value) => {...},
+    ///     (AutomationSendListStep value) => {...},
+    ///     (AutomationUpdateProfileStep value) => {...},
+    ///     (AutomationCancelStep value) => {...},
+    ///     (AutomationFetchDataStep value) => {...},
+    ///     (AutomationInvokeStep value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(
         System::Action<AutomationDelayStep> automationDelay,
         System::Action<AutomationSendStep> automationSend,
@@ -368,6 +502,32 @@ public record class Step
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (AutomationDelayStep value) => {...},
+    ///     (AutomationSendStep value) => {...},
+    ///     (AutomationSendListStep value) => {...},
+    ///     (AutomationUpdateProfileStep value) => {...},
+    ///     (AutomationCancelStep value) => {...},
+    ///     (AutomationFetchDataStep value) => {...},
+    ///     (AutomationInvokeStep value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(
         System::Func<AutomationDelayStep, T> automationDelay,
         System::Func<AutomationSendStep, T> automationSend,
@@ -405,6 +565,16 @@ public record class Step
 
     public static implicit operator Step(AutomationInvokeStep value) => new(value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)
@@ -564,6 +734,7 @@ public sealed record class AutomationDelayStep : ModelBase
         init { ModelBase.Set(this._rawData, "until", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Action.Validate();
@@ -586,6 +757,7 @@ public sealed record class AutomationDelayStep : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationDelayStepFromRaw.FromRawUnchecked"/>
     public static AutomationDelayStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -603,6 +775,7 @@ public sealed record class AutomationDelayStep : ModelBase
 
 class AutomationDelayStepFromRaw : IFromRaw<AutomationDelayStep>
 {
+    /// <inheritdoc/>
     public AutomationDelayStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         AutomationDelayStep.FromRawUnchecked(rawData);
 }
@@ -701,6 +874,7 @@ public sealed record class AutomationSendStep : ModelBase
         init { ModelBase.Set(this._rawData, "template", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Action.Validate();
@@ -726,6 +900,7 @@ public sealed record class AutomationSendStep : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationSendStepFromRaw.FromRawUnchecked"/>
     public static AutomationSendStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -743,6 +918,7 @@ public sealed record class AutomationSendStep : ModelBase
 
 class AutomationSendStepFromRaw : IFromRaw<AutomationSendStep>
 {
+    /// <inheritdoc/>
     public AutomationSendStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         AutomationSendStep.FromRawUnchecked(rawData);
 }
@@ -827,6 +1003,7 @@ public sealed record class AutomationSendListStep : ModelBase
         init { ModelBase.Set(this._rawData, "data", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Action.Validate();
@@ -850,6 +1027,7 @@ public sealed record class AutomationSendListStep : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationSendListStepFromRaw.FromRawUnchecked"/>
     public static AutomationSendListStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -860,6 +1038,7 @@ public sealed record class AutomationSendListStep : ModelBase
 
 class AutomationSendListStepFromRaw : IFromRaw<AutomationSendListStep>
 {
+    /// <inheritdoc/>
     public AutomationSendListStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AutomationSendListStep.FromRawUnchecked(rawData);
@@ -947,6 +1126,7 @@ public sealed record class AutomationUpdateProfileStep : ModelBase
         init { ModelBase.Set(this._rawData, "recipient_id", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Action.Validate();
@@ -970,6 +1150,7 @@ public sealed record class AutomationUpdateProfileStep : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationUpdateProfileStepFromRaw.FromRawUnchecked"/>
     public static AutomationUpdateProfileStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -980,6 +1161,7 @@ public sealed record class AutomationUpdateProfileStep : ModelBase
 
 class AutomationUpdateProfileStepFromRaw : IFromRaw<AutomationUpdateProfileStep>
 {
+    /// <inheritdoc/>
     public AutomationUpdateProfileStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AutomationUpdateProfileStep.FromRawUnchecked(rawData);
@@ -1094,6 +1276,7 @@ public sealed record class AutomationCancelStep : ModelBase
         init { ModelBase.Set(this._rawData, "cancelation_token", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Action.Validate();
@@ -1115,6 +1298,7 @@ public sealed record class AutomationCancelStep : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationCancelStepFromRaw.FromRawUnchecked"/>
     public static AutomationCancelStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -1125,6 +1309,7 @@ public sealed record class AutomationCancelStep : ModelBase
 
 class AutomationCancelStepFromRaw : IFromRaw<AutomationCancelStep>
 {
+    /// <inheritdoc/>
     public AutomationCancelStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AutomationCancelStep.FromRawUnchecked(rawData);
@@ -1204,6 +1389,7 @@ public sealed record class AutomationFetchDataStep : ModelBase
         init { ModelBase.Set(this._rawData, "merge_strategy", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Action.Validate();
@@ -1226,6 +1412,7 @@ public sealed record class AutomationFetchDataStep : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationFetchDataStepFromRaw.FromRawUnchecked"/>
     public static AutomationFetchDataStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -1236,6 +1423,7 @@ public sealed record class AutomationFetchDataStep : ModelBase
 
 class AutomationFetchDataStepFromRaw : IFromRaw<AutomationFetchDataStep>
 {
+    /// <inheritdoc/>
     public AutomationFetchDataStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AutomationFetchDataStep.FromRawUnchecked(rawData);
@@ -1317,6 +1505,7 @@ public sealed record class Webhook : ModelBase
         init { ModelBase.Set(this._rawData, "headers", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Method.Validate();
@@ -1340,6 +1529,7 @@ public sealed record class Webhook : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="WebhookFromRaw.FromRawUnchecked"/>
     public static Webhook FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -1348,6 +1538,7 @@ public sealed record class Webhook : ModelBase
 
 class WebhookFromRaw : IFromRaw<Webhook>
 {
+    /// <inheritdoc/>
     public Webhook FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Webhook.FromRawUnchecked(rawData);
 }
@@ -1473,6 +1664,7 @@ public sealed record class AutomationInvokeStep : ModelBase
         init { ModelBase.Set(this._rawData, "template", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Action.Validate();
@@ -1494,6 +1686,7 @@ public sealed record class AutomationInvokeStep : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AutomationInvokeStepFromRaw.FromRawUnchecked"/>
     public static AutomationInvokeStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -1504,6 +1697,7 @@ public sealed record class AutomationInvokeStep : ModelBase
 
 class AutomationInvokeStepFromRaw : IFromRaw<AutomationInvokeStep>
 {
+    /// <inheritdoc/>
     public AutomationInvokeStep FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AutomationInvokeStep.FromRawUnchecked(rawData);

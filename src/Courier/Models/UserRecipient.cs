@@ -101,6 +101,7 @@ public sealed record class UserRecipient : ModelBase
         init { ModelBase.Set(this._rawData, "user_id", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.AccountID;
@@ -130,6 +131,7 @@ public sealed record class UserRecipient : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="UserRecipientFromRaw.FromRawUnchecked"/>
     public static UserRecipient FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -138,6 +140,7 @@ public sealed record class UserRecipient : ModelBase
 
 class UserRecipientFromRaw : IFromRaw<UserRecipient>
 {
+    /// <inheritdoc/>
     public UserRecipient FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         UserRecipient.FromRawUnchecked(rawData);
 }

@@ -37,6 +37,7 @@ public sealed record class BrandSettingsEmail : ModelBase
         init { ModelBase.Set(this._rawData, "templateOverride", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Footer?.Validate();
@@ -60,6 +61,7 @@ public sealed record class BrandSettingsEmail : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BrandSettingsEmailFromRaw.FromRawUnchecked"/>
     public static BrandSettingsEmail FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -70,6 +72,7 @@ public sealed record class BrandSettingsEmail : ModelBase
 
 class BrandSettingsEmailFromRaw : IFromRaw<BrandSettingsEmail>
 {
+    /// <inheritdoc/>
     public BrandSettingsEmail FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         BrandSettingsEmail.FromRawUnchecked(rawData);
 }
@@ -149,6 +152,7 @@ public sealed record class TemplateOverride : ModelBase
             Width = templateOverride.Width,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Enabled;
@@ -178,6 +182,7 @@ public sealed record class TemplateOverride : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TemplateOverrideFromRaw.FromRawUnchecked"/>
     public static TemplateOverride FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -188,6 +193,7 @@ public sealed record class TemplateOverride : ModelBase
 
 class TemplateOverrideFromRaw : IFromRaw<TemplateOverride>
 {
+    /// <inheritdoc/>
     public TemplateOverride FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         TemplateOverride.FromRawUnchecked(rawData);
 }
@@ -218,6 +224,7 @@ public sealed record class IntersectionMember1 : ModelBase
         init { ModelBase.Set(this._rawData, "footerFullWidth", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Mjml.Validate();
@@ -240,6 +247,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Courier.Models.Brands.IntersectionMember1FromRaw.FromRawUnchecked"/>
     public static global::Courier.Models.Brands.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -257,6 +265,7 @@ public sealed record class IntersectionMember1 : ModelBase
 
 class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Brands.IntersectionMember1>
 {
+    /// <inheritdoc/>
     public global::Courier.Models.Brands.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Courier.Models.Brands.IntersectionMember1.FromRawUnchecked(rawData);
