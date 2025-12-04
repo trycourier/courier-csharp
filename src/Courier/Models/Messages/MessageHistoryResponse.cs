@@ -22,6 +22,7 @@ public sealed record class MessageHistoryResponse : ModelBase
         init { ModelBase.Set(this._rawData, "results", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Results;
@@ -42,6 +43,7 @@ public sealed record class MessageHistoryResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageHistoryResponseFromRaw.FromRawUnchecked"/>
     public static MessageHistoryResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -59,6 +61,7 @@ public sealed record class MessageHistoryResponse : ModelBase
 
 class MessageHistoryResponseFromRaw : IFromRaw<MessageHistoryResponse>
 {
+    /// <inheritdoc/>
     public MessageHistoryResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => MessageHistoryResponse.FromRawUnchecked(rawData);

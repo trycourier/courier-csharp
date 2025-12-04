@@ -8,7 +8,7 @@ using Courier.Models.Requests;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class RequestService : IRequestService
 {
     /// <inheritdoc/>

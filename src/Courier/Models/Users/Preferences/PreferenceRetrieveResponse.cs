@@ -30,6 +30,7 @@ public sealed record class PreferenceRetrieveResponse : ModelBase
         init { ModelBase.Set(this._rawData, "paging", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Items)
@@ -54,6 +55,7 @@ public sealed record class PreferenceRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PreferenceRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static PreferenceRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -64,6 +66,7 @@ public sealed record class PreferenceRetrieveResponse : ModelBase
 
 class PreferenceRetrieveResponseFromRaw : IFromRaw<PreferenceRetrieveResponse>
 {
+    /// <inheritdoc/>
     public PreferenceRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => PreferenceRetrieveResponse.FromRawUnchecked(rawData);

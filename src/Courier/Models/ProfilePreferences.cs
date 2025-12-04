@@ -40,6 +40,7 @@ public sealed record class ProfilePreferences : ModelBase
         init { ModelBase.Set(this._rawData, "templateId", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Notifications.Values)
@@ -71,6 +72,7 @@ public sealed record class ProfilePreferences : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ProfilePreferencesFromRaw.FromRawUnchecked"/>
     public static ProfilePreferences FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -88,6 +90,7 @@ public sealed record class ProfilePreferences : ModelBase
 
 class ProfilePreferencesFromRaw : IFromRaw<ProfilePreferences>
 {
+    /// <inheritdoc/>
     public ProfilePreferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ProfilePreferences.FromRawUnchecked(rawData);
 }

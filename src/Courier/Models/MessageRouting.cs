@@ -27,6 +27,7 @@ public sealed record class MessageRouting : ModelBase
         init { ModelBase.Set(this._rawData, "method", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Channels)
@@ -51,6 +52,7 @@ public sealed record class MessageRouting : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageRoutingFromRaw.FromRawUnchecked"/>
     public static MessageRouting FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -59,6 +61,7 @@ public sealed record class MessageRouting : ModelBase
 
 class MessageRoutingFromRaw : IFromRaw<MessageRouting>
 {
+    /// <inheritdoc/>
     public MessageRouting FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         MessageRouting.FromRawUnchecked(rawData);
 }

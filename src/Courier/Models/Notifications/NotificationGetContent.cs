@@ -30,6 +30,7 @@ public sealed record class NotificationGetContent : ModelBase
         init { ModelBase.Set(this._rawData, "checksum", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Blocks ?? [])
@@ -58,6 +59,7 @@ public sealed record class NotificationGetContent : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="NotificationGetContentFromRaw.FromRawUnchecked"/>
     public static NotificationGetContent FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -68,6 +70,7 @@ public sealed record class NotificationGetContent : ModelBase
 
 class NotificationGetContentFromRaw : IFromRaw<NotificationGetContent>
 {
+    /// <inheritdoc/>
     public NotificationGetContent FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => NotificationGetContent.FromRawUnchecked(rawData);
@@ -121,6 +124,7 @@ public sealed record class Block : ModelBase
         init { ModelBase.Set(this._rawData, "locales", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -153,6 +157,7 @@ public sealed record class Block : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BlockFromRaw.FromRawUnchecked"/>
     public static Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -161,6 +166,7 @@ public sealed record class Block : ModelBase
 
 class BlockFromRaw : IFromRaw<Block>
 {
+    /// <inheritdoc/>
     public Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Block.FromRawUnchecked(rawData);
 }
@@ -259,12 +265,42 @@ public record class Content
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="string"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickString(out var value)) {
+    ///     // `value` is of type `string`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickString([NotNullWhen(true)] out string? value)
     {
         value = this.Value as string;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="NotificationContentHierarchy"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickNotificationContentHierarchy(out var value)) {
+    ///     // `value` is of type `NotificationContentHierarchy`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickNotificationContentHierarchy(
         [NotNullWhen(true)] out NotificationContentHierarchy? value
     )
@@ -273,6 +309,26 @@ public record class Content
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (string value) => {...},
+    ///     (NotificationContentHierarchy value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(
         System::Action<string> @string,
         System::Action<NotificationContentHierarchy> notificationContentHierarchy
@@ -291,6 +347,27 @@ public record class Content
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (string value) => {...},
+    ///     (NotificationContentHierarchy value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(
         System::Func<string, T> @string,
         System::Func<NotificationContentHierarchy, T> notificationContentHierarchy
@@ -308,6 +385,16 @@ public record class Content
 
     public static implicit operator Content(NotificationContentHierarchy value) => new(value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)
@@ -392,6 +479,7 @@ public sealed record class NotificationContentHierarchy : ModelBase
         init { ModelBase.Set(this._rawData, "parent", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Children;
@@ -413,6 +501,7 @@ public sealed record class NotificationContentHierarchy : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="NotificationContentHierarchyFromRaw.FromRawUnchecked"/>
     public static NotificationContentHierarchy FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -423,6 +512,7 @@ public sealed record class NotificationContentHierarchy : ModelBase
 
 class NotificationContentHierarchyFromRaw : IFromRaw<NotificationContentHierarchy>
 {
+    /// <inheritdoc/>
     public NotificationContentHierarchy FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => NotificationContentHierarchy.FromRawUnchecked(rawData);
@@ -457,12 +547,42 @@ public record class Locale
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="string"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickString(out var value)) {
+    ///     // `value` is of type `string`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickString([NotNullWhen(true)] out string? value)
     {
         value = this.Value as string;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="LocaleNotificationContentHierarchy"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickNotificationContentHierarchy(out var value)) {
+    ///     // `value` is of type `LocaleNotificationContentHierarchy`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickNotificationContentHierarchy(
         [NotNullWhen(true)] out LocaleNotificationContentHierarchy? value
     )
@@ -471,6 +591,26 @@ public record class Locale
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (string value) => {...},
+    ///     (LocaleNotificationContentHierarchy value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(
         System::Action<string> @string,
         System::Action<LocaleNotificationContentHierarchy> notificationContentHierarchy
@@ -489,6 +629,27 @@ public record class Locale
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (string value) => {...},
+    ///     (LocaleNotificationContentHierarchy value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(
         System::Func<string, T> @string,
         System::Func<LocaleNotificationContentHierarchy, T> notificationContentHierarchy
@@ -506,6 +667,16 @@ public record class Locale
 
     public static implicit operator Locale(LocaleNotificationContentHierarchy value) => new(value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)
@@ -593,6 +764,7 @@ public sealed record class LocaleNotificationContentHierarchy : ModelBase
         init { ModelBase.Set(this._rawData, "parent", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Children;
@@ -614,6 +786,7 @@ public sealed record class LocaleNotificationContentHierarchy : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="LocaleNotificationContentHierarchyFromRaw.FromRawUnchecked"/>
     public static LocaleNotificationContentHierarchy FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -624,6 +797,7 @@ public sealed record class LocaleNotificationContentHierarchy : ModelBase
 
 class LocaleNotificationContentHierarchyFromRaw : IFromRaw<LocaleNotificationContentHierarchy>
 {
+    /// <inheritdoc/>
     public LocaleNotificationContentHierarchy FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => LocaleNotificationContentHierarchy.FromRawUnchecked(rawData);
@@ -668,6 +842,7 @@ public sealed record class Channel : ModelBase
         init { ModelBase.Set(this._rawData, "type", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -698,6 +873,7 @@ public sealed record class Channel : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ChannelFromRaw.FromRawUnchecked"/>
     public static Channel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -713,6 +889,7 @@ public sealed record class Channel : ModelBase
 
 class ChannelFromRaw : IFromRaw<Channel>
 {
+    /// <inheritdoc/>
     public Channel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Channel.FromRawUnchecked(rawData);
 }
@@ -732,6 +909,7 @@ public sealed record class ChannelContent : ModelBase
         init { ModelBase.Set(this._rawData, "title", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Subject;
@@ -753,6 +931,7 @@ public sealed record class ChannelContent : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ChannelContentFromRaw.FromRawUnchecked"/>
     public static ChannelContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -761,6 +940,7 @@ public sealed record class ChannelContent : ModelBase
 
 class ChannelContentFromRaw : IFromRaw<ChannelContent>
 {
+    /// <inheritdoc/>
     public ChannelContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ChannelContent.FromRawUnchecked(rawData);
 }
@@ -780,6 +960,7 @@ public sealed record class LocalesItem : ModelBase
         init { ModelBase.Set(this._rawData, "title", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Subject;
@@ -801,6 +982,7 @@ public sealed record class LocalesItem : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="LocalesItemFromRaw.FromRawUnchecked"/>
     public static LocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -809,6 +991,7 @@ public sealed record class LocalesItem : ModelBase
 
 class LocalesItemFromRaw : IFromRaw<LocalesItem>
 {
+    /// <inheritdoc/>
     public LocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         LocalesItem.FromRawUnchecked(rawData);
 }

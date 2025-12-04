@@ -46,6 +46,7 @@ public sealed record class AuditEvent : ModelBase
         init { ModelBase.Set(this._rawData, "type", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Actor.Validate();
@@ -71,6 +72,7 @@ public sealed record class AuditEvent : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AuditEventFromRaw.FromRawUnchecked"/>
     public static AuditEvent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -79,6 +81,7 @@ public sealed record class AuditEvent : ModelBase
 
 class AuditEventFromRaw : IFromRaw<AuditEvent>
 {
+    /// <inheritdoc/>
     public AuditEvent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         AuditEvent.FromRawUnchecked(rawData);
 }
@@ -98,6 +101,7 @@ public sealed record class Actor : ModelBase
         init { ModelBase.Set(this._rawData, "email", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -119,6 +123,7 @@ public sealed record class Actor : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ActorFromRaw.FromRawUnchecked"/>
     public static Actor FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -134,6 +139,7 @@ public sealed record class Actor : ModelBase
 
 class ActorFromRaw : IFromRaw<Actor>
 {
+    /// <inheritdoc/>
     public Actor FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Actor.FromRawUnchecked(rawData);
 }

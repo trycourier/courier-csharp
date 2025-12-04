@@ -16,6 +16,7 @@ public sealed record class BulkCreateJobResponse : ModelBase
         init { ModelBase.Set(this._rawData, "jobId", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.JobID;
@@ -36,6 +37,7 @@ public sealed record class BulkCreateJobResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BulkCreateJobResponseFromRaw.FromRawUnchecked"/>
     public static BulkCreateJobResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -53,6 +55,7 @@ public sealed record class BulkCreateJobResponse : ModelBase
 
 class BulkCreateJobResponseFromRaw : IFromRaw<BulkCreateJobResponse>
 {
+    /// <inheritdoc/>
     public BulkCreateJobResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => BulkCreateJobResponse.FromRawUnchecked(rawData);

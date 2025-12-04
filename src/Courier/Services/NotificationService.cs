@@ -9,7 +9,7 @@ using Courier.Services.Notifications;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class NotificationService : INotificationService
 {
     /// <inheritdoc/>

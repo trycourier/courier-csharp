@@ -104,6 +104,7 @@ public sealed record class TokenRetrieveResponse : ModelBase
             Tracking = tokenRetrieveResponse.Tracking,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Token;
@@ -131,6 +132,7 @@ public sealed record class TokenRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TokenRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static TokenRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -141,6 +143,7 @@ public sealed record class TokenRetrieveResponse : ModelBase
 
 class TokenRetrieveResponseFromRaw : IFromRaw<TokenRetrieveResponse>
 {
+    /// <inheritdoc/>
     public TokenRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => TokenRetrieveResponse.FromRawUnchecked(rawData);
@@ -169,6 +172,7 @@ public sealed record class IntersectionMember1 : ModelBase
         init { ModelBase.Set(this._rawData, "status_reason", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Status?.Validate();
@@ -190,6 +194,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Courier.Models.Users.Tokens.IntersectionMember1FromRaw.FromRawUnchecked"/>
     public static global::Courier.Models.Users.Tokens.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -200,6 +205,7 @@ public sealed record class IntersectionMember1 : ModelBase
 
 class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Users.Tokens.IntersectionMember1>
 {
+    /// <inheritdoc/>
     public global::Courier.Models.Users.Tokens.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Courier.Models.Users.Tokens.IntersectionMember1.FromRawUnchecked(rawData);

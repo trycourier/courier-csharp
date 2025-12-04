@@ -77,6 +77,7 @@ public sealed record class ElementalChannelNode : ModelBase
             Ref = elementalChannelNode.Ref,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channels;
@@ -102,6 +103,7 @@ public sealed record class ElementalChannelNode : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalChannelNodeFromRaw.FromRawUnchecked"/>
     public static ElementalChannelNode FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -119,6 +121,7 @@ public sealed record class ElementalChannelNode : ModelBase
 
 class ElementalChannelNodeFromRaw : IFromRaw<ElementalChannelNode>
 {
+    /// <inheritdoc/>
     public ElementalChannelNode FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalChannelNode.FromRawUnchecked(rawData);
@@ -155,6 +158,7 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : ModelBase
         init { ModelBase.Set(this._rawData, "raw", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channel;
@@ -176,6 +180,7 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalChannelNodeIntersectionMember1FromRaw.FromRawUnchecked"/>
     public static ElementalChannelNodeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -194,6 +199,7 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : ModelBase
 class ElementalChannelNodeIntersectionMember1FromRaw
     : IFromRaw<ElementalChannelNodeIntersectionMember1>
 {
+    /// <inheritdoc/>
     public ElementalChannelNodeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalChannelNodeIntersectionMember1.FromRawUnchecked(rawData);

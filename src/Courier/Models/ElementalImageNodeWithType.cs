@@ -68,6 +68,7 @@ public sealed record class ElementalImageNodeWithType : ModelBase
             Ref = elementalImageNodeWithType.Ref,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channels;
@@ -92,6 +93,7 @@ public sealed record class ElementalImageNodeWithType : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalImageNodeWithTypeFromRaw.FromRawUnchecked"/>
     public static ElementalImageNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -102,6 +104,7 @@ public sealed record class ElementalImageNodeWithType : ModelBase
 
 class ElementalImageNodeWithTypeFromRaw : IFromRaw<ElementalImageNodeWithType>
 {
+    /// <inheritdoc/>
     public ElementalImageNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalImageNodeWithType.FromRawUnchecked(rawData);
@@ -134,6 +137,7 @@ public sealed record class ElementalImageNodeWithTypeIntersectionMember1 : Model
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Type?.Validate();
@@ -156,6 +160,7 @@ public sealed record class ElementalImageNodeWithTypeIntersectionMember1 : Model
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalImageNodeWithTypeIntersectionMember1FromRaw.FromRawUnchecked"/>
     public static ElementalImageNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -167,6 +172,7 @@ public sealed record class ElementalImageNodeWithTypeIntersectionMember1 : Model
 class ElementalImageNodeWithTypeIntersectionMember1FromRaw
     : IFromRaw<ElementalImageNodeWithTypeIntersectionMember1>
 {
+    /// <inheritdoc/>
     public ElementalImageNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalImageNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);

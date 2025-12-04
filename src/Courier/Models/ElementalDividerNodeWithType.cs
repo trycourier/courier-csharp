@@ -68,6 +68,7 @@ public sealed record class ElementalDividerNodeWithType : ModelBase
             Ref = elementalDividerNodeWithType.Ref,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channels;
@@ -92,6 +93,7 @@ public sealed record class ElementalDividerNodeWithType : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalDividerNodeWithTypeFromRaw.FromRawUnchecked"/>
     public static ElementalDividerNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -102,6 +104,7 @@ public sealed record class ElementalDividerNodeWithType : ModelBase
 
 class ElementalDividerNodeWithTypeFromRaw : IFromRaw<ElementalDividerNodeWithType>
 {
+    /// <inheritdoc/>
     public ElementalDividerNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalDividerNodeWithType.FromRawUnchecked(rawData);
@@ -134,6 +137,7 @@ public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : Mod
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Type?.Validate();
@@ -156,6 +160,7 @@ public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : Mod
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalDividerNodeWithTypeIntersectionMember1FromRaw.FromRawUnchecked"/>
     public static ElementalDividerNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -167,6 +172,7 @@ public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : Mod
 class ElementalDividerNodeWithTypeIntersectionMember1FromRaw
     : IFromRaw<ElementalDividerNodeWithTypeIntersectionMember1>
 {
+    /// <inheritdoc/>
     public ElementalDividerNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalDividerNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);

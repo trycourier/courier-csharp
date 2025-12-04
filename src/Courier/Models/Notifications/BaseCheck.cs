@@ -35,6 +35,7 @@ public sealed record class BaseCheck : ModelBase
         init { ModelBase.Set(this._rawData, "type", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -57,6 +58,7 @@ public sealed record class BaseCheck : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BaseCheckFromRaw.FromRawUnchecked"/>
     public static BaseCheck FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -65,6 +67,7 @@ public sealed record class BaseCheck : ModelBase
 
 class BaseCheckFromRaw : IFromRaw<BaseCheck>
 {
+    /// <inheritdoc/>
     public BaseCheck FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         BaseCheck.FromRawUnchecked(rawData);
 }

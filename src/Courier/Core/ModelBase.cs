@@ -19,10 +19,18 @@ using Tokens = Courier.Models.Users.Tokens;
 
 namespace Courier.Core;
 
+/// <summary>
+/// The base class for all API objects with properties.
+///
+/// <para>API objects such as enums and unions do not inherit from this class.</para>
+/// </summary>
 public abstract record class ModelBase
 {
     private protected FreezableDictionary<string, JsonElement> _rawData = [];
 
+    /// <summary>
+    /// The backing JSON properties of the instance.
+    /// </summary>
     public IReadOnlyDictionary<string, JsonElement> RawData
     {
         get { return this._rawData.Freeze(); }
@@ -227,6 +235,15 @@ public abstract record class ModelBase
         return 0;
     }
 
+    /// <summary>
+    /// Validates that all required fields are set and that each field's value is of the expected type.
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public abstract void Validate();
 }
 
@@ -234,13 +251,21 @@ public abstract record class ModelBase
 /// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
 /// changes in non-major versions. We may add new methods in the future that cause
 /// existing derived classes to break.
+///
+/// <para>NOTE: This interface is in the style of a factory instance instead of using
+/// abstract static methods because .NET Standard 2.0 doesn't support abstract static methods.</para>
 /// </summary>
 interface IFromRaw<T>
 {
     /// <summary>
-    /// NOTE: This interface is in the style of a factory instance instead of using
-    /// abstract static methods because .NET Standard 2.0 doesn't support abstract
-    /// static methods.
+    /// Returns an instance constructed from the given raw JSON properties.
+    ///
+    /// <para>Required field and type mismatches are not checked. In these cases accessing
+    /// the relevant properties of the constructed instance may throw.</para>
+    ///
+    /// <para>This method is useful for constructing an instance from already serialized
+    /// data or for sending arbitrary data to the API (e.g. for undocumented or not
+    /// yet supported properties or values).</para>
     /// </summary>
     T FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData);
 }

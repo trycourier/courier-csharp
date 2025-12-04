@@ -19,6 +19,7 @@ public sealed record class MessageContext : ModelBase
         init { ModelBase.Set(this._rawData, "tenant_id", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.TenantID;
@@ -39,6 +40,7 @@ public sealed record class MessageContext : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageContextFromRaw.FromRawUnchecked"/>
     public static MessageContext FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -47,6 +49,7 @@ public sealed record class MessageContext : ModelBase
 
 class MessageContextFromRaw : IFromRaw<MessageContext>
 {
+    /// <inheritdoc/>
     public MessageContext FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         MessageContext.FromRawUnchecked(rawData);
 }

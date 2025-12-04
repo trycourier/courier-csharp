@@ -16,6 +16,7 @@ public sealed record class CheckUpdateResponse : ModelBase
         init { ModelBase.Set(this._rawData, "checks", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Checks)
@@ -39,6 +40,7 @@ public sealed record class CheckUpdateResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="CheckUpdateResponseFromRaw.FromRawUnchecked"/>
     public static CheckUpdateResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -56,6 +58,7 @@ public sealed record class CheckUpdateResponse : ModelBase
 
 class CheckUpdateResponseFromRaw : IFromRaw<CheckUpdateResponse>
 {
+    /// <inheritdoc/>
     public CheckUpdateResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         CheckUpdateResponse.FromRawUnchecked(rawData);
 }

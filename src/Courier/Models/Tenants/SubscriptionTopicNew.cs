@@ -43,6 +43,7 @@ public sealed record class SubscriptionTopicNew : ModelBase
         init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Status.Validate();
@@ -68,6 +69,7 @@ public sealed record class SubscriptionTopicNew : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="SubscriptionTopicNewFromRaw.FromRawUnchecked"/>
     public static SubscriptionTopicNew FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -85,6 +87,7 @@ public sealed record class SubscriptionTopicNew : ModelBase
 
 class SubscriptionTopicNewFromRaw : IFromRaw<SubscriptionTopicNew>
 {
+    /// <inheritdoc/>
     public SubscriptionTopicNew FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => SubscriptionTopicNew.FromRawUnchecked(rawData);

@@ -24,6 +24,7 @@ public sealed record class ProfileReplaceResponse : ModelBase
         init { ModelBase.Set(this._rawData, "status", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Status.Validate();
@@ -44,6 +45,7 @@ public sealed record class ProfileReplaceResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ProfileReplaceResponseFromRaw.FromRawUnchecked"/>
     public static ProfileReplaceResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -61,6 +63,7 @@ public sealed record class ProfileReplaceResponse : ModelBase
 
 class ProfileReplaceResponseFromRaw : IFromRaw<ProfileReplaceResponse>
 {
+    /// <inheritdoc/>
     public ProfileReplaceResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ProfileReplaceResponse.FromRawUnchecked(rawData);

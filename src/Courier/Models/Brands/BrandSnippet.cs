@@ -22,6 +22,7 @@ public sealed record class BrandSnippet : ModelBase
         init { ModelBase.Set(this._rawData, "value", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Name;
@@ -43,6 +44,7 @@ public sealed record class BrandSnippet : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BrandSnippetFromRaw.FromRawUnchecked"/>
     public static BrandSnippet FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -51,6 +53,7 @@ public sealed record class BrandSnippet : ModelBase
 
 class BrandSnippetFromRaw : IFromRaw<BrandSnippet>
 {
+    /// <inheritdoc/>
     public BrandSnippet FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         BrandSnippet.FromRawUnchecked(rawData);
 }

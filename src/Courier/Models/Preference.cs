@@ -48,6 +48,7 @@ public sealed record class Preference : ModelBase
         init { ModelBase.Set(this._rawData, "source", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Status.Validate();
@@ -77,6 +78,7 @@ public sealed record class Preference : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PreferenceFromRaw.FromRawUnchecked"/>
     public static Preference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -92,6 +94,7 @@ public sealed record class Preference : ModelBase
 
 class PreferenceFromRaw : IFromRaw<Preference>
 {
+    /// <inheritdoc/>
     public Preference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Preference.FromRawUnchecked(rawData);
 }

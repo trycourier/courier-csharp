@@ -25,6 +25,7 @@ public sealed record class PutSubscriptionsRecipient : ModelBase
         init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.RecipientID;
@@ -46,6 +47,7 @@ public sealed record class PutSubscriptionsRecipient : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PutSubscriptionsRecipientFromRaw.FromRawUnchecked"/>
     public static PutSubscriptionsRecipient FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -63,6 +65,7 @@ public sealed record class PutSubscriptionsRecipient : ModelBase
 
 class PutSubscriptionsRecipientFromRaw : IFromRaw<PutSubscriptionsRecipient>
 {
+    /// <inheritdoc/>
     public PutSubscriptionsRecipient FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => PutSubscriptionsRecipient.FromRawUnchecked(rawData);

@@ -22,6 +22,7 @@ public sealed record class AuditEventListResponse : ModelBase
         init { ModelBase.Set(this._rawData, "results", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Paging.Validate();
@@ -46,6 +47,7 @@ public sealed record class AuditEventListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AuditEventListResponseFromRaw.FromRawUnchecked"/>
     public static AuditEventListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -56,6 +58,7 @@ public sealed record class AuditEventListResponse : ModelBase
 
 class AuditEventListResponseFromRaw : IFromRaw<AuditEventListResponse>
 {
+    /// <inheritdoc/>
     public AuditEventListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AuditEventListResponse.FromRawUnchecked(rawData);

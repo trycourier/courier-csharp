@@ -8,7 +8,7 @@ using Courier.Models.Notifications.Checks;
 
 namespace Courier.Services.Notifications;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class CheckService : ICheckService
 {
     /// <inheritdoc/>

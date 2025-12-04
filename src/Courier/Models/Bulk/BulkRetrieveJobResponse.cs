@@ -18,6 +18,7 @@ public sealed record class BulkRetrieveJobResponse : ModelBase
         init { ModelBase.Set(this._rawData, "job", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Job.Validate();
@@ -38,6 +39,7 @@ public sealed record class BulkRetrieveJobResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BulkRetrieveJobResponseFromRaw.FromRawUnchecked"/>
     public static BulkRetrieveJobResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -55,6 +57,7 @@ public sealed record class BulkRetrieveJobResponse : ModelBase
 
 class BulkRetrieveJobResponseFromRaw : IFromRaw<BulkRetrieveJobResponse>
 {
+    /// <inheritdoc/>
     public BulkRetrieveJobResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => BulkRetrieveJobResponse.FromRawUnchecked(rawData);
@@ -96,6 +99,7 @@ public sealed record class Job : ModelBase
         init { ModelBase.Set(this._rawData, "status", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Definition.Validate();
@@ -120,6 +124,7 @@ public sealed record class Job : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="JobFromRaw.FromRawUnchecked"/>
     public static Job FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -128,6 +133,7 @@ public sealed record class Job : ModelBase
 
 class JobFromRaw : IFromRaw<Job>
 {
+    /// <inheritdoc/>
     public Job FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Job.FromRawUnchecked(rawData);
 }

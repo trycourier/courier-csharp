@@ -22,6 +22,7 @@ public sealed record class Icons : ModelBase
         init { ModelBase.Set(this._rawData, "message", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Bell;
@@ -43,6 +44,7 @@ public sealed record class Icons : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IconsFromRaw.FromRawUnchecked"/>
     public static Icons FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -51,6 +53,7 @@ public sealed record class Icons : ModelBase
 
 class IconsFromRaw : IFromRaw<Icons>
 {
+    /// <inheritdoc/>
     public Icons FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Icons.FromRawUnchecked(rawData);
 }

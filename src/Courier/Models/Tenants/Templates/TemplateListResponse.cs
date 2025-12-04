@@ -76,6 +76,7 @@ public sealed record class TemplateListResponse : ModelBase
         init { ModelBase.Set(this._rawData, "next_url", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.HasMore;
@@ -104,6 +105,7 @@ public sealed record class TemplateListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TemplateListResponseFromRaw.FromRawUnchecked"/>
     public static TemplateListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -114,6 +116,7 @@ public sealed record class TemplateListResponse : ModelBase
 
 class TemplateListResponseFromRaw : IFromRaw<TemplateListResponse>
 {
+    /// <inheritdoc/>
     public TemplateListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => TemplateListResponse.FromRawUnchecked(rawData);
@@ -237,6 +240,7 @@ public sealed record class Item : ModelBase
             Version = item.Version,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -262,6 +266,7 @@ public sealed record class Item : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Courier.Models.Tenants.Templates.ItemFromRaw.FromRawUnchecked"/>
     public static global::Courier.Models.Tenants.Templates.Item FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -272,6 +277,7 @@ public sealed record class Item : ModelBase
 
 class ItemFromRaw : IFromRaw<global::Courier.Models.Tenants.Templates.Item>
 {
+    /// <inheritdoc/>
     public global::Courier.Models.Tenants.Templates.Item FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Courier.Models.Tenants.Templates.Item.FromRawUnchecked(rawData);
@@ -294,6 +300,7 @@ public sealed record class IntersectionMember1 : ModelBase
         init { ModelBase.Set(this._rawData, "data", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Data.Validate();
@@ -314,6 +321,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Courier.Models.Tenants.Templates.IntersectionMember1FromRaw.FromRawUnchecked"/>
     public static global::Courier.Models.Tenants.Templates.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -332,6 +340,7 @@ public sealed record class IntersectionMember1 : ModelBase
 class IntersectionMember1FromRaw
     : IFromRaw<global::Courier.Models.Tenants.Templates.IntersectionMember1>
 {
+    /// <inheritdoc/>
     public global::Courier.Models.Tenants.Templates.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Courier.Models.Tenants.Templates.IntersectionMember1.FromRawUnchecked(rawData);
@@ -349,6 +358,7 @@ public sealed record class Data : ModelBase
         init { ModelBase.Set(this._rawData, "routing", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Routing.Validate();
@@ -369,6 +379,7 @@ public sealed record class Data : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="DataFromRaw.FromRawUnchecked"/>
     public static Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -384,6 +395,7 @@ public sealed record class Data : ModelBase
 
 class DataFromRaw : IFromRaw<Data>
 {
+    /// <inheritdoc/>
     public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Data.FromRawUnchecked(rawData);
 }
