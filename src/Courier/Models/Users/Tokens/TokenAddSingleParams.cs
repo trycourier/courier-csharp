@@ -29,7 +29,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// <summary>
     /// Full body of the token. Must match token in URL path parameter.
     /// </summary>
-    public required string Token1
+    public required string TokenValue
     {
         get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "token"); }
         init { ModelBase.Set(this._rawBodyData, "token", value); }
