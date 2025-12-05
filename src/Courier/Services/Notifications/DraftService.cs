@@ -9,7 +9,7 @@ using Courier.Models.Notifications.Draft;
 
 namespace Courier.Services.Notifications;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class DraftService : IDraftService
 {
     /// <inheritdoc/>

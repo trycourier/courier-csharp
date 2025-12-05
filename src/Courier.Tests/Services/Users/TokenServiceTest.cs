@@ -63,7 +63,7 @@ public class TokenServiceTest : TestBase
             new()
             {
                 UserID = "user_id",
-                Token1 = "token",
+                TokenValue = "token",
                 ProviderKey = ProviderKey.FirebaseFcm,
             }
         );

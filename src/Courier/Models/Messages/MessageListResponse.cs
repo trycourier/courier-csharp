@@ -28,6 +28,7 @@ public sealed record class MessageListResponse : ModelBase
         init { ModelBase.Set(this._rawData, "results", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Paging.Validate();
@@ -38,6 +39,9 @@ public sealed record class MessageListResponse : ModelBase
     }
 
     public MessageListResponse() { }
+
+    public MessageListResponse(MessageListResponse messageListResponse)
+        : base(messageListResponse) { }
 
     public MessageListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -52,6 +56,7 @@ public sealed record class MessageListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageListResponseFromRaw.FromRawUnchecked"/>
     public static MessageListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -62,6 +67,7 @@ public sealed record class MessageListResponse : ModelBase
 
 class MessageListResponseFromRaw : IFromRaw<MessageListResponse>
 {
+    /// <inheritdoc/>
     public MessageListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         MessageListResponse.FromRawUnchecked(rawData);
 }

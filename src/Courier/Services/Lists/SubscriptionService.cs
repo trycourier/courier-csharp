@@ -8,7 +8,7 @@ using Courier.Models.Lists.Subscriptions;
 
 namespace Courier.Services.Lists;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class SubscriptionService : ISubscriptionService
 {
     /// <inheritdoc/>

@@ -42,6 +42,7 @@ public sealed record class NotificationPreferenceDetails : ModelBase
         init { ModelBase.Set(this._rawData, "rules", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Status.Validate();
@@ -57,6 +58,11 @@ public sealed record class NotificationPreferenceDetails : ModelBase
 
     public NotificationPreferenceDetails() { }
 
+    public NotificationPreferenceDetails(
+        NotificationPreferenceDetails notificationPreferenceDetails
+    )
+        : base(notificationPreferenceDetails) { }
+
     public NotificationPreferenceDetails(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -70,6 +76,7 @@ public sealed record class NotificationPreferenceDetails : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="NotificationPreferenceDetailsFromRaw.FromRawUnchecked"/>
     public static NotificationPreferenceDetails FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -87,6 +94,7 @@ public sealed record class NotificationPreferenceDetails : ModelBase
 
 class NotificationPreferenceDetailsFromRaw : IFromRaw<NotificationPreferenceDetails>
 {
+    /// <inheritdoc/>
     public NotificationPreferenceDetails FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => NotificationPreferenceDetails.FromRawUnchecked(rawData);

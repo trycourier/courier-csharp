@@ -66,6 +66,7 @@ public sealed record class ElementalMetaNodeWithType : ModelBase
             Ref = elementalMetaNodeWithType.Ref,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channels;
@@ -76,6 +77,9 @@ public sealed record class ElementalMetaNodeWithType : ModelBase
     }
 
     public ElementalMetaNodeWithType() { }
+
+    public ElementalMetaNodeWithType(ElementalMetaNodeWithType elementalMetaNodeWithType)
+        : base(elementalMetaNodeWithType) { }
 
     public ElementalMetaNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -90,6 +94,7 @@ public sealed record class ElementalMetaNodeWithType : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalMetaNodeWithTypeFromRaw.FromRawUnchecked"/>
     public static ElementalMetaNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -100,6 +105,7 @@ public sealed record class ElementalMetaNodeWithType : ModelBase
 
 class ElementalMetaNodeWithTypeFromRaw : IFromRaw<ElementalMetaNodeWithType>
 {
+    /// <inheritdoc/>
     public ElementalMetaNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalMetaNodeWithType.FromRawUnchecked(rawData);
@@ -132,12 +138,18 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelB
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Type?.Validate();
     }
 
     public ElementalMetaNodeWithTypeIntersectionMember1() { }
+
+    public ElementalMetaNodeWithTypeIntersectionMember1(
+        ElementalMetaNodeWithTypeIntersectionMember1 elementalMetaNodeWithTypeIntersectionMember1
+    )
+        : base(elementalMetaNodeWithTypeIntersectionMember1) { }
 
     public ElementalMetaNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData
@@ -154,6 +166,7 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelB
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalMetaNodeWithTypeIntersectionMember1FromRaw.FromRawUnchecked"/>
     public static ElementalMetaNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -165,6 +178,7 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelB
 class ElementalMetaNodeWithTypeIntersectionMember1FromRaw
     : IFromRaw<ElementalMetaNodeWithTypeIntersectionMember1>
 {
+    /// <inheritdoc/>
     public ElementalMetaNodeWithTypeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalMetaNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);

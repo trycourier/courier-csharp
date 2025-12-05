@@ -9,7 +9,7 @@ using Courier.Models.Users.Tokens;
 
 namespace Courier.Services.Users;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class TokenService : ITokenService
 {
     /// <inheritdoc/>

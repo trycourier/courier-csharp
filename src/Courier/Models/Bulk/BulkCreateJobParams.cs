@@ -28,6 +28,12 @@ public sealed record class BulkCreateJobParams : ParamsBase
 
     public BulkCreateJobParams() { }
 
+    public BulkCreateJobParams(BulkCreateJobParams bulkCreateJobParams)
+        : base(bulkCreateJobParams)
+    {
+        this._rawBodyData = [.. bulkCreateJobParams._rawBodyData];
+    }
+
     public BulkCreateJobParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -53,6 +59,7 @@ public sealed record class BulkCreateJobParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static BulkCreateJobParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

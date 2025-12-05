@@ -19,6 +19,9 @@ public sealed record class TemplateRetrieveParams : ParamsBase
 
     public TemplateRetrieveParams() { }
 
+    public TemplateRetrieveParams(TemplateRetrieveParams templateRetrieveParams)
+        : base(templateRetrieveParams) { }
+
     public TemplateRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -40,6 +43,7 @@ public sealed record class TemplateRetrieveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static TemplateRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

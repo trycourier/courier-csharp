@@ -34,6 +34,7 @@ public sealed record class SubscriptionList : ModelBase
         init { ModelBase.Set(this._rawData, "updated", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -43,6 +44,9 @@ public sealed record class SubscriptionList : ModelBase
     }
 
     public SubscriptionList() { }
+
+    public SubscriptionList(SubscriptionList subscriptionList)
+        : base(subscriptionList) { }
 
     public SubscriptionList(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -57,6 +61,7 @@ public sealed record class SubscriptionList : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="SubscriptionListFromRaw.FromRawUnchecked"/>
     public static SubscriptionList FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -67,6 +72,7 @@ public sealed record class SubscriptionList : ModelBase
 
 class SubscriptionListFromRaw : IFromRaw<SubscriptionList>
 {
+    /// <inheritdoc/>
     public SubscriptionList FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         SubscriptionList.FromRawUnchecked(rawData);
 }

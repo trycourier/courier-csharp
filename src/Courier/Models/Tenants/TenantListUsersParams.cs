@@ -35,6 +35,9 @@ public sealed record class TenantListUsersParams : ParamsBase
 
     public TenantListUsersParams() { }
 
+    public TenantListUsersParams(TenantListUsersParams tenantListUsersParams)
+        : base(tenantListUsersParams) { }
+
     public TenantListUsersParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -56,6 +59,7 @@ public sealed record class TenantListUsersParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static TenantListUsersParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

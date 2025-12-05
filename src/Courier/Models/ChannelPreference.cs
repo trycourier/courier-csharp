@@ -22,12 +22,16 @@ public sealed record class ChannelPreference : ModelBase
         init { ModelBase.Set(this._rawData, "channel", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Channel.Validate();
     }
 
     public ChannelPreference() { }
+
+    public ChannelPreference(ChannelPreference channelPreference)
+        : base(channelPreference) { }
 
     public ChannelPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -42,6 +46,7 @@ public sealed record class ChannelPreference : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ChannelPreferenceFromRaw.FromRawUnchecked"/>
     public static ChannelPreference FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -59,6 +64,7 @@ public sealed record class ChannelPreference : ModelBase
 
 class ChannelPreferenceFromRaw : IFromRaw<ChannelPreference>
 {
+    /// <inheritdoc/>
     public ChannelPreference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ChannelPreference.FromRawUnchecked(rawData);
 }

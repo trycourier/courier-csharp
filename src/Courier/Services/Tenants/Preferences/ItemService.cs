@@ -8,7 +8,7 @@ using Courier.Models.Tenants.Preferences.Items;
 
 namespace Courier.Services.Tenants.Preferences;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ItemService : IItemService
 {
     /// <inheritdoc/>

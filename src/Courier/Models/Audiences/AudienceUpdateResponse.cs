@@ -16,12 +16,16 @@ public sealed record class AudienceUpdateResponse : ModelBase
         init { ModelBase.Set(this._rawData, "audience", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Audience.Validate();
     }
 
     public AudienceUpdateResponse() { }
+
+    public AudienceUpdateResponse(AudienceUpdateResponse audienceUpdateResponse)
+        : base(audienceUpdateResponse) { }
 
     public AudienceUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -36,6 +40,7 @@ public sealed record class AudienceUpdateResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AudienceUpdateResponseFromRaw.FromRawUnchecked"/>
     public static AudienceUpdateResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -53,6 +58,7 @@ public sealed record class AudienceUpdateResponse : ModelBase
 
 class AudienceUpdateResponseFromRaw : IFromRaw<AudienceUpdateResponse>
 {
+    /// <inheritdoc/>
     public AudienceUpdateResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => AudienceUpdateResponse.FromRawUnchecked(rawData);

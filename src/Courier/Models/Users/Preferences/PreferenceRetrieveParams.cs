@@ -26,6 +26,9 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
 
     public PreferenceRetrieveParams() { }
 
+    public PreferenceRetrieveParams(PreferenceRetrieveParams preferenceRetrieveParams)
+        : base(preferenceRetrieveParams) { }
+
     public PreferenceRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -47,6 +50,7 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static PreferenceRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -7,7 +7,7 @@ using Courier.Models.Auth;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class AuthService : IAuthService
 {
     /// <inheritdoc/>

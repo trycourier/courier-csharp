@@ -22,6 +22,7 @@ public sealed record class EmailFooter : ModelBase
         init { ModelBase.Set(this._rawData, "inheritDefault", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Content;
@@ -29,6 +30,9 @@ public sealed record class EmailFooter : ModelBase
     }
 
     public EmailFooter() { }
+
+    public EmailFooter(EmailFooter emailFooter)
+        : base(emailFooter) { }
 
     public EmailFooter(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -43,6 +47,7 @@ public sealed record class EmailFooter : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="EmailFooterFromRaw.FromRawUnchecked"/>
     public static EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -51,6 +56,7 @@ public sealed record class EmailFooter : ModelBase
 
 class EmailFooterFromRaw : IFromRaw<EmailFooter>
 {
+    /// <inheritdoc/>
     public EmailFooter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         EmailFooter.FromRawUnchecked(rawData);
 }

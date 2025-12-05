@@ -8,7 +8,7 @@ using Courier.Models.Bulk;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class BulkService : IBulkService
 {
     /// <inheritdoc/>

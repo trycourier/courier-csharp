@@ -9,7 +9,7 @@ using Courier.Services.Tenants;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class TenantService : ITenantService
 {
     /// <inheritdoc/>

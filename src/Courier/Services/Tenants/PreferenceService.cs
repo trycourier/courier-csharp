@@ -4,7 +4,7 @@ using Courier.Services.Tenants.Preferences;
 
 namespace Courier.Services.Tenants;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class PreferenceService : IPreferenceService
 {
     /// <inheritdoc/>

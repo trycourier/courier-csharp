@@ -36,6 +36,12 @@ public sealed record class TenantAddMultipleParams : ParamsBase
 
     public TenantAddMultipleParams() { }
 
+    public TenantAddMultipleParams(TenantAddMultipleParams tenantAddMultipleParams)
+        : base(tenantAddMultipleParams)
+    {
+        this._rawBodyData = [.. tenantAddMultipleParams._rawBodyData];
+    }
+
     public TenantAddMultipleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -61,6 +67,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static TenantAddMultipleParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

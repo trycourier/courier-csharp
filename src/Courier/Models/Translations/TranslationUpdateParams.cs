@@ -32,6 +32,12 @@ public sealed record class TranslationUpdateParams : ParamsBase
 
     public TranslationUpdateParams() { }
 
+    public TranslationUpdateParams(TranslationUpdateParams translationUpdateParams)
+        : base(translationUpdateParams)
+    {
+        this._rawBodyData = [.. translationUpdateParams._rawBodyData];
+    }
+
     public TranslationUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -57,6 +63,7 @@ public sealed record class TranslationUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static TranslationUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

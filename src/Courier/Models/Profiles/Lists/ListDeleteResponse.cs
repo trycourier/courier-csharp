@@ -23,12 +23,16 @@ public sealed record class ListDeleteResponse : ModelBase
         init { ModelBase.Set(this._rawData, "status", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Status.Validate();
     }
 
     public ListDeleteResponse() { }
+
+    public ListDeleteResponse(ListDeleteResponse listDeleteResponse)
+        : base(listDeleteResponse) { }
 
     public ListDeleteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -43,6 +47,7 @@ public sealed record class ListDeleteResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ListDeleteResponseFromRaw.FromRawUnchecked"/>
     public static ListDeleteResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -60,6 +65,7 @@ public sealed record class ListDeleteResponse : ModelBase
 
 class ListDeleteResponseFromRaw : IFromRaw<ListDeleteResponse>
 {
+    /// <inheritdoc/>
     public ListDeleteResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ListDeleteResponse.FromRawUnchecked(rawData);
 }

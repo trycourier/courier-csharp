@@ -92,6 +92,7 @@ public sealed record class Tenant : ModelBase
         init { ModelBase.Set(this._rawData, "user_profile", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -104,6 +105,9 @@ public sealed record class Tenant : ModelBase
     }
 
     public Tenant() { }
+
+    public Tenant(Tenant tenant)
+        : base(tenant) { }
 
     public Tenant(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -118,6 +122,7 @@ public sealed record class Tenant : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TenantFromRaw.FromRawUnchecked"/>
     public static Tenant FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -126,6 +131,7 @@ public sealed record class Tenant : ModelBase
 
 class TenantFromRaw : IFromRaw<Tenant>
 {
+    /// <inheritdoc/>
     public Tenant FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Tenant.FromRawUnchecked(rawData);
 }

@@ -20,12 +20,16 @@ public sealed record class InboundTrackEventResponse : ModelBase
         init { ModelBase.Set(this._rawData, "messageId", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.MessageID;
     }
 
     public InboundTrackEventResponse() { }
+
+    public InboundTrackEventResponse(InboundTrackEventResponse inboundTrackEventResponse)
+        : base(inboundTrackEventResponse) { }
 
     public InboundTrackEventResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -40,6 +44,7 @@ public sealed record class InboundTrackEventResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="InboundTrackEventResponseFromRaw.FromRawUnchecked"/>
     public static InboundTrackEventResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -57,6 +62,7 @@ public sealed record class InboundTrackEventResponse : ModelBase
 
 class InboundTrackEventResponseFromRaw : IFromRaw<InboundTrackEventResponse>
 {
+    /// <inheritdoc/>
     public InboundTrackEventResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InboundTrackEventResponse.FromRawUnchecked(rawData);

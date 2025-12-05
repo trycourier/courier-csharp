@@ -7,7 +7,7 @@ using Courier.Models.Send;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class SendService : ISendService
 {
     /// <inheritdoc/>

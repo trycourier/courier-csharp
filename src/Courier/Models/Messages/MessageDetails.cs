@@ -126,6 +126,7 @@ public sealed record class MessageDetails : ModelBase
         init { ModelBase.Set(this._rawData, "reason", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -144,6 +145,9 @@ public sealed record class MessageDetails : ModelBase
 
     public MessageDetails() { }
 
+    public MessageDetails(MessageDetails messageDetails)
+        : base(messageDetails) { }
+
     public MessageDetails(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -157,6 +161,7 @@ public sealed record class MessageDetails : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageDetailsFromRaw.FromRawUnchecked"/>
     public static MessageDetails FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -165,6 +170,7 @@ public sealed record class MessageDetails : ModelBase
 
 class MessageDetailsFromRaw : IFromRaw<MessageDetails>
 {
+    /// <inheritdoc/>
     public MessageDetails FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         MessageDetails.FromRawUnchecked(rawData);
 }

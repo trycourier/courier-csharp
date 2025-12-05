@@ -141,18 +141,63 @@ public record class ElementalNode
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalTextNodeWithType"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickTextNodeWithType(out var value)) {
+    ///     // `value` is of type `ElementalTextNodeWithType`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickTextNodeWithType([NotNullWhen(true)] out ElementalTextNodeWithType? value)
     {
         value = this.Value as ElementalTextNodeWithType;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalMetaNodeWithType"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickMetaNodeWithType(out var value)) {
+    ///     // `value` is of type `ElementalMetaNodeWithType`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickMetaNodeWithType([NotNullWhen(true)] out ElementalMetaNodeWithType? value)
     {
         value = this.Value as ElementalMetaNodeWithType;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalChannelNodeWithType"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickChannelNodeWithType(out var value)) {
+    ///     // `value` is of type `ElementalChannelNodeWithType`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickChannelNodeWithType(
         [NotNullWhen(true)] out ElementalChannelNodeWithType? value
     )
@@ -161,12 +206,42 @@ public record class ElementalNode
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalImageNodeWithType"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickImageNodeWithType(out var value)) {
+    ///     // `value` is of type `ElementalImageNodeWithType`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickImageNodeWithType([NotNullWhen(true)] out ElementalImageNodeWithType? value)
     {
         value = this.Value as ElementalImageNodeWithType;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalActionNodeWithType"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickActionNodeWithType(out var value)) {
+    ///     // `value` is of type `ElementalActionNodeWithType`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickActionNodeWithType(
         [NotNullWhen(true)] out ElementalActionNodeWithType? value
     )
@@ -175,6 +250,21 @@ public record class ElementalNode
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalDividerNodeWithType"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickDividerNodeWithType(out var value)) {
+    ///     // `value` is of type `ElementalDividerNodeWithType`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickDividerNodeWithType(
         [NotNullWhen(true)] out ElementalDividerNodeWithType? value
     )
@@ -183,12 +273,52 @@ public record class ElementalNode
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalQuoteNodeWithType"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickQuoteNodeWithType(out var value)) {
+    ///     // `value` is of type `ElementalQuoteNodeWithType`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickQuoteNodeWithType([NotNullWhen(true)] out ElementalQuoteNodeWithType? value)
     {
         value = this.Value as ElementalQuoteNodeWithType;
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (ElementalTextNodeWithType value) => {...},
+    ///     (ElementalMetaNodeWithType value) => {...},
+    ///     (ElementalChannelNodeWithType value) => {...},
+    ///     (ElementalImageNodeWithType value) => {...},
+    ///     (ElementalActionNodeWithType value) => {...},
+    ///     (ElementalDividerNodeWithType value) => {...},
+    ///     (ElementalQuoteNodeWithType value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(
         System::Action<ElementalTextNodeWithType> textNodeWithType,
         System::Action<ElementalMetaNodeWithType> metaNodeWithType,
@@ -229,6 +359,32 @@ public record class ElementalNode
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (ElementalTextNodeWithType value) => {...},
+    ///     (ElementalMetaNodeWithType value) => {...},
+    ///     (ElementalChannelNodeWithType value) => {...},
+    ///     (ElementalImageNodeWithType value) => {...},
+    ///     (ElementalActionNodeWithType value) => {...},
+    ///     (ElementalDividerNodeWithType value) => {...},
+    ///     (ElementalQuoteNodeWithType value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(
         System::Func<ElementalTextNodeWithType, T> textNodeWithType,
         System::Func<ElementalMetaNodeWithType, T> metaNodeWithType,
@@ -268,6 +424,16 @@ public record class ElementalNode
 
     public static implicit operator ElementalNode(ElementalQuoteNodeWithType value) => new(value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)

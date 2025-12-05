@@ -9,7 +9,7 @@ using Courier.Services.Lists;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class ListService : IListService
 {
     /// <inheritdoc/>

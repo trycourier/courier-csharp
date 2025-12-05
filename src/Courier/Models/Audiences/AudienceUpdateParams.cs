@@ -51,6 +51,12 @@ public sealed record class AudienceUpdateParams : ParamsBase
 
     public AudienceUpdateParams() { }
 
+    public AudienceUpdateParams(AudienceUpdateParams audienceUpdateParams)
+        : base(audienceUpdateParams)
+    {
+        this._rawBodyData = [.. audienceUpdateParams._rawBodyData];
+    }
+
     public AudienceUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -76,6 +82,7 @@ public sealed record class AudienceUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static AudienceUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

@@ -22,6 +22,7 @@ public sealed record class Rule : ModelBase
         init { ModelBase.Set(this._rawData, "start", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Until;
@@ -29,6 +30,9 @@ public sealed record class Rule : ModelBase
     }
 
     public Rule() { }
+
+    public Rule(Rule rule)
+        : base(rule) { }
 
     public Rule(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -43,6 +47,7 @@ public sealed record class Rule : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="RuleFromRaw.FromRawUnchecked"/>
     public static Rule FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -58,6 +63,7 @@ public sealed record class Rule : ModelBase
 
 class RuleFromRaw : IFromRaw<Rule>
 {
+    /// <inheritdoc/>
     public Rule FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Rule.FromRawUnchecked(rawData);
 }

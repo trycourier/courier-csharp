@@ -24,6 +24,9 @@ public sealed record class BrandListParams : ParamsBase
 
     public BrandListParams() { }
 
+    public BrandListParams(BrandListParams brandListParams)
+        : base(brandListParams) { }
+
     public BrandListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -45,6 +48,7 @@ public sealed record class BrandListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static BrandListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

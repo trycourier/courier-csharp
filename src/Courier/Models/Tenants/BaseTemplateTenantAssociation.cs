@@ -57,6 +57,7 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
         init { ModelBase.Set(this._rawData, "version", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -67,6 +68,11 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
     }
 
     public BaseTemplateTenantAssociation() { }
+
+    public BaseTemplateTenantAssociation(
+        BaseTemplateTenantAssociation baseTemplateTenantAssociation
+    )
+        : base(baseTemplateTenantAssociation) { }
 
     public BaseTemplateTenantAssociation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -81,6 +87,7 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BaseTemplateTenantAssociationFromRaw.FromRawUnchecked"/>
     public static BaseTemplateTenantAssociation FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -91,6 +98,7 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
 
 class BaseTemplateTenantAssociationFromRaw : IFromRaw<BaseTemplateTenantAssociation>
 {
+    /// <inheritdoc/>
     public BaseTemplateTenantAssociation FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => BaseTemplateTenantAssociation.FromRawUnchecked(rawData);

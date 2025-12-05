@@ -9,7 +9,7 @@ using Courier.Models.Tenants.Templates;
 
 namespace Courier.Services.Tenants;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class TemplateService : ITemplateService
 {
     /// <inheritdoc/>

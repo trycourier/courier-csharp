@@ -4,7 +4,7 @@ using Users = Courier.Services.Users;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class UserService : IUserService
 {
     /// <inheritdoc/>

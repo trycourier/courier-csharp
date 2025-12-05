@@ -8,7 +8,7 @@ using Courier.Models.Users.Preferences;
 
 namespace Courier.Services.Users;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class PreferenceService : IPreferenceService
 {
     /// <inheritdoc/>

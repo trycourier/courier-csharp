@@ -17,6 +17,9 @@ public sealed record class AudienceDeleteParams : ParamsBase
 
     public AudienceDeleteParams() { }
 
+    public AudienceDeleteParams(AudienceDeleteParams audienceDeleteParams)
+        : base(audienceDeleteParams) { }
+
     public AudienceDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -38,6 +41,7 @@ public sealed record class AudienceDeleteParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static AudienceDeleteParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

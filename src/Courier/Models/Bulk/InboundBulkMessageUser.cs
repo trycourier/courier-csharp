@@ -59,6 +59,7 @@ public sealed record class InboundBulkMessageUser : ModelBase
         init { ModelBase.Set(this._rawData, "to", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Data;
@@ -69,6 +70,9 @@ public sealed record class InboundBulkMessageUser : ModelBase
     }
 
     public InboundBulkMessageUser() { }
+
+    public InboundBulkMessageUser(InboundBulkMessageUser inboundBulkMessageUser)
+        : base(inboundBulkMessageUser) { }
 
     public InboundBulkMessageUser(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -83,6 +87,7 @@ public sealed record class InboundBulkMessageUser : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="InboundBulkMessageUserFromRaw.FromRawUnchecked"/>
     public static InboundBulkMessageUser FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -93,6 +98,7 @@ public sealed record class InboundBulkMessageUser : ModelBase
 
 class InboundBulkMessageUserFromRaw : IFromRaw<InboundBulkMessageUser>
 {
+    /// <inheritdoc/>
     public InboundBulkMessageUser FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InboundBulkMessageUser.FromRawUnchecked(rawData);

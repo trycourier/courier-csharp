@@ -43,6 +43,14 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     public PreferenceUpdateOrCreateTopicParams() { }
 
     public PreferenceUpdateOrCreateTopicParams(
+        PreferenceUpdateOrCreateTopicParams preferenceUpdateOrCreateTopicParams
+    )
+        : base(preferenceUpdateOrCreateTopicParams)
+    {
+        this._rawBodyData = [.. preferenceUpdateOrCreateTopicParams._rawBodyData];
+    }
+
+    public PreferenceUpdateOrCreateTopicParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -67,6 +75,7 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static PreferenceUpdateOrCreateTopicParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -142,6 +151,7 @@ public sealed record class Topic : ModelBase
         init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Status.Validate();
@@ -153,6 +163,9 @@ public sealed record class Topic : ModelBase
     }
 
     public Topic() { }
+
+    public Topic(Topic topic)
+        : base(topic) { }
 
     public Topic(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -167,6 +180,7 @@ public sealed record class Topic : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TopicFromRaw.FromRawUnchecked"/>
     public static Topic FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -182,6 +196,7 @@ public sealed record class Topic : ModelBase
 
 class TopicFromRaw : IFromRaw<Topic>
 {
+    /// <inheritdoc/>
     public Topic FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Topic.FromRawUnchecked(rawData);
 }

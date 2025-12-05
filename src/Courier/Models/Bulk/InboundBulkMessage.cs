@@ -48,18 +48,68 @@ public record class InboundBulkMessage
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="InboundBulkTemplateMessage"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickTemplate(out var value)) {
+    ///     // `value` is of type `InboundBulkTemplateMessage`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickTemplate([NotNullWhen(true)] out InboundBulkTemplateMessage? value)
     {
         value = this.Value as InboundBulkTemplateMessage;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="InboundBulkContentMessage"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickContent(out var value)) {
+    ///     // `value` is of type `InboundBulkContentMessage`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickContent([NotNullWhen(true)] out InboundBulkContentMessage? value)
     {
         value = this.Value as InboundBulkContentMessage;
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (InboundBulkTemplateMessage value) => {...},
+    ///     (InboundBulkContentMessage value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(
         System::Action<InboundBulkTemplateMessage> template,
         System::Action<InboundBulkContentMessage> content
@@ -80,6 +130,27 @@ public record class InboundBulkMessage
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (InboundBulkTemplateMessage value) => {...},
+    ///     (InboundBulkContentMessage value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(
         System::Func<InboundBulkTemplateMessage, T> template,
         System::Func<InboundBulkContentMessage, T> content
@@ -101,6 +172,16 @@ public record class InboundBulkMessage
     public static implicit operator InboundBulkMessage(InboundBulkContentMessage value) =>
         new(value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)
@@ -234,6 +315,7 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
         init { ModelBase.Set(this._rawData, "override", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Template;
@@ -245,6 +327,9 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
     }
 
     public InboundBulkTemplateMessage() { }
+
+    public InboundBulkTemplateMessage(InboundBulkTemplateMessage inboundBulkTemplateMessage)
+        : base(inboundBulkTemplateMessage) { }
 
     public InboundBulkTemplateMessage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -259,6 +344,7 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="InboundBulkTemplateMessageFromRaw.FromRawUnchecked"/>
     public static InboundBulkTemplateMessage FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -276,6 +362,7 @@ public sealed record class InboundBulkTemplateMessage : ModelBase
 
 class InboundBulkTemplateMessageFromRaw : IFromRaw<InboundBulkTemplateMessage>
 {
+    /// <inheritdoc/>
     public InboundBulkTemplateMessage FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InboundBulkTemplateMessage.FromRawUnchecked(rawData);
@@ -341,6 +428,7 @@ public sealed record class InboundBulkContentMessage : ModelBase
         init { ModelBase.Set(this._rawData, "override", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Content.Validate();
@@ -352,6 +440,9 @@ public sealed record class InboundBulkContentMessage : ModelBase
     }
 
     public InboundBulkContentMessage() { }
+
+    public InboundBulkContentMessage(InboundBulkContentMessage inboundBulkContentMessage)
+        : base(inboundBulkContentMessage) { }
 
     public InboundBulkContentMessage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -366,6 +457,7 @@ public sealed record class InboundBulkContentMessage : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="InboundBulkContentMessageFromRaw.FromRawUnchecked"/>
     public static InboundBulkContentMessage FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -383,6 +475,7 @@ public sealed record class InboundBulkContentMessage : ModelBase
 
 class InboundBulkContentMessageFromRaw : IFromRaw<InboundBulkContentMessage>
 {
+    /// <inheritdoc/>
     public InboundBulkContentMessage FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => InboundBulkContentMessage.FromRawUnchecked(rawData);
@@ -420,18 +513,68 @@ public record class Content
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalContentSugar"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickElementalContentSugar(out var value)) {
+    ///     // `value` is of type `ElementalContentSugar`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickElementalContentSugar([NotNullWhen(true)] out ElementalContentSugar? value)
     {
         value = this.Value as ElementalContentSugar;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalContent"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickElemental(out var value)) {
+    ///     // `value` is of type `ElementalContent`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickElemental([NotNullWhen(true)] out ElementalContent? value)
     {
         value = this.Value as ElementalContent;
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (ElementalContentSugar value) => {...},
+    ///     (ElementalContent value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(
         System::Action<ElementalContentSugar> elementalContentSugar,
         System::Action<ElementalContent> elemental
@@ -450,6 +593,27 @@ public record class Content
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (ElementalContentSugar value) => {...},
+    ///     (ElementalContent value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(
         System::Func<ElementalContentSugar, T> elementalContentSugar,
         System::Func<ElementalContent, T> elemental
@@ -467,6 +631,16 @@ public record class Content
 
     public static implicit operator Content(ElementalContent value) => new(value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)

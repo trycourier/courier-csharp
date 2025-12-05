@@ -27,6 +27,7 @@ public sealed record class SubscribeToListsRequestItem : ModelBase
         init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ListID;
@@ -34,6 +35,9 @@ public sealed record class SubscribeToListsRequestItem : ModelBase
     }
 
     public SubscribeToListsRequestItem() { }
+
+    public SubscribeToListsRequestItem(SubscribeToListsRequestItem subscribeToListsRequestItem)
+        : base(subscribeToListsRequestItem) { }
 
     public SubscribeToListsRequestItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -48,6 +52,7 @@ public sealed record class SubscribeToListsRequestItem : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="SubscribeToListsRequestItemFromRaw.FromRawUnchecked"/>
     public static SubscribeToListsRequestItem FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -65,6 +70,7 @@ public sealed record class SubscribeToListsRequestItem : ModelBase
 
 class SubscribeToListsRequestItemFromRaw : IFromRaw<SubscribeToListsRequestItem>
 {
+    /// <inheritdoc/>
     public SubscribeToListsRequestItem FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => SubscribeToListsRequestItem.FromRawUnchecked(rawData);
