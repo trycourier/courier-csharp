@@ -36,11 +36,8 @@ public class TokenServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task List_Works()
     {
-        var userTokens = await this.client.Users.Tokens.List("user_id");
-        foreach (var item in userTokens)
-        {
-            item.Validate();
-        }
+        var tokens = await this.client.Users.Tokens.List("user_id");
+        tokens.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
@@ -51,13 +50,13 @@ public interface ITokenService
     /// <summary>
     /// Gets all tokens available for a :user_id
     /// </summary>
-    Task<List<UserToken>> List(
+    Task<TokenListResponse> List(
         TokenListParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="List(TokenListParams, CancellationToken)"/>
-    Task<List<UserToken>> List(
+    Task<TokenListResponse> List(
         string userID,
         TokenListParams? parameters = null,
         CancellationToken cancellationToken = default
