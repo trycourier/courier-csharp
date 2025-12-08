@@ -3,7 +3,7 @@
     <!-- Metadata -->
     <AssemblyTitle>Courier C#</AssemblyTitle>
     <AssemblyName>Courier</AssemblyName>
-    <VersionPrefix>3.1.0</VersionPrefix>
+    <VersionPrefix>3.2.0</VersionPrefix>
     <Authors>Courier</Authors>
     <Company>Courier</Company>
     <Description>The official .NET library for the Courier API.</Description>
