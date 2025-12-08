@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.2.0 (2025-12-08)
+
+Full Changelog: [v3.1.0...v3.2.0](https://github.com/trycourier/courier-csharp/compare/v3.1.0...v3.2.0)
+
+### Features
+
+* Fix UsersGetAllTokensResponse to return object with tokens property i… ([6b00b29](https://github.com/trycourier/courier-csharp/commit/6b00b297425c2be66699fb7fae8d3c00b719e818))
+
 ## 3.1.0 (2025-12-08)
 
 Full Changelog: [v3.0.0...v3.1.0](https://github.com/trycourier/courier-csharp/compare/v3.0.0...v3.1.0)
