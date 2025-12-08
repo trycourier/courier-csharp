@@ -82,6 +82,15 @@ public sealed record class Result : ModelBase
         init { ModelBase.Set(this._rawData, "created_at", value); }
     }
 
+    /// <summary>
+    /// Array of event IDs associated with this notification
+    /// </summary>
+    public required IReadOnlyList<string> EventIDs
+    {
+        get { return ModelBase.GetNotNullClass<List<string>>(this.RawData, "event_ids"); }
+        init { ModelBase.Set(this._rawData, "event_ids", value); }
+    }
+
     public required string Note
     {
         get { return ModelBase.GetNotNullClass<string>(this.RawData, "note"); }
@@ -123,6 +132,7 @@ public sealed record class Result : ModelBase
     {
         _ = this.ID;
         _ = this.CreatedAt;
+        _ = this.EventIDs;
         _ = this.Note;
         this.Routing.Validate();
         _ = this.TopicID;
