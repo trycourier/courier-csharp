@@ -19,6 +19,7 @@ public class NotificationListResponseTest : TestBase
                 {
                     ID = "id",
                     CreatedAt = 0,
+                    EventIDs = ["string"],
                     Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
@@ -36,6 +37,7 @@ public class NotificationListResponseTest : TestBase
             {
                 ID = "id",
                 CreatedAt = 0,
+                EventIDs = ["string"],
                 Note = "note",
                 Routing = new() { Channels = ["string"], Method = Method.All },
                 TopicID = "topic_id",
@@ -65,6 +67,7 @@ public class NotificationListResponseTest : TestBase
                 {
                     ID = "id",
                     CreatedAt = 0,
+                    EventIDs = ["string"],
                     Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
@@ -93,6 +96,7 @@ public class NotificationListResponseTest : TestBase
                 {
                     ID = "id",
                     CreatedAt = 0,
+                    EventIDs = ["string"],
                     Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
@@ -114,6 +118,7 @@ public class NotificationListResponseTest : TestBase
             {
                 ID = "id",
                 CreatedAt = 0,
+                EventIDs = ["string"],
                 Note = "note",
                 Routing = new() { Channels = ["string"], Method = Method.All },
                 TopicID = "topic_id",
@@ -143,6 +148,7 @@ public class NotificationListResponseTest : TestBase
                 {
                     ID = "id",
                     CreatedAt = 0,
+                    EventIDs = ["string"],
                     Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
@@ -166,6 +172,7 @@ public class ResultTest : TestBase
         {
             ID = "id",
             CreatedAt = 0,
+            EventIDs = ["string"],
             Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
@@ -176,6 +183,7 @@ public class ResultTest : TestBase
 
         string expectedID = "id";
         long expectedCreatedAt = 0;
+        List<string> expectedEventIDs = ["string"];
         string expectedNote = "note";
         MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
         string expectedTopicID = "topic_id";
@@ -185,6 +193,11 @@ public class ResultTest : TestBase
 
         Assert.Equal(expectedID, model.ID);
         Assert.Equal(expectedCreatedAt, model.CreatedAt);
+        Assert.Equal(expectedEventIDs.Count, model.EventIDs.Count);
+        for (int i = 0; i < expectedEventIDs.Count; i++)
+        {
+            Assert.Equal(expectedEventIDs[i], model.EventIDs[i]);
+        }
         Assert.Equal(expectedNote, model.Note);
         Assert.Equal(expectedRouting, model.Routing);
         Assert.Equal(expectedTopicID, model.TopicID);
@@ -200,6 +213,7 @@ public class ResultTest : TestBase
         {
             ID = "id",
             CreatedAt = 0,
+            EventIDs = ["string"],
             Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
@@ -221,6 +235,7 @@ public class ResultTest : TestBase
         {
             ID = "id",
             CreatedAt = 0,
+            EventIDs = ["string"],
             Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
@@ -235,6 +250,7 @@ public class ResultTest : TestBase
 
         string expectedID = "id";
         long expectedCreatedAt = 0;
+        List<string> expectedEventIDs = ["string"];
         string expectedNote = "note";
         MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
         string expectedTopicID = "topic_id";
@@ -244,6 +260,11 @@ public class ResultTest : TestBase
 
         Assert.Equal(expectedID, deserialized.ID);
         Assert.Equal(expectedCreatedAt, deserialized.CreatedAt);
+        Assert.Equal(expectedEventIDs.Count, deserialized.EventIDs.Count);
+        for (int i = 0; i < expectedEventIDs.Count; i++)
+        {
+            Assert.Equal(expectedEventIDs[i], deserialized.EventIDs[i]);
+        }
         Assert.Equal(expectedNote, deserialized.Note);
         Assert.Equal(expectedRouting, deserialized.Routing);
         Assert.Equal(expectedTopicID, deserialized.TopicID);
@@ -259,6 +280,7 @@ public class ResultTest : TestBase
         {
             ID = "id",
             CreatedAt = 0,
+            EventIDs = ["string"],
             Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
@@ -277,6 +299,7 @@ public class ResultTest : TestBase
         {
             ID = "id",
             CreatedAt = 0,
+            EventIDs = ["string"],
             Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
@@ -296,6 +319,7 @@ public class ResultTest : TestBase
         {
             ID = "id",
             CreatedAt = 0,
+            EventIDs = ["string"],
             Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
@@ -312,6 +336,7 @@ public class ResultTest : TestBase
         {
             ID = "id",
             CreatedAt = 0,
+            EventIDs = ["string"],
             Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
@@ -334,6 +359,7 @@ public class ResultTest : TestBase
         {
             ID = "id",
             CreatedAt = 0,
+            EventIDs = ["string"],
             Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
