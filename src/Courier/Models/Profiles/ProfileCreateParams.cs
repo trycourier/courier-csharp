@@ -37,6 +37,12 @@ public sealed record class ProfileCreateParams : ParamsBase
 
     public ProfileCreateParams() { }
 
+    public ProfileCreateParams(ProfileCreateParams profileCreateParams)
+        : base(profileCreateParams)
+    {
+        this._rawBodyData = [.. profileCreateParams._rawBodyData];
+    }
+
     public ProfileCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -62,6 +68,7 @@ public sealed record class ProfileCreateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static ProfileCreateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

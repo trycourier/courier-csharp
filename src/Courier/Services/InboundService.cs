@@ -7,7 +7,7 @@ using Courier.Models.Inbound;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class InboundService : IInboundService
 {
     /// <inheritdoc/>

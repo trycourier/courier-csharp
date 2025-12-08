@@ -25,6 +25,7 @@ public sealed record class ListRetrieveResponse : ModelBase
         init { ModelBase.Set(this._rawData, "results", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Paging.Validate();
@@ -35,6 +36,9 @@ public sealed record class ListRetrieveResponse : ModelBase
     }
 
     public ListRetrieveResponse() { }
+
+    public ListRetrieveResponse(ListRetrieveResponse listRetrieveResponse)
+        : base(listRetrieveResponse) { }
 
     public ListRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -49,6 +53,7 @@ public sealed record class ListRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ListRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static ListRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -59,6 +64,7 @@ public sealed record class ListRetrieveResponse : ModelBase
 
 class ListRetrieveResponseFromRaw : IFromRaw<ListRetrieveResponse>
 {
+    /// <inheritdoc/>
     public ListRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ListRetrieveResponse.FromRawUnchecked(rawData);
@@ -109,6 +115,7 @@ public sealed record class Result : ModelBase
         init { ModelBase.Set(this._rawData, "preferences", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -119,6 +126,9 @@ public sealed record class Result : ModelBase
     }
 
     public Result() { }
+
+    public Result(Result result)
+        : base(result) { }
 
     public Result(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -133,6 +143,7 @@ public sealed record class Result : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ResultFromRaw.FromRawUnchecked"/>
     public static Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -141,6 +152,7 @@ public sealed record class Result : ModelBase
 
 class ResultFromRaw : IFromRaw<Result>
 {
+    /// <inheritdoc/>
     public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Result.FromRawUnchecked(rawData);
 }

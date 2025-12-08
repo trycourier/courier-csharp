@@ -28,6 +28,7 @@ public sealed record class EmailHeader : ModelBase
         init { ModelBase.Set(this._rawData, "inheritDefault", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Logo.Validate();
@@ -36,6 +37,9 @@ public sealed record class EmailHeader : ModelBase
     }
 
     public EmailHeader() { }
+
+    public EmailHeader(EmailHeader emailHeader)
+        : base(emailHeader) { }
 
     public EmailHeader(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -50,6 +54,7 @@ public sealed record class EmailHeader : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="EmailHeaderFromRaw.FromRawUnchecked"/>
     public static EmailHeader FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -65,6 +70,7 @@ public sealed record class EmailHeader : ModelBase
 
 class EmailHeaderFromRaw : IFromRaw<EmailHeader>
 {
+    /// <inheritdoc/>
     public EmailHeader FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         EmailHeader.FromRawUnchecked(rawData);
 }

@@ -40,6 +40,14 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
     public SubscriptionSubscribeUserParams() { }
 
     public SubscriptionSubscribeUserParams(
+        SubscriptionSubscribeUserParams subscriptionSubscribeUserParams
+    )
+        : base(subscriptionSubscribeUserParams)
+    {
+        this._rawBodyData = [.. subscriptionSubscribeUserParams._rawBodyData];
+    }
+
+    public SubscriptionSubscribeUserParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -64,6 +72,7 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static SubscriptionSubscribeUserParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

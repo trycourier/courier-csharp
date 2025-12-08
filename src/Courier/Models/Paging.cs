@@ -22,6 +22,7 @@ public sealed record class Paging : ModelBase
         init { ModelBase.Set(this._rawData, "cursor", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.More;
@@ -29,6 +30,9 @@ public sealed record class Paging : ModelBase
     }
 
     public Paging() { }
+
+    public Paging(Paging paging)
+        : base(paging) { }
 
     public Paging(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -43,6 +47,7 @@ public sealed record class Paging : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PagingFromRaw.FromRawUnchecked"/>
     public static Paging FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -58,6 +63,7 @@ public sealed record class Paging : ModelBase
 
 class PagingFromRaw : IFromRaw<Paging>
 {
+    /// <inheritdoc/>
     public Paging FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Paging.FromRawUnchecked(rawData);
 }

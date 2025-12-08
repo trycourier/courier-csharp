@@ -53,6 +53,12 @@ public sealed record class AuthIssueTokenParams : ParamsBase
 
     public AuthIssueTokenParams() { }
 
+    public AuthIssueTokenParams(AuthIssueTokenParams authIssueTokenParams)
+        : base(authIssueTokenParams)
+    {
+        this._rawBodyData = [.. authIssueTokenParams._rawBodyData];
+    }
+
     public AuthIssueTokenParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -78,6 +84,7 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static AuthIssueTokenParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

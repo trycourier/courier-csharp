@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.1.0 (2025-12-08)
+
+Full Changelog: [v3.0.0...v3.1.0](https://github.com/trycourier/courier-csharp/compare/v3.0.0...v3.1.0)
+
+### Features
+
+* Add event_ids field to Notification schema ([e8f8182](https://github.com/trycourier/courier-csharp/commit/e8f8182b7a3c253c8414f621086b613699d1c076))
+* **client:** add x-stainless-retry-count ([a1d9ccf](https://github.com/trycourier/courier-csharp/commit/a1d9ccfd76e895a765ae35b36ec458f3cb04701f))
+* **client:** improve some names ([3a375fd](https://github.com/trycourier/courier-csharp/commit/3a375fda45bc8d72838d8df49cbde884b237eaba))
+
+
+### Bug Fixes
+
+* **client:** with expressions for models ([68ee5c5](https://github.com/trycourier/courier-csharp/commit/68ee5c55e261b29ddd563489f44f5019c846b2e8))
+
+
+### Documentation
+
+* add more comments ([d7a7206](https://github.com/trycourier/courier-csharp/commit/d7a72066ff643e9df036194e0ae327b319539ada))
+
 ## 3.0.0 (2025-12-03)
 
 Full Changelog: [v2.0.0...v3.0.0](https://github.com/trycourier/courier-csharp/compare/v2.0.0...v3.0.0)

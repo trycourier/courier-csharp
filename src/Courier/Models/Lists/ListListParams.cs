@@ -36,6 +36,9 @@ public sealed record class ListListParams : ParamsBase
 
     public ListListParams() { }
 
+    public ListListParams(ListListParams listListParams)
+        : base(listListParams) { }
+
     public ListListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -57,6 +60,7 @@ public sealed record class ListListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static ListListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

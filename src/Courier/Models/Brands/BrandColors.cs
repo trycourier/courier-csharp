@@ -38,6 +38,7 @@ public sealed record class BrandColors : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Primary;
@@ -45,6 +46,9 @@ public sealed record class BrandColors : ModelBase
     }
 
     public BrandColors() { }
+
+    public BrandColors(BrandColors brandColors)
+        : base(brandColors) { }
 
     public BrandColors(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -59,6 +63,7 @@ public sealed record class BrandColors : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="BrandColorsFromRaw.FromRawUnchecked"/>
     public static BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -67,6 +72,7 @@ public sealed record class BrandColors : ModelBase
 
 class BrandColorsFromRaw : IFromRaw<BrandColors>
 {
+    /// <inheritdoc/>
     public BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         BrandColors.FromRawUnchecked(rawData);
 }

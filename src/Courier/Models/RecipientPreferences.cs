@@ -34,6 +34,7 @@ public sealed record class RecipientPreferences : ModelBase
         init { ModelBase.Set(this._rawData, "notifications", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         if (this.Categories != null)
@@ -54,6 +55,9 @@ public sealed record class RecipientPreferences : ModelBase
 
     public RecipientPreferences() { }
 
+    public RecipientPreferences(RecipientPreferences recipientPreferences)
+        : base(recipientPreferences) { }
+
     public RecipientPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -67,6 +71,7 @@ public sealed record class RecipientPreferences : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="RecipientPreferencesFromRaw.FromRawUnchecked"/>
     public static RecipientPreferences FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -77,6 +82,7 @@ public sealed record class RecipientPreferences : ModelBase
 
 class RecipientPreferencesFromRaw : IFromRaw<RecipientPreferences>
 {
+    /// <inheritdoc/>
     public RecipientPreferences FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => RecipientPreferences.FromRawUnchecked(rawData);

@@ -17,6 +17,9 @@ public sealed record class ProfileDeleteParams : ParamsBase
 
     public ProfileDeleteParams() { }
 
+    public ProfileDeleteParams(ProfileDeleteParams profileDeleteParams)
+        : base(profileDeleteParams) { }
+
     public ProfileDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -38,6 +41,7 @@ public sealed record class ProfileDeleteParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static ProfileDeleteParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

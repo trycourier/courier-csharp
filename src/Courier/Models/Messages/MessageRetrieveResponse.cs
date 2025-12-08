@@ -155,6 +155,7 @@ public sealed record class MessageRetrieveResponse : ModelBase
             Reason = messageRetrieveResponse.Reason,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -174,6 +175,9 @@ public sealed record class MessageRetrieveResponse : ModelBase
 
     public MessageRetrieveResponse() { }
 
+    public MessageRetrieveResponse(MessageRetrieveResponse messageRetrieveResponse)
+        : base(messageRetrieveResponse) { }
+
     public MessageRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -187,6 +191,7 @@ public sealed record class MessageRetrieveResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageRetrieveResponseFromRaw.FromRawUnchecked"/>
     public static MessageRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -197,6 +202,7 @@ public sealed record class MessageRetrieveResponse : ModelBase
 
 class MessageRetrieveResponseFromRaw : IFromRaw<MessageRetrieveResponse>
 {
+    /// <inheritdoc/>
     public MessageRetrieveResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => MessageRetrieveResponse.FromRawUnchecked(rawData);
@@ -222,12 +228,18 @@ public sealed record class IntersectionMember1 : ModelBase
         init { ModelBase.Set(this._rawData, "providers", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Providers;
     }
 
     public IntersectionMember1() { }
+
+    public IntersectionMember1(
+        global::Courier.Models.Messages.IntersectionMember1 intersectionMember1
+    )
+        : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -242,6 +254,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="global::Courier.Models.Messages.IntersectionMember1FromRaw.FromRawUnchecked"/>
     public static global::Courier.Models.Messages.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -252,6 +265,7 @@ public sealed record class IntersectionMember1 : ModelBase
 
 class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Messages.IntersectionMember1>
 {
+    /// <inheritdoc/>
     public global::Courier.Models.Messages.IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => global::Courier.Models.Messages.IntersectionMember1.FromRawUnchecked(rawData);

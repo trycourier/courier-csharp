@@ -69,6 +69,7 @@ public sealed record class ElementalActionNodeWithType : ModelBase
             Ref = elementalActionNodeWithType.Ref,
         };
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channels;
@@ -79,6 +80,9 @@ public sealed record class ElementalActionNodeWithType : ModelBase
     }
 
     public ElementalActionNodeWithType() { }
+
+    public ElementalActionNodeWithType(ElementalActionNodeWithType elementalActionNodeWithType)
+        : base(elementalActionNodeWithType) { }
 
     public ElementalActionNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -93,6 +97,7 @@ public sealed record class ElementalActionNodeWithType : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalActionNodeWithTypeFromRaw.FromRawUnchecked"/>
     public static ElementalActionNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -103,6 +108,7 @@ public sealed record class ElementalActionNodeWithType : ModelBase
 
 class ElementalActionNodeWithTypeFromRaw : IFromRaw<ElementalActionNodeWithType>
 {
+    /// <inheritdoc/>
     public ElementalActionNodeWithType FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalActionNodeWithType.FromRawUnchecked(rawData);
@@ -131,12 +137,16 @@ public sealed record class IntersectionMember1 : ModelBase
         }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Type?.Validate();
     }
 
     public IntersectionMember1() { }
+
+    public IntersectionMember1(IntersectionMember1 intersectionMember1)
+        : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -151,6 +161,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IntersectionMember1FromRaw.FromRawUnchecked"/>
     public static IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -161,6 +172,7 @@ public sealed record class IntersectionMember1 : ModelBase
 
 class IntersectionMember1FromRaw : IFromRaw<IntersectionMember1>
 {
+    /// <inheritdoc/>
     public IntersectionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         IntersectionMember1.FromRawUnchecked(rawData);
 }

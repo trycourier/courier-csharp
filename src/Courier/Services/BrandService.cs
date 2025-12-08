@@ -8,7 +8,7 @@ using Courier.Models.Brands;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class BrandService : IBrandService
 {
     /// <inheritdoc/>

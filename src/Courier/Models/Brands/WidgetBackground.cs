@@ -22,6 +22,7 @@ public sealed record class WidgetBackground : ModelBase
         init { ModelBase.Set(this._rawData, "topColor", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.BottomColor;
@@ -29,6 +30,9 @@ public sealed record class WidgetBackground : ModelBase
     }
 
     public WidgetBackground() { }
+
+    public WidgetBackground(WidgetBackground widgetBackground)
+        : base(widgetBackground) { }
 
     public WidgetBackground(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -43,6 +47,7 @@ public sealed record class WidgetBackground : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="WidgetBackgroundFromRaw.FromRawUnchecked"/>
     public static WidgetBackground FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -53,6 +58,7 @@ public sealed record class WidgetBackground : ModelBase
 
 class WidgetBackgroundFromRaw : IFromRaw<WidgetBackground>
 {
+    /// <inheritdoc/>
     public WidgetBackground FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         WidgetBackground.FromRawUnchecked(rawData);
 }

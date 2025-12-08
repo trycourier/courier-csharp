@@ -18,12 +18,18 @@ public sealed record class PreferenceRetrieveTopicResponse : ModelBase
         init { ModelBase.Set(this._rawData, "topic", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Topic.Validate();
     }
 
     public PreferenceRetrieveTopicResponse() { }
+
+    public PreferenceRetrieveTopicResponse(
+        PreferenceRetrieveTopicResponse preferenceRetrieveTopicResponse
+    )
+        : base(preferenceRetrieveTopicResponse) { }
 
     public PreferenceRetrieveTopicResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -38,6 +44,7 @@ public sealed record class PreferenceRetrieveTopicResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PreferenceRetrieveTopicResponseFromRaw.FromRawUnchecked"/>
     public static PreferenceRetrieveTopicResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -55,6 +62,7 @@ public sealed record class PreferenceRetrieveTopicResponse : ModelBase
 
 class PreferenceRetrieveTopicResponseFromRaw : IFromRaw<PreferenceRetrieveTopicResponse>
 {
+    /// <inheritdoc/>
     public PreferenceRetrieveTopicResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => PreferenceRetrieveTopicResponse.FromRawUnchecked(rawData);

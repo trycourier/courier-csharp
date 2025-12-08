@@ -15,6 +15,11 @@ public sealed record class NotificationRetrieveContentParams : ParamsBase
     public NotificationRetrieveContentParams() { }
 
     public NotificationRetrieveContentParams(
+        NotificationRetrieveContentParams notificationRetrieveContentParams
+    )
+        : base(notificationRetrieveContentParams) { }
+
+    public NotificationRetrieveContentParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
@@ -35,6 +40,7 @@ public sealed record class NotificationRetrieveContentParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static NotificationRetrieveContentParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

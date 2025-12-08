@@ -17,6 +17,9 @@ public sealed record class BulkRunJobParams : ParamsBase
 
     public BulkRunJobParams() { }
 
+    public BulkRunJobParams(BulkRunJobParams bulkRunJobParams)
+        : base(bulkRunJobParams) { }
+
     public BulkRunJobParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -38,6 +41,7 @@ public sealed record class BulkRunJobParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static BulkRunJobParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

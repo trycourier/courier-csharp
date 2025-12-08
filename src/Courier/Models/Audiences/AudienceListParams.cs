@@ -24,6 +24,9 @@ public sealed record class AudienceListParams : ParamsBase
 
     public AudienceListParams() { }
 
+    public AudienceListParams(AudienceListParams audienceListParams)
+        : base(audienceListParams) { }
+
     public AudienceListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -45,6 +48,7 @@ public sealed record class AudienceListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static AudienceListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

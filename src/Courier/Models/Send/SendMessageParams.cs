@@ -35,6 +35,12 @@ public sealed record class SendMessageParams : ParamsBase
 
     public SendMessageParams() { }
 
+    public SendMessageParams(SendMessageParams sendMessageParams)
+        : base(sendMessageParams)
+    {
+        this._rawBodyData = [.. sendMessageParams._rawBodyData];
+    }
+
     public SendMessageParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -60,6 +66,7 @@ public sealed record class SendMessageParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static SendMessageParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -226,6 +233,7 @@ public sealed record class Message : ModelBase
         init { ModelBase.Set(this._rawData, "to", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.BrandID;
@@ -258,6 +266,9 @@ public sealed record class Message : ModelBase
 
     public Message() { }
 
+    public Message(Message message)
+        : base(message) { }
+
     public Message(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -271,6 +282,7 @@ public sealed record class Message : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageFromRaw.FromRawUnchecked"/>
     public static Message FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -279,6 +291,7 @@ public sealed record class Message : ModelBase
 
 class MessageFromRaw : IFromRaw<Message>
 {
+    /// <inheritdoc/>
     public Message FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Message.FromRawUnchecked(rawData);
 }
@@ -355,6 +368,7 @@ public sealed record class ChannelsItem : ModelBase
         init { ModelBase.Set(this._rawData, "timeouts", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.BrandID;
@@ -367,6 +381,9 @@ public sealed record class ChannelsItem : ModelBase
     }
 
     public ChannelsItem() { }
+
+    public ChannelsItem(ChannelsItem channelsItem)
+        : base(channelsItem) { }
 
     public ChannelsItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -381,6 +398,7 @@ public sealed record class ChannelsItem : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ChannelsItemFromRaw.FromRawUnchecked"/>
     public static ChannelsItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -389,6 +407,7 @@ public sealed record class ChannelsItem : ModelBase
 
 class ChannelsItemFromRaw : IFromRaw<ChannelsItem>
 {
+    /// <inheritdoc/>
     public ChannelsItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ChannelsItem.FromRawUnchecked(rawData);
 }
@@ -402,12 +421,16 @@ public sealed record class Metadata : ModelBase
         init { ModelBase.Set(this._rawData, "utm", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Utm?.Validate();
     }
 
     public Metadata() { }
+
+    public Metadata(Metadata metadata)
+        : base(metadata) { }
 
     public Metadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -422,6 +445,7 @@ public sealed record class Metadata : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MetadataFromRaw.FromRawUnchecked"/>
     public static Metadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -430,6 +454,7 @@ public sealed record class Metadata : ModelBase
 
 class MetadataFromRaw : IFromRaw<Metadata>
 {
+    /// <inheritdoc/>
     public Metadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Metadata.FromRawUnchecked(rawData);
 }
@@ -496,6 +521,7 @@ public sealed record class Timeouts : ModelBase
         init { ModelBase.Set(this._rawData, "provider", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channel;
@@ -503,6 +529,9 @@ public sealed record class Timeouts : ModelBase
     }
 
     public Timeouts() { }
+
+    public Timeouts(Timeouts timeouts)
+        : base(timeouts) { }
 
     public Timeouts(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -517,6 +546,7 @@ public sealed record class Timeouts : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TimeoutsFromRaw.FromRawUnchecked"/>
     public static Timeouts FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -525,6 +555,7 @@ public sealed record class Timeouts : ModelBase
 
 class TimeoutsFromRaw : IFromRaw<Timeouts>
 {
+    /// <inheritdoc/>
     public Timeouts FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Timeouts.FromRawUnchecked(rawData);
 }
@@ -561,18 +592,68 @@ public record class Content
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalContentSugar"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickElementalContentSugar(out var value)) {
+    ///     // `value` is of type `ElementalContentSugar`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickElementalContentSugar([NotNullWhen(true)] out ElementalContentSugar? value)
     {
         value = this.Value as ElementalContentSugar;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalContent"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickElemental(out var value)) {
+    ///     // `value` is of type `ElementalContent`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickElemental([NotNullWhen(true)] out ElementalContent? value)
     {
         value = this.Value as ElementalContent;
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (ElementalContentSugar value) => {...},
+    ///     (ElementalContent value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(
         System::Action<ElementalContentSugar> elementalContentSugar,
         System::Action<ElementalContent> elemental
@@ -591,6 +672,27 @@ public record class Content
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (ElementalContentSugar value) => {...},
+    ///     (ElementalContent value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(
         System::Func<ElementalContentSugar, T> elementalContentSugar,
         System::Func<ElementalContent, T> elemental
@@ -608,6 +710,16 @@ public record class Content
 
     public static implicit operator Content(ElementalContent value) => new(value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)
@@ -694,6 +806,7 @@ public sealed record class Delay : ModelBase
         init { ModelBase.Set(this._rawData, "until", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Duration;
@@ -701,6 +814,9 @@ public sealed record class Delay : ModelBase
     }
 
     public Delay() { }
+
+    public Delay(Delay delay)
+        : base(delay) { }
 
     public Delay(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -715,6 +831,7 @@ public sealed record class Delay : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="DelayFromRaw.FromRawUnchecked"/>
     public static Delay FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -723,6 +840,7 @@ public sealed record class Delay : ModelBase
 
 class DelayFromRaw : IFromRaw<Delay>
 {
+    /// <inheritdoc/>
     public Delay FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Delay.FromRawUnchecked(rawData);
 }
@@ -748,6 +866,7 @@ public sealed record class Expiry : ModelBase
         init { ModelBase.Set(this._rawData, "expires_at", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.ExpiresIn.Validate();
@@ -755,6 +874,9 @@ public sealed record class Expiry : ModelBase
     }
 
     public Expiry() { }
+
+    public Expiry(Expiry expiry)
+        : base(expiry) { }
 
     public Expiry(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -769,6 +891,7 @@ public sealed record class Expiry : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ExpiryFromRaw.FromRawUnchecked"/>
     public static Expiry FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -784,6 +907,7 @@ public sealed record class Expiry : ModelBase
 
 class ExpiryFromRaw : IFromRaw<Expiry>
 {
+    /// <inheritdoc/>
     public Expiry FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Expiry.FromRawUnchecked(rawData);
 }
@@ -820,18 +944,68 @@ public record class ExpiresIn
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="string"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickString(out var value)) {
+    ///     // `value` is of type `string`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickString([NotNullWhen(true)] out string? value)
     {
         value = this.Value as string;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="long"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickLong(out var value)) {
+    ///     // `value` is of type `long`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickLong([NotNullWhen(true)] out long? value)
     {
         value = this.Value as long?;
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (string value) => {...},
+    ///     (long value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(System::Action<string> @string, System::Action<long> @long)
     {
         switch (this.Value)
@@ -849,6 +1023,27 @@ public record class ExpiresIn
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (string value) => {...},
+    ///     (long value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(System::Func<string, T> @string, System::Func<long, T> @long)
     {
         return this.Value switch
@@ -865,6 +1060,16 @@ public record class ExpiresIn
 
     public static implicit operator ExpiresIn(long value) => new(value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)
@@ -955,6 +1160,7 @@ public sealed record class MessageMetadata : ModelBase
         init { ModelBase.Set(this._rawData, "utm", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Event;
@@ -964,6 +1170,9 @@ public sealed record class MessageMetadata : ModelBase
     }
 
     public MessageMetadata() { }
+
+    public MessageMetadata(MessageMetadata messageMetadata)
+        : base(messageMetadata) { }
 
     public MessageMetadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -978,6 +1187,7 @@ public sealed record class MessageMetadata : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="MessageMetadataFromRaw.FromRawUnchecked"/>
     public static MessageMetadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -986,6 +1196,7 @@ public sealed record class MessageMetadata : ModelBase
 
 class MessageMetadataFromRaw : IFromRaw<MessageMetadata>
 {
+    /// <inheritdoc/>
     public MessageMetadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         MessageMetadata.FromRawUnchecked(rawData);
 }
@@ -1002,12 +1213,16 @@ public sealed record class Preferences : ModelBase
         init { ModelBase.Set(this._rawData, "subscription_topic_id", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.SubscriptionTopicID;
     }
 
     public Preferences() { }
+
+    public Preferences(Preferences preferences)
+        : base(preferences) { }
 
     public Preferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1022,6 +1237,7 @@ public sealed record class Preferences : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PreferencesFromRaw.FromRawUnchecked"/>
     public static Preferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -1037,6 +1253,7 @@ public sealed record class Preferences : ModelBase
 
 class PreferencesFromRaw : IFromRaw<Preferences>
 {
+    /// <inheritdoc/>
     public Preferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Preferences.FromRawUnchecked(rawData);
 }
@@ -1080,6 +1297,7 @@ public sealed record class ProvidersItem : ModelBase
         init { ModelBase.Set(this._rawData, "timeouts", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.If;
@@ -1089,6 +1307,9 @@ public sealed record class ProvidersItem : ModelBase
     }
 
     public ProvidersItem() { }
+
+    public ProvidersItem(ProvidersItem providersItem)
+        : base(providersItem) { }
 
     public ProvidersItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1103,6 +1324,7 @@ public sealed record class ProvidersItem : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ProvidersItemFromRaw.FromRawUnchecked"/>
     public static ProvidersItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -1111,6 +1333,7 @@ public sealed record class ProvidersItem : ModelBase
 
 class ProvidersItemFromRaw : IFromRaw<ProvidersItem>
 {
+    /// <inheritdoc/>
     public ProvidersItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ProvidersItem.FromRawUnchecked(rawData);
 }
@@ -1124,12 +1347,16 @@ public sealed record class ProvidersItemMetadata : ModelBase
         init { ModelBase.Set(this._rawData, "utm", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.Utm?.Validate();
     }
 
     public ProvidersItemMetadata() { }
+
+    public ProvidersItemMetadata(ProvidersItemMetadata providersItemMetadata)
+        : base(providersItemMetadata) { }
 
     public ProvidersItemMetadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1144,6 +1371,7 @@ public sealed record class ProvidersItemMetadata : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ProvidersItemMetadataFromRaw.FromRawUnchecked"/>
     public static ProvidersItemMetadata FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -1154,6 +1382,7 @@ public sealed record class ProvidersItemMetadata : ModelBase
 
 class ProvidersItemMetadataFromRaw : IFromRaw<ProvidersItemMetadata>
 {
+    /// <inheritdoc/>
     public ProvidersItemMetadata FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ProvidersItemMetadata.FromRawUnchecked(rawData);
@@ -1189,6 +1418,7 @@ public sealed record class Routing : ModelBase
         init { ModelBase.Set(this._rawData, "method", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         foreach (var item in this.Channels)
@@ -1199,6 +1429,9 @@ public sealed record class Routing : ModelBase
     }
 
     public Routing() { }
+
+    public Routing(Routing routing)
+        : base(routing) { }
 
     public Routing(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1213,6 +1446,7 @@ public sealed record class Routing : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="RoutingFromRaw.FromRawUnchecked"/>
     public static Routing FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -1221,6 +1455,7 @@ public sealed record class Routing : ModelBase
 
 class RoutingFromRaw : IFromRaw<Routing>
 {
+    /// <inheritdoc/>
     public Routing FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Routing.FromRawUnchecked(rawData);
 }
@@ -1311,6 +1546,7 @@ public sealed record class Timeout : ModelBase
         init { ModelBase.Set(this._rawData, "provider", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Channel;
@@ -1321,6 +1557,9 @@ public sealed record class Timeout : ModelBase
     }
 
     public Timeout() { }
+
+    public Timeout(Timeout timeout)
+        : base(timeout) { }
 
     public Timeout(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1335,6 +1574,7 @@ public sealed record class Timeout : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TimeoutFromRaw.FromRawUnchecked"/>
     public static Timeout FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -1343,6 +1583,7 @@ public sealed record class Timeout : ModelBase
 
 class TimeoutFromRaw : IFromRaw<Timeout>
 {
+    /// <inheritdoc/>
     public Timeout FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Timeout.FromRawUnchecked(rawData);
 }
@@ -1425,18 +1666,68 @@ public record class To
         this._json = json;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="UserRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickUserRecipient(out var value)) {
+    ///     // `value` is of type `UserRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickUserRecipient([NotNullWhen(true)] out UserRecipient? value)
     {
         value = this.Value as UserRecipient;
         return value != null;
     }
 
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="IReadOnlyList<Recipient>"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickRecipients(out var value)) {
+    ///     // `value` is of type `IReadOnlyList<Recipient>`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
     public bool TryPickRecipients([NotNullWhen(true)] out IReadOnlyList<Recipient>? value)
     {
         value = this.Value as IReadOnlyList<Recipient>;
         return value != null;
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (UserRecipient value) => {...},
+    ///     (IReadOnlyList<Recipient> value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public void Switch(
         System::Action<UserRecipient> userRecipient,
         System::Action<IReadOnlyList<Recipient>> recipients
@@ -1455,6 +1746,27 @@ public record class To
         }
     }
 
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (UserRecipient value) => {...},
+    ///     (IReadOnlyList<Recipient> value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
     public T Match<T>(
         System::Func<UserRecipient, T> userRecipient,
         System::Func<IReadOnlyList<Recipient>, T> recipients
@@ -1473,6 +1785,16 @@ public record class To
     public static implicit operator To(List<Recipient> value) =>
         new((IReadOnlyList<Recipient>)value);
 
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
     public void Validate()
     {
         if (this.Value == null)

@@ -8,7 +8,7 @@ using Courier.Models.AuditEvents;
 
 namespace Courier.Services;
 
-/// <inheritdoc />
+/// <inheritdoc/>
 public sealed class AuditEventService : IAuditEventService
 {
     /// <inheritdoc/>

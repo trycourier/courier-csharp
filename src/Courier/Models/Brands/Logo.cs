@@ -22,6 +22,7 @@ public sealed record class Logo : ModelBase
         init { ModelBase.Set(this._rawData, "image", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Href;
@@ -29,6 +30,9 @@ public sealed record class Logo : ModelBase
     }
 
     public Logo() { }
+
+    public Logo(Logo logo)
+        : base(logo) { }
 
     public Logo(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -43,6 +47,7 @@ public sealed record class Logo : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="LogoFromRaw.FromRawUnchecked"/>
     public static Logo FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -51,6 +56,7 @@ public sealed record class Logo : ModelBase
 
 class LogoFromRaw : IFromRaw<Logo>
 {
+    /// <inheritdoc/>
     public Logo FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Logo.FromRawUnchecked(rawData);
 }

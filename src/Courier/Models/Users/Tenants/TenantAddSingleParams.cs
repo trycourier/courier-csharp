@@ -41,6 +41,12 @@ public sealed record class TenantAddSingleParams : ParamsBase
 
     public TenantAddSingleParams() { }
 
+    public TenantAddSingleParams(TenantAddSingleParams tenantAddSingleParams)
+        : base(tenantAddSingleParams)
+    {
+        this._rawBodyData = [.. tenantAddSingleParams._rawBodyData];
+    }
+
     public TenantAddSingleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -66,6 +72,7 @@ public sealed record class TenantAddSingleParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static TenantAddSingleParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

@@ -74,6 +74,7 @@ public sealed record class TenantListResponse : ModelBase
         init { ModelBase.Set(this._rawData, "next_url", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.HasMore;
@@ -89,6 +90,9 @@ public sealed record class TenantListResponse : ModelBase
 
     public TenantListResponse() { }
 
+    public TenantListResponse(TenantListResponse tenantListResponse)
+        : base(tenantListResponse) { }
+
     public TenantListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -102,6 +106,7 @@ public sealed record class TenantListResponse : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TenantListResponseFromRaw.FromRawUnchecked"/>
     public static TenantListResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -112,6 +117,7 @@ public sealed record class TenantListResponse : ModelBase
 
 class TenantListResponseFromRaw : IFromRaw<TenantListResponse>
 {
+    /// <inheritdoc/>
     public TenantListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         TenantListResponse.FromRawUnchecked(rawData);
 }

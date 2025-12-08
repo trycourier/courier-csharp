@@ -66,6 +66,12 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
 
     public InvokeInvokeByTemplateParams() { }
 
+    public InvokeInvokeByTemplateParams(InvokeInvokeByTemplateParams invokeInvokeByTemplateParams)
+        : base(invokeInvokeByTemplateParams)
+    {
+        this._rawBodyData = [.. invokeInvokeByTemplateParams._rawBodyData];
+    }
+
     public InvokeInvokeByTemplateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -91,6 +97,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static InvokeInvokeByTemplateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

@@ -46,6 +46,12 @@ public sealed record class BrandCreateParams : ParamsBase
 
     public BrandCreateParams() { }
 
+    public BrandCreateParams(BrandCreateParams brandCreateParams)
+        : base(brandCreateParams)
+    {
+        this._rawBodyData = [.. brandCreateParams._rawBodyData];
+    }
+
     public BrandCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -71,6 +77,7 @@ public sealed record class BrandCreateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static BrandCreateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

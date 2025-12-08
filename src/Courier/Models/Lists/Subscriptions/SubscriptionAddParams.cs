@@ -37,6 +37,12 @@ public sealed record class SubscriptionAddParams : ParamsBase
 
     public SubscriptionAddParams() { }
 
+    public SubscriptionAddParams(SubscriptionAddParams subscriptionAddParams)
+        : base(subscriptionAddParams)
+    {
+        this._rawBodyData = [.. subscriptionAddParams._rawBodyData];
+    }
+
     public SubscriptionAddParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -62,6 +68,7 @@ public sealed record class SubscriptionAddParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static SubscriptionAddParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

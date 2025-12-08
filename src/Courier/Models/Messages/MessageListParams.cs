@@ -171,6 +171,9 @@ public sealed record class MessageListParams : ParamsBase
 
     public MessageListParams() { }
 
+    public MessageListParams(MessageListParams messageListParams)
+        : base(messageListParams) { }
+
     public MessageListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -192,6 +195,7 @@ public sealed record class MessageListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static MessageListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

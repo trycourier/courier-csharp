@@ -64,6 +64,12 @@ public sealed record class ItemUpdateParams : ParamsBase
 
     public ItemUpdateParams() { }
 
+    public ItemUpdateParams(ItemUpdateParams itemUpdateParams)
+        : base(itemUpdateParams)
+    {
+        this._rawBodyData = [.. itemUpdateParams._rawBodyData];
+    }
+
     public ItemUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -89,6 +95,7 @@ public sealed record class ItemUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static ItemUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

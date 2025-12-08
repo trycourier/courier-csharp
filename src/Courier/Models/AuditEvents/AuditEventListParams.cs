@@ -24,6 +24,9 @@ public sealed record class AuditEventListParams : ParamsBase
 
     public AuditEventListParams() { }
 
+    public AuditEventListParams(AuditEventListParams auditEventListParams)
+        : base(auditEventListParams) { }
+
     public AuditEventListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -45,6 +48,7 @@ public sealed record class AuditEventListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static AuditEventListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

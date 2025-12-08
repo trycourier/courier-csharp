@@ -31,6 +31,7 @@ public sealed record class ElementalContentSugar : ModelBase
         init { ModelBase.Set(this._rawData, "title", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Body;
@@ -38,6 +39,9 @@ public sealed record class ElementalContentSugar : ModelBase
     }
 
     public ElementalContentSugar() { }
+
+    public ElementalContentSugar(ElementalContentSugar elementalContentSugar)
+        : base(elementalContentSugar) { }
 
     public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -52,6 +56,7 @@ public sealed record class ElementalContentSugar : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="ElementalContentSugarFromRaw.FromRawUnchecked"/>
     public static ElementalContentSugar FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
@@ -62,6 +67,7 @@ public sealed record class ElementalContentSugar : ModelBase
 
 class ElementalContentSugarFromRaw : IFromRaw<ElementalContentSugar>
 {
+    /// <inheritdoc/>
     public ElementalContentSugar FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => ElementalContentSugar.FromRawUnchecked(rawData);

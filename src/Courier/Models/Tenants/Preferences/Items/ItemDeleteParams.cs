@@ -19,6 +19,9 @@ public sealed record class ItemDeleteParams : ParamsBase
 
     public ItemDeleteParams() { }
 
+    public ItemDeleteParams(ItemDeleteParams itemDeleteParams)
+        : base(itemDeleteParams) { }
+
     public ItemDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -40,6 +43,7 @@ public sealed record class ItemDeleteParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static ItemDeleteParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

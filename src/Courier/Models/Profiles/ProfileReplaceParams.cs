@@ -40,6 +40,12 @@ public sealed record class ProfileReplaceParams : ParamsBase
 
     public ProfileReplaceParams() { }
 
+    public ProfileReplaceParams(ProfileReplaceParams profileReplaceParams)
+        : base(profileReplaceParams)
+    {
+        this._rawBodyData = [.. profileReplaceParams._rawBodyData];
+    }
+
     public ProfileReplaceParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -65,6 +71,7 @@ public sealed record class ProfileReplaceParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static ProfileReplaceParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

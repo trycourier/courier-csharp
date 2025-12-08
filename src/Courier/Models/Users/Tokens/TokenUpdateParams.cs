@@ -33,6 +33,12 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public TokenUpdateParams() { }
 
+    public TokenUpdateParams(TokenUpdateParams tokenUpdateParams)
+        : base(tokenUpdateParams)
+    {
+        this._rawBodyData = [.. tokenUpdateParams._rawBodyData];
+    }
+
     public TokenUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -58,6 +64,7 @@ public sealed record class TokenUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static TokenUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -127,6 +134,7 @@ public sealed record class Patch : ModelBase
         init { ModelBase.Set(this._rawData, "value", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.Op;
@@ -135,6 +143,9 @@ public sealed record class Patch : ModelBase
     }
 
     public Patch() { }
+
+    public Patch(Patch patch)
+        : base(patch) { }
 
     public Patch(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -149,6 +160,7 @@ public sealed record class Patch : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="PatchFromRaw.FromRawUnchecked"/>
     public static Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -157,6 +169,7 @@ public sealed record class Patch : ModelBase
 
 class PatchFromRaw : IFromRaw<Patch>
 {
+    /// <inheritdoc/>
     public Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Patch.FromRawUnchecked(rawData);
 }

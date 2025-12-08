@@ -67,6 +67,7 @@ public sealed record class TopicPreference : ModelBase
         init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         this.DefaultStatus.Validate();
@@ -82,6 +83,9 @@ public sealed record class TopicPreference : ModelBase
 
     public TopicPreference() { }
 
+    public TopicPreference(TopicPreference topicPreference)
+        : base(topicPreference) { }
+
     public TopicPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -95,6 +99,7 @@ public sealed record class TopicPreference : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="TopicPreferenceFromRaw.FromRawUnchecked"/>
     public static TopicPreference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -103,6 +108,7 @@ public sealed record class TopicPreference : ModelBase
 
 class TopicPreferenceFromRaw : IFromRaw<TopicPreference>
 {
+    /// <inheritdoc/>
     public TopicPreference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         TopicPreference.FromRawUnchecked(rawData);
 }

@@ -17,6 +17,9 @@ public sealed record class TokenListParams : ParamsBase
 
     public TokenListParams() { }
 
+    public TokenListParams(TokenListParams tokenListParams)
+        : base(tokenListParams) { }
+
     public TokenListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
@@ -38,6 +41,7 @@ public sealed record class TokenListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
     public static TokenListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

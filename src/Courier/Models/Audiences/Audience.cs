@@ -58,6 +58,7 @@ public sealed record class Audience : ModelBase
         init { ModelBase.Set(this._rawData, "updated_at", value); }
     }
 
+    /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
@@ -69,6 +70,9 @@ public sealed record class Audience : ModelBase
     }
 
     public Audience() { }
+
+    public Audience(Audience audience)
+        : base(audience) { }
 
     public Audience(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -83,6 +87,7 @@ public sealed record class Audience : ModelBase
     }
 #pragma warning restore CS8618
 
+    /// <inheritdoc cref="AudienceFromRaw.FromRawUnchecked"/>
     public static Audience FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
@@ -91,6 +96,7 @@ public sealed record class Audience : ModelBase
 
 class AudienceFromRaw : IFromRaw<Audience>
 {
+    /// <inheritdoc/>
     public Audience FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Audience.FromRawUnchecked(rawData);
 }
