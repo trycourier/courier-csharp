@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -96,7 +95,7 @@ public sealed class TokenService : ITokenService
     }
 
     /// <inheritdoc/>
-    public async Task<List<UserToken>> List(
+    public async Task<TokenListResponse> List(
         TokenListParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -114,21 +113,18 @@ public sealed class TokenService : ITokenService
         using var response = await this
             ._client.Execute(request, cancellationToken)
             .ConfigureAwait(false);
-        var userTokens = await response
-            .Deserialize<List<UserToken>>(cancellationToken)
+        var tokens = await response
+            .Deserialize<TokenListResponse>(cancellationToken)
             .ConfigureAwait(false);
         if (this._client.ResponseValidation)
         {
-            foreach (var item in userTokens)
-            {
-                item.Validate();
-            }
+            tokens.Validate();
         }
-        return userTokens;
+        return tokens;
     }
 
     /// <inheritdoc/>
-    public async Task<List<UserToken>> List(
+    public async Task<TokenListResponse> List(
         string userID,
         TokenListParams? parameters = null,
         CancellationToken cancellationToken = default
