@@ -233,6 +233,43 @@ public class DeviceTest : TestBase
     }
 }
 
+public class ExpiryDateTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        ExpiryDate value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void boolValidation_Works()
+    {
+        ExpiryDate value = new(true);
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        ExpiryDate value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void boolSerializationRoundtrip_Works()
+    {
+        ExpiryDate value = new(true);
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class TrackingTest : TestBase
 {
     [Fact]

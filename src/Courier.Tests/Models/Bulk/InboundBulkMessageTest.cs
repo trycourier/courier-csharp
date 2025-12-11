@@ -5,6 +5,143 @@ using Courier.Models.Bulk;
 
 namespace Courier.Tests.Models.Bulk;
 
+public class InboundBulkMessageTest : TestBase
+{
+    [Fact]
+    public void templateValidation_Works()
+    {
+        InboundBulkMessage value = new(
+            new()
+            {
+                Template = "template",
+                Brand = "brand",
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Event = "event",
+                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                {
+                    {
+                        "foo",
+                        new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        }
+                    },
+                },
+                Override = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void contentValidation_Works()
+    {
+        InboundBulkMessage value = new(
+            new()
+            {
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
+                Brand = "brand",
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Event = "event",
+                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                {
+                    {
+                        "foo",
+                        new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        }
+                    },
+                },
+                Override = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void templateSerializationRoundtrip_Works()
+    {
+        InboundBulkMessage value = new(
+            new()
+            {
+                Template = "template",
+                Brand = "brand",
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Event = "event",
+                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                {
+                    {
+                        "foo",
+                        new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        }
+                    },
+                },
+                Override = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<InboundBulkMessage>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void contentSerializationRoundtrip_Works()
+    {
+        InboundBulkMessage value = new(
+            new()
+            {
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
+                Brand = "brand",
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Event = "event",
+                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                {
+                    {
+                        "foo",
+                        new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        }
+                    },
+                },
+                Override = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<InboundBulkMessage>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class InboundBulkTemplateMessageTest : TestBase
 {
     [Fact]
@@ -620,5 +757,76 @@ public class InboundBulkContentMessageTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class ContentTest : TestBase
+{
+    [Fact]
+    public void elemental_content_sugarValidation_Works()
+    {
+        Content value = new(new() { Body = "body", Title = "title" });
+        value.Validate();
+    }
+
+    [Fact]
+    public void elementalValidation_Works()
+    {
+        Content value = new(
+            new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+                Brand = "brand",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void elemental_content_sugarSerializationRoundtrip_Works()
+    {
+        Content value = new(new() { Body = "body", Title = "title" });
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void elementalSerializationRoundtrip_Works()
+    {
+        Content value = new(
+            new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+                Brand = "brand",
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(json);
+
+        Assert.Equal(value, deserialized);
     }
 }

@@ -1,1 +1,41 @@
+using System.Text.Json;
+using Courier.Models;
+
 namespace Courier.Tests.Models;
+
+public class MessageRoutingChannelTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        MessageRoutingChannel value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void message_routingValidation_Works()
+    {
+        MessageRoutingChannel value = new(new() { Channels = ["string"], Method = Method.All });
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        MessageRoutingChannel value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<MessageRoutingChannel>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void message_routingSerializationRoundtrip_Works()
+    {
+        MessageRoutingChannel value = new(new() { Channels = ["string"], Method = Method.All });
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<MessageRoutingChannel>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
