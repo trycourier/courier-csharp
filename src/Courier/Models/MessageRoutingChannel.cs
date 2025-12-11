@@ -175,6 +175,7 @@ public record class MessageRoutingChannel
                 "Data did not match any variant of MessageRoutingChannel"
             );
         }
+        this.Switch((_) => { }, (messageRouting) => messageRouting.Validate());
     }
 
     public virtual bool Equals(MessageRoutingChannel? other)

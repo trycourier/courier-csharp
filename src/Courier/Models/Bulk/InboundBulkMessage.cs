@@ -190,6 +190,7 @@ public record class InboundBulkMessage
                 "Data did not match any variant of InboundBulkMessage"
             );
         }
+        this.Switch((template) => template.Validate(), (content) => content.Validate());
     }
 
     public virtual bool Equals(InboundBulkMessage? other)
@@ -647,6 +648,10 @@ public record class Content
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
+        this.Switch(
+            (elementalContentSugar) => elementalContentSugar.Validate(),
+            (elemental) => elemental.Validate()
+        );
     }
 
     public virtual bool Equals(Content? other)
