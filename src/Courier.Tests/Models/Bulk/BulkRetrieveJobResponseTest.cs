@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Bulk;
 
 namespace Courier.Tests.Models.Bulk;
@@ -468,5 +469,65 @@ public class JobTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class JobStatusTest : TestBase
+{
+    [Theory]
+    [InlineData(JobStatus.Created)]
+    [InlineData(JobStatus.Processing)]
+    [InlineData(JobStatus.Completed)]
+    [InlineData(JobStatus.Error)]
+    public void Validation_Works(JobStatus rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, JobStatus> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(JobStatus.Created)]
+    [InlineData(JobStatus.Processing)]
+    [InlineData(JobStatus.Completed)]
+    [InlineData(JobStatus.Error)]
+    public void SerializationRoundtrip_Works(JobStatus rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, JobStatus> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

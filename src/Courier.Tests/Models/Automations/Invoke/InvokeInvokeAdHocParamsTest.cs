@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Automations.Invoke;
 
 namespace Courier.Tests.Models.Automations.Invoke;
@@ -333,6 +334,60 @@ public class AutomationDelayStepTest : TestBase
     }
 }
 
+public class ActionTest : TestBase
+{
+    [Theory]
+    [InlineData(Action.Delay)]
+    public void Validation_Works(Action rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Action> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Action>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Action.Delay)]
+    public void SerializationRoundtrip_Works(Action rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Action> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Action>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Action>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Action>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class AutomationSendStepTest : TestBase
 {
     [Fact]
@@ -559,6 +614,60 @@ public class AutomationSendStepTest : TestBase
     }
 }
 
+public class AutomationSendStepActionTest : TestBase
+{
+    [Theory]
+    [InlineData(AutomationSendStepAction.Send)]
+    public void Validation_Works(AutomationSendStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationSendStepAction> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationSendStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AutomationSendStepAction.Send)]
+    public void SerializationRoundtrip_Works(AutomationSendStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationSendStepAction> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, AutomationSendStepAction>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationSendStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, AutomationSendStepAction>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class AutomationSendListStepTest : TestBase
 {
     [Fact]
@@ -730,6 +839,58 @@ public class AutomationSendListStepTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class AutomationSendListStepActionTest : TestBase
+{
+    [Theory]
+    [InlineData(AutomationSendListStepAction.SendList)]
+    public void Validation_Works(AutomationSendListStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationSendListStepAction> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationSendListStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AutomationSendListStepAction.SendList)]
+    public void SerializationRoundtrip_Works(AutomationSendListStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationSendListStepAction> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AutomationSendListStepAction>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationSendListStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AutomationSendListStepAction>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }
 
@@ -919,6 +1080,118 @@ public class AutomationUpdateProfileStepTest : TestBase
     }
 }
 
+public class AutomationUpdateProfileStepActionTest : TestBase
+{
+    [Theory]
+    [InlineData(AutomationUpdateProfileStepAction.UpdateProfile)]
+    public void Validation_Works(AutomationUpdateProfileStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationUpdateProfileStepAction> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationUpdateProfileStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AutomationUpdateProfileStepAction.UpdateProfile)]
+    public void SerializationRoundtrip_Works(AutomationUpdateProfileStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationUpdateProfileStepAction> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AutomationUpdateProfileStepAction>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationUpdateProfileStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AutomationUpdateProfileStepAction>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class MergeTest : TestBase
+{
+    [Theory]
+    [InlineData(Merge.None)]
+    [InlineData(Merge.Overwrite)]
+    [InlineData(Merge.SoftMerge)]
+    [InlineData(Merge.Replace)]
+    public void Validation_Works(Merge rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Merge> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Merge>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Merge.None)]
+    [InlineData(Merge.Overwrite)]
+    [InlineData(Merge.SoftMerge)]
+    [InlineData(Merge.Replace)]
+    public void SerializationRoundtrip_Works(Merge rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Merge> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Merge>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Merge>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Merge>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class AutomationCancelStepTest : TestBase
 {
     [Fact]
@@ -984,6 +1257,60 @@ public class AutomationCancelStepTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class AutomationCancelStepActionTest : TestBase
+{
+    [Theory]
+    [InlineData(AutomationCancelStepAction.Cancel)]
+    public void Validation_Works(AutomationCancelStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationCancelStepAction> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationCancelStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AutomationCancelStepAction.Cancel)]
+    public void SerializationRoundtrip_Works(AutomationCancelStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationCancelStepAction> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, AutomationCancelStepAction>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationCancelStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, AutomationCancelStepAction>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
 
@@ -1177,6 +1504,58 @@ public class AutomationFetchDataStepTest : TestBase
     }
 }
 
+public class AutomationFetchDataStepActionTest : TestBase
+{
+    [Theory]
+    [InlineData(AutomationFetchDataStepAction.FetchData)]
+    public void Validation_Works(AutomationFetchDataStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationFetchDataStepAction> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationFetchDataStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AutomationFetchDataStepAction.FetchData)]
+    public void SerializationRoundtrip_Works(AutomationFetchDataStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationFetchDataStepAction> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AutomationFetchDataStepAction>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationFetchDataStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, AutomationFetchDataStepAction>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class WebhookTest : TestBase
 {
     [Fact]
@@ -1323,6 +1702,126 @@ public class WebhookTest : TestBase
     }
 }
 
+public class MethodTest : TestBase
+{
+    [Theory]
+    [InlineData(Method.Get)]
+    [InlineData(Method.Post)]
+    [InlineData(Method.Put)]
+    [InlineData(Method.Patch)]
+    [InlineData(Method.Delete)]
+    public void Validation_Works(Method rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Method> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Method.Get)]
+    [InlineData(Method.Post)]
+    [InlineData(Method.Put)]
+    [InlineData(Method.Patch)]
+    [InlineData(Method.Delete)]
+    public void SerializationRoundtrip_Works(Method rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Method> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class MergeStrategyTest : TestBase
+{
+    [Theory]
+    [InlineData(MergeStrategy.Replace)]
+    [InlineData(MergeStrategy.Overwrite)]
+    [InlineData(MergeStrategy.SoftMerge)]
+    public void Validation_Works(MergeStrategy rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, MergeStrategy> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, MergeStrategy>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(MergeStrategy.Replace)]
+    [InlineData(MergeStrategy.Overwrite)]
+    [InlineData(MergeStrategy.SoftMerge)]
+    public void SerializationRoundtrip_Works(MergeStrategy rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, MergeStrategy> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, MergeStrategy>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, MergeStrategy>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, MergeStrategy>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class AutomationInvokeStepTest : TestBase
 {
     [Fact]
@@ -1388,5 +1887,59 @@ public class AutomationInvokeStepTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class AutomationInvokeStepActionTest : TestBase
+{
+    [Theory]
+    [InlineData(AutomationInvokeStepAction.Invoke)]
+    public void Validation_Works(AutomationInvokeStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationInvokeStepAction> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationInvokeStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(AutomationInvokeStepAction.Invoke)]
+    public void SerializationRoundtrip_Works(AutomationInvokeStepAction rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, AutomationInvokeStepAction> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, AutomationInvokeStepAction>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, AutomationInvokeStepAction>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, AutomationInvokeStepAction>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
