@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -162,5 +163,63 @@ public class PreferenceTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class SourceTest : TestBase
+{
+    [Theory]
+    [InlineData(Source.Subscription)]
+    [InlineData(Source.List)]
+    [InlineData(Source.Recipient)]
+    public void Validation_Works(Source rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Source> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Source>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Source.Subscription)]
+    [InlineData(Source.List)]
+    [InlineData(Source.Recipient)]
+    public void SerializationRoundtrip_Works(Source rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Source> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Source>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Source>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Source>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

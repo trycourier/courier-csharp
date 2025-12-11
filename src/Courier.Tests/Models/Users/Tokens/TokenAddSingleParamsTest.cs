@@ -1,7 +1,69 @@
 using System.Text.Json;
+using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Users.Tokens;
 
 namespace Courier.Tests.Models.Users.Tokens;
+
+public class ProviderKeyTest : TestBase
+{
+    [Theory]
+    [InlineData(ProviderKey.FirebaseFcm)]
+    [InlineData(ProviderKey.Apn)]
+    [InlineData(ProviderKey.Expo)]
+    [InlineData(ProviderKey.Onesignal)]
+    public void Validation_Works(ProviderKey rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ProviderKey> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, ProviderKey>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(ProviderKey.FirebaseFcm)]
+    [InlineData(ProviderKey.Apn)]
+    [InlineData(ProviderKey.Expo)]
+    [InlineData(ProviderKey.Onesignal)]
+    public void SerializationRoundtrip_Works(ProviderKey rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ProviderKey> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ProviderKey>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, ProviderKey>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ProviderKey>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
 
 public class DeviceTest : TestBase
 {
