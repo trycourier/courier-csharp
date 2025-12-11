@@ -210,6 +210,260 @@ public class AutomationTest : TestBase
     }
 }
 
+public class StepTest : TestBase
+{
+    [Fact]
+    public void automation_delayValidation_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = Action.Delay,
+                Duration = "duration",
+                Until = "until",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void automation_sendValidation_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationSendStepAction.Send,
+                Brand = "brand",
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Profile = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Recipient = "recipient",
+                Template = "template",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void automation_send_listValidation_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationSendListStepAction.SendList,
+                List = "list",
+                Brand = "brand",
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void automation_update_profileValidation_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationUpdateProfileStepAction.UpdateProfile,
+                Profile = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Merge = Merge.None,
+                RecipientID = "recipient_id",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void automation_cancelValidation_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationCancelStepAction.Cancel,
+                CancelationToken = "cancelation_token",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void automation_fetch_dataValidation_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationFetchDataStepAction.FetchData,
+                Webhook = new()
+                {
+                    Method = Method.Get,
+                    URL = "url",
+                    Body = "body",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                },
+                MergeStrategy = MergeStrategy.Replace,
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void automation_invokeValidation_Works()
+    {
+        Step value = new(
+            new() { Action = AutomationInvokeStepAction.Invoke, Template = "template" }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void automation_delaySerializationRoundtrip_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = Action.Delay,
+                Duration = "duration",
+                Until = "until",
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void automation_sendSerializationRoundtrip_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationSendStepAction.Send,
+                Brand = "brand",
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Profile = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Recipient = "recipient",
+                Template = "template",
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void automation_send_listSerializationRoundtrip_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationSendListStepAction.SendList,
+                List = "list",
+                Brand = "brand",
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void automation_update_profileSerializationRoundtrip_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationUpdateProfileStepAction.UpdateProfile,
+                Profile = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Merge = Merge.None,
+                RecipientID = "recipient_id",
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void automation_cancelSerializationRoundtrip_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationCancelStepAction.Cancel,
+                CancelationToken = "cancelation_token",
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void automation_fetch_dataSerializationRoundtrip_Works()
+    {
+        Step value = new(
+            new()
+            {
+                Action = AutomationFetchDataStepAction.FetchData,
+                Webhook = new()
+                {
+                    Method = Method.Get,
+                    URL = "url",
+                    Body = "body",
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                },
+                MergeStrategy = MergeStrategy.Replace,
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void automation_invokeSerializationRoundtrip_Works()
+    {
+        Step value = new(
+            new() { Action = AutomationInvokeStepAction.Invoke, Template = "template" }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class AutomationDelayStepTest : TestBase
 {
     [Fact]

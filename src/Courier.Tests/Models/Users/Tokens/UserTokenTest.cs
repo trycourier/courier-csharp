@@ -617,6 +617,43 @@ public class UserTokenDeviceTest : TestBase
     }
 }
 
+public class UserTokenExpiryDateTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        UserTokenExpiryDate value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void boolValidation_Works()
+    {
+        UserTokenExpiryDate value = new(true);
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        UserTokenExpiryDate value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void boolSerializationRoundtrip_Works()
+    {
+        UserTokenExpiryDate value = new(true);
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class UserTokenTrackingTest : TestBase
 {
     [Fact]

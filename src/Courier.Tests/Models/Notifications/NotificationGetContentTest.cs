@@ -574,6 +574,43 @@ public class BlockTypeTest : TestBase
     }
 }
 
+public class ContentTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        Content value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void notification_content_hierarchyValidation_Works()
+    {
+        Content value = new(new() { Children = "children", Parent = "parent" });
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        Content value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void notification_content_hierarchySerializationRoundtrip_Works()
+    {
+        Content value = new(new() { Children = "children", Parent = "parent" });
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class NotificationContentHierarchyTest : TestBase
 {
     [Fact]
@@ -659,6 +696,43 @@ public class NotificationContentHierarchyTest : TestBase
         var model = new NotificationContentHierarchy { Children = null, Parent = null };
 
         model.Validate();
+    }
+}
+
+public class LocaleTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        Locale value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void notification_content_hierarchyValidation_Works()
+    {
+        Locale value = new(new() { Children = "children", Parent = "parent" });
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        Locale value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Locale>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void notification_content_hierarchySerializationRoundtrip_Works()
+    {
+        Locale value = new(new() { Children = "children", Parent = "parent" });
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Locale>(json);
+
+        Assert.Equal(value, deserialized);
     }
 }
 
