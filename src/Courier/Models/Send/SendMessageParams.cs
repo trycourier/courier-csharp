@@ -732,6 +732,10 @@ public record class Content
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
+        this.Switch(
+            (elementalContentSugar) => elementalContentSugar.Validate(),
+            (elemental) => elemental.Validate()
+        );
     }
 
     public virtual bool Equals(Content? other)
@@ -1815,6 +1819,7 @@ public record class To
         {
             throw new CourierInvalidDataException("Data did not match any variant of To");
         }
+        this.Switch((userRecipient) => userRecipient.Validate(), (_) => { });
     }
 
     public virtual bool Equals(To? other)
