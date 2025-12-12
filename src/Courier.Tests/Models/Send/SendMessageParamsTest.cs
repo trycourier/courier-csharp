@@ -2246,7 +2246,7 @@ public class ContentTest : TestBase
     [Fact]
     public void elemental_content_sugarValidation_Works()
     {
-        Content value = new(new() { Body = "body", Title = "title" });
+        Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
         value.Validate();
     }
 
@@ -2254,7 +2254,7 @@ public class ContentTest : TestBase
     public void elementalValidation_Works()
     {
         Content value = new(
-            new()
+            new Models::ElementalContent()
             {
                 Elements =
                 [
@@ -2277,7 +2277,7 @@ public class ContentTest : TestBase
     [Fact]
     public void elemental_content_sugarSerializationRoundtrip_Works()
     {
-        Content value = new(new() { Body = "body", Title = "title" });
+        Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
         string json = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Content>(json);
 
@@ -2288,7 +2288,7 @@ public class ContentTest : TestBase
     public void elementalSerializationRoundtrip_Works()
     {
         Content value = new(
-            new()
+            new Models::ElementalContent()
             {
                 Elements =
                 [
@@ -3489,7 +3489,7 @@ public class ToTest : TestBase
     public void user_recipientValidation_Works()
     {
         To value = new(
-            new()
+            new Models::UserRecipient()
             {
                 AccountID = "account_id",
                 Context = new() { TenantID = "tenant_id" },
@@ -3609,7 +3609,7 @@ public class ToTest : TestBase
     public void user_recipientSerializationRoundtrip_Works()
     {
         To value = new(
-            new()
+            new Models::UserRecipient()
             {
                 AccountID = "account_id",
                 Context = new() { TenantID = "tenant_id" },

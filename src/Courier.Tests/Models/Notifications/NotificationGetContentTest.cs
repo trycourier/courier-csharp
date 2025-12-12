@@ -586,7 +586,9 @@ public class ContentTest : TestBase
     [Fact]
     public void notification_content_hierarchyValidation_Works()
     {
-        Content value = new(new() { Children = "children", Parent = "parent" });
+        Content value = new(
+            new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
+        );
         value.Validate();
     }
 
@@ -603,7 +605,9 @@ public class ContentTest : TestBase
     [Fact]
     public void notification_content_hierarchySerializationRoundtrip_Works()
     {
-        Content value = new(new() { Children = "children", Parent = "parent" });
+        Content value = new(
+            new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
+        );
         string json = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Content>(json);
 
@@ -711,7 +715,9 @@ public class LocaleTest : TestBase
     [Fact]
     public void notification_content_hierarchyValidation_Works()
     {
-        Locale value = new(new() { Children = "children", Parent = "parent" });
+        Locale value = new(
+            new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
+        );
         value.Validate();
     }
 
@@ -728,7 +734,9 @@ public class LocaleTest : TestBase
     [Fact]
     public void notification_content_hierarchySerializationRoundtrip_Works()
     {
-        Locale value = new(new() { Children = "children", Parent = "parent" });
+        Locale value = new(
+            new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
+        );
         string json = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Locale>(json);
 

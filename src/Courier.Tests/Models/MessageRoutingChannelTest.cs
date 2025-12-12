@@ -15,7 +15,9 @@ public class MessageRoutingChannelTest : TestBase
     [Fact]
     public void message_routingValidation_Works()
     {
-        MessageRoutingChannel value = new(new() { Channels = ["string"], Method = Method.All });
+        MessageRoutingChannel value = new(
+            new MessageRouting() { Channels = ["string"], Method = Method.All }
+        );
         value.Validate();
     }
 
@@ -32,7 +34,9 @@ public class MessageRoutingChannelTest : TestBase
     [Fact]
     public void message_routingSerializationRoundtrip_Works()
     {
-        MessageRoutingChannel value = new(new() { Channels = ["string"], Method = Method.All });
+        MessageRoutingChannel value = new(
+            new MessageRouting() { Channels = ["string"], Method = Method.All }
+        );
         string json = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<MessageRoutingChannel>(json);
 
