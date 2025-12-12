@@ -27,6 +27,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
         ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalMetaNodeWithTypeIntersectionMember1Type.Meta;
 
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -79,6 +80,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
         ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalMetaNodeWithTypeIntersectionMember1Type.Meta;
 
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {

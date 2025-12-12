@@ -1743,6 +1743,7 @@ public class ChannelsItemTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, model.Override[item.Key]));
         }
+        Assert.NotNull(model.Providers);
         Assert.Equal(expectedProviders.Count, model.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
         {
@@ -1847,6 +1848,7 @@ public class ChannelsItemTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, deserialized.Override[item.Key]));
         }
+        Assert.NotNull(deserialized.Providers);
         Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
         {
@@ -2564,6 +2566,7 @@ public class MessageMetadataTest : TestBase
         };
 
         Assert.Equal(expectedEvent, model.Event);
+        Assert.NotNull(model.Tags);
         Assert.Equal(expectedTags.Count, model.Tags.Count);
         for (int i = 0; i < expectedTags.Count; i++)
         {
@@ -2632,6 +2635,7 @@ public class MessageMetadataTest : TestBase
         };
 
         Assert.Equal(expectedEvent, deserialized.Event);
+        Assert.NotNull(deserialized.Tags);
         Assert.Equal(expectedTags.Count, deserialized.Tags.Count);
         for (int i = 0; i < expectedTags.Count; i++)
         {

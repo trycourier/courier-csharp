@@ -78,11 +78,13 @@ public class NotificationGetContentTest : TestBase
         ];
         string expectedChecksum = "checksum";
 
+        Assert.NotNull(model.Blocks);
         Assert.Equal(expectedBlocks.Count, model.Blocks.Count);
         for (int i = 0; i < expectedBlocks.Count; i++)
         {
             Assert.Equal(expectedBlocks[i], model.Blocks[i]);
         }
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -209,11 +211,13 @@ public class NotificationGetContentTest : TestBase
         ];
         string expectedChecksum = "checksum";
 
+        Assert.NotNull(deserialized.Blocks);
         Assert.Equal(expectedBlocks.Count, deserialized.Blocks.Count);
         for (int i = 0; i < expectedBlocks.Count; i++)
         {
             Assert.Equal(expectedBlocks[i], deserialized.Blocks[i]);
         }
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {

@@ -60,10 +60,8 @@ public class UserTokenTest : TestBase
         Assert.Equal(expectedProviderKey, model.ProviderKey);
         Assert.Equal(expectedDevice, model.Device);
         Assert.Equal(expectedExpiryDate, model.ExpiryDate);
-        Assert.True(
-            model.Properties.HasValue
-                && JsonElement.DeepEquals(expectedProperties, model.Properties.Value)
-        );
+        Assert.NotNull(model.Properties);
+        Assert.True(JsonElement.DeepEquals(expectedProperties, model.Properties.Value));
         Assert.Equal(expectedTracking, model.Tracking);
     }
 
@@ -157,10 +155,8 @@ public class UserTokenTest : TestBase
         Assert.Equal(expectedProviderKey, deserialized.ProviderKey);
         Assert.Equal(expectedDevice, deserialized.Device);
         Assert.Equal(expectedExpiryDate, deserialized.ExpiryDate);
-        Assert.True(
-            deserialized.Properties.HasValue
-                && JsonElement.DeepEquals(expectedProperties, deserialized.Properties.Value)
-        );
+        Assert.NotNull(deserialized.Properties);
+        Assert.True(JsonElement.DeepEquals(expectedProperties, deserialized.Properties.Value));
         Assert.Equal(expectedTracking, deserialized.Tracking);
     }
 

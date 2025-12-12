@@ -36,6 +36,7 @@ public class DefaultPreferencesTest : TestBase
             },
         ];
 
+        Assert.NotNull(model.Items);
         Assert.Equal(expectedItems.Count, model.Items.Count);
         for (int i = 0; i < expectedItems.Count; i++)
         {
@@ -98,6 +99,7 @@ public class DefaultPreferencesTest : TestBase
             },
         ];
 
+        Assert.NotNull(deserialized.Items);
         Assert.Equal(expectedItems.Count, deserialized.Items.Count);
         for (int i = 0; i < expectedItems.Count; i++)
         {
@@ -182,6 +184,7 @@ public class ItemTest : TestBase
         string expectedID = "id";
 
         Assert.Equal(expectedStatus, model.Status);
+        Assert.NotNull(model.CustomRouting);
         Assert.Equal(expectedCustomRouting.Count, model.CustomRouting.Count);
         for (int i = 0; i < expectedCustomRouting.Count; i++)
         {
@@ -232,6 +235,7 @@ public class ItemTest : TestBase
         string expectedID = "id";
 
         Assert.Equal(expectedStatus, deserialized.Status);
+        Assert.NotNull(deserialized.CustomRouting);
         Assert.Equal(expectedCustomRouting.Count, deserialized.CustomRouting.Count);
         for (int i = 0; i < expectedCustomRouting.Count; i++)
         {
