@@ -22,7 +22,8 @@ public class InboundServiceTest : TestBase
                     { "last_order_id", JsonSerializer.SerializeToElement("bar") },
                 },
                 Type = Type.Track,
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }

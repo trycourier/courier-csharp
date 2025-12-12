@@ -10,7 +10,8 @@ public class ItemServiceTest : TestBase
     {
         await this.client.Tenants.Preferences.Items.Update(
             "topic_id",
-            new() { TenantID = "tenant_id", Status = Status.OptedIn }
+            new() { TenantID = "tenant_id", Status = Status.OptedIn },
+            TestContext.Current.CancellationToken
         );
     }
 
@@ -19,7 +20,8 @@ public class ItemServiceTest : TestBase
     {
         await this.client.Tenants.Preferences.Items.Delete(
             "topic_id",
-            new() { TenantID = "tenant_id" }
+            new() { TenantID = "tenant_id" },
+            TestContext.Current.CancellationToken
         );
     }
 }

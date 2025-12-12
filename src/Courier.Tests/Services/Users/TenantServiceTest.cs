@@ -10,7 +10,11 @@ public class TenantServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task List_Works()
     {
-        var tenants = await this.client.Users.Tenants.List("user_id");
+        var tenants = await this.client.Users.Tenants.List(
+            "user_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         tenants.Validate();
     }
 
@@ -34,25 +38,38 @@ public class TenantServiceTest : TestBase
                         UserID = "user_id",
                     },
                 ],
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task AddSingle_Works()
     {
-        await this.client.Users.Tenants.AddSingle("tenant_id", new() { UserID = "user_id" });
+        await this.client.Users.Tenants.AddSingle(
+            "tenant_id",
+            new() { UserID = "user_id" },
+            TestContext.Current.CancellationToken
+        );
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RemoveAll_Works()
     {
-        await this.client.Users.Tenants.RemoveAll("user_id");
+        await this.client.Users.Tenants.RemoveAll(
+            "user_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RemoveSingle_Works()
     {
-        await this.client.Users.Tenants.RemoveSingle("tenant_id", new() { UserID = "user_id" });
+        await this.client.Users.Tenants.RemoveSingle(
+            "tenant_id",
+            new() { UserID = "user_id" },
+            TestContext.Current.CancellationToken
+        );
     }
 }

@@ -22,7 +22,8 @@ public class CheckServiceTest : TestBase
                         Type = Type.Custom,
                     },
                 ],
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         check.Validate();
     }
@@ -32,7 +33,8 @@ public class CheckServiceTest : TestBase
     {
         var checks = await this.client.Notifications.Checks.List(
             "submissionId",
-            new() { ID = "id" }
+            new() { ID = "id" },
+            TestContext.Current.CancellationToken
         );
         checks.Validate();
     }
@@ -40,6 +42,10 @@ public class CheckServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Notifications.Checks.Delete("submissionId", new() { ID = "id" });
+        await this.client.Notifications.Checks.Delete(
+            "submissionId",
+            new() { ID = "id" },
+            TestContext.Current.CancellationToken
+        );
     }
 }
