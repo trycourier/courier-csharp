@@ -161,7 +161,8 @@ public class SendServiceTest : TestBase
                         UserID = "example_user",
                     },
                 },
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }

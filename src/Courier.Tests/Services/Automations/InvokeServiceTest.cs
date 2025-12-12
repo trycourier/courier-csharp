@@ -41,7 +41,8 @@ public class InvokeServiceTest : TestBase
                     ],
                     CancelationToken = "delay-send--user-yes--abc-123",
                 },
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         automationInvokeResponse.Validate();
     }
@@ -51,7 +52,8 @@ public class InvokeServiceTest : TestBase
     {
         var automationInvokeResponse = await this.client.Automations.Invoke.InvokeByTemplate(
             "templateId",
-            new() { Recipient = "recipient" }
+            new() { Recipient = "recipient" },
+            TestContext.Current.CancellationToken
         );
         automationInvokeResponse.Validate();
     }

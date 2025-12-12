@@ -9,7 +9,11 @@ public class SubscriptionServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task List_Works()
     {
-        var subscriptions = await this.client.Lists.Subscriptions.List("list_id");
+        var subscriptions = await this.client.Lists.Subscriptions.List(
+            "list_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         subscriptions.Validate();
     }
 
@@ -60,7 +64,8 @@ public class SubscriptionServiceTest : TestBase
                         },
                     },
                 ],
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 
@@ -111,7 +116,8 @@ public class SubscriptionServiceTest : TestBase
                         },
                     },
                 ],
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 
@@ -120,7 +126,8 @@ public class SubscriptionServiceTest : TestBase
     {
         await this.client.Lists.Subscriptions.SubscribeUser(
             "user_id",
-            new() { ListID = "list_id" }
+            new() { ListID = "list_id" },
+            TestContext.Current.CancellationToken
         );
     }
 
@@ -129,7 +136,8 @@ public class SubscriptionServiceTest : TestBase
     {
         await this.client.Lists.Subscriptions.UnsubscribeUser(
             "user_id",
-            new() { ListID = "list_id" }
+            new() { ListID = "list_id" },
+            TestContext.Current.CancellationToken
         );
     }
 }

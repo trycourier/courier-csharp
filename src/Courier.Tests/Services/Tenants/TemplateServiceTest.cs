@@ -9,7 +9,8 @@ public class TemplateServiceTest : TestBase
     {
         var baseTemplateTenantAssociation = await this.client.Tenants.Templates.Retrieve(
             "template_id",
-            new() { TenantID = "tenant_id" }
+            new() { TenantID = "tenant_id" },
+            TestContext.Current.CancellationToken
         );
         baseTemplateTenantAssociation.Validate();
     }
@@ -17,7 +18,11 @@ public class TemplateServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task List_Works()
     {
-        var templates = await this.client.Tenants.Templates.List("tenant_id");
+        var templates = await this.client.Tenants.Templates.List(
+            "tenant_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         templates.Validate();
     }
 }
