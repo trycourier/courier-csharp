@@ -11,9 +11,8 @@ public class TestBase
     {
         client = new CourierClient()
         {
-            BaseUrl = new Uri(
-                Environment.GetEnvironmentVariable("TEST_API_BASE_URL") ?? "http://localhost:4010"
-            ),
+            BaseUrl =
+                Environment.GetEnvironmentVariable("TEST_API_BASE_URL") ?? "http://localhost:4010",
             APIKey = "My API Key",
         };
     }
