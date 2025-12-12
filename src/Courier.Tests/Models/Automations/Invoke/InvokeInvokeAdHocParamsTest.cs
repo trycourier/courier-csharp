@@ -216,7 +216,7 @@ public class StepTest : TestBase
     public void automation_delayValidation_Works()
     {
         Step value = new(
-            new()
+            new AutomationDelayStep()
             {
                 Action = Action.Delay,
                 Duration = "duration",
@@ -230,7 +230,7 @@ public class StepTest : TestBase
     public void automation_sendValidation_Works()
     {
         Step value = new(
-            new()
+            new AutomationSendStep()
             {
                 Action = AutomationSendStepAction.Send,
                 Brand = "brand",
@@ -253,7 +253,7 @@ public class StepTest : TestBase
     public void automation_send_listValidation_Works()
     {
         Step value = new(
-            new()
+            new AutomationSendListStep()
             {
                 Action = AutomationSendListStepAction.SendList,
                 List = "list",
@@ -271,7 +271,7 @@ public class StepTest : TestBase
     public void automation_update_profileValidation_Works()
     {
         Step value = new(
-            new()
+            new AutomationUpdateProfileStep()
             {
                 Action = AutomationUpdateProfileStepAction.UpdateProfile,
                 Profile = new Dictionary<string, JsonElement>()
@@ -289,7 +289,7 @@ public class StepTest : TestBase
     public void automation_cancelValidation_Works()
     {
         Step value = new(
-            new()
+            new AutomationCancelStep()
             {
                 Action = AutomationCancelStepAction.Cancel,
                 CancelationToken = "cancelation_token",
@@ -302,7 +302,7 @@ public class StepTest : TestBase
     public void automation_fetch_dataValidation_Works()
     {
         Step value = new(
-            new()
+            new AutomationFetchDataStep()
             {
                 Action = AutomationFetchDataStepAction.FetchData,
                 Webhook = new()
@@ -322,7 +322,11 @@ public class StepTest : TestBase
     public void automation_invokeValidation_Works()
     {
         Step value = new(
-            new() { Action = AutomationInvokeStepAction.Invoke, Template = "template" }
+            new AutomationInvokeStep()
+            {
+                Action = AutomationInvokeStepAction.Invoke,
+                Template = "template",
+            }
         );
         value.Validate();
     }
@@ -331,7 +335,7 @@ public class StepTest : TestBase
     public void automation_delaySerializationRoundtrip_Works()
     {
         Step value = new(
-            new()
+            new AutomationDelayStep()
             {
                 Action = Action.Delay,
                 Duration = "duration",
@@ -348,7 +352,7 @@ public class StepTest : TestBase
     public void automation_sendSerializationRoundtrip_Works()
     {
         Step value = new(
-            new()
+            new AutomationSendStep()
             {
                 Action = AutomationSendStepAction.Send,
                 Brand = "brand",
@@ -374,7 +378,7 @@ public class StepTest : TestBase
     public void automation_send_listSerializationRoundtrip_Works()
     {
         Step value = new(
-            new()
+            new AutomationSendListStep()
             {
                 Action = AutomationSendListStepAction.SendList,
                 List = "list",
@@ -395,7 +399,7 @@ public class StepTest : TestBase
     public void automation_update_profileSerializationRoundtrip_Works()
     {
         Step value = new(
-            new()
+            new AutomationUpdateProfileStep()
             {
                 Action = AutomationUpdateProfileStepAction.UpdateProfile,
                 Profile = new Dictionary<string, JsonElement>()
@@ -416,7 +420,7 @@ public class StepTest : TestBase
     public void automation_cancelSerializationRoundtrip_Works()
     {
         Step value = new(
-            new()
+            new AutomationCancelStep()
             {
                 Action = AutomationCancelStepAction.Cancel,
                 CancelationToken = "cancelation_token",
@@ -432,7 +436,7 @@ public class StepTest : TestBase
     public void automation_fetch_dataSerializationRoundtrip_Works()
     {
         Step value = new(
-            new()
+            new AutomationFetchDataStep()
             {
                 Action = AutomationFetchDataStepAction.FetchData,
                 Webhook = new()
@@ -455,7 +459,11 @@ public class StepTest : TestBase
     public void automation_invokeSerializationRoundtrip_Works()
     {
         Step value = new(
-            new() { Action = AutomationInvokeStepAction.Invoke, Template = "template" }
+            new AutomationInvokeStep()
+            {
+                Action = AutomationInvokeStepAction.Invoke,
+                Template = "template",
+            }
         );
         string json = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Step>(json);

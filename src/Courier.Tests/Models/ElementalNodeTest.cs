@@ -9,7 +9,7 @@ public class ElementalNodeTest : TestBase
     public void text_node_with_typeValidation_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalTextNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -25,7 +25,7 @@ public class ElementalNodeTest : TestBase
     public void meta_node_with_typeValidation_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalMetaNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -41,7 +41,10 @@ public class ElementalNodeTest : TestBase
     public void channel_node_with_typeValidation_Works()
     {
         ElementalNode value = new(
-            new() { Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel }
+            new ElementalChannelNodeWithType()
+            {
+                Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+            }
         );
         value.Validate();
     }
@@ -50,7 +53,7 @@ public class ElementalNodeTest : TestBase
     public void image_node_with_typeValidation_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalImageNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -66,7 +69,7 @@ public class ElementalNodeTest : TestBase
     public void action_node_with_typeValidation_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalActionNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -82,7 +85,7 @@ public class ElementalNodeTest : TestBase
     public void divider_node_with_typeValidation_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalDividerNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -98,7 +101,7 @@ public class ElementalNodeTest : TestBase
     public void quote_node_with_typeValidation_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalQuoteNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -114,7 +117,7 @@ public class ElementalNodeTest : TestBase
     public void text_node_with_typeSerializationRoundtrip_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalTextNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -133,7 +136,7 @@ public class ElementalNodeTest : TestBase
     public void meta_node_with_typeSerializationRoundtrip_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalMetaNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -152,7 +155,10 @@ public class ElementalNodeTest : TestBase
     public void channel_node_with_typeSerializationRoundtrip_Works()
     {
         ElementalNode value = new(
-            new() { Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel }
+            new ElementalChannelNodeWithType()
+            {
+                Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+            }
         );
         string json = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
@@ -164,7 +170,7 @@ public class ElementalNodeTest : TestBase
     public void image_node_with_typeSerializationRoundtrip_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalImageNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -183,7 +189,7 @@ public class ElementalNodeTest : TestBase
     public void action_node_with_typeSerializationRoundtrip_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalActionNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -202,7 +208,7 @@ public class ElementalNodeTest : TestBase
     public void divider_node_with_typeSerializationRoundtrip_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalDividerNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
@@ -221,7 +227,7 @@ public class ElementalNodeTest : TestBase
     public void quote_node_with_typeSerializationRoundtrip_Works()
     {
         ElementalNode value = new(
-            new()
+            new ElementalQuoteNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",

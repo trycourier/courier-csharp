@@ -11,7 +11,7 @@ public class InboundBulkMessageTest : TestBase
     public void templateValidation_Works()
     {
         InboundBulkMessage value = new(
-            new()
+            new InboundBulkTemplateMessage()
             {
                 Template = "template",
                 Brand = "brand",
@@ -43,7 +43,7 @@ public class InboundBulkMessageTest : TestBase
     public void contentValidation_Works()
     {
         InboundBulkMessage value = new(
-            new()
+            new InboundBulkContentMessage()
             {
                 Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Brand = "brand",
@@ -75,7 +75,7 @@ public class InboundBulkMessageTest : TestBase
     public void templateSerializationRoundtrip_Works()
     {
         InboundBulkMessage value = new(
-            new()
+            new InboundBulkTemplateMessage()
             {
                 Template = "template",
                 Brand = "brand",
@@ -110,7 +110,7 @@ public class InboundBulkMessageTest : TestBase
     public void contentSerializationRoundtrip_Works()
     {
         InboundBulkMessage value = new(
-            new()
+            new InboundBulkContentMessage()
             {
                 Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Brand = "brand",
@@ -765,7 +765,7 @@ public class ContentTest : TestBase
     [Fact]
     public void elemental_content_sugarValidation_Works()
     {
-        Content value = new(new() { Body = "body", Title = "title" });
+        Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
         value.Validate();
     }
 
@@ -773,7 +773,7 @@ public class ContentTest : TestBase
     public void elementalValidation_Works()
     {
         Content value = new(
-            new()
+            new ElementalContent()
             {
                 Elements =
                 [
@@ -796,7 +796,7 @@ public class ContentTest : TestBase
     [Fact]
     public void elemental_content_sugarSerializationRoundtrip_Works()
     {
-        Content value = new(new() { Body = "body", Title = "title" });
+        Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
         string json = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Content>(json);
 
@@ -807,7 +807,7 @@ public class ContentTest : TestBase
     public void elementalSerializationRoundtrip_Works()
     {
         Content value = new(
-            new()
+            new ElementalContent()
             {
                 Elements =
                 [
