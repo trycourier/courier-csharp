@@ -57,6 +57,7 @@ public class TenantListResponseTest : TestBase
         Assert.Equal(expectedType, model.Type);
         Assert.Equal(expectedURL, model.URL);
         Assert.Equal(expectedCursor, model.Cursor);
+        Assert.NotNull(model.Items);
         Assert.Equal(expectedItems.Count, model.Items.Count);
         for (int i = 0; i < expectedItems.Count; i++)
         {
@@ -148,6 +149,7 @@ public class TenantListResponseTest : TestBase
         Assert.Equal(expectedType, deserialized.Type);
         Assert.Equal(expectedURL, deserialized.URL);
         Assert.Equal(expectedCursor, deserialized.Cursor);
+        Assert.NotNull(deserialized.Items);
         Assert.Equal(expectedItems.Count, deserialized.Items.Count);
         for (int i = 0; i < expectedItems.Count; i++)
         {

@@ -27,6 +27,7 @@ public class SubscriptionTopicNewTest : TestBase
         bool expectedHasCustomRouting = true;
 
         Assert.Equal(expectedStatus, model.Status);
+        Assert.NotNull(model.CustomRouting);
         Assert.Equal(expectedCustomRouting.Count, model.CustomRouting.Count);
         for (int i = 0; i < expectedCustomRouting.Count; i++)
         {
@@ -73,6 +74,7 @@ public class SubscriptionTopicNewTest : TestBase
         bool expectedHasCustomRouting = true;
 
         Assert.Equal(expectedStatus, deserialized.Status);
+        Assert.NotNull(deserialized.CustomRouting);
         Assert.Equal(expectedCustomRouting.Count, deserialized.CustomRouting.Count);
         for (int i = 0; i < expectedCustomRouting.Count; i++)
         {

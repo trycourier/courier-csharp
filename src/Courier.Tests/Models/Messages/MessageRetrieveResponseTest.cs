@@ -65,6 +65,7 @@ public class MessageRetrieveResponseTest : TestBase
         Assert.Equal(expectedStatus, model.Status);
         Assert.Equal(expectedError, model.Error);
         Assert.Equal(expectedReason, model.Reason);
+        Assert.NotNull(model.Providers);
         Assert.Equal(expectedProviders.Count, model.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
         {
@@ -172,6 +173,7 @@ public class MessageRetrieveResponseTest : TestBase
         Assert.Equal(expectedStatus, deserialized.Status);
         Assert.Equal(expectedError, deserialized.Error);
         Assert.Equal(expectedReason, deserialized.Reason);
+        Assert.NotNull(deserialized.Providers);
         Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
         {
@@ -337,6 +339,7 @@ public class IntersectionMember1Test : TestBase
             },
         ];
 
+        Assert.NotNull(model.Providers);
         Assert.Equal(expectedProviders.Count, model.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
         {
@@ -396,6 +399,7 @@ public class IntersectionMember1Test : TestBase
             },
         ];
 
+        Assert.NotNull(deserialized.Providers);
         Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
         {

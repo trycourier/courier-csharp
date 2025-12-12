@@ -27,6 +27,7 @@ public class ElementalImageNodeWithTypeTest : TestBase
         ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalImageNodeWithTypeIntersectionMember1Type.Image;
 
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -79,6 +80,7 @@ public class ElementalImageNodeWithTypeTest : TestBase
         ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalImageNodeWithTypeIntersectionMember1Type.Image;
 
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {

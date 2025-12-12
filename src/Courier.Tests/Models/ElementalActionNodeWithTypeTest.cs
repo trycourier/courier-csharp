@@ -26,6 +26,7 @@ public class ElementalActionNodeWithTypeTest : TestBase
         string expectedRef = "ref";
         ApiEnum<string, Type> expectedType = Type.Action;
 
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -77,6 +78,7 @@ public class ElementalActionNodeWithTypeTest : TestBase
         string expectedRef = "ref";
         ApiEnum<string, Type> expectedType = Type.Action;
 
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {

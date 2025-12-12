@@ -28,11 +28,13 @@ public class PreferenceTest : TestBase
         ApiEnum<string, Source> expectedSource = Source.Subscription;
 
         Assert.Equal(expectedStatus, model.Status);
+        Assert.NotNull(model.ChannelPreferences);
         Assert.Equal(expectedChannelPreferences.Count, model.ChannelPreferences.Count);
         for (int i = 0; i < expectedChannelPreferences.Count; i++)
         {
             Assert.Equal(expectedChannelPreferences[i], model.ChannelPreferences[i]);
         }
+        Assert.NotNull(model.Rules);
         Assert.Equal(expectedRules.Count, model.Rules.Count);
         for (int i = 0; i < expectedRules.Count; i++)
         {
@@ -82,11 +84,13 @@ public class PreferenceTest : TestBase
         ApiEnum<string, Source> expectedSource = Source.Subscription;
 
         Assert.Equal(expectedStatus, deserialized.Status);
+        Assert.NotNull(deserialized.ChannelPreferences);
         Assert.Equal(expectedChannelPreferences.Count, deserialized.ChannelPreferences.Count);
         for (int i = 0; i < expectedChannelPreferences.Count; i++)
         {
             Assert.Equal(expectedChannelPreferences[i], deserialized.ChannelPreferences[i]);
         }
+        Assert.NotNull(deserialized.Rules);
         Assert.Equal(expectedRules.Count, deserialized.Rules.Count);
         for (int i = 0; i < expectedRules.Count; i++)
         {

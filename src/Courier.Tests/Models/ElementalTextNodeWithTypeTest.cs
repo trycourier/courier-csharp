@@ -27,6 +27,7 @@ public class ElementalTextNodeWithTypeTest : TestBase
         ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalTextNodeWithTypeIntersectionMember1Type.Text;
 
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -79,6 +80,7 @@ public class ElementalTextNodeWithTypeTest : TestBase
         ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalTextNodeWithTypeIntersectionMember1Type.Text;
 
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
