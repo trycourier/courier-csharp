@@ -13,7 +13,8 @@ public class AuthServiceTest : TestBase
                 ExpiresIn = "$YOUR_NUMBER days",
                 Scope =
                     "user_id:$YOUR_USER_ID write:user-tokens inbox:read:messages inbox:write:events read:preferences write:preferences read:brands",
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }

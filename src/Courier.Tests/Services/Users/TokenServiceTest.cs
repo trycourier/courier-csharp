@@ -8,7 +8,11 @@ public class TokenServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var token = await this.client.Users.Tokens.Retrieve("token", new() { UserID = "user_id" });
+        var token = await this.client.Users.Tokens.Retrieve(
+            "token",
+            new() { UserID = "user_id" },
+            TestContext.Current.CancellationToken
+        );
         token.Validate();
     }
 
@@ -29,27 +33,40 @@ public class TokenServiceTest : TestBase
                         Value = "value",
                     },
                 ],
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task List_Works()
     {
-        var tokens = await this.client.Users.Tokens.List("user_id");
+        var tokens = await this.client.Users.Tokens.List(
+            "user_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         tokens.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Users.Tokens.Delete("token", new() { UserID = "user_id" });
+        await this.client.Users.Tokens.Delete(
+            "token",
+            new() { UserID = "user_id" },
+            TestContext.Current.CancellationToken
+        );
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task AddMultiple_Works()
     {
-        await this.client.Users.Tokens.AddMultiple("user_id");
+        await this.client.Users.Tokens.AddMultiple(
+            "user_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
     }
 
     [Fact(Skip = "Prism tests are disabled")]
@@ -62,7 +79,8 @@ public class TokenServiceTest : TestBase
                 UserID = "user_id",
                 TokenValue = "token",
                 ProviderKey = ProviderKey.FirebaseFcm,
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 }

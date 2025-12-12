@@ -590,6 +590,15 @@ public record class Step
         {
             throw new CourierInvalidDataException("Data did not match any variant of Step");
         }
+        this.Switch(
+            (automationDelay) => automationDelay.Validate(),
+            (automationSend) => automationSend.Validate(),
+            (automationSendList) => automationSendList.Validate(),
+            (automationUpdateProfile) => automationUpdateProfile.Validate(),
+            (automationCancel) => automationCancel.Validate(),
+            (automationFetchData) => automationFetchData.Validate(),
+            (automationInvoke) => automationInvoke.Validate()
+        );
     }
 
     public virtual bool Equals(Step? other)

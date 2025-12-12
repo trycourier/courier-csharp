@@ -13,6 +13,7 @@ public class BrandSnippetsTest : TestBase
 
         List<BrandSnippet> expectedItems = [new() { Name = "name", Value = "value" }];
 
+        Assert.NotNull(model.Items);
         Assert.Equal(expectedItems.Count, model.Items.Count);
         for (int i = 0; i < expectedItems.Count; i++)
         {
@@ -42,6 +43,7 @@ public class BrandSnippetsTest : TestBase
 
         List<BrandSnippet> expectedItems = [new() { Name = "name", Value = "value" }];
 
+        Assert.NotNull(deserialized.Items);
         Assert.Equal(expectedItems.Count, deserialized.Items.Count);
         for (int i = 0; i < expectedItems.Count; i++)
         {

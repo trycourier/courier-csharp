@@ -22,6 +22,7 @@ public class ElementalBaseNodeTest : TestBase
         string expectedLoop = "loop";
         string expectedRef = "ref";
 
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -69,6 +70,7 @@ public class ElementalBaseNodeTest : TestBase
         string expectedLoop = "loop";
         string expectedRef = "ref";
 
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {

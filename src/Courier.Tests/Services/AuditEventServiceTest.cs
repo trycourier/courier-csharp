@@ -7,14 +7,21 @@ public class AuditEventServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var auditEvent = await this.client.AuditEvents.Retrieve("audit-event-id");
+        var auditEvent = await this.client.AuditEvents.Retrieve(
+            "audit-event-id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         auditEvent.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task List_Works()
     {
-        var auditEvents = await this.client.AuditEvents.List();
+        var auditEvents = await this.client.AuditEvents.List(
+            new(),
+            TestContext.Current.CancellationToken
+        );
         auditEvents.Validate();
     }
 }

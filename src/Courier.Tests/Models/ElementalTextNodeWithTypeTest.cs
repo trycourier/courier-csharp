@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -26,6 +27,7 @@ public class ElementalTextNodeWithTypeTest : TestBase
         ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalTextNodeWithTypeIntersectionMember1Type.Text;
 
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -78,6 +80,7 @@ public class ElementalTextNodeWithTypeTest : TestBase
         ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalTextNodeWithTypeIntersectionMember1Type.Text;
 
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -340,5 +343,63 @@ public class ElementalTextNodeWithTypeIntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class ElementalTextNodeWithTypeIntersectionMember1TypeTest : TestBase
+{
+    [Theory]
+    [InlineData(ElementalTextNodeWithTypeIntersectionMember1Type.Text)]
+    public void Validation_Works(ElementalTextNodeWithTypeIntersectionMember1Type rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
+        >(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(ElementalTextNodeWithTypeIntersectionMember1Type.Text)]
+    public void SerializationRoundtrip_Works(
+        ElementalTextNodeWithTypeIntersectionMember1Type rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
+        >(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }

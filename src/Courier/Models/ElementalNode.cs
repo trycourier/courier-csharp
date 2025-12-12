@@ -442,6 +442,15 @@ public record class ElementalNode
                 "Data did not match any variant of ElementalNode"
             );
         }
+        this.Switch(
+            (textNodeWithType) => textNodeWithType.Validate(),
+            (metaNodeWithType) => metaNodeWithType.Validate(),
+            (channelNodeWithType) => channelNodeWithType.Validate(),
+            (imageNodeWithType) => imageNodeWithType.Validate(),
+            (actionNodeWithType) => actionNodeWithType.Validate(),
+            (dividerNodeWithType) => dividerNodeWithType.Validate(),
+            (quoteNodeWithType) => quoteNodeWithType.Validate()
+        );
     }
 
     public virtual bool Equals(ElementalNode? other)

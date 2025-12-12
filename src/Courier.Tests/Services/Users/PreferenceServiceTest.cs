@@ -8,7 +8,11 @@ public class PreferenceServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var preference = await this.client.Users.Preferences.Retrieve("user_id");
+        var preference = await this.client.Users.Preferences.Retrieve(
+            "user_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         preference.Validate();
     }
 
@@ -17,7 +21,8 @@ public class PreferenceServiceTest : TestBase
     {
         var response = await this.client.Users.Preferences.RetrieveTopic(
             "topic_id",
-            new() { UserID = "user_id" }
+            new() { UserID = "user_id" },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }
@@ -36,7 +41,8 @@ public class PreferenceServiceTest : TestBase
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }

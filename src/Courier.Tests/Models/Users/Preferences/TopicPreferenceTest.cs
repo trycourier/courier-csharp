@@ -35,6 +35,7 @@ public class TopicPreferenceTest : TestBase
         Assert.Equal(expectedStatus, model.Status);
         Assert.Equal(expectedTopicID, model.TopicID);
         Assert.Equal(expectedTopicName, model.TopicName);
+        Assert.NotNull(model.CustomRouting);
         Assert.Equal(expectedCustomRouting.Count, model.CustomRouting.Count);
         for (int i = 0; i < expectedCustomRouting.Count; i++)
         {
@@ -93,6 +94,7 @@ public class TopicPreferenceTest : TestBase
         Assert.Equal(expectedStatus, deserialized.Status);
         Assert.Equal(expectedTopicID, deserialized.TopicID);
         Assert.Equal(expectedTopicName, deserialized.TopicName);
+        Assert.NotNull(deserialized.CustomRouting);
         Assert.Equal(expectedCustomRouting.Count, deserialized.CustomRouting.Count);
         for (int i = 0; i < expectedCustomRouting.Count; i++)
         {

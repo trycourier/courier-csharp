@@ -17,7 +17,8 @@ public class ProfileServiceTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         profile.Validate();
     }
@@ -25,7 +26,11 @@ public class ProfileServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var profile = await this.client.Profiles.Retrieve("user_id");
+        var profile = await this.client.Profiles.Retrieve(
+            "user_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         profile.Validate();
     }
 
@@ -45,14 +50,15 @@ public class ProfileServiceTest : TestBase
                         Value = "value",
                     },
                 ],
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task Delete_Works()
     {
-        await this.client.Profiles.Delete("user_id");
+        await this.client.Profiles.Delete("user_id", new(), TestContext.Current.CancellationToken);
     }
 
     [Fact(Skip = "Prism tests are disabled")]
@@ -66,7 +72,8 @@ public class ProfileServiceTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }

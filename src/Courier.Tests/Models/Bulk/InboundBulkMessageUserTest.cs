@@ -165,11 +165,11 @@ public class InboundBulkMessageUserTest : TestBase
             UserID = "user_id",
         };
 
-        Assert.True(model.Data.HasValue && JsonElement.DeepEquals(expectedData, model.Data.Value));
+        Assert.NotNull(model.Data);
+        Assert.True(JsonElement.DeepEquals(expectedData, model.Data.Value));
         Assert.Equal(expectedPreferences, model.Preferences);
-        Assert.True(
-            model.Profile.HasValue && JsonElement.DeepEquals(expectedProfile, model.Profile.Value)
-        );
+        Assert.NotNull(model.Profile);
+        Assert.True(JsonElement.DeepEquals(expectedProfile, model.Profile.Value));
         Assert.Equal(expectedRecipient, model.Recipient);
         Assert.Equal(expectedTo, model.To);
     }
@@ -424,15 +424,11 @@ public class InboundBulkMessageUserTest : TestBase
             UserID = "user_id",
         };
 
-        Assert.True(
-            deserialized.Data.HasValue
-                && JsonElement.DeepEquals(expectedData, deserialized.Data.Value)
-        );
+        Assert.NotNull(deserialized.Data);
+        Assert.True(JsonElement.DeepEquals(expectedData, deserialized.Data.Value));
         Assert.Equal(expectedPreferences, deserialized.Preferences);
-        Assert.True(
-            deserialized.Profile.HasValue
-                && JsonElement.DeepEquals(expectedProfile, deserialized.Profile.Value)
-        );
+        Assert.NotNull(deserialized.Profile);
+        Assert.True(JsonElement.DeepEquals(expectedProfile, deserialized.Profile.Value));
         Assert.Equal(expectedRecipient, deserialized.Recipient);
         Assert.Equal(expectedTo, deserialized.To);
     }

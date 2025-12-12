@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -27,11 +28,13 @@ public class PreferenceTest : TestBase
         ApiEnum<string, Source> expectedSource = Source.Subscription;
 
         Assert.Equal(expectedStatus, model.Status);
+        Assert.NotNull(model.ChannelPreferences);
         Assert.Equal(expectedChannelPreferences.Count, model.ChannelPreferences.Count);
         for (int i = 0; i < expectedChannelPreferences.Count; i++)
         {
             Assert.Equal(expectedChannelPreferences[i], model.ChannelPreferences[i]);
         }
+        Assert.NotNull(model.Rules);
         Assert.Equal(expectedRules.Count, model.Rules.Count);
         for (int i = 0; i < expectedRules.Count; i++)
         {
@@ -81,11 +84,13 @@ public class PreferenceTest : TestBase
         ApiEnum<string, Source> expectedSource = Source.Subscription;
 
         Assert.Equal(expectedStatus, deserialized.Status);
+        Assert.NotNull(deserialized.ChannelPreferences);
         Assert.Equal(expectedChannelPreferences.Count, deserialized.ChannelPreferences.Count);
         for (int i = 0; i < expectedChannelPreferences.Count; i++)
         {
             Assert.Equal(expectedChannelPreferences[i], deserialized.ChannelPreferences[i]);
         }
+        Assert.NotNull(deserialized.Rules);
         Assert.Equal(expectedRules.Count, deserialized.Rules.Count);
         for (int i = 0; i < expectedRules.Count; i++)
         {
@@ -162,5 +167,63 @@ public class PreferenceTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class SourceTest : TestBase
+{
+    [Theory]
+    [InlineData(Source.Subscription)]
+    [InlineData(Source.List)]
+    [InlineData(Source.Recipient)]
+    public void Validation_Works(Source rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Source> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Source>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Source.Subscription)]
+    [InlineData(Source.List)]
+    [InlineData(Source.Recipient)]
+    public void SerializationRoundtrip_Works(Source rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Source> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Source>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Source>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Source>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

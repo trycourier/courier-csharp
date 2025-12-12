@@ -407,6 +407,10 @@ public record class Content
         {
             throw new CourierInvalidDataException("Data did not match any variant of Content");
         }
+        this.Switch(
+            (_) => { },
+            (notificationContentHierarchy) => notificationContentHierarchy.Validate()
+        );
     }
 
     public virtual bool Equals(Content? other)
@@ -692,6 +696,10 @@ public record class Locale
         {
             throw new CourierInvalidDataException("Data did not match any variant of Locale");
         }
+        this.Switch(
+            (_) => { },
+            (notificationContentHierarchy) => notificationContentHierarchy.Validate()
+        );
     }
 
     public virtual bool Equals(Locale? other)

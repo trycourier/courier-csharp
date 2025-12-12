@@ -108,7 +108,8 @@ public class BulkServiceTest : TestBase
                         },
                     },
                 ],
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 
@@ -142,7 +143,8 @@ public class BulkServiceTest : TestBase
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
                 },
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }
@@ -150,20 +152,28 @@ public class BulkServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task ListUsers_Works()
     {
-        var response = await this.client.Bulk.ListUsers("job_id");
+        var response = await this.client.Bulk.ListUsers(
+            "job_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RetrieveJob_Works()
     {
-        var response = await this.client.Bulk.RetrieveJob("job_id");
+        var response = await this.client.Bulk.RetrieveJob(
+            "job_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RunJob_Works()
     {
-        await this.client.Bulk.RunJob("job_id");
+        await this.client.Bulk.RunJob("job_id", new(), TestContext.Current.CancellationToken);
     }
 }

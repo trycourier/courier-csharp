@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Bulk;
 using Models = Courier.Models;
 
@@ -826,11 +827,11 @@ public class ItemTest : TestBase
         ApiEnum<string, Status> expectedStatus = Status.Pending;
         string expectedMessageID = "messageId";
 
-        Assert.True(model.Data.HasValue && JsonElement.DeepEquals(expectedData, model.Data.Value));
+        Assert.NotNull(model.Data);
+        Assert.True(JsonElement.DeepEquals(expectedData, model.Data.Value));
         Assert.Equal(expectedPreferences, model.Preferences);
-        Assert.True(
-            model.Profile.HasValue && JsonElement.DeepEquals(expectedProfile, model.Profile.Value)
-        );
+        Assert.NotNull(model.Profile);
+        Assert.True(JsonElement.DeepEquals(expectedProfile, model.Profile.Value));
         Assert.Equal(expectedRecipient, model.Recipient);
         Assert.Equal(expectedTo, model.To);
         Assert.Equal(expectedStatus, model.Status);
@@ -1105,15 +1106,11 @@ public class ItemTest : TestBase
         ApiEnum<string, Status> expectedStatus = Status.Pending;
         string expectedMessageID = "messageId";
 
-        Assert.True(
-            deserialized.Data.HasValue
-                && JsonElement.DeepEquals(expectedData, deserialized.Data.Value)
-        );
+        Assert.NotNull(deserialized.Data);
+        Assert.True(JsonElement.DeepEquals(expectedData, deserialized.Data.Value));
         Assert.Equal(expectedPreferences, deserialized.Preferences);
-        Assert.True(
-            deserialized.Profile.HasValue
-                && JsonElement.DeepEquals(expectedProfile, deserialized.Profile.Value)
-        );
+        Assert.NotNull(deserialized.Profile);
+        Assert.True(JsonElement.DeepEquals(expectedProfile, deserialized.Profile.Value));
         Assert.Equal(expectedRecipient, deserialized.Recipient);
         Assert.Equal(expectedTo, deserialized.To);
         Assert.Equal(expectedStatus, deserialized.Status);
@@ -1759,5 +1756,63 @@ public class IntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class StatusTest : TestBase
+{
+    [Theory]
+    [InlineData(Status.Pending)]
+    [InlineData(Status.Enqueued)]
+    [InlineData(Status.Error)]
+    public void Validation_Works(Status rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Status> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Status.Pending)]
+    [InlineData(Status.Enqueued)]
+    [InlineData(Status.Error)]
+    public void SerializationRoundtrip_Works(Status rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Status> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
