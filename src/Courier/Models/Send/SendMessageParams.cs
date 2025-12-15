@@ -808,6 +808,16 @@ public sealed record class Delay : ModelBase
     }
 
     /// <summary>
+    /// IANA timezone identifier (e.g., "America/Los_Angeles", "UTC"). Used when
+    /// resolving opening hours expressions. Takes precedence over user profile timezone settings.
+    /// </summary>
+    public string? Timezone
+    {
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "timezone"); }
+        init { ModelBase.Set(this._rawData, "timezone", value); }
+    }
+
+    /// <summary>
     /// ISO 8601 timestamp or opening_hours-like format.
     /// </summary>
     public string? Until
@@ -820,6 +830,7 @@ public sealed record class Delay : ModelBase
     public override void Validate()
     {
         _ = this.Duration;
+        _ = this.Timezone;
         _ = this.Until;
     }
 

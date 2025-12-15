@@ -50,7 +50,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -196,7 +201,12 @@ public class MessageTest : TestBase
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
-        Delay expectedDelay = new() { Duration = 0, Until = "until" };
+        Delay expectedDelay = new()
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
         Expiry expectedExpiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" };
         MessageMetadata expectedMetadata = new()
         {
@@ -370,7 +380,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -523,7 +538,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -673,7 +693,12 @@ public class MessageTest : TestBase
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
-        Delay expectedDelay = new() { Duration = 0, Until = "until" };
+        Delay expectedDelay = new()
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
         Expiry expectedExpiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" };
         MessageMetadata expectedMetadata = new()
         {
@@ -847,7 +872,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -996,7 +1026,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -1146,7 +1181,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -1295,7 +1335,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -1448,7 +1493,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -2319,19 +2369,31 @@ public class DelayTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Delay { Duration = 0, Until = "until" };
+        var model = new Delay
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
 
         long expectedDuration = 0;
+        string expectedTimezone = "timezone";
         string expectedUntil = "until";
 
         Assert.Equal(expectedDuration, model.Duration);
+        Assert.Equal(expectedTimezone, model.Timezone);
         Assert.Equal(expectedUntil, model.Until);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Delay { Duration = 0, Until = "until" };
+        var model = new Delay
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
 
         string json = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<Delay>(json);
@@ -2342,23 +2404,35 @@ public class DelayTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Delay { Duration = 0, Until = "until" };
+        var model = new Delay
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
 
         string json = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<Delay>(json);
         Assert.NotNull(deserialized);
 
         long expectedDuration = 0;
+        string expectedTimezone = "timezone";
         string expectedUntil = "until";
 
         Assert.Equal(expectedDuration, deserialized.Duration);
+        Assert.Equal(expectedTimezone, deserialized.Timezone);
         Assert.Equal(expectedUntil, deserialized.Until);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new Delay { Duration = 0, Until = "until" };
+        var model = new Delay
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
 
         model.Validate();
     }
@@ -2370,6 +2444,8 @@ public class DelayTest : TestBase
 
         Assert.Null(model.Duration);
         Assert.False(model.RawData.ContainsKey("duration"));
+        Assert.Null(model.Timezone);
+        Assert.False(model.RawData.ContainsKey("timezone"));
         Assert.Null(model.Until);
         Assert.False(model.RawData.ContainsKey("until"));
     }
@@ -2385,10 +2461,17 @@ public class DelayTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new Delay { Duration = null, Until = null };
+        var model = new Delay
+        {
+            Duration = null,
+            Timezone = null,
+            Until = null,
+        };
 
         Assert.Null(model.Duration);
         Assert.True(model.RawData.ContainsKey("duration"));
+        Assert.Null(model.Timezone);
+        Assert.True(model.RawData.ContainsKey("timezone"));
         Assert.Null(model.Until);
         Assert.True(model.RawData.ContainsKey("until"));
     }
@@ -2396,7 +2479,12 @@ public class DelayTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Delay { Duration = null, Until = null };
+        var model = new Delay
+        {
+            Duration = null,
+            Timezone = null,
+            Until = null,
+        };
 
         model.Validate();
     }
