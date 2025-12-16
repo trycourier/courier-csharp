@@ -10,7 +10,11 @@ using Courier.Core;
 namespace Courier.Models.Bulk;
 
 /// <summary>
-/// Ingest user data into a Bulk Job
+/// Ingest user data into a Bulk Job.
+///
+/// <para>**Important**: For email-based bulk jobs, each user must include `profile.email`
+///  for provider routing to work correctly. The `to.email` field is not sufficient
+///  for email provider routing. </para>
 /// </summary>
 public sealed record class BulkAddUsersParams : ParamsBase
 {

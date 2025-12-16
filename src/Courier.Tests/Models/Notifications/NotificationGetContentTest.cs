@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Notifications;
 
 namespace Courier.Tests.Models.Notifications;
@@ -77,11 +78,13 @@ public class NotificationGetContentTest : TestBase
         ];
         string expectedChecksum = "checksum";
 
+        Assert.NotNull(model.Blocks);
         Assert.Equal(expectedBlocks.Count, model.Blocks.Count);
         for (int i = 0; i < expectedBlocks.Count; i++)
         {
             Assert.Equal(expectedBlocks[i], model.Blocks[i]);
         }
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -208,11 +211,13 @@ public class NotificationGetContentTest : TestBase
         ];
         string expectedChecksum = "checksum";
 
+        Assert.NotNull(deserialized.Blocks);
         Assert.Equal(expectedBlocks.Count, deserialized.Blocks.Count);
         for (int i = 0; i < expectedBlocks.Count; i++)
         {
             Assert.Equal(expectedBlocks[i], deserialized.Blocks[i]);
         }
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -503,6 +508,117 @@ public class BlockTest : TestBase
     }
 }
 
+public class BlockTypeTest : TestBase
+{
+    [Theory]
+    [InlineData(BlockType.Action)]
+    [InlineData(BlockType.Divider)]
+    [InlineData(BlockType.Image)]
+    [InlineData(BlockType.Jsonnet)]
+    [InlineData(BlockType.List)]
+    [InlineData(BlockType.Markdown)]
+    [InlineData(BlockType.Quote)]
+    [InlineData(BlockType.Template)]
+    [InlineData(BlockType.Text)]
+    public void Validation_Works(BlockType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, BlockType> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, BlockType>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(BlockType.Action)]
+    [InlineData(BlockType.Divider)]
+    [InlineData(BlockType.Image)]
+    [InlineData(BlockType.Jsonnet)]
+    [InlineData(BlockType.List)]
+    [InlineData(BlockType.Markdown)]
+    [InlineData(BlockType.Quote)]
+    [InlineData(BlockType.Template)]
+    [InlineData(BlockType.Text)]
+    public void SerializationRoundtrip_Works(BlockType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, BlockType> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, BlockType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, BlockType>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, BlockType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ContentTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        Content value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void notification_content_hierarchyValidation_Works()
+    {
+        Content value = new(
+            new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        Content value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void notification_content_hierarchySerializationRoundtrip_Works()
+    {
+        Content value = new(
+            new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class NotificationContentHierarchyTest : TestBase
 {
     [Fact]
@@ -588,6 +704,47 @@ public class NotificationContentHierarchyTest : TestBase
         var model = new NotificationContentHierarchy { Children = null, Parent = null };
 
         model.Validate();
+    }
+}
+
+public class LocaleTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        Locale value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void notification_content_hierarchyValidation_Works()
+    {
+        Locale value = new(
+            new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        Locale value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Locale>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void notification_content_hierarchySerializationRoundtrip_Works()
+    {
+        Locale value = new(
+            new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Locale>(json);
+
+        Assert.Equal(value, deserialized);
     }
 }
 

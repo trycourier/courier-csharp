@@ -56,7 +56,12 @@ public class SendServiceTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Delay = new() { Duration = 0, Until = "until" },
+                    Delay = new()
+                    {
+                        Duration = 0,
+                        Timezone = "timezone",
+                        Until = "until",
+                    },
                     Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
                     Metadata = new()
                     {
@@ -161,7 +166,8 @@ public class SendServiceTest : TestBase
                         UserID = "example_user",
                     },
                 },
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }

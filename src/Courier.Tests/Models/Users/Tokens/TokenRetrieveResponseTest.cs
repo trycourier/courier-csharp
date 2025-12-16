@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Users.Tokens;
 
 namespace Courier.Tests.Models.Users.Tokens;
@@ -63,10 +64,8 @@ public class TokenRetrieveResponseTest : TestBase
         Assert.Equal(expectedProviderKey, model.ProviderKey);
         Assert.Equal(expectedDevice, model.Device);
         Assert.Equal(expectedExpiryDate, model.ExpiryDate);
-        Assert.True(
-            model.Properties.HasValue
-                && JsonElement.DeepEquals(expectedProperties, model.Properties.Value)
-        );
+        Assert.NotNull(model.Properties);
+        Assert.True(JsonElement.DeepEquals(expectedProperties, model.Properties.Value));
         Assert.Equal(expectedTracking, model.Tracking);
         Assert.Equal(expectedStatus, model.Status);
         Assert.Equal(expectedStatusReason, model.StatusReason);
@@ -168,10 +167,8 @@ public class TokenRetrieveResponseTest : TestBase
         Assert.Equal(expectedProviderKey, deserialized.ProviderKey);
         Assert.Equal(expectedDevice, deserialized.Device);
         Assert.Equal(expectedExpiryDate, deserialized.ExpiryDate);
-        Assert.True(
-            deserialized.Properties.HasValue
-                && JsonElement.DeepEquals(expectedProperties, deserialized.Properties.Value)
-        );
+        Assert.NotNull(deserialized.Properties);
+        Assert.True(JsonElement.DeepEquals(expectedProperties, deserialized.Properties.Value));
         Assert.Equal(expectedTracking, deserialized.Tracking);
         Assert.Equal(expectedStatus, deserialized.Status);
         Assert.Equal(expectedStatusReason, deserialized.StatusReason);
@@ -525,5 +522,65 @@ public class IntersectionMember1Test : TestBase
         var model = new IntersectionMember1 { Status = null, StatusReason = null };
 
         model.Validate();
+    }
+}
+
+public class StatusTest : TestBase
+{
+    [Theory]
+    [InlineData(Status.Active)]
+    [InlineData(Status.Unknown)]
+    [InlineData(Status.Failed)]
+    [InlineData(Status.Revoked)]
+    public void Validation_Works(Status rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Status> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Status.Active)]
+    [InlineData(Status.Unknown)]
+    [InlineData(Status.Failed)]
+    [InlineData(Status.Revoked)]
+    public void SerializationRoundtrip_Works(Status rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Status> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Courier.Models;
-using Courier.Models.Bulk;
 
 namespace Courier.Tests.Services;
 
@@ -53,7 +52,10 @@ public class BulkServiceTest : TestBase
                                 },
                             },
                         },
-                        Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                        Profile = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
                         Recipient = "recipient",
                         To = new()
                         {
@@ -108,7 +110,8 @@ public class BulkServiceTest : TestBase
                         },
                     },
                 ],
-            }
+            },
+            TestContext.Current.CancellationToken
         );
     }
 
@@ -118,15 +121,15 @@ public class BulkServiceTest : TestBase
         var response = await this.client.Bulk.CreateJob(
             new()
             {
-                Message = new InboundBulkTemplateMessage()
+                Message = new()
                 {
-                    Template = "template",
+                    Event = "event",
                     Brand = "brand",
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     Data = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Event = "event",
                     Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                     {
                         {
@@ -141,8 +144,10 @@ public class BulkServiceTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
+                    Template = "template",
                 },
-            }
+            },
+            TestContext.Current.CancellationToken
         );
         response.Validate();
     }
@@ -150,20 +155,28 @@ public class BulkServiceTest : TestBase
     [Fact(Skip = "Prism tests are disabled")]
     public async Task ListUsers_Works()
     {
-        var response = await this.client.Bulk.ListUsers("job_id");
+        var response = await this.client.Bulk.ListUsers(
+            "job_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RetrieveJob_Works()
     {
-        var response = await this.client.Bulk.RetrieveJob("job_id");
+        var response = await this.client.Bulk.RetrieveJob(
+            "job_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
         response.Validate();
     }
 
     [Fact(Skip = "Prism tests are disabled")]
     public async Task RunJob_Works()
     {
-        await this.client.Bulk.RunJob("job_id");
+        await this.client.Bulk.RunJob("job_id", new(), TestContext.Current.CancellationToken);
     }
 }

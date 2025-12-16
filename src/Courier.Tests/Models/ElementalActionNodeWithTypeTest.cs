@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -25,6 +26,7 @@ public class ElementalActionNodeWithTypeTest : TestBase
         string expectedRef = "ref";
         ApiEnum<string, Type> expectedType = Type.Action;
 
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -76,6 +78,7 @@ public class ElementalActionNodeWithTypeTest : TestBase
         string expectedRef = "ref";
         ApiEnum<string, Type> expectedType = Type.Action;
 
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         for (int i = 0; i < expectedChannels.Count; i++)
         {
@@ -314,5 +317,59 @@ public class IntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class TypeTest : TestBase
+{
+    [Theory]
+    [InlineData(Type.Action)]
+    public void Validation_Works(Type rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Type> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Type>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Type.Action)]
+    public void SerializationRoundtrip_Works(Type rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Type> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Type>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Type>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Type>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

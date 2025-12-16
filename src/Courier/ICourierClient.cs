@@ -29,9 +29,9 @@ public interface ICourierClient
     /// <summary>
     /// The base URL to use for every request.
     ///
-    /// <para>Defaults to the production environment: https://api.courier.com</para>
+    /// <para>Defaults to the production environment: <see cref="EnvironmentUrl.Production"/></para>
     /// </summary>
-    Uri BaseUrl { get; init; }
+    string BaseUrl { get; init; }
 
     /// <summary>
     /// Whether to validate every response before returning it.

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Messages;
 
 namespace Courier.Tests.Models.Messages;
@@ -239,5 +240,157 @@ public class MessageDetailsTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class StatusTest : TestBase
+{
+    [Theory]
+    [InlineData(Status.Canceled)]
+    [InlineData(Status.Clicked)]
+    [InlineData(Status.Delayed)]
+    [InlineData(Status.Delivered)]
+    [InlineData(Status.Digested)]
+    [InlineData(Status.Enqueued)]
+    [InlineData(Status.Filtered)]
+    [InlineData(Status.Opened)]
+    [InlineData(Status.Routed)]
+    [InlineData(Status.Sent)]
+    [InlineData(Status.Simulated)]
+    [InlineData(Status.Throttled)]
+    [InlineData(Status.Undeliverable)]
+    [InlineData(Status.Unmapped)]
+    [InlineData(Status.Unroutable)]
+    public void Validation_Works(Status rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Status> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Status.Canceled)]
+    [InlineData(Status.Clicked)]
+    [InlineData(Status.Delayed)]
+    [InlineData(Status.Delivered)]
+    [InlineData(Status.Digested)]
+    [InlineData(Status.Enqueued)]
+    [InlineData(Status.Filtered)]
+    [InlineData(Status.Opened)]
+    [InlineData(Status.Routed)]
+    [InlineData(Status.Sent)]
+    [InlineData(Status.Simulated)]
+    [InlineData(Status.Throttled)]
+    [InlineData(Status.Undeliverable)]
+    [InlineData(Status.Unmapped)]
+    [InlineData(Status.Unroutable)]
+    public void SerializationRoundtrip_Works(Status rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Status> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ReasonTest : TestBase
+{
+    [Theory]
+    [InlineData(Reason.Bounced)]
+    [InlineData(Reason.Failed)]
+    [InlineData(Reason.Filtered)]
+    [InlineData(Reason.NoChannels)]
+    [InlineData(Reason.NoProviders)]
+    [InlineData(Reason.OptInRequired)]
+    [InlineData(Reason.ProviderError)]
+    [InlineData(Reason.Unpublished)]
+    [InlineData(Reason.Unsubscribed)]
+    public void Validation_Works(Reason rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Reason> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Reason>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Reason.Bounced)]
+    [InlineData(Reason.Failed)]
+    [InlineData(Reason.Filtered)]
+    [InlineData(Reason.NoChannels)]
+    [InlineData(Reason.NoProviders)]
+    [InlineData(Reason.OptInRequired)]
+    [InlineData(Reason.ProviderError)]
+    [InlineData(Reason.Unpublished)]
+    [InlineData(Reason.Unsubscribed)]
+    public void SerializationRoundtrip_Works(Reason rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Reason> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Reason>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Reason>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Reason>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

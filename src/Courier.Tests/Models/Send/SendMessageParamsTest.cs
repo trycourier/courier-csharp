@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Send;
 using Models = Courier.Models;
 
@@ -49,7 +50,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -195,7 +201,12 @@ public class MessageTest : TestBase
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
-        Delay expectedDelay = new() { Duration = 0, Until = "until" };
+        Delay expectedDelay = new()
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
         Expiry expectedExpiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" };
         MessageMetadata expectedMetadata = new()
         {
@@ -369,7 +380,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -522,7 +538,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -672,7 +693,12 @@ public class MessageTest : TestBase
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
-        Delay expectedDelay = new() { Duration = 0, Until = "until" };
+        Delay expectedDelay = new()
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
         Expiry expectedExpiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" };
         MessageMetadata expectedMetadata = new()
         {
@@ -846,7 +872,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -995,7 +1026,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -1145,7 +1181,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -1294,7 +1335,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -1447,7 +1493,12 @@ public class MessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Delay = new() { Duration = 0, Until = "until" },
+            Delay = new()
+            {
+                Duration = 0,
+                Timezone = "timezone",
+                Until = "until",
+            },
             Expiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" },
             Metadata = new()
             {
@@ -1742,6 +1793,7 @@ public class ChannelsItemTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, model.Override[item.Key]));
         }
+        Assert.NotNull(model.Providers);
         Assert.Equal(expectedProviders.Count, model.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
         {
@@ -1846,6 +1898,7 @@ public class ChannelsItemTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, deserialized.Override[item.Key]));
         }
+        Assert.NotNull(deserialized.Providers);
         Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
         {
@@ -2096,6 +2149,62 @@ public class MetadataTest : TestBase
     }
 }
 
+public class RoutingMethodTest : TestBase
+{
+    [Theory]
+    [InlineData(RoutingMethod.All)]
+    [InlineData(RoutingMethod.Single)]
+    public void Validation_Works(RoutingMethod rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, RoutingMethod> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(RoutingMethod.All)]
+    [InlineData(RoutingMethod.Single)]
+    public void SerializationRoundtrip_Works(RoutingMethod rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, RoutingMethod> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class TimeoutsTest : TestBase
 {
     [Fact]
@@ -2184,24 +2293,107 @@ public class TimeoutsTest : TestBase
     }
 }
 
+public class ContentTest : TestBase
+{
+    [Fact]
+    public void elemental_content_sugarValidation_Works()
+    {
+        Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
+        value.Validate();
+    }
+
+    [Fact]
+    public void elementalValidation_Works()
+    {
+        Content value = new(
+            new Models::ElementalContent()
+            {
+                Elements =
+                [
+                    new Models::ElementalTextNodeWithType()
+                    {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+                Brand = "brand",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void elemental_content_sugarSerializationRoundtrip_Works()
+    {
+        Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void elementalSerializationRoundtrip_Works()
+    {
+        Content value = new(
+            new Models::ElementalContent()
+            {
+                Elements =
+                [
+                    new Models::ElementalTextNodeWithType()
+                    {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+                Brand = "brand",
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class DelayTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Delay { Duration = 0, Until = "until" };
+        var model = new Delay
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
 
         long expectedDuration = 0;
+        string expectedTimezone = "timezone";
         string expectedUntil = "until";
 
         Assert.Equal(expectedDuration, model.Duration);
+        Assert.Equal(expectedTimezone, model.Timezone);
         Assert.Equal(expectedUntil, model.Until);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Delay { Duration = 0, Until = "until" };
+        var model = new Delay
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
 
         string json = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<Delay>(json);
@@ -2212,23 +2404,35 @@ public class DelayTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Delay { Duration = 0, Until = "until" };
+        var model = new Delay
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
 
         string json = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<Delay>(json);
         Assert.NotNull(deserialized);
 
         long expectedDuration = 0;
+        string expectedTimezone = "timezone";
         string expectedUntil = "until";
 
         Assert.Equal(expectedDuration, deserialized.Duration);
+        Assert.Equal(expectedTimezone, deserialized.Timezone);
         Assert.Equal(expectedUntil, deserialized.Until);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new Delay { Duration = 0, Until = "until" };
+        var model = new Delay
+        {
+            Duration = 0,
+            Timezone = "timezone",
+            Until = "until",
+        };
 
         model.Validate();
     }
@@ -2240,6 +2444,8 @@ public class DelayTest : TestBase
 
         Assert.Null(model.Duration);
         Assert.False(model.RawData.ContainsKey("duration"));
+        Assert.Null(model.Timezone);
+        Assert.False(model.RawData.ContainsKey("timezone"));
         Assert.Null(model.Until);
         Assert.False(model.RawData.ContainsKey("until"));
     }
@@ -2255,10 +2461,17 @@ public class DelayTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new Delay { Duration = null, Until = null };
+        var model = new Delay
+        {
+            Duration = null,
+            Timezone = null,
+            Until = null,
+        };
 
         Assert.Null(model.Duration);
         Assert.True(model.RawData.ContainsKey("duration"));
+        Assert.Null(model.Timezone);
+        Assert.True(model.RawData.ContainsKey("timezone"));
         Assert.Null(model.Until);
         Assert.True(model.RawData.ContainsKey("until"));
     }
@@ -2266,7 +2479,12 @@ public class DelayTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Delay { Duration = null, Until = null };
+        var model = new Delay
+        {
+            Duration = null,
+            Timezone = null,
+            Until = null,
+        };
 
         model.Validate();
     }
@@ -2366,6 +2584,43 @@ public class ExpiryTest : TestBase
     }
 }
 
+public class ExpiresInTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        ExpiresIn value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void longValidation_Works()
+    {
+        ExpiresIn value = new(0);
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        ExpiresIn value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void longSerializationRoundtrip_Works()
+    {
+        ExpiresIn value = new(0);
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class MessageMetadataTest : TestBase
 {
     [Fact]
@@ -2399,6 +2654,7 @@ public class MessageMetadataTest : TestBase
         };
 
         Assert.Equal(expectedEvent, model.Event);
+        Assert.NotNull(model.Tags);
         Assert.Equal(expectedTags.Count, model.Tags.Count);
         for (int i = 0; i < expectedTags.Count; i++)
         {
@@ -2467,6 +2723,7 @@ public class MessageMetadataTest : TestBase
         };
 
         Assert.Equal(expectedEvent, deserialized.Event);
+        Assert.NotNull(deserialized.Tags);
         Assert.Equal(expectedTags.Count, deserialized.Tags.Count);
         for (int i = 0; i < expectedTags.Count; i++)
         {
@@ -3024,6 +3281,62 @@ public class RoutingTest : TestBase
     }
 }
 
+public class MethodTest : TestBase
+{
+    [Theory]
+    [InlineData(Method.All)]
+    [InlineData(Method.Single)]
+    public void Validation_Works(Method rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Method> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Method.All)]
+    [InlineData(Method.Single)]
+    public void SerializationRoundtrip_Works(Method rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Method> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class TimeoutTest : TestBase
 {
     [Fact]
@@ -3199,5 +3512,314 @@ public class TimeoutTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class CriteriaTest : TestBase
+{
+    [Theory]
+    [InlineData(Criteria.NoEscalation)]
+    [InlineData(Criteria.Delivered)]
+    [InlineData(Criteria.Viewed)]
+    [InlineData(Criteria.Engaged)]
+    public void Validation_Works(Criteria rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Criteria> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Criteria>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Criteria.NoEscalation)]
+    [InlineData(Criteria.Delivered)]
+    [InlineData(Criteria.Viewed)]
+    [InlineData(Criteria.Engaged)]
+    public void SerializationRoundtrip_Works(Criteria rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Criteria> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Criteria>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Criteria>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Criteria>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ToTest : TestBase
+{
+    [Fact]
+    public void user_recipientValidation_Works()
+    {
+        To value = new(
+            new Models::UserRecipient()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void RecipientsValidation_Works()
+    {
+        To value = new(
+            [
+                new()
+                {
+                    AccountID = "account_id",
+                    Context = new() { TenantID = "tenant_id" },
+                    Data = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Email = "email",
+                    ListID = "list_id",
+                    Locale = "locale",
+                    PhoneNumber = "phone_number",
+                    Preferences = new()
+                    {
+                        Notifications = new Dictionary<string, Models::Preference>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                    Source = Models::Source.Subscription,
+                                }
+                            },
+                        },
+                        Categories = new Dictionary<string, Models::Preference>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                    Source = Models::Source.Subscription,
+                                }
+                            },
+                        },
+                        TemplateID = "templateId",
+                    },
+                    TenantID = "tenant_id",
+                    UserID = "user_id",
+                },
+            ]
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void user_recipientSerializationRoundtrip_Works()
+    {
+        To value = new(
+            new Models::UserRecipient()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Models::Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = Models::PreferenceStatus.OptedIn,
+                                ChannelPreferences =
+                                [
+                                    new(Models::ChannelClassification.DirectMessage),
+                                ],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Models::Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            }
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void RecipientsSerializationRoundtrip_Works()
+    {
+        To value = new(
+            [
+                new()
+                {
+                    AccountID = "account_id",
+                    Context = new() { TenantID = "tenant_id" },
+                    Data = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Email = "email",
+                    ListID = "list_id",
+                    Locale = "locale",
+                    PhoneNumber = "phone_number",
+                    Preferences = new()
+                    {
+                        Notifications = new Dictionary<string, Models::Preference>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                    Source = Models::Source.Subscription,
+                                }
+                            },
+                        },
+                        Categories = new Dictionary<string, Models::Preference>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = Models::PreferenceStatus.OptedIn,
+                                    ChannelPreferences =
+                                    [
+                                        new(Models::ChannelClassification.DirectMessage),
+                                    ],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                    Source = Models::Source.Subscription,
+                                }
+                            },
+                        },
+                        TemplateID = "templateId",
+                    },
+                    TenantID = "tenant_id",
+                    UserID = "user_id",
+                },
+            ]
+        );
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(json);
+
+        Assert.Equal(value, deserialized);
     }
 }

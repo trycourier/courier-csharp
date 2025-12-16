@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Tenants;
 
 namespace Courier.Tests.Models.Tenants;
@@ -56,6 +57,7 @@ public class TenantListUsersResponseTest : TestBase
         Assert.Equal(expectedType, model.Type);
         Assert.Equal(expectedURL, model.URL);
         Assert.Equal(expectedCursor, model.Cursor);
+        Assert.NotNull(model.Items);
         Assert.Equal(expectedItems.Count, model.Items.Count);
         for (int i = 0; i < expectedItems.Count; i++)
         {
@@ -148,6 +150,7 @@ public class TenantListUsersResponseTest : TestBase
         Assert.Equal(expectedType, deserialized.Type);
         Assert.Equal(expectedURL, deserialized.URL);
         Assert.Equal(expectedCursor, deserialized.Cursor);
+        Assert.NotNull(deserialized.Items);
         Assert.Equal(expectedItems.Count, deserialized.Items.Count);
         for (int i = 0; i < expectedItems.Count; i++)
         {
@@ -252,5 +255,59 @@ public class TenantListUsersResponseTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class TenantListUsersResponseTypeTest : TestBase
+{
+    [Theory]
+    [InlineData(TenantListUsersResponseType.List)]
+    public void Validation_Works(TenantListUsersResponseType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, TenantListUsersResponseType> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, TenantListUsersResponseType>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(TenantListUsersResponseType.List)]
+    public void SerializationRoundtrip_Works(TenantListUsersResponseType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, TenantListUsersResponseType> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, TenantListUsersResponseType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, TenantListUsersResponseType>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, TenantListUsersResponseType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

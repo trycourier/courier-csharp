@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Bulk;
 using Models = Courier.Models;
 
@@ -54,7 +55,10 @@ public class BulkListUsersResponseTest : TestBase
                             },
                         },
                     },
-                    Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
                     Recipient = "recipient",
                     To = new()
                     {
@@ -152,7 +156,10 @@ public class BulkListUsersResponseTest : TestBase
                         },
                     },
                 },
-                Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                Profile = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
                 Recipient = "recipient",
                 To = new()
                 {
@@ -265,7 +272,10 @@ public class BulkListUsersResponseTest : TestBase
                             },
                         },
                     },
-                    Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
                     Recipient = "recipient",
                     To = new()
                     {
@@ -377,7 +387,10 @@ public class BulkListUsersResponseTest : TestBase
                             },
                         },
                     },
-                    Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
                     Recipient = "recipient",
                     To = new()
                     {
@@ -479,7 +492,10 @@ public class BulkListUsersResponseTest : TestBase
                         },
                     },
                 },
-                Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                Profile = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
                 Recipient = "recipient",
                 To = new()
                 {
@@ -592,7 +608,10 @@ public class BulkListUsersResponseTest : TestBase
                             },
                         },
                     },
-                    Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
                     Recipient = "recipient",
                     To = new()
                     {
@@ -691,7 +710,10 @@ public class ItemTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -776,7 +798,10 @@ public class ItemTest : TestBase
                 },
             },
         };
-        JsonElement expectedProfile = JsonSerializer.Deserialize<JsonElement>("{}");
+        Dictionary<string, JsonElement> expectedProfile = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
         string expectedRecipient = "recipient";
         Models::UserRecipient expectedTo = new()
         {
@@ -826,11 +851,16 @@ public class ItemTest : TestBase
         ApiEnum<string, Status> expectedStatus = Status.Pending;
         string expectedMessageID = "messageId";
 
-        Assert.True(model.Data.HasValue && JsonElement.DeepEquals(expectedData, model.Data.Value));
+        Assert.NotNull(model.Data);
+        Assert.True(JsonElement.DeepEquals(expectedData, model.Data.Value));
         Assert.Equal(expectedPreferences, model.Preferences);
-        Assert.True(
-            model.Profile.HasValue && JsonElement.DeepEquals(expectedProfile, model.Profile.Value)
-        );
+        Assert.Equal(expectedProfile.Count, model.Profile.Count);
+        foreach (var item in expectedProfile)
+        {
+            Assert.True(model.Profile.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, model.Profile[item.Key]));
+        }
         Assert.Equal(expectedRecipient, model.Recipient);
         Assert.Equal(expectedTo, model.To);
         Assert.Equal(expectedStatus, model.Status);
@@ -870,7 +900,10 @@ public class ItemTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -966,7 +999,10 @@ public class ItemTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -1055,7 +1091,10 @@ public class ItemTest : TestBase
                 },
             },
         };
-        JsonElement expectedProfile = JsonSerializer.Deserialize<JsonElement>("{}");
+        Dictionary<string, JsonElement> expectedProfile = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
         string expectedRecipient = "recipient";
         Models::UserRecipient expectedTo = new()
         {
@@ -1105,15 +1144,16 @@ public class ItemTest : TestBase
         ApiEnum<string, Status> expectedStatus = Status.Pending;
         string expectedMessageID = "messageId";
 
-        Assert.True(
-            deserialized.Data.HasValue
-                && JsonElement.DeepEquals(expectedData, deserialized.Data.Value)
-        );
+        Assert.NotNull(deserialized.Data);
+        Assert.True(JsonElement.DeepEquals(expectedData, deserialized.Data.Value));
         Assert.Equal(expectedPreferences, deserialized.Preferences);
-        Assert.True(
-            deserialized.Profile.HasValue
-                && JsonElement.DeepEquals(expectedProfile, deserialized.Profile.Value)
-        );
+        Assert.Equal(expectedProfile.Count, deserialized.Profile.Count);
+        foreach (var item in expectedProfile)
+        {
+            Assert.True(deserialized.Profile.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, deserialized.Profile[item.Key]));
+        }
         Assert.Equal(expectedRecipient, deserialized.Recipient);
         Assert.Equal(expectedTo, deserialized.To);
         Assert.Equal(expectedStatus, deserialized.Status);
@@ -1153,7 +1193,10 @@ public class ItemTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -1218,6 +1261,10 @@ public class ItemTest : TestBase
     {
         var model = new Item
         {
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             Status = Status.Pending,
             MessageID = "messageId",
@@ -1227,8 +1274,6 @@ public class ItemTest : TestBase
         Assert.False(model.RawData.ContainsKey("data"));
         Assert.Null(model.Preferences);
         Assert.False(model.RawData.ContainsKey("preferences"));
-        Assert.Null(model.Profile);
-        Assert.False(model.RawData.ContainsKey("profile"));
         Assert.Null(model.To);
         Assert.False(model.RawData.ContainsKey("to"));
     }
@@ -1238,6 +1283,10 @@ public class ItemTest : TestBase
     {
         var model = new Item
         {
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             Status = Status.Pending,
             MessageID = "messageId",
@@ -1251,6 +1300,10 @@ public class ItemTest : TestBase
     {
         var model = new Item
         {
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             Status = Status.Pending,
             MessageID = "messageId",
@@ -1258,7 +1311,6 @@ public class ItemTest : TestBase
             // Null should be interpreted as omitted for these properties
             Data = null,
             Preferences = null,
-            Profile = null,
             To = null,
         };
 
@@ -1266,8 +1318,6 @@ public class ItemTest : TestBase
         Assert.False(model.RawData.ContainsKey("data"));
         Assert.Null(model.Preferences);
         Assert.False(model.RawData.ContainsKey("preferences"));
-        Assert.Null(model.Profile);
-        Assert.False(model.RawData.ContainsKey("profile"));
         Assert.Null(model.To);
         Assert.False(model.RawData.ContainsKey("to"));
     }
@@ -1277,6 +1327,10 @@ public class ItemTest : TestBase
     {
         var model = new Item
         {
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             Status = Status.Pending,
             MessageID = "messageId",
@@ -1284,7 +1338,6 @@ public class ItemTest : TestBase
             // Null should be interpreted as omitted for these properties
             Data = null,
             Preferences = null,
-            Profile = null,
             To = null,
         };
 
@@ -1324,7 +1377,6 @@ public class ItemTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
             To = new()
             {
                 AccountID = "account_id",
@@ -1379,6 +1431,8 @@ public class ItemTest : TestBase
             Status = Status.Pending,
         };
 
+        Assert.Null(model.Profile);
+        Assert.False(model.RawData.ContainsKey("profile"));
         Assert.Null(model.Recipient);
         Assert.False(model.RawData.ContainsKey("recipient"));
         Assert.Null(model.MessageID);
@@ -1418,7 +1472,6 @@ public class ItemTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
             To = new()
             {
                 AccountID = "account_id",
@@ -1509,7 +1562,6 @@ public class ItemTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
             To = new()
             {
                 AccountID = "account_id",
@@ -1563,10 +1615,13 @@ public class ItemTest : TestBase
             },
             Status = Status.Pending,
 
+            Profile = null,
             Recipient = null,
             MessageID = null,
         };
 
+        Assert.Null(model.Profile);
+        Assert.True(model.RawData.ContainsKey("profile"));
         Assert.Null(model.Recipient);
         Assert.True(model.RawData.ContainsKey("recipient"));
         Assert.Null(model.MessageID);
@@ -1606,7 +1661,6 @@ public class ItemTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
             To = new()
             {
                 AccountID = "account_id",
@@ -1660,6 +1714,7 @@ public class ItemTest : TestBase
             },
             Status = Status.Pending,
 
+            Profile = null,
             Recipient = null,
             MessageID = null,
         };
@@ -1759,5 +1814,63 @@ public class IntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class StatusTest : TestBase
+{
+    [Theory]
+    [InlineData(Status.Pending)]
+    [InlineData(Status.Enqueued)]
+    [InlineData(Status.Error)]
+    public void Validation_Works(Status rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Status> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Status.Pending)]
+    [InlineData(Status.Enqueued)]
+    [InlineData(Status.Error)]
+    public void SerializationRoundtrip_Works(Status rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Status> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Status>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

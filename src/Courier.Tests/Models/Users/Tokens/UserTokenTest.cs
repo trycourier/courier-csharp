@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Courier.Core;
+using Courier.Exceptions;
 using Courier.Models.Users.Tokens;
 
 namespace Courier.Tests.Models.Users.Tokens;
@@ -59,10 +60,8 @@ public class UserTokenTest : TestBase
         Assert.Equal(expectedProviderKey, model.ProviderKey);
         Assert.Equal(expectedDevice, model.Device);
         Assert.Equal(expectedExpiryDate, model.ExpiryDate);
-        Assert.True(
-            model.Properties.HasValue
-                && JsonElement.DeepEquals(expectedProperties, model.Properties.Value)
-        );
+        Assert.NotNull(model.Properties);
+        Assert.True(JsonElement.DeepEquals(expectedProperties, model.Properties.Value));
         Assert.Equal(expectedTracking, model.Tracking);
     }
 
@@ -156,10 +155,8 @@ public class UserTokenTest : TestBase
         Assert.Equal(expectedProviderKey, deserialized.ProviderKey);
         Assert.Equal(expectedDevice, deserialized.Device);
         Assert.Equal(expectedExpiryDate, deserialized.ExpiryDate);
-        Assert.True(
-            deserialized.Properties.HasValue
-                && JsonElement.DeepEquals(expectedProperties, deserialized.Properties.Value)
-        );
+        Assert.NotNull(deserialized.Properties);
+        Assert.True(JsonElement.DeepEquals(expectedProperties, deserialized.Properties.Value));
         Assert.Equal(expectedTracking, deserialized.Tracking);
     }
 
@@ -388,6 +385,66 @@ public class UserTokenTest : TestBase
     }
 }
 
+public class UserTokenProviderKeyTest : TestBase
+{
+    [Theory]
+    [InlineData(UserTokenProviderKey.FirebaseFcm)]
+    [InlineData(UserTokenProviderKey.Apn)]
+    [InlineData(UserTokenProviderKey.Expo)]
+    [InlineData(UserTokenProviderKey.Onesignal)]
+    public void Validation_Works(UserTokenProviderKey rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, UserTokenProviderKey> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(UserTokenProviderKey.FirebaseFcm)]
+    [InlineData(UserTokenProviderKey.Apn)]
+    [InlineData(UserTokenProviderKey.Expo)]
+    [InlineData(UserTokenProviderKey.Onesignal)]
+    public void SerializationRoundtrip_Works(UserTokenProviderKey rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, UserTokenProviderKey> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
+            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, UserTokenProviderKey>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
 public class UserTokenDeviceTest : TestBase
 {
     [Fact]
@@ -553,6 +610,43 @@ public class UserTokenDeviceTest : TestBase
         };
 
         model.Validate();
+    }
+}
+
+public class UserTokenExpiryDateTest : TestBase
+{
+    [Fact]
+    public void stringValidation_Works()
+    {
+        UserTokenExpiryDate value = new("string");
+        value.Validate();
+    }
+
+    [Fact]
+    public void boolValidation_Works()
+    {
+        UserTokenExpiryDate value = new(true);
+        value.Validate();
+    }
+
+    [Fact]
+    public void stringSerializationRoundtrip_Works()
+    {
+        UserTokenExpiryDate value = new("string");
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(json);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void boolSerializationRoundtrip_Works()
+    {
+        UserTokenExpiryDate value = new(true);
+        string json = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(json);
+
+        Assert.Equal(value, deserialized);
     }
 }
 

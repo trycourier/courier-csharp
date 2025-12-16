@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.3.0 (2025-12-16)
+
+Full Changelog: [v3.2.0...v3.3.0](https://github.com/trycourier/courier-csharp/compare/v3.2.0...v3.3.0)
+
+### Features
+
+* Add timezone field to Delay schema ([1518fef](https://github.com/trycourier/courier-csharp/commit/1518fefe696d63fcd38b2356e968e172c4ffcec6))
+* **client:** add EnvironmentUrl ([3ba6cea](https://github.com/trycourier/courier-csharp/commit/3ba6cea4c71923be5e4c3fe9b19bfe8777120536))
+* Update bulk API spec: make event required, document profile.email req… ([eec9c04](https://github.com/trycourier/courier-csharp/commit/eec9c04cbffc88b54de3c89f6d97e589c8e8f8fd))
+
+
+### Bug Fixes
+
+* **internal:** add nullability checks for tests ([a9be5e2](https://github.com/trycourier/courier-csharp/commit/a9be5e2509e9b07d47a5b64e45b7065f64f81579))
+
+
+### Chores
+
+* **client:** improve union validation ([7a5bddd](https://github.com/trycourier/courier-csharp/commit/7a5bddd563e23ec7273ebaf13c44571da17af7cc))
+* **client:** update test dependencies ([465bcef](https://github.com/trycourier/courier-csharp/commit/465bcef9ccf78cb23f95fe385aac02b9ca972d0c))
+* **internal:** add enum tests ([fbb5535](https://github.com/trycourier/courier-csharp/commit/fbb553576bdd617e6c622ce4d1b9543833214f56))
+* **internal:** add union tests ([e38039d](https://github.com/trycourier/courier-csharp/commit/e38039dd5a6961f872746ce673b9bb4d72e74392))
+* **internal:** codegen related update ([07c7db2](https://github.com/trycourier/courier-csharp/commit/07c7db275f6d4387a0024e2dc890e1c63232ac91))
+
 ## 3.2.0 (2025-12-08)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/trycourier/courier-csharp/compare/v3.1.0...v3.2.0)
