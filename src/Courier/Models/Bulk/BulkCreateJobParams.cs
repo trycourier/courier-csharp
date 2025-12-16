@@ -10,7 +10,13 @@ using Courier.Core;
 namespace Courier.Models.Bulk;
 
 /// <summary>
-/// Create a bulk job
+/// Creates a new bulk job for sending messages to multiple recipients.
+///
+/// <para>**Required**: `message.event` (event ID or notification ID)</para>
+///
+/// <para>**Optional (V2 format)**: `message.template` (notification ID) or `message.content`
+/// (Elemental content)  can be provided to override the notification associated
+/// with the event. </para>
 /// </summary>
 public sealed record class BulkCreateJobParams : ParamsBase
 {
@@ -20,6 +26,11 @@ public sealed record class BulkCreateJobParams : ParamsBase
         get { return this._rawBodyData.Freeze(); }
     }
 
+    /// <summary>
+    /// Bulk message definition. Supports two formats: - V1 format: Requires `event`
+    /// field (event ID or notification ID) - V2 format: Optionally use `template`
+    /// (notification ID) or `content` (Elemental content) in addition to `event`
+    /// </summary>
     public required InboundBulkMessage Message
     {
         get { return ModelBase.GetNotNullClass<InboundBulkMessage>(this.RawBodyData, "message"); }

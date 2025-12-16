@@ -69,6 +69,11 @@ class BulkRetrieveJobResponseFromRaw : IFromRaw<BulkRetrieveJobResponse>
 [JsonConverter(typeof(ModelConverter<Job, JobFromRaw>))]
 public sealed record class Job : ModelBase
 {
+    /// <summary>
+    /// Bulk message definition. Supports two formats: - V1 format: Requires `event`
+    /// field (event ID or notification ID) - V2 format: Optionally use `template`
+    /// (notification ID) or `content` (Elemental content) in addition to `event`
+    /// </summary>
     public required InboundBulkMessage Definition
     {
         get { return ModelBase.GetNotNullClass<InboundBulkMessage>(this.RawData, "definition"); }

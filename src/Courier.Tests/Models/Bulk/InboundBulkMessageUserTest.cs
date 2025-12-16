@@ -40,7 +40,10 @@ public class InboundBulkMessageUserTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -117,7 +120,10 @@ public class InboundBulkMessageUserTest : TestBase
                 },
             },
         };
-        JsonElement expectedProfile = JsonSerializer.Deserialize<JsonElement>("{}");
+        Dictionary<string, JsonElement> expectedProfile = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
         string expectedRecipient = "recipient";
         UserRecipient expectedTo = new()
         {
@@ -168,8 +174,13 @@ public class InboundBulkMessageUserTest : TestBase
         Assert.NotNull(model.Data);
         Assert.True(JsonElement.DeepEquals(expectedData, model.Data.Value));
         Assert.Equal(expectedPreferences, model.Preferences);
-        Assert.NotNull(model.Profile);
-        Assert.True(JsonElement.DeepEquals(expectedProfile, model.Profile.Value));
+        Assert.Equal(expectedProfile.Count, model.Profile.Count);
+        foreach (var item in expectedProfile)
+        {
+            Assert.True(model.Profile.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, model.Profile[item.Key]));
+        }
         Assert.Equal(expectedRecipient, model.Recipient);
         Assert.Equal(expectedTo, model.To);
     }
@@ -207,7 +218,10 @@ public class InboundBulkMessageUserTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -295,7 +309,10 @@ public class InboundBulkMessageUserTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -376,7 +393,10 @@ public class InboundBulkMessageUserTest : TestBase
                 },
             },
         };
-        JsonElement expectedProfile = JsonSerializer.Deserialize<JsonElement>("{}");
+        Dictionary<string, JsonElement> expectedProfile = new()
+        {
+            { "foo", JsonSerializer.SerializeToElement("bar") },
+        };
         string expectedRecipient = "recipient";
         UserRecipient expectedTo = new()
         {
@@ -427,8 +447,13 @@ public class InboundBulkMessageUserTest : TestBase
         Assert.NotNull(deserialized.Data);
         Assert.True(JsonElement.DeepEquals(expectedData, deserialized.Data.Value));
         Assert.Equal(expectedPreferences, deserialized.Preferences);
-        Assert.NotNull(deserialized.Profile);
-        Assert.True(JsonElement.DeepEquals(expectedProfile, deserialized.Profile.Value));
+        Assert.Equal(expectedProfile.Count, deserialized.Profile.Count);
+        foreach (var item in expectedProfile)
+        {
+            Assert.True(deserialized.Profile.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, deserialized.Profile[item.Key]));
+        }
         Assert.Equal(expectedRecipient, deserialized.Recipient);
         Assert.Equal(expectedTo, deserialized.To);
     }
@@ -466,7 +491,10 @@ public class InboundBulkMessageUserTest : TestBase
                     },
                 },
             },
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -550,6 +578,10 @@ public class InboundBulkMessageUserTest : TestBase
                     },
                 },
             },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -600,8 +632,6 @@ public class InboundBulkMessageUserTest : TestBase
 
         Assert.Null(model.Data);
         Assert.False(model.RawData.ContainsKey("data"));
-        Assert.Null(model.Profile);
-        Assert.False(model.RawData.ContainsKey("profile"));
     }
 
     [Fact]
@@ -635,6 +665,10 @@ public class InboundBulkMessageUserTest : TestBase
                         }
                     },
                 },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Recipient = "recipient",
             To = new()
@@ -719,6 +753,10 @@ public class InboundBulkMessageUserTest : TestBase
                     },
                 },
             },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -768,13 +806,10 @@ public class InboundBulkMessageUserTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Data = null,
-            Profile = null,
         };
 
         Assert.Null(model.Data);
         Assert.False(model.RawData.ContainsKey("data"));
-        Assert.Null(model.Profile);
-        Assert.False(model.RawData.ContainsKey("profile"));
     }
 
     [Fact]
@@ -809,6 +844,10 @@ public class InboundBulkMessageUserTest : TestBase
                     },
                 },
             },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
             Recipient = "recipient",
             To = new()
             {
@@ -858,7 +897,6 @@ public class InboundBulkMessageUserTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Data = null,
-            Profile = null,
         };
 
         model.Validate();
@@ -870,11 +908,12 @@ public class InboundBulkMessageUserTest : TestBase
         var model = new InboundBulkMessageUser
         {
             Data = JsonSerializer.Deserialize<JsonElement>("{}"),
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
         };
 
         Assert.Null(model.Preferences);
         Assert.False(model.RawData.ContainsKey("preferences"));
+        Assert.Null(model.Profile);
+        Assert.False(model.RawData.ContainsKey("profile"));
         Assert.Null(model.Recipient);
         Assert.False(model.RawData.ContainsKey("recipient"));
         Assert.Null(model.To);
@@ -887,7 +926,6 @@ public class InboundBulkMessageUserTest : TestBase
         var model = new InboundBulkMessageUser
         {
             Data = JsonSerializer.Deserialize<JsonElement>("{}"),
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
         };
 
         model.Validate();
@@ -899,15 +937,17 @@ public class InboundBulkMessageUserTest : TestBase
         var model = new InboundBulkMessageUser
         {
             Data = JsonSerializer.Deserialize<JsonElement>("{}"),
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
 
             Preferences = null,
+            Profile = null,
             Recipient = null,
             To = null,
         };
 
         Assert.Null(model.Preferences);
         Assert.True(model.RawData.ContainsKey("preferences"));
+        Assert.Null(model.Profile);
+        Assert.True(model.RawData.ContainsKey("profile"));
         Assert.Null(model.Recipient);
         Assert.True(model.RawData.ContainsKey("recipient"));
         Assert.Null(model.To);
@@ -920,9 +960,9 @@ public class InboundBulkMessageUserTest : TestBase
         var model = new InboundBulkMessageUser
         {
             Data = JsonSerializer.Deserialize<JsonElement>("{}"),
-            Profile = JsonSerializer.Deserialize<JsonElement>("{}"),
 
             Preferences = null,
+            Profile = null,
             Recipient = null,
             To = null,
         };

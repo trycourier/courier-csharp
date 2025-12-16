@@ -21,7 +21,11 @@ public interface IBulkService
     IBulkService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Ingest user data into a Bulk Job
+    /// Ingest user data into a Bulk Job.
+    ///
+    /// <para>**Important**: For email-based bulk jobs, each user must include `profile.email`
+    ///  for provider routing to work correctly. The `to.email` field is not sufficient
+    ///  for email provider routing. </para>
     /// </summary>
     Task AddUsers(BulkAddUsersParams parameters, CancellationToken cancellationToken = default);
 
@@ -33,7 +37,13 @@ public interface IBulkService
     );
 
     /// <summary>
-    /// Create a bulk job
+    /// Creates a new bulk job for sending messages to multiple recipients.
+    ///
+    /// <para>**Required**: `message.event` (event ID or notification ID)</para>
+    ///
+    /// <para>**Optional (V2 format)**: `message.template` (notification ID) or `message.content`
+    /// (Elemental content)  can be provided to override the notification associated
+    /// with the event. </para>
     /// </summary>
     Task<BulkCreateJobResponse> CreateJob(
         BulkCreateJobParams parameters,

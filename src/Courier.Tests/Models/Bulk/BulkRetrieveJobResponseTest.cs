@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
+using Courier.Models;
 using Courier.Models.Bulk;
 
 namespace Courier.Tests.Models.Bulk;
@@ -15,15 +16,15 @@ public class BulkRetrieveJobResponseTest : TestBase
         {
             Job = new()
             {
-                Definition = new InboundBulkTemplateMessage()
+                Definition = new()
                 {
-                    Template = "template",
+                    Event = "event",
                     Brand = "brand",
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     Data = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Event = "event",
                     Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                     {
                         {
@@ -38,6 +39,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
+                    Template = "template",
                 },
                 Enqueued = 0,
                 Failures = 0,
@@ -48,15 +50,15 @@ public class BulkRetrieveJobResponseTest : TestBase
 
         Job expectedJob = new()
         {
-            Definition = new InboundBulkTemplateMessage()
+            Definition = new()
             {
-                Template = "template",
+                Event = "event",
                 Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Event = "event",
                 Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                 {
                     {
@@ -71,6 +73,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
+                Template = "template",
             },
             Enqueued = 0,
             Failures = 0,
@@ -88,15 +91,15 @@ public class BulkRetrieveJobResponseTest : TestBase
         {
             Job = new()
             {
-                Definition = new InboundBulkTemplateMessage()
+                Definition = new()
                 {
-                    Template = "template",
+                    Event = "event",
                     Brand = "brand",
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     Data = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Event = "event",
                     Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                     {
                         {
@@ -111,6 +114,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
+                    Template = "template",
                 },
                 Enqueued = 0,
                 Failures = 0,
@@ -132,15 +136,15 @@ public class BulkRetrieveJobResponseTest : TestBase
         {
             Job = new()
             {
-                Definition = new InboundBulkTemplateMessage()
+                Definition = new()
                 {
-                    Template = "template",
+                    Event = "event",
                     Brand = "brand",
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     Data = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Event = "event",
                     Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                     {
                         {
@@ -155,6 +159,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
+                    Template = "template",
                 },
                 Enqueued = 0,
                 Failures = 0,
@@ -169,15 +174,15 @@ public class BulkRetrieveJobResponseTest : TestBase
 
         Job expectedJob = new()
         {
-            Definition = new InboundBulkTemplateMessage()
+            Definition = new()
             {
-                Template = "template",
+                Event = "event",
                 Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Event = "event",
                 Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                 {
                     {
@@ -192,6 +197,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
+                Template = "template",
             },
             Enqueued = 0,
             Failures = 0,
@@ -209,15 +215,15 @@ public class BulkRetrieveJobResponseTest : TestBase
         {
             Job = new()
             {
-                Definition = new InboundBulkTemplateMessage()
+                Definition = new()
                 {
-                    Template = "template",
+                    Event = "event",
                     Brand = "brand",
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     Data = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Event = "event",
                     Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                     {
                         {
@@ -232,6 +238,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
+                    Template = "template",
                 },
                 Enqueued = 0,
                 Failures = 0,
@@ -251,15 +258,15 @@ public class JobTest : TestBase
     {
         var model = new Job
         {
-            Definition = new InboundBulkTemplateMessage()
+            Definition = new()
             {
-                Template = "template",
+                Event = "event",
                 Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Event = "event",
                 Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                 {
                     {
@@ -274,6 +281,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
+                Template = "template",
             },
             Enqueued = 0,
             Failures = 0,
@@ -281,15 +289,15 @@ public class JobTest : TestBase
             Status = JobStatus.Created,
         };
 
-        InboundBulkMessage expectedDefinition = new InboundBulkTemplateMessage()
+        InboundBulkMessage expectedDefinition = new()
         {
-            Template = "template",
+            Event = "event",
             Brand = "brand",
+            Content = new ElementalContentSugar() { Body = "body", Title = "title" },
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Event = "event",
             Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
             {
                 {
@@ -304,6 +312,7 @@ public class JobTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
+            Template = "template",
         };
         long expectedEnqueued = 0;
         long expectedFailures = 0;
@@ -322,15 +331,15 @@ public class JobTest : TestBase
     {
         var model = new Job
         {
-            Definition = new InboundBulkTemplateMessage()
+            Definition = new()
             {
-                Template = "template",
+                Event = "event",
                 Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Event = "event",
                 Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                 {
                     {
@@ -345,6 +354,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
+                Template = "template",
             },
             Enqueued = 0,
             Failures = 0,
@@ -363,15 +373,15 @@ public class JobTest : TestBase
     {
         var model = new Job
         {
-            Definition = new InboundBulkTemplateMessage()
+            Definition = new()
             {
-                Template = "template",
+                Event = "event",
                 Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Event = "event",
                 Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                 {
                     {
@@ -386,6 +396,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
+                Template = "template",
             },
             Enqueued = 0,
             Failures = 0,
@@ -397,15 +408,15 @@ public class JobTest : TestBase
         var deserialized = JsonSerializer.Deserialize<Job>(json);
         Assert.NotNull(deserialized);
 
-        InboundBulkMessage expectedDefinition = new InboundBulkTemplateMessage()
+        InboundBulkMessage expectedDefinition = new()
         {
-            Template = "template",
+            Event = "event",
             Brand = "brand",
+            Content = new ElementalContentSugar() { Body = "body", Title = "title" },
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Event = "event",
             Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
             {
                 {
@@ -420,6 +431,7 @@ public class JobTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
+            Template = "template",
         };
         long expectedEnqueued = 0;
         long expectedFailures = 0;
@@ -438,15 +450,15 @@ public class JobTest : TestBase
     {
         var model = new Job
         {
-            Definition = new InboundBulkTemplateMessage()
+            Definition = new()
             {
-                Template = "template",
+                Event = "event",
                 Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Event = "event",
                 Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
                 {
                     {
@@ -461,6 +473,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
+                Template = "template",
             },
             Enqueued = 0,
             Failures = 0,
