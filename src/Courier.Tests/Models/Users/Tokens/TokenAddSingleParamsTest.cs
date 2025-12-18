@@ -236,21 +236,21 @@ public class DeviceTest : TestBase
 public class ExpiryDateTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         ExpiryDate value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void boolValidation_Works()
+    public void BoolValidationWorks()
     {
         ExpiryDate value = new(true);
         value.Validate();
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         ExpiryDate value = new("string");
         string json = JsonSerializer.Serialize(value);
@@ -260,7 +260,7 @@ public class ExpiryDateTest : TestBase
     }
 
     [Fact]
-    public void boolSerializationRoundtrip_Works()
+    public void BoolSerializationRoundtripWorks()
     {
         ExpiryDate value = new(true);
         string json = JsonSerializer.Serialize(value);

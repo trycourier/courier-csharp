@@ -6,14 +6,14 @@ namespace Courier.Tests.Models;
 public class MessageRoutingChannelTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         MessageRoutingChannel value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void message_routingValidation_Works()
+    public void MessageRoutingValidationWorks()
     {
         MessageRoutingChannel value = new(
             new MessageRouting() { Channels = ["string"], Method = Method.All }
@@ -22,7 +22,7 @@ public class MessageRoutingChannelTest : TestBase
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         MessageRoutingChannel value = new("string");
         string json = JsonSerializer.Serialize(value);
@@ -32,7 +32,7 @@ public class MessageRoutingChannelTest : TestBase
     }
 
     [Fact]
-    public void message_routingSerializationRoundtrip_Works()
+    public void MessageRoutingSerializationRoundtripWorks()
     {
         MessageRoutingChannel value = new(
             new MessageRouting() { Channels = ["string"], Method = Method.All }

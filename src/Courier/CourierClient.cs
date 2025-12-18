@@ -361,6 +361,8 @@ public sealed class CourierClient : ICourierClient
         return e is IOException || e is CourierIOException;
     }
 
+    public void Dispose() => this.HttpClient.Dispose();
+
     public CourierClient()
     {
         _options = new();
