@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ChannelPreference, ChannelPreferenceFromRaw>))]
-public sealed record class ChannelPreference : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ChannelPreference, ChannelPreferenceFromRaw>))]
+public sealed record class ChannelPreference : JsonModel
 {
     public required ApiEnum<string, ChannelClassification> Channel
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, ChannelClassification>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, ChannelClassification>>(
                 this.RawData,
                 "channel"
             );
         }
-        init { ModelBase.Set(this._rawData, "channel", value); }
+        init { JsonModel.Set(this._rawData, "channel", value); }
     }
 
     /// <inheritdoc/>
@@ -62,7 +62,7 @@ public sealed record class ChannelPreference : ModelBase
     }
 }
 
-class ChannelPreferenceFromRaw : IFromRaw<ChannelPreference>
+class ChannelPreferenceFromRaw : IFromRawJson<ChannelPreference>
 {
     /// <inheritdoc/>
     public ChannelPreference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

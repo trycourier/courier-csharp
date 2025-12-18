@@ -156,8 +156,8 @@ public class TenantTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Tenant>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Tenant>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

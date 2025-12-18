@@ -95,8 +95,8 @@ public class ElementalContentTest : TestBase
             Brand = "brand",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalContent>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalContent>(element);
         Assert.NotNull(deserialized);
 
         List<ElementalNode> expectedElements =

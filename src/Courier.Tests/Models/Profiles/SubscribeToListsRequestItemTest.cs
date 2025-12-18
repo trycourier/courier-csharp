@@ -151,8 +151,8 @@ public class SubscribeToListsRequestItemTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SubscribeToListsRequestItem>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SubscribeToListsRequestItem>(element);
         Assert.NotNull(deserialized);
 
         string expectedListID = "listId";

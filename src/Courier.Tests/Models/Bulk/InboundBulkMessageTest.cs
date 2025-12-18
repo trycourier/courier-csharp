@@ -156,8 +156,8 @@ public class InboundBulkMessageTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InboundBulkMessage>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<InboundBulkMessage>(element);
         Assert.NotNull(deserialized);
 
         string expectedEvent = "event";
@@ -362,8 +362,8 @@ public class ContentTest : TestBase
     public void ElementalContentSugarSerializationRoundtripWorks()
     {
         Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -389,8 +389,8 @@ public class ContentTest : TestBase
                 Brand = "brand",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }

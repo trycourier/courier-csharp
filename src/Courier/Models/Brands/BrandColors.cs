@@ -7,12 +7,12 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandColors, BrandColorsFromRaw>))]
-public sealed record class BrandColors : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BrandColors, BrandColorsFromRaw>))]
+public sealed record class BrandColors : JsonModel
 {
     public string? Primary
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "primary"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "primary"); }
         init
         {
             if (value == null)
@@ -20,13 +20,13 @@ public sealed record class BrandColors : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "primary", value);
+            JsonModel.Set(this._rawData, "primary", value);
         }
     }
 
     public string? Secondary
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "secondary"); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "secondary"); }
         init
         {
             if (value == null)
@@ -34,7 +34,7 @@ public sealed record class BrandColors : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "secondary", value);
+            JsonModel.Set(this._rawData, "secondary", value);
         }
     }
 
@@ -70,7 +70,7 @@ public sealed record class BrandColors : ModelBase
     }
 }
 
-class BrandColorsFromRaw : IFromRaw<BrandColors>
+class BrandColorsFromRaw : IFromRawJson<BrandColors>
 {
     /// <inheritdoc/>
     public BrandColors FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

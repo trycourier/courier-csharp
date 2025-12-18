@@ -76,8 +76,8 @@ public class TopicPreferenceTest : TestBase
             HasCustomRouting = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<TopicPreference>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TopicPreference>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, PreferenceStatus> expectedDefaultStatus = PreferenceStatus.OptedIn;

@@ -9,25 +9,25 @@ using System = System;
 
 namespace Courier.Models.Notifications;
 
-[JsonConverter(typeof(ModelConverter<NotificationGetContent, NotificationGetContentFromRaw>))]
-public sealed record class NotificationGetContent : ModelBase
+[JsonConverter(typeof(JsonModelConverter<NotificationGetContent, NotificationGetContentFromRaw>))]
+public sealed record class NotificationGetContent : JsonModel
 {
     public IReadOnlyList<Block>? Blocks
     {
-        get { return ModelBase.GetNullableClass<List<Block>>(this.RawData, "blocks"); }
-        init { ModelBase.Set(this._rawData, "blocks", value); }
+        get { return JsonModel.GetNullableClass<List<Block>>(this.RawData, "blocks"); }
+        init { JsonModel.Set(this._rawData, "blocks", value); }
     }
 
     public IReadOnlyList<Channel>? Channels
     {
-        get { return ModelBase.GetNullableClass<List<Channel>>(this.RawData, "channels"); }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        get { return JsonModel.GetNullableClass<List<Channel>>(this.RawData, "channels"); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public string? Checksum
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "checksum"); }
-        init { ModelBase.Set(this._rawData, "checksum", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "checksum"); }
+        init { JsonModel.Set(this._rawData, "checksum", value); }
     }
 
     /// <inheritdoc/>
@@ -71,7 +71,7 @@ public sealed record class NotificationGetContent : ModelBase
     }
 }
 
-class NotificationGetContentFromRaw : IFromRaw<NotificationGetContent>
+class NotificationGetContentFromRaw : IFromRawJson<NotificationGetContent>
 {
     /// <inheritdoc/>
     public NotificationGetContent FromRawUnchecked(
@@ -79,52 +79,52 @@ class NotificationGetContentFromRaw : IFromRaw<NotificationGetContent>
     ) => NotificationGetContent.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Block, BlockFromRaw>))]
-public sealed record class Block : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Block, BlockFromRaw>))]
+public sealed record class Block : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public required ApiEnum<string, BlockType> Type
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, BlockType>>(this.RawData, "type"); }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, BlockType>>(this.RawData, "type"); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     public string? Alias
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "alias"); }
-        init { ModelBase.Set(this._rawData, "alias", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "alias"); }
+        init { JsonModel.Set(this._rawData, "alias", value); }
     }
 
     public string? Checksum
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "checksum"); }
-        init { ModelBase.Set(this._rawData, "checksum", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "checksum"); }
+        init { JsonModel.Set(this._rawData, "checksum", value); }
     }
 
     public Content? Content
     {
-        get { return ModelBase.GetNullableClass<Content>(this.RawData, "content"); }
-        init { ModelBase.Set(this._rawData, "content", value); }
+        get { return JsonModel.GetNullableClass<Content>(this.RawData, "content"); }
+        init { JsonModel.Set(this._rawData, "content", value); }
     }
 
     public string? Context
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "context"); }
-        init { ModelBase.Set(this._rawData, "context", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "context"); }
+        init { JsonModel.Set(this._rawData, "context", value); }
     }
 
     public IReadOnlyDictionary<string, Locale>? Locales
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, Locale>>(this.RawData, "locales");
+            return JsonModel.GetNullableClass<Dictionary<string, Locale>>(this.RawData, "locales");
         }
-        init { ModelBase.Set(this._rawData, "locales", value); }
+        init { JsonModel.Set(this._rawData, "locales", value); }
     }
 
     /// <inheritdoc/>
@@ -170,7 +170,7 @@ public sealed record class Block : ModelBase
     }
 }
 
-class BlockFromRaw : IFromRaw<Block>
+class BlockFromRaw : IFromRawJson<Block>
 {
     /// <inheritdoc/>
     public Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -247,28 +247,28 @@ public record class Content
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Content(string value, JsonElement? json = null)
+    public Content(string value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Content(NotificationContentHierarchy value, JsonElement? json = null)
+    public Content(NotificationContentHierarchy value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Content(JsonElement json)
+    public Content(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -432,17 +432,17 @@ sealed class ContentConverter : JsonConverter<Content?>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
             var deserialized = JsonSerializer.Deserialize<NotificationContentHierarchy>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -452,10 +452,10 @@ sealed class ContentConverter : JsonConverter<Content?>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(json, options);
+            var deserialized = JsonSerializer.Deserialize<string>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -463,7 +463,7 @@ sealed class ContentConverter : JsonConverter<Content?>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, Content? value, JsonSerializerOptions options)
@@ -473,20 +473,20 @@ sealed class ContentConverter : JsonConverter<Content?>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<NotificationContentHierarchy, NotificationContentHierarchyFromRaw>)
+    typeof(JsonModelConverter<NotificationContentHierarchy, NotificationContentHierarchyFromRaw>)
 )]
-public sealed record class NotificationContentHierarchy : ModelBase
+public sealed record class NotificationContentHierarchy : JsonModel
 {
     public string? Children
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "children"); }
-        init { ModelBase.Set(this._rawData, "children", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "children"); }
+        init { JsonModel.Set(this._rawData, "children", value); }
     }
 
     public string? Parent
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "parent"); }
-        init { ModelBase.Set(this._rawData, "parent", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "parent"); }
+        init { JsonModel.Set(this._rawData, "parent", value); }
     }
 
     /// <inheritdoc/>
@@ -523,7 +523,7 @@ public sealed record class NotificationContentHierarchy : ModelBase
     }
 }
 
-class NotificationContentHierarchyFromRaw : IFromRaw<NotificationContentHierarchy>
+class NotificationContentHierarchyFromRaw : IFromRawJson<NotificationContentHierarchy>
 {
     /// <inheritdoc/>
     public NotificationContentHierarchy FromRawUnchecked(
@@ -536,28 +536,28 @@ public record class Locale
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Locale(string value, JsonElement? json = null)
+    public Locale(string value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Locale(LocaleNotificationContentHierarchy value, JsonElement? json = null)
+    public Locale(LocaleNotificationContentHierarchy value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Locale(JsonElement json)
+    public Locale(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -721,17 +721,17 @@ sealed class LocaleConverter : JsonConverter<Locale>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
             var deserialized = JsonSerializer.Deserialize<LocaleNotificationContentHierarchy>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -741,10 +741,10 @@ sealed class LocaleConverter : JsonConverter<Locale>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(json, options);
+            var deserialized = JsonSerializer.Deserialize<string>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -752,7 +752,7 @@ sealed class LocaleConverter : JsonConverter<Locale>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, Locale value, JsonSerializerOptions options)
@@ -762,23 +762,23 @@ sealed class LocaleConverter : JsonConverter<Locale>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         LocaleNotificationContentHierarchy,
         LocaleNotificationContentHierarchyFromRaw
     >)
 )]
-public sealed record class LocaleNotificationContentHierarchy : ModelBase
+public sealed record class LocaleNotificationContentHierarchy : JsonModel
 {
     public string? Children
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "children"); }
-        init { ModelBase.Set(this._rawData, "children", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "children"); }
+        init { JsonModel.Set(this._rawData, "children", value); }
     }
 
     public string? Parent
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "parent"); }
-        init { ModelBase.Set(this._rawData, "parent", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "parent"); }
+        init { JsonModel.Set(this._rawData, "parent", value); }
     }
 
     /// <inheritdoc/>
@@ -817,7 +817,7 @@ public sealed record class LocaleNotificationContentHierarchy : ModelBase
     }
 }
 
-class LocaleNotificationContentHierarchyFromRaw : IFromRaw<LocaleNotificationContentHierarchy>
+class LocaleNotificationContentHierarchyFromRaw : IFromRawJson<LocaleNotificationContentHierarchy>
 {
     /// <inheritdoc/>
     public LocaleNotificationContentHierarchy FromRawUnchecked(
@@ -825,43 +825,43 @@ class LocaleNotificationContentHierarchyFromRaw : IFromRaw<LocaleNotificationCon
     ) => LocaleNotificationContentHierarchy.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Channel, ChannelFromRaw>))]
-public sealed record class Channel : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Channel, ChannelFromRaw>))]
+public sealed record class Channel : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public string? Checksum
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "checksum"); }
-        init { ModelBase.Set(this._rawData, "checksum", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "checksum"); }
+        init { JsonModel.Set(this._rawData, "checksum", value); }
     }
 
     public ChannelContent? Content
     {
-        get { return ModelBase.GetNullableClass<ChannelContent>(this.RawData, "content"); }
-        init { ModelBase.Set(this._rawData, "content", value); }
+        get { return JsonModel.GetNullableClass<ChannelContent>(this.RawData, "content"); }
+        init { JsonModel.Set(this._rawData, "content", value); }
     }
 
     public IReadOnlyDictionary<string, LocalesItem>? Locales
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, LocalesItem>>(
+            return JsonModel.GetNullableClass<Dictionary<string, LocalesItem>>(
                 this.RawData,
                 "locales"
             );
         }
-        init { ModelBase.Set(this._rawData, "locales", value); }
+        init { JsonModel.Set(this._rawData, "locales", value); }
     }
 
     public string? Type
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "type"); }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "type"); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     /// <inheritdoc/>
@@ -912,26 +912,26 @@ public sealed record class Channel : ModelBase
     }
 }
 
-class ChannelFromRaw : IFromRaw<Channel>
+class ChannelFromRaw : IFromRawJson<Channel>
 {
     /// <inheritdoc/>
     public Channel FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Channel.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<ChannelContent, ChannelContentFromRaw>))]
-public sealed record class ChannelContent : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ChannelContent, ChannelContentFromRaw>))]
+public sealed record class ChannelContent : JsonModel
 {
     public string? Subject
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "subject"); }
-        init { ModelBase.Set(this._rawData, "subject", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "subject"); }
+        init { JsonModel.Set(this._rawData, "subject", value); }
     }
 
     public string? Title
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "title"); }
-        init { ModelBase.Set(this._rawData, "title", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "title"); }
+        init { JsonModel.Set(this._rawData, "title", value); }
     }
 
     /// <inheritdoc/>
@@ -966,26 +966,26 @@ public sealed record class ChannelContent : ModelBase
     }
 }
 
-class ChannelContentFromRaw : IFromRaw<ChannelContent>
+class ChannelContentFromRaw : IFromRawJson<ChannelContent>
 {
     /// <inheritdoc/>
     public ChannelContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ChannelContent.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<LocalesItem, LocalesItemFromRaw>))]
-public sealed record class LocalesItem : ModelBase
+[JsonConverter(typeof(JsonModelConverter<LocalesItem, LocalesItemFromRaw>))]
+public sealed record class LocalesItem : JsonModel
 {
     public string? Subject
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "subject"); }
-        init { ModelBase.Set(this._rawData, "subject", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "subject"); }
+        init { JsonModel.Set(this._rawData, "subject", value); }
     }
 
     public string? Title
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "title"); }
-        init { ModelBase.Set(this._rawData, "title", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "title"); }
+        init { JsonModel.Set(this._rawData, "title", value); }
     }
 
     /// <inheritdoc/>
@@ -1020,7 +1020,7 @@ public sealed record class LocalesItem : ModelBase
     }
 }
 
-class LocalesItemFromRaw : IFromRaw<LocalesItem>
+class LocalesItemFromRaw : IFromRawJson<LocalesItem>
 {
     /// <inheritdoc/>
     public LocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

@@ -122,8 +122,8 @@ public class TenantListUsersResponseTest : TestBase
             NextURL = "next_url",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<TenantListUsersResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TenantListUsersResponse>(element);
         Assert.NotNull(deserialized);
 
         bool expectedHasMore = true;

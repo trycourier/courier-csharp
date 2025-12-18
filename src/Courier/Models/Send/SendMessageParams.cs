@@ -29,8 +29,8 @@ public sealed record class SendMessageParams : ParamsBase
     /// </summary>
     public required Message Message
     {
-        get { return ModelBase.GetNotNullClass<Message>(this.RawBodyData, "message"); }
-        init { ModelBase.Set(this._rawBodyData, "message", value); }
+        get { return JsonModel.GetNotNullClass<Message>(this.RawBodyData, "message"); }
+        init { JsonModel.Set(this._rawBodyData, "message", value); }
     }
 
     public SendMessageParams() { }
@@ -66,7 +66,7 @@ public sealed record class SendMessageParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SendMessageParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -88,9 +88,13 @@ public sealed record class SendMessageParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -107,13 +111,13 @@ public sealed record class SendMessageParams : ParamsBase
 /// The message property has the following primary top-level properties. They define
 /// the destination and content of the message.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Message, MessageFromRaw>))]
-public sealed record class Message : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Message, MessageFromRaw>))]
+public sealed record class Message : JsonModel
 {
     public string? BrandID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand_id"); }
-        init { ModelBase.Set(this._rawData, "brand_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand_id"); }
+        init { JsonModel.Set(this._rawData, "brand_id", value); }
     }
 
     /// <summary>
@@ -124,12 +128,12 @@ public sealed record class Message : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, ChannelsItem>>(
+            return JsonModel.GetNullableClass<Dictionary<string, ChannelsItem>>(
                 this.RawData,
                 "channels"
             );
         }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     /// <summary>
@@ -137,7 +141,7 @@ public sealed record class Message : ModelBase
     /// </summary>
     public Content? Content
     {
-        get { return ModelBase.GetNullableClass<Content>(this.RawData, "content"); }
+        get { return JsonModel.GetNullableClass<Content>(this.RawData, "content"); }
         init
         {
             if (value == null)
@@ -145,68 +149,68 @@ public sealed record class Message : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "content", value);
+            JsonModel.Set(this._rawData, "content", value);
         }
     }
 
     public MessageContext? Context
     {
-        get { return ModelBase.GetNullableClass<MessageContext>(this.RawData, "context"); }
-        init { ModelBase.Set(this._rawData, "context", value); }
+        get { return JsonModel.GetNullableClass<MessageContext>(this.RawData, "context"); }
+        init { JsonModel.Set(this._rawData, "context", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "data"
             );
         }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     public Delay? Delay
     {
-        get { return ModelBase.GetNullableClass<Delay>(this.RawData, "delay"); }
-        init { ModelBase.Set(this._rawData, "delay", value); }
+        get { return JsonModel.GetNullableClass<Delay>(this.RawData, "delay"); }
+        init { JsonModel.Set(this._rawData, "delay", value); }
     }
 
     public Expiry? Expiry
     {
-        get { return ModelBase.GetNullableClass<Expiry>(this.RawData, "expiry"); }
-        init { ModelBase.Set(this._rawData, "expiry", value); }
+        get { return JsonModel.GetNullableClass<Expiry>(this.RawData, "expiry"); }
+        init { JsonModel.Set(this._rawData, "expiry", value); }
     }
 
     public MessageMetadata? Metadata
     {
-        get { return ModelBase.GetNullableClass<MessageMetadata>(this.RawData, "metadata"); }
-        init { ModelBase.Set(this._rawData, "metadata", value); }
+        get { return JsonModel.GetNullableClass<MessageMetadata>(this.RawData, "metadata"); }
+        init { JsonModel.Set(this._rawData, "metadata", value); }
     }
 
     public global::Courier.Models.Send.Preferences? Preferences
     {
         get
         {
-            return ModelBase.GetNullableClass<global::Courier.Models.Send.Preferences>(
+            return JsonModel.GetNullableClass<global::Courier.Models.Send.Preferences>(
                 this.RawData,
                 "preferences"
             );
         }
-        init { ModelBase.Set(this._rawData, "preferences", value); }
+        init { JsonModel.Set(this._rawData, "preferences", value); }
     }
 
     public IReadOnlyDictionary<string, ProvidersItem>? Providers
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, ProvidersItem>>(
+            return JsonModel.GetNullableClass<Dictionary<string, ProvidersItem>>(
                 this.RawData,
                 "providers"
             );
         }
-        init { ModelBase.Set(this._rawData, "providers", value); }
+        init { JsonModel.Set(this._rawData, "providers", value); }
     }
 
     /// <summary>
@@ -214,20 +218,20 @@ public sealed record class Message : ModelBase
     /// </summary>
     public Routing? Routing
     {
-        get { return ModelBase.GetNullableClass<Routing>(this.RawData, "routing"); }
-        init { ModelBase.Set(this._rawData, "routing", value); }
+        get { return JsonModel.GetNullableClass<Routing>(this.RawData, "routing"); }
+        init { JsonModel.Set(this._rawData, "routing", value); }
     }
 
     public string? Template
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "template"); }
-        init { ModelBase.Set(this._rawData, "template", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "template"); }
+        init { JsonModel.Set(this._rawData, "template", value); }
     }
 
     public Timeout? Timeout
     {
-        get { return ModelBase.GetNullableClass<Timeout>(this.RawData, "timeout"); }
-        init { ModelBase.Set(this._rawData, "timeout", value); }
+        get { return JsonModel.GetNullableClass<Timeout>(this.RawData, "timeout"); }
+        init { JsonModel.Set(this._rawData, "timeout", value); }
     }
 
     /// <summary>
@@ -235,8 +239,8 @@ public sealed record class Message : ModelBase
     /// </summary>
     public To? To
     {
-        get { return ModelBase.GetNullableClass<To>(this.RawData, "to"); }
-        init { ModelBase.Set(this._rawData, "to", value); }
+        get { return JsonModel.GetNullableClass<To>(this.RawData, "to"); }
+        init { JsonModel.Set(this._rawData, "to", value); }
     }
 
     /// <inheritdoc/>
@@ -295,23 +299,23 @@ public sealed record class Message : ModelBase
     }
 }
 
-class MessageFromRaw : IFromRaw<Message>
+class MessageFromRaw : IFromRawJson<Message>
 {
     /// <inheritdoc/>
     public Message FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Message.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<ChannelsItem, ChannelsItemFromRaw>))]
-public sealed record class ChannelsItem : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ChannelsItem, ChannelsItemFromRaw>))]
+public sealed record class ChannelsItem : JsonModel
 {
     /// <summary>
     /// Brand id used for rendering.
     /// </summary>
     public string? BrandID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand_id"); }
-        init { ModelBase.Set(this._rawData, "brand_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand_id"); }
+        init { JsonModel.Set(this._rawData, "brand_id", value); }
     }
 
     /// <summary>
@@ -319,14 +323,14 @@ public sealed record class ChannelsItem : ModelBase
     /// </summary>
     public string? If
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
-        init { ModelBase.Set(this._rawData, "if", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
+        init { JsonModel.Set(this._rawData, "if", value); }
     }
 
     public Metadata? Metadata
     {
-        get { return ModelBase.GetNullableClass<Metadata>(this.RawData, "metadata"); }
-        init { ModelBase.Set(this._rawData, "metadata", value); }
+        get { return JsonModel.GetNullableClass<Metadata>(this.RawData, "metadata"); }
+        init { JsonModel.Set(this._rawData, "metadata", value); }
     }
 
     /// <summary>
@@ -336,12 +340,12 @@ public sealed record class ChannelsItem : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "override"
             );
         }
-        init { ModelBase.Set(this._rawData, "override", value); }
+        init { JsonModel.Set(this._rawData, "override", value); }
     }
 
     /// <summary>
@@ -349,8 +353,8 @@ public sealed record class ChannelsItem : ModelBase
     /// </summary>
     public IReadOnlyList<string>? Providers
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "providers"); }
-        init { ModelBase.Set(this._rawData, "providers", value); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "providers"); }
+        init { JsonModel.Set(this._rawData, "providers", value); }
     }
 
     /// <summary>
@@ -360,18 +364,18 @@ public sealed record class ChannelsItem : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, RoutingMethod>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, RoutingMethod>>(
                 this.RawData,
                 "routing_method"
             );
         }
-        init { ModelBase.Set(this._rawData, "routing_method", value); }
+        init { JsonModel.Set(this._rawData, "routing_method", value); }
     }
 
     public Timeouts? Timeouts
     {
-        get { return ModelBase.GetNullableClass<Timeouts>(this.RawData, "timeouts"); }
-        init { ModelBase.Set(this._rawData, "timeouts", value); }
+        get { return JsonModel.GetNullableClass<Timeouts>(this.RawData, "timeouts"); }
+        init { JsonModel.Set(this._rawData, "timeouts", value); }
     }
 
     /// <inheritdoc/>
@@ -411,20 +415,20 @@ public sealed record class ChannelsItem : ModelBase
     }
 }
 
-class ChannelsItemFromRaw : IFromRaw<ChannelsItem>
+class ChannelsItemFromRaw : IFromRawJson<ChannelsItem>
 {
     /// <inheritdoc/>
     public ChannelsItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ChannelsItem.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Metadata, MetadataFromRaw>))]
-public sealed record class Metadata : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Metadata, MetadataFromRaw>))]
+public sealed record class Metadata : JsonModel
 {
     public Utm? Utm
     {
-        get { return ModelBase.GetNullableClass<Utm>(this.RawData, "utm"); }
-        init { ModelBase.Set(this._rawData, "utm", value); }
+        get { return JsonModel.GetNullableClass<Utm>(this.RawData, "utm"); }
+        init { JsonModel.Set(this._rawData, "utm", value); }
     }
 
     /// <inheritdoc/>
@@ -458,7 +462,7 @@ public sealed record class Metadata : ModelBase
     }
 }
 
-class MetadataFromRaw : IFromRaw<Metadata>
+class MetadataFromRaw : IFromRawJson<Metadata>
 {
     /// <inheritdoc/>
     public Metadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -512,19 +516,19 @@ sealed class RoutingMethodConverter : JsonConverter<RoutingMethod>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Timeouts, TimeoutsFromRaw>))]
-public sealed record class Timeouts : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Timeouts, TimeoutsFromRaw>))]
+public sealed record class Timeouts : JsonModel
 {
     public long? Channel
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "channel"); }
-        init { ModelBase.Set(this._rawData, "channel", value); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "channel"); }
+        init { JsonModel.Set(this._rawData, "channel", value); }
     }
 
     public long? Provider
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "provider"); }
-        init { ModelBase.Set(this._rawData, "provider", value); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "provider"); }
+        init { JsonModel.Set(this._rawData, "provider", value); }
     }
 
     /// <inheritdoc/>
@@ -559,7 +563,7 @@ public sealed record class Timeouts : ModelBase
     }
 }
 
-class TimeoutsFromRaw : IFromRaw<Timeouts>
+class TimeoutsFromRaw : IFromRawJson<Timeouts>
 {
     /// <inheritdoc/>
     public Timeouts FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -574,28 +578,28 @@ public record class Content
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Content(ElementalContentSugar value, JsonElement? json = null)
+    public Content(ElementalContentSugar value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Content(ElementalContent value, JsonElement? json = null)
+    public Content(ElementalContent value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Content(JsonElement json)
+    public Content(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -757,14 +761,14 @@ sealed class ContentConverter : JsonConverter<Content>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(json, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -774,11 +778,11 @@ sealed class ContentConverter : JsonConverter<Content>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalContent>(json, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalContent>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -786,7 +790,7 @@ sealed class ContentConverter : JsonConverter<Content>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, Content value, JsonSerializerOptions options)
@@ -795,16 +799,16 @@ sealed class ContentConverter : JsonConverter<Content>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Delay, DelayFromRaw>))]
-public sealed record class Delay : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Delay, DelayFromRaw>))]
+public sealed record class Delay : JsonModel
 {
     /// <summary>
     /// The duration of the delay in milliseconds.
     /// </summary>
     public long? Duration
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "duration"); }
-        init { ModelBase.Set(this._rawData, "duration", value); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "duration"); }
+        init { JsonModel.Set(this._rawData, "duration", value); }
     }
 
     /// <summary>
@@ -813,8 +817,8 @@ public sealed record class Delay : ModelBase
     /// </summary>
     public string? Timezone
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "timezone"); }
-        init { ModelBase.Set(this._rawData, "timezone", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "timezone"); }
+        init { JsonModel.Set(this._rawData, "timezone", value); }
     }
 
     /// <summary>
@@ -822,8 +826,8 @@ public sealed record class Delay : ModelBase
     /// </summary>
     public string? Until
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "until"); }
-        init { ModelBase.Set(this._rawData, "until", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "until"); }
+        init { JsonModel.Set(this._rawData, "until", value); }
     }
 
     /// <inheritdoc/>
@@ -859,23 +863,23 @@ public sealed record class Delay : ModelBase
     }
 }
 
-class DelayFromRaw : IFromRaw<Delay>
+class DelayFromRaw : IFromRawJson<Delay>
 {
     /// <inheritdoc/>
     public Delay FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Delay.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Expiry, ExpiryFromRaw>))]
-public sealed record class Expiry : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Expiry, ExpiryFromRaw>))]
+public sealed record class Expiry : JsonModel
 {
     /// <summary>
     /// Duration in ms or ISO8601 duration (e.g. P1DT4H).
     /// </summary>
     public required ExpiresIn ExpiresIn
     {
-        get { return ModelBase.GetNotNullClass<ExpiresIn>(this.RawData, "expires_in"); }
-        init { ModelBase.Set(this._rawData, "expires_in", value); }
+        get { return JsonModel.GetNotNullClass<ExpiresIn>(this.RawData, "expires_in"); }
+        init { JsonModel.Set(this._rawData, "expires_in", value); }
     }
 
     /// <summary>
@@ -883,8 +887,8 @@ public sealed record class Expiry : ModelBase
     /// </summary>
     public string? ExpiresAt
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "expires_at"); }
-        init { ModelBase.Set(this._rawData, "expires_at", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "expires_at"); }
+        init { JsonModel.Set(this._rawData, "expires_at", value); }
     }
 
     /// <inheritdoc/>
@@ -926,7 +930,7 @@ public sealed record class Expiry : ModelBase
     }
 }
 
-class ExpiryFromRaw : IFromRaw<Expiry>
+class ExpiryFromRaw : IFromRawJson<Expiry>
 {
     /// <inheritdoc/>
     public Expiry FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -941,28 +945,28 @@ public record class ExpiresIn
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public ExpiresIn(string value, JsonElement? json = null)
+    public ExpiresIn(string value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ExpiresIn(long value, JsonElement? json = null)
+    public ExpiresIn(long value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ExpiresIn(JsonElement json)
+    public ExpiresIn(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -1118,13 +1122,13 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(json, options);
+            var deserialized = JsonSerializer.Deserialize<string>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1134,14 +1138,14 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
 
         try
         {
-            return new(JsonSerializer.Deserialize<long>(json, options));
+            return new(JsonSerializer.Deserialize<long>(element, options));
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(
@@ -1154,31 +1158,31 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<MessageMetadata, MessageMetadataFromRaw>))]
-public sealed record class MessageMetadata : ModelBase
+[JsonConverter(typeof(JsonModelConverter<MessageMetadata, MessageMetadataFromRaw>))]
+public sealed record class MessageMetadata : JsonModel
 {
     public string? Event
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "event"); }
-        init { ModelBase.Set(this._rawData, "event", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "event"); }
+        init { JsonModel.Set(this._rawData, "event", value); }
     }
 
     public IReadOnlyList<string>? Tags
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "tags"); }
-        init { ModelBase.Set(this._rawData, "tags", value); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "tags"); }
+        init { JsonModel.Set(this._rawData, "tags", value); }
     }
 
     public string? TraceID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "trace_id"); }
-        init { ModelBase.Set(this._rawData, "trace_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "trace_id"); }
+        init { JsonModel.Set(this._rawData, "trace_id", value); }
     }
 
     public Utm? Utm
     {
-        get { return ModelBase.GetNullableClass<Utm>(this.RawData, "utm"); }
-        init { ModelBase.Set(this._rawData, "utm", value); }
+        get { return JsonModel.GetNullableClass<Utm>(this.RawData, "utm"); }
+        init { JsonModel.Set(this._rawData, "utm", value); }
     }
 
     /// <inheritdoc/>
@@ -1215,7 +1219,7 @@ public sealed record class MessageMetadata : ModelBase
     }
 }
 
-class MessageMetadataFromRaw : IFromRaw<MessageMetadata>
+class MessageMetadataFromRaw : IFromRawJson<MessageMetadata>
 {
     /// <inheritdoc/>
     public MessageMetadata FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -1223,20 +1227,20 @@ class MessageMetadataFromRaw : IFromRaw<MessageMetadata>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         global::Courier.Models.Send.Preferences,
         global::Courier.Models.Send.PreferencesFromRaw
     >)
 )]
-public sealed record class Preferences : ModelBase
+public sealed record class Preferences : JsonModel
 {
     /// <summary>
     /// The subscription topic to apply to the message.
     /// </summary>
     public required string SubscriptionTopicID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "subscription_topic_id"); }
-        init { ModelBase.Set(this._rawData, "subscription_topic_id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "subscription_topic_id"); }
+        init { JsonModel.Set(this._rawData, "subscription_topic_id", value); }
     }
 
     /// <inheritdoc/>
@@ -1279,7 +1283,7 @@ public sealed record class Preferences : ModelBase
     }
 }
 
-class PreferencesFromRaw : IFromRaw<global::Courier.Models.Send.Preferences>
+class PreferencesFromRaw : IFromRawJson<global::Courier.Models.Send.Preferences>
 {
     /// <inheritdoc/>
     public global::Courier.Models.Send.Preferences FromRawUnchecked(
@@ -1287,22 +1291,22 @@ class PreferencesFromRaw : IFromRaw<global::Courier.Models.Send.Preferences>
     ) => global::Courier.Models.Send.Preferences.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<ProvidersItem, ProvidersItemFromRaw>))]
-public sealed record class ProvidersItem : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ProvidersItem, ProvidersItemFromRaw>))]
+public sealed record class ProvidersItem : JsonModel
 {
     /// <summary>
     /// JS conditional with access to data/profile.
     /// </summary>
     public string? If
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
-        init { ModelBase.Set(this._rawData, "if", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
+        init { JsonModel.Set(this._rawData, "if", value); }
     }
 
     public ProvidersItemMetadata? Metadata
     {
-        get { return ModelBase.GetNullableClass<ProvidersItemMetadata>(this.RawData, "metadata"); }
-        init { ModelBase.Set(this._rawData, "metadata", value); }
+        get { return JsonModel.GetNullableClass<ProvidersItemMetadata>(this.RawData, "metadata"); }
+        init { JsonModel.Set(this._rawData, "metadata", value); }
     }
 
     /// <summary>
@@ -1312,18 +1316,18 @@ public sealed record class ProvidersItem : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "override"
             );
         }
-        init { ModelBase.Set(this._rawData, "override", value); }
+        init { JsonModel.Set(this._rawData, "override", value); }
     }
 
     public long? Timeouts
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "timeouts"); }
-        init { ModelBase.Set(this._rawData, "timeouts", value); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "timeouts"); }
+        init { JsonModel.Set(this._rawData, "timeouts", value); }
     }
 
     /// <inheritdoc/>
@@ -1360,20 +1364,20 @@ public sealed record class ProvidersItem : ModelBase
     }
 }
 
-class ProvidersItemFromRaw : IFromRaw<ProvidersItem>
+class ProvidersItemFromRaw : IFromRawJson<ProvidersItem>
 {
     /// <inheritdoc/>
     public ProvidersItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ProvidersItem.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<ProvidersItemMetadata, ProvidersItemMetadataFromRaw>))]
-public sealed record class ProvidersItemMetadata : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ProvidersItemMetadata, ProvidersItemMetadataFromRaw>))]
+public sealed record class ProvidersItemMetadata : JsonModel
 {
     public Utm? Utm
     {
-        get { return ModelBase.GetNullableClass<Utm>(this.RawData, "utm"); }
-        init { ModelBase.Set(this._rawData, "utm", value); }
+        get { return JsonModel.GetNullableClass<Utm>(this.RawData, "utm"); }
+        init { JsonModel.Set(this._rawData, "utm", value); }
     }
 
     /// <inheritdoc/>
@@ -1409,7 +1413,7 @@ public sealed record class ProvidersItemMetadata : ModelBase
     }
 }
 
-class ProvidersItemMetadataFromRaw : IFromRaw<ProvidersItemMetadata>
+class ProvidersItemMetadataFromRaw : IFromRawJson<ProvidersItemMetadata>
 {
     /// <inheritdoc/>
     public ProvidersItemMetadata FromRawUnchecked(
@@ -1420,8 +1424,8 @@ class ProvidersItemMetadataFromRaw : IFromRaw<ProvidersItemMetadata>
 /// <summary>
 /// Customize which channels/providers Courier may deliver the message through.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Routing, RoutingFromRaw>))]
-public sealed record class Routing : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Routing, RoutingFromRaw>))]
+public sealed record class Routing : JsonModel
 {
     /// <summary>
     /// A list of channels or providers (or nested routing rules).
@@ -1430,21 +1434,21 @@ public sealed record class Routing : ModelBase
     {
         get
         {
-            return ModelBase.GetNotNullClass<List<MessageRoutingChannel>>(this.RawData, "channels");
+            return JsonModel.GetNotNullClass<List<MessageRoutingChannel>>(this.RawData, "channels");
         }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public required ApiEnum<string, global::Courier.Models.Send.Method> Method
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, global::Courier.Models.Send.Method>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, global::Courier.Models.Send.Method>>(
                 this.RawData,
                 "method"
             );
         }
-        init { ModelBase.Set(this._rawData, "method", value); }
+        init { JsonModel.Set(this._rawData, "method", value); }
     }
 
     /// <inheritdoc/>
@@ -1482,7 +1486,7 @@ public sealed record class Routing : ModelBase
     }
 }
 
-class RoutingFromRaw : IFromRaw<Routing>
+class RoutingFromRaw : IFromRawJson<Routing>
 {
     /// <inheritdoc/>
     public Routing FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -1533,46 +1537,46 @@ sealed class MethodConverter : JsonConverter<global::Courier.Models.Send.Method>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Timeout, TimeoutFromRaw>))]
-public sealed record class Timeout : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Timeout, TimeoutFromRaw>))]
+public sealed record class Timeout : JsonModel
 {
     public IReadOnlyDictionary<string, long>? Channel
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, long>>(this.RawData, "channel");
+            return JsonModel.GetNullableClass<Dictionary<string, long>>(this.RawData, "channel");
         }
-        init { ModelBase.Set(this._rawData, "channel", value); }
+        init { JsonModel.Set(this._rawData, "channel", value); }
     }
 
     public ApiEnum<string, Criteria>? Criteria
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, Criteria>>(this.RawData, "criteria");
+            return JsonModel.GetNullableClass<ApiEnum<string, Criteria>>(this.RawData, "criteria");
         }
-        init { ModelBase.Set(this._rawData, "criteria", value); }
+        init { JsonModel.Set(this._rawData, "criteria", value); }
     }
 
     public long? Escalation
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "escalation"); }
-        init { ModelBase.Set(this._rawData, "escalation", value); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "escalation"); }
+        init { JsonModel.Set(this._rawData, "escalation", value); }
     }
 
     public long? Message
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "message"); }
-        init { ModelBase.Set(this._rawData, "message", value); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "message"); }
+        init { JsonModel.Set(this._rawData, "message", value); }
     }
 
     public IReadOnlyDictionary<string, long>? Provider
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, long>>(this.RawData, "provider");
+            return JsonModel.GetNullableClass<Dictionary<string, long>>(this.RawData, "provider");
         }
-        init { ModelBase.Set(this._rawData, "provider", value); }
+        init { JsonModel.Set(this._rawData, "provider", value); }
     }
 
     /// <inheritdoc/>
@@ -1610,7 +1614,7 @@ public sealed record class Timeout : ModelBase
     }
 }
 
-class TimeoutFromRaw : IFromRaw<Timeout>
+class TimeoutFromRaw : IFromRawJson<Timeout>
 {
     /// <inheritdoc/>
     public Timeout FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -1671,28 +1675,28 @@ public record class To
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public To(UserRecipient value, JsonElement? json = null)
+    public To(UserRecipient value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public To(IReadOnlyList<Recipient> value, JsonElement? json = null)
+    public To(IReadOnlyList<Recipient> value, JsonElement? element = null)
     {
         this.Value = ImmutableArray.ToImmutableArray(value);
-        this._json = json;
+        this._element = element;
     }
 
-    public To(JsonElement json)
+    public To(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -1852,14 +1856,14 @@ sealed class ToConverter : JsonConverter<To?>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UserRecipient>(json, options);
+            var deserialized = JsonSerializer.Deserialize<UserRecipient>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1869,10 +1873,10 @@ sealed class ToConverter : JsonConverter<To?>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<List<Recipient>>(json, options);
+            var deserialized = JsonSerializer.Deserialize<List<Recipient>>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1880,7 +1884,7 @@ sealed class ToConverter : JsonConverter<To?>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, To? value, JsonSerializerOptions options)

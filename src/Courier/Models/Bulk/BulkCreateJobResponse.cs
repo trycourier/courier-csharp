@@ -7,13 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<BulkCreateJobResponse, BulkCreateJobResponseFromRaw>))]
-public sealed record class BulkCreateJobResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BulkCreateJobResponse, BulkCreateJobResponseFromRaw>))]
+public sealed record class BulkCreateJobResponse : JsonModel
 {
     public required string JobID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "jobId"); }
-        init { ModelBase.Set(this._rawData, "jobId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "jobId"); }
+        init { JsonModel.Set(this._rawData, "jobId", value); }
     }
 
     /// <inheritdoc/>
@@ -56,7 +56,7 @@ public sealed record class BulkCreateJobResponse : ModelBase
     }
 }
 
-class BulkCreateJobResponseFromRaw : IFromRaw<BulkCreateJobResponse>
+class BulkCreateJobResponseFromRaw : IFromRawJson<BulkCreateJobResponse>
 {
     /// <inheritdoc/>
     public BulkCreateJobResponse FromRawUnchecked(

@@ -85,8 +85,8 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Audience>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Audience>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

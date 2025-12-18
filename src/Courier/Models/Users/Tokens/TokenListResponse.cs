@@ -10,13 +10,13 @@ namespace Courier.Models.Users.Tokens;
 /// <summary>
 /// A list of tokens registered with the user.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<TokenListResponse, TokenListResponseFromRaw>))]
-public sealed record class TokenListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<TokenListResponse, TokenListResponseFromRaw>))]
+public sealed record class TokenListResponse : JsonModel
 {
     public required IReadOnlyList<UserToken> Tokens
     {
-        get { return ModelBase.GetNotNullClass<List<UserToken>>(this.RawData, "tokens"); }
-        init { ModelBase.Set(this._rawData, "tokens", value); }
+        get { return JsonModel.GetNotNullClass<List<UserToken>>(this.RawData, "tokens"); }
+        init { JsonModel.Set(this._rawData, "tokens", value); }
     }
 
     /// <inheritdoc/>
@@ -62,7 +62,7 @@ public sealed record class TokenListResponse : ModelBase
     }
 }
 
-class TokenListResponseFromRaw : IFromRaw<TokenListResponse>
+class TokenListResponseFromRaw : IFromRawJson<TokenListResponse>
 {
     /// <inheritdoc/>
     public TokenListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

@@ -146,8 +146,8 @@ public class RecipientPreferencesTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<RecipientPreferences>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<RecipientPreferences>(element);
         Assert.NotNull(deserialized);
 
         Dictionary<string, NotificationPreferenceDetails> expectedCategories = new()

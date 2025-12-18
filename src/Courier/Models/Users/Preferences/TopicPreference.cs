@@ -7,43 +7,43 @@ using Courier.Core;
 
 namespace Courier.Models.Users.Preferences;
 
-[JsonConverter(typeof(ModelConverter<TopicPreference, TopicPreferenceFromRaw>))]
-public sealed record class TopicPreference : ModelBase
+[JsonConverter(typeof(JsonModelConverter<TopicPreference, TopicPreferenceFromRaw>))]
+public sealed record class TopicPreference : JsonModel
 {
     public required ApiEnum<string, PreferenceStatus> DefaultStatus
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
                 this.RawData,
                 "default_status"
             );
         }
-        init { ModelBase.Set(this._rawData, "default_status", value); }
+        init { JsonModel.Set(this._rawData, "default_status", value); }
     }
 
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
                 this.RawData,
                 "status"
             );
         }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     public required string TopicID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "topic_id"); }
-        init { ModelBase.Set(this._rawData, "topic_id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "topic_id"); }
+        init { JsonModel.Set(this._rawData, "topic_id", value); }
     }
 
     public required string TopicName
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "topic_name"); }
-        init { ModelBase.Set(this._rawData, "topic_name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "topic_name"); }
+        init { JsonModel.Set(this._rawData, "topic_name", value); }
     }
 
     /// <summary>
@@ -53,18 +53,18 @@ public sealed record class TopicPreference : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
                 this.RawData,
                 "custom_routing"
             );
         }
-        init { ModelBase.Set(this._rawData, "custom_routing", value); }
+        init { JsonModel.Set(this._rawData, "custom_routing", value); }
     }
 
     public bool? HasCustomRouting
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
-        init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
+        init { JsonModel.Set(this._rawData, "has_custom_routing", value); }
     }
 
     /// <inheritdoc/>
@@ -106,7 +106,7 @@ public sealed record class TopicPreference : ModelBase
     }
 }
 
-class TopicPreferenceFromRaw : IFromRaw<TopicPreference>
+class TopicPreferenceFromRaw : IFromRawJson<TopicPreference>
 {
     /// <inheritdoc/>
     public TopicPreference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

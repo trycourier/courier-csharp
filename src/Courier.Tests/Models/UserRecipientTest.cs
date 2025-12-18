@@ -220,8 +220,8 @@ public class UserRecipientTest : TestBase
             UserID = "user_id",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserRecipient>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserRecipient>(element);
         Assert.NotNull(deserialized);
 
         string expectedAccountID = "account_id";
@@ -587,8 +587,8 @@ public class UserRecipientPreferencesTest : TestBase
             TemplateID = "templateId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserRecipientPreferences>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserRecipientPreferences>(element);
         Assert.NotNull(deserialized);
 
         Dictionary<string, Preference> expectedNotifications = new()

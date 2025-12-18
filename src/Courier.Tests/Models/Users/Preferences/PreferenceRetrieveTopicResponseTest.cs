@@ -73,8 +73,8 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PreferenceRetrieveTopicResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<PreferenceRetrieveTopicResponse>(element);
         Assert.NotNull(deserialized);
 
         TopicPreference expectedTopic = new()

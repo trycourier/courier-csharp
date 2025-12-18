@@ -126,8 +126,8 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -145,8 +145,8 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -160,8 +160,8 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -179,8 +179,8 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -198,8 +198,8 @@ public class ElementalNodeTest : TestBase
                 Type = Type.Action,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -217,8 +217,8 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -236,8 +236,8 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }

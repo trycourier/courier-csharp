@@ -27,8 +27,8 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public required IReadOnlyList<Patch> Patch
     {
-        get { return ModelBase.GetNotNullClass<List<Patch>>(this.RawBodyData, "patch"); }
-        init { ModelBase.Set(this._rawBodyData, "patch", value); }
+        get { return JsonModel.GetNotNullClass<List<Patch>>(this.RawBodyData, "patch"); }
+        init { JsonModel.Set(this._rawBodyData, "patch", value); }
     }
 
     public TokenUpdateParams() { }
@@ -64,7 +64,7 @@ public sealed record class TokenUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static TokenUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -89,9 +89,13 @@ public sealed record class TokenUpdateParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -104,16 +108,16 @@ public sealed record class TokenUpdateParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Patch, PatchFromRaw>))]
-public sealed record class Patch : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Patch, PatchFromRaw>))]
+public sealed record class Patch : JsonModel
 {
     /// <summary>
     /// The operation to perform.
     /// </summary>
     public required string Op
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "op"); }
-        init { ModelBase.Set(this._rawData, "op", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "op"); }
+        init { JsonModel.Set(this._rawData, "op", value); }
     }
 
     /// <summary>
@@ -121,8 +125,8 @@ public sealed record class Patch : ModelBase
     /// </summary>
     public required string Path
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
-        init { ModelBase.Set(this._rawData, "path", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "path"); }
+        init { JsonModel.Set(this._rawData, "path", value); }
     }
 
     /// <summary>
@@ -130,8 +134,8 @@ public sealed record class Patch : ModelBase
     /// </summary>
     public string? Value
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "value"); }
-        init { ModelBase.Set(this._rawData, "value", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "value"); }
+        init { JsonModel.Set(this._rawData, "value", value); }
     }
 
     /// <inheritdoc/>
@@ -167,7 +171,7 @@ public sealed record class Patch : ModelBase
     }
 }
 
-class PatchFromRaw : IFromRaw<Patch>
+class PatchFromRaw : IFromRawJson<Patch>
 {
     /// <inheritdoc/>
     public Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

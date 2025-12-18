@@ -450,8 +450,8 @@ public class BulkListUsersResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BulkListUsersResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BulkListUsersResponse>(element);
         Assert.NotNull(deserialized);
 
         List<Item> expectedItems =
@@ -1059,8 +1059,8 @@ public class ItemTest : TestBase
             MessageID = "messageId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Item>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Item>(element);
         Assert.NotNull(deserialized);
 
         JsonElement expectedData = JsonSerializer.Deserialize<JsonElement>("{}");
@@ -1753,8 +1753,8 @@ public class IntersectionMember1Test : TestBase
     {
         var model = new IntersectionMember1 { Status = Status.Pending, MessageID = "messageId" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Status> expectedStatus = Status.Pending;

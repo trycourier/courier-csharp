@@ -7,13 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalContent, ElementalContentFromRaw>))]
-public sealed record class ElementalContent : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ElementalContent, ElementalContentFromRaw>))]
+public sealed record class ElementalContent : JsonModel
 {
     public required IReadOnlyList<ElementalNode> Elements
     {
-        get { return ModelBase.GetNotNullClass<List<ElementalNode>>(this.RawData, "elements"); }
-        init { ModelBase.Set(this._rawData, "elements", value); }
+        get { return JsonModel.GetNotNullClass<List<ElementalNode>>(this.RawData, "elements"); }
+        init { JsonModel.Set(this._rawData, "elements", value); }
     }
 
     /// <summary>
@@ -21,14 +21,14 @@ public sealed record class ElementalContent : ModelBase
     /// </summary>
     public required string Version
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "version"); }
-        init { ModelBase.Set(this._rawData, "version", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "version"); }
+        init { JsonModel.Set(this._rawData, "version", value); }
     }
 
     public string? Brand
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand"); }
-        init { ModelBase.Set(this._rawData, "brand", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand"); }
+        init { JsonModel.Set(this._rawData, "brand", value); }
     }
 
     /// <inheritdoc/>
@@ -69,7 +69,7 @@ public sealed record class ElementalContent : ModelBase
     }
 }
 
-class ElementalContentFromRaw : IFromRaw<ElementalContent>
+class ElementalContentFromRaw : IFromRawJson<ElementalContent>
 {
     /// <inheritdoc/>
     public ElementalContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

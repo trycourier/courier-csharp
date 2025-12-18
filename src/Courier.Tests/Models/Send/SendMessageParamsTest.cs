@@ -649,8 +649,8 @@ public class MessageTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Message>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Message>(element);
         Assert.NotNull(deserialized);
 
         string expectedBrandID = "brand_id";
@@ -1863,8 +1863,8 @@ public class ChannelsItemTest : TestBase
             Timeouts = new() { Channel = 0, Provider = 0 },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ChannelsItem>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ChannelsItem>(element);
         Assert.NotNull(deserialized);
 
         string expectedBrandID = "brand_id";
@@ -2080,8 +2080,8 @@ public class MetadataTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Metadata>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Metadata>(element);
         Assert.NotNull(deserialized);
 
         Models::Utm expectedUtm = new()
@@ -2235,8 +2235,8 @@ public class TimeoutsTest : TestBase
     {
         var model = new Timeouts { Channel = 0, Provider = 0 };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Timeouts>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Timeouts>(element);
         Assert.NotNull(deserialized);
 
         long expectedChannel = 0;
@@ -2330,8 +2330,8 @@ public class ContentTest : TestBase
     public void ElementalContentSugarSerializationRoundtripWorks()
     {
         Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2357,8 +2357,8 @@ public class ContentTest : TestBase
                 Brand = "brand",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2411,8 +2411,8 @@ public class DelayTest : TestBase
             Until = "until",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Delay>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Delay>(element);
         Assert.NotNull(deserialized);
 
         long expectedDuration = 0;
@@ -2520,8 +2520,8 @@ public class ExpiryTest : TestBase
     {
         var model = new Expiry { ExpiresIn = "string", ExpiresAt = "expires_at" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Expiry>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Expiry>(element);
         Assert.NotNull(deserialized);
 
         ExpiresIn expectedExpiresIn = "string";
@@ -2604,8 +2604,8 @@ public class ExpiresInTest : TestBase
     public void StringSerializationRoundtripWorks()
     {
         ExpiresIn value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2614,8 +2614,8 @@ public class ExpiresInTest : TestBase
     public void LongSerializationRoundtripWorks()
     {
         ExpiresIn value = new(0);
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2706,8 +2706,8 @@ public class MessageMetadataTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MessageMetadata>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<MessageMetadata>(element);
         Assert.NotNull(deserialized);
 
         string expectedEvent = "event";
@@ -2841,8 +2841,8 @@ public class PreferencesTest : TestBase
     {
         var model = new Preferences { SubscriptionTopicID = "subscription_topic_id" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Preferences>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Preferences>(element);
         Assert.NotNull(deserialized);
 
         string expectedSubscriptionTopicID = "subscription_topic_id";
@@ -2969,8 +2969,8 @@ public class ProvidersItemTest : TestBase
             Timeouts = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItem>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ProvidersItem>(element);
         Assert.NotNull(deserialized);
 
         string expectedIf = "if";
@@ -3154,8 +3154,8 @@ public class ProvidersItemMetadataTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItemMetadata>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ProvidersItemMetadata>(element);
         Assert.NotNull(deserialized);
 
         Models::Utm expectedUtm = new()
@@ -3257,8 +3257,8 @@ public class RoutingTest : TestBase
     {
         var model = new Routing { Channels = ["string"], Method = Method.All };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Routing>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Routing>(element);
         Assert.NotNull(deserialized);
 
         List<Models::MessageRoutingChannel> expectedChannels = ["string"];
@@ -3406,8 +3406,8 @@ public class TimeoutTest : TestBase
             Provider = new Dictionary<string, long>() { { "foo", 0 } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Timeout>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Timeout>(element);
         Assert.NotNull(deserialized);
 
         Dictionary<string, long> expectedChannel = new() { { "foo", 0 } };
@@ -3753,8 +3753,8 @@ public class ToTest : TestBase
                 UserID = "user_id",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -3817,8 +3817,8 @@ public class ToTest : TestBase
                 },
             ]
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(element);
 
         Assert.Equal(value, deserialized);
     }

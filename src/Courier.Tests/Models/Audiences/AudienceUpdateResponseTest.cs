@@ -92,8 +92,8 @@ public class AudienceUpdateResponseTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AudienceUpdateResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AudienceUpdateResponse>(element);
         Assert.NotNull(deserialized);
 
         Audience expectedAudience = new()

@@ -10,39 +10,39 @@ using System = System;
 namespace Courier.Models;
 
 [JsonConverter(
-    typeof(ModelConverter<ElementalQuoteNodeWithType, ElementalQuoteNodeWithTypeFromRaw>)
+    typeof(JsonModelConverter<ElementalQuoteNodeWithType, ElementalQuoteNodeWithTypeFromRaw>)
 )]
-public sealed record class ElementalQuoteNodeWithType : ModelBase
+public sealed record class ElementalQuoteNodeWithType : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
-        init { ModelBase.Set(this._rawData, "if", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
+        init { JsonModel.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
-        init { ModelBase.Set(this._rawData, "loop", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "loop"); }
+        init { JsonModel.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
-        init { ModelBase.Set(this._rawData, "ref", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "ref"); }
+        init { JsonModel.Set(this._rawData, "ref", value); }
     }
 
     public ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>
             >(this.RawData, "type");
         }
@@ -53,7 +53,7 @@ public sealed record class ElementalQuoteNodeWithType : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -105,7 +105,7 @@ public sealed record class ElementalQuoteNodeWithType : ModelBase
     }
 }
 
-class ElementalQuoteNodeWithTypeFromRaw : IFromRaw<ElementalQuoteNodeWithType>
+class ElementalQuoteNodeWithTypeFromRaw : IFromRawJson<ElementalQuoteNodeWithType>
 {
     /// <inheritdoc/>
     public ElementalQuoteNodeWithType FromRawUnchecked(
@@ -114,18 +114,18 @@ class ElementalQuoteNodeWithTypeFromRaw : IFromRaw<ElementalQuoteNodeWithType>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         ElementalQuoteNodeWithTypeIntersectionMember1,
         ElementalQuoteNodeWithTypeIntersectionMember1FromRaw
     >)
 )]
-public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : ModelBase
+public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : JsonModel
 {
     public ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>
             >(this.RawData, "type");
         }
@@ -136,7 +136,7 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : Model
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -178,7 +178,7 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : Model
 }
 
 class ElementalQuoteNodeWithTypeIntersectionMember1FromRaw
-    : IFromRaw<ElementalQuoteNodeWithTypeIntersectionMember1>
+    : IFromRawJson<ElementalQuoteNodeWithTypeIntersectionMember1>
 {
     /// <inheritdoc/>
     public ElementalQuoteNodeWithTypeIntersectionMember1 FromRawUnchecked(

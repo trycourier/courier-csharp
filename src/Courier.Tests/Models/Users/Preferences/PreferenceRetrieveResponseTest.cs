@@ -95,8 +95,8 @@ public class PreferenceRetrieveResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PreferenceRetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<PreferenceRetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         List<TopicPreference> expectedItems =

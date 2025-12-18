@@ -27,20 +27,20 @@ public sealed record class BrandUpdateParams : ParamsBase
     /// </summary>
     public required string Name
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "name"); }
-        init { ModelBase.Set(this._rawBodyData, "name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "name"); }
+        init { JsonModel.Set(this._rawBodyData, "name", value); }
     }
 
     public BrandSettings? Settings
     {
-        get { return ModelBase.GetNullableClass<BrandSettings>(this.RawBodyData, "settings"); }
-        init { ModelBase.Set(this._rawBodyData, "settings", value); }
+        get { return JsonModel.GetNullableClass<BrandSettings>(this.RawBodyData, "settings"); }
+        init { JsonModel.Set(this._rawBodyData, "settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get { return ModelBase.GetNullableClass<BrandSnippets>(this.RawBodyData, "snippets"); }
-        init { ModelBase.Set(this._rawBodyData, "snippets", value); }
+        get { return JsonModel.GetNullableClass<BrandSnippets>(this.RawBodyData, "snippets"); }
+        init { JsonModel.Set(this._rawBodyData, "snippets", value); }
     }
 
     public BrandUpdateParams() { }
@@ -76,7 +76,7 @@ public sealed record class BrandUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static BrandUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -100,9 +100,13 @@ public sealed record class BrandUpdateParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

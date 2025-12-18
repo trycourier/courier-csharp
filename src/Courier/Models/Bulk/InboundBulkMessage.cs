@@ -14,8 +14,8 @@ namespace Courier.Models.Bulk;
 /// (event ID or notification ID) - V2 format: Optionally use `template` (notification
 /// ID) or `content` (Elemental content) in addition to `event`
 /// </summary>
-[JsonConverter(typeof(ModelConverter<InboundBulkMessage, InboundBulkMessageFromRaw>))]
-public sealed record class InboundBulkMessage : ModelBase
+[JsonConverter(typeof(JsonModelConverter<InboundBulkMessage, InboundBulkMessageFromRaw>))]
+public sealed record class InboundBulkMessage : JsonModel
 {
     /// <summary>
     /// Event ID or Notification ID (required). Can be either a  Notification ID
@@ -24,14 +24,14 @@ public sealed record class InboundBulkMessage : ModelBase
     /// </summary>
     public required string Event
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "event"); }
-        init { ModelBase.Set(this._rawData, "event", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "event"); }
+        init { JsonModel.Set(this._rawData, "event", value); }
     }
 
     public string? Brand
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand"); }
-        init { ModelBase.Set(this._rawData, "brand", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand"); }
+        init { JsonModel.Set(this._rawData, "brand", value); }
     }
 
     /// <summary>
@@ -40,44 +40,44 @@ public sealed record class InboundBulkMessage : ModelBase
     /// </summary>
     public Content? Content
     {
-        get { return ModelBase.GetNullableClass<Content>(this.RawData, "content"); }
-        init { ModelBase.Set(this._rawData, "content", value); }
+        get { return JsonModel.GetNullableClass<Content>(this.RawData, "content"); }
+        init { JsonModel.Set(this._rawData, "content", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "data"
             );
         }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     public IReadOnlyDictionary<string, Dictionary<string, JsonElement>>? Locale
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, Dictionary<string, JsonElement>>>(
+            return JsonModel.GetNullableClass<Dictionary<string, Dictionary<string, JsonElement>>>(
                 this.RawData,
                 "locale"
             );
         }
-        init { ModelBase.Set(this._rawData, "locale", value); }
+        init { JsonModel.Set(this._rawData, "locale", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Override
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "override"
             );
         }
-        init { ModelBase.Set(this._rawData, "override", value); }
+        init { JsonModel.Set(this._rawData, "override", value); }
     }
 
     /// <summary>
@@ -87,8 +87,8 @@ public sealed record class InboundBulkMessage : ModelBase
     /// </summary>
     public string? Template
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "template"); }
-        init { ModelBase.Set(this._rawData, "template", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "template"); }
+        init { JsonModel.Set(this._rawData, "template", value); }
     }
 
     /// <inheritdoc/>
@@ -137,7 +137,7 @@ public sealed record class InboundBulkMessage : ModelBase
     }
 }
 
-class InboundBulkMessageFromRaw : IFromRaw<InboundBulkMessage>
+class InboundBulkMessageFromRaw : IFromRawJson<InboundBulkMessage>
 {
     /// <inheritdoc/>
     public InboundBulkMessage FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -153,28 +153,28 @@ public record class Content
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public Content(ElementalContentSugar value, JsonElement? json = null)
+    public Content(ElementalContentSugar value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Content(ElementalContent value, JsonElement? json = null)
+    public Content(ElementalContent value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Content(JsonElement json)
+    public Content(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -336,14 +336,14 @@ sealed class ContentConverter : JsonConverter<Content?>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(json, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -353,11 +353,11 @@ sealed class ContentConverter : JsonConverter<Content?>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalContent>(json, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalContent>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -365,7 +365,7 @@ sealed class ContentConverter : JsonConverter<Content?>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, Content? value, JsonSerializerOptions options)

@@ -27,8 +27,8 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     /// </summary>
     public required string ExpiresIn
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "expires_in"); }
-        init { ModelBase.Set(this._rawBodyData, "expires_in", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "expires_in"); }
+        init { JsonModel.Set(this._rawBodyData, "expires_in", value); }
     }
 
     /// <summary>
@@ -47,8 +47,8 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     /// </summary>
     public required string Scope
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "scope"); }
-        init { ModelBase.Set(this._rawBodyData, "scope", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "scope"); }
+        init { JsonModel.Set(this._rawBodyData, "scope", value); }
     }
 
     public AuthIssueTokenParams() { }
@@ -84,7 +84,7 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static AuthIssueTokenParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -106,9 +106,13 @@ public sealed record class AuthIssueTokenParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

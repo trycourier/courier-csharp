@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Paging, PagingFromRaw>))]
-public sealed record class Paging : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Paging, PagingFromRaw>))]
+public sealed record class Paging : JsonModel
 {
     public required bool More
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "more"); }
-        init { ModelBase.Set(this._rawData, "more", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "more"); }
+        init { JsonModel.Set(this._rawData, "more", value); }
     }
 
     public string? Cursor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "cursor"); }
-        init { ModelBase.Set(this._rawData, "cursor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "cursor"); }
+        init { JsonModel.Set(this._rawData, "cursor", value); }
     }
 
     /// <inheritdoc/>
@@ -61,7 +61,7 @@ public sealed record class Paging : ModelBase
     }
 }
 
-class PagingFromRaw : IFromRaw<Paging>
+class PagingFromRaw : IFromRawJson<Paging>
 {
     /// <inheritdoc/>
     public Paging FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
