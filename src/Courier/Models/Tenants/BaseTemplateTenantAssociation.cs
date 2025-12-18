@@ -8,17 +8,17 @@ using Courier.Core;
 namespace Courier.Models.Tenants;
 
 [JsonConverter(
-    typeof(ModelConverter<BaseTemplateTenantAssociation, BaseTemplateTenantAssociationFromRaw>)
+    typeof(JsonModelConverter<BaseTemplateTenantAssociation, BaseTemplateTenantAssociationFromRaw>)
 )]
-public sealed record class BaseTemplateTenantAssociation : ModelBase
+public sealed record class BaseTemplateTenantAssociation : JsonModel
 {
     /// <summary>
     /// The template's id
     /// </summary>
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     /// <summary>
@@ -26,8 +26,8 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
     /// </summary>
     public required string CreatedAt
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "created_at"); }
-        init { ModelBase.Set(this._rawData, "created_at", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "created_at"); }
+        init { JsonModel.Set(this._rawData, "created_at", value); }
     }
 
     /// <summary>
@@ -35,8 +35,8 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
     /// </summary>
     public required string PublishedAt
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "published_at"); }
-        init { ModelBase.Set(this._rawData, "published_at", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "published_at"); }
+        init { JsonModel.Set(this._rawData, "published_at", value); }
     }
 
     /// <summary>
@@ -44,8 +44,8 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
     /// </summary>
     public required string UpdatedAt
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "updated_at"); }
-        init { ModelBase.Set(this._rawData, "updated_at", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "updated_at"); }
+        init { JsonModel.Set(this._rawData, "updated_at", value); }
     }
 
     /// <summary>
@@ -53,8 +53,8 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
     /// </summary>
     public required string Version
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "version"); }
-        init { ModelBase.Set(this._rawData, "version", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "version"); }
+        init { JsonModel.Set(this._rawData, "version", value); }
     }
 
     /// <inheritdoc/>
@@ -96,7 +96,7 @@ public sealed record class BaseTemplateTenantAssociation : ModelBase
     }
 }
 
-class BaseTemplateTenantAssociationFromRaw : IFromRaw<BaseTemplateTenantAssociation>
+class BaseTemplateTenantAssociationFromRaw : IFromRawJson<BaseTemplateTenantAssociation>
 {
     /// <inheritdoc/>
     public BaseTemplateTenantAssociation FromRawUnchecked(

@@ -65,8 +65,8 @@ public class AuditEventTest : TestBase
             Type = "type",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AuditEvent>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AuditEvent>(element);
         Assert.NotNull(deserialized);
 
         Actor expectedActor = new() { ID = "id", Email = "email" };
@@ -131,8 +131,8 @@ public class ActorTest : TestBase
     {
         var model = new Actor { ID = "id", Email = "email" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Actor>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Actor>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

@@ -75,8 +75,8 @@ public class MessageHistoryResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MessageHistoryResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<MessageHistoryResponse>(element);
         Assert.NotNull(deserialized);
 
         List<Dictionary<string, JsonElement>> expectedResults =

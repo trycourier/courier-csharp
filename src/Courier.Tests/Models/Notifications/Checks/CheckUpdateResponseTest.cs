@@ -82,8 +82,8 @@ public class CheckUpdateResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<CheckUpdateResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<CheckUpdateResponse>(element);
         Assert.NotNull(deserialized);
 
         List<Check> expectedChecks =

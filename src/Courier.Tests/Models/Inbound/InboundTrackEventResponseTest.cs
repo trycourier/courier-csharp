@@ -40,8 +40,8 @@ public class InboundTrackEventResponseTest : TestBase
             MessageID = "1-65f240a0-47a6a120c8374de9bcf9f22c",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InboundTrackEventResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<InboundTrackEventResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedMessageID = "1-65f240a0-47a6a120c8374de9bcf9f22c";

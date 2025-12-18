@@ -7,49 +7,49 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandTemplate, BrandTemplateFromRaw>))]
-public sealed record class BrandTemplate : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BrandTemplate, BrandTemplateFromRaw>))]
+public sealed record class BrandTemplate : JsonModel
 {
     public required bool Enabled
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "enabled"); }
-        init { ModelBase.Set(this._rawData, "enabled", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "enabled"); }
+        init { JsonModel.Set(this._rawData, "enabled", value); }
     }
 
     public string? BackgroundColor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "backgroundColor"); }
-        init { ModelBase.Set(this._rawData, "backgroundColor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "backgroundColor"); }
+        init { JsonModel.Set(this._rawData, "backgroundColor", value); }
     }
 
     public string? BlocksBackgroundColor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "blocksBackgroundColor"); }
-        init { ModelBase.Set(this._rawData, "blocksBackgroundColor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "blocksBackgroundColor"); }
+        init { JsonModel.Set(this._rawData, "blocksBackgroundColor", value); }
     }
 
     public string? Footer
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "footer"); }
-        init { ModelBase.Set(this._rawData, "footer", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "footer"); }
+        init { JsonModel.Set(this._rawData, "footer", value); }
     }
 
     public string? Head
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "head"); }
-        init { ModelBase.Set(this._rawData, "head", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "head"); }
+        init { JsonModel.Set(this._rawData, "head", value); }
     }
 
     public string? Header
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "header"); }
-        init { ModelBase.Set(this._rawData, "header", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "header"); }
+        init { JsonModel.Set(this._rawData, "header", value); }
     }
 
     public string? Width
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "width"); }
-        init { ModelBase.Set(this._rawData, "width", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "width"); }
+        init { JsonModel.Set(this._rawData, "width", value); }
     }
 
     /// <inheritdoc/>
@@ -96,7 +96,7 @@ public sealed record class BrandTemplate : ModelBase
     }
 }
 
-class BrandTemplateFromRaw : IFromRaw<BrandTemplate>
+class BrandTemplateFromRaw : IFromRawJson<BrandTemplate>
 {
     /// <inheritdoc/>
     public BrandTemplate FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

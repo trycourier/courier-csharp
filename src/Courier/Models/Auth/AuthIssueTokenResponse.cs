@@ -7,13 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models.Auth;
 
-[JsonConverter(typeof(ModelConverter<AuthIssueTokenResponse, AuthIssueTokenResponseFromRaw>))]
-public sealed record class AuthIssueTokenResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AuthIssueTokenResponse, AuthIssueTokenResponseFromRaw>))]
+public sealed record class AuthIssueTokenResponse : JsonModel
 {
     public required string Token
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "token"); }
-        init { ModelBase.Set(this._rawData, "token", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "token"); }
+        init { JsonModel.Set(this._rawData, "token", value); }
     }
 
     /// <inheritdoc/>
@@ -56,7 +56,7 @@ public sealed record class AuthIssueTokenResponse : ModelBase
     }
 }
 
-class AuthIssueTokenResponseFromRaw : IFromRaw<AuthIssueTokenResponse>
+class AuthIssueTokenResponseFromRaw : IFromRawJson<AuthIssueTokenResponse>
 {
     /// <inheritdoc/>
     public AuthIssueTokenResponse FromRawUnchecked(

@@ -9,58 +9,58 @@ using System = System;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSettingsInApp, BrandSettingsInAppFromRaw>))]
-public sealed record class BrandSettingsInApp : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BrandSettingsInApp, BrandSettingsInAppFromRaw>))]
+public sealed record class BrandSettingsInApp : JsonModel
 {
     public required BrandColors Colors
     {
-        get { return ModelBase.GetNotNullClass<BrandColors>(this.RawData, "colors"); }
-        init { ModelBase.Set(this._rawData, "colors", value); }
+        get { return JsonModel.GetNotNullClass<BrandColors>(this.RawData, "colors"); }
+        init { JsonModel.Set(this._rawData, "colors", value); }
     }
 
     public required Icons Icons
     {
-        get { return ModelBase.GetNotNullClass<Icons>(this.RawData, "icons"); }
-        init { ModelBase.Set(this._rawData, "icons", value); }
+        get { return JsonModel.GetNotNullClass<Icons>(this.RawData, "icons"); }
+        init { JsonModel.Set(this._rawData, "icons", value); }
     }
 
     public required WidgetBackground WidgetBackground
     {
         get
         {
-            return ModelBase.GetNotNullClass<WidgetBackground>(this.RawData, "widgetBackground");
+            return JsonModel.GetNotNullClass<WidgetBackground>(this.RawData, "widgetBackground");
         }
-        init { ModelBase.Set(this._rawData, "widgetBackground", value); }
+        init { JsonModel.Set(this._rawData, "widgetBackground", value); }
     }
 
     public string? BorderRadius
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "borderRadius"); }
-        init { ModelBase.Set(this._rawData, "borderRadius", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "borderRadius"); }
+        init { JsonModel.Set(this._rawData, "borderRadius", value); }
     }
 
     public bool? DisableMessageIcon
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "disableMessageIcon"); }
-        init { ModelBase.Set(this._rawData, "disableMessageIcon", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "disableMessageIcon"); }
+        init { JsonModel.Set(this._rawData, "disableMessageIcon", value); }
     }
 
     public string? FontFamily
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "fontFamily"); }
-        init { ModelBase.Set(this._rawData, "fontFamily", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "fontFamily"); }
+        init { JsonModel.Set(this._rawData, "fontFamily", value); }
     }
 
     public ApiEnum<string, Placement>? Placement
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, Placement>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, Placement>>(
                 this.RawData,
                 "placement"
             );
         }
-        init { ModelBase.Set(this._rawData, "placement", value); }
+        init { JsonModel.Set(this._rawData, "placement", value); }
     }
 
     /// <inheritdoc/>
@@ -102,7 +102,7 @@ public sealed record class BrandSettingsInApp : ModelBase
     }
 }
 
-class BrandSettingsInAppFromRaw : IFromRaw<BrandSettingsInApp>
+class BrandSettingsInAppFromRaw : IFromRawJson<BrandSettingsInApp>
 {
     /// <inheritdoc/>
     public BrandSettingsInApp FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

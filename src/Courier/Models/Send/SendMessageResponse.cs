@@ -7,8 +7,8 @@ using Courier.Core;
 
 namespace Courier.Models.Send;
 
-[JsonConverter(typeof(ModelConverter<SendMessageResponse, SendMessageResponseFromRaw>))]
-public sealed record class SendMessageResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SendMessageResponse, SendMessageResponseFromRaw>))]
+public sealed record class SendMessageResponse : JsonModel
 {
     /// <summary>
     /// A successful call to `POST /send` returns a `202` status code along with a
@@ -18,8 +18,8 @@ public sealed record class SendMessageResponse : ModelBase
     /// </summary>
     public required string RequestID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "requestId"); }
-        init { ModelBase.Set(this._rawData, "requestId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "requestId"); }
+        init { JsonModel.Set(this._rawData, "requestId", value); }
     }
 
     /// <inheritdoc/>
@@ -62,7 +62,7 @@ public sealed record class SendMessageResponse : ModelBase
     }
 }
 
-class SendMessageResponseFromRaw : IFromRaw<SendMessageResponse>
+class SendMessageResponseFromRaw : IFromRawJson<SendMessageResponse>
 {
     /// <inheritdoc/>
     public SendMessageResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

@@ -97,8 +97,8 @@ public class MessageDetailsTest : TestBase
             Reason = Reason.Bounced,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MessageDetails>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<MessageDetails>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

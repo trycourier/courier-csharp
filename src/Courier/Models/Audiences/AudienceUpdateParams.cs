@@ -27,8 +27,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public string? Description
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "description"); }
-        init { ModelBase.Set(this._rawBodyData, "description", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "description"); }
+        init { JsonModel.Set(this._rawBodyData, "description", value); }
     }
 
     /// <summary>
@@ -36,8 +36,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public Filter? Filter
     {
-        get { return ModelBase.GetNullableClass<Filter>(this.RawBodyData, "filter"); }
-        init { ModelBase.Set(this._rawBodyData, "filter", value); }
+        get { return JsonModel.GetNullableClass<Filter>(this.RawBodyData, "filter"); }
+        init { JsonModel.Set(this._rawBodyData, "filter", value); }
     }
 
     /// <summary>
@@ -45,8 +45,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public string? Name
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "name"); }
-        init { ModelBase.Set(this._rawBodyData, "name", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "name"); }
+        init { JsonModel.Set(this._rawBodyData, "name", value); }
     }
 
     public AudienceUpdateParams() { }
@@ -82,7 +82,7 @@ public sealed record class AudienceUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static AudienceUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -107,9 +107,13 @@ public sealed record class AudienceUpdateParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

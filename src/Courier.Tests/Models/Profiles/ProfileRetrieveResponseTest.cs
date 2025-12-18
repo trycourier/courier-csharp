@@ -169,8 +169,8 @@ public class ProfileRetrieveResponseTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProfileRetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ProfileRetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         Dictionary<string, JsonElement> expectedProfile = new()

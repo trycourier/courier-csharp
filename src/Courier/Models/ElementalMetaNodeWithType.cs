@@ -9,38 +9,40 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalMetaNodeWithType, ElementalMetaNodeWithTypeFromRaw>))]
-public sealed record class ElementalMetaNodeWithType : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<ElementalMetaNodeWithType, ElementalMetaNodeWithTypeFromRaw>)
+)]
+public sealed record class ElementalMetaNodeWithType : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
-        init { ModelBase.Set(this._rawData, "if", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
+        init { JsonModel.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
-        init { ModelBase.Set(this._rawData, "loop", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "loop"); }
+        init { JsonModel.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
-        init { ModelBase.Set(this._rawData, "ref", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "ref"); }
+        init { JsonModel.Set(this._rawData, "ref", value); }
     }
 
     public ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>
             >(this.RawData, "type");
         }
@@ -51,7 +53,7 @@ public sealed record class ElementalMetaNodeWithType : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -103,7 +105,7 @@ public sealed record class ElementalMetaNodeWithType : ModelBase
     }
 }
 
-class ElementalMetaNodeWithTypeFromRaw : IFromRaw<ElementalMetaNodeWithType>
+class ElementalMetaNodeWithTypeFromRaw : IFromRawJson<ElementalMetaNodeWithType>
 {
     /// <inheritdoc/>
     public ElementalMetaNodeWithType FromRawUnchecked(
@@ -112,18 +114,18 @@ class ElementalMetaNodeWithTypeFromRaw : IFromRaw<ElementalMetaNodeWithType>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         ElementalMetaNodeWithTypeIntersectionMember1,
         ElementalMetaNodeWithTypeIntersectionMember1FromRaw
     >)
 )]
-public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelBase
+public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : JsonModel
 {
     public ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>
             >(this.RawData, "type");
         }
@@ -134,7 +136,7 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelB
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -176,7 +178,7 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : ModelB
 }
 
 class ElementalMetaNodeWithTypeIntersectionMember1FromRaw
-    : IFromRaw<ElementalMetaNodeWithTypeIntersectionMember1>
+    : IFromRawJson<ElementalMetaNodeWithTypeIntersectionMember1>
 {
     /// <inheritdoc/>
     public ElementalMetaNodeWithTypeIntersectionMember1 FromRawUnchecked(

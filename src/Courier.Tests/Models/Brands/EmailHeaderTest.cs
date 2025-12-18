@@ -50,8 +50,8 @@ public class EmailHeaderTest : TestBase
             InheritDefault = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<EmailHeader>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<EmailHeader>(element);
         Assert.NotNull(deserialized);
 
         Logo expectedLogo = new() { Href = "href", Image = "image" };

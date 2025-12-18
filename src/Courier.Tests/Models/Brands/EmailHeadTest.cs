@@ -33,8 +33,8 @@ public class EmailHeadTest : TestBase
     {
         var model = new EmailHead { InheritDefault = true, Content = "content" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<EmailHead>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<EmailHead>(element);
         Assert.NotNull(deserialized);
 
         bool expectedInheritDefault = true;

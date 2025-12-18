@@ -9,13 +9,13 @@ using System = System;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<SubscriptionTopicNew, SubscriptionTopicNewFromRaw>))]
-public sealed record class SubscriptionTopicNew : ModelBase
+[JsonConverter(typeof(JsonModelConverter<SubscriptionTopicNew, SubscriptionTopicNewFromRaw>))]
+public sealed record class SubscriptionTopicNew : JsonModel
 {
     public required ApiEnum<string, Status> Status
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
@@ -25,12 +25,12 @@ public sealed record class SubscriptionTopicNew : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
                 this.RawData,
                 "custom_routing"
             );
         }
-        init { ModelBase.Set(this._rawData, "custom_routing", value); }
+        init { JsonModel.Set(this._rawData, "custom_routing", value); }
     }
 
     /// <summary>
@@ -39,8 +39,8 @@ public sealed record class SubscriptionTopicNew : ModelBase
     /// </summary>
     public bool? HasCustomRouting
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
-        init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
+        init { JsonModel.Set(this._rawData, "has_custom_routing", value); }
     }
 
     /// <inheritdoc/>
@@ -88,7 +88,7 @@ public sealed record class SubscriptionTopicNew : ModelBase
     }
 }
 
-class SubscriptionTopicNewFromRaw : IFromRaw<SubscriptionTopicNew>
+class SubscriptionTopicNewFromRaw : IFromRawJson<SubscriptionTopicNew>
 {
     /// <inheritdoc/>
     public SubscriptionTopicNew FromRawUnchecked(

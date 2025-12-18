@@ -27,8 +27,8 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
 
     public required Topic Topic
     {
-        get { return ModelBase.GetNotNullClass<Topic>(this.RawBodyData, "topic"); }
-        init { ModelBase.Set(this._rawBodyData, "topic", value); }
+        get { return JsonModel.GetNotNullClass<Topic>(this.RawBodyData, "topic"); }
+        init { JsonModel.Set(this._rawBodyData, "topic", value); }
     }
 
     /// <summary>
@@ -36,8 +36,8 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
-        init { ModelBase.Set(this._rawQueryData, "tenant_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
+        init { JsonModel.Set(this._rawQueryData, "tenant_id", value); }
     }
 
     public PreferenceUpdateOrCreateTopicParams() { }
@@ -75,7 +75,7 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static PreferenceUpdateOrCreateTopicParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -100,9 +100,13 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -115,19 +119,19 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Topic, TopicFromRaw>))]
-public sealed record class Topic : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Topic, TopicFromRaw>))]
+public sealed record class Topic : JsonModel
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
                 this.RawData,
                 "status"
             );
         }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
@@ -137,18 +141,18 @@ public sealed record class Topic : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
                 this.RawData,
                 "custom_routing"
             );
         }
-        init { ModelBase.Set(this._rawData, "custom_routing", value); }
+        init { JsonModel.Set(this._rawData, "custom_routing", value); }
     }
 
     public bool? HasCustomRouting
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
-        init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
+        init { JsonModel.Set(this._rawData, "has_custom_routing", value); }
     }
 
     /// <inheritdoc/>
@@ -194,7 +198,7 @@ public sealed record class Topic : ModelBase
     }
 }
 
-class TopicFromRaw : IFromRaw<Topic>
+class TopicFromRaw : IFromRawJson<Topic>
 {
     /// <inheritdoc/>
     public Topic FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

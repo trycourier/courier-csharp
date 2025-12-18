@@ -127,8 +127,8 @@ public class DeviceTest : TestBase
             Platform = "platform",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Device>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Device>(element);
         Assert.NotNull(deserialized);
 
         string expectedAdID = "ad_id";
@@ -236,35 +236,35 @@ public class DeviceTest : TestBase
 public class ExpiryDateTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         ExpiryDate value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void boolValidation_Works()
+    public void BoolValidationWorks()
     {
         ExpiryDate value = new(true);
         value.Validate();
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         ExpiryDate value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void boolSerializationRoundtrip_Works()
+    public void BoolSerializationRoundtripWorks()
     {
         ExpiryDate value = new(true);
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -322,8 +322,8 @@ public class TrackingTest : TestBase
             OsVersion = "os_version",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Tracking>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Tracking>(element);
         Assert.NotNull(deserialized);
 
         string expectedIP = "ip";

@@ -21,8 +21,8 @@ public sealed record class BulkListUsersParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "cursor"); }
-        init { ModelBase.Set(this._rawQueryData, "cursor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cursor"); }
+        init { JsonModel.Set(this._rawQueryData, "cursor", value); }
     }
 
     public BulkListUsersParams() { }
@@ -51,7 +51,7 @@ public sealed record class BulkListUsersParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static BulkListUsersParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

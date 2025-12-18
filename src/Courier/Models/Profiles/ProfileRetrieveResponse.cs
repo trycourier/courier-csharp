@@ -7,28 +7,28 @@ using Courier.Core;
 
 namespace Courier.Models.Profiles;
 
-[JsonConverter(typeof(ModelConverter<ProfileRetrieveResponse, ProfileRetrieveResponseFromRaw>))]
-public sealed record class ProfileRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ProfileRetrieveResponse, ProfileRetrieveResponseFromRaw>))]
+public sealed record class ProfileRetrieveResponse : JsonModel
 {
     public required IReadOnlyDictionary<string, JsonElement> Profile
     {
         get
         {
-            return ModelBase.GetNotNullClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNotNullClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "profile"
             );
         }
-        init { ModelBase.Set(this._rawData, "profile", value); }
+        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
+            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init { ModelBase.Set(this._rawData, "preferences", value); }
+        init { JsonModel.Set(this._rawData, "preferences", value); }
     }
 
     /// <inheritdoc/>
@@ -65,7 +65,7 @@ public sealed record class ProfileRetrieveResponse : ModelBase
     }
 }
 
-class ProfileRetrieveResponseFromRaw : IFromRaw<ProfileRetrieveResponse>
+class ProfileRetrieveResponseFromRaw : IFromRawJson<ProfileRetrieveResponse>
 {
     /// <inheritdoc/>
     public ProfileRetrieveResponse FromRawUnchecked(

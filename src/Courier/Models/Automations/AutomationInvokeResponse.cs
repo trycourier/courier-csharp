@@ -7,13 +7,15 @@ using Courier.Core;
 
 namespace Courier.Models.Automations;
 
-[JsonConverter(typeof(ModelConverter<AutomationInvokeResponse, AutomationInvokeResponseFromRaw>))]
-public sealed record class AutomationInvokeResponse : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<AutomationInvokeResponse, AutomationInvokeResponseFromRaw>)
+)]
+public sealed record class AutomationInvokeResponse : JsonModel
 {
     public required string RunID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "runId"); }
-        init { ModelBase.Set(this._rawData, "runId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "runId"); }
+        init { JsonModel.Set(this._rawData, "runId", value); }
     }
 
     /// <inheritdoc/>
@@ -56,7 +58,7 @@ public sealed record class AutomationInvokeResponse : ModelBase
     }
 }
 
-class AutomationInvokeResponseFromRaw : IFromRaw<AutomationInvokeResponse>
+class AutomationInvokeResponseFromRaw : IFromRawJson<AutomationInvokeResponse>
 {
     /// <inheritdoc/>
     public AutomationInvokeResponse FromRawUnchecked(

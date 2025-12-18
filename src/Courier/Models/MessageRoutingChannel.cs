@@ -11,28 +11,28 @@ public record class MessageRoutingChannel
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public MessageRoutingChannel(string value, JsonElement? json = null)
+    public MessageRoutingChannel(string value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public MessageRoutingChannel(MessageRouting value, JsonElement? json = null)
+    public MessageRoutingChannel(MessageRouting value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public MessageRoutingChannel(JsonElement json)
+    public MessageRoutingChannel(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -197,14 +197,14 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<MessageRouting>(json, options);
+            var deserialized = JsonSerializer.Deserialize<MessageRouting>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -214,10 +214,10 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(json, options);
+            var deserialized = JsonSerializer.Deserialize<string>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -225,7 +225,7 @@ sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChanne
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(

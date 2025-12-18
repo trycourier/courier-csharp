@@ -76,8 +76,8 @@ public class BrandSettingsInAppTest : TestBase
             Placement = Placement.Top,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandSettingsInApp>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrandSettingsInApp>(element);
         Assert.NotNull(deserialized);
 
         BrandColors expectedColors = new() { Primary = "primary", Secondary = "secondary" };

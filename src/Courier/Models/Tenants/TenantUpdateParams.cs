@@ -27,8 +27,8 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public required string Name
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "name"); }
-        init { ModelBase.Set(this._rawBodyData, "name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "name"); }
+        init { JsonModel.Set(this._rawBodyData, "name", value); }
     }
 
     /// <summary>
@@ -36,8 +36,8 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public string? BrandID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "brand_id"); }
-        init { ModelBase.Set(this._rawBodyData, "brand_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "brand_id"); }
+        init { JsonModel.Set(this._rawBodyData, "brand_id", value); }
     }
 
     /// <summary>
@@ -48,12 +48,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<DefaultPreferences>(
+            return JsonModel.GetNullableClass<DefaultPreferences>(
                 this.RawBodyData,
                 "default_preferences"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "default_preferences", value); }
+        init { JsonModel.Set(this._rawBodyData, "default_preferences", value); }
     }
 
     /// <summary>
@@ -61,8 +61,8 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public string? ParentTenantID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "parent_tenant_id"); }
-        init { ModelBase.Set(this._rawBodyData, "parent_tenant_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "parent_tenant_id"); }
+        init { JsonModel.Set(this._rawBodyData, "parent_tenant_id", value); }
     }
 
     /// <summary>
@@ -72,12 +72,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawBodyData,
                 "properties"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "properties", value); }
+        init { JsonModel.Set(this._rawBodyData, "properties", value); }
     }
 
     /// <summary>
@@ -87,12 +87,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawBodyData,
                 "user_profile"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "user_profile", value); }
+        init { JsonModel.Set(this._rawBodyData, "user_profile", value); }
     }
 
     public TenantUpdateParams() { }
@@ -128,7 +128,7 @@ public sealed record class TenantUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static TenantUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -152,9 +152,13 @@ public sealed record class TenantUpdateParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

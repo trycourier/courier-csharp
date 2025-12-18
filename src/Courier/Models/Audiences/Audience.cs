@@ -7,22 +7,22 @@ using Courier.Core;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<Audience, AudienceFromRaw>))]
-public sealed record class Audience : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Audience, AudienceFromRaw>))]
+public sealed record class Audience : JsonModel
 {
     /// <summary>
     /// A unique identifier representing the audience_id
     /// </summary>
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public required string CreatedAt
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "created_at"); }
-        init { ModelBase.Set(this._rawData, "created_at", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "created_at"); }
+        init { JsonModel.Set(this._rawData, "created_at", value); }
     }
 
     /// <summary>
@@ -30,8 +30,8 @@ public sealed record class Audience : ModelBase
     /// </summary>
     public required string Description
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "description"); }
-        init { ModelBase.Set(this._rawData, "description", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "description"); }
+        init { JsonModel.Set(this._rawData, "description", value); }
     }
 
     /// <summary>
@@ -39,8 +39,8 @@ public sealed record class Audience : ModelBase
     /// </summary>
     public required Filter Filter
     {
-        get { return ModelBase.GetNotNullClass<Filter>(this.RawData, "filter"); }
-        init { ModelBase.Set(this._rawData, "filter", value); }
+        get { return JsonModel.GetNotNullClass<Filter>(this.RawData, "filter"); }
+        init { JsonModel.Set(this._rawData, "filter", value); }
     }
 
     /// <summary>
@@ -48,14 +48,14 @@ public sealed record class Audience : ModelBase
     /// </summary>
     public required string Name
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "name"); }
-        init { ModelBase.Set(this._rawData, "name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
+        init { JsonModel.Set(this._rawData, "name", value); }
     }
 
     public required string UpdatedAt
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "updated_at"); }
-        init { ModelBase.Set(this._rawData, "updated_at", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "updated_at"); }
+        init { JsonModel.Set(this._rawData, "updated_at", value); }
     }
 
     /// <inheritdoc/>
@@ -94,7 +94,7 @@ public sealed record class Audience : ModelBase
     }
 }
 
-class AudienceFromRaw : IFromRaw<Audience>
+class AudienceFromRaw : IFromRawJson<Audience>
 {
     /// <inheritdoc/>
     public Audience FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

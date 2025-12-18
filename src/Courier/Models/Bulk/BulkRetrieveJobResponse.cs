@@ -9,13 +9,13 @@ using System = System;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<BulkRetrieveJobResponse, BulkRetrieveJobResponseFromRaw>))]
-public sealed record class BulkRetrieveJobResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BulkRetrieveJobResponse, BulkRetrieveJobResponseFromRaw>))]
+public sealed record class BulkRetrieveJobResponse : JsonModel
 {
     public required Job Job
     {
-        get { return ModelBase.GetNotNullClass<Job>(this.RawData, "job"); }
-        init { ModelBase.Set(this._rawData, "job", value); }
+        get { return JsonModel.GetNotNullClass<Job>(this.RawData, "job"); }
+        init { JsonModel.Set(this._rawData, "job", value); }
     }
 
     /// <inheritdoc/>
@@ -58,7 +58,7 @@ public sealed record class BulkRetrieveJobResponse : ModelBase
     }
 }
 
-class BulkRetrieveJobResponseFromRaw : IFromRaw<BulkRetrieveJobResponse>
+class BulkRetrieveJobResponseFromRaw : IFromRawJson<BulkRetrieveJobResponse>
 {
     /// <inheritdoc/>
     public BulkRetrieveJobResponse FromRawUnchecked(
@@ -66,8 +66,8 @@ class BulkRetrieveJobResponseFromRaw : IFromRaw<BulkRetrieveJobResponse>
     ) => BulkRetrieveJobResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Job, JobFromRaw>))]
-public sealed record class Job : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Job, JobFromRaw>))]
+public sealed record class Job : JsonModel
 {
     /// <summary>
     /// Bulk message definition. Supports two formats: - V1 format: Requires `event`
@@ -76,35 +76,35 @@ public sealed record class Job : ModelBase
     /// </summary>
     public required InboundBulkMessage Definition
     {
-        get { return ModelBase.GetNotNullClass<InboundBulkMessage>(this.RawData, "definition"); }
-        init { ModelBase.Set(this._rawData, "definition", value); }
+        get { return JsonModel.GetNotNullClass<InboundBulkMessage>(this.RawData, "definition"); }
+        init { JsonModel.Set(this._rawData, "definition", value); }
     }
 
     public required long Enqueued
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "enqueued"); }
-        init { ModelBase.Set(this._rawData, "enqueued", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "enqueued"); }
+        init { JsonModel.Set(this._rawData, "enqueued", value); }
     }
 
     public required long Failures
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "failures"); }
-        init { ModelBase.Set(this._rawData, "failures", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "failures"); }
+        init { JsonModel.Set(this._rawData, "failures", value); }
     }
 
     public required long Received
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "received"); }
-        init { ModelBase.Set(this._rawData, "received", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "received"); }
+        init { JsonModel.Set(this._rawData, "received", value); }
     }
 
     public required ApiEnum<string, JobStatus> Status
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, JobStatus>>(this.RawData, "status");
+            return JsonModel.GetNotNullClass<ApiEnum<string, JobStatus>>(this.RawData, "status");
         }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <inheritdoc/>
@@ -142,7 +142,7 @@ public sealed record class Job : ModelBase
     }
 }
 
-class JobFromRaw : IFromRaw<Job>
+class JobFromRaw : IFromRawJson<Job>
 {
     /// <inheritdoc/>
     public Job FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

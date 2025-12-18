@@ -7,13 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSnippets, BrandSnippetsFromRaw>))]
-public sealed record class BrandSnippets : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BrandSnippets, BrandSnippetsFromRaw>))]
+public sealed record class BrandSnippets : JsonModel
 {
     public IReadOnlyList<BrandSnippet>? Items
     {
-        get { return ModelBase.GetNullableClass<List<BrandSnippet>>(this.RawData, "items"); }
-        init { ModelBase.Set(this._rawData, "items", value); }
+        get { return JsonModel.GetNullableClass<List<BrandSnippet>>(this.RawData, "items"); }
+        init { JsonModel.Set(this._rawData, "items", value); }
     }
 
     /// <inheritdoc/>
@@ -50,7 +50,7 @@ public sealed record class BrandSnippets : ModelBase
     }
 }
 
-class BrandSnippetsFromRaw : IFromRaw<BrandSnippets>
+class BrandSnippetsFromRaw : IFromRawJson<BrandSnippets>
 {
     /// <inheritdoc/>
     public BrandSnippets FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

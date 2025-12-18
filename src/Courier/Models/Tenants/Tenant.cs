@@ -7,16 +7,16 @@ using Courier.Core;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<Tenant, TenantFromRaw>))]
-public sealed record class Tenant : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Tenant, TenantFromRaw>))]
+public sealed record class Tenant : JsonModel
 {
     /// <summary>
     /// Id of the tenant.
     /// </summary>
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     /// <summary>
@@ -24,8 +24,8 @@ public sealed record class Tenant : ModelBase
     /// </summary>
     public required string Name
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "name"); }
-        init { ModelBase.Set(this._rawData, "name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
+        init { JsonModel.Set(this._rawData, "name", value); }
     }
 
     /// <summary>
@@ -33,8 +33,8 @@ public sealed record class Tenant : ModelBase
     /// </summary>
     public string? BrandID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand_id"); }
-        init { ModelBase.Set(this._rawData, "brand_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand_id"); }
+        init { JsonModel.Set(this._rawData, "brand_id", value); }
     }
 
     /// <summary>
@@ -45,12 +45,12 @@ public sealed record class Tenant : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<DefaultPreferences>(
+            return JsonModel.GetNullableClass<DefaultPreferences>(
                 this.RawData,
                 "default_preferences"
             );
         }
-        init { ModelBase.Set(this._rawData, "default_preferences", value); }
+        init { JsonModel.Set(this._rawData, "default_preferences", value); }
     }
 
     /// <summary>
@@ -58,8 +58,8 @@ public sealed record class Tenant : ModelBase
     /// </summary>
     public string? ParentTenantID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "parent_tenant_id"); }
-        init { ModelBase.Set(this._rawData, "parent_tenant_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "parent_tenant_id"); }
+        init { JsonModel.Set(this._rawData, "parent_tenant_id", value); }
     }
 
     /// <summary>
@@ -69,12 +69,12 @@ public sealed record class Tenant : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "properties"
             );
         }
-        init { ModelBase.Set(this._rawData, "properties", value); }
+        init { JsonModel.Set(this._rawData, "properties", value); }
     }
 
     /// <summary>
@@ -84,12 +84,12 @@ public sealed record class Tenant : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "user_profile"
             );
         }
-        init { ModelBase.Set(this._rawData, "user_profile", value); }
+        init { JsonModel.Set(this._rawData, "user_profile", value); }
     }
 
     /// <inheritdoc/>
@@ -129,7 +129,7 @@ public sealed record class Tenant : ModelBase
     }
 }
 
-class TenantFromRaw : IFromRaw<Tenant>
+class TenantFromRaw : IFromRawJson<Tenant>
 {
     /// <inheritdoc/>
     public Tenant FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

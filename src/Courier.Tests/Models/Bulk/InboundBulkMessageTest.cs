@@ -156,8 +156,8 @@ public class InboundBulkMessageTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InboundBulkMessage>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<InboundBulkMessage>(element);
         Assert.NotNull(deserialized);
 
         string expectedEvent = "event";
@@ -328,14 +328,14 @@ public class InboundBulkMessageTest : TestBase
 public class ContentTest : TestBase
 {
     [Fact]
-    public void elemental_content_sugarValidation_Works()
+    public void ElementalContentSugarValidationWorks()
     {
         Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
         value.Validate();
     }
 
     [Fact]
-    public void elementalValidation_Works()
+    public void ElementalValidationWorks()
     {
         Content value = new(
             new ElementalContent()
@@ -359,17 +359,17 @@ public class ContentTest : TestBase
     }
 
     [Fact]
-    public void elemental_content_sugarSerializationRoundtrip_Works()
+    public void ElementalContentSugarSerializationRoundtripWorks()
     {
         Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void elementalSerializationRoundtrip_Works()
+    public void ElementalSerializationRoundtripWorks()
     {
         Content value = new(
             new ElementalContent()
@@ -389,8 +389,8 @@ public class ContentTest : TestBase
                 Brand = "brand",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }

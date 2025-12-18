@@ -195,8 +195,8 @@ public class ListRetrieveResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListRetrieveResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ListRetrieveResponse>(element);
         Assert.NotNull(deserialized);
 
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
@@ -456,8 +456,8 @@ public class ResultTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Result>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Result>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

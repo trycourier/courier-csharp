@@ -84,8 +84,8 @@ public class AutomationTest : TestBase
             CancelationToken = "cancelation_token",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Automation>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Automation>(element);
         Assert.NotNull(deserialized);
 
         List<Step> expectedSteps =
@@ -213,7 +213,7 @@ public class AutomationTest : TestBase
 public class StepTest : TestBase
 {
     [Fact]
-    public void automation_delayValidation_Works()
+    public void AutomationDelayValidationWorks()
     {
         Step value = new(
             new AutomationDelayStep()
@@ -227,7 +227,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_sendValidation_Works()
+    public void AutomationSendValidationWorks()
     {
         Step value = new(
             new AutomationSendStep()
@@ -250,7 +250,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_send_listValidation_Works()
+    public void AutomationSendListValidationWorks()
     {
         Step value = new(
             new AutomationSendListStep()
@@ -268,7 +268,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_update_profileValidation_Works()
+    public void AutomationUpdateProfileValidationWorks()
     {
         Step value = new(
             new AutomationUpdateProfileStep()
@@ -286,7 +286,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_cancelValidation_Works()
+    public void AutomationCancelValidationWorks()
     {
         Step value = new(
             new AutomationCancelStep()
@@ -299,7 +299,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_fetch_dataValidation_Works()
+    public void AutomationFetchDataValidationWorks()
     {
         Step value = new(
             new AutomationFetchDataStep()
@@ -319,7 +319,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_invokeValidation_Works()
+    public void AutomationInvokeValidationWorks()
     {
         Step value = new(
             new AutomationInvokeStep()
@@ -332,7 +332,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_delaySerializationRoundtrip_Works()
+    public void AutomationDelaySerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationDelayStep()
@@ -342,14 +342,14 @@ public class StepTest : TestBase
                 Until = "until",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_sendSerializationRoundtrip_Works()
+    public void AutomationSendSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationSendStep()
@@ -368,14 +368,14 @@ public class StepTest : TestBase
                 Template = "template",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_send_listSerializationRoundtrip_Works()
+    public void AutomationSendListSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationSendListStep()
@@ -389,14 +389,14 @@ public class StepTest : TestBase
                 },
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_update_profileSerializationRoundtrip_Works()
+    public void AutomationUpdateProfileSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationUpdateProfileStep()
@@ -410,14 +410,14 @@ public class StepTest : TestBase
                 RecipientID = "recipient_id",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_cancelSerializationRoundtrip_Works()
+    public void AutomationCancelSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationCancelStep()
@@ -426,14 +426,14 @@ public class StepTest : TestBase
                 CancelationToken = "cancelation_token",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_fetch_dataSerializationRoundtrip_Works()
+    public void AutomationFetchDataSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationFetchDataStep()
@@ -449,14 +449,14 @@ public class StepTest : TestBase
                 MergeStrategy = MergeStrategy.Replace,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_invokeSerializationRoundtrip_Works()
+    public void AutomationInvokeSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationInvokeStep()
@@ -465,8 +465,8 @@ public class StepTest : TestBase
                 Template = "template",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -519,8 +519,8 @@ public class AutomationDelayStepTest : TestBase
             Until = "until",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Action> expectedAction = Action.Delay;
@@ -748,8 +748,8 @@ public class AutomationSendStepTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationSendStepAction> expectedAction = AutomationSendStepAction.Send;
@@ -1001,8 +1001,8 @@ public class AutomationSendListStepTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationSendListStepAction> expectedAction =
@@ -1227,8 +1227,8 @@ public class AutomationUpdateProfileStepTest : TestBase
             RecipientID = "recipient_id",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationUpdateProfileStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationUpdateProfileStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationUpdateProfileStepAction> expectedAction =
@@ -1497,8 +1497,8 @@ public class AutomationCancelStepTest : TestBase
             CancelationToken = "cancelation_token",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationCancelStepAction> expectedAction =
@@ -1648,8 +1648,8 @@ public class AutomationFetchDataStepTest : TestBase
             MergeStrategy = MergeStrategy.Replace,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationFetchDataStepAction> expectedAction =
@@ -1876,8 +1876,8 @@ public class WebhookTest : TestBase
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Webhook>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Webhook>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Method> expectedMethod = Method.Get;
@@ -2127,8 +2127,8 @@ public class AutomationInvokeStepTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationInvokeStepAction> expectedAction =

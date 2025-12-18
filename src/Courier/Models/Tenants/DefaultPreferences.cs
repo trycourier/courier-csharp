@@ -7,13 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<DefaultPreferences, DefaultPreferencesFromRaw>))]
-public sealed record class DefaultPreferences : ModelBase
+[JsonConverter(typeof(JsonModelConverter<DefaultPreferences, DefaultPreferencesFromRaw>))]
+public sealed record class DefaultPreferences : JsonModel
 {
     public IReadOnlyList<Item>? Items
     {
-        get { return ModelBase.GetNullableClass<List<Item>>(this.RawData, "items"); }
-        init { ModelBase.Set(this._rawData, "items", value); }
+        get { return JsonModel.GetNullableClass<List<Item>>(this.RawData, "items"); }
+        init { JsonModel.Set(this._rawData, "items", value); }
     }
 
     /// <inheritdoc/>
@@ -52,20 +52,20 @@ public sealed record class DefaultPreferences : ModelBase
     }
 }
 
-class DefaultPreferencesFromRaw : IFromRaw<DefaultPreferences>
+class DefaultPreferencesFromRaw : IFromRawJson<DefaultPreferences>
 {
     /// <inheritdoc/>
     public DefaultPreferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         DefaultPreferences.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Item, ItemFromRaw>))]
-public sealed record class Item : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Item, ItemFromRaw>))]
+public sealed record class Item : JsonModel
 {
     public required ApiEnum<string, Status> Status
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
@@ -75,12 +75,12 @@ public sealed record class Item : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
                 this.RawData,
                 "custom_routing"
             );
         }
-        init { ModelBase.Set(this._rawData, "custom_routing", value); }
+        init { JsonModel.Set(this._rawData, "custom_routing", value); }
     }
 
     /// <summary>
@@ -89,8 +89,8 @@ public sealed record class Item : ModelBase
     /// </summary>
     public bool? HasCustomRouting
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
-        init { ModelBase.Set(this._rawData, "has_custom_routing", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
+        init { JsonModel.Set(this._rawData, "has_custom_routing", value); }
     }
 
     /// <summary>
@@ -98,8 +98,8 @@ public sealed record class Item : ModelBase
     /// </summary>
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public static implicit operator SubscriptionTopicNew(Item item) =>
@@ -147,7 +147,7 @@ public sealed record class Item : ModelBase
     }
 }
 
-class ItemFromRaw : IFromRaw<Item>
+class ItemFromRaw : IFromRawJson<Item>
 {
     /// <inheritdoc/>
     public Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -155,20 +155,20 @@ class ItemFromRaw : IFromRaw<Item>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         global::Courier.Models.Tenants.IntersectionMember1,
         global::Courier.Models.Tenants.IntersectionMember1FromRaw
     >)
 )]
-public sealed record class IntersectionMember1 : ModelBase
+public sealed record class IntersectionMember1 : JsonModel
 {
     /// <summary>
     /// Topic ID
     /// </summary>
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     /// <inheritdoc/>
@@ -213,7 +213,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 }
 
-class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Tenants.IntersectionMember1>
+class IntersectionMember1FromRaw : IFromRawJson<global::Courier.Models.Tenants.IntersectionMember1>
 {
     /// <inheritdoc/>
     public global::Courier.Models.Tenants.IntersectionMember1 FromRawUnchecked(

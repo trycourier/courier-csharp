@@ -142,8 +142,8 @@ public class TemplateListResponseTest : TestBase
             NextURL = "next_url",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<TemplateListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TemplateListResponse>(element);
         Assert.NotNull(deserialized);
 
         bool expectedHasMore = true;
@@ -411,8 +411,8 @@ public class ItemTest : TestBase
             ),
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Item>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Item>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -496,8 +496,8 @@ public class IntersectionMember1Test : TestBase
             ),
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         Data expectedData = new(
@@ -562,8 +562,8 @@ public class DataTest : TestBase
             Routing = new() { Channels = ["string"], Method = Models::Method.All },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Data>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Data>(element);
         Assert.NotNull(deserialized);
 
         Models::MessageRouting expectedRouting = new()

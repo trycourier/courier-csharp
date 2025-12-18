@@ -31,8 +31,8 @@ public class MessageContextTest : TestBase
     {
         var model = new MessageContext { TenantID = "tenant_id" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MessageContext>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<MessageContext>(element);
         Assert.NotNull(deserialized);
 
         string expectedTenantID = "tenant_id";

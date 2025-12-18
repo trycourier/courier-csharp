@@ -7,13 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<AudienceUpdateResponse, AudienceUpdateResponseFromRaw>))]
-public sealed record class AudienceUpdateResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AudienceUpdateResponse, AudienceUpdateResponseFromRaw>))]
+public sealed record class AudienceUpdateResponse : JsonModel
 {
     public required Audience Audience
     {
-        get { return ModelBase.GetNotNullClass<Audience>(this.RawData, "audience"); }
-        init { ModelBase.Set(this._rawData, "audience", value); }
+        get { return JsonModel.GetNotNullClass<Audience>(this.RawData, "audience"); }
+        init { JsonModel.Set(this._rawData, "audience", value); }
     }
 
     /// <inheritdoc/>
@@ -56,7 +56,7 @@ public sealed record class AudienceUpdateResponse : ModelBase
     }
 }
 
-class AudienceUpdateResponseFromRaw : IFromRaw<AudienceUpdateResponse>
+class AudienceUpdateResponseFromRaw : IFromRawJson<AudienceUpdateResponse>
 {
     /// <inheritdoc/>
     public AudienceUpdateResponse FromRawUnchecked(

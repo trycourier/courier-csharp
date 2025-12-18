@@ -70,8 +70,8 @@ public class BrandTemplateTest : TestBase
             Width = "width",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandTemplate>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrandTemplate>(element);
         Assert.NotNull(deserialized);
 
         bool expectedEnabled = true;

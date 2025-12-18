@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<EmailHead, EmailHeadFromRaw>))]
-public sealed record class EmailHead : ModelBase
+[JsonConverter(typeof(JsonModelConverter<EmailHead, EmailHeadFromRaw>))]
+public sealed record class EmailHead : JsonModel
 {
     public required bool InheritDefault
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "inheritDefault"); }
-        init { ModelBase.Set(this._rawData, "inheritDefault", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "inheritDefault"); }
+        init { JsonModel.Set(this._rawData, "inheritDefault", value); }
     }
 
     public string? Content
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "content"); }
-        init { ModelBase.Set(this._rawData, "content", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "content"); }
+        init { JsonModel.Set(this._rawData, "content", value); }
     }
 
     /// <inheritdoc/>
@@ -61,7 +61,7 @@ public sealed record class EmailHead : ModelBase
     }
 }
 
-class EmailHeadFromRaw : IFromRaw<EmailHead>
+class EmailHeadFromRaw : IFromRawJson<EmailHead>
 {
     /// <inheritdoc/>
     public EmailHead FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

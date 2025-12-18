@@ -10,39 +10,39 @@ using System = System;
 namespace Courier.Models;
 
 [JsonConverter(
-    typeof(ModelConverter<ElementalActionNodeWithType, ElementalActionNodeWithTypeFromRaw>)
+    typeof(JsonModelConverter<ElementalActionNodeWithType, ElementalActionNodeWithTypeFromRaw>)
 )]
-public sealed record class ElementalActionNodeWithType : ModelBase
+public sealed record class ElementalActionNodeWithType : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
-        init { ModelBase.Set(this._rawData, "if", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
+        init { JsonModel.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
-        init { ModelBase.Set(this._rawData, "loop", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "loop"); }
+        init { JsonModel.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
-        init { ModelBase.Set(this._rawData, "ref", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "ref"); }
+        init { JsonModel.Set(this._rawData, "ref", value); }
     }
 
     public ApiEnum<string, global::Courier.Models.Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, global::Courier.Models.Type>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, global::Courier.Models.Type>>(
                 this.RawData,
                 "type"
             );
@@ -54,7 +54,7 @@ public sealed record class ElementalActionNodeWithType : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -106,7 +106,7 @@ public sealed record class ElementalActionNodeWithType : ModelBase
     }
 }
 
-class ElementalActionNodeWithTypeFromRaw : IFromRaw<ElementalActionNodeWithType>
+class ElementalActionNodeWithTypeFromRaw : IFromRawJson<ElementalActionNodeWithType>
 {
     /// <inheritdoc/>
     public ElementalActionNodeWithType FromRawUnchecked(
@@ -114,14 +114,14 @@ class ElementalActionNodeWithTypeFromRaw : IFromRaw<ElementalActionNodeWithType>
     ) => ElementalActionNodeWithType.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<IntersectionMember1, IntersectionMember1FromRaw>))]
-public sealed record class IntersectionMember1 : ModelBase
+[JsonConverter(typeof(JsonModelConverter<IntersectionMember1, IntersectionMember1FromRaw>))]
+public sealed record class IntersectionMember1 : JsonModel
 {
     public ApiEnum<string, global::Courier.Models.Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, global::Courier.Models.Type>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, global::Courier.Models.Type>>(
                 this.RawData,
                 "type"
             );
@@ -133,7 +133,7 @@ public sealed record class IntersectionMember1 : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -170,7 +170,7 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 }
 
-class IntersectionMember1FromRaw : IFromRaw<IntersectionMember1>
+class IntersectionMember1FromRaw : IFromRawJson<IntersectionMember1>
 {
     /// <inheritdoc/>
     public IntersectionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

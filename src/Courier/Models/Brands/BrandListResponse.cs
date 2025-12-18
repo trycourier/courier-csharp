@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandListResponse, BrandListResponseFromRaw>))]
-public sealed record class BrandListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BrandListResponse, BrandListResponseFromRaw>))]
+public sealed record class BrandListResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { ModelBase.Set(this._rawData, "paging", value); }
+        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { JsonModel.Set(this._rawData, "paging", value); }
     }
 
     public required IReadOnlyList<Brand> Results
     {
-        get { return ModelBase.GetNotNullClass<List<Brand>>(this.RawData, "results"); }
-        init { ModelBase.Set(this._rawData, "results", value); }
+        get { return JsonModel.GetNotNullClass<List<Brand>>(this.RawData, "results"); }
+        init { JsonModel.Set(this._rawData, "results", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class BrandListResponse : ModelBase
     }
 }
 
-class BrandListResponseFromRaw : IFromRaw<BrandListResponse>
+class BrandListResponseFromRaw : IFromRawJson<BrandListResponse>
 {
     /// <inheritdoc/>
     public BrandListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

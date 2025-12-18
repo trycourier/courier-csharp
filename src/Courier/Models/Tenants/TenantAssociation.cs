@@ -9,16 +9,16 @@ using System = System;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<TenantAssociation, TenantAssociationFromRaw>))]
-public sealed record class TenantAssociation : ModelBase
+[JsonConverter(typeof(JsonModelConverter<TenantAssociation, TenantAssociationFromRaw>))]
+public sealed record class TenantAssociation : JsonModel
 {
     /// <summary>
     /// Tenant ID for the association between tenant and user
     /// </summary>
     public required string TenantID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "tenant_id"); }
-        init { ModelBase.Set(this._rawData, "tenant_id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "tenant_id"); }
+        init { JsonModel.Set(this._rawData, "tenant_id", value); }
     }
 
     /// <summary>
@@ -28,24 +28,24 @@ public sealed record class TenantAssociation : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "profile"
             );
         }
-        init { ModelBase.Set(this._rawData, "profile", value); }
+        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     public ApiEnum<string, global::Courier.Models.Tenants.Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, global::Courier.Models.Tenants.Type>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, global::Courier.Models.Tenants.Type>>(
                 this.RawData,
                 "type"
             );
         }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -53,8 +53,8 @@ public sealed record class TenantAssociation : ModelBase
     /// </summary>
     public string? UserID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "user_id"); }
-        init { ModelBase.Set(this._rawData, "user_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "user_id"); }
+        init { JsonModel.Set(this._rawData, "user_id", value); }
     }
 
     /// <inheritdoc/>
@@ -100,7 +100,7 @@ public sealed record class TenantAssociation : ModelBase
     }
 }
 
-class TenantAssociationFromRaw : IFromRaw<TenantAssociation>
+class TenantAssociationFromRaw : IFromRawJson<TenantAssociation>
 {
     /// <inheritdoc/>
     public TenantAssociation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

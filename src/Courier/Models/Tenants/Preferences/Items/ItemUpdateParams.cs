@@ -30,11 +30,11 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNotNullClass<
+            return JsonModel.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status>
             >(this.RawBodyData, "status");
         }
-        init { ModelBase.Set(this._rawBodyData, "status", value); }
+        init { JsonModel.Set(this._rawBodyData, "status", value); }
     }
 
     /// <summary>
@@ -44,12 +44,12 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
+            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
                 this.RawBodyData,
                 "custom_routing"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "custom_routing", value); }
+        init { JsonModel.Set(this._rawBodyData, "custom_routing", value); }
     }
 
     /// <summary>
@@ -58,8 +58,8 @@ public sealed record class ItemUpdateParams : ParamsBase
     /// </summary>
     public bool? HasCustomRouting
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawBodyData, "has_custom_routing"); }
-        init { ModelBase.Set(this._rawBodyData, "has_custom_routing", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "has_custom_routing"); }
+        init { JsonModel.Set(this._rawBodyData, "has_custom_routing", value); }
     }
 
     public ItemUpdateParams() { }
@@ -95,7 +95,7 @@ public sealed record class ItemUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static ItemUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -124,9 +124,13 @@ public sealed record class ItemUpdateParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

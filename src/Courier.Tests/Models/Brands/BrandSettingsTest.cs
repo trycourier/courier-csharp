@@ -214,8 +214,8 @@ public class BrandSettingsTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandSettings>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrandSettings>(element);
         Assert.NotNull(deserialized);
 
         BrandColors expectedColors = new() { Primary = "primary", Secondary = "secondary" };

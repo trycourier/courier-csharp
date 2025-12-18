@@ -26,50 +26,50 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
 
     public required Automation Automation
     {
-        get { return ModelBase.GetNotNullClass<Automation>(this.RawBodyData, "automation"); }
-        init { ModelBase.Set(this._rawBodyData, "automation", value); }
+        get { return JsonModel.GetNotNullClass<Automation>(this.RawBodyData, "automation"); }
+        init { JsonModel.Set(this._rawBodyData, "automation", value); }
     }
 
     public string? Brand
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "brand"); }
-        init { ModelBase.Set(this._rawBodyData, "brand", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "brand"); }
+        init { JsonModel.Set(this._rawBodyData, "brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawBodyData,
                 "data"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "data", value); }
+        init { JsonModel.Set(this._rawBodyData, "data", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawBodyData,
                 "profile"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "profile", value); }
+        init { JsonModel.Set(this._rawBodyData, "profile", value); }
     }
 
     public string? Recipient
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "recipient"); }
-        init { ModelBase.Set(this._rawBodyData, "recipient", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "recipient"); }
+        init { JsonModel.Set(this._rawBodyData, "recipient", value); }
     }
 
     public string? Template
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "template"); }
-        init { ModelBase.Set(this._rawBodyData, "template", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "template"); }
+        init { JsonModel.Set(this._rawBodyData, "template", value); }
     }
 
     public InvokeInvokeAdHocParams() { }
@@ -105,7 +105,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static InvokeInvokeAdHocParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -129,9 +129,13 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
@@ -144,19 +148,19 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Automation, AutomationFromRaw>))]
-public sealed record class Automation : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Automation, AutomationFromRaw>))]
+public sealed record class Automation : JsonModel
 {
     public required IReadOnlyList<Step> Steps
     {
-        get { return ModelBase.GetNotNullClass<List<Step>>(this.RawData, "steps"); }
-        init { ModelBase.Set(this._rawData, "steps", value); }
+        get { return JsonModel.GetNotNullClass<List<Step>>(this.RawData, "steps"); }
+        init { JsonModel.Set(this._rawData, "steps", value); }
     }
 
     public string? CancelationToken
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "cancelation_token"); }
-        init { ModelBase.Set(this._rawData, "cancelation_token", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "cancelation_token"); }
+        init { JsonModel.Set(this._rawData, "cancelation_token", value); }
     }
 
     /// <inheritdoc/>
@@ -201,7 +205,7 @@ public sealed record class Automation : ModelBase
     }
 }
 
-class AutomationFromRaw : IFromRaw<Automation>
+class AutomationFromRaw : IFromRawJson<Automation>
 {
     /// <inheritdoc/>
     public Automation FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -213,11 +217,11 @@ public record class Step
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
     public string? Brand
@@ -252,51 +256,51 @@ public record class Step
         }
     }
 
-    public Step(AutomationDelayStep value, JsonElement? json = null)
+    public Step(AutomationDelayStep value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Step(AutomationSendStep value, JsonElement? json = null)
+    public Step(AutomationSendStep value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Step(AutomationSendListStep value, JsonElement? json = null)
+    public Step(AutomationSendListStep value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Step(AutomationUpdateProfileStep value, JsonElement? json = null)
+    public Step(AutomationUpdateProfileStep value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Step(AutomationCancelStep value, JsonElement? json = null)
+    public Step(AutomationCancelStep value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Step(AutomationFetchDataStep value, JsonElement? json = null)
+    public Step(AutomationFetchDataStep value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Step(AutomationInvokeStep value, JsonElement? json = null)
+    public Step(AutomationInvokeStep value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public Step(JsonElement json)
+    public Step(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -620,14 +624,14 @@ sealed class StepConverter : JsonConverter<Step>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(json, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -637,11 +641,11 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(json, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -651,11 +655,11 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(json, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -666,13 +670,13 @@ sealed class StepConverter : JsonConverter<Step>
         try
         {
             var deserialized = JsonSerializer.Deserialize<AutomationUpdateProfileStep>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -682,11 +686,11 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(json, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -696,11 +700,14 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(json, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(
+                element,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -710,11 +717,11 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(json, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -722,7 +729,7 @@ sealed class StepConverter : JsonConverter<Step>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, Step value, JsonSerializerOptions options)
@@ -731,25 +738,25 @@ sealed class StepConverter : JsonConverter<Step>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationDelayStep, AutomationDelayStepFromRaw>))]
-public sealed record class AutomationDelayStep : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AutomationDelayStep, AutomationDelayStepFromRaw>))]
+public sealed record class AutomationDelayStep : JsonModel
 {
     public required ApiEnum<string, Action> Action
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Action>>(this.RawData, "action"); }
-        init { ModelBase.Set(this._rawData, "action", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, Action>>(this.RawData, "action"); }
+        init { JsonModel.Set(this._rawData, "action", value); }
     }
 
     public string? Duration
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "duration"); }
-        init { ModelBase.Set(this._rawData, "duration", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "duration"); }
+        init { JsonModel.Set(this._rawData, "duration", value); }
     }
 
     public string? Until
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "until"); }
-        init { ModelBase.Set(this._rawData, "until", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "until"); }
+        init { JsonModel.Set(this._rawData, "until", value); }
     }
 
     /// <inheritdoc/>
@@ -794,7 +801,7 @@ public sealed record class AutomationDelayStep : ModelBase
     }
 }
 
-class AutomationDelayStepFromRaw : IFromRaw<AutomationDelayStep>
+class AutomationDelayStepFromRaw : IFromRawJson<AutomationDelayStep>
 {
     /// <inheritdoc/>
     public AutomationDelayStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -838,61 +845,61 @@ sealed class ActionConverter : JsonConverter<Action>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationSendStep, AutomationSendStepFromRaw>))]
-public sealed record class AutomationSendStep : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AutomationSendStep, AutomationSendStepFromRaw>))]
+public sealed record class AutomationSendStep : JsonModel
 {
     public required ApiEnum<string, AutomationSendStepAction> Action
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationSendStepAction>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationSendStepAction>>(
                 this.RawData,
                 "action"
             );
         }
-        init { ModelBase.Set(this._rawData, "action", value); }
+        init { JsonModel.Set(this._rawData, "action", value); }
     }
 
     public string? Brand
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand"); }
-        init { ModelBase.Set(this._rawData, "brand", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand"); }
+        init { JsonModel.Set(this._rawData, "brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "data"
             );
         }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "profile"
             );
         }
-        init { ModelBase.Set(this._rawData, "profile", value); }
+        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     public string? Recipient
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "recipient"); }
-        init { ModelBase.Set(this._rawData, "recipient", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "recipient"); }
+        init { JsonModel.Set(this._rawData, "recipient", value); }
     }
 
     public string? Template
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "template"); }
-        init { ModelBase.Set(this._rawData, "template", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "template"); }
+        init { JsonModel.Set(this._rawData, "template", value); }
     }
 
     /// <inheritdoc/>
@@ -940,7 +947,7 @@ public sealed record class AutomationSendStep : ModelBase
     }
 }
 
-class AutomationSendStepFromRaw : IFromRaw<AutomationSendStep>
+class AutomationSendStepFromRaw : IFromRawJson<AutomationSendStep>
 {
     /// <inheritdoc/>
     public AutomationSendStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -988,43 +995,43 @@ sealed class AutomationSendStepActionConverter : JsonConverter<AutomationSendSte
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationSendListStep, AutomationSendListStepFromRaw>))]
-public sealed record class AutomationSendListStep : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AutomationSendListStep, AutomationSendListStepFromRaw>))]
+public sealed record class AutomationSendListStep : JsonModel
 {
     public required ApiEnum<string, AutomationSendListStepAction> Action
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationSendListStepAction>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationSendListStepAction>>(
                 this.RawData,
                 "action"
             );
         }
-        init { ModelBase.Set(this._rawData, "action", value); }
+        init { JsonModel.Set(this._rawData, "action", value); }
     }
 
     public required string List
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "list"); }
-        init { ModelBase.Set(this._rawData, "list", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "list"); }
+        init { JsonModel.Set(this._rawData, "list", value); }
     }
 
     public string? Brand
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "brand"); }
-        init { ModelBase.Set(this._rawData, "brand", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand"); }
+        init { JsonModel.Set(this._rawData, "brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "data"
             );
         }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <inheritdoc/>
@@ -1063,7 +1070,7 @@ public sealed record class AutomationSendListStep : ModelBase
     }
 }
 
-class AutomationSendListStepFromRaw : IFromRaw<AutomationSendListStep>
+class AutomationSendListStepFromRaw : IFromRawJson<AutomationSendListStep>
 {
     /// <inheritdoc/>
     public AutomationSendListStep FromRawUnchecked(
@@ -1113,44 +1120,44 @@ sealed class AutomationSendListStepActionConverter : JsonConverter<AutomationSen
 }
 
 [JsonConverter(
-    typeof(ModelConverter<AutomationUpdateProfileStep, AutomationUpdateProfileStepFromRaw>)
+    typeof(JsonModelConverter<AutomationUpdateProfileStep, AutomationUpdateProfileStepFromRaw>)
 )]
-public sealed record class AutomationUpdateProfileStep : ModelBase
+public sealed record class AutomationUpdateProfileStep : JsonModel
 {
     public required ApiEnum<string, AutomationUpdateProfileStepAction> Action
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationUpdateProfileStepAction>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationUpdateProfileStepAction>>(
                 this.RawData,
                 "action"
             );
         }
-        init { ModelBase.Set(this._rawData, "action", value); }
+        init { JsonModel.Set(this._rawData, "action", value); }
     }
 
     public required IReadOnlyDictionary<string, JsonElement> Profile
     {
         get
         {
-            return ModelBase.GetNotNullClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNotNullClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "profile"
             );
         }
-        init { ModelBase.Set(this._rawData, "profile", value); }
+        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     public ApiEnum<string, Merge>? Merge
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Merge>>(this.RawData, "merge"); }
-        init { ModelBase.Set(this._rawData, "merge", value); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Merge>>(this.RawData, "merge"); }
+        init { JsonModel.Set(this._rawData, "merge", value); }
     }
 
     public string? RecipientID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "recipient_id"); }
-        init { ModelBase.Set(this._rawData, "recipient_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "recipient_id"); }
+        init { JsonModel.Set(this._rawData, "recipient_id", value); }
     }
 
     /// <inheritdoc/>
@@ -1189,7 +1196,7 @@ public sealed record class AutomationUpdateProfileStep : ModelBase
     }
 }
 
-class AutomationUpdateProfileStepFromRaw : IFromRaw<AutomationUpdateProfileStep>
+class AutomationUpdateProfileStepFromRaw : IFromRawJson<AutomationUpdateProfileStep>
 {
     /// <inheritdoc/>
     public AutomationUpdateProfileStep FromRawUnchecked(
@@ -1285,25 +1292,25 @@ sealed class MergeConverter : JsonConverter<Merge>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationCancelStep, AutomationCancelStepFromRaw>))]
-public sealed record class AutomationCancelStep : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AutomationCancelStep, AutomationCancelStepFromRaw>))]
+public sealed record class AutomationCancelStep : JsonModel
 {
     public required ApiEnum<string, AutomationCancelStepAction> Action
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationCancelStepAction>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationCancelStepAction>>(
                 this.RawData,
                 "action"
             );
         }
-        init { ModelBase.Set(this._rawData, "action", value); }
+        init { JsonModel.Set(this._rawData, "action", value); }
     }
 
     public required string CancelationToken
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "cancelation_token"); }
-        init { ModelBase.Set(this._rawData, "cancelation_token", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "cancelation_token"); }
+        init { JsonModel.Set(this._rawData, "cancelation_token", value); }
     }
 
     /// <inheritdoc/>
@@ -1340,7 +1347,7 @@ public sealed record class AutomationCancelStep : ModelBase
     }
 }
 
-class AutomationCancelStepFromRaw : IFromRaw<AutomationCancelStep>
+class AutomationCancelStepFromRaw : IFromRawJson<AutomationCancelStep>
 {
     /// <inheritdoc/>
     public AutomationCancelStep FromRawUnchecked(
@@ -1389,37 +1396,37 @@ sealed class AutomationCancelStepActionConverter : JsonConverter<AutomationCance
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationFetchDataStep, AutomationFetchDataStepFromRaw>))]
-public sealed record class AutomationFetchDataStep : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AutomationFetchDataStep, AutomationFetchDataStepFromRaw>))]
+public sealed record class AutomationFetchDataStep : JsonModel
 {
     public required ApiEnum<string, AutomationFetchDataStepAction> Action
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationFetchDataStepAction>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationFetchDataStepAction>>(
                 this.RawData,
                 "action"
             );
         }
-        init { ModelBase.Set(this._rawData, "action", value); }
+        init { JsonModel.Set(this._rawData, "action", value); }
     }
 
     public required Webhook Webhook
     {
-        get { return ModelBase.GetNotNullClass<Webhook>(this.RawData, "webhook"); }
-        init { ModelBase.Set(this._rawData, "webhook", value); }
+        get { return JsonModel.GetNotNullClass<Webhook>(this.RawData, "webhook"); }
+        init { JsonModel.Set(this._rawData, "webhook", value); }
     }
 
     public ApiEnum<string, MergeStrategy>? MergeStrategy
     {
         get
         {
-            return ModelBase.GetNullableClass<ApiEnum<string, MergeStrategy>>(
+            return JsonModel.GetNullableClass<ApiEnum<string, MergeStrategy>>(
                 this.RawData,
                 "merge_strategy"
             );
         }
-        init { ModelBase.Set(this._rawData, "merge_strategy", value); }
+        init { JsonModel.Set(this._rawData, "merge_strategy", value); }
     }
 
     /// <inheritdoc/>
@@ -1457,7 +1464,7 @@ public sealed record class AutomationFetchDataStep : ModelBase
     }
 }
 
-class AutomationFetchDataStepFromRaw : IFromRaw<AutomationFetchDataStep>
+class AutomationFetchDataStepFromRaw : IFromRawJson<AutomationFetchDataStep>
 {
     /// <inheritdoc/>
     public AutomationFetchDataStep FromRawUnchecked(
@@ -1506,39 +1513,39 @@ sealed class AutomationFetchDataStepActionConverter : JsonConverter<AutomationFe
     }
 }
 
-[JsonConverter(typeof(ModelConverter<Webhook, WebhookFromRaw>))]
-public sealed record class Webhook : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Webhook, WebhookFromRaw>))]
+public sealed record class Webhook : JsonModel
 {
     public required ApiEnum<string, global::Courier.Models.Automations.Invoke.Method> Method
     {
         get
         {
-            return ModelBase.GetNotNullClass<
+            return JsonModel.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Automations.Invoke.Method>
             >(this.RawData, "method");
         }
-        init { ModelBase.Set(this._rawData, "method", value); }
+        init { JsonModel.Set(this._rawData, "method", value); }
     }
 
     public required string URL
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "url"); }
-        init { ModelBase.Set(this._rawData, "url", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "url"); }
+        init { JsonModel.Set(this._rawData, "url", value); }
     }
 
     public string? Body
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "body"); }
-        init { ModelBase.Set(this._rawData, "body", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "body"); }
+        init { JsonModel.Set(this._rawData, "body", value); }
     }
 
     public IReadOnlyDictionary<string, string>? Headers
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, string>>(this.RawData, "headers");
+            return JsonModel.GetNullableClass<Dictionary<string, string>>(this.RawData, "headers");
         }
-        init { ModelBase.Set(this._rawData, "headers", value); }
+        init { JsonModel.Set(this._rawData, "headers", value); }
     }
 
     /// <inheritdoc/>
@@ -1575,7 +1582,7 @@ public sealed record class Webhook : ModelBase
     }
 }
 
-class WebhookFromRaw : IFromRaw<Webhook>
+class WebhookFromRaw : IFromRawJson<Webhook>
 {
     /// <inheritdoc/>
     public Webhook FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -1682,25 +1689,25 @@ sealed class MergeStrategyConverter : JsonConverter<MergeStrategy>
     }
 }
 
-[JsonConverter(typeof(ModelConverter<AutomationInvokeStep, AutomationInvokeStepFromRaw>))]
-public sealed record class AutomationInvokeStep : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AutomationInvokeStep, AutomationInvokeStepFromRaw>))]
+public sealed record class AutomationInvokeStep : JsonModel
 {
     public required ApiEnum<string, AutomationInvokeStepAction> Action
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, AutomationInvokeStepAction>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationInvokeStepAction>>(
                 this.RawData,
                 "action"
             );
         }
-        init { ModelBase.Set(this._rawData, "action", value); }
+        init { JsonModel.Set(this._rawData, "action", value); }
     }
 
     public required string Template
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "template"); }
-        init { ModelBase.Set(this._rawData, "template", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "template"); }
+        init { JsonModel.Set(this._rawData, "template", value); }
     }
 
     /// <inheritdoc/>
@@ -1737,7 +1744,7 @@ public sealed record class AutomationInvokeStep : ModelBase
     }
 }
 
-class AutomationInvokeStepFromRaw : IFromRaw<AutomationInvokeStep>
+class AutomationInvokeStepFromRaw : IFromRawJson<AutomationInvokeStep>
 {
     /// <inheritdoc/>
     public AutomationInvokeStep FromRawUnchecked(

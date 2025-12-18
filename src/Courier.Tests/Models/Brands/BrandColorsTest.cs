@@ -33,8 +33,8 @@ public class BrandColorsTest : TestBase
     {
         var model = new BrandColors { Primary = "primary", Secondary = "secondary" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandColors>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrandColors>(element);
         Assert.NotNull(deserialized);
 
         string expectedPrimary = "primary";

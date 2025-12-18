@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<WidgetBackground, WidgetBackgroundFromRaw>))]
-public sealed record class WidgetBackground : ModelBase
+[JsonConverter(typeof(JsonModelConverter<WidgetBackground, WidgetBackgroundFromRaw>))]
+public sealed record class WidgetBackground : JsonModel
 {
     public string? BottomColor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "bottomColor"); }
-        init { ModelBase.Set(this._rawData, "bottomColor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "bottomColor"); }
+        init { JsonModel.Set(this._rawData, "bottomColor", value); }
     }
 
     public string? TopColor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "topColor"); }
-        init { ModelBase.Set(this._rawData, "topColor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "topColor"); }
+        init { JsonModel.Set(this._rawData, "topColor", value); }
     }
 
     /// <inheritdoc/>
@@ -56,7 +56,7 @@ public sealed record class WidgetBackground : ModelBase
     }
 }
 
-class WidgetBackgroundFromRaw : IFromRaw<WidgetBackground>
+class WidgetBackgroundFromRaw : IFromRawJson<WidgetBackground>
 {
     /// <inheritdoc/>
     public WidgetBackground FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<Logo, LogoFromRaw>))]
-public sealed record class Logo : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Logo, LogoFromRaw>))]
+public sealed record class Logo : JsonModel
 {
     public string? Href
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "href"); }
-        init { ModelBase.Set(this._rawData, "href", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "href"); }
+        init { JsonModel.Set(this._rawData, "href", value); }
     }
 
     public string? Image
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "image"); }
-        init { ModelBase.Set(this._rawData, "image", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "image"); }
+        init { JsonModel.Set(this._rawData, "image", value); }
     }
 
     /// <inheritdoc/>
@@ -54,7 +54,7 @@ public sealed record class Logo : ModelBase
     }
 }
 
-class LogoFromRaw : IFromRaw<Logo>
+class LogoFromRaw : IFromRawJson<Logo>
 {
     /// <inheritdoc/>
     public Logo FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

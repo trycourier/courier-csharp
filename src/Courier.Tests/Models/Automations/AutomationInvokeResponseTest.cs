@@ -31,8 +31,8 @@ public class AutomationInvokeResponseTest : TestBase
     {
         var model = new AutomationInvokeResponse { RunID = "runId" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationInvokeResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationInvokeResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedRunID = "runId";

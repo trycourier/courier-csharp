@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<Icons, IconsFromRaw>))]
-public sealed record class Icons : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Icons, IconsFromRaw>))]
+public sealed record class Icons : JsonModel
 {
     public string? Bell
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "bell"); }
-        init { ModelBase.Set(this._rawData, "bell", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "bell"); }
+        init { JsonModel.Set(this._rawData, "bell", value); }
     }
 
     public string? Message
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "message"); }
-        init { ModelBase.Set(this._rawData, "message", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "message"); }
+        init { JsonModel.Set(this._rawData, "message", value); }
     }
 
     /// <inheritdoc/>
@@ -54,7 +54,7 @@ public sealed record class Icons : ModelBase
     }
 }
 
-class IconsFromRaw : IFromRaw<Icons>
+class IconsFromRaw : IFromRawJson<Icons>
 {
     /// <inheritdoc/>
     public Icons FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

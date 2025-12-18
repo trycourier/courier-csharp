@@ -7,15 +7,15 @@ using Courier.Core;
 
 namespace Courier.Models.Bulk;
 
-[JsonConverter(typeof(ModelConverter<InboundBulkMessageUser, InboundBulkMessageUserFromRaw>))]
-public sealed record class InboundBulkMessageUser : ModelBase
+[JsonConverter(typeof(JsonModelConverter<InboundBulkMessageUser, InboundBulkMessageUserFromRaw>))]
+public sealed record class InboundBulkMessageUser : JsonModel
 {
     /// <summary>
     /// User-specific data that will be merged with message.data
     /// </summary>
     public JsonElement? Data
     {
-        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "data"); }
+        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawData, "data"); }
         init
         {
             if (value == null)
@@ -23,7 +23,7 @@ public sealed record class InboundBulkMessageUser : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "data", value);
+            JsonModel.Set(this._rawData, "data", value);
         }
     }
 
@@ -31,9 +31,9 @@ public sealed record class InboundBulkMessageUser : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
+            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init { ModelBase.Set(this._rawData, "preferences", value); }
+        init { JsonModel.Set(this._rawData, "preferences", value); }
     }
 
     /// <summary>
@@ -45,12 +45,12 @@ public sealed record class InboundBulkMessageUser : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "profile"
             );
         }
-        init { ModelBase.Set(this._rawData, "profile", value); }
+        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     /// <summary>
@@ -58,8 +58,8 @@ public sealed record class InboundBulkMessageUser : ModelBase
     /// </summary>
     public string? Recipient
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "recipient"); }
-        init { ModelBase.Set(this._rawData, "recipient", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "recipient"); }
+        init { JsonModel.Set(this._rawData, "recipient", value); }
     }
 
     /// <summary>
@@ -69,8 +69,8 @@ public sealed record class InboundBulkMessageUser : ModelBase
     /// </summary>
     public UserRecipient? To
     {
-        get { return ModelBase.GetNullableClass<UserRecipient>(this.RawData, "to"); }
-        init { ModelBase.Set(this._rawData, "to", value); }
+        get { return JsonModel.GetNullableClass<UserRecipient>(this.RawData, "to"); }
+        init { JsonModel.Set(this._rawData, "to", value); }
     }
 
     /// <inheritdoc/>
@@ -110,7 +110,7 @@ public sealed record class InboundBulkMessageUser : ModelBase
     }
 }
 
-class InboundBulkMessageUserFromRaw : IFromRaw<InboundBulkMessageUser>
+class InboundBulkMessageUserFromRaw : IFromRawJson<InboundBulkMessageUser>
 {
     /// <inheritdoc/>
     public InboundBulkMessageUser FromRawUnchecked(

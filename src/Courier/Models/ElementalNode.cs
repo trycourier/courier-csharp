@@ -23,11 +23,11 @@ public record class ElementalNode
 {
     public object? Value { get; } = null;
 
-    JsonElement? _json = null;
+    JsonElement? _element = null;
 
     public JsonElement Json
     {
-        get { return this._json ??= JsonSerializer.SerializeToElement(this.Value); }
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
     public IReadOnlyList<string>? Channels
@@ -94,51 +94,51 @@ public record class ElementalNode
         }
     }
 
-    public ElementalNode(ElementalTextNodeWithType value, JsonElement? json = null)
+    public ElementalNode(ElementalTextNodeWithType value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ElementalNode(ElementalMetaNodeWithType value, JsonElement? json = null)
+    public ElementalNode(ElementalMetaNodeWithType value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ElementalNode(ElementalChannelNodeWithType value, JsonElement? json = null)
+    public ElementalNode(ElementalChannelNodeWithType value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ElementalNode(ElementalImageNodeWithType value, JsonElement? json = null)
+    public ElementalNode(ElementalImageNodeWithType value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ElementalNode(ElementalActionNodeWithType value, JsonElement? json = null)
+    public ElementalNode(ElementalActionNodeWithType value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ElementalNode(ElementalDividerNodeWithType value, JsonElement? json = null)
+    public ElementalNode(ElementalDividerNodeWithType value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ElementalNode(ElementalQuoteNodeWithType value, JsonElement? json = null)
+    public ElementalNode(ElementalQuoteNodeWithType value, JsonElement? element = null)
     {
         this.Value = value;
-        this._json = json;
+        this._element = element;
     }
 
-    public ElementalNode(JsonElement json)
+    public ElementalNode(JsonElement element)
     {
-        this._json = json;
+        this._element = element;
     }
 
     /// <summary>
@@ -472,14 +472,17 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         JsonSerializerOptions options
     )
     {
-        var json = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(json, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(
+                element,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -489,11 +492,14 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(json, options);
+            var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(
+                element,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -504,13 +510,13 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -521,13 +527,13 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -538,13 +544,13 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -555,13 +561,13 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -572,13 +578,13 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(
-                json,
+                element,
                 options
             );
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, json);
+                return new(deserialized, element);
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -586,7 +592,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             // ignore
         }
 
-        return new(json);
+        return new(element);
     }
 
     public override void Write(

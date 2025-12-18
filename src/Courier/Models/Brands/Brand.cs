@@ -7,55 +7,55 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<Brand, BrandFromRaw>))]
-public sealed record class Brand : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Brand, BrandFromRaw>))]
+public sealed record class Brand : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public required long Created
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "created"); }
-        init { ModelBase.Set(this._rawData, "created", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "created"); }
+        init { JsonModel.Set(this._rawData, "created", value); }
     }
 
     public required string Name
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "name"); }
-        init { ModelBase.Set(this._rawData, "name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
+        init { JsonModel.Set(this._rawData, "name", value); }
     }
 
     public required long Updated
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "updated"); }
-        init { ModelBase.Set(this._rawData, "updated", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "updated"); }
+        init { JsonModel.Set(this._rawData, "updated", value); }
     }
 
     public long? Published
     {
-        get { return ModelBase.GetNullableStruct<long>(this.RawData, "published"); }
-        init { ModelBase.Set(this._rawData, "published", value); }
+        get { return JsonModel.GetNullableStruct<long>(this.RawData, "published"); }
+        init { JsonModel.Set(this._rawData, "published", value); }
     }
 
     public BrandSettings? Settings
     {
-        get { return ModelBase.GetNullableClass<BrandSettings>(this.RawData, "settings"); }
-        init { ModelBase.Set(this._rawData, "settings", value); }
+        get { return JsonModel.GetNullableClass<BrandSettings>(this.RawData, "settings"); }
+        init { JsonModel.Set(this._rawData, "settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get { return ModelBase.GetNullableClass<BrandSnippets>(this.RawData, "snippets"); }
-        init { ModelBase.Set(this._rawData, "snippets", value); }
+        get { return JsonModel.GetNullableClass<BrandSnippets>(this.RawData, "snippets"); }
+        init { JsonModel.Set(this._rawData, "snippets", value); }
     }
 
     public string? Version
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "version"); }
-        init { ModelBase.Set(this._rawData, "version", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "version"); }
+        init { JsonModel.Set(this._rawData, "version", value); }
     }
 
     /// <inheritdoc/>
@@ -96,7 +96,7 @@ public sealed record class Brand : ModelBase
     }
 }
 
-class BrandFromRaw : IFromRaw<Brand>
+class BrandFromRaw : IFromRawJson<Brand>
 {
     /// <inheritdoc/>
     public Brand FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

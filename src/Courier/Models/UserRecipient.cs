@@ -7,16 +7,16 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<UserRecipient, UserRecipientFromRaw>))]
-public sealed record class UserRecipient : ModelBase
+[JsonConverter(typeof(JsonModelConverter<UserRecipient, UserRecipientFromRaw>))]
+public sealed record class UserRecipient : JsonModel
 {
     /// <summary>
     /// Deprecated - Use `tenant_id` instead.
     /// </summary>
     public string? AccountID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "account_id"); }
-        init { ModelBase.Set(this._rawData, "account_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "account_id"); }
+        init { JsonModel.Set(this._rawData, "account_id", value); }
     }
 
     /// <summary>
@@ -24,20 +24,20 @@ public sealed record class UserRecipient : ModelBase
     /// </summary>
     public MessageContext? Context
     {
-        get { return ModelBase.GetNullableClass<MessageContext>(this.RawData, "context"); }
-        init { ModelBase.Set(this._rawData, "context", value); }
+        get { return JsonModel.GetNullableClass<MessageContext>(this.RawData, "context"); }
+        init { JsonModel.Set(this._rawData, "context", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawData,
                 "data"
             );
         }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -45,8 +45,8 @@ public sealed record class UserRecipient : ModelBase
     /// </summary>
     public string? Email
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "email"); }
-        init { ModelBase.Set(this._rawData, "email", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "email"); }
+        init { JsonModel.Set(this._rawData, "email", value); }
     }
 
     /// <summary>
@@ -54,8 +54,8 @@ public sealed record class UserRecipient : ModelBase
     /// </summary>
     public string? ListID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "list_id"); }
-        init { ModelBase.Set(this._rawData, "list_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "list_id"); }
+        init { JsonModel.Set(this._rawData, "list_id", value); }
     }
 
     /// <summary>
@@ -63,8 +63,8 @@ public sealed record class UserRecipient : ModelBase
     /// </summary>
     public string? Locale
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "locale"); }
-        init { ModelBase.Set(this._rawData, "locale", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "locale"); }
+        init { JsonModel.Set(this._rawData, "locale", value); }
     }
 
     /// <summary>
@@ -72,20 +72,20 @@ public sealed record class UserRecipient : ModelBase
     /// </summary>
     public string? PhoneNumber
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "phone_number"); }
-        init { ModelBase.Set(this._rawData, "phone_number", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "phone_number"); }
+        init { JsonModel.Set(this._rawData, "phone_number", value); }
     }
 
     public UserRecipientPreferences? Preferences
     {
         get
         {
-            return ModelBase.GetNullableClass<UserRecipientPreferences>(
+            return JsonModel.GetNullableClass<UserRecipientPreferences>(
                 this.RawData,
                 "preferences"
             );
         }
-        init { ModelBase.Set(this._rawData, "preferences", value); }
+        init { JsonModel.Set(this._rawData, "preferences", value); }
     }
 
     /// <summary>
@@ -93,8 +93,8 @@ public sealed record class UserRecipient : ModelBase
     /// </summary>
     public string? TenantID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "tenant_id"); }
-        init { ModelBase.Set(this._rawData, "tenant_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "tenant_id"); }
+        init { JsonModel.Set(this._rawData, "tenant_id", value); }
     }
 
     /// <summary>
@@ -103,8 +103,8 @@ public sealed record class UserRecipient : ModelBase
     /// </summary>
     public string? UserID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "user_id"); }
-        init { ModelBase.Set(this._rawData, "user_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "user_id"); }
+        init { JsonModel.Set(this._rawData, "user_id", value); }
     }
 
     /// <inheritdoc/>
@@ -147,44 +147,46 @@ public sealed record class UserRecipient : ModelBase
     }
 }
 
-class UserRecipientFromRaw : IFromRaw<UserRecipient>
+class UserRecipientFromRaw : IFromRawJson<UserRecipient>
 {
     /// <inheritdoc/>
     public UserRecipient FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         UserRecipient.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<UserRecipientPreferences, UserRecipientPreferencesFromRaw>))]
-public sealed record class UserRecipientPreferences : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<UserRecipientPreferences, UserRecipientPreferencesFromRaw>)
+)]
+public sealed record class UserRecipientPreferences : JsonModel
 {
     public required IReadOnlyDictionary<string, Preference> Notifications
     {
         get
         {
-            return ModelBase.GetNotNullClass<Dictionary<string, Preference>>(
+            return JsonModel.GetNotNullClass<Dictionary<string, Preference>>(
                 this.RawData,
                 "notifications"
             );
         }
-        init { ModelBase.Set(this._rawData, "notifications", value); }
+        init { JsonModel.Set(this._rawData, "notifications", value); }
     }
 
     public IReadOnlyDictionary<string, Preference>? Categories
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, Preference>>(
+            return JsonModel.GetNullableClass<Dictionary<string, Preference>>(
                 this.RawData,
                 "categories"
             );
         }
-        init { ModelBase.Set(this._rawData, "categories", value); }
+        init { JsonModel.Set(this._rawData, "categories", value); }
     }
 
     public string? TemplateID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "templateId"); }
-        init { ModelBase.Set(this._rawData, "templateId", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "templateId"); }
+        init { JsonModel.Set(this._rawData, "templateId", value); }
     }
 
     /// <inheritdoc/>
@@ -238,7 +240,7 @@ public sealed record class UserRecipientPreferences : ModelBase
     }
 }
 
-class UserRecipientPreferencesFromRaw : IFromRaw<UserRecipientPreferences>
+class UserRecipientPreferencesFromRaw : IFromRawJson<UserRecipientPreferences>
 {
     /// <inheritdoc/>
     public UserRecipientPreferences FromRawUnchecked(

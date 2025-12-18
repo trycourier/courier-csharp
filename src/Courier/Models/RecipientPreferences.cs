@@ -7,31 +7,31 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<RecipientPreferences, RecipientPreferencesFromRaw>))]
-public sealed record class RecipientPreferences : ModelBase
+[JsonConverter(typeof(JsonModelConverter<RecipientPreferences, RecipientPreferencesFromRaw>))]
+public sealed record class RecipientPreferences : JsonModel
 {
     public IReadOnlyDictionary<string, NotificationPreferenceDetails>? Categories
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
+            return JsonModel.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
                 this.RawData,
                 "categories"
             );
         }
-        init { ModelBase.Set(this._rawData, "categories", value); }
+        init { JsonModel.Set(this._rawData, "categories", value); }
     }
 
     public IReadOnlyDictionary<string, NotificationPreferenceDetails>? Notifications
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
+            return JsonModel.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
                 this.RawData,
                 "notifications"
             );
         }
-        init { ModelBase.Set(this._rawData, "notifications", value); }
+        init { JsonModel.Set(this._rawData, "notifications", value); }
     }
 
     /// <inheritdoc/>
@@ -80,7 +80,7 @@ public sealed record class RecipientPreferences : ModelBase
     }
 }
 
-class RecipientPreferencesFromRaw : IFromRaw<RecipientPreferences>
+class RecipientPreferencesFromRaw : IFromRawJson<RecipientPreferences>
 {
     /// <inheritdoc/>
     public RecipientPreferences FromRawUnchecked(

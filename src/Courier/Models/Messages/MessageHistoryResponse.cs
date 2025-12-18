@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageHistoryResponse, MessageHistoryResponseFromRaw>))]
-public sealed record class MessageHistoryResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<MessageHistoryResponse, MessageHistoryResponseFromRaw>))]
+public sealed record class MessageHistoryResponse : JsonModel
 {
     public required IReadOnlyList<Dictionary<string, JsonElement>> Results
     {
         get
         {
-            return ModelBase.GetNotNullClass<List<Dictionary<string, JsonElement>>>(
+            return JsonModel.GetNotNullClass<List<Dictionary<string, JsonElement>>>(
                 this.RawData,
                 "results"
             );
         }
-        init { ModelBase.Set(this._rawData, "results", value); }
+        init { JsonModel.Set(this._rawData, "results", value); }
     }
 
     /// <inheritdoc/>
@@ -62,7 +62,7 @@ public sealed record class MessageHistoryResponse : ModelBase
     }
 }
 
-class MessageHistoryResponseFromRaw : IFromRaw<MessageHistoryResponse>
+class MessageHistoryResponseFromRaw : IFromRawJson<MessageHistoryResponse>
 {
     /// <inheritdoc/>
     public MessageHistoryResponse FromRawUnchecked(

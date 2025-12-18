@@ -31,8 +31,8 @@ public class BulkCreateJobResponseTest : TestBase
     {
         var model = new BulkCreateJobResponse { JobID = "jobId" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BulkCreateJobResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BulkCreateJobResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedJobID = "jobId";

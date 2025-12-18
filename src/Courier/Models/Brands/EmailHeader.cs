@@ -7,25 +7,25 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<EmailHeader, EmailHeaderFromRaw>))]
-public sealed record class EmailHeader : ModelBase
+[JsonConverter(typeof(JsonModelConverter<EmailHeader, EmailHeaderFromRaw>))]
+public sealed record class EmailHeader : JsonModel
 {
     public required Logo Logo
     {
-        get { return ModelBase.GetNotNullClass<Logo>(this.RawData, "logo"); }
-        init { ModelBase.Set(this._rawData, "logo", value); }
+        get { return JsonModel.GetNotNullClass<Logo>(this.RawData, "logo"); }
+        init { JsonModel.Set(this._rawData, "logo", value); }
     }
 
     public string? BarColor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "barColor"); }
-        init { ModelBase.Set(this._rawData, "barColor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "barColor"); }
+        init { JsonModel.Set(this._rawData, "barColor", value); }
     }
 
     public bool? InheritDefault
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "inheritDefault"); }
-        init { ModelBase.Set(this._rawData, "inheritDefault", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "inheritDefault"); }
+        init { JsonModel.Set(this._rawData, "inheritDefault", value); }
     }
 
     /// <inheritdoc/>
@@ -68,7 +68,7 @@ public sealed record class EmailHeader : ModelBase
     }
 }
 
-class EmailHeaderFromRaw : IFromRaw<EmailHeader>
+class EmailHeaderFromRaw : IFromRawJson<EmailHeader>
 {
     /// <inheritdoc/>
     public EmailHeader FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

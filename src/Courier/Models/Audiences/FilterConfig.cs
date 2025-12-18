@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<FilterConfig, FilterConfigFromRaw>))]
-public sealed record class FilterConfig : ModelBase
+[JsonConverter(typeof(JsonModelConverter<FilterConfig, FilterConfigFromRaw>))]
+public sealed record class FilterConfig : JsonModel
 {
     /// <summary>
     /// The operator to use for filtering
@@ -19,12 +19,12 @@ public sealed record class FilterConfig : ModelBase
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, FilterConfigOperator>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, FilterConfigOperator>>(
                 this.RawData,
                 "operator"
             );
         }
-        init { ModelBase.Set(this._rawData, "operator", value); }
+        init { JsonModel.Set(this._rawData, "operator", value); }
     }
 
     /// <summary>
@@ -32,8 +32,8 @@ public sealed record class FilterConfig : ModelBase
     /// </summary>
     public required string Path
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
-        init { ModelBase.Set(this._rawData, "path", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "path"); }
+        init { JsonModel.Set(this._rawData, "path", value); }
     }
 
     /// <summary>
@@ -41,8 +41,8 @@ public sealed record class FilterConfig : ModelBase
     /// </summary>
     public required string Value
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "value"); }
-        init { ModelBase.Set(this._rawData, "value", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "value"); }
+        init { JsonModel.Set(this._rawData, "value", value); }
     }
 
     /// <inheritdoc/>
@@ -78,7 +78,7 @@ public sealed record class FilterConfig : ModelBase
     }
 }
 
-class FilterConfigFromRaw : IFromRaw<FilterConfig>
+class FilterConfigFromRaw : IFromRawJson<FilterConfig>
 {
     /// <inheritdoc/>
     public FilterConfig FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

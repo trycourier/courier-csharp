@@ -8,38 +8,38 @@ using Courier.Core;
 namespace Courier.Models;
 
 [JsonConverter(
-    typeof(ModelConverter<NotificationPreferenceDetails, NotificationPreferenceDetailsFromRaw>)
+    typeof(JsonModelConverter<NotificationPreferenceDetails, NotificationPreferenceDetailsFromRaw>)
 )]
-public sealed record class NotificationPreferenceDetails : ModelBase
+public sealed record class NotificationPreferenceDetails : JsonModel
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
                 this.RawData,
                 "status"
             );
         }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     public IReadOnlyList<ChannelPreference>? ChannelPreferences
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ChannelPreference>>(
+            return JsonModel.GetNullableClass<List<ChannelPreference>>(
                 this.RawData,
                 "channel_preferences"
             );
         }
-        init { ModelBase.Set(this._rawData, "channel_preferences", value); }
+        init { JsonModel.Set(this._rawData, "channel_preferences", value); }
     }
 
     public IReadOnlyList<Rule>? Rules
     {
-        get { return ModelBase.GetNullableClass<List<Rule>>(this.RawData, "rules"); }
-        init { ModelBase.Set(this._rawData, "rules", value); }
+        get { return JsonModel.GetNullableClass<List<Rule>>(this.RawData, "rules"); }
+        init { JsonModel.Set(this._rawData, "rules", value); }
     }
 
     /// <inheritdoc/>
@@ -92,7 +92,7 @@ public sealed record class NotificationPreferenceDetails : ModelBase
     }
 }
 
-class NotificationPreferenceDetailsFromRaw : IFromRaw<NotificationPreferenceDetails>
+class NotificationPreferenceDetailsFromRaw : IFromRawJson<NotificationPreferenceDetails>
 {
     /// <inheritdoc/>
     public NotificationPreferenceDetails FromRawUnchecked(

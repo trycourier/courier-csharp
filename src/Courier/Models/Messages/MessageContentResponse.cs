@@ -7,16 +7,16 @@ using Courier.Core;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageContentResponse, MessageContentResponseFromRaw>))]
-public sealed record class MessageContentResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<MessageContentResponse, MessageContentResponseFromRaw>))]
+public sealed record class MessageContentResponse : JsonModel
 {
     /// <summary>
     /// An array of render output of a previously sent message.
     /// </summary>
     public required IReadOnlyList<Result> Results
     {
-        get { return ModelBase.GetNotNullClass<List<Result>>(this.RawData, "results"); }
-        init { ModelBase.Set(this._rawData, "results", value); }
+        get { return JsonModel.GetNotNullClass<List<Result>>(this.RawData, "results"); }
+        init { JsonModel.Set(this._rawData, "results", value); }
     }
 
     /// <inheritdoc/>
@@ -62,7 +62,7 @@ public sealed record class MessageContentResponse : ModelBase
     }
 }
 
-class MessageContentResponseFromRaw : IFromRaw<MessageContentResponse>
+class MessageContentResponseFromRaw : IFromRawJson<MessageContentResponse>
 {
     /// <inheritdoc/>
     public MessageContentResponse FromRawUnchecked(
@@ -70,16 +70,16 @@ class MessageContentResponseFromRaw : IFromRaw<MessageContentResponse>
     ) => MessageContentResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Result, ResultFromRaw>))]
-public sealed record class Result : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Result, ResultFromRaw>))]
+public sealed record class Result : JsonModel
 {
     /// <summary>
     /// The channel used for rendering the message.
     /// </summary>
     public required string Channel
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "channel"); }
-        init { ModelBase.Set(this._rawData, "channel", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "channel"); }
+        init { JsonModel.Set(this._rawData, "channel", value); }
     }
 
     /// <summary>
@@ -87,8 +87,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required string ChannelID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "channel_id"); }
-        init { ModelBase.Set(this._rawData, "channel_id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "channel_id"); }
+        init { JsonModel.Set(this._rawData, "channel_id", value); }
     }
 
     /// <summary>
@@ -96,8 +96,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required Content Content
     {
-        get { return ModelBase.GetNotNullClass<Content>(this.RawData, "content"); }
-        init { ModelBase.Set(this._rawData, "content", value); }
+        get { return JsonModel.GetNotNullClass<Content>(this.RawData, "content"); }
+        init { JsonModel.Set(this._rawData, "content", value); }
     }
 
     /// <inheritdoc/>
@@ -133,7 +133,7 @@ public sealed record class Result : ModelBase
     }
 }
 
-class ResultFromRaw : IFromRaw<Result>
+class ResultFromRaw : IFromRawJson<Result>
 {
     /// <inheritdoc/>
     public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -143,16 +143,16 @@ class ResultFromRaw : IFromRaw<Result>
 /// <summary>
 /// Content details of the rendered message.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<Content, ContentFromRaw>))]
-public sealed record class Content : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Content, ContentFromRaw>))]
+public sealed record class Content : JsonModel
 {
     /// <summary>
     /// The blocks of the rendered message.
     /// </summary>
     public required IReadOnlyList<Block> Blocks
     {
-        get { return ModelBase.GetNotNullClass<List<Block>>(this.RawData, "blocks"); }
-        init { ModelBase.Set(this._rawData, "blocks", value); }
+        get { return JsonModel.GetNotNullClass<List<Block>>(this.RawData, "blocks"); }
+        init { JsonModel.Set(this._rawData, "blocks", value); }
     }
 
     /// <summary>
@@ -160,8 +160,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string Body
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "body"); }
-        init { ModelBase.Set(this._rawData, "body", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "body"); }
+        init { JsonModel.Set(this._rawData, "body", value); }
     }
 
     /// <summary>
@@ -169,8 +169,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string HTML
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "html"); }
-        init { ModelBase.Set(this._rawData, "html", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "html"); }
+        init { JsonModel.Set(this._rawData, "html", value); }
     }
 
     /// <summary>
@@ -178,8 +178,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string Subject
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "subject"); }
-        init { ModelBase.Set(this._rawData, "subject", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "subject"); }
+        init { JsonModel.Set(this._rawData, "subject", value); }
     }
 
     /// <summary>
@@ -187,8 +187,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string Text
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "text"); }
-        init { ModelBase.Set(this._rawData, "text", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "text"); }
+        init { JsonModel.Set(this._rawData, "text", value); }
     }
 
     /// <summary>
@@ -196,8 +196,8 @@ public sealed record class Content : ModelBase
     /// </summary>
     public required string Title
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "title"); }
-        init { ModelBase.Set(this._rawData, "title", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "title"); }
+        init { JsonModel.Set(this._rawData, "title", value); }
     }
 
     /// <inheritdoc/>
@@ -239,23 +239,23 @@ public sealed record class Content : ModelBase
     }
 }
 
-class ContentFromRaw : IFromRaw<Content>
+class ContentFromRaw : IFromRawJson<Content>
 {
     /// <inheritdoc/>
     public Content FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Content.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Block, BlockFromRaw>))]
-public sealed record class Block : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Block, BlockFromRaw>))]
+public sealed record class Block : JsonModel
 {
     /// <summary>
     /// The block text of the rendered message block.
     /// </summary>
     public required string Text
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "text"); }
-        init { ModelBase.Set(this._rawData, "text", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "text"); }
+        init { JsonModel.Set(this._rawData, "text", value); }
     }
 
     /// <summary>
@@ -263,8 +263,8 @@ public sealed record class Block : ModelBase
     /// </summary>
     public required string Type
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "type"); }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "type"); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     /// <inheritdoc/>
@@ -299,7 +299,7 @@ public sealed record class Block : ModelBase
     }
 }
 
-class BlockFromRaw : IFromRaw<Block>
+class BlockFromRaw : IFromRawJson<Block>
 {
     /// <inheritdoc/>
     public Block FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

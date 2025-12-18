@@ -33,8 +33,8 @@ public class LogoTest : TestBase
     {
         var model = new Logo { Href = "href", Image = "image" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Logo>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Logo>(element);
         Assert.NotNull(deserialized);
 
         string expectedHref = "href";

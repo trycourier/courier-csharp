@@ -33,8 +33,8 @@ public class ProfileCreateResponseTest : TestBase
     {
         var model = new ProfileCreateResponse { Status = Status.Success };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProfileCreateResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ProfileCreateResponse>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Status> expectedStatus = Status.Success;

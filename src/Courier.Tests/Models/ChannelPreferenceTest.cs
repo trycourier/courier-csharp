@@ -33,8 +33,8 @@ public class ChannelPreferenceTest : TestBase
     {
         var model = new ChannelPreference { Channel = ChannelClassification.DirectMessage };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ChannelPreference>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ChannelPreference>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ChannelClassification> expectedChannel =

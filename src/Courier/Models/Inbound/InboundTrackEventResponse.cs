@@ -7,8 +7,10 @@ using Courier.Core;
 
 namespace Courier.Models.Inbound;
 
-[JsonConverter(typeof(ModelConverter<InboundTrackEventResponse, InboundTrackEventResponseFromRaw>))]
-public sealed record class InboundTrackEventResponse : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<InboundTrackEventResponse, InboundTrackEventResponseFromRaw>)
+)]
+public sealed record class InboundTrackEventResponse : JsonModel
 {
     /// <summary>
     /// A successful call returns a `202` status code along with a `requestId` in
@@ -16,8 +18,8 @@ public sealed record class InboundTrackEventResponse : ModelBase
     /// </summary>
     public required string MessageID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "messageId"); }
-        init { ModelBase.Set(this._rawData, "messageId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "messageId"); }
+        init { JsonModel.Set(this._rawData, "messageId", value); }
     }
 
     /// <inheritdoc/>
@@ -60,7 +62,7 @@ public sealed record class InboundTrackEventResponse : ModelBase
     }
 }
 
-class InboundTrackEventResponseFromRaw : IFromRaw<InboundTrackEventResponse>
+class InboundTrackEventResponseFromRaw : IFromRawJson<InboundTrackEventResponse>
 {
     /// <inheritdoc/>
     public InboundTrackEventResponse FromRawUnchecked(

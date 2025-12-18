@@ -55,8 +55,8 @@ public class SubscriptionListTest : TestBase
             Updated = "updated",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SubscriptionList>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SubscriptionList>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

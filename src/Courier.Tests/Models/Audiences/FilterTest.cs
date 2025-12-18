@@ -52,8 +52,8 @@ public class FilterTest : TestBase
             Value = "value",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Filter>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Filter>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Operator> expectedOperator = Operator.EndsWith;

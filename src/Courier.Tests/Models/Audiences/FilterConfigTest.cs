@@ -52,8 +52,8 @@ public class FilterConfigTest : TestBase
             Value = "value",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<FilterConfig>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<FilterConfig>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, FilterConfigOperator> expectedOperator = FilterConfigOperator.EndsWith;

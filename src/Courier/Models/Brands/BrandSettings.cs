@@ -7,25 +7,25 @@ using Courier.Core;
 
 namespace Courier.Models.Brands;
 
-[JsonConverter(typeof(ModelConverter<BrandSettings, BrandSettingsFromRaw>))]
-public sealed record class BrandSettings : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BrandSettings, BrandSettingsFromRaw>))]
+public sealed record class BrandSettings : JsonModel
 {
     public BrandColors? Colors
     {
-        get { return ModelBase.GetNullableClass<BrandColors>(this.RawData, "colors"); }
-        init { ModelBase.Set(this._rawData, "colors", value); }
+        get { return JsonModel.GetNullableClass<BrandColors>(this.RawData, "colors"); }
+        init { JsonModel.Set(this._rawData, "colors", value); }
     }
 
     public BrandSettingsEmail? Email
     {
-        get { return ModelBase.GetNullableClass<BrandSettingsEmail>(this.RawData, "email"); }
-        init { ModelBase.Set(this._rawData, "email", value); }
+        get { return JsonModel.GetNullableClass<BrandSettingsEmail>(this.RawData, "email"); }
+        init { JsonModel.Set(this._rawData, "email", value); }
     }
 
     public BrandSettingsInApp? Inapp
     {
-        get { return ModelBase.GetNullableClass<BrandSettingsInApp>(this.RawData, "inapp"); }
-        init { ModelBase.Set(this._rawData, "inapp", value); }
+        get { return JsonModel.GetNullableClass<BrandSettingsInApp>(this.RawData, "inapp"); }
+        init { JsonModel.Set(this._rawData, "inapp", value); }
     }
 
     /// <inheritdoc/>
@@ -61,7 +61,7 @@ public sealed record class BrandSettings : ModelBase
     }
 }
 
-class BrandSettingsFromRaw : IFromRaw<BrandSettings>
+class BrandSettingsFromRaw : IFromRawJson<BrandSettings>
 {
     /// <inheritdoc/>
     public BrandSettings FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

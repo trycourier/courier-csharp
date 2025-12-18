@@ -20,8 +20,8 @@ public sealed record class MessageHistoryParams : ParamsBase
     /// </summary>
     public string? Type
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "type"); }
-        init { ModelBase.Set(this._rawQueryData, "type", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "type"); }
+        init { JsonModel.Set(this._rawQueryData, "type", value); }
     }
 
     public MessageHistoryParams() { }
@@ -50,7 +50,7 @@ public sealed record class MessageHistoryParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static MessageHistoryParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

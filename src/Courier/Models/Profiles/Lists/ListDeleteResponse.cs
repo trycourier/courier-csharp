@@ -9,18 +9,18 @@ using System = System;
 
 namespace Courier.Models.Profiles.Lists;
 
-[JsonConverter(typeof(ModelConverter<ListDeleteResponse, ListDeleteResponseFromRaw>))]
-public sealed record class ListDeleteResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ListDeleteResponse, ListDeleteResponseFromRaw>))]
+public sealed record class ListDeleteResponse : JsonModel
 {
     public required ApiEnum<string, global::Courier.Models.Profiles.Lists.Status> Status
     {
         get
         {
-            return ModelBase.GetNotNullClass<
+            return JsonModel.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
             >(this.RawData, "status");
         }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <inheritdoc/>
@@ -63,7 +63,7 @@ public sealed record class ListDeleteResponse : ModelBase
     }
 }
 
-class ListDeleteResponseFromRaw : IFromRaw<ListDeleteResponse>
+class ListDeleteResponseFromRaw : IFromRawJson<ListDeleteResponse>
 {
     /// <inheritdoc/>
     public ListDeleteResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

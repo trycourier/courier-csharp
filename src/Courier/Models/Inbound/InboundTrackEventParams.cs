@@ -28,8 +28,8 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public required string Event
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "event"); }
-        init { ModelBase.Set(this._rawBodyData, "event", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "event"); }
+        init { JsonModel.Set(this._rawBodyData, "event", value); }
     }
 
     /// <summary>
@@ -38,32 +38,32 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public required string MessageID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "messageId"); }
-        init { ModelBase.Set(this._rawBodyData, "messageId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "messageId"); }
+        init { JsonModel.Set(this._rawBodyData, "messageId", value); }
     }
 
     public required IReadOnlyDictionary<string, JsonElement> Properties
     {
         get
         {
-            return ModelBase.GetNotNullClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNotNullClass<Dictionary<string, JsonElement>>(
                 this.RawBodyData,
                 "properties"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "properties", value); }
+        init { JsonModel.Set(this._rawBodyData, "properties", value); }
     }
 
     public required ApiEnum<string, global::Courier.Models.Inbound.Type> Type
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, global::Courier.Models.Inbound.Type>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, global::Courier.Models.Inbound.Type>>(
                 this.RawBodyData,
                 "type"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "type", value); }
+        init { JsonModel.Set(this._rawBodyData, "type", value); }
     }
 
     /// <summary>
@@ -71,8 +71,8 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public string? UserID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "userId"); }
-        init { ModelBase.Set(this._rawBodyData, "userId", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "userId"); }
+        init { JsonModel.Set(this._rawBodyData, "userId", value); }
     }
 
     public InboundTrackEventParams() { }
@@ -108,7 +108,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static InboundTrackEventParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -130,9 +130,13 @@ public sealed record class InboundTrackEventParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

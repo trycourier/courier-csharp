@@ -33,8 +33,8 @@ public class EmailFooterTest : TestBase
     {
         var model = new EmailFooter { Content = "content", InheritDefault = true };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<EmailFooter>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<EmailFooter>(element);
         Assert.NotNull(deserialized);
 
         string expectedContent = "content";

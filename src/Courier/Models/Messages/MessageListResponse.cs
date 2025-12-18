@@ -7,16 +7,16 @@ using Courier.Core;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageListResponse, MessageListResponseFromRaw>))]
-public sealed record class MessageListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<MessageListResponse, MessageListResponseFromRaw>))]
+public sealed record class MessageListResponse : JsonModel
 {
     /// <summary>
     /// Paging information for the result set.
     /// </summary>
     public required Paging Paging
     {
-        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { ModelBase.Set(this._rawData, "paging", value); }
+        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { JsonModel.Set(this._rawData, "paging", value); }
     }
 
     /// <summary>
@@ -24,8 +24,8 @@ public sealed record class MessageListResponse : ModelBase
     /// </summary>
     public required IReadOnlyList<MessageDetails> Results
     {
-        get { return ModelBase.GetNotNullClass<List<MessageDetails>>(this.RawData, "results"); }
-        init { ModelBase.Set(this._rawData, "results", value); }
+        get { return JsonModel.GetNotNullClass<List<MessageDetails>>(this.RawData, "results"); }
+        init { JsonModel.Set(this._rawData, "results", value); }
     }
 
     /// <inheritdoc/>
@@ -65,7 +65,7 @@ public sealed record class MessageListResponse : ModelBase
     }
 }
 
-class MessageListResponseFromRaw : IFromRaw<MessageListResponse>
+class MessageListResponseFromRaw : IFromRawJson<MessageListResponse>
 {
     /// <inheritdoc/>
     public MessageListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

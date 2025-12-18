@@ -8,17 +8,17 @@ using Courier.Core;
 namespace Courier.Models.Users.Preferences;
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         PreferenceUpdateOrCreateTopicResponse,
         PreferenceUpdateOrCreateTopicResponseFromRaw
     >)
 )]
-public sealed record class PreferenceUpdateOrCreateTopicResponse : ModelBase
+public sealed record class PreferenceUpdateOrCreateTopicResponse : JsonModel
 {
     public required string Message
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "message"); }
-        init { ModelBase.Set(this._rawData, "message", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "message"); }
+        init { JsonModel.Set(this._rawData, "message", value); }
     }
 
     /// <inheritdoc/>
@@ -63,7 +63,8 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : ModelBase
     }
 }
 
-class PreferenceUpdateOrCreateTopicResponseFromRaw : IFromRaw<PreferenceUpdateOrCreateTopicResponse>
+class PreferenceUpdateOrCreateTopicResponseFromRaw
+    : IFromRawJson<PreferenceUpdateOrCreateTopicResponse>
 {
     /// <inheritdoc/>
     public PreferenceUpdateOrCreateTopicResponse FromRawUnchecked(

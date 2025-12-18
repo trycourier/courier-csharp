@@ -10,16 +10,16 @@ namespace Courier.Models;
 /// <summary>
 /// Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
 /// </summary>
-[JsonConverter(typeof(ModelConverter<ElementalContentSugar, ElementalContentSugarFromRaw>))]
-public sealed record class ElementalContentSugar : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ElementalContentSugar, ElementalContentSugarFromRaw>))]
+public sealed record class ElementalContentSugar : JsonModel
 {
     /// <summary>
     /// The text content displayed in the notification.
     /// </summary>
     public required string Body
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "body"); }
-        init { ModelBase.Set(this._rawData, "body", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "body"); }
+        init { JsonModel.Set(this._rawData, "body", value); }
     }
 
     /// <summary>
@@ -27,8 +27,8 @@ public sealed record class ElementalContentSugar : ModelBase
     /// </summary>
     public required string Title
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "title"); }
-        init { ModelBase.Set(this._rawData, "title", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "title"); }
+        init { JsonModel.Set(this._rawData, "title", value); }
     }
 
     /// <inheritdoc/>
@@ -65,7 +65,7 @@ public sealed record class ElementalContentSugar : ModelBase
     }
 }
 
-class ElementalContentSugarFromRaw : IFromRaw<ElementalContentSugar>
+class ElementalContentSugarFromRaw : IFromRawJson<ElementalContentSugar>
 {
     /// <inheritdoc/>
     public ElementalContentSugar FromRawUnchecked(

@@ -109,8 +109,8 @@ public class MessageContentResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MessageContentResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<MessageContentResponse>(element);
         Assert.NotNull(deserialized);
 
         List<Result> expectedResults =
@@ -245,8 +245,8 @@ public class ResultTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Result>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Result>(element);
         Assert.NotNull(deserialized);
 
         string expectedChannel = "channel";
@@ -354,8 +354,8 @@ public class ContentTest : TestBase
             Title = "title",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
         Assert.NotNull(deserialized);
 
         List<Block> expectedBlocks = [new() { Text = "text", Type = "type" }];
@@ -424,8 +424,8 @@ public class BlockTest : TestBase
     {
         var model = new Block { Text = "text", Type = "type" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Block>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Block>(element);
         Assert.NotNull(deserialized);
 
         string expectedText = "text";

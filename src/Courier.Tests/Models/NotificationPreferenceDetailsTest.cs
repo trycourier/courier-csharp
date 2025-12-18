@@ -65,8 +65,8 @@ public class NotificationPreferenceDetailsTest : TestBase
             Rules = [new() { Until = "until", Start = "start" }],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<NotificationPreferenceDetails>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<NotificationPreferenceDetails>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, PreferenceStatus> expectedStatus = PreferenceStatus.OptedIn;

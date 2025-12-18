@@ -30,12 +30,12 @@ public sealed record class BulkAddUsersParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNotNullClass<List<InboundBulkMessageUser>>(
+            return JsonModel.GetNotNullClass<List<InboundBulkMessageUser>>(
                 this.RawBodyData,
                 "users"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "users", value); }
+        init { JsonModel.Set(this._rawBodyData, "users", value); }
     }
 
     public BulkAddUsersParams() { }
@@ -71,7 +71,7 @@ public sealed record class BulkAddUsersParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static BulkAddUsersParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -95,9 +95,13 @@ public sealed record class BulkAddUsersParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

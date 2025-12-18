@@ -7,19 +7,21 @@ using Courier.Core;
 
 namespace Courier.Models.Notifications;
 
-[JsonConverter(typeof(ModelConverter<NotificationListResponse, NotificationListResponseFromRaw>))]
-public sealed record class NotificationListResponse : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<NotificationListResponse, NotificationListResponseFromRaw>)
+)]
+public sealed record class NotificationListResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { ModelBase.Set(this._rawData, "paging", value); }
+        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { JsonModel.Set(this._rawData, "paging", value); }
     }
 
     public required IReadOnlyList<Result> Results
     {
-        get { return ModelBase.GetNotNullClass<List<Result>>(this.RawData, "results"); }
-        init { ModelBase.Set(this._rawData, "results", value); }
+        get { return JsonModel.GetNotNullClass<List<Result>>(this.RawData, "results"); }
+        init { JsonModel.Set(this._rawData, "results", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +61,7 @@ public sealed record class NotificationListResponse : ModelBase
     }
 }
 
-class NotificationListResponseFromRaw : IFromRaw<NotificationListResponse>
+class NotificationListResponseFromRaw : IFromRawJson<NotificationListResponse>
 {
     /// <inheritdoc/>
     public NotificationListResponse FromRawUnchecked(
@@ -67,19 +69,19 @@ class NotificationListResponseFromRaw : IFromRaw<NotificationListResponse>
     ) => NotificationListResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Result, ResultFromRaw>))]
-public sealed record class Result : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Result, ResultFromRaw>))]
+public sealed record class Result : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public required long CreatedAt
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "created_at"); }
-        init { ModelBase.Set(this._rawData, "created_at", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "created_at"); }
+        init { JsonModel.Set(this._rawData, "created_at", value); }
     }
 
     /// <summary>
@@ -87,44 +89,44 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required IReadOnlyList<string> EventIDs
     {
-        get { return ModelBase.GetNotNullClass<List<string>>(this.RawData, "event_ids"); }
-        init { ModelBase.Set(this._rawData, "event_ids", value); }
+        get { return JsonModel.GetNotNullClass<List<string>>(this.RawData, "event_ids"); }
+        init { JsonModel.Set(this._rawData, "event_ids", value); }
     }
 
     public required string Note
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "note"); }
-        init { ModelBase.Set(this._rawData, "note", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "note"); }
+        init { JsonModel.Set(this._rawData, "note", value); }
     }
 
     public required MessageRouting Routing
     {
-        get { return ModelBase.GetNotNullClass<MessageRouting>(this.RawData, "routing"); }
-        init { ModelBase.Set(this._rawData, "routing", value); }
+        get { return JsonModel.GetNotNullClass<MessageRouting>(this.RawData, "routing"); }
+        init { JsonModel.Set(this._rawData, "routing", value); }
     }
 
     public required string TopicID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "topic_id"); }
-        init { ModelBase.Set(this._rawData, "topic_id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "topic_id"); }
+        init { JsonModel.Set(this._rawData, "topic_id", value); }
     }
 
     public required long UpdatedAt
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "updated_at"); }
-        init { ModelBase.Set(this._rawData, "updated_at", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "updated_at"); }
+        init { JsonModel.Set(this._rawData, "updated_at", value); }
     }
 
     public Tags? Tags
     {
-        get { return ModelBase.GetNullableClass<Tags>(this.RawData, "tags"); }
-        init { ModelBase.Set(this._rawData, "tags", value); }
+        get { return JsonModel.GetNullableClass<Tags>(this.RawData, "tags"); }
+        init { JsonModel.Set(this._rawData, "tags", value); }
     }
 
     public string? Title
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "title"); }
-        init { ModelBase.Set(this._rawData, "title", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "title"); }
+        init { JsonModel.Set(this._rawData, "title", value); }
     }
 
     /// <inheritdoc/>
@@ -166,20 +168,20 @@ public sealed record class Result : ModelBase
     }
 }
 
-class ResultFromRaw : IFromRaw<Result>
+class ResultFromRaw : IFromRawJson<Result>
 {
     /// <inheritdoc/>
     public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Result.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Tags, TagsFromRaw>))]
-public sealed record class Tags : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Tags, TagsFromRaw>))]
+public sealed record class Tags : JsonModel
 {
     public required IReadOnlyList<Data> Data
     {
-        get { return ModelBase.GetNotNullClass<List<Data>>(this.RawData, "data"); }
-        init { ModelBase.Set(this._rawData, "data", value); }
+        get { return JsonModel.GetNotNullClass<List<Data>>(this.RawData, "data"); }
+        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <inheritdoc/>
@@ -223,26 +225,26 @@ public sealed record class Tags : ModelBase
     }
 }
 
-class TagsFromRaw : IFromRaw<Tags>
+class TagsFromRaw : IFromRawJson<Tags>
 {
     /// <inheritdoc/>
     public Tags FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Tags.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Data, DataFromRaw>))]
-public sealed record class Data : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Data, DataFromRaw>))]
+public sealed record class Data : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public required string Name
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "name"); }
-        init { ModelBase.Set(this._rawData, "name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
+        init { JsonModel.Set(this._rawData, "name", value); }
     }
 
     /// <inheritdoc/>
@@ -277,7 +279,7 @@ public sealed record class Data : ModelBase
     }
 }
 
-class DataFromRaw : IFromRaw<Data>
+class DataFromRaw : IFromRawJson<Data>
 {
     /// <inheritdoc/>
     public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

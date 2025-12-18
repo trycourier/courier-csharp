@@ -31,8 +31,10 @@ public class PreferenceUpdateOrCreateTopicResponseTest : TestBase
     {
         var model = new PreferenceUpdateOrCreateTopicResponse { Message = "success" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PreferenceUpdateOrCreateTopicResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<PreferenceUpdateOrCreateTopicResponse>(
+            element
+        );
         Assert.NotNull(deserialized);
 
         string expectedMessage = "success";

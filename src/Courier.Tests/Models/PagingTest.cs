@@ -33,8 +33,8 @@ public class PagingTest : TestBase
     {
         var model = new Paging { More = true, Cursor = "cursor" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Paging>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Paging>(element);
         Assert.NotNull(deserialized);
 
         bool expectedMore = true;

@@ -89,8 +89,8 @@ public class ElementalChannelNodeTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalChannelNode>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalChannelNode>(element);
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -272,9 +272,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeIntersectionMember1>(
-            json
+            element
         );
         Assert.NotNull(deserialized);
 

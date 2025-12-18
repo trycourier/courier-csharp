@@ -7,13 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models.Notifications.Checks;
 
-[JsonConverter(typeof(ModelConverter<CheckUpdateResponse, CheckUpdateResponseFromRaw>))]
-public sealed record class CheckUpdateResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<CheckUpdateResponse, CheckUpdateResponseFromRaw>))]
+public sealed record class CheckUpdateResponse : JsonModel
 {
     public required IReadOnlyList<Check> Checks
     {
-        get { return ModelBase.GetNotNullClass<List<Check>>(this.RawData, "checks"); }
-        init { ModelBase.Set(this._rawData, "checks", value); }
+        get { return JsonModel.GetNotNullClass<List<Check>>(this.RawData, "checks"); }
+        init { JsonModel.Set(this._rawData, "checks", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class CheckUpdateResponse : ModelBase
     }
 }
 
-class CheckUpdateResponseFromRaw : IFromRaw<CheckUpdateResponse>
+class CheckUpdateResponseFromRaw : IFromRawJson<CheckUpdateResponse>
 {
     /// <inheritdoc/>
     public CheckUpdateResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

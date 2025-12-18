@@ -87,8 +87,8 @@ public class ListListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ListListResponse>(element);
         Assert.NotNull(deserialized);
 
         List<SubscriptionList> expectedItems =

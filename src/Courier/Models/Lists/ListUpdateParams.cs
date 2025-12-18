@@ -24,20 +24,20 @@ public sealed record class ListUpdateParams : ParamsBase
 
     public required string Name
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawBodyData, "name"); }
-        init { ModelBase.Set(this._rawBodyData, "name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "name"); }
+        init { JsonModel.Set(this._rawBodyData, "name", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            return ModelBase.GetNullableClass<RecipientPreferences>(
+            return JsonModel.GetNullableClass<RecipientPreferences>(
                 this.RawBodyData,
                 "preferences"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "preferences", value); }
+        init { JsonModel.Set(this._rawBodyData, "preferences", value); }
     }
 
     public ListUpdateParams() { }
@@ -73,7 +73,7 @@ public sealed record class ListUpdateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static ListUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -97,9 +97,13 @@ public sealed record class ListUpdateParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

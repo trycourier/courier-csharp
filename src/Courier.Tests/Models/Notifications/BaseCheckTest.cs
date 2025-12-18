@@ -52,8 +52,8 @@ public class BaseCheckTest : TestBase
             Type = Type.Custom,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BaseCheck>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BaseCheck>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

@@ -7,16 +7,16 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<MessageContext, MessageContextFromRaw>))]
-public sealed record class MessageContext : ModelBase
+[JsonConverter(typeof(JsonModelConverter<MessageContext, MessageContextFromRaw>))]
+public sealed record class MessageContext : JsonModel
 {
     /// <summary>
     /// Tenant id used to load brand/default preferences/context.
     /// </summary>
     public string? TenantID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "tenant_id"); }
-        init { ModelBase.Set(this._rawData, "tenant_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "tenant_id"); }
+        init { JsonModel.Set(this._rawData, "tenant_id", value); }
     }
 
     /// <inheritdoc/>
@@ -50,7 +50,7 @@ public sealed record class MessageContext : ModelBase
     }
 }
 
-class MessageContextFromRaw : IFromRaw<MessageContext>
+class MessageContextFromRaw : IFromRawJson<MessageContext>
 {
     /// <inheritdoc/>
     public MessageContext FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
