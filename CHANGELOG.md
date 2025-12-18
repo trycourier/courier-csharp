@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.4.0 (2025-12-18)
+
+Full Changelog: [v3.3.0...v3.4.0](https://github.com/trycourier/courier-csharp/compare/v3.3.0...v3.4.0)
+
+### Features
+
+* **client:** add multipart form data support ([6f9e8f5](https://github.com/trycourier/courier-csharp/commit/6f9e8f56c2f3374cc2e280395294bf258694f459))
+
+
+### Chores
+
+* **client:** improve object instantiation ([82d71f5](https://github.com/trycourier/courier-csharp/commit/82d71f55b0f5a38ead50d204156e8c13bc545909))
+* **internal:** use `Random.Shared` in newer .NET versions ([10521ce](https://github.com/trycourier/courier-csharp/commit/10521cec393e6ee2c86b1d5b886636d98b59c36c))
+
+
+### Documentation
+
+* add contributing.md ([f3ceb03](https://github.com/trycourier/courier-csharp/commit/f3ceb03bec24a015c9c204d43ddad6758242d4d6))
+
 ## 3.3.0 (2025-12-16)
 
 Full Changelog: [v3.2.0...v3.3.0](https://github.com/trycourier/courier-csharp/compare/v3.2.0...v3.3.0)
