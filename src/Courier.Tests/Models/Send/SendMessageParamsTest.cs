@@ -2296,14 +2296,14 @@ public class TimeoutsTest : TestBase
 public class ContentTest : TestBase
 {
     [Fact]
-    public void elemental_content_sugarValidation_Works()
+    public void ElementalContentSugarValidationWorks()
     {
         Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
         value.Validate();
     }
 
     [Fact]
-    public void elementalValidation_Works()
+    public void ElementalValidationWorks()
     {
         Content value = new(
             new Models::ElementalContent()
@@ -2327,7 +2327,7 @@ public class ContentTest : TestBase
     }
 
     [Fact]
-    public void elemental_content_sugarSerializationRoundtrip_Works()
+    public void ElementalContentSugarSerializationRoundtripWorks()
     {
         Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
         string json = JsonSerializer.Serialize(value);
@@ -2337,7 +2337,7 @@ public class ContentTest : TestBase
     }
 
     [Fact]
-    public void elementalSerializationRoundtrip_Works()
+    public void ElementalSerializationRoundtripWorks()
     {
         Content value = new(
             new Models::ElementalContent()
@@ -2587,21 +2587,21 @@ public class ExpiryTest : TestBase
 public class ExpiresInTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         ExpiresIn value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void longValidation_Works()
+    public void LongValidationWorks()
     {
         ExpiresIn value = new(0);
         value.Validate();
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         ExpiresIn value = new("string");
         string json = JsonSerializer.Serialize(value);
@@ -2611,7 +2611,7 @@ public class ExpiresInTest : TestBase
     }
 
     [Fact]
-    public void longSerializationRoundtrip_Works()
+    public void LongSerializationRoundtripWorks()
     {
         ExpiresIn value = new(0);
         string json = JsonSerializer.Serialize(value);
@@ -3578,7 +3578,7 @@ public class CriteriaTest : TestBase
 public class ToTest : TestBase
 {
     [Fact]
-    public void user_recipientValidation_Works()
+    public void UserRecipientValidationWorks()
     {
         To value = new(
             new Models::UserRecipient()
@@ -3637,11 +3637,11 @@ public class ToTest : TestBase
     }
 
     [Fact]
-    public void RecipientsValidation_Works()
+    public void RecipientsValidationWorks()
     {
         To value = new(
             [
-                new()
+                new Models::Recipient()
                 {
                     AccountID = "account_id",
                     Context = new() { TenantID = "tenant_id" },
@@ -3698,7 +3698,7 @@ public class ToTest : TestBase
     }
 
     [Fact]
-    public void user_recipientSerializationRoundtrip_Works()
+    public void UserRecipientSerializationRoundtripWorks()
     {
         To value = new(
             new Models::UserRecipient()
@@ -3760,11 +3760,11 @@ public class ToTest : TestBase
     }
 
     [Fact]
-    public void RecipientsSerializationRoundtrip_Works()
+    public void RecipientsSerializationRoundtripWorks()
     {
         To value = new(
             [
-                new()
+                new Models::Recipient()
                 {
                     AccountID = "account_id",
                     Context = new() { TenantID = "tenant_id" },

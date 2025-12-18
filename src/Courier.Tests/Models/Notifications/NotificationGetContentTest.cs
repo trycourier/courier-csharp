@@ -581,14 +581,14 @@ public class BlockTypeTest : TestBase
 public class ContentTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         Content value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void notification_content_hierarchyValidation_Works()
+    public void NotificationContentHierarchyValidationWorks()
     {
         Content value = new(
             new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
@@ -597,7 +597,7 @@ public class ContentTest : TestBase
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         Content value = new("string");
         string json = JsonSerializer.Serialize(value);
@@ -607,7 +607,7 @@ public class ContentTest : TestBase
     }
 
     [Fact]
-    public void notification_content_hierarchySerializationRoundtrip_Works()
+    public void NotificationContentHierarchySerializationRoundtripWorks()
     {
         Content value = new(
             new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
@@ -710,14 +710,14 @@ public class NotificationContentHierarchyTest : TestBase
 public class LocaleTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         Locale value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void notification_content_hierarchyValidation_Works()
+    public void NotificationContentHierarchyValidationWorks()
     {
         Locale value = new(
             new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
@@ -726,7 +726,7 @@ public class LocaleTest : TestBase
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         Locale value = new("string");
         string json = JsonSerializer.Serialize(value);
@@ -736,7 +736,7 @@ public class LocaleTest : TestBase
     }
 
     [Fact]
-    public void notification_content_hierarchySerializationRoundtrip_Works()
+    public void NotificationContentHierarchySerializationRoundtripWorks()
     {
         Locale value = new(
             new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
