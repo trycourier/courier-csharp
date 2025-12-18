@@ -12,8 +12,8 @@ public sealed record class NotificationListParams : ParamsBase
 {
     public string? Cursor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "cursor"); }
-        init { ModelBase.Set(this._rawQueryData, "cursor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cursor"); }
+        init { JsonModel.Set(this._rawQueryData, "cursor", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class NotificationListParams : ParamsBase
     /// </summary>
     public bool? Notes
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "notes"); }
-        init { ModelBase.Set(this._rawQueryData, "notes", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "notes"); }
+        init { JsonModel.Set(this._rawQueryData, "notes", value); }
     }
 
     public NotificationListParams() { }
@@ -51,7 +51,7 @@ public sealed record class NotificationListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static NotificationListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

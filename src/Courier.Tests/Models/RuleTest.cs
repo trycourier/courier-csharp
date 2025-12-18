@@ -33,8 +33,8 @@ public class RuleTest : TestBase
     {
         var model = new Rule { Until = "until", Start = "start" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Rule>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Rule>(element);
         Assert.NotNull(deserialized);
 
         string expectedUntil = "until";

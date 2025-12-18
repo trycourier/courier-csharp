@@ -37,8 +37,8 @@ public class BrandSnippetsTest : TestBase
     {
         var model = new BrandSnippets { Items = [new() { Name = "name", Value = "value" }] };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandSnippets>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrandSnippets>(element);
         Assert.NotNull(deserialized);
 
         List<BrandSnippet> expectedItems = [new() { Name = "name", Value = "value" }];

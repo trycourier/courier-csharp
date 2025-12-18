@@ -50,8 +50,8 @@ public class PatchTest : TestBase
             Value = "value",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Patch>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Patch>(element);
         Assert.NotNull(deserialized);
 
         string expectedOp = "op";

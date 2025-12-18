@@ -175,8 +175,8 @@ public class NotificationGetContentTest : TestBase
             Checksum = "checksum",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<NotificationGetContent>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<NotificationGetContent>(element);
         Assert.NotNull(deserialized);
 
         List<Block> expectedBlocks =
@@ -393,8 +393,8 @@ public class BlockTest : TestBase
             Locales = new Dictionary<string, Locale>() { { "foo", "string" } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Block>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Block>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -600,8 +600,8 @@ public class ContentTest : TestBase
     public void StringSerializationRoundtripWorks()
     {
         Content value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -612,8 +612,8 @@ public class ContentTest : TestBase
         Content value = new(
             new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -649,8 +649,8 @@ public class NotificationContentHierarchyTest : TestBase
     {
         var model = new NotificationContentHierarchy { Children = "children", Parent = "parent" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<NotificationContentHierarchy>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<NotificationContentHierarchy>(element);
         Assert.NotNull(deserialized);
 
         string expectedChildren = "children";
@@ -729,8 +729,8 @@ public class LocaleTest : TestBase
     public void StringSerializationRoundtripWorks()
     {
         Locale value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Locale>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Locale>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -741,8 +741,8 @@ public class LocaleTest : TestBase
         Locale value = new(
             new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Locale>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Locale>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -790,8 +790,8 @@ public class LocaleNotificationContentHierarchyTest : TestBase
             Parent = "parent",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<LocaleNotificationContentHierarchy>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<LocaleNotificationContentHierarchy>(element);
         Assert.NotNull(deserialized);
 
         string expectedChildren = "children";
@@ -939,8 +939,8 @@ public class ChannelTest : TestBase
             Type = "type",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Channel>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Channel>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -1082,8 +1082,8 @@ public class ChannelContentTest : TestBase
     {
         var model = new ChannelContent { Subject = "subject", Title = "title" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ChannelContent>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ChannelContent>(element);
         Assert.NotNull(deserialized);
 
         string expectedSubject = "subject";
@@ -1170,8 +1170,8 @@ public class LocalesItemTest : TestBase
     {
         var model = new LocalesItem { Subject = "subject", Title = "title" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<LocalesItem>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<LocalesItem>(element);
         Assert.NotNull(deserialized);
 
         string expectedSubject = "subject";

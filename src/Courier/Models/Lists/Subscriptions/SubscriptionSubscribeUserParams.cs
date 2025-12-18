@@ -29,12 +29,12 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNullableClass<RecipientPreferences>(
+            return JsonModel.GetNullableClass<RecipientPreferences>(
                 this.RawBodyData,
                 "preferences"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "preferences", value); }
+        init { JsonModel.Set(this._rawBodyData, "preferences", value); }
     }
 
     public SubscriptionSubscribeUserParams() { }
@@ -72,7 +72,7 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static SubscriptionSubscribeUserParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -97,9 +97,13 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

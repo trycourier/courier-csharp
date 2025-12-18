@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.Lists;
 
-[JsonConverter(typeof(ModelConverter<ListListResponse, ListListResponseFromRaw>))]
-public sealed record class ListListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ListListResponse, ListListResponseFromRaw>))]
+public sealed record class ListListResponse : JsonModel
 {
     public required IReadOnlyList<SubscriptionList> Items
     {
-        get { return ModelBase.GetNotNullClass<List<SubscriptionList>>(this.RawData, "items"); }
-        init { ModelBase.Set(this._rawData, "items", value); }
+        get { return JsonModel.GetNotNullClass<List<SubscriptionList>>(this.RawData, "items"); }
+        init { JsonModel.Set(this._rawData, "items", value); }
     }
 
     public required Paging Paging
     {
-        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { ModelBase.Set(this._rawData, "paging", value); }
+        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { JsonModel.Set(this._rawData, "paging", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class ListListResponse : ModelBase
     }
 }
 
-class ListListResponseFromRaw : IFromRaw<ListListResponse>
+class ListListResponseFromRaw : IFromRawJson<ListListResponse>
 {
     /// <inheritdoc/>
     public ListListResponse FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

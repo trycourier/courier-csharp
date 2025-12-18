@@ -82,8 +82,8 @@ public class CheckListResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<CheckListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<CheckListResponse>(element);
         Assert.NotNull(deserialized);
 
         List<Check> expectedChecks =

@@ -56,8 +56,8 @@ public class CheckTest : TestBase
             Updated = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Check>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Check>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -114,8 +114,8 @@ public class IntersectionMember1Test : TestBase
     {
         var model = new IntersectionMember1 { Updated = 0 };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         long expectedUpdated = 0;

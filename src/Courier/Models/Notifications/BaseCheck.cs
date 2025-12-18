@@ -9,30 +9,30 @@ using System = System;
 
 namespace Courier.Models.Notifications;
 
-[JsonConverter(typeof(ModelConverter<BaseCheck, BaseCheckFromRaw>))]
-public sealed record class BaseCheck : ModelBase
+[JsonConverter(typeof(JsonModelConverter<BaseCheck, BaseCheckFromRaw>))]
+public sealed record class BaseCheck : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public required ApiEnum<string, Status> Status
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     public required ApiEnum<string, global::Courier.Models.Notifications.Type> Type
     {
         get
         {
-            return ModelBase.GetNotNullClass<
+            return JsonModel.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Notifications.Type>
             >(this.RawData, "type");
         }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     /// <inheritdoc/>
@@ -68,7 +68,7 @@ public sealed record class BaseCheck : ModelBase
     }
 }
 
-class BaseCheckFromRaw : IFromRaw<BaseCheck>
+class BaseCheckFromRaw : IFromRawJson<BaseCheck>
 {
     /// <inheritdoc/>
     public BaseCheck FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

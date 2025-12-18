@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Messages;
 
-[JsonConverter(typeof(ModelConverter<MessageDetails, MessageDetailsFromRaw>))]
-public sealed record class MessageDetails : ModelBase
+[JsonConverter(typeof(JsonModelConverter<MessageDetails, MessageDetailsFromRaw>))]
+public sealed record class MessageDetails : JsonModel
 {
     /// <summary>
     /// A unique identifier associated with the message you wish to retrieve (results
@@ -18,8 +18,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     /// <summary>
@@ -28,8 +28,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Clicked
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "clicked"); }
-        init { ModelBase.Set(this._rawData, "clicked", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "clicked"); }
+        init { JsonModel.Set(this._rawData, "clicked", value); }
     }
 
     /// <summary>
@@ -38,8 +38,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Delivered
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "delivered"); }
-        init { ModelBase.Set(this._rawData, "delivered", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "delivered"); }
+        init { JsonModel.Set(this._rawData, "delivered", value); }
     }
 
     /// <summary>
@@ -48,8 +48,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Enqueued
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "enqueued"); }
-        init { ModelBase.Set(this._rawData, "enqueued", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "enqueued"); }
+        init { JsonModel.Set(this._rawData, "enqueued", value); }
     }
 
     /// <summary>
@@ -57,8 +57,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required string Event
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "event"); }
-        init { ModelBase.Set(this._rawData, "event", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "event"); }
+        init { JsonModel.Set(this._rawData, "event", value); }
     }
 
     /// <summary>
@@ -66,8 +66,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required string Notification
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "notification"); }
-        init { ModelBase.Set(this._rawData, "notification", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "notification"); }
+        init { JsonModel.Set(this._rawData, "notification", value); }
     }
 
     /// <summary>
@@ -76,8 +76,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Opened
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "opened"); }
-        init { ModelBase.Set(this._rawData, "opened", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "opened"); }
+        init { JsonModel.Set(this._rawData, "opened", value); }
     }
 
     /// <summary>
@@ -85,8 +85,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required string Recipient
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "recipient"); }
-        init { ModelBase.Set(this._rawData, "recipient", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "recipient"); }
+        init { JsonModel.Set(this._rawData, "recipient", value); }
     }
 
     /// <summary>
@@ -95,8 +95,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required long Sent
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "sent"); }
-        init { ModelBase.Set(this._rawData, "sent", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "sent"); }
+        init { JsonModel.Set(this._rawData, "sent", value); }
     }
 
     /// <summary>
@@ -104,8 +104,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public required ApiEnum<string, Status> Status
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
@@ -113,8 +113,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public string? Error
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "error"); }
-        init { ModelBase.Set(this._rawData, "error", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "error"); }
+        init { JsonModel.Set(this._rawData, "error", value); }
     }
 
     /// <summary>
@@ -122,8 +122,8 @@ public sealed record class MessageDetails : ModelBase
     /// </summary>
     public ApiEnum<string, Reason>? Reason
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Reason>>(this.RawData, "reason"); }
-        init { ModelBase.Set(this._rawData, "reason", value); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Reason>>(this.RawData, "reason"); }
+        init { JsonModel.Set(this._rawData, "reason", value); }
     }
 
     /// <inheritdoc/>
@@ -168,7 +168,7 @@ public sealed record class MessageDetails : ModelBase
     }
 }
 
-class MessageDetailsFromRaw : IFromRaw<MessageDetails>
+class MessageDetailsFromRaw : IFromRawJson<MessageDetails>
 {
     /// <inheritdoc/>
     public MessageDetails FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

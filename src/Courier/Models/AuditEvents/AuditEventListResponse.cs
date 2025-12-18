@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models.AuditEvents;
 
-[JsonConverter(typeof(ModelConverter<AuditEventListResponse, AuditEventListResponseFromRaw>))]
-public sealed record class AuditEventListResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AuditEventListResponse, AuditEventListResponseFromRaw>))]
+public sealed record class AuditEventListResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { ModelBase.Set(this._rawData, "paging", value); }
+        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { JsonModel.Set(this._rawData, "paging", value); }
     }
 
     public required IReadOnlyList<AuditEvent> Results
     {
-        get { return ModelBase.GetNotNullClass<List<AuditEvent>>(this.RawData, "results"); }
-        init { ModelBase.Set(this._rawData, "results", value); }
+        get { return JsonModel.GetNotNullClass<List<AuditEvent>>(this.RawData, "results"); }
+        init { JsonModel.Set(this._rawData, "results", value); }
     }
 
     /// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed record class AuditEventListResponse : ModelBase
     }
 }
 
-class AuditEventListResponseFromRaw : IFromRaw<AuditEventListResponse>
+class AuditEventListResponseFromRaw : IFromRawJson<AuditEventListResponse>
 {
     /// <inheritdoc/>
     public AuditEventListResponse FromRawUnchecked(

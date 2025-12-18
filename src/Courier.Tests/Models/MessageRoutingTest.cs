@@ -40,8 +40,8 @@ public class MessageRoutingTest : TestBase
     {
         var model = new MessageRouting { Channels = ["string"], Method = Method.All };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MessageRouting>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<MessageRouting>(element);
         Assert.NotNull(deserialized);
 
         List<MessageRoutingChannel> expectedChannels = ["string"];

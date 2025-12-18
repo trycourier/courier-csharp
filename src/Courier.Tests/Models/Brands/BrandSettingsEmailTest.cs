@@ -159,8 +159,8 @@ public class BrandSettingsEmailTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandSettingsEmail>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BrandSettingsEmail>(element);
         Assert.NotNull(deserialized);
 
         EmailFooter expectedFooter = new() { Content = "content", InheritDefault = true };
@@ -417,8 +417,8 @@ public class TemplateOverrideTest : TestBase
             FooterFullWidth = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<TemplateOverride>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TemplateOverride>(element);
         Assert.NotNull(deserialized);
 
         bool expectedEnabled = true;
@@ -698,8 +698,8 @@ public class IntersectionMember1Test : TestBase
             FooterFullWidth = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         BrandTemplate expectedMjml = new()

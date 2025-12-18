@@ -9,22 +9,22 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<MessageRouting, MessageRoutingFromRaw>))]
-public sealed record class MessageRouting : ModelBase
+[JsonConverter(typeof(JsonModelConverter<MessageRouting, MessageRoutingFromRaw>))]
+public sealed record class MessageRouting : JsonModel
 {
     public required IReadOnlyList<MessageRoutingChannel> Channels
     {
         get
         {
-            return ModelBase.GetNotNullClass<List<MessageRoutingChannel>>(this.RawData, "channels");
+            return JsonModel.GetNotNullClass<List<MessageRoutingChannel>>(this.RawData, "channels");
         }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public required ApiEnum<string, Method> Method
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Method>>(this.RawData, "method"); }
-        init { ModelBase.Set(this._rawData, "method", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, Method>>(this.RawData, "method"); }
+        init { JsonModel.Set(this._rawData, "method", value); }
     }
 
     /// <inheritdoc/>
@@ -62,7 +62,7 @@ public sealed record class MessageRouting : ModelBase
     }
 }
 
-class MessageRoutingFromRaw : IFromRaw<MessageRouting>
+class MessageRoutingFromRaw : IFromRawJson<MessageRouting>
 {
     /// <inheritdoc/>
     public MessageRouting FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

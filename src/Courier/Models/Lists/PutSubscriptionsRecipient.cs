@@ -7,22 +7,24 @@ using Courier.Core;
 
 namespace Courier.Models.Lists;
 
-[JsonConverter(typeof(ModelConverter<PutSubscriptionsRecipient, PutSubscriptionsRecipientFromRaw>))]
-public sealed record class PutSubscriptionsRecipient : ModelBase
+[JsonConverter(
+    typeof(JsonModelConverter<PutSubscriptionsRecipient, PutSubscriptionsRecipientFromRaw>)
+)]
+public sealed record class PutSubscriptionsRecipient : JsonModel
 {
     public required string RecipientID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "recipientId"); }
-        init { ModelBase.Set(this._rawData, "recipientId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "recipientId"); }
+        init { JsonModel.Set(this._rawData, "recipientId", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
+            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init { ModelBase.Set(this._rawData, "preferences", value); }
+        init { JsonModel.Set(this._rawData, "preferences", value); }
     }
 
     /// <inheritdoc/>
@@ -66,7 +68,7 @@ public sealed record class PutSubscriptionsRecipient : ModelBase
     }
 }
 
-class PutSubscriptionsRecipientFromRaw : IFromRaw<PutSubscriptionsRecipient>
+class PutSubscriptionsRecipientFromRaw : IFromRawJson<PutSubscriptionsRecipient>
 {
     /// <inheritdoc/>
     public PutSubscriptionsRecipient FromRawUnchecked(

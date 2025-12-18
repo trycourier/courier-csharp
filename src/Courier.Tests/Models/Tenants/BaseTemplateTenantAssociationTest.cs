@@ -60,8 +60,8 @@ public class BaseTemplateTenantAssociationTest : TestBase
             Version = "version",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BaseTemplateTenantAssociation>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BaseTemplateTenantAssociation>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

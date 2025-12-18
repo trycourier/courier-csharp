@@ -125,8 +125,8 @@ public class UserTokenTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserToken>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserToken>(element);
         Assert.NotNull(deserialized);
 
         string expectedToken = "token";
@@ -507,8 +507,8 @@ public class UserTokenDeviceTest : TestBase
             Platform = "platform",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserTokenDevice>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserTokenDevice>(element);
         Assert.NotNull(deserialized);
 
         string expectedAdID = "ad_id";
@@ -633,8 +633,8 @@ public class UserTokenExpiryDateTest : TestBase
     public void StringSerializationRoundtripWorks()
     {
         UserTokenExpiryDate value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -643,8 +643,8 @@ public class UserTokenExpiryDateTest : TestBase
     public void BoolSerializationRoundtripWorks()
     {
         UserTokenExpiryDate value = new(true);
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -702,8 +702,8 @@ public class UserTokenTrackingTest : TestBase
             OsVersion = "os_version",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserTokenTracking>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserTokenTracking>(element);
         Assert.NotNull(deserialized);
 
         string expectedIP = "ip";

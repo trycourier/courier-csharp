@@ -145,8 +145,8 @@ public class TokenListResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<TokenListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TokenListResponse>(element);
         Assert.NotNull(deserialized);
 
         List<UserToken> expectedTokens =

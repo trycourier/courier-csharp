@@ -33,8 +33,8 @@ public class ElementalContentSugarTest : TestBase
     {
         var model = new ElementalContentSugar { Body = "body", Title = "title" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalContentSugar>(element);
         Assert.NotNull(deserialized);
 
         string expectedBody = "body";

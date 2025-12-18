@@ -76,8 +76,8 @@ public class TenantAssociationTest : TestBase
             UserID = "user_id",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<TenantAssociation>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TenantAssociation>(element);
         Assert.NotNull(deserialized);
 
         string expectedTenantID = "tenant_id";

@@ -31,8 +31,8 @@ public class AuthIssueTokenResponseTest : TestBase
     {
         var model = new AuthIssueTokenResponse { Token = "token" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AuthIssueTokenResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AuthIssueTokenResponse>(element);
         Assert.NotNull(deserialized);
 
         string expectedToken = "token";

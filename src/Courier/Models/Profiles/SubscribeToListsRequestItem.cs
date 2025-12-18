@@ -8,23 +8,23 @@ using Courier.Core;
 namespace Courier.Models.Profiles;
 
 [JsonConverter(
-    typeof(ModelConverter<SubscribeToListsRequestItem, SubscribeToListsRequestItemFromRaw>)
+    typeof(JsonModelConverter<SubscribeToListsRequestItem, SubscribeToListsRequestItemFromRaw>)
 )]
-public sealed record class SubscribeToListsRequestItem : ModelBase
+public sealed record class SubscribeToListsRequestItem : JsonModel
 {
     public required string ListID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "listId"); }
-        init { ModelBase.Set(this._rawData, "listId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "listId"); }
+        init { JsonModel.Set(this._rawData, "listId", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
+            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init { ModelBase.Set(this._rawData, "preferences", value); }
+        init { JsonModel.Set(this._rawData, "preferences", value); }
     }
 
     /// <inheritdoc/>
@@ -68,7 +68,7 @@ public sealed record class SubscribeToListsRequestItem : ModelBase
     }
 }
 
-class SubscribeToListsRequestItemFromRaw : IFromRaw<SubscribeToListsRequestItem>
+class SubscribeToListsRequestItemFromRaw : IFromRawJson<SubscribeToListsRequestItem>
 {
     /// <inheritdoc/>
     public SubscribeToListsRequestItem FromRawUnchecked(

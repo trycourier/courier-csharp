@@ -361,8 +361,8 @@ public class InboundBulkMessageUserTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InboundBulkMessageUser>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<InboundBulkMessageUser>(element);
         Assert.NotNull(deserialized);
 
         JsonElement expectedData = JsonSerializer.Deserialize<JsonElement>("{}");

@@ -29,9 +29,9 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     {
         get
         {
-            return ModelBase.GetNotNullClass<List<TenantAssociation>>(this.RawBodyData, "tenants");
+            return JsonModel.GetNotNullClass<List<TenantAssociation>>(this.RawBodyData, "tenants");
         }
-        init { ModelBase.Set(this._rawBodyData, "tenants", value); }
+        init { JsonModel.Set(this._rawBodyData, "tenants", value); }
     }
 
     public TenantAddMultipleParams() { }
@@ -67,7 +67,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static TenantAddMultipleParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -92,9 +92,13 @@ public sealed record class TenantAddMultipleParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

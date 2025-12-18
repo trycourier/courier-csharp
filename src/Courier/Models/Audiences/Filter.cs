@@ -9,8 +9,8 @@ using System = System;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<Filter, FilterFromRaw>))]
-public sealed record class Filter : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Filter, FilterFromRaw>))]
+public sealed record class Filter : JsonModel
 {
     /// <summary>
     /// The operator to use for filtering
@@ -19,9 +19,9 @@ public sealed record class Filter : ModelBase
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, Operator>>(this.RawData, "operator");
+            return JsonModel.GetNotNullClass<ApiEnum<string, Operator>>(this.RawData, "operator");
         }
-        init { ModelBase.Set(this._rawData, "operator", value); }
+        init { JsonModel.Set(this._rawData, "operator", value); }
     }
 
     /// <summary>
@@ -29,8 +29,8 @@ public sealed record class Filter : ModelBase
     /// </summary>
     public required string Path
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
-        init { ModelBase.Set(this._rawData, "path", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "path"); }
+        init { JsonModel.Set(this._rawData, "path", value); }
     }
 
     /// <summary>
@@ -38,8 +38,8 @@ public sealed record class Filter : ModelBase
     /// </summary>
     public required string Value
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "value"); }
-        init { ModelBase.Set(this._rawData, "value", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "value"); }
+        init { JsonModel.Set(this._rawData, "value", value); }
     }
 
     /// <inheritdoc/>
@@ -75,7 +75,7 @@ public sealed record class Filter : ModelBase
     }
 }
 
-class FilterFromRaw : IFromRaw<Filter>
+class FilterFromRaw : IFromRawJson<Filter>
 {
     /// <inheritdoc/>
     public Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

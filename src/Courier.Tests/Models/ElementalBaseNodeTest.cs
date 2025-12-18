@@ -61,8 +61,8 @@ public class ElementalBaseNodeTest : TestBase
             Ref = "ref",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalBaseNode>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalBaseNode>(element);
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];

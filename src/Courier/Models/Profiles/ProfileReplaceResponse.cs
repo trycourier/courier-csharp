@@ -9,19 +9,19 @@ using System = System;
 
 namespace Courier.Models.Profiles;
 
-[JsonConverter(typeof(ModelConverter<ProfileReplaceResponse, ProfileReplaceResponseFromRaw>))]
-public sealed record class ProfileReplaceResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ProfileReplaceResponse, ProfileReplaceResponseFromRaw>))]
+public sealed record class ProfileReplaceResponse : JsonModel
 {
     public required ApiEnum<string, ProfileReplaceResponseStatus> Status
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, ProfileReplaceResponseStatus>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, ProfileReplaceResponseStatus>>(
                 this.RawData,
                 "status"
             );
         }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <inheritdoc/>
@@ -64,7 +64,7 @@ public sealed record class ProfileReplaceResponse : ModelBase
     }
 }
 
-class ProfileReplaceResponseFromRaw : IFromRaw<ProfileReplaceResponse>
+class ProfileReplaceResponseFromRaw : IFromRawJson<ProfileReplaceResponse>
 {
     /// <inheritdoc/>
     public ProfileReplaceResponse FromRawUnchecked(

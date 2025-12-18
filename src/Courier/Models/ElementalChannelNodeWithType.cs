@@ -21,32 +21,32 @@ namespace Courier.Models;
 /// for more details.
 /// </summary>
 [JsonConverter(
-    typeof(ModelConverter<ElementalChannelNodeWithType, ElementalChannelNodeWithTypeFromRaw>)
+    typeof(JsonModelConverter<ElementalChannelNodeWithType, ElementalChannelNodeWithTypeFromRaw>)
 )]
-public sealed record class ElementalChannelNodeWithType : ModelBase
+public sealed record class ElementalChannelNodeWithType : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
-        init { ModelBase.Set(this._rawData, "if", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
+        init { JsonModel.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
-        init { ModelBase.Set(this._rawData, "loop", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "loop"); }
+        init { JsonModel.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
-        init { ModelBase.Set(this._rawData, "ref", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "ref"); }
+        init { JsonModel.Set(this._rawData, "ref", value); }
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
     /// </summary>
     public required string Channel
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "channel"); }
-        init { ModelBase.Set(this._rawData, "channel", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "channel"); }
+        init { JsonModel.Set(this._rawData, "channel", value); }
     }
 
     /// <summary>
@@ -67,16 +67,16 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(this.RawData, "raw");
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(this.RawData, "raw");
         }
-        init { ModelBase.Set(this._rawData, "raw", value); }
+        init { JsonModel.Set(this._rawData, "raw", value); }
     }
 
     public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
             >(this.RawData, "type");
         }
@@ -87,7 +87,7 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -150,7 +150,7 @@ public sealed record class ElementalChannelNodeWithType : ModelBase
     }
 }
 
-class ElementalChannelNodeWithTypeFromRaw : IFromRaw<ElementalChannelNodeWithType>
+class ElementalChannelNodeWithTypeFromRaw : IFromRawJson<ElementalChannelNodeWithType>
 {
     /// <inheritdoc/>
     public ElementalChannelNodeWithType FromRawUnchecked(
@@ -159,18 +159,18 @@ class ElementalChannelNodeWithTypeFromRaw : IFromRaw<ElementalChannelNodeWithTyp
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         ElementalChannelNodeWithTypeIntersectionMember1,
         ElementalChannelNodeWithTypeIntersectionMember1FromRaw
     >)
 )]
-public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : ModelBase
+public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : JsonModel
 {
     public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
             >(this.RawData, "type");
         }
@@ -181,7 +181,7 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Mod
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -223,7 +223,7 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Mod
 }
 
 class ElementalChannelNodeWithTypeIntersectionMember1FromRaw
-    : IFromRaw<ElementalChannelNodeWithTypeIntersectionMember1>
+    : IFromRawJson<ElementalChannelNodeWithTypeIntersectionMember1>
 {
     /// <inheritdoc/>
     public ElementalChannelNodeWithTypeIntersectionMember1 FromRawUnchecked(

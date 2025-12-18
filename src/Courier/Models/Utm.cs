@@ -7,37 +7,37 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Utm, UtmFromRaw>))]
-public sealed record class Utm : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Utm, UtmFromRaw>))]
+public sealed record class Utm : JsonModel
 {
     public string? Campaign
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "campaign"); }
-        init { ModelBase.Set(this._rawData, "campaign", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "campaign"); }
+        init { JsonModel.Set(this._rawData, "campaign", value); }
     }
 
     public string? Content
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "content"); }
-        init { ModelBase.Set(this._rawData, "content", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "content"); }
+        init { JsonModel.Set(this._rawData, "content", value); }
     }
 
     public string? Medium
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "medium"); }
-        init { ModelBase.Set(this._rawData, "medium", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "medium"); }
+        init { JsonModel.Set(this._rawData, "medium", value); }
     }
 
     public string? Source
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "source"); }
-        init { ModelBase.Set(this._rawData, "source", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "source"); }
+        init { JsonModel.Set(this._rawData, "source", value); }
     }
 
     public string? Term
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "term"); }
-        init { ModelBase.Set(this._rawData, "term", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "term"); }
+        init { JsonModel.Set(this._rawData, "term", value); }
     }
 
     /// <inheritdoc/>
@@ -75,7 +75,7 @@ public sealed record class Utm : ModelBase
     }
 }
 
-class UtmFromRaw : IFromRaw<Utm>
+class UtmFromRaw : IFromRawJson<Utm>
 {
     /// <inheritdoc/>
     public Utm FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

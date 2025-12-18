@@ -24,44 +24,44 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
 
     public required string? Recipient
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "recipient"); }
-        init { ModelBase.Set(this._rawBodyData, "recipient", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "recipient"); }
+        init { JsonModel.Set(this._rawBodyData, "recipient", value); }
     }
 
     public string? Brand
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "brand"); }
-        init { ModelBase.Set(this._rawBodyData, "brand", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "brand"); }
+        init { JsonModel.Set(this._rawBodyData, "brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawBodyData,
                 "data"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "data", value); }
+        init { JsonModel.Set(this._rawBodyData, "data", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            return ModelBase.GetNullableClass<Dictionary<string, JsonElement>>(
+            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
                 this.RawBodyData,
                 "profile"
             );
         }
-        init { ModelBase.Set(this._rawBodyData, "profile", value); }
+        init { JsonModel.Set(this._rawBodyData, "profile", value); }
     }
 
     public string? Template
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawBodyData, "template"); }
-        init { ModelBase.Set(this._rawBodyData, "template", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "template"); }
+        init { JsonModel.Set(this._rawBodyData, "template", value); }
     }
 
     public InvokeInvokeByTemplateParams() { }
@@ -97,7 +97,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static InvokeInvokeByTemplateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -122,9 +122,13 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

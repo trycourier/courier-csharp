@@ -262,8 +262,8 @@ public class BrandTest : TestBase
             Version = "version",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Brand>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Brand>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
