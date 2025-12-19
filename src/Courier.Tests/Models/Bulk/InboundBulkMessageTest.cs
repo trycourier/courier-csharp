@@ -62,6 +62,7 @@ public class InboundBulkMessageTest : TestBase
         Assert.Equal(expectedEvent, model.Event);
         Assert.Equal(expectedBrand, model.Brand);
         Assert.Equal(expectedContent, model.Content);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -69,6 +70,7 @@ public class InboundBulkMessageTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, model.Data[item.Key]));
         }
+        Assert.NotNull(model.Locale);
         Assert.Equal(expectedLocale.Count, model.Locale.Count);
         foreach (var item in expectedLocale)
         {
@@ -82,6 +84,7 @@ public class InboundBulkMessageTest : TestBase
                 Assert.True(JsonElement.DeepEquals(value1, model.Locale[item.Key][item1.Key]));
             }
         }
+        Assert.NotNull(model.Override);
         Assert.Equal(expectedOverride.Count, model.Override.Count);
         foreach (var item in expectedOverride)
         {
@@ -186,6 +189,7 @@ public class InboundBulkMessageTest : TestBase
         Assert.Equal(expectedEvent, deserialized.Event);
         Assert.Equal(expectedBrand, deserialized.Brand);
         Assert.Equal(expectedContent, deserialized.Content);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -193,6 +197,7 @@ public class InboundBulkMessageTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, deserialized.Data[item.Key]));
         }
+        Assert.NotNull(deserialized.Locale);
         Assert.Equal(expectedLocale.Count, deserialized.Locale.Count);
         foreach (var item in expectedLocale)
         {
@@ -208,6 +213,7 @@ public class InboundBulkMessageTest : TestBase
                 );
             }
         }
+        Assert.NotNull(deserialized.Override);
         Assert.Equal(expectedOverride.Count, deserialized.Override.Count);
         foreach (var item in expectedOverride)
         {

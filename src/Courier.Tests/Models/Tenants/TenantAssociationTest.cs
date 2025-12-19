@@ -31,6 +31,7 @@ public class TenantAssociationTest : TestBase
         string expectedUserID = "user_id";
 
         Assert.Equal(expectedTenantID, model.TenantID);
+        Assert.NotNull(model.Profile);
         Assert.Equal(expectedProfile.Count, model.Profile.Count);
         foreach (var item in expectedProfile)
         {
@@ -89,6 +90,7 @@ public class TenantAssociationTest : TestBase
         string expectedUserID = "user_id";
 
         Assert.Equal(expectedTenantID, deserialized.TenantID);
+        Assert.NotNull(deserialized.Profile);
         Assert.Equal(expectedProfile.Count, deserialized.Profile.Count);
         foreach (var item in expectedProfile)
         {
@@ -192,6 +194,8 @@ public class TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

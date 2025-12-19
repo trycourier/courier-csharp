@@ -174,6 +174,7 @@ public class InboundBulkMessageUserTest : TestBase
         Assert.NotNull(model.Data);
         Assert.True(JsonElement.DeepEquals(expectedData, model.Data.Value));
         Assert.Equal(expectedPreferences, model.Preferences);
+        Assert.NotNull(model.Profile);
         Assert.Equal(expectedProfile.Count, model.Profile.Count);
         foreach (var item in expectedProfile)
         {
@@ -447,6 +448,7 @@ public class InboundBulkMessageUserTest : TestBase
         Assert.NotNull(deserialized.Data);
         Assert.True(JsonElement.DeepEquals(expectedData, deserialized.Data.Value));
         Assert.Equal(expectedPreferences, deserialized.Preferences);
+        Assert.NotNull(deserialized.Profile);
         Assert.Equal(expectedProfile.Count, deserialized.Profile.Count);
         foreach (var item in expectedProfile)
         {

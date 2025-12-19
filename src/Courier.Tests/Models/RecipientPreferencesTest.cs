@@ -62,6 +62,7 @@ public class RecipientPreferencesTest : TestBase
             },
         };
 
+        Assert.NotNull(model.Categories);
         Assert.Equal(expectedCategories.Count, model.Categories.Count);
         foreach (var item in expectedCategories)
         {
@@ -69,6 +70,7 @@ public class RecipientPreferencesTest : TestBase
 
             Assert.Equal(value, model.Categories[item.Key]);
         }
+        Assert.NotNull(model.Notifications);
         Assert.Equal(expectedNotifications.Count, model.Notifications.Count);
         foreach (var item in expectedNotifications)
         {
@@ -175,6 +177,7 @@ public class RecipientPreferencesTest : TestBase
             },
         };
 
+        Assert.NotNull(deserialized.Categories);
         Assert.Equal(expectedCategories.Count, deserialized.Categories.Count);
         foreach (var item in expectedCategories)
         {
@@ -182,6 +185,7 @@ public class RecipientPreferencesTest : TestBase
 
             Assert.Equal(value, deserialized.Categories[item.Key]);
         }
+        Assert.NotNull(deserialized.Notifications);
         Assert.Equal(expectedNotifications.Count, deserialized.Notifications.Count);
         foreach (var item in expectedNotifications)
         {

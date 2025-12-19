@@ -614,6 +614,8 @@ public class ActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -686,6 +688,7 @@ public class AutomationSendStepTest : TestBase
 
         Assert.Equal(expectedAction, model.Action);
         Assert.Equal(expectedBrand, model.Brand);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -693,6 +696,7 @@ public class AutomationSendStepTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, model.Data[item.Key]));
         }
+        Assert.NotNull(model.Profile);
         Assert.Equal(expectedProfile.Count, model.Profile.Count);
         foreach (var item in expectedProfile)
         {
@@ -767,6 +771,7 @@ public class AutomationSendStepTest : TestBase
 
         Assert.Equal(expectedAction, deserialized.Action);
         Assert.Equal(expectedBrand, deserialized.Brand);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -774,6 +779,7 @@ public class AutomationSendStepTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, deserialized.Data[item.Key]));
         }
+        Assert.NotNull(deserialized.Profile);
         Assert.Equal(expectedProfile.Count, deserialized.Profile.Count);
         foreach (var item in expectedProfile)
         {
@@ -894,6 +900,8 @@ public class AutomationSendStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -958,6 +966,7 @@ public class AutomationSendListStepTest : TestBase
         Assert.Equal(expectedAction, model.Action);
         Assert.Equal(expectedList, model.List);
         Assert.Equal(expectedBrand, model.Brand);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -1017,6 +1026,7 @@ public class AutomationSendListStepTest : TestBase
         Assert.Equal(expectedAction, deserialized.Action);
         Assert.Equal(expectedList, deserialized.List);
         Assert.Equal(expectedBrand, deserialized.Brand);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -1122,6 +1132,8 @@ public class AutomationSendListStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1360,6 +1372,8 @@ public class AutomationUpdateProfileStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1415,6 +1429,8 @@ public class MergeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1540,6 +1556,8 @@ public class AutomationCancelStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1784,6 +1802,8 @@ public class AutomationFetchDataStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1839,6 +1859,7 @@ public class WebhookTest : TestBase
         Assert.Equal(expectedMethod, model.Method);
         Assert.Equal(expectedURL, model.URL);
         Assert.Equal(expectedBody, model.Body);
+        Assert.NotNull(model.Headers);
         Assert.Equal(expectedHeaders.Count, model.Headers.Count);
         foreach (var item in expectedHeaders)
         {
@@ -1888,6 +1909,7 @@ public class WebhookTest : TestBase
         Assert.Equal(expectedMethod, deserialized.Method);
         Assert.Equal(expectedURL, deserialized.URL);
         Assert.Equal(expectedBody, deserialized.Body);
+        Assert.NotNull(deserialized.Headers);
         Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
         foreach (var item in expectedHeaders)
         {
@@ -1986,6 +2008,8 @@ public class MethodTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -2046,6 +2070,8 @@ public class MergeStrategyTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -2170,6 +2196,8 @@ public class AutomationInvokeStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

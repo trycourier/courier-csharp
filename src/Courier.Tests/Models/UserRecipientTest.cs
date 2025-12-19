@@ -100,6 +100,7 @@ public class UserRecipientTest : TestBase
 
         Assert.Equal(expectedAccountID, model.AccountID);
         Assert.Equal(expectedContext, model.Context);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -269,6 +270,7 @@ public class UserRecipientTest : TestBase
 
         Assert.Equal(expectedAccountID, deserialized.AccountID);
         Assert.Equal(expectedContext, deserialized.Context);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -503,6 +505,7 @@ public class UserRecipientPreferencesTest : TestBase
 
             Assert.Equal(value, model.Notifications[item.Key]);
         }
+        Assert.NotNull(model.Categories);
         Assert.Equal(expectedCategories.Count, model.Categories.Count);
         foreach (var item in expectedCategories)
         {
@@ -626,6 +629,7 @@ public class UserRecipientPreferencesTest : TestBase
 
             Assert.Equal(value, deserialized.Notifications[item.Key]);
         }
+        Assert.NotNull(deserialized.Categories);
         Assert.Equal(expectedCategories.Count, deserialized.Categories.Count);
         foreach (var item in expectedCategories)
         {

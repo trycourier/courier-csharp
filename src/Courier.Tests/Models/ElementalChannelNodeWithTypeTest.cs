@@ -47,6 +47,7 @@ public class ElementalChannelNodeWithTypeTest : TestBase
         Assert.Equal(expectedLoop, model.Loop);
         Assert.Equal(expectedRef, model.Ref);
         Assert.Equal(expectedChannel, model.Channel);
+        Assert.NotNull(model.Raw);
         Assert.Equal(expectedRaw.Count, model.Raw.Count);
         foreach (var item in expectedRaw)
         {
@@ -123,6 +124,7 @@ public class ElementalChannelNodeWithTypeTest : TestBase
         Assert.Equal(expectedLoop, deserialized.Loop);
         Assert.Equal(expectedRef, deserialized.Ref);
         Assert.Equal(expectedChannel, deserialized.Channel);
+        Assert.NotNull(deserialized.Raw);
         Assert.Equal(expectedRaw.Count, deserialized.Raw.Count);
         foreach (var item in expectedRaw)
         {
@@ -440,6 +442,8 @@ public class ElementalChannelNodeWithTypeIntersectionMember1TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
