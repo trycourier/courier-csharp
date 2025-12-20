@@ -5,6 +5,183 @@ using Courier.Models.Users.Tokens;
 
 namespace Courier.Tests.Models.Users.Tokens;
 
+public class TokenAddSingleParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        string expectedUserID = "user_id";
+        string expectedToken = "token";
+        string expectedTokenValue = "token";
+        ApiEnum<string, ProviderKey> expectedProviderKey = ProviderKey.FirebaseFcm;
+        Device expectedDevice = new()
+        {
+            AdID = "ad_id",
+            AppID = "app_id",
+            DeviceID = "device_id",
+            Manufacturer = "manufacturer",
+            Model = "model",
+            Platform = "platform",
+        };
+        ExpiryDate expectedExpiryDate = "string";
+        JsonElement expectedProperties = JsonSerializer.Deserialize<JsonElement>("{}");
+        Tracking expectedTracking = new()
+        {
+            IP = "ip",
+            Lat = "lat",
+            Long = "long",
+            OsVersion = "os_version",
+        };
+
+        Assert.Equal(expectedUserID, parameters.UserID);
+        Assert.Equal(expectedToken, parameters.Token);
+        Assert.Equal(expectedTokenValue, parameters.TokenValue);
+        Assert.Equal(expectedProviderKey, parameters.ProviderKey);
+        Assert.Equal(expectedDevice, parameters.Device);
+        Assert.Equal(expectedExpiryDate, parameters.ExpiryDate);
+        Assert.NotNull(parameters.Properties);
+        Assert.True(JsonElement.DeepEquals(expectedProperties, parameters.Properties.Value));
+        Assert.Equal(expectedTracking, parameters.Tracking);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        Assert.Null(parameters.Properties);
+        Assert.False(parameters.RawBodyData.ContainsKey("properties"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            Properties = null,
+        };
+
+        Assert.Null(parameters.Properties);
+        Assert.False(parameters.RawBodyData.ContainsKey("properties"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        Assert.Null(parameters.Device);
+        Assert.False(parameters.RawBodyData.ContainsKey("device"));
+        Assert.Null(parameters.ExpiryDate);
+        Assert.False(parameters.RawBodyData.ContainsKey("expiry_date"));
+        Assert.Null(parameters.Tracking);
+        Assert.False(parameters.RawBodyData.ContainsKey("tracking"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+
+            Device = null,
+            ExpiryDate = null,
+            Tracking = null,
+        };
+
+        Assert.Null(parameters.Device);
+        Assert.False(parameters.RawBodyData.ContainsKey("device"));
+        Assert.Null(parameters.ExpiryDate);
+        Assert.False(parameters.RawBodyData.ContainsKey("expiry_date"));
+        Assert.Null(parameters.Tracking);
+        Assert.False(parameters.RawBodyData.ContainsKey("tracking"));
+    }
+}
+
 public class ProviderKeyTest : TestBase
 {
     [Theory]
