@@ -6,6 +6,81 @@ using Courier.Models.Users.Preferences;
 
 namespace Courier.Tests.Models.Users.Preferences;
 
+public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new PreferenceUpdateOrCreateTopicParams
+        {
+            UserID = "user_id",
+            TopicID = "topic_id",
+            Topic = new()
+            {
+                Status = PreferenceStatus.OptedIn,
+                CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                HasCustomRouting = true,
+            },
+            TenantID = "tenant_id",
+        };
+
+        string expectedUserID = "user_id";
+        string expectedTopicID = "topic_id";
+        Topic expectedTopic = new()
+        {
+            Status = PreferenceStatus.OptedIn,
+            CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+            HasCustomRouting = true,
+        };
+        string expectedTenantID = "tenant_id";
+
+        Assert.Equal(expectedUserID, parameters.UserID);
+        Assert.Equal(expectedTopicID, parameters.TopicID);
+        Assert.Equal(expectedTopic, parameters.Topic);
+        Assert.Equal(expectedTenantID, parameters.TenantID);
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new PreferenceUpdateOrCreateTopicParams
+        {
+            UserID = "user_id",
+            TopicID = "topic_id",
+            Topic = new()
+            {
+                Status = PreferenceStatus.OptedIn,
+                CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                HasCustomRouting = true,
+            },
+        };
+
+        Assert.Null(parameters.TenantID);
+        Assert.False(parameters.RawQueryData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new PreferenceUpdateOrCreateTopicParams
+        {
+            UserID = "user_id",
+            TopicID = "topic_id",
+            Topic = new()
+            {
+                Status = PreferenceStatus.OptedIn,
+                CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                HasCustomRouting = true,
+            },
+
+            TenantID = null,
+        };
+
+        Assert.Null(parameters.TenantID);
+        Assert.False(parameters.RawQueryData.ContainsKey("tenant_id"));
+    }
+}
+
 public class TopicTest : TestBase
 {
     [Fact]

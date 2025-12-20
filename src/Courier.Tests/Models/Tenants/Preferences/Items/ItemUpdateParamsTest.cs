@@ -1,9 +1,82 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
+using Courier.Models;
 using Courier.Models.Tenants.Preferences.Items;
 
 namespace Courier.Tests.Models.Tenants.Preferences.Items;
+
+public class ItemUpdateParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new ItemUpdateParams
+        {
+            TenantID = "tenant_id",
+            TopicID = "topic_id",
+            Status = Status.OptedIn,
+            CustomRouting = [ChannelClassification.Inbox],
+            HasCustomRouting = true,
+        };
+
+        string expectedTenantID = "tenant_id";
+        string expectedTopicID = "topic_id";
+        ApiEnum<string, Status> expectedStatus = Status.OptedIn;
+        List<ApiEnum<string, ChannelClassification>> expectedCustomRouting =
+        [
+            ChannelClassification.Inbox,
+        ];
+        bool expectedHasCustomRouting = true;
+
+        Assert.Equal(expectedTenantID, parameters.TenantID);
+        Assert.Equal(expectedTopicID, parameters.TopicID);
+        Assert.Equal(expectedStatus, parameters.Status);
+        Assert.NotNull(parameters.CustomRouting);
+        Assert.Equal(expectedCustomRouting.Count, parameters.CustomRouting.Count);
+        for (int i = 0; i < expectedCustomRouting.Count; i++)
+        {
+            Assert.Equal(expectedCustomRouting[i], parameters.CustomRouting[i]);
+        }
+        Assert.Equal(expectedHasCustomRouting, parameters.HasCustomRouting);
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new ItemUpdateParams
+        {
+            TenantID = "tenant_id",
+            TopicID = "topic_id",
+            Status = Status.OptedIn,
+        };
+
+        Assert.Null(parameters.CustomRouting);
+        Assert.False(parameters.RawBodyData.ContainsKey("custom_routing"));
+        Assert.Null(parameters.HasCustomRouting);
+        Assert.False(parameters.RawBodyData.ContainsKey("has_custom_routing"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new ItemUpdateParams
+        {
+            TenantID = "tenant_id",
+            TopicID = "topic_id",
+            Status = Status.OptedIn,
+
+            CustomRouting = null,
+            HasCustomRouting = null,
+        };
+
+        Assert.Null(parameters.CustomRouting);
+        Assert.False(parameters.RawBodyData.ContainsKey("custom_routing"));
+        Assert.Null(parameters.HasCustomRouting);
+        Assert.False(parameters.RawBodyData.ContainsKey("has_custom_routing"));
+    }
+}
 
 public class StatusTest : TestBase
 {

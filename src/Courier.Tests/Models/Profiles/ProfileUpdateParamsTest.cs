@@ -1,7 +1,47 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models.Profiles;
 
 namespace Courier.Tests.Models.Profiles;
+
+public class ProfileUpdateParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new ProfileUpdateParams
+        {
+            UserID = "user_id",
+            Patch =
+            [
+                new()
+                {
+                    Op = "op",
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+        };
+
+        string expectedUserID = "user_id";
+        List<Patch> expectedPatch =
+        [
+            new()
+            {
+                Op = "op",
+                Path = "path",
+                Value = "value",
+            },
+        ];
+
+        Assert.Equal(expectedUserID, parameters.UserID);
+        Assert.Equal(expectedPatch.Count, parameters.Patch.Count);
+        for (int i = 0; i < expectedPatch.Count; i++)
+        {
+            Assert.Equal(expectedPatch[i], parameters.Patch[i]);
+        }
+    }
+}
 
 public class PatchTest : TestBase
 {
