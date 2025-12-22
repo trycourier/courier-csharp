@@ -1,0 +1,86 @@
+using System.Text.Json;
+using Courier.Models;
+
+namespace Courier.Tests.Models;
+
+public class SendToMsTeamsChannelNameTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            ServiceURL = "service_url",
+            TeamID = "team_id",
+            TenantID = "tenant_id",
+        };
+
+        string expectedChannelName = "channel_name";
+        string expectedServiceURL = "service_url";
+        string expectedTeamID = "team_id";
+        string expectedTenantID = "tenant_id";
+
+        Assert.Equal(expectedChannelName, model.ChannelName);
+        Assert.Equal(expectedServiceURL, model.ServiceURL);
+        Assert.Equal(expectedTeamID, model.TeamID);
+        Assert.Equal(expectedTenantID, model.TenantID);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            ServiceURL = "service_url",
+            TeamID = "team_id",
+            TenantID = "tenant_id",
+        };
+
+        string json = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(json);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            ServiceURL = "service_url",
+            TeamID = "team_id",
+            TenantID = "tenant_id",
+        };
+
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(element);
+        Assert.NotNull(deserialized);
+
+        string expectedChannelName = "channel_name";
+        string expectedServiceURL = "service_url";
+        string expectedTeamID = "team_id";
+        string expectedTenantID = "tenant_id";
+
+        Assert.Equal(expectedChannelName, deserialized.ChannelName);
+        Assert.Equal(expectedServiceURL, deserialized.ServiceURL);
+        Assert.Equal(expectedTeamID, deserialized.TeamID);
+        Assert.Equal(expectedTenantID, deserialized.TenantID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            ServiceURL = "service_url",
+            TeamID = "team_id",
+            TenantID = "tenant_id",
+        };
+
+        model.Validate();
+    }
+}

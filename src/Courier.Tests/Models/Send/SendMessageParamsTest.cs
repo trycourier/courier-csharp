@@ -159,7 +159,7 @@ public class SendMessageParamsTest : TestBase
                         TemplateID = "templateId",
                     },
                     TenantID = "tenant_id",
-                    UserID = "example_user",
+                    UserID = "user_id",
                 },
             },
         };
@@ -309,7 +309,7 @@ public class SendMessageParamsTest : TestBase
                     TemplateID = "templateId",
                 },
                 TenantID = "tenant_id",
-                UserID = "example_user",
+                UserID = "user_id",
             },
         };
 
@@ -3967,62 +3967,143 @@ public class ToTest : TestBase
     }
 
     [Fact]
-    public void RecipientsValidationWorks()
+    public void AudienceRecipientValidationWorks()
     {
         To value = new(
-            [
-                new Models::Recipient()
+            new Models::AudienceRecipient()
+            {
+                AudienceID = "audience_id",
+                Data = new Dictionary<string, JsonElement>()
                 {
-                    AccountID = "account_id",
-                    Context = new() { TenantID = "tenant_id" },
-                    Data = new Dictionary<string, JsonElement>()
-                    {
-                        { "foo", JsonSerializer.SerializeToElement("bar") },
-                    },
-                    Email = "email",
-                    ListID = "list_id",
-                    Locale = "locale",
-                    PhoneNumber = "phone_number",
-                    Preferences = new()
-                    {
-                        Notifications = new Dictionary<string, Models::Preference>()
-                        {
-                            {
-                                "foo",
-                                new()
-                                {
-                                    Status = Models::PreferenceStatus.OptedIn,
-                                    ChannelPreferences =
-                                    [
-                                        new(Models::ChannelClassification.DirectMessage),
-                                    ],
-                                    Rules = [new() { Until = "until", Start = "start" }],
-                                    Source = Models::Source.Subscription,
-                                }
-                            },
-                        },
-                        Categories = new Dictionary<string, Models::Preference>()
-                        {
-                            {
-                                "foo",
-                                new()
-                                {
-                                    Status = Models::PreferenceStatus.OptedIn,
-                                    ChannelPreferences =
-                                    [
-                                        new(Models::ChannelClassification.DirectMessage),
-                                    ],
-                                    Rules = [new() { Until = "until", Start = "start" }],
-                                    Source = Models::Source.Subscription,
-                                }
-                            },
-                        },
-                        TemplateID = "templateId",
-                    },
-                    TenantID = "tenant_id",
-                    UserID = "user_id",
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-            ]
+                Filters =
+                [
+                    new()
+                    {
+                        Operator = Models::Operator.MemberOf,
+                        Path = Models::Path.AccountID,
+                        Value = "value",
+                    },
+                ],
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void ListRecipientValidationWorks()
+    {
+        To value = new(
+            new Models::ListRecipient()
+            {
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Filters =
+                [
+                    new()
+                    {
+                        Operator = Models::ListFilterOperator.MemberOf,
+                        Path = Models::ListFilterPath.AccountID,
+                        Value = "value",
+                    },
+                ],
+                ListID = "list_id",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void ListPatternRecipientValidationWorks()
+    {
+        To value = new(
+            new Models::ListPatternRecipient()
+            {
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                ListPattern = "list_pattern",
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void SlackRecipientValidationWorks()
+    {
+        To value = new(
+            new Models::SlackRecipient(
+                new Models::Slack(
+                    new Models::SendToSlackChannel()
+                    {
+                        AccessToken = "access_token",
+                        Channel = "channel",
+                    }
+                )
+            )
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void MsTeamsRecipientValidationWorks()
+    {
+        To value = new(
+            new Models::MsTeamsRecipient(
+                new Models::MsTeams(
+                    new Models::SendToMsTeamsUserID()
+                    {
+                        ServiceURL = "service_url",
+                        TenantID = "tenant_id",
+                        UserID = "user_id",
+                    }
+                )
+            )
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void PagerdutyRecipientValidationWorks()
+    {
+        To value = new(
+            new Models::PagerdutyRecipient(
+                new Models::Pagerduty()
+                {
+                    EventAction = "event_action",
+                    RoutingKey = "routing_key",
+                    Severity = "severity",
+                    Source = "source",
+                }
+            )
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void WebhookRecipientValidationWorks()
+    {
+        To value = new(
+            new Models::WebhookRecipient(
+                new Models::WebhookProfile()
+                {
+                    URL = "url",
+                    Authentication = new()
+                    {
+                        Mode = Models::WebhookAuthMode.None,
+                        Token = "token",
+                        Password = "password",
+                        Username = "username",
+                    },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Method = Models::WebhookMethod.Post,
+                    Profile = Models::WebhookProfileType.Limited,
+                }
+            )
         );
         value.Validate();
     }
@@ -4090,62 +4171,161 @@ public class ToTest : TestBase
     }
 
     [Fact]
-    public void RecipientsSerializationRoundtripWorks()
+    public void AudienceRecipientSerializationRoundtripWorks()
     {
         To value = new(
-            [
-                new Models::Recipient()
+            new Models::AudienceRecipient()
+            {
+                AudienceID = "audience_id",
+                Data = new Dictionary<string, JsonElement>()
                 {
-                    AccountID = "account_id",
-                    Context = new() { TenantID = "tenant_id" },
-                    Data = new Dictionary<string, JsonElement>()
-                    {
-                        { "foo", JsonSerializer.SerializeToElement("bar") },
-                    },
-                    Email = "email",
-                    ListID = "list_id",
-                    Locale = "locale",
-                    PhoneNumber = "phone_number",
-                    Preferences = new()
-                    {
-                        Notifications = new Dictionary<string, Models::Preference>()
-                        {
-                            {
-                                "foo",
-                                new()
-                                {
-                                    Status = Models::PreferenceStatus.OptedIn,
-                                    ChannelPreferences =
-                                    [
-                                        new(Models::ChannelClassification.DirectMessage),
-                                    ],
-                                    Rules = [new() { Until = "until", Start = "start" }],
-                                    Source = Models::Source.Subscription,
-                                }
-                            },
-                        },
-                        Categories = new Dictionary<string, Models::Preference>()
-                        {
-                            {
-                                "foo",
-                                new()
-                                {
-                                    Status = Models::PreferenceStatus.OptedIn,
-                                    ChannelPreferences =
-                                    [
-                                        new(Models::ChannelClassification.DirectMessage),
-                                    ],
-                                    Rules = [new() { Until = "until", Start = "start" }],
-                                    Source = Models::Source.Subscription,
-                                }
-                            },
-                        },
-                        TemplateID = "templateId",
-                    },
-                    TenantID = "tenant_id",
-                    UserID = "user_id",
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-            ]
+                Filters =
+                [
+                    new()
+                    {
+                        Operator = Models::Operator.MemberOf,
+                        Path = Models::Path.AccountID,
+                        Value = "value",
+                    },
+                ],
+            }
+        );
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(element);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void ListRecipientSerializationRoundtripWorks()
+    {
+        To value = new(
+            new Models::ListRecipient()
+            {
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Filters =
+                [
+                    new()
+                    {
+                        Operator = Models::ListFilterOperator.MemberOf,
+                        Path = Models::ListFilterPath.AccountID,
+                        Value = "value",
+                    },
+                ],
+                ListID = "list_id",
+            }
+        );
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(element);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void ListPatternRecipientSerializationRoundtripWorks()
+    {
+        To value = new(
+            new Models::ListPatternRecipient()
+            {
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                ListPattern = "list_pattern",
+            }
+        );
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(element);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void SlackRecipientSerializationRoundtripWorks()
+    {
+        To value = new(
+            new Models::SlackRecipient(
+                new Models::Slack(
+                    new Models::SendToSlackChannel()
+                    {
+                        AccessToken = "access_token",
+                        Channel = "channel",
+                    }
+                )
+            )
+        );
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(element);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void MsTeamsRecipientSerializationRoundtripWorks()
+    {
+        To value = new(
+            new Models::MsTeamsRecipient(
+                new Models::MsTeams(
+                    new Models::SendToMsTeamsUserID()
+                    {
+                        ServiceURL = "service_url",
+                        TenantID = "tenant_id",
+                        UserID = "user_id",
+                    }
+                )
+            )
+        );
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(element);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void PagerdutyRecipientSerializationRoundtripWorks()
+    {
+        To value = new(
+            new Models::PagerdutyRecipient(
+                new Models::Pagerduty()
+                {
+                    EventAction = "event_action",
+                    RoutingKey = "routing_key",
+                    Severity = "severity",
+                    Source = "source",
+                }
+            )
+        );
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<To>(element);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void WebhookRecipientSerializationRoundtripWorks()
+    {
+        To value = new(
+            new Models::WebhookRecipient(
+                new Models::WebhookProfile()
+                {
+                    URL = "url",
+                    Authentication = new()
+                    {
+                        Mode = Models::WebhookAuthMode.None,
+                        Token = "token",
+                        Password = "password",
+                        Username = "username",
+                    },
+                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                    Method = Models::WebhookMethod.Post,
+                    Profile = Models::WebhookProfileType.Limited,
+                }
+            )
         );
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<To>(element);

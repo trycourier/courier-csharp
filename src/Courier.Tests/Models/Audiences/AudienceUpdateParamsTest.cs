@@ -11,9 +11,9 @@ public class AudienceUpdateParamsTest : TestBase
         {
             AudienceID = "audience_id",
             Description = "description",
-            Filter = new()
+            Filter = new SingleFilterConfig()
             {
-                Operator = Operator.EndsWith,
+                Operator = SingleFilterConfigOperator.EndsWith,
                 Path = "path",
                 Value = "value",
             },
@@ -22,9 +22,9 @@ public class AudienceUpdateParamsTest : TestBase
 
         string expectedAudienceID = "audience_id";
         string expectedDescription = "description";
-        Filter expectedFilter = new()
+        Filter expectedFilter = new SingleFilterConfig()
         {
-            Operator = Operator.EndsWith,
+            Operator = SingleFilterConfigOperator.EndsWith,
             Path = "path",
             Value = "value",
         };

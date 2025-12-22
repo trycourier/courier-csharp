@@ -1,9 +1,9 @@
 using System.Text.Json;
 using Courier.Exceptions;
 using Courier.Models;
-using Courier.Models.Audiences;
 using Courier.Models.Brands;
 using Courier.Models.Bulk;
+using Audiences = Courier.Models.Audiences;
 using Inbound = Courier.Models.Inbound;
 using Invoke = Courier.Models.Automations.Invoke;
 using Items = Courier.Models.Tenants.Preferences.Items;
@@ -35,6 +35,8 @@ public abstract record class ModelBase
         Converters =
         {
             new ApiEnumConverter<string, Alignment>(),
+            new ApiEnumConverter<string, Operator>(),
+            new ApiEnumConverter<string, Path>(),
             new ApiEnumConverter<string, ChannelClassification>(),
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, ElementalChannelNodeWithTypeIntersectionMember1Type>(),
@@ -43,15 +45,20 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, ElementalMetaNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalTextNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, ListFilterOperator>(),
+            new ApiEnumConverter<string, ListFilterPath>(),
             new ApiEnumConverter<string, Method>(),
             new ApiEnumConverter<string, Source>(),
             new ApiEnumConverter<string, PreferenceStatus>(),
             new ApiEnumConverter<string, TextStyle>(),
+            new ApiEnumConverter<string, WebhookAuthMode>(),
+            new ApiEnumConverter<string, WebhookMethod>(),
+            new ApiEnumConverter<string, WebhookProfileType>(),
             new ApiEnumConverter<string, Send::RoutingMethod>(),
             new ApiEnumConverter<string, Send::Method>(),
             new ApiEnumConverter<string, Send::Criteria>(),
-            new ApiEnumConverter<string, Operator>(),
-            new ApiEnumConverter<string, FilterConfigOperator>(),
+            new ApiEnumConverter<string, Audiences::Operator>(),
+            new ApiEnumConverter<string, Audiences::SingleFilterConfigOperator>(),
             new ApiEnumConverter<string, Invoke::Action>(),
             new ApiEnumConverter<string, Invoke::AutomationSendStepAction>(),
             new ApiEnumConverter<string, Invoke::AutomationSendListStepAction>(),

@@ -163,7 +163,7 @@ public class SendServiceTest : TestBase
                             TemplateID = "templateId",
                         },
                         TenantID = "tenant_id",
-                        UserID = "example_user",
+                        UserID = "user_id",
                     },
                 },
             },

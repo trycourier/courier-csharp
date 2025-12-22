@@ -65,7 +65,7 @@ public class UserRecipientTest : TestBase
         string expectedListID = "list_id";
         string expectedLocale = "locale";
         string expectedPhoneNumber = "phone_number";
-        UserRecipientPreferences expectedPreferences = new()
+        Preferences expectedPreferences = new()
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -235,7 +235,7 @@ public class UserRecipientTest : TestBase
         string expectedListID = "list_id";
         string expectedLocale = "locale";
         string expectedPhoneNumber = "phone_number";
-        UserRecipientPreferences expectedPreferences = new()
+        Preferences expectedPreferences = new()
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -434,12 +434,12 @@ public class UserRecipientTest : TestBase
     }
 }
 
-public class UserRecipientPreferencesTest : TestBase
+public class PreferencesTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -519,7 +519,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -551,7 +551,7 @@ public class UserRecipientPreferencesTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserRecipientPreferences>(json);
+        var deserialized = JsonSerializer.Deserialize<Preferences>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -559,7 +559,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -591,7 +591,7 @@ public class UserRecipientPreferencesTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserRecipientPreferences>(element);
+        var deserialized = JsonSerializer.Deserialize<Preferences>(element);
         Assert.NotNull(deserialized);
 
         Dictionary<string, Preference> expectedNotifications = new()
@@ -643,7 +643,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -680,7 +680,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -706,7 +706,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -729,7 +729,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -758,7 +758,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
