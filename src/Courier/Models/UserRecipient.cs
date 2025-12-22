@@ -76,15 +76,9 @@ public sealed record class UserRecipient : JsonModel
         init { JsonModel.Set(this._rawData, "phone_number", value); }
     }
 
-    public UserRecipientPreferences? Preferences
+    public Preferences? Preferences
     {
-        get
-        {
-            return JsonModel.GetNullableClass<UserRecipientPreferences>(
-                this.RawData,
-                "preferences"
-            );
-        }
+        get { return JsonModel.GetNullableClass<Preferences>(this.RawData, "preferences"); }
         init { JsonModel.Set(this._rawData, "preferences", value); }
     }
 
@@ -154,10 +148,8 @@ class UserRecipientFromRaw : IFromRawJson<UserRecipient>
         UserRecipient.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<UserRecipientPreferences, UserRecipientPreferencesFromRaw>)
-)]
-public sealed record class UserRecipientPreferences : JsonModel
+[JsonConverter(typeof(JsonModelConverter<Preferences, PreferencesFromRaw>))]
+public sealed record class Preferences : JsonModel
 {
     public required IReadOnlyDictionary<string, Preference> Notifications
     {
@@ -206,44 +198,41 @@ public sealed record class UserRecipientPreferences : JsonModel
         _ = this.TemplateID;
     }
 
-    public UserRecipientPreferences() { }
+    public Preferences() { }
 
-    public UserRecipientPreferences(UserRecipientPreferences userRecipientPreferences)
-        : base(userRecipientPreferences) { }
+    public Preferences(Preferences preferences)
+        : base(preferences) { }
 
-    public UserRecipientPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
+    public Preferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    UserRecipientPreferences(FrozenDictionary<string, JsonElement> rawData)
+    Preferences(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="UserRecipientPreferencesFromRaw.FromRawUnchecked"/>
-    public static UserRecipientPreferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="PreferencesFromRaw.FromRawUnchecked"/>
+    public static Preferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
-    public UserRecipientPreferences(Dictionary<string, Preference> notifications)
+    public Preferences(Dictionary<string, Preference> notifications)
         : this()
     {
         this.Notifications = notifications;
     }
 }
 
-class UserRecipientPreferencesFromRaw : IFromRawJson<UserRecipientPreferences>
+class PreferencesFromRaw : IFromRawJson<Preferences>
 {
     /// <inheritdoc/>
-    public UserRecipientPreferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => UserRecipientPreferences.FromRawUnchecked(rawData);
+    public Preferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Preferences.FromRawUnchecked(rawData);
 }
