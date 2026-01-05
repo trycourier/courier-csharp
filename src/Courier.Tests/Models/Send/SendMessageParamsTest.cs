@@ -306,6 +306,7 @@ public class MessageTest : TestBase
         };
 
         Assert.Equal(expectedBrandID, model.BrandID);
+        Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         foreach (var item in expectedChannels)
         {
@@ -315,6 +316,7 @@ public class MessageTest : TestBase
         }
         Assert.Equal(expectedContent, model.Content);
         Assert.Equal(expectedContext, model.Context);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -326,6 +328,7 @@ public class MessageTest : TestBase
         Assert.Equal(expectedExpiry, model.Expiry);
         Assert.Equal(expectedMetadata, model.Metadata);
         Assert.Equal(expectedPreferences, model.Preferences);
+        Assert.NotNull(model.Providers);
         Assert.Equal(expectedProviders.Count, model.Providers.Count);
         foreach (var item in expectedProviders)
         {
@@ -798,6 +801,7 @@ public class MessageTest : TestBase
         };
 
         Assert.Equal(expectedBrandID, deserialized.BrandID);
+        Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         foreach (var item in expectedChannels)
         {
@@ -807,6 +811,7 @@ public class MessageTest : TestBase
         }
         Assert.Equal(expectedContent, deserialized.Content);
         Assert.Equal(expectedContext, deserialized.Context);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -818,6 +823,7 @@ public class MessageTest : TestBase
         Assert.Equal(expectedExpiry, deserialized.Expiry);
         Assert.Equal(expectedMetadata, deserialized.Metadata);
         Assert.Equal(expectedPreferences, deserialized.Preferences);
+        Assert.NotNull(deserialized.Providers);
         Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
         foreach (var item in expectedProviders)
         {
@@ -1786,6 +1792,7 @@ public class ChannelsItemTest : TestBase
         Assert.Equal(expectedBrandID, model.BrandID);
         Assert.Equal(expectedIf, model.If);
         Assert.Equal(expectedMetadata, model.Metadata);
+        Assert.NotNull(model.Override);
         Assert.Equal(expectedOverride.Count, model.Override.Count);
         foreach (var item in expectedOverride)
         {
@@ -1891,6 +1898,7 @@ public class ChannelsItemTest : TestBase
         Assert.Equal(expectedBrandID, deserialized.BrandID);
         Assert.Equal(expectedIf, deserialized.If);
         Assert.Equal(expectedMetadata, deserialized.Metadata);
+        Assert.NotNull(deserialized.Override);
         Assert.Equal(expectedOverride.Count, deserialized.Override.Count);
         foreach (var item in expectedOverride)
         {
@@ -2168,6 +2176,8 @@ public class RoutingMethodTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -2905,6 +2915,7 @@ public class ProvidersItemTest : TestBase
 
         Assert.Equal(expectedIf, model.If);
         Assert.Equal(expectedMetadata, model.Metadata);
+        Assert.NotNull(model.Override);
         Assert.Equal(expectedOverride.Count, model.Override.Count);
         foreach (var item in expectedOverride)
         {
@@ -2993,6 +3004,7 @@ public class ProvidersItemTest : TestBase
 
         Assert.Equal(expectedIf, deserialized.If);
         Assert.Equal(expectedMetadata, deserialized.Metadata);
+        Assert.NotNull(deserialized.Override);
         Assert.Equal(expectedOverride.Count, deserialized.Override.Count);
         foreach (var item in expectedOverride)
         {
@@ -3300,6 +3312,8 @@ public class MethodTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -3357,6 +3371,7 @@ public class TimeoutTest : TestBase
         long expectedMessage = 0;
         Dictionary<string, long> expectedProvider = new() { { "foo", 0 } };
 
+        Assert.NotNull(model.Channel);
         Assert.Equal(expectedChannel.Count, model.Channel.Count);
         foreach (var item in expectedChannel)
         {
@@ -3367,6 +3382,7 @@ public class TimeoutTest : TestBase
         Assert.Equal(expectedCriteria, model.Criteria);
         Assert.Equal(expectedEscalation, model.Escalation);
         Assert.Equal(expectedMessage, model.Message);
+        Assert.NotNull(model.Provider);
         Assert.Equal(expectedProvider.Count, model.Provider.Count);
         foreach (var item in expectedProvider)
         {
@@ -3416,6 +3432,7 @@ public class TimeoutTest : TestBase
         long expectedMessage = 0;
         Dictionary<string, long> expectedProvider = new() { { "foo", 0 } };
 
+        Assert.NotNull(deserialized.Channel);
         Assert.Equal(expectedChannel.Count, deserialized.Channel.Count);
         foreach (var item in expectedChannel)
         {
@@ -3426,6 +3443,7 @@ public class TimeoutTest : TestBase
         Assert.Equal(expectedCriteria, deserialized.Criteria);
         Assert.Equal(expectedEscalation, deserialized.Escalation);
         Assert.Equal(expectedMessage, deserialized.Message);
+        Assert.NotNull(deserialized.Provider);
         Assert.Equal(expectedProvider.Count, deserialized.Provider.Count);
         foreach (var item in expectedProvider)
         {
@@ -3536,6 +3554,8 @@ public class CriteriaTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

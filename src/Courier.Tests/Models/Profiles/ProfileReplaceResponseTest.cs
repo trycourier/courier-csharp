@@ -71,6 +71,8 @@ public class ProfileReplaceResponseStatusTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

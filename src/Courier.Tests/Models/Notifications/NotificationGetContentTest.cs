@@ -350,6 +350,7 @@ public class BlockTest : TestBase
         Assert.Equal(expectedChecksum, model.Checksum);
         Assert.Equal(expectedContent, model.Content);
         Assert.Equal(expectedContext, model.Context);
+        Assert.NotNull(model.Locales);
         Assert.Equal(expectedLocales.Count, model.Locales.Count);
         foreach (var item in expectedLocales)
         {
@@ -411,6 +412,7 @@ public class BlockTest : TestBase
         Assert.Equal(expectedChecksum, deserialized.Checksum);
         Assert.Equal(expectedContent, deserialized.Content);
         Assert.Equal(expectedContext, deserialized.Context);
+        Assert.NotNull(deserialized.Locales);
         Assert.Equal(expectedLocales.Count, deserialized.Locales.Count);
         foreach (var item in expectedLocales)
         {
@@ -534,6 +536,8 @@ public class BlockTypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -887,6 +891,7 @@ public class ChannelTest : TestBase
         Assert.Equal(expectedID, model.ID);
         Assert.Equal(expectedChecksum, model.Checksum);
         Assert.Equal(expectedContent, model.Content);
+        Assert.NotNull(model.Locales);
         Assert.Equal(expectedLocales.Count, model.Locales.Count);
         foreach (var item in expectedLocales)
         {
@@ -958,6 +963,7 @@ public class ChannelTest : TestBase
         Assert.Equal(expectedID, deserialized.ID);
         Assert.Equal(expectedChecksum, deserialized.Checksum);
         Assert.Equal(expectedContent, deserialized.Content);
+        Assert.NotNull(deserialized.Locales);
         Assert.Equal(expectedLocales.Count, deserialized.Locales.Count);
         foreach (var item in expectedLocales)
         {
