@@ -5,6 +5,183 @@ using Courier.Models.Users.Tokens;
 
 namespace Courier.Tests.Models.Users.Tokens;
 
+public class TokenAddSingleParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        string expectedUserID = "user_id";
+        string expectedToken = "token";
+        string expectedTokenValue = "token";
+        ApiEnum<string, ProviderKey> expectedProviderKey = ProviderKey.FirebaseFcm;
+        Device expectedDevice = new()
+        {
+            AdID = "ad_id",
+            AppID = "app_id",
+            DeviceID = "device_id",
+            Manufacturer = "manufacturer",
+            Model = "model",
+            Platform = "platform",
+        };
+        ExpiryDate expectedExpiryDate = "string";
+        JsonElement expectedProperties = JsonSerializer.Deserialize<JsonElement>("{}");
+        Tracking expectedTracking = new()
+        {
+            IP = "ip",
+            Lat = "lat",
+            Long = "long",
+            OsVersion = "os_version",
+        };
+
+        Assert.Equal(expectedUserID, parameters.UserID);
+        Assert.Equal(expectedToken, parameters.Token);
+        Assert.Equal(expectedTokenValue, parameters.TokenValue);
+        Assert.Equal(expectedProviderKey, parameters.ProviderKey);
+        Assert.Equal(expectedDevice, parameters.Device);
+        Assert.Equal(expectedExpiryDate, parameters.ExpiryDate);
+        Assert.NotNull(parameters.Properties);
+        Assert.True(JsonElement.DeepEquals(expectedProperties, parameters.Properties.Value));
+        Assert.Equal(expectedTracking, parameters.Tracking);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        Assert.Null(parameters.Properties);
+        Assert.False(parameters.RawBodyData.ContainsKey("properties"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+
+            // Null should be interpreted as omitted for these properties
+            Properties = null,
+        };
+
+        Assert.Null(parameters.Properties);
+        Assert.False(parameters.RawBodyData.ContainsKey("properties"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+        };
+
+        Assert.Null(parameters.Device);
+        Assert.False(parameters.RawBodyData.ContainsKey("device"));
+        Assert.Null(parameters.ExpiryDate);
+        Assert.False(parameters.RawBodyData.ContainsKey("expiry_date"));
+        Assert.Null(parameters.Tracking);
+        Assert.False(parameters.RawBodyData.ContainsKey("tracking"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+
+            Device = null,
+            ExpiryDate = null,
+            Tracking = null,
+        };
+
+        Assert.Null(parameters.Device);
+        Assert.False(parameters.RawBodyData.ContainsKey("device"));
+        Assert.Null(parameters.ExpiryDate);
+        Assert.False(parameters.RawBodyData.ContainsKey("expiry_date"));
+        Assert.Null(parameters.Tracking);
+        Assert.False(parameters.RawBodyData.ContainsKey("tracking"));
+    }
+}
+
 public class ProviderKeyTest : TestBase
 {
     [Theory]
@@ -26,6 +203,8 @@ public class ProviderKeyTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -127,8 +306,8 @@ public class DeviceTest : TestBase
             Platform = "platform",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Device>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Device>(element);
         Assert.NotNull(deserialized);
 
         string expectedAdID = "ad_id";
@@ -236,35 +415,35 @@ public class DeviceTest : TestBase
 public class ExpiryDateTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         ExpiryDate value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void boolValidation_Works()
+    public void BoolValidationWorks()
     {
         ExpiryDate value = new(true);
         value.Validate();
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         ExpiryDate value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void boolSerializationRoundtrip_Works()
+    public void BoolSerializationRoundtripWorks()
     {
         ExpiryDate value = new(true);
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ExpiryDate>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -322,8 +501,8 @@ public class TrackingTest : TestBase
             OsVersion = "os_version",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Tracking>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Tracking>(element);
         Assert.NotNull(deserialized);
 
         string expectedIP = "ip";

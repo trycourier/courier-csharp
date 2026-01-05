@@ -19,9 +19,9 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new()
+                    Filter = new SingleFilterConfig()
                     {
-                        Operator = Operator.EndsWith,
+                        Operator = SingleFilterConfigOperator.EndsWith,
                         Path = "path",
                         Value = "value",
                     },
@@ -39,9 +39,9 @@ public class AudienceListResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new()
+                Filter = new SingleFilterConfig()
                 {
-                    Operator = Operator.EndsWith,
+                    Operator = SingleFilterConfigOperator.EndsWith,
                     Path = "path",
                     Value = "value",
                 },
@@ -71,9 +71,9 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new()
+                    Filter = new SingleFilterConfig()
                     {
-                        Operator = Operator.EndsWith,
+                        Operator = SingleFilterConfigOperator.EndsWith,
                         Path = "path",
                         Value = "value",
                     },
@@ -102,9 +102,9 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new()
+                    Filter = new SingleFilterConfig()
                     {
-                        Operator = Operator.EndsWith,
+                        Operator = SingleFilterConfigOperator.EndsWith,
                         Path = "path",
                         Value = "value",
                     },
@@ -115,8 +115,8 @@ public class AudienceListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AudienceListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AudienceListResponse>(element);
         Assert.NotNull(deserialized);
 
         List<Audience> expectedItems =
@@ -126,9 +126,9 @@ public class AudienceListResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new()
+                Filter = new SingleFilterConfig()
                 {
-                    Operator = Operator.EndsWith,
+                    Operator = SingleFilterConfigOperator.EndsWith,
                     Path = "path",
                     Value = "value",
                 },
@@ -158,9 +158,9 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new()
+                    Filter = new SingleFilterConfig()
                     {
-                        Operator = Operator.EndsWith,
+                        Operator = SingleFilterConfigOperator.EndsWith,
                         Path = "path",
                         Value = "value",
                     },

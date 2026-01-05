@@ -7,13 +7,13 @@ using Courier.Core;
 
 namespace Courier.Models.Profiles.Lists;
 
-[JsonConverter(typeof(ModelConverter<ListRetrieveResponse, ListRetrieveResponseFromRaw>))]
-public sealed record class ListRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ListRetrieveResponse, ListRetrieveResponseFromRaw>))]
+public sealed record class ListRetrieveResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { ModelBase.Set(this._rawData, "paging", value); }
+        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { JsonModel.Set(this._rawData, "paging", value); }
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public sealed record class ListRetrieveResponse : ModelBase
     /// </summary>
     public required IReadOnlyList<Result> Results
     {
-        get { return ModelBase.GetNotNullClass<List<Result>>(this.RawData, "results"); }
-        init { ModelBase.Set(this._rawData, "results", value); }
+        get { return JsonModel.GetNotNullClass<List<Result>>(this.RawData, "results"); }
+        init { JsonModel.Set(this._rawData, "results", value); }
     }
 
     /// <inheritdoc/>
@@ -62,7 +62,7 @@ public sealed record class ListRetrieveResponse : ModelBase
     }
 }
 
-class ListRetrieveResponseFromRaw : IFromRaw<ListRetrieveResponse>
+class ListRetrieveResponseFromRaw : IFromRawJson<ListRetrieveResponse>
 {
     /// <inheritdoc/>
     public ListRetrieveResponse FromRawUnchecked(
@@ -70,13 +70,13 @@ class ListRetrieveResponseFromRaw : IFromRaw<ListRetrieveResponse>
     ) => ListRetrieveResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Result, ResultFromRaw>))]
-public sealed record class Result : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Result, ResultFromRaw>))]
+public sealed record class Result : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     /// <summary>
@@ -84,8 +84,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required string Created
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "created"); }
-        init { ModelBase.Set(this._rawData, "created", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "created"); }
+        init { JsonModel.Set(this._rawData, "created", value); }
     }
 
     /// <summary>
@@ -93,8 +93,8 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required string Name
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "name"); }
-        init { ModelBase.Set(this._rawData, "name", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
+        init { JsonModel.Set(this._rawData, "name", value); }
     }
 
     /// <summary>
@@ -102,17 +102,17 @@ public sealed record class Result : ModelBase
     /// </summary>
     public required string Updated
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "updated"); }
-        init { ModelBase.Set(this._rawData, "updated", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "updated"); }
+        init { JsonModel.Set(this._rawData, "updated", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            return ModelBase.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
+            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
         }
-        init { ModelBase.Set(this._rawData, "preferences", value); }
+        init { JsonModel.Set(this._rawData, "preferences", value); }
     }
 
     /// <inheritdoc/>
@@ -150,7 +150,7 @@ public sealed record class Result : ModelBase
     }
 }
 
-class ResultFromRaw : IFromRaw<Result>
+class ResultFromRaw : IFromRawJson<Result>
 {
     /// <inheritdoc/>
     public Result FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

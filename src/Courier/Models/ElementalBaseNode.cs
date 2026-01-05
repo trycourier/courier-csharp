@@ -7,31 +7,31 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<ElementalBaseNode, ElementalBaseNodeFromRaw>))]
-public sealed record class ElementalBaseNode : ModelBase
+[JsonConverter(typeof(JsonModelConverter<ElementalBaseNode, ElementalBaseNodeFromRaw>))]
+public sealed record class ElementalBaseNode : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
-        init { ModelBase.Set(this._rawData, "if", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
+        init { JsonModel.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
-        init { ModelBase.Set(this._rawData, "loop", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "loop"); }
+        init { JsonModel.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
-        init { ModelBase.Set(this._rawData, "ref", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "ref"); }
+        init { JsonModel.Set(this._rawData, "ref", value); }
     }
 
     /// <inheritdoc/>
@@ -70,7 +70,7 @@ public sealed record class ElementalBaseNode : ModelBase
     }
 }
 
-class ElementalBaseNodeFromRaw : IFromRaw<ElementalBaseNode>
+class ElementalBaseNodeFromRaw : IFromRawJson<ElementalBaseNode>
 {
     /// <inheritdoc/>
     public ElementalBaseNode FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

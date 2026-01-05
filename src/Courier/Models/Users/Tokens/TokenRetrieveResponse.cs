@@ -9,28 +9,28 @@ using System = System;
 
 namespace Courier.Models.Users.Tokens;
 
-[JsonConverter(typeof(ModelConverter<TokenRetrieveResponse, TokenRetrieveResponseFromRaw>))]
-public sealed record class TokenRetrieveResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<TokenRetrieveResponse, TokenRetrieveResponseFromRaw>))]
+public sealed record class TokenRetrieveResponse : JsonModel
 {
     /// <summary>
     /// Full body of the token. Must match token in URL path parameter.
     /// </summary>
     public required string Token
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "token"); }
-        init { ModelBase.Set(this._rawData, "token", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "token"); }
+        init { JsonModel.Set(this._rawData, "token", value); }
     }
 
     public required ApiEnum<string, UserTokenProviderKey> ProviderKey
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
                 this.RawData,
                 "provider_key"
             );
         }
-        init { ModelBase.Set(this._rawData, "provider_key", value); }
+        init { JsonModel.Set(this._rawData, "provider_key", value); }
     }
 
     /// <summary>
@@ -38,8 +38,8 @@ public sealed record class TokenRetrieveResponse : ModelBase
     /// </summary>
     public UserTokenDevice? Device
     {
-        get { return ModelBase.GetNullableClass<UserTokenDevice>(this.RawData, "device"); }
-        init { ModelBase.Set(this._rawData, "device", value); }
+        get { return JsonModel.GetNullableClass<UserTokenDevice>(this.RawData, "device"); }
+        init { JsonModel.Set(this._rawData, "device", value); }
     }
 
     /// <summary>
@@ -48,8 +48,8 @@ public sealed record class TokenRetrieveResponse : ModelBase
     /// </summary>
     public UserTokenExpiryDate? ExpiryDate
     {
-        get { return ModelBase.GetNullableClass<UserTokenExpiryDate>(this.RawData, "expiry_date"); }
-        init { ModelBase.Set(this._rawData, "expiry_date", value); }
+        get { return JsonModel.GetNullableClass<UserTokenExpiryDate>(this.RawData, "expiry_date"); }
+        init { JsonModel.Set(this._rawData, "expiry_date", value); }
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public sealed record class TokenRetrieveResponse : ModelBase
     /// </summary>
     public JsonElement? Properties
     {
-        get { return ModelBase.GetNullableStruct<JsonElement>(this.RawData, "properties"); }
+        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawData, "properties"); }
         init
         {
             if (value == null)
@@ -65,7 +65,7 @@ public sealed record class TokenRetrieveResponse : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "properties", value);
+            JsonModel.Set(this._rawData, "properties", value);
         }
     }
 
@@ -74,14 +74,14 @@ public sealed record class TokenRetrieveResponse : ModelBase
     /// </summary>
     public UserTokenTracking? Tracking
     {
-        get { return ModelBase.GetNullableClass<UserTokenTracking>(this.RawData, "tracking"); }
-        init { ModelBase.Set(this._rawData, "tracking", value); }
+        get { return JsonModel.GetNullableClass<UserTokenTracking>(this.RawData, "tracking"); }
+        init { JsonModel.Set(this._rawData, "tracking", value); }
     }
 
     public ApiEnum<string, Status>? Status
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
@@ -89,8 +89,8 @@ public sealed record class TokenRetrieveResponse : ModelBase
     /// </summary>
     public string? StatusReason
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "status_reason"); }
-        init { ModelBase.Set(this._rawData, "status_reason", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "status_reason"); }
+        init { JsonModel.Set(this._rawData, "status_reason", value); }
     }
 
     public static implicit operator UserToken(TokenRetrieveResponse tokenRetrieveResponse) =>
@@ -144,7 +144,7 @@ public sealed record class TokenRetrieveResponse : ModelBase
     }
 }
 
-class TokenRetrieveResponseFromRaw : IFromRaw<TokenRetrieveResponse>
+class TokenRetrieveResponseFromRaw : IFromRawJson<TokenRetrieveResponse>
 {
     /// <inheritdoc/>
     public TokenRetrieveResponse FromRawUnchecked(
@@ -153,17 +153,17 @@ class TokenRetrieveResponseFromRaw : IFromRaw<TokenRetrieveResponse>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         global::Courier.Models.Users.Tokens.IntersectionMember1,
         global::Courier.Models.Users.Tokens.IntersectionMember1FromRaw
     >)
 )]
-public sealed record class IntersectionMember1 : ModelBase
+public sealed record class IntersectionMember1 : JsonModel
 {
     public ApiEnum<string, Status>? Status
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     /// <summary>
@@ -171,8 +171,8 @@ public sealed record class IntersectionMember1 : ModelBase
     /// </summary>
     public string? StatusReason
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "status_reason"); }
-        init { ModelBase.Set(this._rawData, "status_reason", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "status_reason"); }
+        init { JsonModel.Set(this._rawData, "status_reason", value); }
     }
 
     /// <inheritdoc/>
@@ -211,7 +211,8 @@ public sealed record class IntersectionMember1 : ModelBase
     }
 }
 
-class IntersectionMember1FromRaw : IFromRaw<global::Courier.Models.Users.Tokens.IntersectionMember1>
+class IntersectionMember1FromRaw
+    : IFromRawJson<global::Courier.Models.Users.Tokens.IntersectionMember1>
 {
     /// <inheritdoc/>
     public global::Courier.Models.Users.Tokens.IntersectionMember1 FromRawUnchecked(

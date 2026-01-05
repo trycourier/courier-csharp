@@ -62,8 +62,8 @@ public class SubscriptionTopicNewTest : TestBase
             HasCustomRouting = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SubscriptionTopicNew>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<SubscriptionTopicNew>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Status> expectedStatus = Status.OptedOut;
@@ -167,6 +167,8 @@ public class StatusTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

@@ -47,6 +47,7 @@ public class ElementalChannelNodeWithTypeTest : TestBase
         Assert.Equal(expectedLoop, model.Loop);
         Assert.Equal(expectedRef, model.Ref);
         Assert.Equal(expectedChannel, model.Channel);
+        Assert.NotNull(model.Raw);
         Assert.Equal(expectedRaw.Count, model.Raw.Count);
         foreach (var item in expectedRaw)
         {
@@ -97,8 +98,8 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(element);
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -123,6 +124,7 @@ public class ElementalChannelNodeWithTypeTest : TestBase
         Assert.Equal(expectedLoop, deserialized.Loop);
         Assert.Equal(expectedRef, deserialized.Ref);
         Assert.Equal(expectedChannel, deserialized.Channel);
+        Assert.NotNull(deserialized.Raw);
         Assert.Equal(expectedRaw.Count, deserialized.Raw.Count);
         foreach (var item in expectedRaw)
         {
@@ -355,9 +357,9 @@ public class ElementalChannelNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalChannelNodeWithTypeIntersectionMember1>(json);
+            JsonSerializer.Deserialize<ElementalChannelNodeWithTypeIntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type> expectedType =
@@ -440,6 +442,8 @@ public class ElementalChannelNodeWithTypeIntersectionMember1TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

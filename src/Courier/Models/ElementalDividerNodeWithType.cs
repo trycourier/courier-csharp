@@ -10,39 +10,39 @@ using System = System;
 namespace Courier.Models;
 
 [JsonConverter(
-    typeof(ModelConverter<ElementalDividerNodeWithType, ElementalDividerNodeWithTypeFromRaw>)
+    typeof(JsonModelConverter<ElementalDividerNodeWithType, ElementalDividerNodeWithTypeFromRaw>)
 )]
-public sealed record class ElementalDividerNodeWithType : ModelBase
+public sealed record class ElementalDividerNodeWithType : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "channels"); }
-        init { ModelBase.Set(this._rawData, "channels", value); }
+        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "channels"); }
+        init { JsonModel.Set(this._rawData, "channels", value); }
     }
 
     public string? If
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "if"); }
-        init { ModelBase.Set(this._rawData, "if", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
+        init { JsonModel.Set(this._rawData, "if", value); }
     }
 
     public string? Loop
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "loop"); }
-        init { ModelBase.Set(this._rawData, "loop", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "loop"); }
+        init { JsonModel.Set(this._rawData, "loop", value); }
     }
 
     public string? Ref
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "ref"); }
-        init { ModelBase.Set(this._rawData, "ref", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "ref"); }
+        init { JsonModel.Set(this._rawData, "ref", value); }
     }
 
     public ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type>
             >(this.RawData, "type");
         }
@@ -53,7 +53,7 @@ public sealed record class ElementalDividerNodeWithType : ModelBase
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -105,7 +105,7 @@ public sealed record class ElementalDividerNodeWithType : ModelBase
     }
 }
 
-class ElementalDividerNodeWithTypeFromRaw : IFromRaw<ElementalDividerNodeWithType>
+class ElementalDividerNodeWithTypeFromRaw : IFromRawJson<ElementalDividerNodeWithType>
 {
     /// <inheritdoc/>
     public ElementalDividerNodeWithType FromRawUnchecked(
@@ -114,18 +114,18 @@ class ElementalDividerNodeWithTypeFromRaw : IFromRaw<ElementalDividerNodeWithTyp
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         ElementalDividerNodeWithTypeIntersectionMember1,
         ElementalDividerNodeWithTypeIntersectionMember1FromRaw
     >)
 )]
-public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : ModelBase
+public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : JsonModel
 {
     public ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return ModelBase.GetNullableClass<
+            return JsonModel.GetNullableClass<
                 ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type>
             >(this.RawData, "type");
         }
@@ -136,7 +136,7 @@ public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : Mod
                 return;
             }
 
-            ModelBase.Set(this._rawData, "type", value);
+            JsonModel.Set(this._rawData, "type", value);
         }
     }
 
@@ -178,7 +178,7 @@ public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : Mod
 }
 
 class ElementalDividerNodeWithTypeIntersectionMember1FromRaw
-    : IFromRaw<ElementalDividerNodeWithTypeIntersectionMember1>
+    : IFromRawJson<ElementalDividerNodeWithTypeIntersectionMember1>
 {
     /// <inheritdoc/>
     public ElementalDividerNodeWithTypeIntersectionMember1 FromRawUnchecked(

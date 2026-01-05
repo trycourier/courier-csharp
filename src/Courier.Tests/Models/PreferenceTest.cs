@@ -71,8 +71,8 @@ public class PreferenceTest : TestBase
             Source = Source.Subscription,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Preference>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Preference>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, PreferenceStatus> expectedStatus = PreferenceStatus.OptedIn;
@@ -190,6 +190,8 @@ public class SourceTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

@@ -151,8 +151,8 @@ public class PutSubscriptionsRecipientTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PutSubscriptionsRecipient>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<PutSubscriptionsRecipient>(element);
         Assert.NotNull(deserialized);
 
         string expectedRecipientID = "recipientId";

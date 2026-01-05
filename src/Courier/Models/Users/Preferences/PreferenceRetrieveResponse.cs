@@ -8,17 +8,17 @@ using Courier.Core;
 namespace Courier.Models.Users.Preferences;
 
 [JsonConverter(
-    typeof(ModelConverter<PreferenceRetrieveResponse, PreferenceRetrieveResponseFromRaw>)
+    typeof(JsonModelConverter<PreferenceRetrieveResponse, PreferenceRetrieveResponseFromRaw>)
 )]
-public sealed record class PreferenceRetrieveResponse : ModelBase
+public sealed record class PreferenceRetrieveResponse : JsonModel
 {
     /// <summary>
     /// The Preferences associated with the user_id.
     /// </summary>
     public required IReadOnlyList<TopicPreference> Items
     {
-        get { return ModelBase.GetNotNullClass<List<TopicPreference>>(this.RawData, "items"); }
-        init { ModelBase.Set(this._rawData, "items", value); }
+        get { return JsonModel.GetNotNullClass<List<TopicPreference>>(this.RawData, "items"); }
+        init { JsonModel.Set(this._rawData, "items", value); }
     }
 
     /// <summary>
@@ -26,8 +26,8 @@ public sealed record class PreferenceRetrieveResponse : ModelBase
     /// </summary>
     public required Paging Paging
     {
-        get { return ModelBase.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { ModelBase.Set(this._rawData, "paging", value); }
+        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
+        init { JsonModel.Set(this._rawData, "paging", value); }
     }
 
     /// <inheritdoc/>
@@ -67,7 +67,7 @@ public sealed record class PreferenceRetrieveResponse : ModelBase
     }
 }
 
-class PreferenceRetrieveResponseFromRaw : IFromRaw<PreferenceRetrieveResponse>
+class PreferenceRetrieveResponseFromRaw : IFromRawJson<PreferenceRetrieveResponse>
 {
     /// <inheritdoc/>
     public PreferenceRetrieveResponse FromRawUnchecked(

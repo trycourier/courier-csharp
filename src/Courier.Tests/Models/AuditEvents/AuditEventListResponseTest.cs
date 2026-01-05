@@ -95,8 +95,8 @@ public class AuditEventListResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AuditEventListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AuditEventListResponse>(element);
         Assert.NotNull(deserialized);
 
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };

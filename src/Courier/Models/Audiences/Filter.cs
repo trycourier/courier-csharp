@@ -1,165 +1,236 @@
-using System.Collections.Frozen;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Courier.Core;
 using Courier.Exceptions;
 using System = System;
 
 namespace Courier.Models.Audiences;
 
-[JsonConverter(typeof(ModelConverter<Filter, FilterFromRaw>))]
-public sealed record class Filter : ModelBase
-{
-    /// <summary>
-    /// The operator to use for filtering
-    /// </summary>
-    public required ApiEnum<string, Operator> Operator
-    {
-        get
-        {
-            return ModelBase.GetNotNullClass<ApiEnum<string, Operator>>(this.RawData, "operator");
-        }
-        init { ModelBase.Set(this._rawData, "operator", value); }
-    }
-
-    /// <summary>
-    /// The attribe name from profile whose value will be operated against the filter value
-    /// </summary>
-    public required string Path
-    {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
-        init { ModelBase.Set(this._rawData, "path", value); }
-    }
-
-    /// <summary>
-    /// The value to use for filtering
-    /// </summary>
-    public required string Value
-    {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "value"); }
-        init { ModelBase.Set(this._rawData, "value", value); }
-    }
-
-    /// <inheritdoc/>
-    public override void Validate()
-    {
-        this.Operator.Validate();
-        _ = this.Path;
-        _ = this.Value;
-    }
-
-    public Filter() { }
-
-    public Filter(Filter filter)
-        : base(filter) { }
-
-    public Filter(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = [.. rawData];
-    }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    Filter(FrozenDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = [.. rawData];
-    }
-#pragma warning restore CS8618
-
-    /// <inheritdoc cref="FilterFromRaw.FromRawUnchecked"/>
-    public static Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-}
-
-class FilterFromRaw : IFromRaw<Filter>
-{
-    /// <inheritdoc/>
-    public Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        Filter.FromRawUnchecked(rawData);
-}
-
 /// <summary>
-/// The operator to use for filtering
+/// A single filter to use for filtering
 /// </summary>
-[JsonConverter(typeof(OperatorConverter))]
-public enum Operator
+[JsonConverter(typeof(FilterConverter))]
+public record class Filter
 {
-    EndsWith,
-    Eq,
-    Exists,
-    Gt,
-    Gte,
-    Includes,
-    IsAfter,
-    IsBefore,
-    Lt,
-    Lte,
-    Neq,
-    Omit,
-    StartsWith,
-    And,
-    Or,
+    public object? Value { get; } = null;
+
+    JsonElement? _element = null;
+
+    public JsonElement Json
+    {
+        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
+    }
+
+    public Filter(SingleFilterConfig value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Filter(NestedFilterConfig value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Filter(JsonElement element)
+    {
+        this._element = element;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="SingleFilterConfig"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickSingleFilterConfig(out var value)) {
+    ///     // `value` is of type `SingleFilterConfig`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickSingleFilterConfig([NotNullWhen(true)] out SingleFilterConfig? value)
+    {
+        value = this.Value as SingleFilterConfig;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="NestedFilterConfig"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickNestedFilterConfig(out var value)) {
+    ///     // `value` is of type `NestedFilterConfig`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickNestedFilterConfig([NotNullWhen(true)] out NestedFilterConfig? value)
+    {
+        value = this.Value as NestedFilterConfig;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (SingleFilterConfig value) => {...},
+    ///     (NestedFilterConfig value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public void Switch(
+        System::Action<SingleFilterConfig> singleFilterConfig,
+        System::Action<NestedFilterConfig> nestedFilterConfig
+    )
+    {
+        switch (this.Value)
+        {
+            case SingleFilterConfig value:
+                singleFilterConfig(value);
+                break;
+            case NestedFilterConfig value:
+                nestedFilterConfig(value);
+                break;
+            default:
+                throw new CourierInvalidDataException("Data did not match any variant of Filter");
+        }
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (SingleFilterConfig value) => {...},
+    ///     (NestedFilterConfig value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public T Match<T>(
+        System::Func<SingleFilterConfig, T> singleFilterConfig,
+        System::Func<NestedFilterConfig, T> nestedFilterConfig
+    )
+    {
+        return this.Value switch
+        {
+            SingleFilterConfig value => singleFilterConfig(value),
+            NestedFilterConfig value => nestedFilterConfig(value),
+            _ => throw new CourierInvalidDataException("Data did not match any variant of Filter"),
+        };
+    }
+
+    public static implicit operator Filter(SingleFilterConfig value) => new(value);
+
+    public static implicit operator Filter(NestedFilterConfig value) => new(value);
+
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
+    public void Validate()
+    {
+        if (this.Value == null)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of Filter");
+        }
+        this.Switch(
+            (singleFilterConfig) => singleFilterConfig.Validate(),
+            (nestedFilterConfig) => nestedFilterConfig.Validate()
+        );
+    }
+
+    public virtual bool Equals(Filter? other)
+    {
+        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
-sealed class OperatorConverter : JsonConverter<Operator>
+sealed class FilterConverter : JsonConverter<Filter>
 {
-    public override Operator Read(
+    public override Filter? Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
     )
     {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        try
         {
-            "ENDS_WITH" => Operator.EndsWith,
-            "EQ" => Operator.Eq,
-            "EXISTS" => Operator.Exists,
-            "GT" => Operator.Gt,
-            "GTE" => Operator.Gte,
-            "INCLUDES" => Operator.Includes,
-            "IS_AFTER" => Operator.IsAfter,
-            "IS_BEFORE" => Operator.IsBefore,
-            "LT" => Operator.Lt,
-            "LTE" => Operator.Lte,
-            "NEQ" => Operator.Neq,
-            "OMIT" => Operator.Omit,
-            "STARTS_WITH" => Operator.StartsWith,
-            "AND" => Operator.And,
-            "OR" => Operator.Or,
-            _ => (Operator)(-1),
-        };
+            var deserialized = JsonSerializer.Deserialize<SingleFilterConfig>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<NestedFilterConfig>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        return new(element);
     }
 
-    public override void Write(Utf8JsonWriter writer, Operator value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, Filter value, JsonSerializerOptions options)
     {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Operator.EndsWith => "ENDS_WITH",
-                Operator.Eq => "EQ",
-                Operator.Exists => "EXISTS",
-                Operator.Gt => "GT",
-                Operator.Gte => "GTE",
-                Operator.Includes => "INCLUDES",
-                Operator.IsAfter => "IS_AFTER",
-                Operator.IsBefore => "IS_BEFORE",
-                Operator.Lt => "LT",
-                Operator.Lte => "LTE",
-                Operator.Neq => "NEQ",
-                Operator.Omit => "OMIT",
-                Operator.StartsWith => "STARTS_WITH",
-                Operator.And => "AND",
-                Operator.Or => "OR",
-                _ => throw new CourierInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }

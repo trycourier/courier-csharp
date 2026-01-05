@@ -68,8 +68,8 @@ public class ElementalActionNodeWithTypeTest : TestBase
             Type = Type.Action,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(element);
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -260,8 +260,8 @@ public class IntersectionMember1Test : TestBase
     {
         var model = new IntersectionMember1 { Type = Type.Action };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Type> expectedType = Type.Action;
@@ -338,6 +338,8 @@ public class TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

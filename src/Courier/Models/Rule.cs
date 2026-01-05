@@ -7,19 +7,19 @@ using Courier.Core;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Rule, RuleFromRaw>))]
-public sealed record class Rule : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Rule, RuleFromRaw>))]
+public sealed record class Rule : JsonModel
 {
     public required string Until
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "until"); }
-        init { ModelBase.Set(this._rawData, "until", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "until"); }
+        init { JsonModel.Set(this._rawData, "until", value); }
     }
 
     public string? Start
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "start"); }
-        init { ModelBase.Set(this._rawData, "start", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "start"); }
+        init { JsonModel.Set(this._rawData, "start", value); }
     }
 
     /// <inheritdoc/>
@@ -61,7 +61,7 @@ public sealed record class Rule : ModelBase
     }
 }
 
-class RuleFromRaw : IFromRaw<Rule>
+class RuleFromRaw : IFromRawJson<Rule>
 {
     /// <inheritdoc/>
     public Rule FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

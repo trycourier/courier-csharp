@@ -13,9 +13,9 @@ public class AudienceTest : TestBase
             ID = "id",
             CreatedAt = "created_at",
             Description = "description",
-            Filter = new()
+            Filter = new SingleFilterConfig()
             {
-                Operator = Operator.EndsWith,
+                Operator = SingleFilterConfigOperator.EndsWith,
                 Path = "path",
                 Value = "value",
             },
@@ -26,9 +26,9 @@ public class AudienceTest : TestBase
         string expectedID = "id";
         string expectedCreatedAt = "created_at";
         string expectedDescription = "description";
-        Filter expectedFilter = new()
+        Filter expectedFilter = new SingleFilterConfig()
         {
-            Operator = Operator.EndsWith,
+            Operator = SingleFilterConfigOperator.EndsWith,
             Path = "path",
             Value = "value",
         };
@@ -51,9 +51,9 @@ public class AudienceTest : TestBase
             ID = "id",
             CreatedAt = "created_at",
             Description = "description",
-            Filter = new()
+            Filter = new SingleFilterConfig()
             {
-                Operator = Operator.EndsWith,
+                Operator = SingleFilterConfigOperator.EndsWith,
                 Path = "path",
                 Value = "value",
             },
@@ -75,9 +75,9 @@ public class AudienceTest : TestBase
             ID = "id",
             CreatedAt = "created_at",
             Description = "description",
-            Filter = new()
+            Filter = new SingleFilterConfig()
             {
-                Operator = Operator.EndsWith,
+                Operator = SingleFilterConfigOperator.EndsWith,
                 Path = "path",
                 Value = "value",
             },
@@ -85,16 +85,16 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Audience>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Audience>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
         string expectedCreatedAt = "created_at";
         string expectedDescription = "description";
-        Filter expectedFilter = new()
+        Filter expectedFilter = new SingleFilterConfig()
         {
-            Operator = Operator.EndsWith,
+            Operator = SingleFilterConfigOperator.EndsWith,
             Path = "path",
             Value = "value",
         };
@@ -117,9 +117,9 @@ public class AudienceTest : TestBase
             ID = "id",
             CreatedAt = "created_at",
             Description = "description",
-            Filter = new()
+            Filter = new SingleFilterConfig()
             {
-                Operator = Operator.EndsWith,
+                Operator = SingleFilterConfigOperator.EndsWith,
                 Path = "path",
                 Value = "value",
             },

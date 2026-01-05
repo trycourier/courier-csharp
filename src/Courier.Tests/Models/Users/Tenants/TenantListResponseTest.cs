@@ -122,8 +122,8 @@ public class TenantListResponseTest : TestBase
             NextURL = "next_url",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<TenantListResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<TenantListResponse>(element);
         Assert.NotNull(deserialized);
 
         bool expectedHasMore = true;
@@ -275,6 +275,8 @@ public class TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

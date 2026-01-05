@@ -33,8 +33,8 @@ public sealed record class BulkCreateJobParams : ParamsBase
     /// </summary>
     public required InboundBulkMessage Message
     {
-        get { return ModelBase.GetNotNullClass<InboundBulkMessage>(this.RawBodyData, "message"); }
-        init { ModelBase.Set(this._rawBodyData, "message", value); }
+        get { return JsonModel.GetNotNullClass<InboundBulkMessage>(this.RawBodyData, "message"); }
+        init { JsonModel.Set(this._rawBodyData, "message", value); }
     }
 
     public BulkCreateJobParams() { }
@@ -70,7 +70,7 @@ public sealed record class BulkCreateJobParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static BulkCreateJobParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -92,9 +92,13 @@ public sealed record class BulkCreateJobParams : ParamsBase
         }.Uri;
     }
 
-    internal override StringContent? BodyContent()
+    internal override HttpContent? BodyContent()
     {
-        return new(JsonSerializer.Serialize(this.RawBodyData), Encoding.UTF8, "application/json");
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

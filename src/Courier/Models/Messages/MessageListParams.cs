@@ -19,8 +19,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public bool? Archived
     {
-        get { return ModelBase.GetNullableStruct<bool>(this.RawQueryData, "archived"); }
-        init { ModelBase.Set(this._rawQueryData, "archived", value); }
+        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "archived"); }
+        init { JsonModel.Set(this._rawQueryData, "archived", value); }
     }
 
     /// <summary>
@@ -28,8 +28,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "cursor"); }
-        init { ModelBase.Set(this._rawQueryData, "cursor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cursor"); }
+        init { JsonModel.Set(this._rawQueryData, "cursor", value); }
     }
 
     /// <summary>
@@ -37,8 +37,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? EnqueuedAfter
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "enqueued_after"); }
-        init { ModelBase.Set(this._rawQueryData, "enqueued_after", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "enqueued_after"); }
+        init { JsonModel.Set(this._rawQueryData, "enqueued_after", value); }
     }
 
     /// <summary>
@@ -46,8 +46,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Event
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "event"); }
-        init { ModelBase.Set(this._rawQueryData, "event", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "event"); }
+        init { JsonModel.Set(this._rawQueryData, "event", value); }
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? List
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "list"); }
-        init { ModelBase.Set(this._rawQueryData, "list", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "list"); }
+        init { JsonModel.Set(this._rawQueryData, "list", value); }
     }
 
     /// <summary>
@@ -65,8 +65,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? MessageID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "messageId"); }
-        init { ModelBase.Set(this._rawQueryData, "messageId", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "messageId"); }
+        init { JsonModel.Set(this._rawQueryData, "messageId", value); }
     }
 
     /// <summary>
@@ -74,8 +74,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Notification
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "notification"); }
-        init { ModelBase.Set(this._rawQueryData, "notification", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "notification"); }
+        init { JsonModel.Set(this._rawQueryData, "notification", value); }
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Provider
     {
-        get { return ModelBase.GetNullableClass<List<string?>>(this.RawQueryData, "provider"); }
+        get { return JsonModel.GetNullableClass<List<string?>>(this.RawQueryData, "provider"); }
         init
         {
             if (value == null)
@@ -92,7 +92,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "provider", value);
+            JsonModel.Set(this._rawQueryData, "provider", value);
         }
     }
 
@@ -101,8 +101,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Recipient
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "recipient"); }
-        init { ModelBase.Set(this._rawQueryData, "recipient", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "recipient"); }
+        init { JsonModel.Set(this._rawQueryData, "recipient", value); }
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Status
     {
-        get { return ModelBase.GetNullableClass<List<string?>>(this.RawQueryData, "status"); }
+        get { return JsonModel.GetNullableClass<List<string?>>(this.RawQueryData, "status"); }
         init
         {
             if (value == null)
@@ -119,7 +119,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "status", value);
+            JsonModel.Set(this._rawQueryData, "status", value);
         }
     }
 
@@ -129,7 +129,7 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Tag
     {
-        get { return ModelBase.GetNullableClass<List<string?>>(this.RawQueryData, "tag"); }
+        get { return JsonModel.GetNullableClass<List<string?>>(this.RawQueryData, "tag"); }
         init
         {
             if (value == null)
@@ -137,7 +137,7 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            ModelBase.Set(this._rawQueryData, "tag", value);
+            JsonModel.Set(this._rawQueryData, "tag", value);
         }
     }
 
@@ -147,8 +147,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Tags
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "tags"); }
-        init { ModelBase.Set(this._rawQueryData, "tags", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "tags"); }
+        init { JsonModel.Set(this._rawQueryData, "tags", value); }
     }
 
     /// <summary>
@@ -156,8 +156,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
-        init { ModelBase.Set(this._rawQueryData, "tenant_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
+        init { JsonModel.Set(this._rawQueryData, "tenant_id", value); }
     }
 
     /// <summary>
@@ -165,8 +165,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? TraceID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "traceId"); }
-        init { ModelBase.Set(this._rawQueryData, "traceId", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "traceId"); }
+        init { JsonModel.Set(this._rawQueryData, "traceId", value); }
     }
 
     public MessageListParams() { }
@@ -195,7 +195,7 @@ public sealed record class MessageListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static MessageListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

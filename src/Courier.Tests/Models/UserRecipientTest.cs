@@ -65,7 +65,7 @@ public class UserRecipientTest : TestBase
         string expectedListID = "list_id";
         string expectedLocale = "locale";
         string expectedPhoneNumber = "phone_number";
-        UserRecipientPreferences expectedPreferences = new()
+        Preferences expectedPreferences = new()
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -100,6 +100,7 @@ public class UserRecipientTest : TestBase
 
         Assert.Equal(expectedAccountID, model.AccountID);
         Assert.Equal(expectedContext, model.Context);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -220,8 +221,8 @@ public class UserRecipientTest : TestBase
             UserID = "user_id",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserRecipient>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserRecipient>(element);
         Assert.NotNull(deserialized);
 
         string expectedAccountID = "account_id";
@@ -234,7 +235,7 @@ public class UserRecipientTest : TestBase
         string expectedListID = "list_id";
         string expectedLocale = "locale";
         string expectedPhoneNumber = "phone_number";
-        UserRecipientPreferences expectedPreferences = new()
+        Preferences expectedPreferences = new()
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -269,6 +270,7 @@ public class UserRecipientTest : TestBase
 
         Assert.Equal(expectedAccountID, deserialized.AccountID);
         Assert.Equal(expectedContext, deserialized.Context);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -432,12 +434,12 @@ public class UserRecipientTest : TestBase
     }
 }
 
-public class UserRecipientPreferencesTest : TestBase
+public class PreferencesTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -503,6 +505,7 @@ public class UserRecipientPreferencesTest : TestBase
 
             Assert.Equal(value, model.Notifications[item.Key]);
         }
+        Assert.NotNull(model.Categories);
         Assert.Equal(expectedCategories.Count, model.Categories.Count);
         foreach (var item in expectedCategories)
         {
@@ -516,7 +519,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -548,7 +551,7 @@ public class UserRecipientPreferencesTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserRecipientPreferences>(json);
+        var deserialized = JsonSerializer.Deserialize<Preferences>(json);
 
         Assert.Equal(model, deserialized);
     }
@@ -556,7 +559,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -587,8 +590,8 @@ public class UserRecipientPreferencesTest : TestBase
             TemplateID = "templateId",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserRecipientPreferences>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Preferences>(element);
         Assert.NotNull(deserialized);
 
         Dictionary<string, Preference> expectedNotifications = new()
@@ -626,6 +629,7 @@ public class UserRecipientPreferencesTest : TestBase
 
             Assert.Equal(value, deserialized.Notifications[item.Key]);
         }
+        Assert.NotNull(deserialized.Categories);
         Assert.Equal(expectedCategories.Count, deserialized.Categories.Count);
         foreach (var item in expectedCategories)
         {
@@ -639,7 +643,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -676,7 +680,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -702,7 +706,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -725,7 +729,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {
@@ -754,7 +758,7 @@ public class UserRecipientPreferencesTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new UserRecipientPreferences
+        var model = new Preferences
         {
             Notifications = new Dictionary<string, Preference>()
             {

@@ -6,7 +6,7 @@ namespace Courier.Tests.Models;
 public class ElementalNodeTest : TestBase
 {
     [Fact]
-    public void text_node_with_typeValidation_Works()
+    public void TextNodeWithTypeValidationWorks()
     {
         ElementalNode value = new(
             new ElementalTextNodeWithType()
@@ -22,7 +22,7 @@ public class ElementalNodeTest : TestBase
     }
 
     [Fact]
-    public void meta_node_with_typeValidation_Works()
+    public void MetaNodeWithTypeValidationWorks()
     {
         ElementalNode value = new(
             new ElementalMetaNodeWithType()
@@ -38,7 +38,7 @@ public class ElementalNodeTest : TestBase
     }
 
     [Fact]
-    public void channel_node_with_typeValidation_Works()
+    public void ChannelNodeWithTypeValidationWorks()
     {
         ElementalNode value = new(
             new ElementalChannelNodeWithType()
@@ -50,7 +50,7 @@ public class ElementalNodeTest : TestBase
     }
 
     [Fact]
-    public void image_node_with_typeValidation_Works()
+    public void ImageNodeWithTypeValidationWorks()
     {
         ElementalNode value = new(
             new ElementalImageNodeWithType()
@@ -66,7 +66,7 @@ public class ElementalNodeTest : TestBase
     }
 
     [Fact]
-    public void action_node_with_typeValidation_Works()
+    public void ActionNodeWithTypeValidationWorks()
     {
         ElementalNode value = new(
             new ElementalActionNodeWithType()
@@ -82,7 +82,7 @@ public class ElementalNodeTest : TestBase
     }
 
     [Fact]
-    public void divider_node_with_typeValidation_Works()
+    public void DividerNodeWithTypeValidationWorks()
     {
         ElementalNode value = new(
             new ElementalDividerNodeWithType()
@@ -98,7 +98,7 @@ public class ElementalNodeTest : TestBase
     }
 
     [Fact]
-    public void quote_node_with_typeValidation_Works()
+    public void QuoteNodeWithTypeValidationWorks()
     {
         ElementalNode value = new(
             new ElementalQuoteNodeWithType()
@@ -114,7 +114,7 @@ public class ElementalNodeTest : TestBase
     }
 
     [Fact]
-    public void text_node_with_typeSerializationRoundtrip_Works()
+    public void TextNodeWithTypeSerializationRoundtripWorks()
     {
         ElementalNode value = new(
             new ElementalTextNodeWithType()
@@ -126,14 +126,14 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void meta_node_with_typeSerializationRoundtrip_Works()
+    public void MetaNodeWithTypeSerializationRoundtripWorks()
     {
         ElementalNode value = new(
             new ElementalMetaNodeWithType()
@@ -145,14 +145,14 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void channel_node_with_typeSerializationRoundtrip_Works()
+    public void ChannelNodeWithTypeSerializationRoundtripWorks()
     {
         ElementalNode value = new(
             new ElementalChannelNodeWithType()
@@ -160,14 +160,14 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void image_node_with_typeSerializationRoundtrip_Works()
+    public void ImageNodeWithTypeSerializationRoundtripWorks()
     {
         ElementalNode value = new(
             new ElementalImageNodeWithType()
@@ -179,14 +179,14 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void action_node_with_typeSerializationRoundtrip_Works()
+    public void ActionNodeWithTypeSerializationRoundtripWorks()
     {
         ElementalNode value = new(
             new ElementalActionNodeWithType()
@@ -198,14 +198,14 @@ public class ElementalNodeTest : TestBase
                 Type = Type.Action,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void divider_node_with_typeSerializationRoundtrip_Works()
+    public void DividerNodeWithTypeSerializationRoundtripWorks()
     {
         ElementalNode value = new(
             new ElementalDividerNodeWithType()
@@ -217,14 +217,14 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void quote_node_with_typeSerializationRoundtrip_Works()
+    public void QuoteNodeWithTypeSerializationRoundtripWorks()
     {
         ElementalNode value = new(
             new ElementalQuoteNodeWithType()
@@ -236,8 +236,8 @@ public class ElementalNodeTest : TestBase
                 Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ElementalNode>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(element);
 
         Assert.Equal(value, deserialized);
     }

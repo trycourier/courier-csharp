@@ -20,8 +20,8 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
-        init { ModelBase.Set(this._rawQueryData, "tenant_id", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
+        init { JsonModel.Set(this._rawQueryData, "tenant_id", value); }
     }
 
     public PreferenceRetrieveParams() { }
@@ -50,7 +50,7 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRaw.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
     public static PreferenceRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

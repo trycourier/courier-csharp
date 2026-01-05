@@ -7,43 +7,43 @@ using Courier.Core;
 
 namespace Courier.Models.AuditEvents;
 
-[JsonConverter(typeof(ModelConverter<AuditEvent, AuditEventFromRaw>))]
-public sealed record class AuditEvent : ModelBase
+[JsonConverter(typeof(JsonModelConverter<AuditEvent, AuditEventFromRaw>))]
+public sealed record class AuditEvent : JsonModel
 {
     public required Actor Actor
     {
-        get { return ModelBase.GetNotNullClass<Actor>(this.RawData, "actor"); }
-        init { ModelBase.Set(this._rawData, "actor", value); }
+        get { return JsonModel.GetNotNullClass<Actor>(this.RawData, "actor"); }
+        init { JsonModel.Set(this._rawData, "actor", value); }
     }
 
     public required string AuditEventID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "auditEventId"); }
-        init { ModelBase.Set(this._rawData, "auditEventId", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "auditEventId"); }
+        init { JsonModel.Set(this._rawData, "auditEventId", value); }
     }
 
     public required string Source
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "source"); }
-        init { ModelBase.Set(this._rawData, "source", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "source"); }
+        init { JsonModel.Set(this._rawData, "source", value); }
     }
 
     public required string Target
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "target"); }
-        init { ModelBase.Set(this._rawData, "target", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "target"); }
+        init { JsonModel.Set(this._rawData, "target", value); }
     }
 
     public required string Timestamp
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "timestamp"); }
-        init { ModelBase.Set(this._rawData, "timestamp", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "timestamp"); }
+        init { JsonModel.Set(this._rawData, "timestamp", value); }
     }
 
     public required string Type
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "type"); }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "type"); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     /// <inheritdoc/>
@@ -82,26 +82,26 @@ public sealed record class AuditEvent : ModelBase
     }
 }
 
-class AuditEventFromRaw : IFromRaw<AuditEvent>
+class AuditEventFromRaw : IFromRawJson<AuditEvent>
 {
     /// <inheritdoc/>
     public AuditEvent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         AuditEvent.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ModelConverter<Actor, ActorFromRaw>))]
-public sealed record class Actor : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Actor, ActorFromRaw>))]
+public sealed record class Actor : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public string? Email
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "email"); }
-        init { ModelBase.Set(this._rawData, "email", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "email"); }
+        init { JsonModel.Set(this._rawData, "email", value); }
     }
 
     /// <inheritdoc/>
@@ -143,7 +143,7 @@ public sealed record class Actor : ModelBase
     }
 }
 
-class ActorFromRaw : IFromRaw<Actor>
+class ActorFromRaw : IFromRawJson<Actor>
 {
     /// <inheritdoc/>
     public Actor FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

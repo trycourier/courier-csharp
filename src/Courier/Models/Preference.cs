@@ -9,43 +9,43 @@ using System = System;
 
 namespace Courier.Models;
 
-[JsonConverter(typeof(ModelConverter<Preference, PreferenceFromRaw>))]
-public sealed record class Preference : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Preference, PreferenceFromRaw>))]
+public sealed record class Preference : JsonModel
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
                 this.RawData,
                 "status"
             );
         }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     public IReadOnlyList<ChannelPreference>? ChannelPreferences
     {
         get
         {
-            return ModelBase.GetNullableClass<List<ChannelPreference>>(
+            return JsonModel.GetNullableClass<List<ChannelPreference>>(
                 this.RawData,
                 "channel_preferences"
             );
         }
-        init { ModelBase.Set(this._rawData, "channel_preferences", value); }
+        init { JsonModel.Set(this._rawData, "channel_preferences", value); }
     }
 
     public IReadOnlyList<Rule>? Rules
     {
-        get { return ModelBase.GetNullableClass<List<Rule>>(this.RawData, "rules"); }
-        init { ModelBase.Set(this._rawData, "rules", value); }
+        get { return JsonModel.GetNullableClass<List<Rule>>(this.RawData, "rules"); }
+        init { JsonModel.Set(this._rawData, "rules", value); }
     }
 
     public ApiEnum<string, Source>? Source
     {
-        get { return ModelBase.GetNullableClass<ApiEnum<string, Source>>(this.RawData, "source"); }
-        init { ModelBase.Set(this._rawData, "source", value); }
+        get { return JsonModel.GetNullableClass<ApiEnum<string, Source>>(this.RawData, "source"); }
+        init { JsonModel.Set(this._rawData, "source", value); }
     }
 
     /// <inheritdoc/>
@@ -95,7 +95,7 @@ public sealed record class Preference : ModelBase
     }
 }
 
-class PreferenceFromRaw : IFromRaw<Preference>
+class PreferenceFromRaw : IFromRawJson<Preference>
 {
     /// <inheritdoc/>
     public Preference FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>

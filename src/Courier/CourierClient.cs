@@ -14,12 +14,16 @@ namespace Courier;
 /// <inheritdoc/>
 public sealed class CourierClient : ICourierClient
 {
+#if NET
+    static readonly Random Random = Random.Shared;
+#else
     static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
 
     static Random Random
     {
         get { return _threadLocalRandom.Value!; }
     }
+#endif
 
     readonly ClientOptions _options;
 
@@ -356,6 +360,8 @@ public sealed class CourierClient : ICourierClient
     {
         return e is IOException || e is CourierIOException;
     }
+
+    public void Dispose() => this.HttpClient.Dispose();
 
     public CourierClient()
     {

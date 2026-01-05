@@ -33,8 +33,8 @@ public class WidgetBackgroundTest : TestBase
     {
         var model = new WidgetBackground { BottomColor = "bottomColor", TopColor = "topColor" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<WidgetBackground>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<WidgetBackground>(element);
         Assert.NotNull(deserialized);
 
         string expectedBottomColor = "bottomColor";

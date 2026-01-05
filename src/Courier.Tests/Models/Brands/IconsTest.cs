@@ -33,8 +33,8 @@ public class IconsTest : TestBase
     {
         var model = new Icons { Bell = "bell", Message = "message" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Icons>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Icons>(element);
         Assert.NotNull(deserialized);
 
         string expectedBell = "bell";

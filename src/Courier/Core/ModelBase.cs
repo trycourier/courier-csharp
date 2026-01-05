@@ -1,10 +1,9 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Exceptions;
 using Courier.Models;
-using Courier.Models.Audiences;
 using Courier.Models.Brands;
 using Courier.Models.Bulk;
+using Audiences = Courier.Models.Audiences;
 using Inbound = Courier.Models.Inbound;
 using Invoke = Courier.Models.Automations.Invoke;
 using Items = Courier.Models.Tenants.Preferences.Items;
@@ -26,19 +25,9 @@ namespace Courier.Core;
 /// </summary>
 public abstract record class ModelBase
 {
-    private protected FreezableDictionary<string, JsonElement> _rawData = [];
-
     protected ModelBase(ModelBase modelBase)
     {
-        this._rawData = [.. modelBase._rawData];
-    }
-
-    /// <summary>
-    /// The backing JSON properties of the instance.
-    /// </summary>
-    public IReadOnlyDictionary<string, JsonElement> RawData
-    {
-        get { return this._rawData.Freeze(); }
+        // Nothing to copy. Just so that subclasses can define copy constructors.
     }
 
     internal static readonly JsonSerializerOptions SerializerOptions = new()
@@ -46,6 +35,8 @@ public abstract record class ModelBase
         Converters =
         {
             new ApiEnumConverter<string, Alignment>(),
+            new ApiEnumConverter<string, Operator>(),
+            new ApiEnumConverter<string, Path>(),
             new ApiEnumConverter<string, ChannelClassification>(),
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, ElementalChannelNodeWithTypeIntersectionMember1Type>(),
@@ -54,15 +45,20 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, ElementalMetaNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalTextNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, ListFilterOperator>(),
+            new ApiEnumConverter<string, ListFilterPath>(),
             new ApiEnumConverter<string, Method>(),
             new ApiEnumConverter<string, Source>(),
             new ApiEnumConverter<string, PreferenceStatus>(),
             new ApiEnumConverter<string, TextStyle>(),
+            new ApiEnumConverter<string, WebhookAuthMode>(),
+            new ApiEnumConverter<string, WebhookMethod>(),
+            new ApiEnumConverter<string, WebhookProfileType>(),
             new ApiEnumConverter<string, Send::RoutingMethod>(),
             new ApiEnumConverter<string, Send::Method>(),
             new ApiEnumConverter<string, Send::Criteria>(),
-            new ApiEnumConverter<string, Operator>(),
-            new ApiEnumConverter<string, FilterConfigOperator>(),
+            new ApiEnumConverter<string, Audiences::Operator>(),
+            new ApiEnumConverter<string, Audiences::SingleFilterConfigOperator>(),
             new ApiEnumConverter<string, Invoke::Action>(),
             new ApiEnumConverter<string, Invoke::AutomationSendStepAction>(),
             new ApiEnumConverter<string, Invoke::AutomationSendListStepAction>(),
@@ -99,146 +95,12 @@ public abstract record class ModelBase
         },
     };
 
-    static readonly JsonSerializerOptions _toStringSerializerOptions = new(SerializerOptions)
+    private protected static readonly JsonSerializerOptions ToStringSerializerOptions = new(
+        SerializerOptions
+    )
     {
         WriteIndented = true,
     };
-
-    internal static void Set<T>(IDictionary<string, JsonElement> dictionary, string key, T value)
-    {
-        dictionary[key] = JsonSerializer.SerializeToElement(value, SerializerOptions);
-    }
-
-    internal static T GetNotNullClass<T>(
-        IReadOnlyDictionary<string, JsonElement> dictionary,
-        string key
-    )
-        where T : class
-    {
-        if (!dictionary.TryGetValue(key, out JsonElement element))
-        {
-            throw new CourierInvalidDataException($"'{key}' cannot be absent");
-        }
-
-        try
-        {
-            return JsonSerializer.Deserialize<T>(element, SerializerOptions)
-                ?? throw new CourierInvalidDataException($"'{key}' cannot be null");
-        }
-        catch (JsonException e)
-        {
-            throw new CourierInvalidDataException(
-                $"'{key}' must be of type {typeof(T).FullName}",
-                e
-            );
-        }
-    }
-
-    internal static T GetNotNullStruct<T>(
-        IReadOnlyDictionary<string, JsonElement> dictionary,
-        string key
-    )
-        where T : struct
-    {
-        if (!dictionary.TryGetValue(key, out JsonElement element))
-        {
-            throw new CourierInvalidDataException($"'{key}' cannot be absent");
-        }
-
-        try
-        {
-            return JsonSerializer.Deserialize<T?>(element, SerializerOptions)
-                ?? throw new CourierInvalidDataException($"'{key}' cannot be null");
-        }
-        catch (JsonException e)
-        {
-            throw new CourierInvalidDataException(
-                $"'{key}' must be of type {typeof(T).FullName}",
-                e
-            );
-        }
-    }
-
-    internal static T? GetNullableClass<T>(
-        IReadOnlyDictionary<string, JsonElement> dictionary,
-        string key
-    )
-        where T : class
-    {
-        if (!dictionary.TryGetValue(key, out JsonElement element))
-        {
-            return null;
-        }
-
-        try
-        {
-            return JsonSerializer.Deserialize<T?>(element, SerializerOptions);
-        }
-        catch (JsonException e)
-        {
-            throw new CourierInvalidDataException(
-                $"'{key}' must be of type {typeof(T).FullName}",
-                e
-            );
-        }
-    }
-
-    internal static T? GetNullableStruct<T>(
-        IReadOnlyDictionary<string, JsonElement> dictionary,
-        string key
-    )
-        where T : struct
-    {
-        if (!dictionary.TryGetValue(key, out JsonElement element))
-        {
-            return null;
-        }
-
-        try
-        {
-            return JsonSerializer.Deserialize<T?>(element, SerializerOptions);
-        }
-        catch (JsonException e)
-        {
-            throw new CourierInvalidDataException(
-                $"'{key}' must be of type {typeof(T).FullName}",
-                e
-            );
-        }
-    }
-
-    public sealed override string? ToString()
-    {
-        return JsonSerializer.Serialize(this.RawData, _toStringSerializerOptions);
-    }
-
-    public virtual bool Equals(ModelBase? other)
-    {
-        if (other == null || this.RawData.Count != other.RawData.Count)
-        {
-            return false;
-        }
-
-        foreach (var item in this.RawData)
-        {
-            if (!other.RawData.TryGetValue(item.Key, out var otherValue))
-            {
-                return false;
-            }
-
-            if (!JsonElement.DeepEquals(item.Value, otherValue))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public override int GetHashCode()
-    {
-        return 0;
-    }
 
     /// <summary>
     /// Validates that all required fields are set and that each field's value is of the expected type.
@@ -250,27 +112,4 @@ public abstract record class ModelBase
     /// </exception>
     /// </summary>
     public abstract void Validate();
-}
-
-/// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
-///
-/// <para>NOTE: This interface is in the style of a factory instance instead of using
-/// abstract static methods because .NET Standard 2.0 doesn't support abstract static methods.</para>
-/// </summary>
-interface IFromRaw<T>
-{
-    /// <summary>
-    /// Returns an instance constructed from the given raw JSON properties.
-    ///
-    /// <para>Required field and type mismatches are not checked. In these cases accessing
-    /// the relevant properties of the constructed instance may throw.</para>
-    ///
-    /// <para>This method is useful for constructing an instance from already serialized
-    /// data or for sending arbitrary data to the API (e.g. for undocumented or not
-    /// yet supported properties or values).</para>
-    /// </summary>
-    T FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData);
 }

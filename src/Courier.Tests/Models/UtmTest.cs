@@ -60,8 +60,8 @@ public class UtmTest : TestBase
             Term = "term",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Utm>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Utm>(element);
         Assert.NotNull(deserialized);
 
         string expectedCampaign = "campaign";

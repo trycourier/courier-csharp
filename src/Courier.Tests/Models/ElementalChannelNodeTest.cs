@@ -42,6 +42,7 @@ public class ElementalChannelNodeTest : TestBase
         Assert.Equal(expectedLoop, model.Loop);
         Assert.Equal(expectedRef, model.Ref);
         Assert.Equal(expectedChannel, model.Channel);
+        Assert.NotNull(model.Raw);
         Assert.Equal(expectedRaw.Count, model.Raw.Count);
         foreach (var item in expectedRaw)
         {
@@ -89,8 +90,8 @@ public class ElementalChannelNodeTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalChannelNode>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalChannelNode>(element);
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -113,6 +114,7 @@ public class ElementalChannelNodeTest : TestBase
         Assert.Equal(expectedLoop, deserialized.Loop);
         Assert.Equal(expectedRef, deserialized.Ref);
         Assert.Equal(expectedChannel, deserialized.Channel);
+        Assert.NotNull(deserialized.Raw);
         Assert.Equal(expectedRaw.Count, deserialized.Raw.Count);
         foreach (var item in expectedRaw)
         {
@@ -231,6 +233,7 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         };
 
         Assert.Equal(expectedChannel, model.Channel);
+        Assert.NotNull(model.Raw);
         Assert.Equal(expectedRaw.Count, model.Raw.Count);
         foreach (var item in expectedRaw)
         {
@@ -272,9 +275,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeIntersectionMember1>(
-            json
+            element
         );
         Assert.NotNull(deserialized);
 
@@ -285,6 +288,7 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         };
 
         Assert.Equal(expectedChannel, deserialized.Channel);
+        Assert.NotNull(deserialized.Raw);
         Assert.Equal(expectedRaw.Count, deserialized.Raw.Count);
         foreach (var item in expectedRaw)
         {

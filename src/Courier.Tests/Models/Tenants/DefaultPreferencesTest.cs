@@ -84,8 +84,8 @@ public class DefaultPreferencesTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<DefaultPreferences>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<DefaultPreferences>(element);
         Assert.NotNull(deserialized);
 
         List<Item> expectedItems =
@@ -222,8 +222,8 @@ public class ItemTest : TestBase
             ID = "id",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Item>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Item>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Status> expectedStatus = Status.OptedOut;
@@ -340,8 +340,8 @@ public class IntersectionMember1Test : TestBase
     {
         var model = new IntersectionMember1 { ID = "id" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<IntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

@@ -15,9 +15,9 @@ public class AudienceUpdateResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new()
+                Filter = new SingleFilterConfig()
                 {
-                    Operator = Operator.EndsWith,
+                    Operator = SingleFilterConfigOperator.EndsWith,
                     Path = "path",
                     Value = "value",
                 },
@@ -31,9 +31,9 @@ public class AudienceUpdateResponseTest : TestBase
             ID = "id",
             CreatedAt = "created_at",
             Description = "description",
-            Filter = new()
+            Filter = new SingleFilterConfig()
             {
-                Operator = Operator.EndsWith,
+                Operator = SingleFilterConfigOperator.EndsWith,
                 Path = "path",
                 Value = "value",
             },
@@ -54,9 +54,9 @@ public class AudienceUpdateResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new()
+                Filter = new SingleFilterConfig()
                 {
-                    Operator = Operator.EndsWith,
+                    Operator = SingleFilterConfigOperator.EndsWith,
                     Path = "path",
                     Value = "value",
                 },
@@ -81,9 +81,9 @@ public class AudienceUpdateResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new()
+                Filter = new SingleFilterConfig()
                 {
-                    Operator = Operator.EndsWith,
+                    Operator = SingleFilterConfigOperator.EndsWith,
                     Path = "path",
                     Value = "value",
                 },
@@ -92,8 +92,8 @@ public class AudienceUpdateResponseTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AudienceUpdateResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AudienceUpdateResponse>(element);
         Assert.NotNull(deserialized);
 
         Audience expectedAudience = new()
@@ -101,9 +101,9 @@ public class AudienceUpdateResponseTest : TestBase
             ID = "id",
             CreatedAt = "created_at",
             Description = "description",
-            Filter = new()
+            Filter = new SingleFilterConfig()
             {
-                Operator = Operator.EndsWith,
+                Operator = SingleFilterConfigOperator.EndsWith,
                 Path = "path",
                 Value = "value",
             },
@@ -124,9 +124,9 @@ public class AudienceUpdateResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new()
+                Filter = new SingleFilterConfig()
                 {
-                    Operator = Operator.EndsWith,
+                    Operator = SingleFilterConfigOperator.EndsWith,
                     Path = "path",
                     Value = "value",
                 },

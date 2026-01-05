@@ -62,6 +62,7 @@ public class InboundBulkMessageTest : TestBase
         Assert.Equal(expectedEvent, model.Event);
         Assert.Equal(expectedBrand, model.Brand);
         Assert.Equal(expectedContent, model.Content);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -69,6 +70,7 @@ public class InboundBulkMessageTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, model.Data[item.Key]));
         }
+        Assert.NotNull(model.Locale);
         Assert.Equal(expectedLocale.Count, model.Locale.Count);
         foreach (var item in expectedLocale)
         {
@@ -82,6 +84,7 @@ public class InboundBulkMessageTest : TestBase
                 Assert.True(JsonElement.DeepEquals(value1, model.Locale[item.Key][item1.Key]));
             }
         }
+        Assert.NotNull(model.Override);
         Assert.Equal(expectedOverride.Count, model.Override.Count);
         foreach (var item in expectedOverride)
         {
@@ -156,8 +159,8 @@ public class InboundBulkMessageTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InboundBulkMessage>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<InboundBulkMessage>(element);
         Assert.NotNull(deserialized);
 
         string expectedEvent = "event";
@@ -186,6 +189,7 @@ public class InboundBulkMessageTest : TestBase
         Assert.Equal(expectedEvent, deserialized.Event);
         Assert.Equal(expectedBrand, deserialized.Brand);
         Assert.Equal(expectedContent, deserialized.Content);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -193,6 +197,7 @@ public class InboundBulkMessageTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, deserialized.Data[item.Key]));
         }
+        Assert.NotNull(deserialized.Locale);
         Assert.Equal(expectedLocale.Count, deserialized.Locale.Count);
         foreach (var item in expectedLocale)
         {
@@ -208,6 +213,7 @@ public class InboundBulkMessageTest : TestBase
                 );
             }
         }
+        Assert.NotNull(deserialized.Override);
         Assert.Equal(expectedOverride.Count, deserialized.Override.Count);
         foreach (var item in expectedOverride)
         {
@@ -328,14 +334,14 @@ public class InboundBulkMessageTest : TestBase
 public class ContentTest : TestBase
 {
     [Fact]
-    public void elemental_content_sugarValidation_Works()
+    public void ElementalContentSugarValidationWorks()
     {
         Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
         value.Validate();
     }
 
     [Fact]
-    public void elementalValidation_Works()
+    public void ElementalValidationWorks()
     {
         Content value = new(
             new ElementalContent()
@@ -359,17 +365,17 @@ public class ContentTest : TestBase
     }
 
     [Fact]
-    public void elemental_content_sugarSerializationRoundtrip_Works()
+    public void ElementalContentSugarSerializationRoundtripWorks()
     {
         Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void elementalSerializationRoundtrip_Works()
+    public void ElementalSerializationRoundtripWorks()
     {
         Content value = new(
             new ElementalContent()
@@ -389,8 +395,8 @@ public class ContentTest : TestBase
                 Brand = "brand",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }

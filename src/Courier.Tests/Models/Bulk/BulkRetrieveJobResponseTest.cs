@@ -168,8 +168,8 @@ public class BulkRetrieveJobResponseTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BulkRetrieveJobResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<BulkRetrieveJobResponse>(element);
         Assert.NotNull(deserialized);
 
         Job expectedJob = new()
@@ -404,8 +404,8 @@ public class JobTest : TestBase
             Status = JobStatus.Created,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Job>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Job>(element);
         Assert.NotNull(deserialized);
 
         InboundBulkMessage expectedDefinition = new()
@@ -506,6 +506,8 @@ public class JobStatusTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

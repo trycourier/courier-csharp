@@ -1,9 +1,96 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Inbound;
 
 namespace Courier.Tests.Models.Inbound;
+
+public class InboundTrackEventParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new InboundTrackEventParams
+        {
+            Event = "New Order Placed",
+            MessageID = "4c62c457-b329-4bea-9bfc-17bba86c393f",
+            Properties = new Dictionary<string, JsonElement>()
+            {
+                { "order_id", JsonSerializer.SerializeToElement("bar") },
+                { "total_orders", JsonSerializer.SerializeToElement("bar") },
+                { "last_order_id", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = Type.Track,
+            UserID = "1234",
+        };
+
+        string expectedEvent = "New Order Placed";
+        string expectedMessageID = "4c62c457-b329-4bea-9bfc-17bba86c393f";
+        Dictionary<string, JsonElement> expectedProperties = new()
+        {
+            { "order_id", JsonSerializer.SerializeToElement("bar") },
+            { "total_orders", JsonSerializer.SerializeToElement("bar") },
+            { "last_order_id", JsonSerializer.SerializeToElement("bar") },
+        };
+        ApiEnum<string, Type> expectedType = Type.Track;
+        string expectedUserID = "1234";
+
+        Assert.Equal(expectedEvent, parameters.Event);
+        Assert.Equal(expectedMessageID, parameters.MessageID);
+        Assert.Equal(expectedProperties.Count, parameters.Properties.Count);
+        foreach (var item in expectedProperties)
+        {
+            Assert.True(parameters.Properties.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, parameters.Properties[item.Key]));
+        }
+        Assert.Equal(expectedType, parameters.Type);
+        Assert.Equal(expectedUserID, parameters.UserID);
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new InboundTrackEventParams
+        {
+            Event = "New Order Placed",
+            MessageID = "4c62c457-b329-4bea-9bfc-17bba86c393f",
+            Properties = new Dictionary<string, JsonElement>()
+            {
+                { "order_id", JsonSerializer.SerializeToElement("bar") },
+                { "total_orders", JsonSerializer.SerializeToElement("bar") },
+                { "last_order_id", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = Type.Track,
+        };
+
+        Assert.Null(parameters.UserID);
+        Assert.False(parameters.RawBodyData.ContainsKey("userId"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new InboundTrackEventParams
+        {
+            Event = "New Order Placed",
+            MessageID = "4c62c457-b329-4bea-9bfc-17bba86c393f",
+            Properties = new Dictionary<string, JsonElement>()
+            {
+                { "order_id", JsonSerializer.SerializeToElement("bar") },
+                { "total_orders", JsonSerializer.SerializeToElement("bar") },
+                { "last_order_id", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = Type.Track,
+
+            UserID = null,
+        };
+
+        Assert.Null(parameters.UserID);
+        Assert.False(parameters.RawBodyData.ContainsKey("userId"));
+    }
+}
 
 public class TypeTest : TestBase
 {
@@ -23,6 +110,8 @@ public class TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

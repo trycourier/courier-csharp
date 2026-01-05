@@ -70,6 +70,7 @@ public class TenantTest : TestBase
         Assert.Equal(expectedBrandID, model.BrandID);
         Assert.Equal(expectedDefaultPreferences, model.DefaultPreferences);
         Assert.Equal(expectedParentTenantID, model.ParentTenantID);
+        Assert.NotNull(model.Properties);
         Assert.Equal(expectedProperties.Count, model.Properties.Count);
         foreach (var item in expectedProperties)
         {
@@ -77,6 +78,7 @@ public class TenantTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, model.Properties[item.Key]));
         }
+        Assert.NotNull(model.UserProfile);
         Assert.Equal(expectedUserProfile.Count, model.UserProfile.Count);
         foreach (var item in expectedUserProfile)
         {
@@ -156,8 +158,8 @@ public class TenantTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Tenant>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Tenant>(element);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -191,6 +193,7 @@ public class TenantTest : TestBase
         Assert.Equal(expectedBrandID, deserialized.BrandID);
         Assert.Equal(expectedDefaultPreferences, deserialized.DefaultPreferences);
         Assert.Equal(expectedParentTenantID, deserialized.ParentTenantID);
+        Assert.NotNull(deserialized.Properties);
         Assert.Equal(expectedProperties.Count, deserialized.Properties.Count);
         foreach (var item in expectedProperties)
         {
@@ -198,6 +201,7 @@ public class TenantTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, deserialized.Properties[item.Key]));
         }
+        Assert.NotNull(deserialized.UserProfile);
         Assert.Equal(expectedUserProfile.Count, deserialized.UserProfile.Count);
         foreach (var item in expectedUserProfile)
         {

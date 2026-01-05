@@ -1,5 +1,38 @@
 # Changelog
 
+## 4.0.0 (2026-01-05)
+
+Full Changelog: [v3.3.0...v4.0.0](https://github.com/trycourier/courier-csharp/compare/v3.3.0...v4.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** add pagination
+
+### Features
+
+* **api:** add webhook/slack/msteams/pagerduty/audience recipients, update recipient to union ([b61e9b9](https://github.com/trycourier/courier-csharp/commit/b61e9b93a0bf6e4eb9e118fda6ed71b35d28119f))
+* **client:** add multipart form data support ([6f9e8f5](https://github.com/trycourier/courier-csharp/commit/6f9e8f56c2f3374cc2e280395294bf258694f459))
+* **client:** add pagination ([02596ff](https://github.com/trycourier/courier-csharp/commit/02596ffe7c1f9d8b443ade01b06ae00e6c38163f))
+
+
+### Bug Fixes
+
+* **internal:** test nullability warnings ([285d46b](https://github.com/trycourier/courier-csharp/commit/285d46b6c07150da9bd7013ff79b4c1147723125))
+
+
+### Chores
+
+* **client:** improve object instantiation ([82d71f5](https://github.com/trycourier/courier-csharp/commit/82d71f55b0f5a38ead50d204156e8c13bc545909))
+* **internal:** share csproj properties with dir build props ([285d46b](https://github.com/trycourier/courier-csharp/commit/285d46b6c07150da9bd7013ff79b4c1147723125))
+* **internal:** turn off overzealous lints ([46c7aad](https://github.com/trycourier/courier-csharp/commit/46c7aad31389cf08ebd0deb365b26d09d35c249b))
+* **internal:** use `Random.Shared` in newer .NET versions ([10521ce](https://github.com/trycourier/courier-csharp/commit/10521cec393e6ee2c86b1d5b886636d98b59c36c))
+* **internal:** use better test examples ([285d46b](https://github.com/trycourier/courier-csharp/commit/285d46b6c07150da9bd7013ff79b4c1147723125))
+
+
+### Documentation
+
+* add contributing.md ([f3ceb03](https://github.com/trycourier/courier-csharp/commit/f3ceb03bec24a015c9c204d43ddad6758242d4d6))
+
 ## 3.3.0 (2025-12-16)
 
 Full Changelog: [v3.2.0...v3.3.0](https://github.com/trycourier/courier-csharp/compare/v3.2.0...v3.3.0)

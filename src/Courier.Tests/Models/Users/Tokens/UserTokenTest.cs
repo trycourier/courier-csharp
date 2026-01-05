@@ -125,8 +125,8 @@ public class UserTokenTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserToken>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserToken>(element);
         Assert.NotNull(deserialized);
 
         string expectedToken = "token";
@@ -406,6 +406,8 @@ public class UserTokenProviderKeyTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -507,8 +509,8 @@ public class UserTokenDeviceTest : TestBase
             Platform = "platform",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserTokenDevice>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserTokenDevice>(element);
         Assert.NotNull(deserialized);
 
         string expectedAdID = "ad_id";
@@ -616,35 +618,35 @@ public class UserTokenDeviceTest : TestBase
 public class UserTokenExpiryDateTest : TestBase
 {
     [Fact]
-    public void stringValidation_Works()
+    public void StringValidationWorks()
     {
         UserTokenExpiryDate value = new("string");
         value.Validate();
     }
 
     [Fact]
-    public void boolValidation_Works()
+    public void BoolValidationWorks()
     {
         UserTokenExpiryDate value = new(true);
         value.Validate();
     }
 
     [Fact]
-    public void stringSerializationRoundtrip_Works()
+    public void StringSerializationRoundtripWorks()
     {
         UserTokenExpiryDate value = new("string");
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void boolSerializationRoundtrip_Works()
+    public void BoolSerializationRoundtripWorks()
     {
         UserTokenExpiryDate value = new(true);
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -702,8 +704,8 @@ public class UserTokenTrackingTest : TestBase
             OsVersion = "os_version",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<UserTokenTracking>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<UserTokenTracking>(element);
         Assert.NotNull(deserialized);
 
         string expectedIP = "ip";

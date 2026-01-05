@@ -9,16 +9,16 @@ using System = System;
 
 namespace Courier.Models.Tenants;
 
-[JsonConverter(typeof(ModelConverter<TenantListUsersResponse, TenantListUsersResponseFromRaw>))]
-public sealed record class TenantListUsersResponse : ModelBase
+[JsonConverter(typeof(JsonModelConverter<TenantListUsersResponse, TenantListUsersResponseFromRaw>))]
+public sealed record class TenantListUsersResponse : JsonModel
 {
     /// <summary>
     /// Set to true when there are more pages that can be retrieved.
     /// </summary>
     public required bool HasMore
     {
-        get { return ModelBase.GetNotNullStruct<bool>(this.RawData, "has_more"); }
-        init { ModelBase.Set(this._rawData, "has_more", value); }
+        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "has_more"); }
+        init { JsonModel.Set(this._rawData, "has_more", value); }
     }
 
     /// <summary>
@@ -28,12 +28,12 @@ public sealed record class TenantListUsersResponse : ModelBase
     {
         get
         {
-            return ModelBase.GetNotNullClass<ApiEnum<string, TenantListUsersResponseType>>(
+            return JsonModel.GetNotNullClass<ApiEnum<string, TenantListUsersResponseType>>(
                 this.RawData,
                 "type"
             );
         }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -41,8 +41,8 @@ public sealed record class TenantListUsersResponse : ModelBase
     /// </summary>
     public required string URL
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "url"); }
-        init { ModelBase.Set(this._rawData, "url", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "url"); }
+        init { JsonModel.Set(this._rawData, "url", value); }
     }
 
     /// <summary>
@@ -51,14 +51,14 @@ public sealed record class TenantListUsersResponse : ModelBase
     /// </summary>
     public string? Cursor
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "cursor"); }
-        init { ModelBase.Set(this._rawData, "cursor", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "cursor"); }
+        init { JsonModel.Set(this._rawData, "cursor", value); }
     }
 
     public IReadOnlyList<TenantAssociation>? Items
     {
-        get { return ModelBase.GetNullableClass<List<TenantAssociation>>(this.RawData, "items"); }
-        init { ModelBase.Set(this._rawData, "items", value); }
+        get { return JsonModel.GetNullableClass<List<TenantAssociation>>(this.RawData, "items"); }
+        init { JsonModel.Set(this._rawData, "items", value); }
     }
 
     /// <summary>
@@ -67,8 +67,8 @@ public sealed record class TenantListUsersResponse : ModelBase
     /// </summary>
     public string? NextURL
     {
-        get { return ModelBase.GetNullableClass<string>(this.RawData, "next_url"); }
-        init { ModelBase.Set(this._rawData, "next_url", value); }
+        get { return JsonModel.GetNullableClass<string>(this.RawData, "next_url"); }
+        init { JsonModel.Set(this._rawData, "next_url", value); }
     }
 
     /// <inheritdoc/>
@@ -112,7 +112,7 @@ public sealed record class TenantListUsersResponse : ModelBase
     }
 }
 
-class TenantListUsersResponseFromRaw : IFromRaw<TenantListUsersResponse>
+class TenantListUsersResponseFromRaw : IFromRawJson<TenantListUsersResponse>
 {
     /// <inheritdoc/>
     public TenantListUsersResponse FromRawUnchecked(

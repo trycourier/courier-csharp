@@ -6,6 +6,217 @@ using Courier.Models.Automations.Invoke;
 
 namespace Courier.Tests.Models.Automations.Invoke;
 
+public class InvokeInvokeAdHocParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new InvokeInvokeAdHocParams
+        {
+            Automation = new()
+            {
+                Steps =
+                [
+                    new AutomationDelayStep()
+                    {
+                        Action = Action.Delay,
+                        Duration = "duration",
+                        Until = "20240408T080910.123",
+                    },
+                    new AutomationSendStep()
+                    {
+                        Action = AutomationSendStepAction.Send,
+                        Brand = "brand",
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Profile = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Recipient = "recipient",
+                        Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                    },
+                ],
+                CancelationToken = "delay-send--user-yes--abc-123",
+            },
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "name", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "tenant_id", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "user-yes",
+            Template = "template",
+        };
+
+        Automation expectedAutomation = new()
+        {
+            Steps =
+            [
+                new AutomationDelayStep()
+                {
+                    Action = Action.Delay,
+                    Duration = "duration",
+                    Until = "20240408T080910.123",
+                },
+                new AutomationSendStep()
+                {
+                    Action = AutomationSendStepAction.Send,
+                    Brand = "brand",
+                    Data = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Recipient = "recipient",
+                    Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                },
+            ],
+            CancelationToken = "delay-send--user-yes--abc-123",
+        };
+        string expectedBrand = "brand";
+        Dictionary<string, JsonElement> expectedData = new()
+        {
+            { "name", JsonSerializer.SerializeToElement("bar") },
+        };
+        Dictionary<string, JsonElement> expectedProfile = new()
+        {
+            { "tenant_id", JsonSerializer.SerializeToElement("bar") },
+        };
+        string expectedRecipient = "user-yes";
+        string expectedTemplate = "template";
+
+        Assert.Equal(expectedAutomation, parameters.Automation);
+        Assert.Equal(expectedBrand, parameters.Brand);
+        Assert.NotNull(parameters.Data);
+        Assert.Equal(expectedData.Count, parameters.Data.Count);
+        foreach (var item in expectedData)
+        {
+            Assert.True(parameters.Data.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, parameters.Data[item.Key]));
+        }
+        Assert.NotNull(parameters.Profile);
+        Assert.Equal(expectedProfile.Count, parameters.Profile.Count);
+        foreach (var item in expectedProfile)
+        {
+            Assert.True(parameters.Profile.TryGetValue(item.Key, out var value));
+
+            Assert.True(JsonElement.DeepEquals(value, parameters.Profile[item.Key]));
+        }
+        Assert.Equal(expectedRecipient, parameters.Recipient);
+        Assert.Equal(expectedTemplate, parameters.Template);
+    }
+
+    [Fact]
+    public void OptionalNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new InvokeInvokeAdHocParams
+        {
+            Automation = new()
+            {
+                Steps =
+                [
+                    new AutomationDelayStep()
+                    {
+                        Action = Action.Delay,
+                        Duration = "duration",
+                        Until = "20240408T080910.123",
+                    },
+                    new AutomationSendStep()
+                    {
+                        Action = AutomationSendStepAction.Send,
+                        Brand = "brand",
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Profile = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Recipient = "recipient",
+                        Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                    },
+                ],
+                CancelationToken = "delay-send--user-yes--abc-123",
+            },
+        };
+
+        Assert.Null(parameters.Brand);
+        Assert.False(parameters.RawBodyData.ContainsKey("brand"));
+        Assert.Null(parameters.Data);
+        Assert.False(parameters.RawBodyData.ContainsKey("data"));
+        Assert.Null(parameters.Profile);
+        Assert.False(parameters.RawBodyData.ContainsKey("profile"));
+        Assert.Null(parameters.Recipient);
+        Assert.False(parameters.RawBodyData.ContainsKey("recipient"));
+        Assert.Null(parameters.Template);
+        Assert.False(parameters.RawBodyData.ContainsKey("template"));
+    }
+
+    [Fact]
+    public void OptionalNullableParamsSetToNullAreSetToNull_Works()
+    {
+        var parameters = new InvokeInvokeAdHocParams
+        {
+            Automation = new()
+            {
+                Steps =
+                [
+                    new AutomationDelayStep()
+                    {
+                        Action = Action.Delay,
+                        Duration = "duration",
+                        Until = "20240408T080910.123",
+                    },
+                    new AutomationSendStep()
+                    {
+                        Action = AutomationSendStepAction.Send,
+                        Brand = "brand",
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Profile = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Recipient = "recipient",
+                        Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                    },
+                ],
+                CancelationToken = "delay-send--user-yes--abc-123",
+            },
+
+            Brand = null,
+            Data = null,
+            Profile = null,
+            Recipient = null,
+            Template = null,
+        };
+
+        Assert.Null(parameters.Brand);
+        Assert.False(parameters.RawBodyData.ContainsKey("brand"));
+        Assert.Null(parameters.Data);
+        Assert.False(parameters.RawBodyData.ContainsKey("data"));
+        Assert.Null(parameters.Profile);
+        Assert.False(parameters.RawBodyData.ContainsKey("profile"));
+        Assert.Null(parameters.Recipient);
+        Assert.False(parameters.RawBodyData.ContainsKey("recipient"));
+        Assert.Null(parameters.Template);
+        Assert.False(parameters.RawBodyData.ContainsKey("template"));
+    }
+}
+
 public class AutomationTest : TestBase
 {
     [Fact]
@@ -84,8 +295,8 @@ public class AutomationTest : TestBase
             CancelationToken = "cancelation_token",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Automation>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Automation>(element);
         Assert.NotNull(deserialized);
 
         List<Step> expectedSteps =
@@ -213,7 +424,7 @@ public class AutomationTest : TestBase
 public class StepTest : TestBase
 {
     [Fact]
-    public void automation_delayValidation_Works()
+    public void AutomationDelayValidationWorks()
     {
         Step value = new(
             new AutomationDelayStep()
@@ -227,7 +438,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_sendValidation_Works()
+    public void AutomationSendValidationWorks()
     {
         Step value = new(
             new AutomationSendStep()
@@ -250,7 +461,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_send_listValidation_Works()
+    public void AutomationSendListValidationWorks()
     {
         Step value = new(
             new AutomationSendListStep()
@@ -268,7 +479,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_update_profileValidation_Works()
+    public void AutomationUpdateProfileValidationWorks()
     {
         Step value = new(
             new AutomationUpdateProfileStep()
@@ -286,7 +497,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_cancelValidation_Works()
+    public void AutomationCancelValidationWorks()
     {
         Step value = new(
             new AutomationCancelStep()
@@ -299,7 +510,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_fetch_dataValidation_Works()
+    public void AutomationFetchDataValidationWorks()
     {
         Step value = new(
             new AutomationFetchDataStep()
@@ -319,7 +530,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_invokeValidation_Works()
+    public void AutomationInvokeValidationWorks()
     {
         Step value = new(
             new AutomationInvokeStep()
@@ -332,7 +543,7 @@ public class StepTest : TestBase
     }
 
     [Fact]
-    public void automation_delaySerializationRoundtrip_Works()
+    public void AutomationDelaySerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationDelayStep()
@@ -342,14 +553,14 @@ public class StepTest : TestBase
                 Until = "until",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_sendSerializationRoundtrip_Works()
+    public void AutomationSendSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationSendStep()
@@ -368,14 +579,14 @@ public class StepTest : TestBase
                 Template = "template",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_send_listSerializationRoundtrip_Works()
+    public void AutomationSendListSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationSendListStep()
@@ -389,14 +600,14 @@ public class StepTest : TestBase
                 },
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_update_profileSerializationRoundtrip_Works()
+    public void AutomationUpdateProfileSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationUpdateProfileStep()
@@ -410,14 +621,14 @@ public class StepTest : TestBase
                 RecipientID = "recipient_id",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_cancelSerializationRoundtrip_Works()
+    public void AutomationCancelSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationCancelStep()
@@ -426,14 +637,14 @@ public class StepTest : TestBase
                 CancelationToken = "cancelation_token",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_fetch_dataSerializationRoundtrip_Works()
+    public void AutomationFetchDataSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationFetchDataStep()
@@ -449,14 +660,14 @@ public class StepTest : TestBase
                 MergeStrategy = MergeStrategy.Replace,
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
 
     [Fact]
-    public void automation_invokeSerializationRoundtrip_Works()
+    public void AutomationInvokeSerializationRoundtripWorks()
     {
         Step value = new(
             new AutomationInvokeStep()
@@ -465,8 +676,8 @@ public class StepTest : TestBase
                 Template = "template",
             }
         );
-        string json = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Step>(json);
+        string element = JsonSerializer.Serialize(value);
+        var deserialized = JsonSerializer.Deserialize<Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -519,8 +730,8 @@ public class AutomationDelayStepTest : TestBase
             Until = "until",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Action> expectedAction = Action.Delay;
@@ -614,6 +825,8 @@ public class ActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -686,6 +899,7 @@ public class AutomationSendStepTest : TestBase
 
         Assert.Equal(expectedAction, model.Action);
         Assert.Equal(expectedBrand, model.Brand);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -693,6 +907,7 @@ public class AutomationSendStepTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, model.Data[item.Key]));
         }
+        Assert.NotNull(model.Profile);
         Assert.Equal(expectedProfile.Count, model.Profile.Count);
         foreach (var item in expectedProfile)
         {
@@ -748,8 +963,8 @@ public class AutomationSendStepTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationSendStepAction> expectedAction = AutomationSendStepAction.Send;
@@ -767,6 +982,7 @@ public class AutomationSendStepTest : TestBase
 
         Assert.Equal(expectedAction, deserialized.Action);
         Assert.Equal(expectedBrand, deserialized.Brand);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -774,6 +990,7 @@ public class AutomationSendStepTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, deserialized.Data[item.Key]));
         }
+        Assert.NotNull(deserialized.Profile);
         Assert.Equal(expectedProfile.Count, deserialized.Profile.Count);
         foreach (var item in expectedProfile)
         {
@@ -894,6 +1111,8 @@ public class AutomationSendStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -958,6 +1177,7 @@ public class AutomationSendListStepTest : TestBase
         Assert.Equal(expectedAction, model.Action);
         Assert.Equal(expectedList, model.List);
         Assert.Equal(expectedBrand, model.Brand);
+        Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
         {
@@ -1001,8 +1221,8 @@ public class AutomationSendListStepTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationSendListStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationSendListStepAction> expectedAction =
@@ -1017,6 +1237,7 @@ public class AutomationSendListStepTest : TestBase
         Assert.Equal(expectedAction, deserialized.Action);
         Assert.Equal(expectedList, deserialized.List);
         Assert.Equal(expectedBrand, deserialized.Brand);
+        Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
         {
@@ -1122,6 +1343,8 @@ public class AutomationSendListStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1227,8 +1450,8 @@ public class AutomationUpdateProfileStepTest : TestBase
             RecipientID = "recipient_id",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationUpdateProfileStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationUpdateProfileStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationUpdateProfileStepAction> expectedAction =
@@ -1360,6 +1583,8 @@ public class AutomationUpdateProfileStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1415,6 +1640,8 @@ public class MergeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1497,8 +1724,8 @@ public class AutomationCancelStepTest : TestBase
             CancelationToken = "cancelation_token",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationCancelStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationCancelStepAction> expectedAction =
@@ -1540,6 +1767,8 @@ public class AutomationCancelStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1648,8 +1877,8 @@ public class AutomationFetchDataStepTest : TestBase
             MergeStrategy = MergeStrategy.Replace,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationFetchDataStepAction> expectedAction =
@@ -1784,6 +2013,8 @@ public class AutomationFetchDataStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -1839,6 +2070,7 @@ public class WebhookTest : TestBase
         Assert.Equal(expectedMethod, model.Method);
         Assert.Equal(expectedURL, model.URL);
         Assert.Equal(expectedBody, model.Body);
+        Assert.NotNull(model.Headers);
         Assert.Equal(expectedHeaders.Count, model.Headers.Count);
         foreach (var item in expectedHeaders)
         {
@@ -1876,8 +2108,8 @@ public class WebhookTest : TestBase
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Webhook>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<Webhook>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Method> expectedMethod = Method.Get;
@@ -1888,6 +2120,7 @@ public class WebhookTest : TestBase
         Assert.Equal(expectedMethod, deserialized.Method);
         Assert.Equal(expectedURL, deserialized.URL);
         Assert.Equal(expectedBody, deserialized.Body);
+        Assert.NotNull(deserialized.Headers);
         Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
         foreach (var item in expectedHeaders)
         {
@@ -1986,6 +2219,8 @@ public class MethodTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -2046,6 +2281,8 @@ public class MergeStrategyTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
@@ -2127,8 +2364,8 @@ public class AutomationInvokeStepTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, AutomationInvokeStepAction> expectedAction =
@@ -2170,6 +2407,8 @@ public class AutomationInvokeStepActionTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

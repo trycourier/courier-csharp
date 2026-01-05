@@ -7,36 +7,36 @@ using Courier.Core;
 
 namespace Courier.Models.Notifications;
 
-[JsonConverter(typeof(ModelConverter<Check, CheckFromRaw>))]
-public sealed record class Check : ModelBase
+[JsonConverter(typeof(JsonModelConverter<Check, CheckFromRaw>))]
+public sealed record class Check : JsonModel
 {
     public required string ID
     {
-        get { return ModelBase.GetNotNullClass<string>(this.RawData, "id"); }
-        init { ModelBase.Set(this._rawData, "id", value); }
+        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
+        init { JsonModel.Set(this._rawData, "id", value); }
     }
 
     public required ApiEnum<string, Status> Status
     {
-        get { return ModelBase.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { ModelBase.Set(this._rawData, "status", value); }
+        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
+        init { JsonModel.Set(this._rawData, "status", value); }
     }
 
     public required ApiEnum<string, global::Courier.Models.Notifications.Type> Type
     {
         get
         {
-            return ModelBase.GetNotNullClass<
+            return JsonModel.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Notifications.Type>
             >(this.RawData, "type");
         }
-        init { ModelBase.Set(this._rawData, "type", value); }
+        init { JsonModel.Set(this._rawData, "type", value); }
     }
 
     public required long Updated
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "updated"); }
-        init { ModelBase.Set(this._rawData, "updated", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "updated"); }
+        init { JsonModel.Set(this._rawData, "updated", value); }
     }
 
     public static implicit operator BaseCheck(Check check) =>
@@ -81,7 +81,7 @@ public sealed record class Check : ModelBase
     }
 }
 
-class CheckFromRaw : IFromRaw<Check>
+class CheckFromRaw : IFromRawJson<Check>
 {
     /// <inheritdoc/>
     public Check FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
@@ -89,17 +89,17 @@ class CheckFromRaw : IFromRaw<Check>
 }
 
 [JsonConverter(
-    typeof(ModelConverter<
+    typeof(JsonModelConverter<
         global::Courier.Models.Notifications.IntersectionMember1,
         global::Courier.Models.Notifications.IntersectionMember1FromRaw
     >)
 )]
-public sealed record class IntersectionMember1 : ModelBase
+public sealed record class IntersectionMember1 : JsonModel
 {
     public required long Updated
     {
-        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "updated"); }
-        init { ModelBase.Set(this._rawData, "updated", value); }
+        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "updated"); }
+        init { JsonModel.Set(this._rawData, "updated", value); }
     }
 
     /// <inheritdoc/>
@@ -145,7 +145,7 @@ public sealed record class IntersectionMember1 : ModelBase
 }
 
 class IntersectionMember1FromRaw
-    : IFromRaw<global::Courier.Models.Notifications.IntersectionMember1>
+    : IFromRawJson<global::Courier.Models.Notifications.IntersectionMember1>
 {
     /// <inheritdoc/>
     public global::Courier.Models.Notifications.IntersectionMember1 FromRawUnchecked(

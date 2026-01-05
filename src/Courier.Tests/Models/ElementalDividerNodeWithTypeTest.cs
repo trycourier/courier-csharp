@@ -69,8 +69,8 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(element);
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -279,9 +279,9 @@ public class ElementalDividerNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalDividerNodeWithTypeIntersectionMember1>(json);
+            JsonSerializer.Deserialize<ElementalDividerNodeWithTypeIntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type> expectedType =
@@ -364,6 +364,8 @@ public class ElementalDividerNodeWithTypeIntersectionMember1TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

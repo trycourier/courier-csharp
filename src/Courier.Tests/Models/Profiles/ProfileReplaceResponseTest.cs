@@ -34,8 +34,8 @@ public class ProfileReplaceResponseTest : TestBase
     {
         var model = new ProfileReplaceResponse { Status = ProfileReplaceResponseStatus.Success };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProfileReplaceResponse>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ProfileReplaceResponse>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ProfileReplaceResponseStatus> expectedStatus =
@@ -71,6 +71,8 @@ public class ProfileReplaceResponseStatusTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

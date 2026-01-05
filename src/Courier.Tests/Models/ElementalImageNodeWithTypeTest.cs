@@ -69,8 +69,8 @@ public class ElementalImageNodeWithTypeTest : TestBase
             Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(json);
+        string element = JsonSerializer.Serialize(model);
+        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(element);
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -279,9 +279,9 @@ public class ElementalImageNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalImageNodeWithTypeIntersectionMember1>(json);
+            JsonSerializer.Deserialize<ElementalImageNodeWithTypeIntersectionMember1>(element);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> expectedType =
@@ -364,6 +364,8 @@ public class ElementalImageNodeWithTypeIntersectionMember1TypeTest : TestBase
             JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
             ModelBase.SerializerOptions
         );
+
+        Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 

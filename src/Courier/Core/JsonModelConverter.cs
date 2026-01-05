@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Courier.Core;
 
-sealed class ModelConverter<TModel, TFromRaw> : JsonConverter<TModel>
-    where TModel : ModelBase
-    where TFromRaw : IFromRaw<TModel>, new()
+sealed class JsonModelConverter<TModel, TFromRaw> : JsonConverter<TModel>
+    where TModel : JsonModel
+    where TFromRaw : IFromRawJson<TModel>, new()
 {
     public override TModel? Read(
         ref Utf8JsonReader reader,
