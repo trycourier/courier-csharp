@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models;
@@ -66,5 +67,42 @@ public class BulkCreateJobParamsTest : TestBase
         };
 
         Assert.Equal(expectedMessage, parameters.Message);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        BulkCreateJobParams parameters = new()
+        {
+            Message = new()
+            {
+                Event = "event",
+                Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                {
+                    {
+                        "foo",
+                        new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        }
+                    },
+                },
+                Override = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Template = "template",
+            },
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/bulk"), url);
     }
 }

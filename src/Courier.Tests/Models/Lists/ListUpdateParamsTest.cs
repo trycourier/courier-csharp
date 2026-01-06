@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Courier.Models;
 using Courier.Models.Lists;
@@ -98,6 +99,16 @@ public class ListUpdateParamsTest : TestBase
         };
 
         Assert.Null(parameters.Preferences);
-        Assert.False(parameters.RawBodyData.ContainsKey("preferences"));
+        Assert.True(parameters.RawBodyData.ContainsKey("preferences"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ListUpdateParams parameters = new() { ListID = "list_id", Name = "name" };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/lists/list_id"), url);
     }
 }

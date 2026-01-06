@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Notifications;
 
 namespace Courier.Tests.Models.Notifications;
@@ -33,8 +34,21 @@ public class NotificationListParamsTest : TestBase
         var parameters = new NotificationListParams { Cursor = null, Notes = null };
 
         Assert.Null(parameters.Cursor);
-        Assert.False(parameters.RawQueryData.ContainsKey("cursor"));
+        Assert.True(parameters.RawQueryData.ContainsKey("cursor"));
         Assert.Null(parameters.Notes);
-        Assert.False(parameters.RawQueryData.ContainsKey("notes"));
+        Assert.True(parameters.RawQueryData.ContainsKey("notes"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        NotificationListParams parameters = new() { Cursor = "cursor", Notes = true };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri("https://api.courier.com/notifications?cursor=cursor&notes=true"),
+            url
+        );
     }
 }

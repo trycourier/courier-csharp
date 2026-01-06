@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models.Automations.Invoke;
@@ -94,12 +95,26 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         };
 
         Assert.Null(parameters.Brand);
-        Assert.False(parameters.RawBodyData.ContainsKey("brand"));
+        Assert.True(parameters.RawBodyData.ContainsKey("brand"));
         Assert.Null(parameters.Data);
-        Assert.False(parameters.RawBodyData.ContainsKey("data"));
+        Assert.True(parameters.RawBodyData.ContainsKey("data"));
         Assert.Null(parameters.Profile);
-        Assert.False(parameters.RawBodyData.ContainsKey("profile"));
+        Assert.True(parameters.RawBodyData.ContainsKey("profile"));
         Assert.Null(parameters.Template);
-        Assert.False(parameters.RawBodyData.ContainsKey("template"));
+        Assert.True(parameters.RawBodyData.ContainsKey("template"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        InvokeInvokeByTemplateParams parameters = new()
+        {
+            TemplateID = "templateId",
+            Recipient = "recipient",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/automations/templateId/invoke"), url);
     }
 }

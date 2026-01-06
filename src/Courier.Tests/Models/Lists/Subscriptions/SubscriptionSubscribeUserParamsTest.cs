@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Courier.Models;
 using Courier.Models.Lists.Subscriptions;
@@ -102,6 +103,20 @@ public class SubscriptionSubscribeUserParamsTest : TestBase
         };
 
         Assert.Null(parameters.Preferences);
-        Assert.False(parameters.RawBodyData.ContainsKey("preferences"));
+        Assert.True(parameters.RawBodyData.ContainsKey("preferences"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        SubscriptionSubscribeUserParams parameters = new()
+        {
+            ListID = "list_id",
+            UserID = "user_id",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/lists/list_id/subscriptions/user_id"), url);
     }
 }

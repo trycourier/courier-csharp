@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Users.Preferences;
 
 namespace Courier.Tests.Models.Users.Preferences;
@@ -48,6 +49,26 @@ public class PreferenceRetrieveTopicParamsTest : TestBase
         };
 
         Assert.Null(parameters.TenantID);
-        Assert.False(parameters.RawQueryData.ContainsKey("tenant_id"));
+        Assert.True(parameters.RawQueryData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        PreferenceRetrieveTopicParams parameters = new()
+        {
+            UserID = "user_id",
+            TopicID = "topic_id",
+            TenantID = "tenant_id",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.courier.com/users/user_id/preferences/topic_id?tenant_id=tenant_id"
+            ),
+            url
+        );
     }
 }

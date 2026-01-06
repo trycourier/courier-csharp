@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models.Profiles;
@@ -40,6 +41,28 @@ public class ProfileUpdateParamsTest : TestBase
         {
             Assert.Equal(expectedPatch[i], parameters.Patch[i]);
         }
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ProfileUpdateParams parameters = new()
+        {
+            UserID = "user_id",
+            Patch =
+            [
+                new()
+                {
+                    Op = "op",
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/profiles/user_id"), url);
     }
 }
 

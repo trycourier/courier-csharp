@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Lists;
 
 namespace Courier.Tests.Models.Lists;
@@ -33,8 +34,18 @@ public class ListListParamsTest : TestBase
         var parameters = new ListListParams { Cursor = null, Pattern = null };
 
         Assert.Null(parameters.Cursor);
-        Assert.False(parameters.RawQueryData.ContainsKey("cursor"));
+        Assert.True(parameters.RawQueryData.ContainsKey("cursor"));
         Assert.Null(parameters.Pattern);
-        Assert.False(parameters.RawQueryData.ContainsKey("pattern"));
+        Assert.True(parameters.RawQueryData.ContainsKey("pattern"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ListListParams parameters = new() { Cursor = "cursor", Pattern = "pattern" };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/lists?cursor=cursor&pattern=pattern"), url);
     }
 }
