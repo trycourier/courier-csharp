@@ -25,7 +25,7 @@ public interface IBulkService
     ///
     /// <para>**Important**: For email-based bulk jobs, each user must include `profile.email`
     ///  for provider routing to work correctly. The `to.email` field is not sufficient
-    ///  for email provider routing. </para>
+    ///  for email provider routing.</para>
     /// </summary>
     Task AddUsers(BulkAddUsersParams parameters, CancellationToken cancellationToken = default);
 
@@ -43,7 +43,7 @@ public interface IBulkService
     ///
     /// <para>**Optional (V2 format)**: `message.template` (notification ID) or `message.content`
     /// (Elemental content)  can be provided to override the notification associated
-    /// with the event. </para>
+    /// with the event.</para>
     /// </summary>
     Task<BulkCreateJobResponse> CreateJob(
         BulkCreateJobParams parameters,
