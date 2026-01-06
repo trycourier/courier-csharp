@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Translations;
 
 namespace Courier.Tests.Models.Translations;
@@ -21,5 +22,20 @@ public class TranslationUpdateParamsTest : TestBase
         Assert.Equal(expectedDomain, parameters.Domain);
         Assert.Equal(expectedLocale, parameters.Locale);
         Assert.Equal(expectedBody, parameters.Body);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        TranslationUpdateParams parameters = new()
+        {
+            Domain = "domain",
+            Locale = "locale",
+            Body = "body",
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/translations/domain/locale"), url);
     }
 }

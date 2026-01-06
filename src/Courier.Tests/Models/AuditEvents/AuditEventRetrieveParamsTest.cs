@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.AuditEvents;
 
 namespace Courier.Tests.Models.AuditEvents;
@@ -12,5 +13,15 @@ public class AuditEventRetrieveParamsTest : TestBase
         string expectedAuditEventID = "audit-event-id";
 
         Assert.Equal(expectedAuditEventID, parameters.AuditEventID);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        AuditEventRetrieveParams parameters = new() { AuditEventID = "audit-event-id" };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/audit-events/audit-event-id"), url);
     }
 }

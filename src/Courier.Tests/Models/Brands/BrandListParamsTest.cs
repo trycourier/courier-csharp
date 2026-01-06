@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Brands;
 
 namespace Courier.Tests.Models.Brands;
@@ -29,6 +30,16 @@ public class BrandListParamsTest : TestBase
         var parameters = new BrandListParams { Cursor = null };
 
         Assert.Null(parameters.Cursor);
-        Assert.False(parameters.RawQueryData.ContainsKey("cursor"));
+        Assert.True(parameters.RawQueryData.ContainsKey("cursor"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        BrandListParams parameters = new() { Cursor = "cursor" };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/brands?cursor=cursor"), url);
     }
 }

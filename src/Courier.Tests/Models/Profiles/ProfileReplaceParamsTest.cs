@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models.Profiles;
@@ -32,5 +33,22 @@ public class ProfileReplaceParamsTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, parameters.Profile[item.Key]));
         }
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ProfileReplaceParams parameters = new()
+        {
+            UserID = "user_id",
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/profiles/user_id"), url);
     }
 }

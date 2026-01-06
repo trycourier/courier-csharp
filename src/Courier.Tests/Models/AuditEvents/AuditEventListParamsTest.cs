@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.AuditEvents;
 
 namespace Courier.Tests.Models.AuditEvents;
@@ -29,6 +30,16 @@ public class AuditEventListParamsTest : TestBase
         var parameters = new AuditEventListParams { Cursor = null };
 
         Assert.Null(parameters.Cursor);
-        Assert.False(parameters.RawQueryData.ContainsKey("cursor"));
+        Assert.True(parameters.RawQueryData.ContainsKey("cursor"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        AuditEventListParams parameters = new() { Cursor = "cursor" };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/audit-events?cursor=cursor"), url);
     }
 }

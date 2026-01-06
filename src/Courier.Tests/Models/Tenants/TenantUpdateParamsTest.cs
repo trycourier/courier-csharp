@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models;
@@ -121,14 +122,24 @@ public class TenantUpdateParamsTest : TestBase
         };
 
         Assert.Null(parameters.BrandID);
-        Assert.False(parameters.RawBodyData.ContainsKey("brand_id"));
+        Assert.True(parameters.RawBodyData.ContainsKey("brand_id"));
         Assert.Null(parameters.DefaultPreferences);
-        Assert.False(parameters.RawBodyData.ContainsKey("default_preferences"));
+        Assert.True(parameters.RawBodyData.ContainsKey("default_preferences"));
         Assert.Null(parameters.ParentTenantID);
-        Assert.False(parameters.RawBodyData.ContainsKey("parent_tenant_id"));
+        Assert.True(parameters.RawBodyData.ContainsKey("parent_tenant_id"));
         Assert.Null(parameters.Properties);
-        Assert.False(parameters.RawBodyData.ContainsKey("properties"));
+        Assert.True(parameters.RawBodyData.ContainsKey("properties"));
         Assert.Null(parameters.UserProfile);
-        Assert.False(parameters.RawBodyData.ContainsKey("user_profile"));
+        Assert.True(parameters.RawBodyData.ContainsKey("user_profile"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        TenantUpdateParams parameters = new() { TenantID = "tenant_id", Name = "name" };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/tenants/tenant_id"), url);
     }
 }

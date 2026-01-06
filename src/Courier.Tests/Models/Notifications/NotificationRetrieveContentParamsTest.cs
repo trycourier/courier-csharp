@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Notifications;
 
 namespace Courier.Tests.Models.Notifications;
@@ -12,5 +13,15 @@ public class NotificationRetrieveContentParamsTest : TestBase
         string expectedID = "id";
 
         Assert.Equal(expectedID, parameters.ID);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        NotificationRetrieveContentParams parameters = new() { ID = "id" };
+
+        var url = parameters.Url(new() { APIKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/notifications/id/content"), url);
     }
 }
