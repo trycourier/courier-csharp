@@ -20,7 +20,7 @@ public class AuditEventRetrieveParamsTest : TestBase
     {
         AuditEventRetrieveParams parameters = new() { AuditEventID = "audit-event-id" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/audit-events/audit-event-id"), url);
     }

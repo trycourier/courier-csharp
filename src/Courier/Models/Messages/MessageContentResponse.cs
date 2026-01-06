@@ -167,7 +167,7 @@ public sealed record class Content : JsonModel
     /// <summary>
     /// The html content of the rendered message.
     /// </summary>
-    public required string HTML
+    public required string Html
     {
         get { return JsonModel.GetNotNullClass<string>(this.RawData, "html"); }
         init { JsonModel.Set(this._rawData, "html", value); }
@@ -208,7 +208,7 @@ public sealed record class Content : JsonModel
             item.Validate();
         }
         _ = this.Body;
-        _ = this.HTML;
+        _ = this.Html;
         _ = this.Subject;
         _ = this.Text;
         _ = this.Title;

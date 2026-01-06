@@ -20,7 +20,7 @@ public class MessageRetrieveParamsTest : TestBase
     {
         MessageRetrieveParams parameters = new() { MessageID = "message_id" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/messages/message_id"), url);
     }

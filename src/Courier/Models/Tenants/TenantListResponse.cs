@@ -48,7 +48,7 @@ public sealed record class TenantListResponse : JsonModel
     /// <summary>
     /// A url that may be used to generate these results.
     /// </summary>
-    public required string URL
+    public required string Url
     {
         get { return JsonModel.GetNotNullClass<string>(this.RawData, "url"); }
         init { JsonModel.Set(this._rawData, "url", value); }
@@ -68,7 +68,7 @@ public sealed record class TenantListResponse : JsonModel
     /// A url that may be used to generate fetch the next set of results.  Defined
     /// only when has_more is set to true
     /// </summary>
-    public string? NextURL
+    public string? NextUrl
     {
         get { return JsonModel.GetNullableClass<string>(this.RawData, "next_url"); }
         init { JsonModel.Set(this._rawData, "next_url", value); }
@@ -83,9 +83,9 @@ public sealed record class TenantListResponse : JsonModel
             item.Validate();
         }
         this.Type.Validate();
-        _ = this.URL;
+        _ = this.Url;
         _ = this.Cursor;
-        _ = this.NextURL;
+        _ = this.NextUrl;
     }
 
     public TenantListResponse() { }

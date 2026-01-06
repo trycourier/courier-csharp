@@ -101,7 +101,7 @@ public class BulkCreateJobParamsTest : TestBase
             },
         };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/bulk"), url);
     }

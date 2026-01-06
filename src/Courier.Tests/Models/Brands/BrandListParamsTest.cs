@@ -38,7 +38,7 @@ public class BrandListParamsTest : TestBase
     {
         BrandListParams parameters = new() { Cursor = "cursor" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/brands?cursor=cursor"), url);
     }

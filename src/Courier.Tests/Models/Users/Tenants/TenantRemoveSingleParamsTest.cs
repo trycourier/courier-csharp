@@ -26,7 +26,7 @@ public class TenantRemoveSingleParamsTest : TestBase
     {
         TenantRemoveSingleParams parameters = new() { UserID = "user_id", TenantID = "tenant_id" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tenants/tenant_id"), url);
     }

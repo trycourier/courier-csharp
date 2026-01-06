@@ -10,7 +10,7 @@ namespace Courier.Models;
 [JsonConverter(typeof(JsonModelConverter<SendToMsTeamsUserID, SendToMsTeamsUserIDFromRaw>))]
 public sealed record class SendToMsTeamsUserID : JsonModel
 {
-    public required string ServiceURL
+    public required string ServiceUrl
     {
         get { return JsonModel.GetNotNullClass<string>(this.RawData, "service_url"); }
         init { JsonModel.Set(this._rawData, "service_url", value); }
@@ -31,7 +31,7 @@ public sealed record class SendToMsTeamsUserID : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.ServiceURL;
+        _ = this.ServiceUrl;
         _ = this.TenantID;
         _ = this.UserID;
     }

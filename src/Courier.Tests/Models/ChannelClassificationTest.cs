@@ -11,7 +11,7 @@ public class ChannelClassificationTest : TestBase
     [InlineData(ChannelClassification.DirectMessage)]
     [InlineData(ChannelClassification.Email)]
     [InlineData(ChannelClassification.Push)]
-    [InlineData(ChannelClassification.SMS)]
+    [InlineData(ChannelClassification.Sms)]
     [InlineData(ChannelClassification.Webhook)]
     [InlineData(ChannelClassification.Inbox)]
     public void Validation_Works(ChannelClassification rawValue)
@@ -37,7 +37,7 @@ public class ChannelClassificationTest : TestBase
     [InlineData(ChannelClassification.DirectMessage)]
     [InlineData(ChannelClassification.Email)]
     [InlineData(ChannelClassification.Push)]
-    [InlineData(ChannelClassification.SMS)]
+    [InlineData(ChannelClassification.Sms)]
     [InlineData(ChannelClassification.Webhook)]
     [InlineData(ChannelClassification.Inbox)]
     public void SerializationRoundtrip_Works(ChannelClassification rawValue)

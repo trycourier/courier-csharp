@@ -12,7 +12,7 @@ public class WebhookProfileTest : TestBase
     {
         var model = new WebhookProfile
         {
-            URL = "url",
+            Url = "url",
             Authentication = new()
             {
                 Mode = WebhookAuthMode.None,
@@ -25,7 +25,7 @@ public class WebhookProfileTest : TestBase
             Profile = WebhookProfileType.Limited,
         };
 
-        string expectedURL = "url";
+        string expectedUrl = "url";
         WebhookAuthentication expectedAuthentication = new()
         {
             Mode = WebhookAuthMode.None,
@@ -37,7 +37,7 @@ public class WebhookProfileTest : TestBase
         ApiEnum<string, WebhookMethod> expectedMethod = WebhookMethod.Post;
         ApiEnum<string, WebhookProfileType> expectedProfile = WebhookProfileType.Limited;
 
-        Assert.Equal(expectedURL, model.URL);
+        Assert.Equal(expectedUrl, model.Url);
         Assert.Equal(expectedAuthentication, model.Authentication);
         Assert.NotNull(model.Headers);
         Assert.Equal(expectedHeaders.Count, model.Headers.Count);
@@ -56,7 +56,7 @@ public class WebhookProfileTest : TestBase
     {
         var model = new WebhookProfile
         {
-            URL = "url",
+            Url = "url",
             Authentication = new()
             {
                 Mode = WebhookAuthMode.None,
@@ -80,7 +80,7 @@ public class WebhookProfileTest : TestBase
     {
         var model = new WebhookProfile
         {
-            URL = "url",
+            Url = "url",
             Authentication = new()
             {
                 Mode = WebhookAuthMode.None,
@@ -97,7 +97,7 @@ public class WebhookProfileTest : TestBase
         var deserialized = JsonSerializer.Deserialize<WebhookProfile>(element);
         Assert.NotNull(deserialized);
 
-        string expectedURL = "url";
+        string expectedUrl = "url";
         WebhookAuthentication expectedAuthentication = new()
         {
             Mode = WebhookAuthMode.None,
@@ -109,7 +109,7 @@ public class WebhookProfileTest : TestBase
         ApiEnum<string, WebhookMethod> expectedMethod = WebhookMethod.Post;
         ApiEnum<string, WebhookProfileType> expectedProfile = WebhookProfileType.Limited;
 
-        Assert.Equal(expectedURL, deserialized.URL);
+        Assert.Equal(expectedUrl, deserialized.Url);
         Assert.Equal(expectedAuthentication, deserialized.Authentication);
         Assert.NotNull(deserialized.Headers);
         Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
@@ -128,7 +128,7 @@ public class WebhookProfileTest : TestBase
     {
         var model = new WebhookProfile
         {
-            URL = "url",
+            Url = "url",
             Authentication = new()
             {
                 Mode = WebhookAuthMode.None,
@@ -147,7 +147,7 @@ public class WebhookProfileTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new WebhookProfile { URL = "url" };
+        var model = new WebhookProfile { Url = "url" };
 
         Assert.Null(model.Authentication);
         Assert.False(model.RawData.ContainsKey("authentication"));
@@ -162,7 +162,7 @@ public class WebhookProfileTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new WebhookProfile { URL = "url" };
+        var model = new WebhookProfile { Url = "url" };
 
         model.Validate();
     }
@@ -172,7 +172,7 @@ public class WebhookProfileTest : TestBase
     {
         var model = new WebhookProfile
         {
-            URL = "url",
+            Url = "url",
 
             Authentication = null,
             Headers = null,
@@ -195,7 +195,7 @@ public class WebhookProfileTest : TestBase
     {
         var model = new WebhookProfile
         {
-            URL = "url",
+            Url = "url",
 
             Authentication = null,
             Headers = null,

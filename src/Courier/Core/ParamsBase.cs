@@ -196,9 +196,9 @@ public abstract record class ParamsBase
             request.Headers.Add(header.Key, header.Value);
         }
 
-        if (options.APIKey != null)
+        if (options.ApiKey != null)
         {
-            request.Headers.Add("Authorization", string.Format("Bearer {0}", options.APIKey));
+            request.Headers.Add("Authorization", string.Format("Bearer {0}", options.ApiKey));
         }
         request.Headers.Add(
             "X-Stainless-Timeout",

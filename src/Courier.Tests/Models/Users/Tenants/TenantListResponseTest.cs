@@ -16,7 +16,7 @@ public class TenantListResponseTest : TestBase
         {
             HasMore = true,
             Type = Type.List,
-            URL = "url",
+            Url = "url",
             Cursor = "cursor",
             Items =
             [
@@ -31,12 +31,12 @@ public class TenantListResponseTest : TestBase
                     UserID = "user_id",
                 },
             ],
-            NextURL = "next_url",
+            NextUrl = "next_url",
         };
 
         bool expectedHasMore = true;
         ApiEnum<string, Type> expectedType = Type.List;
-        string expectedURL = "url";
+        string expectedUrl = "url";
         string expectedCursor = "cursor";
         List<Tenants::TenantAssociation> expectedItems =
         [
@@ -51,11 +51,11 @@ public class TenantListResponseTest : TestBase
                 UserID = "user_id",
             },
         ];
-        string expectedNextURL = "next_url";
+        string expectedNextUrl = "next_url";
 
         Assert.Equal(expectedHasMore, model.HasMore);
         Assert.Equal(expectedType, model.Type);
-        Assert.Equal(expectedURL, model.URL);
+        Assert.Equal(expectedUrl, model.Url);
         Assert.Equal(expectedCursor, model.Cursor);
         Assert.NotNull(model.Items);
         Assert.Equal(expectedItems.Count, model.Items.Count);
@@ -63,7 +63,7 @@ public class TenantListResponseTest : TestBase
         {
             Assert.Equal(expectedItems[i], model.Items[i]);
         }
-        Assert.Equal(expectedNextURL, model.NextURL);
+        Assert.Equal(expectedNextUrl, model.NextUrl);
     }
 
     [Fact]
@@ -73,7 +73,7 @@ public class TenantListResponseTest : TestBase
         {
             HasMore = true,
             Type = Type.List,
-            URL = "url",
+            Url = "url",
             Cursor = "cursor",
             Items =
             [
@@ -88,7 +88,7 @@ public class TenantListResponseTest : TestBase
                     UserID = "user_id",
                 },
             ],
-            NextURL = "next_url",
+            NextUrl = "next_url",
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -104,7 +104,7 @@ public class TenantListResponseTest : TestBase
         {
             HasMore = true,
             Type = Type.List,
-            URL = "url",
+            Url = "url",
             Cursor = "cursor",
             Items =
             [
@@ -119,7 +119,7 @@ public class TenantListResponseTest : TestBase
                     UserID = "user_id",
                 },
             ],
-            NextURL = "next_url",
+            NextUrl = "next_url",
         };
 
         string element = JsonSerializer.Serialize(model);
@@ -128,7 +128,7 @@ public class TenantListResponseTest : TestBase
 
         bool expectedHasMore = true;
         ApiEnum<string, Type> expectedType = Type.List;
-        string expectedURL = "url";
+        string expectedUrl = "url";
         string expectedCursor = "cursor";
         List<Tenants::TenantAssociation> expectedItems =
         [
@@ -143,11 +143,11 @@ public class TenantListResponseTest : TestBase
                 UserID = "user_id",
             },
         ];
-        string expectedNextURL = "next_url";
+        string expectedNextUrl = "next_url";
 
         Assert.Equal(expectedHasMore, deserialized.HasMore);
         Assert.Equal(expectedType, deserialized.Type);
-        Assert.Equal(expectedURL, deserialized.URL);
+        Assert.Equal(expectedUrl, deserialized.Url);
         Assert.Equal(expectedCursor, deserialized.Cursor);
         Assert.NotNull(deserialized.Items);
         Assert.Equal(expectedItems.Count, deserialized.Items.Count);
@@ -155,7 +155,7 @@ public class TenantListResponseTest : TestBase
         {
             Assert.Equal(expectedItems[i], deserialized.Items[i]);
         }
-        Assert.Equal(expectedNextURL, deserialized.NextURL);
+        Assert.Equal(expectedNextUrl, deserialized.NextUrl);
     }
 
     [Fact]
@@ -165,7 +165,7 @@ public class TenantListResponseTest : TestBase
         {
             HasMore = true,
             Type = Type.List,
-            URL = "url",
+            Url = "url",
             Cursor = "cursor",
             Items =
             [
@@ -180,7 +180,7 @@ public class TenantListResponseTest : TestBase
                     UserID = "user_id",
                 },
             ],
-            NextURL = "next_url",
+            NextUrl = "next_url",
         };
 
         model.Validate();
@@ -193,14 +193,14 @@ public class TenantListResponseTest : TestBase
         {
             HasMore = true,
             Type = Type.List,
-            URL = "url",
+            Url = "url",
         };
 
         Assert.Null(model.Cursor);
         Assert.False(model.RawData.ContainsKey("cursor"));
         Assert.Null(model.Items);
         Assert.False(model.RawData.ContainsKey("items"));
-        Assert.Null(model.NextURL);
+        Assert.Null(model.NextUrl);
         Assert.False(model.RawData.ContainsKey("next_url"));
     }
 
@@ -211,7 +211,7 @@ public class TenantListResponseTest : TestBase
         {
             HasMore = true,
             Type = Type.List,
-            URL = "url",
+            Url = "url",
         };
 
         model.Validate();
@@ -224,18 +224,18 @@ public class TenantListResponseTest : TestBase
         {
             HasMore = true,
             Type = Type.List,
-            URL = "url",
+            Url = "url",
 
             Cursor = null,
             Items = null,
-            NextURL = null,
+            NextUrl = null,
         };
 
         Assert.Null(model.Cursor);
         Assert.True(model.RawData.ContainsKey("cursor"));
         Assert.Null(model.Items);
         Assert.True(model.RawData.ContainsKey("items"));
-        Assert.Null(model.NextURL);
+        Assert.Null(model.NextUrl);
         Assert.True(model.RawData.ContainsKey("next_url"));
     }
 
@@ -246,11 +246,11 @@ public class TenantListResponseTest : TestBase
         {
             HasMore = true,
             Type = Type.List,
-            URL = "url",
+            Url = "url",
 
             Cursor = null,
             Items = null,
-            NextURL = null,
+            NextUrl = null,
         };
 
         model.Validate();

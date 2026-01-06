@@ -72,7 +72,7 @@ Or manually:
 ```csharp
 using Courier;
 
-CourierClient client = new() { APIKey = "My API Key" };
+CourierClient client = new() { ApiKey = "My API Key" };
 ```
 
 Or using a combination of the two approaches.
@@ -81,7 +81,7 @@ See this table for the available options:
 
 | Property  | Environment variable | Required | Default value               |
 | --------- | -------------------- | -------- | --------------------------- |
-| `APIKey`  | `COURIER_API_KEY`    | true     | -                           |
+| `ApiKey`  | `COURIER_API_KEY`    | true     | -                           |
 | `BaseUrl` | `COURIER_BASE_URL`   | true     | `"https://api.courier.com"` |
 
 ### Modifying configuration

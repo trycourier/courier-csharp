@@ -472,7 +472,7 @@ public class SendMessageParamsTest : TestBase
             },
         };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/send"), url);
     }
@@ -4218,7 +4218,7 @@ public class ToTest : TestBase
                 new Models::MsTeams(
                     new Models::SendToMsTeamsUserID()
                     {
-                        ServiceURL = "service_url",
+                        ServiceUrl = "service_url",
                         TenantID = "tenant_id",
                         UserID = "user_id",
                     }
@@ -4252,7 +4252,7 @@ public class ToTest : TestBase
             new Models::WebhookRecipient(
                 new Models::WebhookProfile()
                 {
-                    URL = "url",
+                    Url = "url",
                     Authentication = new()
                     {
                         Mode = Models::WebhookAuthMode.None,
@@ -4434,7 +4434,7 @@ public class ToTest : TestBase
                 new Models::MsTeams(
                     new Models::SendToMsTeamsUserID()
                     {
-                        ServiceURL = "service_url",
+                        ServiceUrl = "service_url",
                         TenantID = "tenant_id",
                         UserID = "user_id",
                     }
@@ -4474,7 +4474,7 @@ public class ToTest : TestBase
             new Models::WebhookRecipient(
                 new Models::WebhookProfile()
                 {
-                    URL = "url",
+                    Url = "url",
                     Authentication = new()
                     {
                         Mode = Models::WebhookAuthMode.None,

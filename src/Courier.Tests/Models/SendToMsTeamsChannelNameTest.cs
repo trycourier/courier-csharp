@@ -11,18 +11,18 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TeamID = "team_id",
             TenantID = "tenant_id",
         };
 
         string expectedChannelName = "channel_name";
-        string expectedServiceURL = "service_url";
+        string expectedServiceUrl = "service_url";
         string expectedTeamID = "team_id";
         string expectedTenantID = "tenant_id";
 
         Assert.Equal(expectedChannelName, model.ChannelName);
-        Assert.Equal(expectedServiceURL, model.ServiceURL);
+        Assert.Equal(expectedServiceUrl, model.ServiceUrl);
         Assert.Equal(expectedTeamID, model.TeamID);
         Assert.Equal(expectedTenantID, model.TenantID);
     }
@@ -33,7 +33,7 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TeamID = "team_id",
             TenantID = "tenant_id",
         };
@@ -50,7 +50,7 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TeamID = "team_id",
             TenantID = "tenant_id",
         };
@@ -60,12 +60,12 @@ public class SendToMsTeamsChannelNameTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedChannelName = "channel_name";
-        string expectedServiceURL = "service_url";
+        string expectedServiceUrl = "service_url";
         string expectedTeamID = "team_id";
         string expectedTenantID = "tenant_id";
 
         Assert.Equal(expectedChannelName, deserialized.ChannelName);
-        Assert.Equal(expectedServiceURL, deserialized.ServiceURL);
+        Assert.Equal(expectedServiceUrl, deserialized.ServiceUrl);
         Assert.Equal(expectedTeamID, deserialized.TeamID);
         Assert.Equal(expectedTenantID, deserialized.TenantID);
     }
@@ -76,7 +76,7 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TeamID = "team_id",
             TenantID = "tenant_id",
         };

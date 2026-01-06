@@ -22,7 +22,7 @@ public class CheckListParamsTest : TestBase
     {
         CheckListParams parameters = new() { ID = "id", SubmissionID = "submissionId" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/notifications/id/submissionId/checks"), url);
     }
