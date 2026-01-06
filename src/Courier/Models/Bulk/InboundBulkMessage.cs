@@ -130,10 +130,10 @@ public sealed record class InboundBulkMessage : JsonModel
     }
 
     [SetsRequiredMembers]
-    public InboundBulkMessage(string event1)
+    public InboundBulkMessage(string event_)
         : this()
     {
-        this.Event = event1;
+        this.Event = event_;
     }
 }
 
