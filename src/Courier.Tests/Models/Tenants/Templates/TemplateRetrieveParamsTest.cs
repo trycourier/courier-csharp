@@ -30,7 +30,7 @@ public class TemplateRetrieveParamsTest : TestBase
             TemplateID = "template_id",
         };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(
             new Uri("https://api.courier.com/tenants/tenant_id/templates/template_id"),

@@ -252,7 +252,7 @@ public class InvokeInvokeAdHocParamsTest : TestBase
             },
         };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/automations/invoke"), url);
     }
@@ -560,7 +560,7 @@ public class StepTest : TestBase
                 Webhook = new()
                 {
                     Method = Invoke::Method.Get,
-                    URL = "url",
+                    Url = "url",
                     Body = "body",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 },
@@ -694,7 +694,7 @@ public class StepTest : TestBase
                 Webhook = new()
                 {
                     Method = Invoke::Method.Get,
-                    URL = "url",
+                    Url = "url",
                     Body = "body",
                     Headers = new Dictionary<string, string>() { { "foo", "string" } },
                 },
@@ -1869,7 +1869,7 @@ public class AutomationFetchDataStepTest : TestBase
             Webhook = new()
             {
                 Method = Invoke::Method.Get,
-                URL = "url",
+                Url = "url",
                 Body = "body",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
             },
@@ -1881,7 +1881,7 @@ public class AutomationFetchDataStepTest : TestBase
         Invoke::Webhook expectedWebhook = new()
         {
             Method = Invoke::Method.Get,
-            URL = "url",
+            Url = "url",
             Body = "body",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
@@ -1902,7 +1902,7 @@ public class AutomationFetchDataStepTest : TestBase
             Webhook = new()
             {
                 Method = Invoke::Method.Get,
-                URL = "url",
+                Url = "url",
                 Body = "body",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
             },
@@ -1924,7 +1924,7 @@ public class AutomationFetchDataStepTest : TestBase
             Webhook = new()
             {
                 Method = Invoke::Method.Get,
-                URL = "url",
+                Url = "url",
                 Body = "body",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
             },
@@ -1940,7 +1940,7 @@ public class AutomationFetchDataStepTest : TestBase
         Invoke::Webhook expectedWebhook = new()
         {
             Method = Invoke::Method.Get,
-            URL = "url",
+            Url = "url",
             Body = "body",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
@@ -1961,7 +1961,7 @@ public class AutomationFetchDataStepTest : TestBase
             Webhook = new()
             {
                 Method = Invoke::Method.Get,
-                URL = "url",
+                Url = "url",
                 Body = "body",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
             },
@@ -1980,7 +1980,7 @@ public class AutomationFetchDataStepTest : TestBase
             Webhook = new()
             {
                 Method = Invoke::Method.Get,
-                URL = "url",
+                Url = "url",
                 Body = "body",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
             },
@@ -1999,7 +1999,7 @@ public class AutomationFetchDataStepTest : TestBase
             Webhook = new()
             {
                 Method = Invoke::Method.Get,
-                URL = "url",
+                Url = "url",
                 Body = "body",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
             },
@@ -2017,7 +2017,7 @@ public class AutomationFetchDataStepTest : TestBase
             Webhook = new()
             {
                 Method = Invoke::Method.Get,
-                URL = "url",
+                Url = "url",
                 Body = "body",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
             },
@@ -2038,7 +2038,7 @@ public class AutomationFetchDataStepTest : TestBase
             Webhook = new()
             {
                 Method = Invoke::Method.Get,
-                URL = "url",
+                Url = "url",
                 Body = "body",
                 Headers = new Dictionary<string, string>() { { "foo", "string" } },
             },
@@ -2116,18 +2116,18 @@ public class WebhookTest : TestBase
         var model = new Invoke::Webhook
         {
             Method = Invoke::Method.Get,
-            URL = "url",
+            Url = "url",
             Body = "body",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
 
         ApiEnum<string, Invoke::Method> expectedMethod = Invoke::Method.Get;
-        string expectedURL = "url";
+        string expectedUrl = "url";
         string expectedBody = "body";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
 
         Assert.Equal(expectedMethod, model.Method);
-        Assert.Equal(expectedURL, model.URL);
+        Assert.Equal(expectedUrl, model.Url);
         Assert.Equal(expectedBody, model.Body);
         Assert.NotNull(model.Headers);
         Assert.Equal(expectedHeaders.Count, model.Headers.Count);
@@ -2145,7 +2145,7 @@ public class WebhookTest : TestBase
         var model = new Invoke::Webhook
         {
             Method = Invoke::Method.Get,
-            URL = "url",
+            Url = "url",
             Body = "body",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
@@ -2162,7 +2162,7 @@ public class WebhookTest : TestBase
         var model = new Invoke::Webhook
         {
             Method = Invoke::Method.Get,
-            URL = "url",
+            Url = "url",
             Body = "body",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
@@ -2172,12 +2172,12 @@ public class WebhookTest : TestBase
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::Method> expectedMethod = Invoke::Method.Get;
-        string expectedURL = "url";
+        string expectedUrl = "url";
         string expectedBody = "body";
         Dictionary<string, string> expectedHeaders = new() { { "foo", "string" } };
 
         Assert.Equal(expectedMethod, deserialized.Method);
-        Assert.Equal(expectedURL, deserialized.URL);
+        Assert.Equal(expectedUrl, deserialized.Url);
         Assert.Equal(expectedBody, deserialized.Body);
         Assert.NotNull(deserialized.Headers);
         Assert.Equal(expectedHeaders.Count, deserialized.Headers.Count);
@@ -2195,7 +2195,7 @@ public class WebhookTest : TestBase
         var model = new Invoke::Webhook
         {
             Method = Invoke::Method.Get,
-            URL = "url",
+            Url = "url",
             Body = "body",
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
@@ -2206,7 +2206,7 @@ public class WebhookTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Invoke::Webhook { Method = Invoke::Method.Get, URL = "url" };
+        var model = new Invoke::Webhook { Method = Invoke::Method.Get, Url = "url" };
 
         Assert.Null(model.Body);
         Assert.False(model.RawData.ContainsKey("body"));
@@ -2217,7 +2217,7 @@ public class WebhookTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Invoke::Webhook { Method = Invoke::Method.Get, URL = "url" };
+        var model = new Invoke::Webhook { Method = Invoke::Method.Get, Url = "url" };
 
         model.Validate();
     }
@@ -2228,7 +2228,7 @@ public class WebhookTest : TestBase
         var model = new Invoke::Webhook
         {
             Method = Invoke::Method.Get,
-            URL = "url",
+            Url = "url",
 
             Body = null,
             Headers = null,
@@ -2246,7 +2246,7 @@ public class WebhookTest : TestBase
         var model = new Invoke::Webhook
         {
             Method = Invoke::Method.Get,
-            URL = "url",
+            Url = "url",
 
             Body = null,
             Headers = null,

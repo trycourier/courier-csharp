@@ -11,7 +11,7 @@ public class MsTeamsTest : TestBase
         MsTeams value = new(
             new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             }
@@ -26,7 +26,7 @@ public class MsTeamsTest : TestBase
             new SendToMsTeamsEmail()
             {
                 Email = "email",
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
             }
         );
@@ -40,7 +40,7 @@ public class MsTeamsTest : TestBase
             new SendToMsTeamsChannelID()
             {
                 ChannelID = "channel_id",
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
             }
         );
@@ -54,7 +54,7 @@ public class MsTeamsTest : TestBase
             new SendToMsTeamsConversationID()
             {
                 ConversationID = "conversation_id",
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
             }
         );
@@ -68,7 +68,7 @@ public class MsTeamsTest : TestBase
             new SendToMsTeamsChannelName()
             {
                 ChannelName = "channel_name",
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TeamID = "team_id",
                 TenantID = "tenant_id",
             }
@@ -82,7 +82,7 @@ public class MsTeamsTest : TestBase
         MsTeams value = new(
             new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             }
@@ -100,7 +100,7 @@ public class MsTeamsTest : TestBase
             new SendToMsTeamsEmail()
             {
                 Email = "email",
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
             }
         );
@@ -117,7 +117,7 @@ public class MsTeamsTest : TestBase
             new SendToMsTeamsChannelID()
             {
                 ChannelID = "channel_id",
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
             }
         );
@@ -134,7 +134,7 @@ public class MsTeamsTest : TestBase
             new SendToMsTeamsConversationID()
             {
                 ConversationID = "conversation_id",
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
             }
         );
@@ -151,7 +151,7 @@ public class MsTeamsTest : TestBase
             new SendToMsTeamsChannelName()
             {
                 ChannelName = "channel_name",
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TeamID = "team_id",
                 TenantID = "tenant_id",
             }

@@ -22,7 +22,7 @@ public class ItemDeleteParamsTest : TestBase
     {
         ItemDeleteParams parameters = new() { TenantID = "tenant_id", TopicID = "topic_id" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(
             new Uri("https://api.courier.com/tenants/tenant_id/default_preferences/items/topic_id"),

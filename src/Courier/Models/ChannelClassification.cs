@@ -11,7 +11,7 @@ public enum ChannelClassification
     DirectMessage,
     Email,
     Push,
-    SMS,
+    Sms,
     Webhook,
     Inbox,
 }
@@ -29,7 +29,7 @@ sealed class ChannelClassificationConverter : JsonConverter<ChannelClassificatio
             "direct_message" => ChannelClassification.DirectMessage,
             "email" => ChannelClassification.Email,
             "push" => ChannelClassification.Push,
-            "sms" => ChannelClassification.SMS,
+            "sms" => ChannelClassification.Sms,
             "webhook" => ChannelClassification.Webhook,
             "inbox" => ChannelClassification.Inbox,
             _ => (ChannelClassification)(-1),
@@ -49,7 +49,7 @@ sealed class ChannelClassificationConverter : JsonConverter<ChannelClassificatio
                 ChannelClassification.DirectMessage => "direct_message",
                 ChannelClassification.Email => "email",
                 ChannelClassification.Push => "push",
-                ChannelClassification.SMS => "sms",
+                ChannelClassification.Sms => "sms",
                 ChannelClassification.Webhook => "webhook",
                 ChannelClassification.Inbox => "inbox",
                 _ => throw new CourierInvalidDataException(

@@ -20,7 +20,7 @@ public class RequestArchiveParamsTest : TestBase
     {
         RequestArchiveParams parameters = new() { RequestID = "request_id" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/requests/request_id/archive"), url);
     }

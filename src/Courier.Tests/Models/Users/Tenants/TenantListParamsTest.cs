@@ -62,7 +62,7 @@ public class TenantListParamsTest : TestBase
             Limit = 0,
         };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(
             new Uri("https://api.courier.com/users/user_id/tenants?cursor=cursor&limit=0"),

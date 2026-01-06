@@ -107,7 +107,7 @@ public class ListUpdateParamsTest : TestBase
     {
         ListUpdateParams parameters = new() { ListID = "list_id", Name = "name" };
 
-        var url = parameters.Url(new() { APIKey = "My API Key" });
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.Equal(new Uri("https://api.courier.com/lists/list_id"), url);
     }

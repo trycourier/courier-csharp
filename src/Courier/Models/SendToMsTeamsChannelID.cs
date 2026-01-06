@@ -16,7 +16,7 @@ public sealed record class SendToMsTeamsChannelID : JsonModel
         init { JsonModel.Set(this._rawData, "channel_id", value); }
     }
 
-    public required string ServiceURL
+    public required string ServiceUrl
     {
         get { return JsonModel.GetNotNullClass<string>(this.RawData, "service_url"); }
         init { JsonModel.Set(this._rawData, "service_url", value); }
@@ -32,7 +32,7 @@ public sealed record class SendToMsTeamsChannelID : JsonModel
     public override void Validate()
     {
         _ = this.ChannelID;
-        _ = this.ServiceURL;
+        _ = this.ServiceUrl;
         _ = this.TenantID;
     }
 

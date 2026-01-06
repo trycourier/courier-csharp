@@ -13,7 +13,7 @@ public sealed record class WebhookProfile : JsonModel
     /// <summary>
     /// The URL to send the webhook request to.
     /// </summary>
-    public required string URL
+    public required string Url
     {
         get { return JsonModel.GetNotNullClass<string>(this.RawData, "url"); }
         init { JsonModel.Set(this._rawData, "url", value); }
@@ -80,7 +80,7 @@ public sealed record class WebhookProfile : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.URL;
+        _ = this.Url;
         this.Authentication?.Validate();
         _ = this.Headers;
         this.Method?.Validate();
@@ -115,7 +115,7 @@ public sealed record class WebhookProfile : JsonModel
     public WebhookProfile(string url)
         : this()
     {
-        this.URL = url;
+        this.Url = url;
     }
 }
 

@@ -13,7 +13,7 @@ public class WebhookRecipientTest : TestBase
         {
             Webhook = new()
             {
-                URL = "url",
+                Url = "url",
                 Authentication = new()
                 {
                     Mode = WebhookAuthMode.None,
@@ -29,7 +29,7 @@ public class WebhookRecipientTest : TestBase
 
         WebhookProfile expectedWebhook = new()
         {
-            URL = "url",
+            Url = "url",
             Authentication = new()
             {
                 Mode = WebhookAuthMode.None,
@@ -52,7 +52,7 @@ public class WebhookRecipientTest : TestBase
         {
             Webhook = new()
             {
-                URL = "url",
+                Url = "url",
                 Authentication = new()
                 {
                     Mode = WebhookAuthMode.None,
@@ -79,7 +79,7 @@ public class WebhookRecipientTest : TestBase
         {
             Webhook = new()
             {
-                URL = "url",
+                Url = "url",
                 Authentication = new()
                 {
                     Mode = WebhookAuthMode.None,
@@ -99,7 +99,7 @@ public class WebhookRecipientTest : TestBase
 
         WebhookProfile expectedWebhook = new()
         {
-            URL = "url",
+            Url = "url",
             Authentication = new()
             {
                 Mode = WebhookAuthMode.None,
@@ -122,7 +122,7 @@ public class WebhookRecipientTest : TestBase
         {
             Webhook = new()
             {
-                URL = "url",
+                Url = "url",
                 Authentication = new()
                 {
                     Mode = WebhookAuthMode.None,

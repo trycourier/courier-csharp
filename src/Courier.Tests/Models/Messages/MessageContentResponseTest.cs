@@ -21,7 +21,7 @@ public class MessageContentResponseTest : TestBase
                     {
                         Blocks = [new() { Text = "text", Type = "type" }],
                         Body = "body",
-                        HTML = "html",
+                        Html = "html",
                         Subject = "subject",
                         Text = "text",
                         Title = "title",
@@ -40,7 +40,7 @@ public class MessageContentResponseTest : TestBase
                 {
                     Blocks = [new() { Text = "text", Type = "type" }],
                     Body = "body",
-                    HTML = "html",
+                    Html = "html",
                     Subject = "subject",
                     Text = "text",
                     Title = "title",
@@ -70,7 +70,7 @@ public class MessageContentResponseTest : TestBase
                     {
                         Blocks = [new() { Text = "text", Type = "type" }],
                         Body = "body",
-                        HTML = "html",
+                        Html = "html",
                         Subject = "subject",
                         Text = "text",
                         Title = "title",
@@ -100,7 +100,7 @@ public class MessageContentResponseTest : TestBase
                     {
                         Blocks = [new() { Text = "text", Type = "type" }],
                         Body = "body",
-                        HTML = "html",
+                        Html = "html",
                         Subject = "subject",
                         Text = "text",
                         Title = "title",
@@ -123,7 +123,7 @@ public class MessageContentResponseTest : TestBase
                 {
                     Blocks = [new() { Text = "text", Type = "type" }],
                     Body = "body",
-                    HTML = "html",
+                    Html = "html",
                     Subject = "subject",
                     Text = "text",
                     Title = "title",
@@ -153,7 +153,7 @@ public class MessageContentResponseTest : TestBase
                     {
                         Blocks = [new() { Text = "text", Type = "type" }],
                         Body = "body",
-                        HTML = "html",
+                        Html = "html",
                         Subject = "subject",
                         Text = "text",
                         Title = "title",
@@ -179,7 +179,7 @@ public class ResultTest : TestBase
             {
                 Blocks = [new() { Text = "text", Type = "type" }],
                 Body = "body",
-                HTML = "html",
+                Html = "html",
                 Subject = "subject",
                 Text = "text",
                 Title = "title",
@@ -192,7 +192,7 @@ public class ResultTest : TestBase
         {
             Blocks = [new() { Text = "text", Type = "type" }],
             Body = "body",
-            HTML = "html",
+            Html = "html",
             Subject = "subject",
             Text = "text",
             Title = "title",
@@ -214,7 +214,7 @@ public class ResultTest : TestBase
             {
                 Blocks = [new() { Text = "text", Type = "type" }],
                 Body = "body",
-                HTML = "html",
+                Html = "html",
                 Subject = "subject",
                 Text = "text",
                 Title = "title",
@@ -238,7 +238,7 @@ public class ResultTest : TestBase
             {
                 Blocks = [new() { Text = "text", Type = "type" }],
                 Body = "body",
-                HTML = "html",
+                Html = "html",
                 Subject = "subject",
                 Text = "text",
                 Title = "title",
@@ -255,7 +255,7 @@ public class ResultTest : TestBase
         {
             Blocks = [new() { Text = "text", Type = "type" }],
             Body = "body",
-            HTML = "html",
+            Html = "html",
             Subject = "subject",
             Text = "text",
             Title = "title",
@@ -277,7 +277,7 @@ public class ResultTest : TestBase
             {
                 Blocks = [new() { Text = "text", Type = "type" }],
                 Body = "body",
-                HTML = "html",
+                Html = "html",
                 Subject = "subject",
                 Text = "text",
                 Title = "title",
@@ -297,7 +297,7 @@ public class ContentTest : TestBase
         {
             Blocks = [new() { Text = "text", Type = "type" }],
             Body = "body",
-            HTML = "html",
+            Html = "html",
             Subject = "subject",
             Text = "text",
             Title = "title",
@@ -305,7 +305,7 @@ public class ContentTest : TestBase
 
         List<Block> expectedBlocks = [new() { Text = "text", Type = "type" }];
         string expectedBody = "body";
-        string expectedHTML = "html";
+        string expectedHtml = "html";
         string expectedSubject = "subject";
         string expectedText = "text";
         string expectedTitle = "title";
@@ -316,7 +316,7 @@ public class ContentTest : TestBase
             Assert.Equal(expectedBlocks[i], model.Blocks[i]);
         }
         Assert.Equal(expectedBody, model.Body);
-        Assert.Equal(expectedHTML, model.HTML);
+        Assert.Equal(expectedHtml, model.Html);
         Assert.Equal(expectedSubject, model.Subject);
         Assert.Equal(expectedText, model.Text);
         Assert.Equal(expectedTitle, model.Title);
@@ -329,7 +329,7 @@ public class ContentTest : TestBase
         {
             Blocks = [new() { Text = "text", Type = "type" }],
             Body = "body",
-            HTML = "html",
+            Html = "html",
             Subject = "subject",
             Text = "text",
             Title = "title",
@@ -348,7 +348,7 @@ public class ContentTest : TestBase
         {
             Blocks = [new() { Text = "text", Type = "type" }],
             Body = "body",
-            HTML = "html",
+            Html = "html",
             Subject = "subject",
             Text = "text",
             Title = "title",
@@ -360,7 +360,7 @@ public class ContentTest : TestBase
 
         List<Block> expectedBlocks = [new() { Text = "text", Type = "type" }];
         string expectedBody = "body";
-        string expectedHTML = "html";
+        string expectedHtml = "html";
         string expectedSubject = "subject";
         string expectedText = "text";
         string expectedTitle = "title";
@@ -371,7 +371,7 @@ public class ContentTest : TestBase
             Assert.Equal(expectedBlocks[i], deserialized.Blocks[i]);
         }
         Assert.Equal(expectedBody, deserialized.Body);
-        Assert.Equal(expectedHTML, deserialized.HTML);
+        Assert.Equal(expectedHtml, deserialized.Html);
         Assert.Equal(expectedSubject, deserialized.Subject);
         Assert.Equal(expectedText, deserialized.Text);
         Assert.Equal(expectedTitle, deserialized.Title);
@@ -384,7 +384,7 @@ public class ContentTest : TestBase
         {
             Blocks = [new() { Text = "text", Type = "type" }],
             Body = "body",
-            HTML = "html",
+            Html = "html",
             Subject = "subject",
             Text = "text",
             Title = "title",
