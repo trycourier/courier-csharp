@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
@@ -174,11 +175,27 @@ public class TokenAddSingleParamsTest : TestBase
         };
 
         Assert.Null(parameters.Device);
-        Assert.False(parameters.RawBodyData.ContainsKey("device"));
+        Assert.True(parameters.RawBodyData.ContainsKey("device"));
         Assert.Null(parameters.ExpiryDate);
-        Assert.False(parameters.RawBodyData.ContainsKey("expiry_date"));
+        Assert.True(parameters.RawBodyData.ContainsKey("expiry_date"));
         Assert.Null(parameters.Tracking);
-        Assert.False(parameters.RawBodyData.ContainsKey("tracking"));
+        Assert.True(parameters.RawBodyData.ContainsKey("tracking"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        TokenAddSingleParams parameters = new()
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/users/user_id/tokens/token"), url);
     }
 }
 

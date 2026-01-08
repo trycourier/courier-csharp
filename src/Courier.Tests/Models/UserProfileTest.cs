@@ -41,7 +41,7 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             },
@@ -94,7 +94,7 @@ public class UserProfileTest : TestBase
         string expectedMiddleName = "middle_name";
         MsTeams expectedMsTeams = new SendToMsTeamsUserID()
         {
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
             UserID = "user_id",
         };
@@ -191,7 +191,7 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             },
@@ -251,7 +251,7 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             },
@@ -308,7 +308,7 @@ public class UserProfileTest : TestBase
         string expectedMiddleName = "middle_name";
         MsTeams expectedMsTeams = new SendToMsTeamsUserID()
         {
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
             UserID = "user_id",
         };
@@ -405,7 +405,7 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             },

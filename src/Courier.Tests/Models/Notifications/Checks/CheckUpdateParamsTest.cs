@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
-using Courier.Models.Notifications;
 using Courier.Models.Notifications.Checks;
+using Notifications = Courier.Models.Notifications;
 
 namespace Courier.Tests.Models.Notifications.Checks;
 
@@ -18,21 +19,21 @@ public class CheckUpdateParamsTest : TestBase
                 new()
                 {
                     ID = "id",
-                    Status = Status.Resolved,
-                    Type = Type.Custom,
+                    Status = Notifications::Status.Resolved,
+                    Type = Notifications::Type.Custom,
                 },
             ],
         };
 
         string expectedID = "id";
         string expectedSubmissionID = "submissionId";
-        List<BaseCheck> expectedChecks =
+        List<Notifications::BaseCheck> expectedChecks =
         [
             new()
             {
                 ID = "id",
-                Status = Status.Resolved,
-                Type = Type.Custom,
+                Status = Notifications::Status.Resolved,
+                Type = Notifications::Type.Custom,
             },
         ];
 
@@ -43,5 +44,28 @@ public class CheckUpdateParamsTest : TestBase
         {
             Assert.Equal(expectedChecks[i], parameters.Checks[i]);
         }
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        CheckUpdateParams parameters = new()
+        {
+            ID = "id",
+            SubmissionID = "submissionId",
+            Checks =
+            [
+                new()
+                {
+                    ID = "id",
+                    Status = Notifications::Status.Resolved,
+                    Type = Notifications::Type.Custom,
+                },
+            ],
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/notifications/id/submissionId/checks"), url);
     }
 }

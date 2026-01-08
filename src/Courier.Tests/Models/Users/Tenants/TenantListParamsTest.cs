@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Users.Tenants;
 
 namespace Courier.Tests.Models.Users.Tenants;
@@ -46,8 +47,26 @@ public class TenantListParamsTest : TestBase
         };
 
         Assert.Null(parameters.Cursor);
-        Assert.False(parameters.RawQueryData.ContainsKey("cursor"));
+        Assert.True(parameters.RawQueryData.ContainsKey("cursor"));
         Assert.Null(parameters.Limit);
-        Assert.False(parameters.RawQueryData.ContainsKey("limit"));
+        Assert.True(parameters.RawQueryData.ContainsKey("limit"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        TenantListParams parameters = new()
+        {
+            UserID = "user_id",
+            Cursor = "cursor",
+            Limit = 0,
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri("https://api.courier.com/users/user_id/tenants?cursor=cursor&limit=0"),
+            url
+        );
     }
 }

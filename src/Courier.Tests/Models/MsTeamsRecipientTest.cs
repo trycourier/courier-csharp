@@ -12,7 +12,7 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             },
@@ -20,7 +20,7 @@ public class MsTeamsRecipientTest : TestBase
 
         MsTeams expectedMsTeams = new SendToMsTeamsUserID()
         {
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
             UserID = "user_id",
         };
@@ -35,7 +35,7 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             },
@@ -54,7 +54,7 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             },
@@ -66,7 +66,7 @@ public class MsTeamsRecipientTest : TestBase
 
         MsTeams expectedMsTeams = new SendToMsTeamsUserID()
         {
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
             UserID = "user_id",
         };
@@ -81,7 +81,7 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
-                ServiceURL = "service_url",
+                ServiceUrl = "service_url",
                 TenantID = "tenant_id",
                 UserID = "user_id",
             },

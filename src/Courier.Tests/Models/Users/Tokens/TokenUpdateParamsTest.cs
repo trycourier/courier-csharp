@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models.Users.Tokens;
@@ -43,6 +44,29 @@ public class TokenUpdateParamsTest : TestBase
         {
             Assert.Equal(expectedPatch[i], parameters.Patch[i]);
         }
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        TokenUpdateParams parameters = new()
+        {
+            UserID = "user_id",
+            Token = "token",
+            Patch =
+            [
+                new()
+                {
+                    Op = "op",
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/users/user_id/tokens/token"), url);
     }
 }
 

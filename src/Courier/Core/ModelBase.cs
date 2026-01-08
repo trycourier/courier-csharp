@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Courier.Exceptions;
 using Courier.Models;
+using Courier.Models.Automations;
 using Courier.Models.Brands;
 using Courier.Models.Bulk;
 using Audiences = Courier.Models.Audiences;
@@ -59,6 +60,8 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Send::Criteria>(),
             new ApiEnumConverter<string, Audiences::Operator>(),
             new ApiEnumConverter<string, Audiences::SingleFilterConfigOperator>(),
+            new ApiEnumConverter<string, AutomationTemplateVersion>(),
+            new ApiEnumConverter<string, Version>(),
             new ApiEnumConverter<string, Invoke::Action>(),
             new ApiEnumConverter<string, Invoke::AutomationSendStepAction>(),
             new ApiEnumConverter<string, Invoke::AutomationSendListStepAction>(),

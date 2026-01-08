@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Audiences;
 
 namespace Courier.Tests.Models.Audiences;
@@ -62,10 +63,20 @@ public class AudienceUpdateParamsTest : TestBase
         };
 
         Assert.Null(parameters.Description);
-        Assert.False(parameters.RawBodyData.ContainsKey("description"));
+        Assert.True(parameters.RawBodyData.ContainsKey("description"));
         Assert.Null(parameters.Filter);
-        Assert.False(parameters.RawBodyData.ContainsKey("filter"));
+        Assert.True(parameters.RawBodyData.ContainsKey("filter"));
         Assert.Null(parameters.Name);
-        Assert.False(parameters.RawBodyData.ContainsKey("name"));
+        Assert.True(parameters.RawBodyData.ContainsKey("name"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        AudienceUpdateParams parameters = new() { AudienceID = "audience_id" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/audiences/audience_id"), url);
     }
 }

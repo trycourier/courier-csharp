@@ -1,5 +1,32 @@
 # Changelog
 
+## 5.0.0 (2026-01-08)
+
+Full Changelog: [v4.0.0...v5.0.0](https://github.com/trycourier/courier-csharp/compare/v4.0.0...v5.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** change casing of some identifiers
+* **client:** **Migration:** Only use all-caps in PascalCase for two-letter acronyms. Otherwise, use a capital letter for the first letter and lowercase letters for the rest.
+
+### Bug Fixes
+
+* **ci:** run tests properly on windows ([fde3d83](https://github.com/trycourier/courier-csharp/commit/fde3d836fc3299ac27be468a45e6422540fa883d))
+* **client:** don't dispose `HttpResponse` for methods that directly return it ([67b9945](https://github.com/trycourier/courier-csharp/commit/67b99452f085cc12425a002ec9ebe065d4ebda24))
+
+
+### Chores
+
+* **internal:** add files to sln so they show up in visual studio ([fbc52cb](https://github.com/trycourier/courier-csharp/commit/fbc52cbb1dcff458c591d4b94250011e18685d2b))
+* **internal:** regenerate SDK with no functional changes ([5b5c8bf](https://github.com/trycourier/courier-csharp/commit/5b5c8bfbacfd46dc155f71063129d5003ccdc053))
+* **internal:** suppress a diagnostic ([6954ea8](https://github.com/trycourier/courier-csharp/commit/6954ea825b91634f7a162a57f8f695496d0f258c))
+* rename some identifiers ([bfbebe8](https://github.com/trycourier/courier-csharp/commit/bfbebe8444b3c92c34fe072c9bfc43a09e3f0fc8))
+
+
+### Refactors
+
+* **client:** change casing of some identifiers ([b71d9c8](https://github.com/trycourier/courier-csharp/commit/b71d9c80faa060b21326ef332e47c97db910571b))
+
 ## 4.0.0 (2026-01-05)
 
 Full Changelog: [v3.3.0...v4.0.0](https://github.com/trycourier/courier-csharp/compare/v3.3.0...v4.0.0)

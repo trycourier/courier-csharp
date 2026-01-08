@@ -1,5 +1,8 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Courier.Core;
+using Courier.Models.Automations;
 using Courier.Services.Automations;
 
 namespace Courier.Services;
@@ -19,4 +22,12 @@ public interface IAutomationService
     IAutomationService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IInvokeService Invoke { get; }
+
+    /// <summary>
+    /// Get the list of automations.
+    /// </summary>
+    Task<AutomationTemplateListResponse> List(
+        AutomationListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }

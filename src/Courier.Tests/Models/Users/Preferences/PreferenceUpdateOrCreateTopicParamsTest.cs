@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
@@ -77,7 +78,33 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
         };
 
         Assert.Null(parameters.TenantID);
-        Assert.False(parameters.RawQueryData.ContainsKey("tenant_id"));
+        Assert.True(parameters.RawQueryData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        PreferenceUpdateOrCreateTopicParams parameters = new()
+        {
+            UserID = "user_id",
+            TopicID = "topic_id",
+            Topic = new()
+            {
+                Status = PreferenceStatus.OptedIn,
+                CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                HasCustomRouting = true,
+            },
+            TenantID = "tenant_id",
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.courier.com/users/user_id/preferences/topic_id?tenant_id=tenant_id"
+            ),
+            url
+        );
     }
 }
 

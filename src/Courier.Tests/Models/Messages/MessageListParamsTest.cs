@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Courier.Models.Messages;
 
@@ -186,26 +187,57 @@ public class MessageListParamsTest : TestBase
         };
 
         Assert.Null(parameters.Archived);
-        Assert.False(parameters.RawQueryData.ContainsKey("archived"));
+        Assert.True(parameters.RawQueryData.ContainsKey("archived"));
         Assert.Null(parameters.Cursor);
-        Assert.False(parameters.RawQueryData.ContainsKey("cursor"));
+        Assert.True(parameters.RawQueryData.ContainsKey("cursor"));
         Assert.Null(parameters.EnqueuedAfter);
-        Assert.False(parameters.RawQueryData.ContainsKey("enqueued_after"));
+        Assert.True(parameters.RawQueryData.ContainsKey("enqueued_after"));
         Assert.Null(parameters.Event);
-        Assert.False(parameters.RawQueryData.ContainsKey("event"));
+        Assert.True(parameters.RawQueryData.ContainsKey("event"));
         Assert.Null(parameters.List);
-        Assert.False(parameters.RawQueryData.ContainsKey("list"));
+        Assert.True(parameters.RawQueryData.ContainsKey("list"));
         Assert.Null(parameters.MessageID);
-        Assert.False(parameters.RawQueryData.ContainsKey("messageId"));
+        Assert.True(parameters.RawQueryData.ContainsKey("messageId"));
         Assert.Null(parameters.Notification);
-        Assert.False(parameters.RawQueryData.ContainsKey("notification"));
+        Assert.True(parameters.RawQueryData.ContainsKey("notification"));
         Assert.Null(parameters.Recipient);
-        Assert.False(parameters.RawQueryData.ContainsKey("recipient"));
+        Assert.True(parameters.RawQueryData.ContainsKey("recipient"));
         Assert.Null(parameters.Tags);
-        Assert.False(parameters.RawQueryData.ContainsKey("tags"));
+        Assert.True(parameters.RawQueryData.ContainsKey("tags"));
         Assert.Null(parameters.TenantID);
-        Assert.False(parameters.RawQueryData.ContainsKey("tenant_id"));
+        Assert.True(parameters.RawQueryData.ContainsKey("tenant_id"));
         Assert.Null(parameters.TraceID);
-        Assert.False(parameters.RawQueryData.ContainsKey("traceId"));
+        Assert.True(parameters.RawQueryData.ContainsKey("traceId"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        MessageListParams parameters = new()
+        {
+            Archived = true,
+            Cursor = "cursor",
+            EnqueuedAfter = "enqueued_after",
+            Event = "event",
+            List = "list",
+            MessageID = "messageId",
+            Notification = "notification",
+            Provider = ["string"],
+            Recipient = "recipient",
+            Status = ["string"],
+            Tag = ["string"],
+            Tags = "tags",
+            TenantID = "tenant_id",
+            TraceID = "traceId",
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri(
+                "https://api.courier.com/messages?archived=true&cursor=cursor&enqueued_after=enqueued_after&event=event&list=list&messageId=messageId&notification=notification&provider=string&recipient=recipient&status=string&tag=string&tags=tags&tenant_id=tenant_id&traceId=traceId"
+            ),
+            url
+        );
     }
 }

@@ -18,16 +18,16 @@ public record class MsTeams
         get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
     }
 
-    public string ServiceURL
+    public string ServiceUrl
     {
         get
         {
             return Match(
-                sendToMsTeamsUserID: (x) => x.ServiceURL,
-                sendToMsTeamsEmail: (x) => x.ServiceURL,
-                sendToMsTeamsChannelID: (x) => x.ServiceURL,
-                sendToMsTeamsConversationID: (x) => x.ServiceURL,
-                sendToMsTeamsChannelName: (x) => x.ServiceURL
+                sendToMsTeamsUserID: (x) => x.ServiceUrl,
+                sendToMsTeamsEmail: (x) => x.ServiceUrl,
+                sendToMsTeamsChannelID: (x) => x.ServiceUrl,
+                sendToMsTeamsConversationID: (x) => x.ServiceUrl,
+                sendToMsTeamsChannelName: (x) => x.ServiceUrl
             );
         }
     }

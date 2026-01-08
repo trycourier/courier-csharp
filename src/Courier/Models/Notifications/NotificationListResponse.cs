@@ -87,7 +87,7 @@ public sealed record class Result : JsonModel
     /// <summary>
     /// Array of event IDs associated with this notification
     /// </summary>
-    public required IReadOnlyList<string> EventIDs
+    public required IReadOnlyList<string> EventIds
     {
         get { return JsonModel.GetNotNullClass<List<string>>(this.RawData, "event_ids"); }
         init { JsonModel.Set(this._rawData, "event_ids", value); }
@@ -134,7 +134,7 @@ public sealed record class Result : JsonModel
     {
         _ = this.ID;
         _ = this.CreatedAt;
-        _ = this.EventIDs;
+        _ = this.EventIds;
         _ = this.Note;
         this.Routing.Validate();
         _ = this.TopicID;

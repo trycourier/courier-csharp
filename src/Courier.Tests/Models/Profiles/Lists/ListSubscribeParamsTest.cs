@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Courier.Models;
 using Courier.Models.Profiles;
@@ -91,5 +92,52 @@ public class ListSubscribeParamsTest : TestBase
         {
             Assert.Equal(expectedLists[i], parameters.Lists[i]);
         }
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ListSubscribeParams parameters = new()
+        {
+            UserID = "user_id",
+            Lists =
+            [
+                new()
+                {
+                    ListID = "listId",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+            ],
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/profiles/user_id/lists"), url);
     }
 }

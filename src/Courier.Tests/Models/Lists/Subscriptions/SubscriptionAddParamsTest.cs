@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Courier.Models;
 using Courier.Models.Lists;
@@ -91,5 +92,52 @@ public class SubscriptionAddParamsTest : TestBase
         {
             Assert.Equal(expectedRecipients[i], parameters.Recipients[i]);
         }
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        SubscriptionAddParams parameters = new()
+        {
+            ListID = "list_id",
+            Recipients =
+            [
+                new()
+                {
+                    RecipientID = "recipientId",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+            ],
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/lists/list_id/subscriptions"), url);
     }
 }

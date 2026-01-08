@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Audiences;
 
 namespace Courier.Tests.Models.Audiences;
@@ -29,6 +30,16 @@ public class AudienceListParamsTest : TestBase
         var parameters = new AudienceListParams { Cursor = null };
 
         Assert.Null(parameters.Cursor);
-        Assert.False(parameters.RawQueryData.ContainsKey("cursor"));
+        Assert.True(parameters.RawQueryData.ContainsKey("cursor"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        AudienceListParams parameters = new() { Cursor = "cursor" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/audiences?cursor=cursor"), url);
     }
 }

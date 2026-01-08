@@ -1,3 +1,4 @@
+using System;
 using Courier.Models.Brands;
 
 namespace Courier.Tests.Models.Brands;
@@ -145,8 +146,18 @@ public class BrandUpdateParamsTest : TestBase
         };
 
         Assert.Null(parameters.Settings);
-        Assert.False(parameters.RawBodyData.ContainsKey("settings"));
+        Assert.True(parameters.RawBodyData.ContainsKey("settings"));
         Assert.Null(parameters.Snippets);
-        Assert.False(parameters.RawBodyData.ContainsKey("snippets"));
+        Assert.True(parameters.RawBodyData.ContainsKey("snippets"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        BrandUpdateParams parameters = new() { BrandID = "brand_id", Name = "name" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/brands/brand_id"), url);
     }
 }

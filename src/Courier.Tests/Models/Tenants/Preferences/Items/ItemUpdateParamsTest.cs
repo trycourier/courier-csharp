@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
@@ -72,9 +73,27 @@ public class ItemUpdateParamsTest : TestBase
         };
 
         Assert.Null(parameters.CustomRouting);
-        Assert.False(parameters.RawBodyData.ContainsKey("custom_routing"));
+        Assert.True(parameters.RawBodyData.ContainsKey("custom_routing"));
         Assert.Null(parameters.HasCustomRouting);
-        Assert.False(parameters.RawBodyData.ContainsKey("has_custom_routing"));
+        Assert.True(parameters.RawBodyData.ContainsKey("has_custom_routing"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ItemUpdateParams parameters = new()
+        {
+            TenantID = "tenant_id",
+            TopicID = "topic_id",
+            Status = Status.OptedIn,
+        };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            new Uri("https://api.courier.com/tenants/tenant_id/default_preferences/items/topic_id"),
+            url
+        );
     }
 }
 

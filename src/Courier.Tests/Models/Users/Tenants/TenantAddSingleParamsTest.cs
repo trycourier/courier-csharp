@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Models.Users.Tenants;
@@ -59,6 +60,16 @@ public class TenantAddSingleParamsTest : TestBase
         };
 
         Assert.Null(parameters.Profile);
-        Assert.False(parameters.RawBodyData.ContainsKey("profile"));
+        Assert.True(parameters.RawBodyData.ContainsKey("profile"));
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        TenantAddSingleParams parameters = new() { UserID = "user_id", TenantID = "tenant_id" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.Equal(new Uri("https://api.courier.com/users/user_id/tenants/tenant_id"), url);
     }
 }

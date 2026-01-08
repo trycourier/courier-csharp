@@ -11,16 +11,16 @@ public class SendToMsTeamsConversationIDTest : TestBase
         var model = new SendToMsTeamsConversationID
         {
             ConversationID = "conversation_id",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
         string expectedConversationID = "conversation_id";
-        string expectedServiceURL = "service_url";
+        string expectedServiceUrl = "service_url";
         string expectedTenantID = "tenant_id";
 
         Assert.Equal(expectedConversationID, model.ConversationID);
-        Assert.Equal(expectedServiceURL, model.ServiceURL);
+        Assert.Equal(expectedServiceUrl, model.ServiceUrl);
         Assert.Equal(expectedTenantID, model.TenantID);
     }
 
@@ -30,7 +30,7 @@ public class SendToMsTeamsConversationIDTest : TestBase
         var model = new SendToMsTeamsConversationID
         {
             ConversationID = "conversation_id",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
@@ -46,7 +46,7 @@ public class SendToMsTeamsConversationIDTest : TestBase
         var model = new SendToMsTeamsConversationID
         {
             ConversationID = "conversation_id",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
@@ -55,11 +55,11 @@ public class SendToMsTeamsConversationIDTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedConversationID = "conversation_id";
-        string expectedServiceURL = "service_url";
+        string expectedServiceUrl = "service_url";
         string expectedTenantID = "tenant_id";
 
         Assert.Equal(expectedConversationID, deserialized.ConversationID);
-        Assert.Equal(expectedServiceURL, deserialized.ServiceURL);
+        Assert.Equal(expectedServiceUrl, deserialized.ServiceUrl);
         Assert.Equal(expectedTenantID, deserialized.TenantID);
     }
 
@@ -69,7 +69,7 @@ public class SendToMsTeamsConversationIDTest : TestBase
         var model = new SendToMsTeamsConversationID
         {
             ConversationID = "conversation_id",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 

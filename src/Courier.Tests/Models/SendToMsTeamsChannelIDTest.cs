@@ -11,16 +11,16 @@ public class SendToMsTeamsChannelIDTest : TestBase
         var model = new SendToMsTeamsChannelID
         {
             ChannelID = "channel_id",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
         string expectedChannelID = "channel_id";
-        string expectedServiceURL = "service_url";
+        string expectedServiceUrl = "service_url";
         string expectedTenantID = "tenant_id";
 
         Assert.Equal(expectedChannelID, model.ChannelID);
-        Assert.Equal(expectedServiceURL, model.ServiceURL);
+        Assert.Equal(expectedServiceUrl, model.ServiceUrl);
         Assert.Equal(expectedTenantID, model.TenantID);
     }
 
@@ -30,7 +30,7 @@ public class SendToMsTeamsChannelIDTest : TestBase
         var model = new SendToMsTeamsChannelID
         {
             ChannelID = "channel_id",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
@@ -46,7 +46,7 @@ public class SendToMsTeamsChannelIDTest : TestBase
         var model = new SendToMsTeamsChannelID
         {
             ChannelID = "channel_id",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
@@ -55,11 +55,11 @@ public class SendToMsTeamsChannelIDTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedChannelID = "channel_id";
-        string expectedServiceURL = "service_url";
+        string expectedServiceUrl = "service_url";
         string expectedTenantID = "tenant_id";
 
         Assert.Equal(expectedChannelID, deserialized.ChannelID);
-        Assert.Equal(expectedServiceURL, deserialized.ServiceURL);
+        Assert.Equal(expectedServiceUrl, deserialized.ServiceUrl);
         Assert.Equal(expectedTenantID, deserialized.TenantID);
     }
 
@@ -69,7 +69,7 @@ public class SendToMsTeamsChannelIDTest : TestBase
         var model = new SendToMsTeamsChannelID
         {
             ChannelID = "channel_id",
-            ServiceURL = "service_url",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
