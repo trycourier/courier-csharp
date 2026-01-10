@@ -327,7 +327,7 @@ class DeviceFromRaw : IFromRawJson<Device>
 /// to disable expiration.
 /// </summary>
 [JsonConverter(typeof(ExpiryDateConverter))]
-public record class ExpiryDate
+public record class ExpiryDate : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -481,7 +481,7 @@ public record class ExpiryDate
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

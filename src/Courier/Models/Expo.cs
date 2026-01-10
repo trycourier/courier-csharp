@@ -8,7 +8,7 @@ using System = System;
 namespace Courier.Models;
 
 [JsonConverter(typeof(ExpoConverter))]
-public record class Expo
+public record class Expo : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -158,7 +158,7 @@ public record class Expo
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

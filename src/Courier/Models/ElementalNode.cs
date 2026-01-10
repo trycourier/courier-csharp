@@ -20,7 +20,7 @@ namespace Courier.Models;
 /// for more details.
 /// </summary>
 [JsonConverter(typeof(ElementalNodeConverter))]
-public record class ElementalNode
+public record class ElementalNode : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -435,7 +435,7 @@ public record class ElementalNode
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
