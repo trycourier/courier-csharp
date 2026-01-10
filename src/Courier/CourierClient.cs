@@ -14,17 +14,6 @@ namespace Courier;
 /// <inheritdoc/>
 public sealed class CourierClient : ICourierClient
 {
-#if NET
-    static readonly Random Random = Random.Shared;
-#else
-    static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
-
-    static Random Random
-    {
-        get { return _threadLocalRandom.Value!; }
-    }
-#endif
-
     readonly ClientOptions _options;
 
     /// <inheritdoc/>
@@ -69,7 +58,13 @@ public sealed class CourierClient : ICourierClient
         init { this._options.ApiKey = value; }
     }
 
-    internal static HttpMethod PatchMethod = new("PATCH");
+    readonly Lazy<ICourierClientWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public ICourierClientWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
 
     /// <inheritdoc/>
     public ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
@@ -169,6 +164,200 @@ public sealed class CourierClient : ICourierClient
 
     readonly Lazy<IUserService> _users;
     public IUserService Users
+    {
+        get { return _users.Value; }
+    }
+
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public CourierClient()
+    {
+        _options = new();
+
+        _withRawResponse = new(() => new CourierClientWithRawResponse(this._options));
+        _send = new(() => new SendService(this));
+        _audiences = new(() => new AudienceService(this));
+        _auditEvents = new(() => new AuditEventService(this));
+        _auth = new(() => new AuthService(this));
+        _automations = new(() => new AutomationService(this));
+        _brands = new(() => new BrandService(this));
+        _bulk = new(() => new BulkService(this));
+        _inbound = new(() => new InboundService(this));
+        _lists = new(() => new ListService(this));
+        _messages = new(() => new MessageService(this));
+        _requests = new(() => new RequestService(this));
+        _notifications = new(() => new NotificationService(this));
+        _profiles = new(() => new ProfileService(this));
+        _tenants = new(() => new TenantService(this));
+        _translations = new(() => new TranslationService(this));
+        _users = new(() => new UserService(this));
+    }
+
+    public CourierClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
+    }
+}
+
+/// <inheritdoc/>
+public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
+{
+#if NET
+    static readonly Random Random = Random.Shared;
+#else
+    static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
+
+    static Random Random
+    {
+        get { return _threadLocalRandom.Value!; }
+    }
+#endif
+
+    internal static HttpMethod PatchMethod = new("PATCH");
+
+    readonly ClientOptions _options;
+
+    /// <inheritdoc/>
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    /// <inheritdoc/>
+    public int? MaxRetries
+    {
+        get { return this._options.MaxRetries; }
+        init { this._options.MaxRetries = value; }
+    }
+
+    /// <inheritdoc/>
+    public TimeSpan? Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
+    /// <inheritdoc/>
+    public string ApiKey
+    {
+        get { return this._options.ApiKey; }
+        init { this._options.ApiKey = value; }
+    }
+
+    /// <inheritdoc/>
+    public ICourierClientWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new CourierClientWithRawResponse(modifier(this._options));
+    }
+
+    readonly Lazy<ISendServiceWithRawResponse> _send;
+    public ISendServiceWithRawResponse Send
+    {
+        get { return _send.Value; }
+    }
+
+    readonly Lazy<IAudienceServiceWithRawResponse> _audiences;
+    public IAudienceServiceWithRawResponse Audiences
+    {
+        get { return _audiences.Value; }
+    }
+
+    readonly Lazy<IAuditEventServiceWithRawResponse> _auditEvents;
+    public IAuditEventServiceWithRawResponse AuditEvents
+    {
+        get { return _auditEvents.Value; }
+    }
+
+    readonly Lazy<IAuthServiceWithRawResponse> _auth;
+    public IAuthServiceWithRawResponse Auth
+    {
+        get { return _auth.Value; }
+    }
+
+    readonly Lazy<IAutomationServiceWithRawResponse> _automations;
+    public IAutomationServiceWithRawResponse Automations
+    {
+        get { return _automations.Value; }
+    }
+
+    readonly Lazy<IBrandServiceWithRawResponse> _brands;
+    public IBrandServiceWithRawResponse Brands
+    {
+        get { return _brands.Value; }
+    }
+
+    readonly Lazy<IBulkServiceWithRawResponse> _bulk;
+    public IBulkServiceWithRawResponse Bulk
+    {
+        get { return _bulk.Value; }
+    }
+
+    readonly Lazy<IInboundServiceWithRawResponse> _inbound;
+    public IInboundServiceWithRawResponse Inbound
+    {
+        get { return _inbound.Value; }
+    }
+
+    readonly Lazy<IListServiceWithRawResponse> _lists;
+    public IListServiceWithRawResponse Lists
+    {
+        get { return _lists.Value; }
+    }
+
+    readonly Lazy<IMessageServiceWithRawResponse> _messages;
+    public IMessageServiceWithRawResponse Messages
+    {
+        get { return _messages.Value; }
+    }
+
+    readonly Lazy<IRequestServiceWithRawResponse> _requests;
+    public IRequestServiceWithRawResponse Requests
+    {
+        get { return _requests.Value; }
+    }
+
+    readonly Lazy<INotificationServiceWithRawResponse> _notifications;
+    public INotificationServiceWithRawResponse Notifications
+    {
+        get { return _notifications.Value; }
+    }
+
+    readonly Lazy<IProfileServiceWithRawResponse> _profiles;
+    public IProfileServiceWithRawResponse Profiles
+    {
+        get { return _profiles.Value; }
+    }
+
+    readonly Lazy<ITenantServiceWithRawResponse> _tenants;
+    public ITenantServiceWithRawResponse Tenants
+    {
+        get { return _tenants.Value; }
+    }
+
+    readonly Lazy<ITranslationServiceWithRawResponse> _translations;
+    public ITranslationServiceWithRawResponse Translations
+    {
+        get { return _translations.Value; }
+    }
+
+    readonly Lazy<IUserServiceWithRawResponse> _users;
+    public IUserServiceWithRawResponse Users
     {
         get { return _users.Value; }
     }
@@ -363,29 +552,29 @@ public sealed class CourierClient : ICourierClient
 
     public void Dispose() => this.HttpClient.Dispose();
 
-    public CourierClient()
+    public CourierClientWithRawResponse()
     {
         _options = new();
 
-        _send = new(() => new SendService(this));
-        _audiences = new(() => new AudienceService(this));
-        _auditEvents = new(() => new AuditEventService(this));
-        _auth = new(() => new AuthService(this));
-        _automations = new(() => new AutomationService(this));
-        _brands = new(() => new BrandService(this));
-        _bulk = new(() => new BulkService(this));
-        _inbound = new(() => new InboundService(this));
-        _lists = new(() => new ListService(this));
-        _messages = new(() => new MessageService(this));
-        _requests = new(() => new RequestService(this));
-        _notifications = new(() => new NotificationService(this));
-        _profiles = new(() => new ProfileService(this));
-        _tenants = new(() => new TenantService(this));
-        _translations = new(() => new TranslationService(this));
-        _users = new(() => new UserService(this));
+        _send = new(() => new SendServiceWithRawResponse(this));
+        _audiences = new(() => new AudienceServiceWithRawResponse(this));
+        _auditEvents = new(() => new AuditEventServiceWithRawResponse(this));
+        _auth = new(() => new AuthServiceWithRawResponse(this));
+        _automations = new(() => new AutomationServiceWithRawResponse(this));
+        _brands = new(() => new BrandServiceWithRawResponse(this));
+        _bulk = new(() => new BulkServiceWithRawResponse(this));
+        _inbound = new(() => new InboundServiceWithRawResponse(this));
+        _lists = new(() => new ListServiceWithRawResponse(this));
+        _messages = new(() => new MessageServiceWithRawResponse(this));
+        _requests = new(() => new RequestServiceWithRawResponse(this));
+        _notifications = new(() => new NotificationServiceWithRawResponse(this));
+        _profiles = new(() => new ProfileServiceWithRawResponse(this));
+        _tenants = new(() => new TenantServiceWithRawResponse(this));
+        _translations = new(() => new TranslationServiceWithRawResponse(this));
+        _users = new(() => new UserServiceWithRawResponse(this));
     }
 
-    public CourierClient(ClientOptions options)
+    public CourierClientWithRawResponse(ClientOptions options)
         : this()
     {
         _options = options;

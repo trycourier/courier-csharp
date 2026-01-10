@@ -11,21 +11,86 @@ namespace Courier.Services;
 /// <inheritdoc/>
 public sealed class AuditEventService : IAuditEventService
 {
+    readonly Lazy<IAuditEventServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IAuditEventServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public IAuditEventService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AuditEventService(this._client.WithOptions(modifier));
     }
 
-    readonly ICourierClient _client;
-
     public AuditEventService(ICourierClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new AuditEventServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<AuditEvent> Retrieve(
+        AuditEventRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<AuditEvent> Retrieve(
+        string auditEventID,
+        AuditEventRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Retrieve(parameters with { AuditEventID = auditEventID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<AuditEventListResponse> List(
+        AuditEventListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class AuditEventServiceWithRawResponse : IAuditEventServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IAuditEventServiceWithRawResponse WithOptions(
+        Func<ClientOptions, ClientOptions> modifier
+    )
+    {
+        return new AuditEventServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public AuditEventServiceWithRawResponse(ICourierClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<AuditEvent> Retrieve(
+    public async Task<HttpResponse<AuditEvent>> Retrieve(
         AuditEventRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,21 +105,25 @@ public sealed class AuditEventService : IAuditEventService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var auditEvent = await response
-            .Deserialize<AuditEvent>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            auditEvent.Validate();
-        }
-        return auditEvent;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var auditEvent = await response
+                    .Deserialize<AuditEvent>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    auditEvent.Validate();
+                }
+                return auditEvent;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<AuditEvent> Retrieve(
+    public Task<HttpResponse<AuditEvent>> Retrieve(
         string auditEventID,
         AuditEventRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -62,17 +131,11 @@ public sealed class AuditEventService : IAuditEventService
     {
         parameters ??= new();
 
-        return await this.Retrieve(
-            parameters with
-            {
-                AuditEventID = auditEventID,
-            },
-            cancellationToken
-        );
+        return this.Retrieve(parameters with { AuditEventID = auditEventID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<AuditEventListResponse> List(
+    public async Task<HttpResponse<AuditEventListResponse>> List(
         AuditEventListParams? parameters = null,
         CancellationToken cancellationToken = default
     )
@@ -84,16 +147,20 @@ public sealed class AuditEventService : IAuditEventService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var auditEvents = await response
-            .Deserialize<AuditEventListResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            auditEvents.Validate();
-        }
-        return auditEvents;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var auditEvents = await response
+                    .Deserialize<AuditEventListResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    auditEvents.Validate();
+                }
+                return auditEvents;
+            }
+        );
     }
 }

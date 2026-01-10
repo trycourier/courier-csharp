@@ -14,6 +14,12 @@ namespace Courier.Services.Users;
 public interface ITenantService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    global::Courier.Services.Users.ITenantServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -92,6 +98,102 @@ public interface ITenantService
 
     /// <inheritdoc cref="RemoveSingle(TenantRemoveSingleParams, CancellationToken)"/>
     Task RemoveSingle(
+        string tenantID,
+        TenantRemoveSingleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="global::Courier.Services.Users.ITenantService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ITenantServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    global::Courier.Services.Users.ITenantServiceWithRawResponse WithOptions(
+        Func<ClientOptions, ClientOptions> modifier
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /users/{user_id}/tenants`, but is otherwise the
+    /// same as <see cref="global::Courier.Services.Users.ITenantService.List(TenantListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<TenantListResponse>> List(
+        TenantListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(TenantListParams, CancellationToken)"/>
+    Task<HttpResponse<TenantListResponse>> List(
+        string userID,
+        TenantListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /users/{user_id}/tenants`, but is otherwise the
+    /// same as <see cref="global::Courier.Services.Users.ITenantService.AddMultiple(TenantAddMultipleParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> AddMultiple(
+        TenantAddMultipleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="AddMultiple(TenantAddMultipleParams, CancellationToken)"/>
+    Task<HttpResponse> AddMultiple(
+        string userID,
+        TenantAddMultipleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /users/{user_id}/tenants/{tenant_id}`, but is otherwise the
+    /// same as <see cref="global::Courier.Services.Users.ITenantService.AddSingle(TenantAddSingleParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> AddSingle(
+        TenantAddSingleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="AddSingle(TenantAddSingleParams, CancellationToken)"/>
+    Task<HttpResponse> AddSingle(
+        string tenantID,
+        TenantAddSingleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `delete /users/{user_id}/tenants`, but is otherwise the
+    /// same as <see cref="global::Courier.Services.Users.ITenantService.RemoveAll(TenantRemoveAllParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> RemoveAll(
+        TenantRemoveAllParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="RemoveAll(TenantRemoveAllParams, CancellationToken)"/>
+    Task<HttpResponse> RemoveAll(
+        string userID,
+        TenantRemoveAllParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `delete /users/{user_id}/tenants/{tenant_id}`, but is otherwise the
+    /// same as <see cref="global::Courier.Services.Users.ITenantService.RemoveSingle(TenantRemoveSingleParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> RemoveSingle(
+        TenantRemoveSingleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="RemoveSingle(TenantRemoveSingleParams, CancellationToken)"/>
+    Task<HttpResponse> RemoveSingle(
         string tenantID,
         TenantRemoveSingleParams parameters,
         CancellationToken cancellationToken = default

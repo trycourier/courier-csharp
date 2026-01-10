@@ -11,21 +11,188 @@ namespace Courier.Services.Users;
 /// <inheritdoc/>
 public sealed class TokenService : ITokenService
 {
+    readonly Lazy<ITokenServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public ITokenServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public ITokenService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new TokenService(this._client.WithOptions(modifier));
     }
 
-    readonly ICourierClient _client;
-
     public TokenService(ICourierClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new TokenServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<TokenRetrieveResponse> Retrieve(
+        TokenRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<TokenRetrieveResponse> Retrieve(
+        string token,
+        TokenRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Retrieve(parameters with { Token = token }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task Update(
+        TokenUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Update(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Update(
+        string token,
+        TokenUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Update(parameters with { Token = token }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task<TokenListResponse> List(
+        TokenListParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<TokenListResponse> List(
+        string userID,
+        TokenListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.List(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task Delete(
+        TokenDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Delete(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Delete(
+        string token,
+        TokenDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Delete(parameters with { Token = token }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task AddMultiple(
+        TokenAddMultipleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.AddMultiple(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task AddMultiple(
+        string userID,
+        TokenAddMultipleParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.AddMultiple(parameters with { UserID = userID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task AddSingle(
+        TokenAddSingleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.AddSingle(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task AddSingle(
+        string token,
+        TokenAddSingleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.AddSingle(parameters with { Token = token }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class TokenServiceWithRawResponse : ITokenServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public ITokenServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new TokenServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public TokenServiceWithRawResponse(ICourierClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<TokenRetrieveResponse> Retrieve(
+    public async Task<HttpResponse<TokenRetrieveResponse>> Retrieve(
         TokenRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,31 +207,35 @@ public sealed class TokenService : ITokenService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var token = await response
-            .Deserialize<TokenRetrieveResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            token.Validate();
-        }
-        return token;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<TokenRetrieveResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<TokenRetrieveResponse> Retrieve(
+    public Task<HttpResponse<TokenRetrieveResponse>> Retrieve(
         string token,
         TokenRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Retrieve(parameters with { Token = token }, cancellationToken);
+        return this.Retrieve(parameters with { Token = token }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Update(
+    public Task<HttpResponse> Update(
         TokenUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -79,23 +250,21 @@ public sealed class TokenService : ITokenService
             Method = CourierClient.PatchMethod,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Update(
+    public Task<HttpResponse> Update(
         string token,
         TokenUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        await this.Update(parameters with { Token = token }, cancellationToken);
+        return this.Update(parameters with { Token = token }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<TokenListResponse> List(
+    public async Task<HttpResponse<TokenListResponse>> List(
         TokenListParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -110,21 +279,25 @@ public sealed class TokenService : ITokenService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var tokens = await response
-            .Deserialize<TokenListResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            tokens.Validate();
-        }
-        return tokens;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var tokens = await response
+                    .Deserialize<TokenListResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    tokens.Validate();
+                }
+                return tokens;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<TokenListResponse> List(
+    public Task<HttpResponse<TokenListResponse>> List(
         string userID,
         TokenListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -132,11 +305,11 @@ public sealed class TokenService : ITokenService
     {
         parameters ??= new();
 
-        return await this.List(parameters with { UserID = userID }, cancellationToken);
+        return this.List(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
+    public Task<HttpResponse> Delete(
         TokenDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -151,23 +324,21 @@ public sealed class TokenService : ITokenService
             Method = HttpMethod.Delete,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
+    public Task<HttpResponse> Delete(
         string token,
         TokenDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        await this.Delete(parameters with { Token = token }, cancellationToken);
+        return this.Delete(parameters with { Token = token }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task AddMultiple(
+    public Task<HttpResponse> AddMultiple(
         TokenAddMultipleParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -182,13 +353,11 @@ public sealed class TokenService : ITokenService
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task AddMultiple(
+    public Task<HttpResponse> AddMultiple(
         string userID,
         TokenAddMultipleParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -196,11 +365,11 @@ public sealed class TokenService : ITokenService
     {
         parameters ??= new();
 
-        await this.AddMultiple(parameters with { UserID = userID }, cancellationToken);
+        return this.AddMultiple(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task AddSingle(
+    public Task<HttpResponse> AddSingle(
         TokenAddSingleParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -215,18 +384,16 @@ public sealed class TokenService : ITokenService
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task AddSingle(
+    public Task<HttpResponse> AddSingle(
         string token,
         TokenAddSingleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        await this.AddSingle(parameters with { Token = token }, cancellationToken);
+        return this.AddSingle(parameters with { Token = token }, cancellationToken);
     }
 }
