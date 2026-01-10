@@ -12,17 +12,27 @@ namespace Courier.Services;
 /// <inheritdoc/>
 public sealed class ProfileService : IProfileService
 {
+    readonly Lazy<IProfileServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IProfileServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public IProfileService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new ProfileService(this._client.WithOptions(modifier));
     }
 
-    readonly ICourierClient _client;
-
     public ProfileService(ICourierClient client)
     {
         _client = client;
+
+        _withRawResponse = new(() => new ProfileServiceWithRawResponse(client.WithRawResponse));
         _lists = new(() => new Profiles::ListService(client));
     }
 
@@ -38,6 +48,147 @@ public sealed class ProfileService : IProfileService
         CancellationToken cancellationToken = default
     )
     {
+        using var response = await this
+            .WithRawResponse.Create(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<ProfileCreateResponse> Create(
+        string userID,
+        ProfileCreateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Create(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<ProfileRetrieveResponse> Retrieve(
+        ProfileRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<ProfileRetrieveResponse> Retrieve(
+        string userID,
+        ProfileRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Retrieve(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task Update(
+        ProfileUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Update(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Update(
+        string userID,
+        ProfileUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Update(parameters with { UserID = userID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Delete(
+        ProfileDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Delete(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Delete(
+        string userID,
+        ProfileDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Delete(parameters with { UserID = userID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task<ProfileReplaceResponse> Replace(
+        ProfileReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Replace(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<ProfileReplaceResponse> Replace(
+        string userID,
+        ProfileReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Replace(parameters with { UserID = userID }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class ProfileServiceWithRawResponse : IProfileServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IProfileServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new ProfileServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public ProfileServiceWithRawResponse(ICourierClientWithRawResponse client)
+    {
+        _client = client;
+
+        _lists = new(() => new Profiles::ListServiceWithRawResponse(client));
+    }
+
+    readonly Lazy<Profiles::IListServiceWithRawResponse> _lists;
+    public Profiles::IListServiceWithRawResponse Lists
+    {
+        get { return _lists.Value; }
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<ProfileCreateResponse>> Create(
+        ProfileCreateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
         if (parameters.UserID == null)
         {
             throw new CourierInvalidDataException("'parameters.UserID' cannot be null");
@@ -48,31 +199,35 @@ public sealed class ProfileService : IProfileService
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var profile = await response
-            .Deserialize<ProfileCreateResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            profile.Validate();
-        }
-        return profile;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var profile = await response
+                    .Deserialize<ProfileCreateResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    profile.Validate();
+                }
+                return profile;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<ProfileCreateResponse> Create(
+    public Task<HttpResponse<ProfileCreateResponse>> Create(
         string userID,
         ProfileCreateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Create(parameters with { UserID = userID }, cancellationToken);
+        return this.Create(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<ProfileRetrieveResponse> Retrieve(
+    public async Task<HttpResponse<ProfileRetrieveResponse>> Retrieve(
         ProfileRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -87,21 +242,25 @@ public sealed class ProfileService : IProfileService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var profile = await response
-            .Deserialize<ProfileRetrieveResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            profile.Validate();
-        }
-        return profile;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var profile = await response
+                    .Deserialize<ProfileRetrieveResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    profile.Validate();
+                }
+                return profile;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<ProfileRetrieveResponse> Retrieve(
+    public Task<HttpResponse<ProfileRetrieveResponse>> Retrieve(
         string userID,
         ProfileRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -109,11 +268,11 @@ public sealed class ProfileService : IProfileService
     {
         parameters ??= new();
 
-        return await this.Retrieve(parameters with { UserID = userID }, cancellationToken);
+        return this.Retrieve(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Update(
+    public Task<HttpResponse> Update(
         ProfileUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -128,23 +287,21 @@ public sealed class ProfileService : IProfileService
             Method = CourierClient.PatchMethod,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Update(
+    public Task<HttpResponse> Update(
         string userID,
         ProfileUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        await this.Update(parameters with { UserID = userID }, cancellationToken);
+        return this.Update(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
+    public Task<HttpResponse> Delete(
         ProfileDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -159,13 +316,11 @@ public sealed class ProfileService : IProfileService
             Method = HttpMethod.Delete,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
+    public Task<HttpResponse> Delete(
         string userID,
         ProfileDeleteParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -173,11 +328,11 @@ public sealed class ProfileService : IProfileService
     {
         parameters ??= new();
 
-        await this.Delete(parameters with { UserID = userID }, cancellationToken);
+        return this.Delete(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<ProfileReplaceResponse> Replace(
+    public async Task<HttpResponse<ProfileReplaceResponse>> Replace(
         ProfileReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -192,26 +347,30 @@ public sealed class ProfileService : IProfileService
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<ProfileReplaceResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<ProfileReplaceResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<ProfileReplaceResponse> Replace(
+    public Task<HttpResponse<ProfileReplaceResponse>> Replace(
         string userID,
         ProfileReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Replace(parameters with { UserID = userID }, cancellationToken);
+        return this.Replace(parameters with { UserID = userID }, cancellationToken);
     }
 }

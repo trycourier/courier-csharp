@@ -11,21 +11,156 @@ namespace Courier.Services;
 /// <inheritdoc/>
 public sealed class BulkService : IBulkService
 {
+    readonly Lazy<IBulkServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IBulkServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public IBulkService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new BulkService(this._client.WithOptions(modifier));
     }
 
-    readonly ICourierClient _client;
-
     public BulkService(ICourierClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new BulkServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task AddUsers(
+        BulkAddUsersParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.AddUsers(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task AddUsers(
+        string jobID,
+        BulkAddUsersParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.AddUsers(parameters with { JobID = jobID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task<BulkCreateJobResponse> CreateJob(
+        BulkCreateJobParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.CreateJob(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task<BulkListUsersResponse> ListUsers(
+        BulkListUsersParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.ListUsers(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<BulkListUsersResponse> ListUsers(
+        string jobID,
+        BulkListUsersParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.ListUsers(parameters with { JobID = jobID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<BulkRetrieveJobResponse> RetrieveJob(
+        BulkRetrieveJobParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.RetrieveJob(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<BulkRetrieveJobResponse> RetrieveJob(
+        string jobID,
+        BulkRetrieveJobParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.RetrieveJob(parameters with { JobID = jobID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task RunJob(
+        BulkRunJobParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.RunJob(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task RunJob(
+        string jobID,
+        BulkRunJobParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.RunJob(parameters with { JobID = jobID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class BulkServiceWithRawResponse : IBulkServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IBulkServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new BulkServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public BulkServiceWithRawResponse(ICourierClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task AddUsers(
+    public Task<HttpResponse> AddUsers(
         BulkAddUsersParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,23 +175,21 @@ public sealed class BulkService : IBulkService
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task AddUsers(
+    public Task<HttpResponse> AddUsers(
         string jobID,
         BulkAddUsersParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        await this.AddUsers(parameters with { JobID = jobID }, cancellationToken);
+        return this.AddUsers(parameters with { JobID = jobID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<BulkCreateJobResponse> CreateJob(
+    public async Task<HttpResponse<BulkCreateJobResponse>> CreateJob(
         BulkCreateJobParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -66,21 +199,25 @@ public sealed class BulkService : IBulkService
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<BulkCreateJobResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<BulkCreateJobResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<BulkListUsersResponse> ListUsers(
+    public async Task<HttpResponse<BulkListUsersResponse>> ListUsers(
         BulkListUsersParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -95,21 +232,25 @@ public sealed class BulkService : IBulkService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<BulkListUsersResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<BulkListUsersResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<BulkListUsersResponse> ListUsers(
+    public Task<HttpResponse<BulkListUsersResponse>> ListUsers(
         string jobID,
         BulkListUsersParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -117,11 +258,11 @@ public sealed class BulkService : IBulkService
     {
         parameters ??= new();
 
-        return await this.ListUsers(parameters with { JobID = jobID }, cancellationToken);
+        return this.ListUsers(parameters with { JobID = jobID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<BulkRetrieveJobResponse> RetrieveJob(
+    public async Task<HttpResponse<BulkRetrieveJobResponse>> RetrieveJob(
         BulkRetrieveJobParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -136,21 +277,25 @@ public sealed class BulkService : IBulkService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<BulkRetrieveJobResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<BulkRetrieveJobResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<BulkRetrieveJobResponse> RetrieveJob(
+    public Task<HttpResponse<BulkRetrieveJobResponse>> RetrieveJob(
         string jobID,
         BulkRetrieveJobParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -158,11 +303,11 @@ public sealed class BulkService : IBulkService
     {
         parameters ??= new();
 
-        return await this.RetrieveJob(parameters with { JobID = jobID }, cancellationToken);
+        return this.RetrieveJob(parameters with { JobID = jobID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task RunJob(
+    public Task<HttpResponse> RunJob(
         BulkRunJobParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -177,13 +322,11 @@ public sealed class BulkService : IBulkService
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task RunJob(
+    public Task<HttpResponse> RunJob(
         string jobID,
         BulkRunJobParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -191,6 +334,6 @@ public sealed class BulkService : IBulkService
     {
         parameters ??= new();
 
-        await this.RunJob(parameters with { JobID = jobID }, cancellationToken);
+        return this.RunJob(parameters with { JobID = jobID }, cancellationToken);
     }
 }

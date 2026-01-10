@@ -14,6 +14,12 @@ namespace Courier.Services;
 public interface IMessageService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IMessageServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -87,6 +93,93 @@ public interface IMessageService
 
     /// <inheritdoc cref="History(MessageHistoryParams, CancellationToken)"/>
     Task<MessageHistoryResponse> History(
+        string messageID,
+        MessageHistoryParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IMessageService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IMessageServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IMessageServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /messages/{message_id}`, but is otherwise the
+    /// same as <see cref="IMessageService.Retrieve(MessageRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<MessageRetrieveResponse>> Retrieve(
+        MessageRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(MessageRetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<MessageRetrieveResponse>> Retrieve(
+        string messageID,
+        MessageRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /messages`, but is otherwise the
+    /// same as <see cref="IMessageService.List(MessageListParams?, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<MessageListResponse>> List(
+        MessageListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /messages/{message_id}/cancel`, but is otherwise the
+    /// same as <see cref="IMessageService.Cancel(MessageCancelParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<MessageDetails>> Cancel(
+        MessageCancelParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Cancel(MessageCancelParams, CancellationToken)"/>
+    Task<HttpResponse<MessageDetails>> Cancel(
+        string messageID,
+        MessageCancelParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /messages/{message_id}/output`, but is otherwise the
+    /// same as <see cref="IMessageService.Content(MessageContentParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<MessageContentResponse>> Content(
+        MessageContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Content(MessageContentParams, CancellationToken)"/>
+    Task<HttpResponse<MessageContentResponse>> Content(
+        string messageID,
+        MessageContentParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /messages/{message_id}/history`, but is otherwise the
+    /// same as <see cref="IMessageService.History(MessageHistoryParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<MessageHistoryResponse>> History(
+        MessageHistoryParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="History(MessageHistoryParams, CancellationToken)"/>
+    Task<HttpResponse<MessageHistoryResponse>> History(
         string messageID,
         MessageHistoryParams? parameters = null,
         CancellationToken cancellationToken = default

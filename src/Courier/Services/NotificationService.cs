@@ -12,17 +12,29 @@ namespace Courier.Services;
 /// <inheritdoc/>
 public sealed class NotificationService : INotificationService
 {
+    readonly Lazy<INotificationServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public INotificationServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public INotificationService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new NotificationService(this._client.WithOptions(modifier));
     }
 
-    readonly ICourierClient _client;
-
     public NotificationService(ICourierClient client)
     {
         _client = client;
+
+        _withRawResponse = new(() =>
+            new NotificationServiceWithRawResponse(client.WithRawResponse)
+        );
         _draft = new(() => new DraftService(client));
         _checks = new(() => new CheckService(client));
     }
@@ -45,6 +57,76 @@ public sealed class NotificationService : INotificationService
         CancellationToken cancellationToken = default
     )
     {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationGetContent> RetrieveContent(
+        NotificationRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.RetrieveContent(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationGetContent> RetrieveContent(
+        string id,
+        NotificationRetrieveContentParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.RetrieveContent(parameters with { ID = id }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class NotificationServiceWithRawResponse : INotificationServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public INotificationServiceWithRawResponse WithOptions(
+        Func<ClientOptions, ClientOptions> modifier
+    )
+    {
+        return new NotificationServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public NotificationServiceWithRawResponse(ICourierClientWithRawResponse client)
+    {
+        _client = client;
+
+        _draft = new(() => new DraftServiceWithRawResponse(client));
+        _checks = new(() => new CheckServiceWithRawResponse(client));
+    }
+
+    readonly Lazy<IDraftServiceWithRawResponse> _draft;
+    public IDraftServiceWithRawResponse Draft
+    {
+        get { return _draft.Value; }
+    }
+
+    readonly Lazy<ICheckServiceWithRawResponse> _checks;
+    public ICheckServiceWithRawResponse Checks
+    {
+        get { return _checks.Value; }
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationListResponse>> List(
+        NotificationListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
         parameters ??= new();
 
         HttpRequest<NotificationListParams> request = new()
@@ -52,21 +134,25 @@ public sealed class NotificationService : INotificationService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var notifications = await response
-            .Deserialize<NotificationListResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            notifications.Validate();
-        }
-        return notifications;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notifications = await response
+                    .Deserialize<NotificationListResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notifications.Validate();
+                }
+                return notifications;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<NotificationGetContent> RetrieveContent(
+    public async Task<HttpResponse<NotificationGetContent>> RetrieveContent(
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -81,21 +167,25 @@ public sealed class NotificationService : INotificationService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var notificationGetContent = await response
-            .Deserialize<NotificationGetContent>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            notificationGetContent.Validate();
-        }
-        return notificationGetContent;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationGetContent = await response
+                    .Deserialize<NotificationGetContent>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationGetContent.Validate();
+                }
+                return notificationGetContent;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<NotificationGetContent> RetrieveContent(
+    public Task<HttpResponse<NotificationGetContent>> RetrieveContent(
         string id,
         NotificationRetrieveContentParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -103,6 +193,6 @@ public sealed class NotificationService : INotificationService
     {
         parameters ??= new();
 
-        return await this.RetrieveContent(parameters with { ID = id }, cancellationToken);
+        return this.RetrieveContent(parameters with { ID = id }, cancellationToken);
     }
 }

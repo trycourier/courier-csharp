@@ -14,6 +14,12 @@ namespace Courier.Services;
 public interface IBulkService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IBulkServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -87,6 +93,93 @@ public interface IBulkService
 
     /// <inheritdoc cref="RunJob(BulkRunJobParams, CancellationToken)"/>
     Task RunJob(
+        string jobID,
+        BulkRunJobParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IBulkService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IBulkServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IBulkServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /bulk/{job_id}`, but is otherwise the
+    /// same as <see cref="IBulkService.AddUsers(BulkAddUsersParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> AddUsers(
+        BulkAddUsersParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="AddUsers(BulkAddUsersParams, CancellationToken)"/>
+    Task<HttpResponse> AddUsers(
+        string jobID,
+        BulkAddUsersParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /bulk`, but is otherwise the
+    /// same as <see cref="IBulkService.CreateJob(BulkCreateJobParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<BulkCreateJobResponse>> CreateJob(
+        BulkCreateJobParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /bulk/{job_id}/users`, but is otherwise the
+    /// same as <see cref="IBulkService.ListUsers(BulkListUsersParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<BulkListUsersResponse>> ListUsers(
+        BulkListUsersParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListUsers(BulkListUsersParams, CancellationToken)"/>
+    Task<HttpResponse<BulkListUsersResponse>> ListUsers(
+        string jobID,
+        BulkListUsersParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /bulk/{job_id}`, but is otherwise the
+    /// same as <see cref="IBulkService.RetrieveJob(BulkRetrieveJobParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<BulkRetrieveJobResponse>> RetrieveJob(
+        BulkRetrieveJobParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="RetrieveJob(BulkRetrieveJobParams, CancellationToken)"/>
+    Task<HttpResponse<BulkRetrieveJobResponse>> RetrieveJob(
+        string jobID,
+        BulkRetrieveJobParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /bulk/{job_id}/run`, but is otherwise the
+    /// same as <see cref="IBulkService.RunJob(BulkRunJobParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> RunJob(
+        BulkRunJobParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="RunJob(BulkRunJobParams, CancellationToken)"/>
+    Task<HttpResponse> RunJob(
         string jobID,
         BulkRunJobParams? parameters = null,
         CancellationToken cancellationToken = default

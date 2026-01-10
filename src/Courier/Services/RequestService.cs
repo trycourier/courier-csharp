@@ -11,21 +11,73 @@ namespace Courier.Services;
 /// <inheritdoc/>
 public sealed class RequestService : IRequestService
 {
+    readonly Lazy<IRequestServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IRequestServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public IRequestService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new RequestService(this._client.WithOptions(modifier));
     }
 
-    readonly ICourierClient _client;
-
     public RequestService(ICourierClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new RequestServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task Archive(
+        RequestArchiveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Archive(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Archive(
+        string requestID,
+        RequestArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Archive(parameters with { RequestID = requestID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class RequestServiceWithRawResponse : IRequestServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IRequestServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new RequestServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public RequestServiceWithRawResponse(ICourierClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task Archive(
+    public Task<HttpResponse> Archive(
         RequestArchiveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,13 +92,11 @@ public sealed class RequestService : IRequestService
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Archive(
+    public Task<HttpResponse> Archive(
         string requestID,
         RequestArchiveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -54,6 +104,6 @@ public sealed class RequestService : IRequestService
     {
         parameters ??= new();
 
-        await this.Archive(parameters with { RequestID = requestID }, cancellationToken);
+        return this.Archive(parameters with { RequestID = requestID }, cancellationToken);
     }
 }

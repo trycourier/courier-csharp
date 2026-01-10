@@ -14,6 +14,12 @@ namespace Courier.Services;
 public interface IAuditEventService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IAuditEventServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -39,6 +45,45 @@ public interface IAuditEventService
     /// Fetch the list of audit events
     /// </summary>
     Task<AuditEventListResponse> List(
+        AuditEventListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IAuditEventService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IAuditEventServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IAuditEventServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /audit-events/{audit-event-id}`, but is otherwise the
+    /// same as <see cref="IAuditEventService.Retrieve(AuditEventRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<AuditEvent>> Retrieve(
+        AuditEventRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(AuditEventRetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<AuditEvent>> Retrieve(
+        string auditEventID,
+        AuditEventRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /audit-events`, but is otherwise the
+    /// same as <see cref="IAuditEventService.List(AuditEventListParams?, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<AuditEventListResponse>> List(
         AuditEventListParams? parameters = null,
         CancellationToken cancellationToken = default
     );

@@ -14,6 +14,12 @@ namespace Courier.Services.Lists;
 public interface ISubscriptionService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ISubscriptionServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -90,6 +96,100 @@ public interface ISubscriptionService
 
     /// <inheritdoc cref="UnsubscribeUser(SubscriptionUnsubscribeUserParams, CancellationToken)"/>
     Task UnsubscribeUser(
+        string userID,
+        SubscriptionUnsubscribeUserParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="ISubscriptionService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ISubscriptionServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ISubscriptionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /lists/{list_id}/subscriptions`, but is otherwise the
+    /// same as <see cref="ISubscriptionService.List(SubscriptionListParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SubscriptionListResponse>> List(
+        SubscriptionListParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="List(SubscriptionListParams, CancellationToken)"/>
+    Task<HttpResponse<SubscriptionListResponse>> List(
+        string listID,
+        SubscriptionListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /lists/{list_id}/subscriptions`, but is otherwise the
+    /// same as <see cref="ISubscriptionService.Add(SubscriptionAddParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Add(
+        SubscriptionAddParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Add(SubscriptionAddParams, CancellationToken)"/>
+    Task<HttpResponse> Add(
+        string listID,
+        SubscriptionAddParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /lists/{list_id}/subscriptions`, but is otherwise the
+    /// same as <see cref="ISubscriptionService.Subscribe(SubscriptionSubscribeParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Subscribe(
+        SubscriptionSubscribeParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Subscribe(SubscriptionSubscribeParams, CancellationToken)"/>
+    Task<HttpResponse> Subscribe(
+        string listID,
+        SubscriptionSubscribeParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /lists/{list_id}/subscriptions/{user_id}`, but is otherwise the
+    /// same as <see cref="ISubscriptionService.SubscribeUser(SubscriptionSubscribeUserParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> SubscribeUser(
+        SubscriptionSubscribeUserParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="SubscribeUser(SubscriptionSubscribeUserParams, CancellationToken)"/>
+    Task<HttpResponse> SubscribeUser(
+        string userID,
+        SubscriptionSubscribeUserParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `delete /lists/{list_id}/subscriptions/{user_id}`, but is otherwise the
+    /// same as <see cref="ISubscriptionService.UnsubscribeUser(SubscriptionUnsubscribeUserParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> UnsubscribeUser(
+        SubscriptionUnsubscribeUserParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="UnsubscribeUser(SubscriptionUnsubscribeUserParams, CancellationToken)"/>
+    Task<HttpResponse> UnsubscribeUser(
         string userID,
         SubscriptionUnsubscribeUserParams parameters,
         CancellationToken cancellationToken = default

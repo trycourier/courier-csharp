@@ -11,6 +11,16 @@ namespace Courier.Services.Profiles;
 /// <inheritdoc/>
 public sealed class ListService : global::Courier.Services.Profiles.IListService
 {
+    readonly Lazy<global::Courier.Services.Profiles.IListServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public global::Courier.Services.Profiles.IListServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public global::Courier.Services.Profiles.IListService WithOptions(
         Func<ClientOptions, ClientOptions> modifier
@@ -21,15 +31,109 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
         );
     }
 
-    readonly ICourierClient _client;
-
     public ListService(ICourierClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() =>
+            new global::Courier.Services.Profiles.ListServiceWithRawResponse(client.WithRawResponse)
+        );
+    }
+
+    /// <inheritdoc/>
+    public async Task<ListRetrieveResponse> Retrieve(
+        ListRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<ListRetrieveResponse> Retrieve(
+        string userID,
+        ListRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Retrieve(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<ListDeleteResponse> Delete(
+        ListDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Delete(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<ListDeleteResponse> Delete(
+        string userID,
+        ListDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Delete(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<ListSubscribeResponse> Subscribe(
+        ListSubscribeParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Subscribe(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<ListSubscribeResponse> Subscribe(
+        string userID,
+        ListSubscribeParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Subscribe(parameters with { UserID = userID }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class ListServiceWithRawResponse
+    : global::Courier.Services.Profiles.IListServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public global::Courier.Services.Profiles.IListServiceWithRawResponse WithOptions(
+        Func<ClientOptions, ClientOptions> modifier
+    )
+    {
+        return new global::Courier.Services.Profiles.ListServiceWithRawResponse(
+            this._client.WithOptions(modifier)
+        );
+    }
+
+    public ListServiceWithRawResponse(ICourierClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<ListRetrieveResponse> Retrieve(
+    public async Task<HttpResponse<ListRetrieveResponse>> Retrieve(
         ListRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -44,21 +148,25 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var list = await response
-            .Deserialize<ListRetrieveResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            list.Validate();
-        }
-        return list;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var list = await response
+                    .Deserialize<ListRetrieveResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    list.Validate();
+                }
+                return list;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<ListRetrieveResponse> Retrieve(
+    public Task<HttpResponse<ListRetrieveResponse>> Retrieve(
         string userID,
         ListRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -66,11 +174,11 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
     {
         parameters ??= new();
 
-        return await this.Retrieve(parameters with { UserID = userID }, cancellationToken);
+        return this.Retrieve(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<ListDeleteResponse> Delete(
+    public async Task<HttpResponse<ListDeleteResponse>> Delete(
         ListDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -85,21 +193,25 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
             Method = HttpMethod.Delete,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var list = await response
-            .Deserialize<ListDeleteResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            list.Validate();
-        }
-        return list;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var list = await response
+                    .Deserialize<ListDeleteResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    list.Validate();
+                }
+                return list;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<ListDeleteResponse> Delete(
+    public Task<HttpResponse<ListDeleteResponse>> Delete(
         string userID,
         ListDeleteParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -107,11 +219,11 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
     {
         parameters ??= new();
 
-        return await this.Delete(parameters with { UserID = userID }, cancellationToken);
+        return this.Delete(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<ListSubscribeResponse> Subscribe(
+    public async Task<HttpResponse<ListSubscribeResponse>> Subscribe(
         ListSubscribeParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -126,26 +238,30 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
             Method = HttpMethod.Post,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<ListSubscribeResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<ListSubscribeResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<ListSubscribeResponse> Subscribe(
+    public Task<HttpResponse<ListSubscribeResponse>> Subscribe(
         string userID,
         ListSubscribeParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.Subscribe(parameters with { UserID = userID }, cancellationToken);
+        return this.Subscribe(parameters with { UserID = userID }, cancellationToken);
     }
 }
