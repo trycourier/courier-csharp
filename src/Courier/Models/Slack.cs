@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Courier.Core;
 using Courier.Exceptions;
 using System = System;
 
@@ -234,6 +235,9 @@ public record class Slack
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class SlackConverter : JsonConverter<Slack>
