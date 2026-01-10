@@ -573,7 +573,7 @@ class TimeoutsFromRaw : IFromRawJson<Timeouts>
 /// Describes content that will work for email, inbox, push, chat, or any channel id.
 /// </summary>
 [JsonConverter(typeof(ContentConverter))]
-public record class Content
+public record class Content : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -729,7 +729,7 @@ public record class Content
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -943,7 +943,7 @@ class ExpiryFromRaw : IFromRawJson<Expiry>
 /// Duration in ms or ISO8601 duration (e.g. P1DT4H).
 /// </summary>
 [JsonConverter(typeof(ExpiresInConverter))]
-public record class ExpiresIn
+public record class ExpiresIn : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -1097,7 +1097,7 @@ public record class ExpiresIn
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -1676,7 +1676,7 @@ sealed class CriteriaConverter : JsonConverter<Criteria>
 /// The recipient or a list of recipients of the message
 /// </summary>
 [JsonConverter(typeof(ToConverter))]
-public record class To
+public record class To : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -2071,7 +2071,7 @@ public record class To
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

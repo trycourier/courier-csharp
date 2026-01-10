@@ -10,7 +10,7 @@ using System = System;
 namespace Courier.Models;
 
 [JsonConverter(typeof(UserProfileFirebaseTokenConverter))]
-public record class UserProfileFirebaseToken
+public record class UserProfileFirebaseToken : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -171,7 +171,7 @@ public record class UserProfileFirebaseToken
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

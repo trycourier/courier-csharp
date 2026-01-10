@@ -11,7 +11,7 @@ namespace Courier.Models.Audiences;
 /// A single filter to use for filtering
 /// </summary>
 [JsonConverter(typeof(FilterConfigConverter))]
-public record class FilterConfig
+public record class FilterConfig : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -171,7 +171,7 @@ public record class FilterConfig
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

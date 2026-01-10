@@ -8,7 +8,7 @@ using System = System;
 namespace Courier.Models;
 
 [JsonConverter(typeof(MsTeamsConverter))]
-public record class MsTeams
+public record class MsTeams : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -307,7 +307,7 @@ public record class MsTeams
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

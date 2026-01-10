@@ -8,7 +8,7 @@ using System = System;
 namespace Courier.Models;
 
 [JsonConverter(typeof(MessageRoutingChannelConverter))]
-public record class MessageRoutingChannel
+public record class MessageRoutingChannel : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -168,7 +168,7 @@ public record class MessageRoutingChannel
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

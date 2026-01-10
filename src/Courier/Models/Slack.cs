@@ -8,7 +8,7 @@ using System = System;
 namespace Courier.Models;
 
 [JsonConverter(typeof(SlackConverter))]
-public record class Slack
+public record class Slack : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -213,7 +213,7 @@ public record class Slack
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {

@@ -213,7 +213,7 @@ class AutomationFromRaw : IFromRawJson<Automation>
 }
 
 [JsonConverter(typeof(StepConverter))]
-public record class Step
+public record class Step : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -588,7 +588,7 @@ public record class Step
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
