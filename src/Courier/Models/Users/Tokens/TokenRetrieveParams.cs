@@ -20,7 +20,11 @@ public sealed record class TokenRetrieveParams : ParamsBase
     public TokenRetrieveParams() { }
 
     public TokenRetrieveParams(TokenRetrieveParams tokenRetrieveParams)
-        : base(tokenRetrieveParams) { }
+        : base(tokenRetrieveParams)
+    {
+        this.UserID = tokenRetrieveParams.UserID;
+        this.Token = tokenRetrieveParams.Token;
+    }
 
     public TokenRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

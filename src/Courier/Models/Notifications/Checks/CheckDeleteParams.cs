@@ -17,7 +17,11 @@ public sealed record class CheckDeleteParams : ParamsBase
     public CheckDeleteParams() { }
 
     public CheckDeleteParams(CheckDeleteParams checkDeleteParams)
-        : base(checkDeleteParams) { }
+        : base(checkDeleteParams)
+    {
+        this.ID = checkDeleteParams.ID;
+        this.SubmissionID = checkDeleteParams.SubmissionID;
+    }
 
     public CheckDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

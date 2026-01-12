@@ -18,7 +18,10 @@ public sealed record class BulkRetrieveJobParams : ParamsBase
     public BulkRetrieveJobParams() { }
 
     public BulkRetrieveJobParams(BulkRetrieveJobParams bulkRetrieveJobParams)
-        : base(bulkRetrieveJobParams) { }
+        : base(bulkRetrieveJobParams)
+    {
+        this.JobID = bulkRetrieveJobParams.JobID;
+    }
 
     public BulkRetrieveJobParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

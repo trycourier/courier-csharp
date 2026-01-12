@@ -20,7 +20,11 @@ public sealed record class TranslationRetrieveParams : ParamsBase
     public TranslationRetrieveParams() { }
 
     public TranslationRetrieveParams(TranslationRetrieveParams translationRetrieveParams)
-        : base(translationRetrieveParams) { }
+        : base(translationRetrieveParams)
+    {
+        this.Domain = translationRetrieveParams.Domain;
+        this.Locale = translationRetrieveParams.Locale;
+    }
 
     public TranslationRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

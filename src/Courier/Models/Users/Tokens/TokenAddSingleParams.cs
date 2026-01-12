@@ -97,6 +97,9 @@ public sealed record class TokenAddSingleParams : ParamsBase
     public TokenAddSingleParams(TokenAddSingleParams tokenAddSingleParams)
         : base(tokenAddSingleParams)
     {
+        this.UserID = tokenAddSingleParams.UserID;
+        this.Token = tokenAddSingleParams.Token;
+
         this._rawBodyData = [.. tokenAddSingleParams._rawBodyData];
     }
 

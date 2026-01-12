@@ -27,6 +27,8 @@ public sealed record class ListRestoreParams : ParamsBase
     public ListRestoreParams(ListRestoreParams listRestoreParams)
         : base(listRestoreParams)
     {
+        this.ListID = listRestoreParams.ListID;
+
         this._rawBodyData = [.. listRestoreParams._rawBodyData];
     }
 

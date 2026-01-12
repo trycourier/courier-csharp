@@ -43,6 +43,8 @@ public sealed record class ProfileReplaceParams : ParamsBase
     public ProfileReplaceParams(ProfileReplaceParams profileReplaceParams)
         : base(profileReplaceParams)
     {
+        this.UserID = profileReplaceParams.UserID;
+
         this._rawBodyData = [.. profileReplaceParams._rawBodyData];
     }
 

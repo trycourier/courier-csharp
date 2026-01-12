@@ -100,6 +100,8 @@ public sealed record class TenantUpdateParams : ParamsBase
     public TenantUpdateParams(TenantUpdateParams tenantUpdateParams)
         : base(tenantUpdateParams)
     {
+        this.TenantID = tenantUpdateParams.TenantID;
+
         this._rawBodyData = [.. tenantUpdateParams._rawBodyData];
     }
 

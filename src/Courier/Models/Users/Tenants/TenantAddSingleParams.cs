@@ -44,6 +44,9 @@ public sealed record class TenantAddSingleParams : ParamsBase
     public TenantAddSingleParams(TenantAddSingleParams tenantAddSingleParams)
         : base(tenantAddSingleParams)
     {
+        this.UserID = tenantAddSingleParams.UserID;
+        this.TenantID = tenantAddSingleParams.TenantID;
+
         this._rawBodyData = [.. tenantAddSingleParams._rawBodyData];
     }
 

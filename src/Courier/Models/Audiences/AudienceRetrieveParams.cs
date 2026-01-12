@@ -18,7 +18,10 @@ public sealed record class AudienceRetrieveParams : ParamsBase
     public AudienceRetrieveParams() { }
 
     public AudienceRetrieveParams(AudienceRetrieveParams audienceRetrieveParams)
-        : base(audienceRetrieveParams) { }
+        : base(audienceRetrieveParams)
+    {
+        this.AudienceID = audienceRetrieveParams.AudienceID;
+    }
 
     public AudienceRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

@@ -39,6 +39,8 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     public TenantAddMultipleParams(TenantAddMultipleParams tenantAddMultipleParams)
         : base(tenantAddMultipleParams)
     {
+        this.UserID = tenantAddMultipleParams.UserID;
+
         this._rawBodyData = [.. tenantAddMultipleParams._rawBodyData];
     }
 
