@@ -69,6 +69,8 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
     public InvokeInvokeByTemplateParams(InvokeInvokeByTemplateParams invokeInvokeByTemplateParams)
         : base(invokeInvokeByTemplateParams)
     {
+        this.TemplateID = invokeInvokeByTemplateParams.TemplateID;
+
         this._rawBodyData = [.. invokeInvokeByTemplateParams._rawBodyData];
     }
 

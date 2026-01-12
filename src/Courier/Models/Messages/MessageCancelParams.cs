@@ -21,7 +21,10 @@ public sealed record class MessageCancelParams : ParamsBase
     public MessageCancelParams() { }
 
     public MessageCancelParams(MessageCancelParams messageCancelParams)
-        : base(messageCancelParams) { }
+        : base(messageCancelParams)
+    {
+        this.MessageID = messageCancelParams.MessageID;
+    }
 
     public MessageCancelParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

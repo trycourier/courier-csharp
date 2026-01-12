@@ -27,7 +27,10 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
     public PreferenceRetrieveParams() { }
 
     public PreferenceRetrieveParams(PreferenceRetrieveParams preferenceRetrieveParams)
-        : base(preferenceRetrieveParams) { }
+        : base(preferenceRetrieveParams)
+    {
+        this.UserID = preferenceRetrieveParams.UserID;
+    }
 
     public PreferenceRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

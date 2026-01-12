@@ -20,7 +20,11 @@ public sealed record class TemplateRetrieveParams : ParamsBase
     public TemplateRetrieveParams() { }
 
     public TemplateRetrieveParams(TemplateRetrieveParams templateRetrieveParams)
-        : base(templateRetrieveParams) { }
+        : base(templateRetrieveParams)
+    {
+        this.TenantID = templateRetrieveParams.TenantID;
+        this.TemplateID = templateRetrieveParams.TemplateID;
+    }
 
     public TemplateRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

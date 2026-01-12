@@ -18,7 +18,10 @@ public sealed record class ListDeleteParams : ParamsBase
     public ListDeleteParams() { }
 
     public ListDeleteParams(ListDeleteParams listDeleteParams)
-        : base(listDeleteParams) { }
+        : base(listDeleteParams)
+    {
+        this.UserID = listDeleteParams.UserID;
+    }
 
     public ListDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

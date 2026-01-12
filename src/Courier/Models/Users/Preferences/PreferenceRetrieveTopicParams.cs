@@ -31,7 +31,11 @@ public sealed record class PreferenceRetrieveTopicParams : ParamsBase
     public PreferenceRetrieveTopicParams(
         PreferenceRetrieveTopicParams preferenceRetrieveTopicParams
     )
-        : base(preferenceRetrieveTopicParams) { }
+        : base(preferenceRetrieveTopicParams)
+    {
+        this.UserID = preferenceRetrieveTopicParams.UserID;
+        this.TopicID = preferenceRetrieveTopicParams.TopicID;
+    }
 
     public PreferenceRetrieveTopicParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

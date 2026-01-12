@@ -18,7 +18,10 @@ public sealed record class RequestArchiveParams : ParamsBase
     public RequestArchiveParams() { }
 
     public RequestArchiveParams(RequestArchiveParams requestArchiveParams)
-        : base(requestArchiveParams) { }
+        : base(requestArchiveParams)
+    {
+        this.RequestID = requestArchiveParams.RequestID;
+    }
 
     public RequestArchiveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

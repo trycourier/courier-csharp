@@ -28,7 +28,10 @@ public sealed record class BulkListUsersParams : ParamsBase
     public BulkListUsersParams() { }
 
     public BulkListUsersParams(BulkListUsersParams bulkListUsersParams)
-        : base(bulkListUsersParams) { }
+        : base(bulkListUsersParams)
+    {
+        this.JobID = bulkListUsersParams.JobID;
+    }
 
     public BulkListUsersParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

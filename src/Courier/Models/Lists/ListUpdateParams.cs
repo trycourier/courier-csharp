@@ -45,6 +45,8 @@ public sealed record class ListUpdateParams : ParamsBase
     public ListUpdateParams(ListUpdateParams listUpdateParams)
         : base(listUpdateParams)
     {
+        this.ListID = listUpdateParams.ListID;
+
         this._rawBodyData = [.. listUpdateParams._rawBodyData];
     }
 

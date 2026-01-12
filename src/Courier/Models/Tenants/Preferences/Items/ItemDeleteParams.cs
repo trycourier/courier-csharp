@@ -20,7 +20,11 @@ public sealed record class ItemDeleteParams : ParamsBase
     public ItemDeleteParams() { }
 
     public ItemDeleteParams(ItemDeleteParams itemDeleteParams)
-        : base(itemDeleteParams) { }
+        : base(itemDeleteParams)
+    {
+        this.TenantID = itemDeleteParams.TenantID;
+        this.TopicID = itemDeleteParams.TopicID;
+    }
 
     public ItemDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

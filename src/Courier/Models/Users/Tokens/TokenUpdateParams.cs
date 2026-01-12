@@ -36,6 +36,9 @@ public sealed record class TokenUpdateParams : ParamsBase
     public TokenUpdateParams(TokenUpdateParams tokenUpdateParams)
         : base(tokenUpdateParams)
     {
+        this.UserID = tokenUpdateParams.UserID;
+        this.Token = tokenUpdateParams.Token;
+
         this._rawBodyData = [.. tokenUpdateParams._rawBodyData];
     }
 

@@ -48,6 +48,8 @@ public sealed record class BrandUpdateParams : ParamsBase
     public BrandUpdateParams(BrandUpdateParams brandUpdateParams)
         : base(brandUpdateParams)
     {
+        this.BrandID = brandUpdateParams.BrandID;
+
         this._rawBodyData = [.. brandUpdateParams._rawBodyData];
     }
 

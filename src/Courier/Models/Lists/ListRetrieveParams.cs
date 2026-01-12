@@ -18,7 +18,10 @@ public sealed record class ListRetrieveParams : ParamsBase
     public ListRetrieveParams() { }
 
     public ListRetrieveParams(ListRetrieveParams listRetrieveParams)
-        : base(listRetrieveParams) { }
+        : base(listRetrieveParams)
+    {
+        this.ListID = listRetrieveParams.ListID;
+    }
 
     public ListRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

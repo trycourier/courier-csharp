@@ -40,6 +40,8 @@ public sealed record class ListSubscribeParams : ParamsBase
     public ListSubscribeParams(ListSubscribeParams listSubscribeParams)
         : base(listSubscribeParams)
     {
+        this.UserID = listSubscribeParams.UserID;
+
         this._rawBodyData = [.. listSubscribeParams._rawBodyData];
     }
 

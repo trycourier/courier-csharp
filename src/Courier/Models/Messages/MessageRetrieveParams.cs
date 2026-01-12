@@ -18,7 +18,10 @@ public sealed record class MessageRetrieveParams : ParamsBase
     public MessageRetrieveParams() { }
 
     public MessageRetrieveParams(MessageRetrieveParams messageRetrieveParams)
-        : base(messageRetrieveParams) { }
+        : base(messageRetrieveParams)
+    {
+        this.MessageID = messageRetrieveParams.MessageID;
+    }
 
     public MessageRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

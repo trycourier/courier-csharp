@@ -32,6 +32,9 @@ public sealed record class CheckUpdateParams : ParamsBase
     public CheckUpdateParams(CheckUpdateParams checkUpdateParams)
         : base(checkUpdateParams)
     {
+        this.ID = checkUpdateParams.ID;
+        this.SubmissionID = checkUpdateParams.SubmissionID;
+
         this._rawBodyData = [.. checkUpdateParams._rawBodyData];
     }
 

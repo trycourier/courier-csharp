@@ -43,6 +43,8 @@ public sealed record class BulkAddUsersParams : ParamsBase
     public BulkAddUsersParams(BulkAddUsersParams bulkAddUsersParams)
         : base(bulkAddUsersParams)
     {
+        this.JobID = bulkAddUsersParams.JobID;
+
         this._rawBodyData = [.. bulkAddUsersParams._rawBodyData];
     }
 

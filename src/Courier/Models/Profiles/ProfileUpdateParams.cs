@@ -37,6 +37,8 @@ public sealed record class ProfileUpdateParams : ParamsBase
     public ProfileUpdateParams(ProfileUpdateParams profileUpdateParams)
         : base(profileUpdateParams)
     {
+        this.UserID = profileUpdateParams.UserID;
+
         this._rawBodyData = [.. profileUpdateParams._rawBodyData];
     }
 

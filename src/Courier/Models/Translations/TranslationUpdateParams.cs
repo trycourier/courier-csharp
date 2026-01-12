@@ -35,6 +35,9 @@ public sealed record class TranslationUpdateParams : ParamsBase
     public TranslationUpdateParams(TranslationUpdateParams translationUpdateParams)
         : base(translationUpdateParams)
     {
+        this.Domain = translationUpdateParams.Domain;
+        this.Locale = translationUpdateParams.Locale;
+
         this._rawBodyData = [.. translationUpdateParams._rawBodyData];
     }
 

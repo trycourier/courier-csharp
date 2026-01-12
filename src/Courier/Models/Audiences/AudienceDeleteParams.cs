@@ -18,7 +18,10 @@ public sealed record class AudienceDeleteParams : ParamsBase
     public AudienceDeleteParams() { }
 
     public AudienceDeleteParams(AudienceDeleteParams audienceDeleteParams)
-        : base(audienceDeleteParams) { }
+        : base(audienceDeleteParams)
+    {
+        this.AudienceID = audienceDeleteParams.AudienceID;
+    }
 
     public AudienceDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

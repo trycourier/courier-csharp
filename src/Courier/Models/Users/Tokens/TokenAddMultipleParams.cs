@@ -18,7 +18,10 @@ public sealed record class TokenAddMultipleParams : ParamsBase
     public TokenAddMultipleParams() { }
 
     public TokenAddMultipleParams(TokenAddMultipleParams tokenAddMultipleParams)
-        : base(tokenAddMultipleParams) { }
+        : base(tokenAddMultipleParams)
+    {
+        this.UserID = tokenAddMultipleParams.UserID;
+    }
 
     public TokenAddMultipleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

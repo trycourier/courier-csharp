@@ -20,7 +20,11 @@ public sealed record class TokenDeleteParams : ParamsBase
     public TokenDeleteParams() { }
 
     public TokenDeleteParams(TokenDeleteParams tokenDeleteParams)
-        : base(tokenDeleteParams) { }
+        : base(tokenDeleteParams)
+    {
+        this.UserID = tokenDeleteParams.UserID;
+        this.Token = tokenDeleteParams.Token;
+    }
 
     public TokenDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

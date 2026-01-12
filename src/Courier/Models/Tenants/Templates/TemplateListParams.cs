@@ -36,7 +36,10 @@ public sealed record class TemplateListParams : ParamsBase
     public TemplateListParams() { }
 
     public TemplateListParams(TemplateListParams templateListParams)
-        : base(templateListParams) { }
+        : base(templateListParams)
+    {
+        this.TenantID = templateListParams.TenantID;
+    }
 
     public TemplateListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
