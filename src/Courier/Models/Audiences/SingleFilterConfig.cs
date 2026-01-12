@@ -28,7 +28,8 @@ public sealed record class SingleFilterConfig : JsonModel
     }
 
     /// <summary>
-    /// The attribe name from profile whose value will be operated against the filter value
+    /// The attribute name from profile whose value will be operated against the
+    /// filter value
     /// </summary>
     public required string Path
     {
