@@ -31,11 +31,17 @@ public interface INotificationService
 
     ICheckService Checks { get; }
 
+    /// <summary>
+    /// Sends a request to <c>get /notifications<c/>.
+    /// </summary>
     Task<NotificationListResponse> List(
         NotificationListParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// Sends a request to <c>get /notifications/{id}/content<c/>.
+    /// </summary>
     Task<NotificationGetContent> RetrieveContent(
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
