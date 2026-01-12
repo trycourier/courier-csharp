@@ -26,6 +26,9 @@ public interface ICheckService
     /// </summary>
     ICheckService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
+    /// <summary>
+    /// Sends a request to <c>put /notifications/{id}/{submissionId}/checks<c/>.
+    /// </summary>
     Task<CheckUpdateResponse> Update(
         CheckUpdateParams parameters,
         CancellationToken cancellationToken = default
@@ -38,6 +41,9 @@ public interface ICheckService
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// Sends a request to <c>get /notifications/{id}/{submissionId}/checks<c/>.
+    /// </summary>
     Task<CheckListResponse> List(
         CheckListParams parameters,
         CancellationToken cancellationToken = default
@@ -50,6 +56,9 @@ public interface ICheckService
         CancellationToken cancellationToken = default
     );
 
+    /// <summary>
+    /// Sends a request to <c>delete /notifications/{id}/{submissionId}/checks<c/>.
+    /// </summary>
     Task Delete(CheckDeleteParams parameters, CancellationToken cancellationToken = default);
 
     /// <inheritdoc cref="Delete(CheckDeleteParams, CancellationToken)"/>

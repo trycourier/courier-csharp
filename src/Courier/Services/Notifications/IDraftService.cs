@@ -27,6 +27,9 @@ public interface IDraftService
     /// </summary>
     IDraftService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
+    /// <summary>
+    /// Sends a request to <c>get /notifications/{id}/draft/content<c/>.
+    /// </summary>
     Task<NotificationGetContent> RetrieveContent(
         DraftRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
