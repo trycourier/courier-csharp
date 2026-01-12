@@ -67,7 +67,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     }
 
     /// <summary>
-    /// The user id associatiated with the track
+    /// The user id associated with the track
     /// </summary>
     public string? UserID
     {
