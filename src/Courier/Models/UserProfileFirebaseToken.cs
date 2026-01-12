@@ -3,13 +3,14 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Courier.Core;
 using Courier.Exceptions;
 using System = System;
 
 namespace Courier.Models;
 
 [JsonConverter(typeof(UserProfileFirebaseTokenConverter))]
-public record class UserProfileFirebaseToken
+public record class UserProfileFirebaseToken : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -109,7 +110,7 @@ public record class UserProfileFirebaseToken
             case string value:
                 @string(value);
                 break;
-            case List<string> value:
+            case IReadOnlyList<string> value:
                 strings(value);
                 break;
             default:
@@ -170,7 +171,7 @@ public record class UserProfileFirebaseToken
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -189,6 +190,9 @@ public record class UserProfileFirebaseToken
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class UserProfileFirebaseTokenConverter : JsonConverter<UserProfileFirebaseToken>

@@ -26,7 +26,7 @@ public class NestedFilterConfigTest : TestBase
         };
 
         ApiEnum<string, Operator> expectedOperator = Operator.EndsWith;
-        List<FilterConfig> expectedRules =
+        List<Filter> expectedRules =
         [
             new SingleFilterConfig()
             {
@@ -89,7 +89,7 @@ public class NestedFilterConfigTest : TestBase
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Operator> expectedOperator = Operator.EndsWith;
-        List<FilterConfig> expectedRules =
+        List<Filter> expectedRules =
         [
             new SingleFilterConfig()
             {

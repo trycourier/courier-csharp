@@ -97,6 +97,9 @@ public sealed record class TokenAddSingleParams : ParamsBase
     public TokenAddSingleParams(TokenAddSingleParams tokenAddSingleParams)
         : base(tokenAddSingleParams)
     {
+        this.UserID = tokenAddSingleParams.UserID;
+        this.Token = tokenAddSingleParams.Token;
+
         this._rawBodyData = [.. tokenAddSingleParams._rawBodyData];
     }
 
@@ -327,7 +330,7 @@ class DeviceFromRaw : IFromRawJson<Device>
 /// to disable expiration.
 /// </summary>
 [JsonConverter(typeof(ExpiryDateConverter))]
-public record class ExpiryDate
+public record class ExpiryDate : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -481,7 +484,7 @@ public record class ExpiryDate
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -498,6 +501,9 @@ public record class ExpiryDate
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>

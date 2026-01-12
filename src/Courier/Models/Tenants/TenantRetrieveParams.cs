@@ -18,7 +18,10 @@ public sealed record class TenantRetrieveParams : ParamsBase
     public TenantRetrieveParams() { }
 
     public TenantRetrieveParams(TenantRetrieveParams tenantRetrieveParams)
-        : base(tenantRetrieveParams) { }
+        : base(tenantRetrieveParams)
+    {
+        this.TenantID = tenantRetrieveParams.TenantID;
+    }
 
     public TenantRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

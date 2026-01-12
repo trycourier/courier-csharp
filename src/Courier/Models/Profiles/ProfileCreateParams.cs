@@ -40,6 +40,8 @@ public sealed record class ProfileCreateParams : ParamsBase
     public ProfileCreateParams(ProfileCreateParams profileCreateParams)
         : base(profileCreateParams)
     {
+        this.UserID = profileCreateParams.UserID;
+
         this._rawBodyData = [.. profileCreateParams._rawBodyData];
     }
 

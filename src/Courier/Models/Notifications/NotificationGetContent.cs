@@ -243,7 +243,7 @@ sealed class BlockTypeConverter : JsonConverter<BlockType>
 }
 
 [JsonConverter(typeof(ContentConverter))]
-public record class Content
+public record class Content : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -401,7 +401,7 @@ public record class Content
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -422,6 +422,9 @@ public record class Content
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class ContentConverter : JsonConverter<Content?>
@@ -532,7 +535,7 @@ class NotificationContentHierarchyFromRaw : IFromRawJson<NotificationContentHier
 }
 
 [JsonConverter(typeof(LocaleConverter))]
-public record class Locale
+public record class Locale : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -690,7 +693,7 @@ public record class Locale
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -711,6 +714,9 @@ public record class Locale
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class LocaleConverter : JsonConverter<Locale>

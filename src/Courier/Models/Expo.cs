@@ -1,13 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Courier.Core;
 using Courier.Exceptions;
 using System = System;
 
 namespace Courier.Models;
 
 [JsonConverter(typeof(ExpoConverter))]
-public record class Expo
+public record class Expo : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -157,7 +158,7 @@ public record class Expo
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -175,6 +176,9 @@ public record class Expo
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class ExpoConverter : JsonConverter<Expo>

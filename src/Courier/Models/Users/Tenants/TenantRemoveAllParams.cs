@@ -18,7 +18,10 @@ public sealed record class TenantRemoveAllParams : ParamsBase
     public TenantRemoveAllParams() { }
 
     public TenantRemoveAllParams(TenantRemoveAllParams tenantRemoveAllParams)
-        : base(tenantRemoveAllParams) { }
+        : base(tenantRemoveAllParams)
+    {
+        this.UserID = tenantRemoveAllParams.UserID;
+    }
 
     public TenantRemoveAllParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

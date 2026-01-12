@@ -14,6 +14,12 @@ namespace Courier.Services;
 public interface IRequestService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IRequestServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -27,6 +33,36 @@ public interface IRequestService
 
     /// <inheritdoc cref="Archive(RequestArchiveParams, CancellationToken)"/>
     Task Archive(
+        string requestID,
+        RequestArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IRequestService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IRequestServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IRequestServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /requests/{request_id}/archive`, but is otherwise the
+    /// same as <see cref="IRequestService.Archive(RequestArchiveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Archive(
+        RequestArchiveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Archive(RequestArchiveParams, CancellationToken)"/>
+    Task<HttpResponse> Archive(
         string requestID,
         RequestArchiveParams? parameters = null,
         CancellationToken cancellationToken = default

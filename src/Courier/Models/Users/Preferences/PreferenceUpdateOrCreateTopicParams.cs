@@ -47,6 +47,9 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     )
         : base(preferenceUpdateOrCreateTopicParams)
     {
+        this.UserID = preferenceUpdateOrCreateTopicParams.UserID;
+        this.TopicID = preferenceUpdateOrCreateTopicParams.TopicID;
+
         this._rawBodyData = [.. preferenceUpdateOrCreateTopicParams._rawBodyData];
     }
 

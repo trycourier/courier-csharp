@@ -15,6 +15,12 @@ namespace Courier.Services.Automations;
 public interface IInvokeService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IInvokeServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -41,6 +47,45 @@ public interface IInvokeService
 
     /// <inheritdoc cref="InvokeByTemplate(InvokeInvokeByTemplateParams, CancellationToken)"/>
     Task<AutomationInvokeResponse> InvokeByTemplate(
+        string templateID,
+        InvokeInvokeByTemplateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IInvokeService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IInvokeServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IInvokeServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /automations/invoke`, but is otherwise the
+    /// same as <see cref="IInvokeService.InvokeAdHoc(InvokeInvokeAdHocParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<AutomationInvokeResponse>> InvokeAdHoc(
+        InvokeInvokeAdHocParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /automations/{templateId}/invoke`, but is otherwise the
+    /// same as <see cref="IInvokeService.InvokeByTemplate(InvokeInvokeByTemplateParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<AutomationInvokeResponse>> InvokeByTemplate(
+        InvokeInvokeByTemplateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="InvokeByTemplate(InvokeInvokeByTemplateParams, CancellationToken)"/>
+    Task<HttpResponse<AutomationInvokeResponse>> InvokeByTemplate(
         string templateID,
         InvokeInvokeByTemplateParams parameters,
         CancellationToken cancellationToken = default

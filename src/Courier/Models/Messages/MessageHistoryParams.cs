@@ -27,7 +27,10 @@ public sealed record class MessageHistoryParams : ParamsBase
     public MessageHistoryParams() { }
 
     public MessageHistoryParams(MessageHistoryParams messageHistoryParams)
-        : base(messageHistoryParams) { }
+        : base(messageHistoryParams)
+    {
+        this.MessageID = messageHistoryParams.MessageID;
+    }
 
     public MessageHistoryParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

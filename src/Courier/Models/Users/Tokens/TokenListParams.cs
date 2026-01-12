@@ -18,7 +18,10 @@ public sealed record class TokenListParams : ParamsBase
     public TokenListParams() { }
 
     public TokenListParams(TokenListParams tokenListParams)
-        : base(tokenListParams) { }
+        : base(tokenListParams)
+    {
+        this.UserID = tokenListParams.UserID;
+    }
 
     public TokenListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

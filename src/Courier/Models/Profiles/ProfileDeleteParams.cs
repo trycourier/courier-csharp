@@ -18,7 +18,10 @@ public sealed record class ProfileDeleteParams : ParamsBase
     public ProfileDeleteParams() { }
 
     public ProfileDeleteParams(ProfileDeleteParams profileDeleteParams)
-        : base(profileDeleteParams) { }
+        : base(profileDeleteParams)
+    {
+        this.UserID = profileDeleteParams.UserID;
+    }
 
     public ProfileDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

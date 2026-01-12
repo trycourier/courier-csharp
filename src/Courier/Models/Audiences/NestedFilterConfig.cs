@@ -26,9 +26,9 @@ public sealed record class NestedFilterConfig : JsonModel
         init { JsonModel.Set(this._rawData, "operator", value); }
     }
 
-    public required IReadOnlyList<FilterConfig> Rules
+    public required IReadOnlyList<Filter> Rules
     {
-        get { return JsonModel.GetNotNullClass<List<FilterConfig>>(this.RawData, "rules"); }
+        get { return JsonModel.GetNotNullClass<List<Filter>>(this.RawData, "rules"); }
         init { JsonModel.Set(this._rawData, "rules", value); }
     }
 

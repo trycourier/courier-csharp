@@ -14,6 +14,12 @@ namespace Courier.Services;
 public interface ITranslationService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    ITranslationServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -42,6 +48,52 @@ public interface ITranslationService
 
     /// <inheritdoc cref="Update(TranslationUpdateParams, CancellationToken)"/>
     Task Update(
+        string locale,
+        TranslationUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="ITranslationService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface ITranslationServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    ITranslationServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /translations/{domain}/{locale}`, but is otherwise the
+    /// same as <see cref="ITranslationService.Retrieve(TranslationRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<string>> Retrieve(
+        TranslationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(TranslationRetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<string>> Retrieve(
+        string locale,
+        TranslationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /translations/{domain}/{locale}`, but is otherwise the
+    /// same as <see cref="ITranslationService.Update(TranslationUpdateParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Update(
+        TranslationUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Update(TranslationUpdateParams, CancellationToken)"/>
+    Task<HttpResponse> Update(
         string locale,
         TranslationUpdateParams parameters,
         CancellationToken cancellationToken = default

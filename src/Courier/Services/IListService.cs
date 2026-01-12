@@ -15,6 +15,12 @@ namespace Courier.Services;
 public interface IListService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IListServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -77,6 +83,95 @@ public interface IListService
 
     /// <inheritdoc cref="Restore(ListRestoreParams, CancellationToken)"/>
     Task Restore(
+        string listID,
+        ListRestoreParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IListService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IListServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    ISubscriptionServiceWithRawResponse Subscriptions { get; }
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /lists/{list_id}`, but is otherwise the
+    /// same as <see cref="IListService.Retrieve(ListRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<SubscriptionList>> Retrieve(
+        ListRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(ListRetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<SubscriptionList>> Retrieve(
+        string listID,
+        ListRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /lists/{list_id}`, but is otherwise the
+    /// same as <see cref="IListService.Update(ListUpdateParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Update(
+        ListUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Update(ListUpdateParams, CancellationToken)"/>
+    Task<HttpResponse> Update(
+        string listID,
+        ListUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `get /lists`, but is otherwise the
+    /// same as <see cref="IListService.List(ListListParams?, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<ListListResponse>> List(
+        ListListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `delete /lists/{list_id}`, but is otherwise the
+    /// same as <see cref="IListService.Delete(ListDeleteParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Delete(
+        ListDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Delete(ListDeleteParams, CancellationToken)"/>
+    Task<HttpResponse> Delete(
+        string listID,
+        ListDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /lists/{list_id}/restore`, but is otherwise the
+    /// same as <see cref="IListService.Restore(ListRestoreParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Restore(
+        ListRestoreParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Restore(ListRestoreParams, CancellationToken)"/>
+    Task<HttpResponse> Restore(
         string listID,
         ListRestoreParams? parameters = null,
         CancellationToken cancellationToken = default

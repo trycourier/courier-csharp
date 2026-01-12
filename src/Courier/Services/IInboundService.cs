@@ -14,6 +14,12 @@ namespace Courier.Services;
 public interface IInboundService
 {
     /// <summary>
+    /// Returns a view of this service that provides access to raw HTTP responses
+    /// for each method.
+    /// </summary>
+    IInboundServiceWithRawResponse WithRawResponse { get; }
+
+    /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
@@ -24,6 +30,29 @@ public interface IInboundService
     /// Courier Track Event
     /// </summary>
     Task<InboundTrackEventResponse> TrackEvent(
+        InboundTrackEventParams parameters,
+        CancellationToken cancellationToken = default
+    );
+}
+
+/// <summary>
+/// A view of <see cref="IInboundService"/> that provides access to raw
+/// HTTP responses for each method.
+/// </summary>
+public interface IInboundServiceWithRawResponse
+{
+    /// <summary>
+    /// Returns a view of this service with the given option modifications applied.
+    ///
+    /// <para>The original service is not modified.</para>
+    /// </summary>
+    IInboundServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /inbound/courier`, but is otherwise the
+    /// same as <see cref="IInboundService.TrackEvent(InboundTrackEventParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<InboundTrackEventResponse>> TrackEvent(
         InboundTrackEventParams parameters,
         CancellationToken cancellationToken = default
     );

@@ -36,7 +36,10 @@ public sealed record class TenantListUsersParams : ParamsBase
     public TenantListUsersParams() { }
 
     public TenantListUsersParams(TenantListUsersParams tenantListUsersParams)
-        : base(tenantListUsersParams) { }
+        : base(tenantListUsersParams)
+    {
+        this.TenantID = tenantListUsersParams.TenantID;
+    }
 
     public TenantListUsersParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,

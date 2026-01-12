@@ -279,7 +279,7 @@ class UserTokenDeviceFromRaw : IFromRawJson<UserTokenDevice>
 /// to disable expiration.
 /// </summary>
 [JsonConverter(typeof(UserTokenExpiryDateConverter))]
-public record class UserTokenExpiryDate
+public record class UserTokenExpiryDate : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -433,7 +433,7 @@ public record class UserTokenExpiryDate
     /// Thrown when the instance does not pass validation.
     /// </exception>
     /// </summary>
-    public void Validate()
+    public override void Validate()
     {
         if (this.Value == null)
         {
@@ -452,6 +452,9 @@ public record class UserTokenExpiryDate
     {
         return 0;
     }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
 }
 
 sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>

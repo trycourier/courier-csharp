@@ -11,21 +11,157 @@ namespace Courier.Services;
 /// <inheritdoc/>
 public sealed class AudienceService : IAudienceService
 {
+    readonly Lazy<IAudienceServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IAudienceServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public IAudienceService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AudienceService(this._client.WithOptions(modifier));
     }
 
-    readonly ICourierClient _client;
-
     public AudienceService(ICourierClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new AudienceServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<Audience> Retrieve(
+        AudienceRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<Audience> Retrieve(
+        string audienceID,
+        AudienceRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Retrieve(parameters with { AudienceID = audienceID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<AudienceUpdateResponse> Update(
+        AudienceUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Update(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<AudienceUpdateResponse> Update(
+        string audienceID,
+        AudienceUpdateParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Update(parameters with { AudienceID = audienceID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<AudienceListResponse> List(
+        AudienceListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.List(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Delete(
+        AudienceDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Delete(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task Delete(
+        string audienceID,
+        AudienceDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Delete(parameters with { AudienceID = audienceID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task<AudienceListMembersResponse> ListMembers(
+        AudienceListMembersParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.ListMembers(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<AudienceListMembersResponse> ListMembers(
+        string audienceID,
+        AudienceListMembersParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.ListMembers(parameters with { AudienceID = audienceID }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class AudienceServiceWithRawResponse : IAudienceServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IAudienceServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new AudienceServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public AudienceServiceWithRawResponse(ICourierClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<Audience> Retrieve(
+    public async Task<HttpResponse<Audience>> Retrieve(
         AudienceRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,21 +176,23 @@ public sealed class AudienceService : IAudienceService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var audience = await response
-            .Deserialize<Audience>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            audience.Validate();
-        }
-        return audience;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var audience = await response.Deserialize<Audience>(token).ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    audience.Validate();
+                }
+                return audience;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<Audience> Retrieve(
+    public Task<HttpResponse<Audience>> Retrieve(
         string audienceID,
         AudienceRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -62,11 +200,11 @@ public sealed class AudienceService : IAudienceService
     {
         parameters ??= new();
 
-        return await this.Retrieve(parameters with { AudienceID = audienceID }, cancellationToken);
+        return this.Retrieve(parameters with { AudienceID = audienceID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<AudienceUpdateResponse> Update(
+    public async Task<HttpResponse<AudienceUpdateResponse>> Update(
         AudienceUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -81,21 +219,25 @@ public sealed class AudienceService : IAudienceService
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var audience = await response
-            .Deserialize<AudienceUpdateResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            audience.Validate();
-        }
-        return audience;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var audience = await response
+                    .Deserialize<AudienceUpdateResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    audience.Validate();
+                }
+                return audience;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<AudienceUpdateResponse> Update(
+    public Task<HttpResponse<AudienceUpdateResponse>> Update(
         string audienceID,
         AudienceUpdateParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -103,11 +245,11 @@ public sealed class AudienceService : IAudienceService
     {
         parameters ??= new();
 
-        return await this.Update(parameters with { AudienceID = audienceID }, cancellationToken);
+        return this.Update(parameters with { AudienceID = audienceID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<AudienceListResponse> List(
+    public async Task<HttpResponse<AudienceListResponse>> List(
         AudienceListParams? parameters = null,
         CancellationToken cancellationToken = default
     )
@@ -119,21 +261,25 @@ public sealed class AudienceService : IAudienceService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var audiences = await response
-            .Deserialize<AudienceListResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            audiences.Validate();
-        }
-        return audiences;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var audiences = await response
+                    .Deserialize<AudienceListResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    audiences.Validate();
+                }
+                return audiences;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
+    public Task<HttpResponse> Delete(
         AudienceDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -148,13 +294,11 @@ public sealed class AudienceService : IAudienceService
             Method = HttpMethod.Delete,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
+        return this._client.Execute(request, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
+    public Task<HttpResponse> Delete(
         string audienceID,
         AudienceDeleteParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -162,11 +306,11 @@ public sealed class AudienceService : IAudienceService
     {
         parameters ??= new();
 
-        await this.Delete(parameters with { AudienceID = audienceID }, cancellationToken);
+        return this.Delete(parameters with { AudienceID = audienceID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<AudienceListMembersResponse> ListMembers(
+    public async Task<HttpResponse<AudienceListMembersResponse>> ListMembers(
         AudienceListMembersParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -181,21 +325,25 @@ public sealed class AudienceService : IAudienceService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<AudienceListMembersResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<AudienceListMembersResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<AudienceListMembersResponse> ListMembers(
+    public Task<HttpResponse<AudienceListMembersResponse>> ListMembers(
         string audienceID,
         AudienceListMembersParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -203,12 +351,6 @@ public sealed class AudienceService : IAudienceService
     {
         parameters ??= new();
 
-        return await this.ListMembers(
-            parameters with
-            {
-                AudienceID = audienceID,
-            },
-            cancellationToken
-        );
+        return this.ListMembers(parameters with { AudienceID = audienceID }, cancellationToken);
     }
 }

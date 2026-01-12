@@ -54,6 +54,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     public AudienceUpdateParams(AudienceUpdateParams audienceUpdateParams)
         : base(audienceUpdateParams)
     {
+        this.AudienceID = audienceUpdateParams.AudienceID;
+
         this._rawBodyData = [.. audienceUpdateParams._rawBodyData];
     }
 

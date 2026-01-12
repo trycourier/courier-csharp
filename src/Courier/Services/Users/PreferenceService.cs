@@ -11,21 +11,118 @@ namespace Courier.Services.Users;
 /// <inheritdoc/>
 public sealed class PreferenceService : IPreferenceService
 {
+    readonly Lazy<IPreferenceServiceWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public IPreferenceServiceWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    readonly ICourierClient _client;
+
     /// <inheritdoc/>
     public IPreferenceService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new PreferenceService(this._client.WithOptions(modifier));
     }
 
-    readonly ICourierClient _client;
-
     public PreferenceService(ICourierClient client)
+    {
+        _client = client;
+
+        _withRawResponse = new(() => new PreferenceServiceWithRawResponse(client.WithRawResponse));
+    }
+
+    /// <inheritdoc/>
+    public async Task<PreferenceRetrieveResponse> Retrieve(
+        PreferenceRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<PreferenceRetrieveResponse> Retrieve(
+        string userID,
+        PreferenceRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Retrieve(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
+        PreferenceRetrieveTopicParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.RetrieveTopic(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
+        string topicID,
+        PreferenceRetrieveTopicParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.RetrieveTopic(parameters with { TopicID = topicID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
+        PreferenceUpdateOrCreateTopicParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.UpdateOrCreateTopic(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
+        string topicID,
+        PreferenceUpdateOrCreateTopicParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.UpdateOrCreateTopic(parameters with { TopicID = topicID }, cancellationToken);
+    }
+}
+
+/// <inheritdoc/>
+public sealed class PreferenceServiceWithRawResponse : IPreferenceServiceWithRawResponse
+{
+    readonly ICourierClientWithRawResponse _client;
+
+    /// <inheritdoc/>
+    public IPreferenceServiceWithRawResponse WithOptions(
+        Func<ClientOptions, ClientOptions> modifier
+    )
+    {
+        return new PreferenceServiceWithRawResponse(this._client.WithOptions(modifier));
+    }
+
+    public PreferenceServiceWithRawResponse(ICourierClientWithRawResponse client)
     {
         _client = client;
     }
 
     /// <inheritdoc/>
-    public async Task<PreferenceRetrieveResponse> Retrieve(
+    public async Task<HttpResponse<PreferenceRetrieveResponse>> Retrieve(
         PreferenceRetrieveParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -40,21 +137,25 @@ public sealed class PreferenceService : IPreferenceService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var preference = await response
-            .Deserialize<PreferenceRetrieveResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            preference.Validate();
-        }
-        return preference;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var preference = await response
+                    .Deserialize<PreferenceRetrieveResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    preference.Validate();
+                }
+                return preference;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<PreferenceRetrieveResponse> Retrieve(
+    public Task<HttpResponse<PreferenceRetrieveResponse>> Retrieve(
         string userID,
         PreferenceRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -62,11 +163,11 @@ public sealed class PreferenceService : IPreferenceService
     {
         parameters ??= new();
 
-        return await this.Retrieve(parameters with { UserID = userID }, cancellationToken);
+        return this.Retrieve(parameters with { UserID = userID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
+    public async Task<HttpResponse<PreferenceRetrieveTopicResponse>> RetrieveTopic(
         PreferenceRetrieveTopicParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -81,31 +182,35 @@ public sealed class PreferenceService : IPreferenceService
             Method = HttpMethod.Get,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<PreferenceRetrieveTopicResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<PreferenceRetrieveTopicResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
+    public Task<HttpResponse<PreferenceRetrieveTopicResponse>> RetrieveTopic(
         string topicID,
         PreferenceRetrieveTopicParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.RetrieveTopic(parameters with { TopicID = topicID }, cancellationToken);
+        return this.RetrieveTopic(parameters with { TopicID = topicID }, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
+    public async Task<HttpResponse<PreferenceUpdateOrCreateTopicResponse>> UpdateOrCreateTopic(
         PreferenceUpdateOrCreateTopicParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -120,32 +225,30 @@ public sealed class PreferenceService : IPreferenceService
             Method = HttpMethod.Put,
             Params = parameters,
         };
-        using var response = await this
-            ._client.Execute(request, cancellationToken)
-            .ConfigureAwait(false);
-        var deserializedResponse = await response
-            .Deserialize<PreferenceUpdateOrCreateTopicResponse>(cancellationToken)
-            .ConfigureAwait(false);
-        if (this._client.ResponseValidation)
-        {
-            deserializedResponse.Validate();
-        }
-        return deserializedResponse;
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var deserializedResponse = await response
+                    .Deserialize<PreferenceUpdateOrCreateTopicResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    deserializedResponse.Validate();
+                }
+                return deserializedResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>
-    public async Task<PreferenceUpdateOrCreateTopicResponse> UpdateOrCreateTopic(
+    public Task<HttpResponse<PreferenceUpdateOrCreateTopicResponse>> UpdateOrCreateTopic(
         string topicID,
         PreferenceUpdateOrCreateTopicParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        return await this.UpdateOrCreateTopic(
-            parameters with
-            {
-                TopicID = topicID,
-            },
-            cancellationToken
-        );
+        return this.UpdateOrCreateTopic(parameters with { TopicID = topicID }, cancellationToken);
     }
 }

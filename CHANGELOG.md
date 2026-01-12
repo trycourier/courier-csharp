@@ -1,5 +1,38 @@
 # Changelog
 
+## 5.1.0 (2026-01-12)
+
+Full Changelog: [v5.0.0...v5.1.0](https://github.com/trycourier/courier-csharp/compare/v5.0.0...v5.1.0)
+
+### Features
+
+* **client:** add more `ToString` implementations ([a8cea99](https://github.com/trycourier/courier-csharp/commit/a8cea997724f2ae6a2afe03a91f791eb24ea9dbf))
+* **client:** support accessing raw responses ([39f4d21](https://github.com/trycourier/courier-csharp/commit/39f4d214f5f9a8d2097ae16082f6a3c2a8b1b44a))
+
+
+### Bug Fixes
+
+* **client:** copy path params in params copy constructors ([c06f815](https://github.com/trycourier/courier-csharp/commit/c06f81546394d5b19391061cea3a7213b4ae88c0))
+* **client:** union switch method type checks ([7a630d5](https://github.com/trycourier/courier-csharp/commit/7a630d54cf59c26ed4852c7cf918b018283cab61))
+* **internal:** remove redundant line ([5681fc8](https://github.com/trycourier/courier-csharp/commit/5681fc8c7205b69a0c807aef9f6f09e3e7e633b8))
+* **internal:** remove roundtrip tests for multipart params ([dd118a9](https://github.com/trycourier/courier-csharp/commit/dd118a9488fde43b23a0fe125831e83244f9a03f))
+* **types:** change Rules field type from FilterConfig to Filter in NestedFilterConfig ([da4d0f3](https://github.com/trycourier/courier-csharp/commit/da4d0f3780d12d5b931d97ea1c212bc3dbbc8380))
+
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([4b2ebbf](https://github.com/trycourier/courier-csharp/commit/4b2ebbf9690a594a43345866ae776d54ff066aba))
+
+
+### Documentation
+
+* add raw responses to readme ([bf9e46d](https://github.com/trycourier/courier-csharp/commit/bf9e46d421e6563c5a6fd24f81ba3b0fac11b431))
+
+
+### Refactors
+
+* **client:** make unions implement `ModelBase` ([2204d0c](https://github.com/trycourier/courier-csharp/commit/2204d0c7cf1cf5768a0c511431eb1e3c5310a105))
+
 ## 5.0.0 (2026-01-08)
 
 Full Changelog: [v4.0.0...v5.0.0](https://github.com/trycourier/courier-csharp/compare/v4.0.0...v5.0.0)
