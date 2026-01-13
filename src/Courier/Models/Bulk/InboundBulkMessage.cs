@@ -77,9 +77,19 @@ public sealed record class InboundBulkMessage : JsonModel
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<
+            var value = this._rawData.GetNullableClass<
                 FrozenDictionary<string, FrozenDictionary<string, JsonElement>>
             >("locale");
+            if (value == null)
+            {
+                return null;
+            }
+
+            return FrozenDictionary.ToFrozenDictionary(
+                value,
+                entry => entry.Key,
+                (entry) => (IReadOnlyDictionary<string, JsonElement>)entry.Value
+            );
         }
         init
         {
