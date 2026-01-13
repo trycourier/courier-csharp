@@ -8,7 +8,7 @@ public class UserProfileFirebaseTokenTest : TestBase
     [Fact]
     public void StringValidationWorks()
     {
-        UserProfileFirebaseToken value = new("string");
+        UserProfileFirebaseToken value = "string";
         value.Validate();
     }
 
@@ -22,7 +22,7 @@ public class UserProfileFirebaseTokenTest : TestBase
     [Fact]
     public void StringSerializationRoundtripWorks()
     {
-        UserProfileFirebaseToken value = new("string");
+        UserProfileFirebaseToken value = "string";
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<UserProfileFirebaseToken>(element);
 

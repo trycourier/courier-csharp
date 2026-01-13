@@ -620,21 +620,21 @@ public class UserTokenExpiryDateTest : TestBase
     [Fact]
     public void StringValidationWorks()
     {
-        UserTokenExpiryDate value = new("string");
+        UserTokenExpiryDate value = "string";
         value.Validate();
     }
 
     [Fact]
     public void BoolValidationWorks()
     {
-        UserTokenExpiryDate value = new(true);
+        UserTokenExpiryDate value = true;
         value.Validate();
     }
 
     [Fact]
     public void StringSerializationRoundtripWorks()
     {
-        UserTokenExpiryDate value = new("string");
+        UserTokenExpiryDate value = "string";
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(element);
 
@@ -644,7 +644,7 @@ public class UserTokenExpiryDateTest : TestBase
     [Fact]
     public void BoolSerializationRoundtripWorks()
     {
-        UserTokenExpiryDate value = new(true);
+        UserTokenExpiryDate value = true;
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<UserTokenExpiryDate>(element);
 

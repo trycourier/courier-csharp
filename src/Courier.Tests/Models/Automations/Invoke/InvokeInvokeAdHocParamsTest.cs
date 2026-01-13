@@ -467,133 +467,117 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationDelayValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationDelayStep()
-            {
-                Action = Invoke::Action.Delay,
-                Duration = "duration",
-                Until = "until",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationDelayStep()
+        {
+            Action = Invoke::Action.Delay,
+            Duration = "duration",
+            Until = "until",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationSendValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationSendStep()
+        Invoke::Step value = new Invoke::AutomationSendStep()
+        {
+            Action = Invoke::AutomationSendStepAction.Send,
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationSendStepAction.Send,
-                Brand = "brand",
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Profile = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Recipient = "recipient",
-                Template = "template",
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "recipient",
+            Template = "template",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationSendListValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationSendListStep()
+        Invoke::Step value = new Invoke::AutomationSendListStep()
+        {
+            Action = Invoke::AutomationSendListStepAction.SendList,
+            List = "list",
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationSendListStepAction.SendList,
-                List = "list",
-                Brand = "brand",
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationUpdateProfileValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationUpdateProfileStep()
+        Invoke::Step value = new Invoke::AutomationUpdateProfileStep()
+        {
+            Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
+            Profile = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
-                Profile = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Merge = Invoke::Merge.None,
-                RecipientID = "recipient_id",
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Merge = Invoke::Merge.None,
+            RecipientID = "recipient_id",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationCancelValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationCancelStep()
-            {
-                Action = Invoke::AutomationCancelStepAction.Cancel,
-                CancelationToken = "cancelation_token",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationCancelStep()
+        {
+            Action = Invoke::AutomationCancelStepAction.Cancel,
+            CancelationToken = "cancelation_token",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationFetchDataValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationFetchDataStep()
+        Invoke::Step value = new Invoke::AutomationFetchDataStep()
+        {
+            Action = Invoke::AutomationFetchDataStepAction.FetchData,
+            Webhook = new()
             {
-                Action = Invoke::AutomationFetchDataStepAction.FetchData,
-                Webhook = new()
-                {
-                    Method = Invoke::Method.Get,
-                    Url = "url",
-                    Body = "body",
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                },
-                MergeStrategy = Invoke::MergeStrategy.Replace,
-            }
-        );
+                Method = Invoke::Method.Get,
+                Url = "url",
+                Body = "body",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+            MergeStrategy = Invoke::MergeStrategy.Replace,
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationInvokeValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationInvokeStep()
-            {
-                Action = Invoke::AutomationInvokeStepAction.Invoke,
-                Template = "template",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationInvokeStep()
+        {
+            Action = Invoke::AutomationInvokeStepAction.Invoke,
+            Template = "template",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationDelaySerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationDelayStep()
-            {
-                Action = Invoke::Action.Delay,
-                Duration = "duration",
-                Until = "until",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationDelayStep()
+        {
+            Action = Invoke::Action.Delay,
+            Duration = "duration",
+            Until = "until",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
@@ -603,23 +587,21 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationSendSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationSendStep()
+        Invoke::Step value = new Invoke::AutomationSendStep()
+        {
+            Action = Invoke::AutomationSendStepAction.Send,
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationSendStepAction.Send,
-                Brand = "brand",
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Profile = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Recipient = "recipient",
-                Template = "template",
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "recipient",
+            Template = "template",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
@@ -629,18 +611,16 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationSendListSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationSendListStep()
+        Invoke::Step value = new Invoke::AutomationSendListStep()
+        {
+            Action = Invoke::AutomationSendListStepAction.SendList,
+            List = "list",
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationSendListStepAction.SendList,
-                List = "list",
-                Brand = "brand",
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
@@ -650,18 +630,16 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationUpdateProfileSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationUpdateProfileStep()
+        Invoke::Step value = new Invoke::AutomationUpdateProfileStep()
+        {
+            Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
+            Profile = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
-                Profile = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Merge = Invoke::Merge.None,
-                RecipientID = "recipient_id",
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Merge = Invoke::Merge.None,
+            RecipientID = "recipient_id",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
@@ -671,13 +649,11 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationCancelSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationCancelStep()
-            {
-                Action = Invoke::AutomationCancelStepAction.Cancel,
-                CancelationToken = "cancelation_token",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationCancelStep()
+        {
+            Action = Invoke::AutomationCancelStepAction.Cancel,
+            CancelationToken = "cancelation_token",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
@@ -687,20 +663,18 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationFetchDataSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationFetchDataStep()
+        Invoke::Step value = new Invoke::AutomationFetchDataStep()
+        {
+            Action = Invoke::AutomationFetchDataStepAction.FetchData,
+            Webhook = new()
             {
-                Action = Invoke::AutomationFetchDataStepAction.FetchData,
-                Webhook = new()
-                {
-                    Method = Invoke::Method.Get,
-                    Url = "url",
-                    Body = "body",
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                },
-                MergeStrategy = Invoke::MergeStrategy.Replace,
-            }
-        );
+                Method = Invoke::Method.Get,
+                Url = "url",
+                Body = "body",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+            MergeStrategy = Invoke::MergeStrategy.Replace,
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
@@ -710,13 +684,11 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationInvokeSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationInvokeStep()
-            {
-                Action = Invoke::AutomationInvokeStepAction.Invoke,
-                Template = "template",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationInvokeStep()
+        {
+            Action = Invoke::AutomationInvokeStepAction.Invoke,
+            Template = "template",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
