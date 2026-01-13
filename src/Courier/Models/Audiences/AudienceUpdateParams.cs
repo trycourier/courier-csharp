@@ -1,11 +1,13 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Courier.Core;
+using Courier.Exceptions;
+using System = System;
 
 namespace Courier.Models.Audiences;
 
@@ -36,7 +38,7 @@ public sealed record class AudienceUpdateParams : ParamsBase
     }
 
     /// <summary>
-    /// A single filter to use for filtering
+    /// Filter that contains an array of FilterConfig items
     /// </summary>
     public Filter? Filter
     {
@@ -59,6 +61,21 @@ public sealed record class AudienceUpdateParams : ParamsBase
             return this._rawBodyData.GetNullableClass<string>("name");
         }
         init { this._rawBodyData.Set("name", value); }
+    }
+
+    /// <summary>
+    /// The logical operator (AND/OR) for the top-level filter
+    /// </summary>
+    public ApiEnum<string, global::Courier.Models.Audiences.Operator>? Operator
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<
+                ApiEnum<string, global::Courier.Models.Audiences.Operator>
+            >("operator");
+        }
+        init { this._rawBodyData.Set("operator", value); }
     }
 
     public AudienceUpdateParams() { }
@@ -110,9 +127,9 @@ public sealed record class AudienceUpdateParams : ParamsBase
         );
     }
 
-    public override Uri Url(ClientOptions options)
+    public override System::Uri Url(ClientOptions options)
     {
-        return new UriBuilder(
+        return new System::UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/audiences/{0}", this.AudienceID)
         )
@@ -137,5 +154,52 @@ public sealed record class AudienceUpdateParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+}
+
+/// <summary>
+/// The logical operator (AND/OR) for the top-level filter
+/// </summary>
+[JsonConverter(typeof(global::Courier.Models.Audiences.OperatorConverter))]
+public enum Operator
+{
+    And,
+    Or,
+}
+
+sealed class OperatorConverter : JsonConverter<global::Courier.Models.Audiences.Operator>
+{
+    public override global::Courier.Models.Audiences.Operator Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "AND" => global::Courier.Models.Audiences.Operator.And,
+            "OR" => global::Courier.Models.Audiences.Operator.Or,
+            _ => (global::Courier.Models.Audiences.Operator)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::Courier.Models.Audiences.Operator value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::Courier.Models.Audiences.Operator.And => "AND",
+                global::Courier.Models.Audiences.Operator.Or => "OR",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }

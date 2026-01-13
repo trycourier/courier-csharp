@@ -13,8 +13,7 @@ public class NestedFilterConfigTest : TestBase
     {
         var model = new NestedFilterConfig
         {
-            Operator = Operator.EndsWith,
-            Rules =
+            Filters =
             [
                 new SingleFilterConfig()
                 {
@@ -23,10 +22,10 @@ public class NestedFilterConfigTest : TestBase
                     Value = "value",
                 },
             ],
+            Operator = NestedFilterConfigOperator.EndsWith,
         };
 
-        ApiEnum<string, Operator> expectedOperator = Operator.EndsWith;
-        List<Filter> expectedRules =
+        List<FilterConfig> expectedFilters =
         [
             new SingleFilterConfig()
             {
@@ -35,13 +34,15 @@ public class NestedFilterConfigTest : TestBase
                 Value = "value",
             },
         ];
+        ApiEnum<string, NestedFilterConfigOperator> expectedOperator =
+            NestedFilterConfigOperator.EndsWith;
 
-        Assert.Equal(expectedOperator, model.Operator);
-        Assert.Equal(expectedRules.Count, model.Rules.Count);
-        for (int i = 0; i < expectedRules.Count; i++)
+        Assert.Equal(expectedFilters.Count, model.Filters.Count);
+        for (int i = 0; i < expectedFilters.Count; i++)
         {
-            Assert.Equal(expectedRules[i], model.Rules[i]);
+            Assert.Equal(expectedFilters[i], model.Filters[i]);
         }
+        Assert.Equal(expectedOperator, model.Operator);
     }
 
     [Fact]
@@ -49,8 +50,7 @@ public class NestedFilterConfigTest : TestBase
     {
         var model = new NestedFilterConfig
         {
-            Operator = Operator.EndsWith,
-            Rules =
+            Filters =
             [
                 new SingleFilterConfig()
                 {
@@ -59,6 +59,7 @@ public class NestedFilterConfigTest : TestBase
                     Value = "value",
                 },
             ],
+            Operator = NestedFilterConfigOperator.EndsWith,
         };
 
         string json = JsonSerializer.Serialize(model);
@@ -72,8 +73,7 @@ public class NestedFilterConfigTest : TestBase
     {
         var model = new NestedFilterConfig
         {
-            Operator = Operator.EndsWith,
-            Rules =
+            Filters =
             [
                 new SingleFilterConfig()
                 {
@@ -82,14 +82,14 @@ public class NestedFilterConfigTest : TestBase
                     Value = "value",
                 },
             ],
+            Operator = NestedFilterConfigOperator.EndsWith,
         };
 
         string element = JsonSerializer.Serialize(model);
         var deserialized = JsonSerializer.Deserialize<NestedFilterConfig>(element);
         Assert.NotNull(deserialized);
 
-        ApiEnum<string, Operator> expectedOperator = Operator.EndsWith;
-        List<Filter> expectedRules =
+        List<FilterConfig> expectedFilters =
         [
             new SingleFilterConfig()
             {
@@ -98,13 +98,15 @@ public class NestedFilterConfigTest : TestBase
                 Value = "value",
             },
         ];
+        ApiEnum<string, NestedFilterConfigOperator> expectedOperator =
+            NestedFilterConfigOperator.EndsWith;
 
-        Assert.Equal(expectedOperator, deserialized.Operator);
-        Assert.Equal(expectedRules.Count, deserialized.Rules.Count);
-        for (int i = 0; i < expectedRules.Count; i++)
+        Assert.Equal(expectedFilters.Count, deserialized.Filters.Count);
+        for (int i = 0; i < expectedFilters.Count; i++)
         {
-            Assert.Equal(expectedRules[i], deserialized.Rules[i]);
+            Assert.Equal(expectedFilters[i], deserialized.Filters[i]);
         }
+        Assert.Equal(expectedOperator, deserialized.Operator);
     }
 
     [Fact]
@@ -112,8 +114,7 @@ public class NestedFilterConfigTest : TestBase
     {
         var model = new NestedFilterConfig
         {
-            Operator = Operator.EndsWith,
-            Rules =
+            Filters =
             [
                 new SingleFilterConfig()
                 {
@@ -122,41 +123,42 @@ public class NestedFilterConfigTest : TestBase
                     Value = "value",
                 },
             ],
+            Operator = NestedFilterConfigOperator.EndsWith,
         };
 
         model.Validate();
     }
 }
 
-public class OperatorTest : TestBase
+public class NestedFilterConfigOperatorTest : TestBase
 {
     [Theory]
-    [InlineData(Operator.EndsWith)]
-    [InlineData(Operator.Eq)]
-    [InlineData(Operator.Exists)]
-    [InlineData(Operator.Gt)]
-    [InlineData(Operator.Gte)]
-    [InlineData(Operator.Includes)]
-    [InlineData(Operator.IsAfter)]
-    [InlineData(Operator.IsBefore)]
-    [InlineData(Operator.Lt)]
-    [InlineData(Operator.Lte)]
-    [InlineData(Operator.Neq)]
-    [InlineData(Operator.Omit)]
-    [InlineData(Operator.StartsWith)]
-    [InlineData(Operator.And)]
-    [InlineData(Operator.Or)]
-    public void Validation_Works(Operator rawValue)
+    [InlineData(NestedFilterConfigOperator.EndsWith)]
+    [InlineData(NestedFilterConfigOperator.Eq)]
+    [InlineData(NestedFilterConfigOperator.Exists)]
+    [InlineData(NestedFilterConfigOperator.Gt)]
+    [InlineData(NestedFilterConfigOperator.Gte)]
+    [InlineData(NestedFilterConfigOperator.Includes)]
+    [InlineData(NestedFilterConfigOperator.IsAfter)]
+    [InlineData(NestedFilterConfigOperator.IsBefore)]
+    [InlineData(NestedFilterConfigOperator.Lt)]
+    [InlineData(NestedFilterConfigOperator.Lte)]
+    [InlineData(NestedFilterConfigOperator.Neq)]
+    [InlineData(NestedFilterConfigOperator.Omit)]
+    [InlineData(NestedFilterConfigOperator.StartsWith)]
+    [InlineData(NestedFilterConfigOperator.And)]
+    [InlineData(NestedFilterConfigOperator.Or)]
+    public void Validation_Works(NestedFilterConfigOperator rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Operator> value = rawValue;
+        ApiEnum<string, NestedFilterConfigOperator> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Operator>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, NestedFilterConfigOperator>>(
             JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
@@ -166,28 +168,28 @@ public class OperatorTest : TestBase
     }
 
     [Theory]
-    [InlineData(Operator.EndsWith)]
-    [InlineData(Operator.Eq)]
-    [InlineData(Operator.Exists)]
-    [InlineData(Operator.Gt)]
-    [InlineData(Operator.Gte)]
-    [InlineData(Operator.Includes)]
-    [InlineData(Operator.IsAfter)]
-    [InlineData(Operator.IsBefore)]
-    [InlineData(Operator.Lt)]
-    [InlineData(Operator.Lte)]
-    [InlineData(Operator.Neq)]
-    [InlineData(Operator.Omit)]
-    [InlineData(Operator.StartsWith)]
-    [InlineData(Operator.And)]
-    [InlineData(Operator.Or)]
-    public void SerializationRoundtrip_Works(Operator rawValue)
+    [InlineData(NestedFilterConfigOperator.EndsWith)]
+    [InlineData(NestedFilterConfigOperator.Eq)]
+    [InlineData(NestedFilterConfigOperator.Exists)]
+    [InlineData(NestedFilterConfigOperator.Gt)]
+    [InlineData(NestedFilterConfigOperator.Gte)]
+    [InlineData(NestedFilterConfigOperator.Includes)]
+    [InlineData(NestedFilterConfigOperator.IsAfter)]
+    [InlineData(NestedFilterConfigOperator.IsBefore)]
+    [InlineData(NestedFilterConfigOperator.Lt)]
+    [InlineData(NestedFilterConfigOperator.Lte)]
+    [InlineData(NestedFilterConfigOperator.Neq)]
+    [InlineData(NestedFilterConfigOperator.Omit)]
+    [InlineData(NestedFilterConfigOperator.StartsWith)]
+    [InlineData(NestedFilterConfigOperator.And)]
+    [InlineData(NestedFilterConfigOperator.Or)]
+    public void SerializationRoundtrip_Works(NestedFilterConfigOperator rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Operator> value = rawValue;
+        ApiEnum<string, NestedFilterConfigOperator> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Operator>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, NestedFilterConfigOperator>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -198,12 +200,12 @@ public class OperatorTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Operator>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, NestedFilterConfigOperator>>(
             JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Operator>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, NestedFilterConfigOperator>>(
             json,
             ModelBase.SerializerOptions
         );
