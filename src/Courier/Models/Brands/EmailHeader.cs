@@ -12,19 +12,31 @@ public sealed record class EmailHeader : JsonModel
 {
     public required Logo Logo
     {
-        get { return this._rawData.GetNotNullClass<Logo>("logo"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Logo>("logo");
+        }
         init { this._rawData.Set("logo", value); }
     }
 
     public string? BarColor
     {
-        get { return this._rawData.GetNullableClass<string>("barColor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("barColor");
+        }
         init { this._rawData.Set("barColor", value); }
     }
 
     public bool? InheritDefault
     {
-        get { return this._rawData.GetNullableStruct<bool>("inheritDefault"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("inheritDefault");
+        }
         init { this._rawData.Set("inheritDefault", value); }
     }
 

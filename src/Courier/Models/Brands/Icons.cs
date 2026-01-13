@@ -12,13 +12,21 @@ public sealed record class Icons : JsonModel
 {
     public string? Bell
     {
-        get { return this._rawData.GetNullableClass<string>("bell"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("bell");
+        }
         init { this._rawData.Set("bell", value); }
     }
 
     public string? Message
     {
-        get { return this._rawData.GetNullableClass<string>("message"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("message");
+        }
         init { this._rawData.Set("message", value); }
     }
 

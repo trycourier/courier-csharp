@@ -27,13 +27,21 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
 
     public required Automation Automation
     {
-        get { return this._rawBodyData.GetNotNullClass<Automation>("automation"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<Automation>("automation");
+        }
         init { this._rawBodyData.Set("automation", value); }
     }
 
     public string? Brand
     {
-        get { return this._rawBodyData.GetNullableClass<string>("brand"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("brand");
+        }
         init { this._rawBodyData.Set("brand", value); }
     }
 
@@ -41,6 +49,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "data"
             );
@@ -58,6 +67,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "profile"
             );
@@ -73,13 +83,21 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
 
     public string? Recipient
     {
-        get { return this._rawBodyData.GetNullableClass<string>("recipient"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("recipient");
+        }
         init { this._rawBodyData.Set("recipient", value); }
     }
 
     public string? Template
     {
-        get { return this._rawBodyData.GetNullableClass<string>("template"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("template");
+        }
         init { this._rawBodyData.Set("template", value); }
     }
 
@@ -164,7 +182,11 @@ public sealed record class Automation : JsonModel
 {
     public required IReadOnlyList<Step> Steps
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Step>>("steps"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Step>>("steps");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Step>>(
@@ -176,7 +198,11 @@ public sealed record class Automation : JsonModel
 
     public string? CancelationToken
     {
-        get { return this._rawData.GetNullableClass<string>("cancelation_token"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("cancelation_token");
+        }
         init { this._rawData.Set("cancelation_token", value); }
     }
 
@@ -763,19 +789,31 @@ public sealed record class AutomationDelayStep : JsonModel
 {
     public required ApiEnum<string, Action> Action
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Action>>("action"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Action>>("action");
+        }
         init { this._rawData.Set("action", value); }
     }
 
     public string? Duration
     {
-        get { return this._rawData.GetNullableClass<string>("duration"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("duration");
+        }
         init { this._rawData.Set("duration", value); }
     }
 
     public string? Until
     {
-        get { return this._rawData.GetNullableClass<string>("until"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("until");
+        }
         init { this._rawData.Set("until", value); }
     }
 
@@ -872,6 +910,7 @@ public sealed record class AutomationSendStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, AutomationSendStepAction>>(
                 "action"
             );
@@ -881,7 +920,11 @@ public sealed record class AutomationSendStep : JsonModel
 
     public string? Brand
     {
-        get { return this._rawData.GetNullableClass<string>("brand"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand");
+        }
         init { this._rawData.Set("brand", value); }
     }
 
@@ -889,6 +932,7 @@ public sealed record class AutomationSendStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
         }
         init
@@ -904,6 +948,7 @@ public sealed record class AutomationSendStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("profile");
         }
         init
@@ -917,13 +962,21 @@ public sealed record class AutomationSendStep : JsonModel
 
     public string? Recipient
     {
-        get { return this._rawData.GetNullableClass<string>("recipient"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("recipient");
+        }
         init { this._rawData.Set("recipient", value); }
     }
 
     public string? Template
     {
-        get { return this._rawData.GetNullableClass<string>("template"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("template");
+        }
         init { this._rawData.Set("template", value); }
     }
 
@@ -1027,6 +1080,7 @@ public sealed record class AutomationSendListStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, AutomationSendListStepAction>>(
                 "action"
             );
@@ -1036,13 +1090,21 @@ public sealed record class AutomationSendListStep : JsonModel
 
     public required string List
     {
-        get { return this._rawData.GetNotNullClass<string>("list"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("list");
+        }
         init { this._rawData.Set("list", value); }
     }
 
     public string? Brand
     {
-        get { return this._rawData.GetNullableClass<string>("brand"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand");
+        }
         init { this._rawData.Set("brand", value); }
     }
 
@@ -1050,6 +1112,7 @@ public sealed record class AutomationSendListStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
         }
         init
@@ -1155,6 +1218,7 @@ public sealed record class AutomationUpdateProfileStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
                 ApiEnum<string, AutomationUpdateProfileStepAction>
             >("action");
@@ -1166,6 +1230,7 @@ public sealed record class AutomationUpdateProfileStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<FrozenDictionary<string, JsonElement>>("profile");
         }
         init
@@ -1179,13 +1244,21 @@ public sealed record class AutomationUpdateProfileStep : JsonModel
 
     public ApiEnum<string, Merge>? Merge
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, Merge>>("merge"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Merge>>("merge");
+        }
         init { this._rawData.Set("merge", value); }
     }
 
     public string? RecipientID
     {
-        get { return this._rawData.GetNullableClass<string>("recipient_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("recipient_id");
+        }
         init { this._rawData.Set("recipient_id", value); }
     }
 
@@ -1328,6 +1401,7 @@ public sealed record class AutomationCancelStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, AutomationCancelStepAction>>(
                 "action"
             );
@@ -1337,7 +1411,11 @@ public sealed record class AutomationCancelStep : JsonModel
 
     public required string CancelationToken
     {
-        get { return this._rawData.GetNotNullClass<string>("cancelation_token"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("cancelation_token");
+        }
         init { this._rawData.Set("cancelation_token", value); }
     }
 
@@ -1431,6 +1509,7 @@ public sealed record class AutomationFetchDataStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, AutomationFetchDataStepAction>>(
                 "action"
             );
@@ -1440,7 +1519,11 @@ public sealed record class AutomationFetchDataStep : JsonModel
 
     public required Webhook Webhook
     {
-        get { return this._rawData.GetNotNullClass<Webhook>("webhook"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Webhook>("webhook");
+        }
         init { this._rawData.Set("webhook", value); }
     }
 
@@ -1448,6 +1531,7 @@ public sealed record class AutomationFetchDataStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<ApiEnum<string, MergeStrategy>>("merge_strategy");
         }
         init { this._rawData.Set("merge_strategy", value); }
@@ -1544,6 +1628,7 @@ public sealed record class Webhook : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Automations.Invoke.Method>
             >("method");
@@ -1553,19 +1638,31 @@ public sealed record class Webhook : JsonModel
 
     public required string Url
     {
-        get { return this._rawData.GetNotNullClass<string>("url"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("url");
+        }
         init { this._rawData.Set("url", value); }
     }
 
     public string? Body
     {
-        get { return this._rawData.GetNullableClass<string>("body"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("body");
+        }
         init { this._rawData.Set("body", value); }
     }
 
     public IReadOnlyDictionary<string, string>? Headers
     {
-        get { return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
         init
         {
             this._rawData.Set<FrozenDictionary<string, string>?>(
@@ -1723,6 +1820,7 @@ public sealed record class AutomationInvokeStep : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, AutomationInvokeStepAction>>(
                 "action"
             );
@@ -1732,7 +1830,11 @@ public sealed record class AutomationInvokeStep : JsonModel
 
     public required string Template
     {
-        get { return this._rawData.GetNotNullClass<string>("template"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("template");
+        }
         init { this._rawData.Set("template", value); }
     }
 

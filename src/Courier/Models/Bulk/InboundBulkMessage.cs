@@ -24,13 +24,21 @@ public sealed record class InboundBulkMessage : JsonModel
     /// </summary>
     public required string Event
     {
-        get { return this._rawData.GetNotNullClass<string>("event"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("event");
+        }
         init { this._rawData.Set("event", value); }
     }
 
     public string? Brand
     {
-        get { return this._rawData.GetNullableClass<string>("brand"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand");
+        }
         init { this._rawData.Set("brand", value); }
     }
 
@@ -40,7 +48,11 @@ public sealed record class InboundBulkMessage : JsonModel
     /// </summary>
     public Content? Content
     {
-        get { return this._rawData.GetNullableClass<Content>("content"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Content>("content");
+        }
         init { this._rawData.Set("content", value); }
     }
 
@@ -48,6 +60,7 @@ public sealed record class InboundBulkMessage : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
         }
         init
@@ -63,6 +76,7 @@ public sealed record class InboundBulkMessage : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<
                 FrozenDictionary<string, FrozenDictionary<string, JsonElement>>
             >("locale");
@@ -86,6 +100,7 @@ public sealed record class InboundBulkMessage : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "override"
             );
@@ -106,7 +121,11 @@ public sealed record class InboundBulkMessage : JsonModel
     /// </summary>
     public string? Template
     {
-        get { return this._rawData.GetNullableClass<string>("template"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("template");
+        }
         init { this._rawData.Set("template", value); }
     }
 

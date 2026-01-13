@@ -15,7 +15,11 @@ public sealed record class InboundBulkMessageUser : JsonModel
     /// </summary>
     public JsonElement? Data
     {
-        get { return this._rawData.GetNullableStruct<JsonElement>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<JsonElement>("data");
+        }
         init
         {
             if (value == null)
@@ -29,7 +33,11 @@ public sealed record class InboundBulkMessageUser : JsonModel
 
     public RecipientPreferences? Preferences
     {
-        get { return this._rawData.GetNullableClass<RecipientPreferences>("preferences"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<RecipientPreferences>("preferences");
+        }
         init { this._rawData.Set("preferences", value); }
     }
 
@@ -42,6 +50,7 @@ public sealed record class InboundBulkMessageUser : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("profile");
         }
         init
@@ -58,7 +67,11 @@ public sealed record class InboundBulkMessageUser : JsonModel
     /// </summary>
     public string? Recipient
     {
-        get { return this._rawData.GetNullableClass<string>("recipient"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("recipient");
+        }
         init { this._rawData.Set("recipient", value); }
     }
 
@@ -69,7 +82,11 @@ public sealed record class InboundBulkMessageUser : JsonModel
     /// </summary>
     public UserRecipient? To
     {
-        get { return this._rawData.GetNullableClass<UserRecipient>("to"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserRecipient>("to");
+        }
         init { this._rawData.Set("to", value); }
     }
 

@@ -18,7 +18,11 @@ public sealed record class InboundTrackEventResponse : JsonModel
     /// </summary>
     public required string MessageID
     {
-        get { return this._rawData.GetNotNullClass<string>("messageId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("messageId");
+        }
         init { this._rawData.Set("messageId", value); }
     }
 

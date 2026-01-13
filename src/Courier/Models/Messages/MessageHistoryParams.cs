@@ -20,7 +20,11 @@ public sealed record class MessageHistoryParams : ParamsBase
     /// </summary>
     public string? Type
     {
-        get { return this._rawQueryData.GetNullableClass<string>("type"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("type");
+        }
         init { this._rawQueryData.Set("type", value); }
     }
 

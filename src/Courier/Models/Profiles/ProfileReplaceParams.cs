@@ -30,6 +30,7 @@ public sealed record class ProfileReplaceParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullClass<FrozenDictionary<string, JsonElement>>(
                 "profile"
             );

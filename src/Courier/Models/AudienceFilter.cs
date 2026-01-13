@@ -17,19 +17,31 @@ public sealed record class AudienceFilter : JsonModel
     /// </summary>
     public required ApiEnum<string, Operator> Operator
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Operator>>("operator"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Operator>>("operator");
+        }
         init { this._rawData.Set("operator", value); }
     }
 
     public required ApiEnum<string, Path> Path
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Path>>("path"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Path>>("path");
+        }
         init { this._rawData.Set("path", value); }
     }
 
     public required string Value
     {
-        get { return this._rawData.GetNotNullClass<string>("value"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("value");
+        }
         init { this._rawData.Set("value", value); }
     }
 

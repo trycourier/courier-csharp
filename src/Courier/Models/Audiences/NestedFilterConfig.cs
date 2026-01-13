@@ -20,6 +20,7 @@ public sealed record class NestedFilterConfig : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Audiences.Operator>
             >("operator");
@@ -29,7 +30,11 @@ public sealed record class NestedFilterConfig : JsonModel
 
     public required IReadOnlyList<Filter> Rules
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Filter>>("rules"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Filter>>("rules");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Filter>>(

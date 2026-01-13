@@ -12,43 +12,71 @@ public sealed record class BrandTemplate : JsonModel
 {
     public required bool Enabled
     {
-        get { return this._rawData.GetNotNullStruct<bool>("enabled"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("enabled");
+        }
         init { this._rawData.Set("enabled", value); }
     }
 
     public string? BackgroundColor
     {
-        get { return this._rawData.GetNullableClass<string>("backgroundColor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("backgroundColor");
+        }
         init { this._rawData.Set("backgroundColor", value); }
     }
 
     public string? BlocksBackgroundColor
     {
-        get { return this._rawData.GetNullableClass<string>("blocksBackgroundColor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("blocksBackgroundColor");
+        }
         init { this._rawData.Set("blocksBackgroundColor", value); }
     }
 
     public string? Footer
     {
-        get { return this._rawData.GetNullableClass<string>("footer"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("footer");
+        }
         init { this._rawData.Set("footer", value); }
     }
 
     public string? Head
     {
-        get { return this._rawData.GetNullableClass<string>("head"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("head");
+        }
         init { this._rawData.Set("head", value); }
     }
 
     public string? Header
     {
-        get { return this._rawData.GetNullableClass<string>("header"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("header");
+        }
         init { this._rawData.Set("header", value); }
     }
 
     public string? Width
     {
-        get { return this._rawData.GetNullableClass<string>("width"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("width");
+        }
         init { this._rawData.Set("width", value); }
     }
 

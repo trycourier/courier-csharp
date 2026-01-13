@@ -15,7 +15,11 @@ public sealed record class WebhookProfile : JsonModel
     /// </summary>
     public required string Url
     {
-        get { return this._rawData.GetNotNullClass<string>("url"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("url");
+        }
         init { this._rawData.Set("url", value); }
     }
 
@@ -24,7 +28,11 @@ public sealed record class WebhookProfile : JsonModel
     /// </summary>
     public WebhookAuthentication? Authentication
     {
-        get { return this._rawData.GetNullableClass<WebhookAuthentication>("authentication"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<WebhookAuthentication>("authentication");
+        }
         init { this._rawData.Set("authentication", value); }
     }
 
@@ -33,7 +41,11 @@ public sealed record class WebhookProfile : JsonModel
     /// </summary>
     public IReadOnlyDictionary<string, string>? Headers
     {
-        get { return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
+        }
         init
         {
             this._rawData.Set<FrozenDictionary<string, string>?>(
@@ -48,7 +60,11 @@ public sealed record class WebhookProfile : JsonModel
     /// </summary>
     public ApiEnum<string, WebhookMethod>? Method
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, WebhookMethod>>("method"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, WebhookMethod>>("method");
+        }
         init { this._rawData.Set("method", value); }
     }
 
@@ -60,6 +76,7 @@ public sealed record class WebhookProfile : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<ApiEnum<string, WebhookProfileType>>("profile");
         }
         init { this._rawData.Set("profile", value); }

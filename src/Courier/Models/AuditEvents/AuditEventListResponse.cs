@@ -13,13 +13,21 @@ public sealed record class AuditEventListResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 
     public required IReadOnlyList<AuditEvent> Results
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<AuditEvent>>("results"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<AuditEvent>>("results");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<AuditEvent>>(

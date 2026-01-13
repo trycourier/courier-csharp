@@ -12,13 +12,21 @@ public sealed record class EmailFooter : JsonModel
 {
     public string? Content
     {
-        get { return this._rawData.GetNullableClass<string>("content"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("content");
+        }
         init { this._rawData.Set("content", value); }
     }
 
     public bool? InheritDefault
     {
-        get { return this._rawData.GetNullableStruct<bool>("inheritDefault"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("inheritDefault");
+        }
         init { this._rawData.Set("inheritDefault", value); }
     }
 

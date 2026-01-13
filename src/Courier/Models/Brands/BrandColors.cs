@@ -12,7 +12,11 @@ public sealed record class BrandColors : JsonModel
 {
     public string? Primary
     {
-        get { return this._rawData.GetNullableClass<string>("primary"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("primary");
+        }
         init
         {
             if (value == null)
@@ -26,7 +30,11 @@ public sealed record class BrandColors : JsonModel
 
     public string? Secondary
     {
-        get { return this._rawData.GetNullableClass<string>("secondary"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("secondary");
+        }
         init
         {
             if (value == null)

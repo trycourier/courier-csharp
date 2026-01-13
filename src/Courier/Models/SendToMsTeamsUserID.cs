@@ -12,19 +12,31 @@ public sealed record class SendToMsTeamsUserID : JsonModel
 {
     public required string ServiceUrl
     {
-        get { return this._rawData.GetNotNullClass<string>("service_url"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("service_url");
+        }
         init { this._rawData.Set("service_url", value); }
     }
 
     public required string TenantID
     {
-        get { return this._rawData.GetNotNullClass<string>("tenant_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("tenant_id");
+        }
         init { this._rawData.Set("tenant_id", value); }
     }
 
     public required string UserID
     {
-        get { return this._rawData.GetNotNullClass<string>("user_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("user_id");
+        }
         init { this._rawData.Set("user_id", value); }
     }
 

@@ -16,6 +16,7 @@ public sealed record class ProfileReplaceResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, ProfileReplaceResponseStatus>>(
                 "status"
             );

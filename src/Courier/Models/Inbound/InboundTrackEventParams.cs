@@ -28,7 +28,11 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public required string Event
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("event"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("event");
+        }
         init { this._rawBodyData.Set("event", value); }
     }
 
@@ -38,7 +42,11 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public required string MessageID
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("messageId"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("messageId");
+        }
         init { this._rawBodyData.Set("messageId", value); }
     }
 
@@ -46,6 +54,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullClass<FrozenDictionary<string, JsonElement>>(
                 "properties"
             );
@@ -63,6 +72,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Inbound.Type>
             >("type");
@@ -75,7 +85,11 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public string? UserID
     {
-        get { return this._rawBodyData.GetNullableClass<string>("userId"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("userId");
+        }
         init { this._rawBodyData.Set("userId", value); }
     }
 

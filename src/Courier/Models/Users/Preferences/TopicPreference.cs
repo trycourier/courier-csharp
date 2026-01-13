@@ -15,6 +15,7 @@ public sealed record class TopicPreference : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
                 "default_status"
             );
@@ -24,19 +25,31 @@ public sealed record class TopicPreference : JsonModel
 
     public required ApiEnum<string, PreferenceStatus> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
     public required string TopicID
     {
-        get { return this._rawData.GetNotNullClass<string>("topic_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("topic_id");
+        }
         init { this._rawData.Set("topic_id", value); }
     }
 
     public required string TopicName
     {
-        get { return this._rawData.GetNotNullClass<string>("topic_name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("topic_name");
+        }
         init { this._rawData.Set("topic_name", value); }
     }
 
@@ -47,6 +60,7 @@ public sealed record class TopicPreference : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<
                 ImmutableArray<ApiEnum<string, ChannelClassification>>
             >("custom_routing");
@@ -62,7 +76,11 @@ public sealed record class TopicPreference : JsonModel
 
     public bool? HasCustomRouting
     {
-        get { return this._rawData.GetNullableStruct<bool>("has_custom_routing"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("has_custom_routing");
+        }
         init { this._rawData.Set("has_custom_routing", value); }
     }
 

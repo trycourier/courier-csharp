@@ -15,7 +15,11 @@ public sealed record class Preference : JsonModel
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -23,6 +27,7 @@ public sealed record class Preference : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<ImmutableArray<ChannelPreference>>(
                 "channel_preferences"
             );
@@ -38,7 +43,11 @@ public sealed record class Preference : JsonModel
 
     public IReadOnlyList<Rule>? Rules
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<Rule>>("rules"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<Rule>>("rules");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Rule>?>(
@@ -50,7 +59,11 @@ public sealed record class Preference : JsonModel
 
     public ApiEnum<string, Source>? Source
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, Source>>("source"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Source>>("source");
+        }
         init { this._rawData.Set("source", value); }
     }
 

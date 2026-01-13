@@ -15,7 +15,11 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? AccountID
     {
-        get { return this._rawData.GetNullableClass<string>("account_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("account_id");
+        }
         init { this._rawData.Set("account_id", value); }
     }
 
@@ -24,7 +28,11 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public MessageContext? Context
     {
-        get { return this._rawData.GetNullableClass<MessageContext>("context"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<MessageContext>("context");
+        }
         init { this._rawData.Set("context", value); }
     }
 
@@ -32,6 +40,7 @@ public sealed record class UserRecipient : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
         }
         init
@@ -48,7 +57,11 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? Email
     {
-        get { return this._rawData.GetNullableClass<string>("email"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("email");
+        }
         init { this._rawData.Set("email", value); }
     }
 
@@ -57,7 +70,11 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? ListID
     {
-        get { return this._rawData.GetNullableClass<string>("list_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("list_id");
+        }
         init { this._rawData.Set("list_id", value); }
     }
 
@@ -66,7 +83,11 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? Locale
     {
-        get { return this._rawData.GetNullableClass<string>("locale"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locale");
+        }
         init { this._rawData.Set("locale", value); }
     }
 
@@ -75,13 +96,21 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? PhoneNumber
     {
-        get { return this._rawData.GetNullableClass<string>("phone_number"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("phone_number");
+        }
         init { this._rawData.Set("phone_number", value); }
     }
 
     public Preferences? Preferences
     {
-        get { return this._rawData.GetNullableClass<Preferences>("preferences"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Preferences>("preferences");
+        }
         init { this._rawData.Set("preferences", value); }
     }
 
@@ -90,7 +119,11 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? TenantID
     {
-        get { return this._rawData.GetNullableClass<string>("tenant_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("tenant_id");
+        }
         init { this._rawData.Set("tenant_id", value); }
     }
 
@@ -100,7 +133,11 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? UserID
     {
-        get { return this._rawData.GetNullableClass<string>("user_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("user_id");
+        }
         init { this._rawData.Set("user_id", value); }
     }
 
@@ -158,6 +195,7 @@ public sealed record class Preferences : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<FrozenDictionary<string, Preference>>(
                 "notifications"
             );
@@ -175,6 +213,7 @@ public sealed record class Preferences : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, Preference>>(
                 "categories"
             );
@@ -190,7 +229,11 @@ public sealed record class Preferences : JsonModel
 
     public string? TemplateID
     {
-        get { return this._rawData.GetNullableClass<string>("templateId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("templateId");
+        }
         init { this._rawData.Set("templateId", value); }
     }
 

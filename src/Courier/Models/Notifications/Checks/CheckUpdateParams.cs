@@ -24,7 +24,11 @@ public sealed record class CheckUpdateParams : ParamsBase
 
     public required IReadOnlyList<BaseCheck> Checks
     {
-        get { return this._rawBodyData.GetNotNullStruct<ImmutableArray<BaseCheck>>("checks"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<BaseCheck>>("checks");
+        }
         init
         {
             this._rawBodyData.Set<ImmutableArray<BaseCheck>>(

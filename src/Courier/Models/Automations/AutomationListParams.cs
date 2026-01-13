@@ -21,7 +21,11 @@ public sealed record class AutomationListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return this._rawQueryData.GetNullableClass<string>("cursor"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cursor");
+        }
         init
         {
             if (value == null)
@@ -39,7 +43,11 @@ public sealed record class AutomationListParams : ParamsBase
     /// </summary>
     public ApiEnum<string, Version>? Version
     {
-        get { return this._rawQueryData.GetNullableClass<ApiEnum<string, Version>>("version"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Version>>("version");
+        }
         init
         {
             if (value == null)

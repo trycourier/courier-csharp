@@ -17,7 +17,11 @@ public sealed record class TenantAssociation : JsonModel
     /// </summary>
     public required string TenantID
     {
-        get { return this._rawData.GetNotNullClass<string>("tenant_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("tenant_id");
+        }
         init { this._rawData.Set("tenant_id", value); }
     }
 
@@ -28,6 +32,7 @@ public sealed record class TenantAssociation : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("profile");
         }
         init
@@ -43,6 +48,7 @@ public sealed record class TenantAssociation : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<
                 ApiEnum<string, global::Courier.Models.Tenants.Type>
             >("type");
@@ -55,7 +61,11 @@ public sealed record class TenantAssociation : JsonModel
     /// </summary>
     public string? UserID
     {
-        get { return this._rawData.GetNullableClass<string>("user_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("user_id");
+        }
         init { this._rawData.Set("user_id", value); }
     }
 

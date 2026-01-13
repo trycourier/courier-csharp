@@ -14,25 +14,41 @@ public sealed record class SendToMsTeamsChannelName : JsonModel
 {
     public required string ChannelName
     {
-        get { return this._rawData.GetNotNullClass<string>("channel_name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("channel_name");
+        }
         init { this._rawData.Set("channel_name", value); }
     }
 
     public required string ServiceUrl
     {
-        get { return this._rawData.GetNotNullClass<string>("service_url"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("service_url");
+        }
         init { this._rawData.Set("service_url", value); }
     }
 
     public required string TeamID
     {
-        get { return this._rawData.GetNotNullClass<string>("team_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("team_id");
+        }
         init { this._rawData.Set("team_id", value); }
     }
 
     public required string TenantID
     {
-        get { return this._rawData.GetNotNullClass<string>("tenant_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("tenant_id");
+        }
         init { this._rawData.Set("tenant_id", value); }
     }
 

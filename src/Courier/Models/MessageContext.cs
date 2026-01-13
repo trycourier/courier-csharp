@@ -15,7 +15,11 @@ public sealed record class MessageContext : JsonModel
     /// </summary>
     public string? TenantID
     {
-        get { return this._rawData.GetNullableClass<string>("tenant_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("tenant_id");
+        }
         init { this._rawData.Set("tenant_id", value); }
     }
 

@@ -27,6 +27,7 @@ public sealed record class ProfileCreateParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullClass<FrozenDictionary<string, JsonElement>>(
                 "profile"
             );

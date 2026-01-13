@@ -12,25 +12,41 @@ public sealed record class UserProfile : JsonModel
 {
     public Address? Address
     {
-        get { return this._rawData.GetNullableClass<Address>("address"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Address>("address");
+        }
         init { this._rawData.Set("address", value); }
     }
 
     public AirshipProfile? Airship
     {
-        get { return this._rawData.GetNullableClass<AirshipProfile>("airship"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<AirshipProfile>("airship");
+        }
         init { this._rawData.Set("airship", value); }
     }
 
     public string? Apn
     {
-        get { return this._rawData.GetNullableClass<string>("apn"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("apn");
+        }
         init { this._rawData.Set("apn", value); }
     }
 
     public string? Birthdate
     {
-        get { return this._rawData.GetNullableClass<string>("birthdate"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("birthdate");
+        }
         init { this._rawData.Set("birthdate", value); }
     }
 
@@ -42,6 +58,7 @@ public sealed record class UserProfile : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("custom");
         }
         init
@@ -55,157 +72,261 @@ public sealed record class UserProfile : JsonModel
 
     public Discord? Discord
     {
-        get { return this._rawData.GetNullableClass<Discord>("discord"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Discord>("discord");
+        }
         init { this._rawData.Set("discord", value); }
     }
 
     public string? Email
     {
-        get { return this._rawData.GetNullableClass<string>("email"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("email");
+        }
         init { this._rawData.Set("email", value); }
     }
 
     public bool? EmailVerified
     {
-        get { return this._rawData.GetNullableStruct<bool>("email_verified"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("email_verified");
+        }
         init { this._rawData.Set("email_verified", value); }
     }
 
     public Expo? Expo
     {
-        get { return this._rawData.GetNullableClass<Expo>("expo"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Expo>("expo");
+        }
         init { this._rawData.Set("expo", value); }
     }
 
     public string? FacebookPsid
     {
-        get { return this._rawData.GetNullableClass<string>("facebookPSID"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("facebookPSID");
+        }
         init { this._rawData.Set("facebookPSID", value); }
     }
 
     public string? FamilyName
     {
-        get { return this._rawData.GetNullableClass<string>("family_name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("family_name");
+        }
         init { this._rawData.Set("family_name", value); }
     }
 
     public UserProfileFirebaseToken? FirebaseToken
     {
-        get { return this._rawData.GetNullableClass<UserProfileFirebaseToken>("firebaseToken"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserProfileFirebaseToken>("firebaseToken");
+        }
         init { this._rawData.Set("firebaseToken", value); }
     }
 
     public string? Gender
     {
-        get { return this._rawData.GetNullableClass<string>("gender"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("gender");
+        }
         init { this._rawData.Set("gender", value); }
     }
 
     public string? GivenName
     {
-        get { return this._rawData.GetNullableClass<string>("given_name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("given_name");
+        }
         init { this._rawData.Set("given_name", value); }
     }
 
     public Intercom? Intercom
     {
-        get { return this._rawData.GetNullableClass<Intercom>("intercom"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Intercom>("intercom");
+        }
         init { this._rawData.Set("intercom", value); }
     }
 
     public string? Locale
     {
-        get { return this._rawData.GetNullableClass<string>("locale"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("locale");
+        }
         init { this._rawData.Set("locale", value); }
     }
 
     public string? MiddleName
     {
-        get { return this._rawData.GetNullableClass<string>("middle_name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("middle_name");
+        }
         init { this._rawData.Set("middle_name", value); }
     }
 
     public MsTeams? MsTeams
     {
-        get { return this._rawData.GetNullableClass<MsTeams>("ms_teams"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<MsTeams>("ms_teams");
+        }
         init { this._rawData.Set("ms_teams", value); }
     }
 
     public string? Name
     {
-        get { return this._rawData.GetNullableClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 
     public string? Nickname
     {
-        get { return this._rawData.GetNullableClass<string>("nickname"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("nickname");
+        }
         init { this._rawData.Set("nickname", value); }
     }
 
     public string? PhoneNumber
     {
-        get { return this._rawData.GetNullableClass<string>("phone_number"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("phone_number");
+        }
         init { this._rawData.Set("phone_number", value); }
     }
 
     public bool? PhoneNumberVerified
     {
-        get { return this._rawData.GetNullableStruct<bool>("phone_number_verified"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("phone_number_verified");
+        }
         init { this._rawData.Set("phone_number_verified", value); }
     }
 
     public string? Picture
     {
-        get { return this._rawData.GetNullableClass<string>("picture"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("picture");
+        }
         init { this._rawData.Set("picture", value); }
     }
 
     public string? PreferredName
     {
-        get { return this._rawData.GetNullableClass<string>("preferred_name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("preferred_name");
+        }
         init { this._rawData.Set("preferred_name", value); }
     }
 
     public string? Profile
     {
-        get { return this._rawData.GetNullableClass<string>("profile"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("profile");
+        }
         init { this._rawData.Set("profile", value); }
     }
 
     public Slack? Slack
     {
-        get { return this._rawData.GetNullableClass<Slack>("slack"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Slack>("slack");
+        }
         init { this._rawData.Set("slack", value); }
     }
 
     public string? Sub
     {
-        get { return this._rawData.GetNullableClass<string>("sub"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("sub");
+        }
         init { this._rawData.Set("sub", value); }
     }
 
     public string? TargetArn
     {
-        get { return this._rawData.GetNullableClass<string>("target_arn"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("target_arn");
+        }
         init { this._rawData.Set("target_arn", value); }
     }
 
     public string? UpdatedAt
     {
-        get { return this._rawData.GetNullableClass<string>("updated_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("updated_at");
+        }
         init { this._rawData.Set("updated_at", value); }
     }
 
     public string? Website
     {
-        get { return this._rawData.GetNullableClass<string>("website"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("website");
+        }
         init { this._rawData.Set("website", value); }
     }
 
     public string? Zoneinfo
     {
-        get { return this._rawData.GetNullableClass<string>("zoneinfo"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("zoneinfo");
+        }
         init { this._rawData.Set("zoneinfo", value); }
     }
 
@@ -282,37 +403,61 @@ public sealed record class Address : JsonModel
 {
     public required string Country
     {
-        get { return this._rawData.GetNotNullClass<string>("country"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("country");
+        }
         init { this._rawData.Set("country", value); }
     }
 
     public required string Formatted
     {
-        get { return this._rawData.GetNotNullClass<string>("formatted"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("formatted");
+        }
         init { this._rawData.Set("formatted", value); }
     }
 
     public required string Locality
     {
-        get { return this._rawData.GetNotNullClass<string>("locality"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("locality");
+        }
         init { this._rawData.Set("locality", value); }
     }
 
     public required string PostalCode
     {
-        get { return this._rawData.GetNotNullClass<string>("postal_code"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("postal_code");
+        }
         init { this._rawData.Set("postal_code", value); }
     }
 
     public required string Region
     {
-        get { return this._rawData.GetNotNullClass<string>("region"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("region");
+        }
         init { this._rawData.Set("region", value); }
     }
 
     public required string StreetAddress
     {
-        get { return this._rawData.GetNotNullClass<string>("street_address"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("street_address");
+        }
         init { this._rawData.Set("street_address", value); }
     }
 

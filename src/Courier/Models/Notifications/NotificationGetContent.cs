@@ -15,7 +15,11 @@ public sealed record class NotificationGetContent : JsonModel
 {
     public IReadOnlyList<Block>? Blocks
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<Block>>("blocks"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<Block>>("blocks");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Block>?>(
@@ -27,7 +31,11 @@ public sealed record class NotificationGetContent : JsonModel
 
     public IReadOnlyList<Channel>? Channels
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<Channel>>("channels"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<Channel>>("channels");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Channel>?>(
@@ -39,7 +47,11 @@ public sealed record class NotificationGetContent : JsonModel
 
     public string? Checksum
     {
-        get { return this._rawData.GetNullableClass<string>("checksum"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("checksum");
+        }
         init { this._rawData.Set("checksum", value); }
     }
 
@@ -97,43 +109,71 @@ public sealed record class Block : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required ApiEnum<string, BlockType> Type
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, BlockType>>("type"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, BlockType>>("type");
+        }
         init { this._rawData.Set("type", value); }
     }
 
     public string? Alias
     {
-        get { return this._rawData.GetNullableClass<string>("alias"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("alias");
+        }
         init { this._rawData.Set("alias", value); }
     }
 
     public string? Checksum
     {
-        get { return this._rawData.GetNullableClass<string>("checksum"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("checksum");
+        }
         init { this._rawData.Set("checksum", value); }
     }
 
     public Content? Content
     {
-        get { return this._rawData.GetNullableClass<Content>("content"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Content>("content");
+        }
         init { this._rawData.Set("content", value); }
     }
 
     public string? Context
     {
-        get { return this._rawData.GetNullableClass<string>("context"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("context");
+        }
         init { this._rawData.Set("context", value); }
     }
 
     public IReadOnlyDictionary<string, Locale>? Locales
     {
-        get { return this._rawData.GetNullableClass<FrozenDictionary<string, Locale>>("locales"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, Locale>>("locales");
+        }
         init
         {
             this._rawData.Set<FrozenDictionary<string, Locale>?>(
@@ -498,13 +538,21 @@ public sealed record class NotificationContentHierarchy : JsonModel
 {
     public string? Children
     {
-        get { return this._rawData.GetNullableClass<string>("children"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("children");
+        }
         init { this._rawData.Set("children", value); }
     }
 
     public string? Parent
     {
-        get { return this._rawData.GetNullableClass<string>("parent"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("parent");
+        }
         init { this._rawData.Set("parent", value); }
     }
 
@@ -793,13 +841,21 @@ public sealed record class LocaleNotificationContentHierarchy : JsonModel
 {
     public string? Children
     {
-        get { return this._rawData.GetNullableClass<string>("children"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("children");
+        }
         init { this._rawData.Set("children", value); }
     }
 
     public string? Parent
     {
-        get { return this._rawData.GetNullableClass<string>("parent"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("parent");
+        }
         init { this._rawData.Set("parent", value); }
     }
 
@@ -852,19 +908,31 @@ public sealed record class Channel : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public string? Checksum
     {
-        get { return this._rawData.GetNullableClass<string>("checksum"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("checksum");
+        }
         init { this._rawData.Set("checksum", value); }
     }
 
     public ChannelContent? Content
     {
-        get { return this._rawData.GetNullableClass<ChannelContent>("content"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ChannelContent>("content");
+        }
         init { this._rawData.Set("content", value); }
     }
 
@@ -872,6 +940,7 @@ public sealed record class Channel : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, LocalesItem>>("locales");
         }
         init
@@ -885,7 +954,11 @@ public sealed record class Channel : JsonModel
 
     public string? Type
     {
-        get { return this._rawData.GetNullableClass<string>("type"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("type");
+        }
         init { this._rawData.Set("type", value); }
     }
 
@@ -949,13 +1022,21 @@ public sealed record class ChannelContent : JsonModel
 {
     public string? Subject
     {
-        get { return this._rawData.GetNullableClass<string>("subject"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subject");
+        }
         init { this._rawData.Set("subject", value); }
     }
 
     public string? Title
     {
-        get { return this._rawData.GetNullableClass<string>("title"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("title");
+        }
         init { this._rawData.Set("title", value); }
     }
 
@@ -1003,13 +1084,21 @@ public sealed record class LocalesItem : JsonModel
 {
     public string? Subject
     {
-        get { return this._rawData.GetNullableClass<string>("subject"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subject");
+        }
         init { this._rawData.Set("subject", value); }
     }
 
     public string? Title
     {
-        get { return this._rawData.GetNullableClass<string>("title"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("title");
+        }
         init { this._rawData.Set("title", value); }
     }
 

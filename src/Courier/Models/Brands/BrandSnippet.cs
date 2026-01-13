@@ -12,13 +12,21 @@ public sealed record class BrandSnippet : JsonModel
 {
     public required string Name
     {
-        get { return this._rawData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 
     public required string Value
     {
-        get { return this._rawData.GetNotNullClass<string>("value"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("value");
+        }
         init { this._rawData.Set("value", value); }
     }
 

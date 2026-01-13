@@ -14,6 +14,7 @@ public sealed record class RecipientPreferences : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<
                 FrozenDictionary<string, NotificationPreferenceDetails>
             >("categories");
@@ -31,6 +32,7 @@ public sealed record class RecipientPreferences : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<
                 FrozenDictionary<string, NotificationPreferenceDetails>
             >("notifications");

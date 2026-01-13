@@ -12,25 +12,41 @@ public sealed record class SubscriptionList : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required string Name
     {
-        get { return this._rawData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 
     public string? Created
     {
-        get { return this._rawData.GetNullableClass<string>("created"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("created");
+        }
         init { this._rawData.Set("created", value); }
     }
 
     public string? Updated
     {
-        get { return this._rawData.GetNullableClass<string>("updated"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("updated");
+        }
         init { this._rawData.Set("updated", value); }
     }
 

@@ -30,6 +30,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullStruct<ImmutableArray<TenantAssociation>>("tenants");
         }
         init

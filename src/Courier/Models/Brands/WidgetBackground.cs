@@ -12,13 +12,21 @@ public sealed record class WidgetBackground : JsonModel
 {
     public string? BottomColor
     {
-        get { return this._rawData.GetNullableClass<string>("bottomColor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("bottomColor");
+        }
         init { this._rawData.Set("bottomColor", value); }
     }
 
     public string? TopColor
     {
-        get { return this._rawData.GetNullableClass<string>("topColor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("topColor");
+        }
         init { this._rawData.Set("topColor", value); }
     }
 

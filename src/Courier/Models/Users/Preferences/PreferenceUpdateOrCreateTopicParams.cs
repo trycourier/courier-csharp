@@ -28,7 +28,11 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
 
     public required Topic Topic
     {
-        get { return this._rawBodyData.GetNotNullClass<Topic>("topic"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<Topic>("topic");
+        }
         init { this._rawBodyData.Set("topic", value); }
     }
 
@@ -37,7 +41,11 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return this._rawQueryData.GetNullableClass<string>("tenant_id"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("tenant_id");
+        }
         init { this._rawQueryData.Set("tenant_id", value); }
     }
 
@@ -128,7 +136,11 @@ public sealed record class Topic : JsonModel
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -139,6 +151,7 @@ public sealed record class Topic : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<
                 ImmutableArray<ApiEnum<string, ChannelClassification>>
             >("custom_routing");
@@ -154,7 +167,11 @@ public sealed record class Topic : JsonModel
 
     public bool? HasCustomRouting
     {
-        get { return this._rawData.GetNullableStruct<bool>("has_custom_routing"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("has_custom_routing");
+        }
         init { this._rawData.Set("has_custom_routing", value); }
     }
 

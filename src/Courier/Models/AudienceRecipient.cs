@@ -20,7 +20,11 @@ public sealed record class AudienceRecipient : JsonModel
     /// </summary>
     public required string AudienceID
     {
-        get { return this._rawData.GetNotNullClass<string>("audience_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("audience_id");
+        }
         init { this._rawData.Set("audience_id", value); }
     }
 
@@ -28,6 +32,7 @@ public sealed record class AudienceRecipient : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
         }
         init
@@ -41,7 +46,11 @@ public sealed record class AudienceRecipient : JsonModel
 
     public IReadOnlyList<AudienceFilter>? Filters
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<AudienceFilter>>("filters"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<AudienceFilter>>("filters");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<AudienceFilter>?>(

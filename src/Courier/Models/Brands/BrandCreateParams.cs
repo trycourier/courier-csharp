@@ -22,25 +22,41 @@ public sealed record class BrandCreateParams : ParamsBase
 
     public required string Name
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("name");
+        }
         init { this._rawBodyData.Set("name", value); }
     }
 
     public string? ID
     {
-        get { return this._rawBodyData.GetNullableClass<string>("id"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("id");
+        }
         init { this._rawBodyData.Set("id", value); }
     }
 
     public BrandSettings? Settings
     {
-        get { return this._rawBodyData.GetNullableClass<BrandSettings>("settings"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<BrandSettings>("settings");
+        }
         init { this._rawBodyData.Set("settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get { return this._rawBodyData.GetNullableClass<BrandSnippets>("snippets"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<BrandSnippets>("snippets");
+        }
         init { this._rawBodyData.Set("snippets", value); }
     }
 

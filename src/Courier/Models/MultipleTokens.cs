@@ -13,7 +13,11 @@ public sealed record class MultipleTokens : JsonModel
 {
     public required IReadOnlyList<Token> Tokens
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Token>>("tokens"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Token>>("tokens");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Token>>(

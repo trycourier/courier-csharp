@@ -18,7 +18,11 @@ public sealed record class TemplateListResponse : JsonModel
     /// </summary>
     public required bool HasMore
     {
-        get { return this._rawData.GetNotNullStruct<bool>("has_more"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("has_more");
+        }
         init { this._rawData.Set("has_more", value); }
     }
 
@@ -29,6 +33,7 @@ public sealed record class TemplateListResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Tenants.Templates.Type>
             >("type");
@@ -41,7 +46,11 @@ public sealed record class TemplateListResponse : JsonModel
     /// </summary>
     public required string Url
     {
-        get { return this._rawData.GetNotNullClass<string>("url"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("url");
+        }
         init { this._rawData.Set("url", value); }
     }
 
@@ -51,7 +60,11 @@ public sealed record class TemplateListResponse : JsonModel
     /// </summary>
     public string? Cursor
     {
-        get { return this._rawData.GetNullableClass<string>("cursor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("cursor");
+        }
         init { this._rawData.Set("cursor", value); }
     }
 
@@ -59,6 +72,7 @@ public sealed record class TemplateListResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<
                 ImmutableArray<global::Courier.Models.Tenants.Templates.Item>
             >("items");
@@ -78,7 +92,11 @@ public sealed record class TemplateListResponse : JsonModel
     /// </summary>
     public string? NextUrl
     {
-        get { return this._rawData.GetNullableClass<string>("next_url"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("next_url");
+        }
         init { this._rawData.Set("next_url", value); }
     }
 
@@ -188,7 +206,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
@@ -197,7 +219,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public required string CreatedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("created_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("created_at");
+        }
         init { this._rawData.Set("created_at", value); }
     }
 
@@ -206,7 +232,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public required string PublishedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("published_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("published_at");
+        }
         init { this._rawData.Set("published_at", value); }
     }
 
@@ -215,7 +245,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public required string UpdatedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("updated_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("updated_at");
+        }
         init { this._rawData.Set("updated_at", value); }
     }
 
@@ -224,7 +258,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public required string Version
     {
-        get { return this._rawData.GetNotNullClass<string>("version"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("version");
+        }
         init { this._rawData.Set("version", value); }
     }
 
@@ -233,7 +271,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public required Data Data
     {
-        get { return this._rawData.GetNotNullClass<Data>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Data>("data");
+        }
         init { this._rawData.Set("data", value); }
     }
 
@@ -308,7 +350,11 @@ public sealed record class IntersectionMember1 : JsonModel
     /// </summary>
     public required Data Data
     {
-        get { return this._rawData.GetNotNullClass<Data>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Data>("data");
+        }
         init { this._rawData.Set("data", value); }
     }
 
@@ -371,7 +417,11 @@ public sealed record class Data : JsonModel
 {
     public required MessageRouting Routing
     {
-        get { return this._rawData.GetNotNullClass<MessageRouting>("routing"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<MessageRouting>("routing");
+        }
         init { this._rawData.Set("routing", value); }
     }
 

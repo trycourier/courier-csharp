@@ -27,7 +27,11 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
 
     public RecipientPreferences? Preferences
     {
-        get { return this._rawBodyData.GetNullableClass<RecipientPreferences>("preferences"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<RecipientPreferences>("preferences");
+        }
         init { this._rawBodyData.Set("preferences", value); }
     }
 

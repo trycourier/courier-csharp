@@ -15,7 +15,11 @@ public sealed record class WebhookAuthentication : JsonModel
     /// </summary>
     public required ApiEnum<string, WebhookAuthMode> Mode
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, WebhookAuthMode>>("mode"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, WebhookAuthMode>>("mode");
+        }
         init { this._rawData.Set("mode", value); }
     }
 
@@ -24,7 +28,11 @@ public sealed record class WebhookAuthentication : JsonModel
     /// </summary>
     public string? Token
     {
-        get { return this._rawData.GetNullableClass<string>("token"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("token");
+        }
         init { this._rawData.Set("token", value); }
     }
 
@@ -33,7 +41,11 @@ public sealed record class WebhookAuthentication : JsonModel
     /// </summary>
     public string? Password
     {
-        get { return this._rawData.GetNullableClass<string>("password"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("password");
+        }
         init { this._rawData.Set("password", value); }
     }
 
@@ -42,7 +54,11 @@ public sealed record class WebhookAuthentication : JsonModel
     /// </summary>
     public string? Username
     {
-        get { return this._rawData.GetNullableClass<string>("username"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("username");
+        }
         init { this._rawData.Set("username", value); }
     }
 

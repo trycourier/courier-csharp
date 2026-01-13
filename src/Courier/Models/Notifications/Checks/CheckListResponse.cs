@@ -13,7 +13,11 @@ public sealed record class CheckListResponse : JsonModel
 {
     public required IReadOnlyList<Check> Checks
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Check>>("checks"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Check>>("checks");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Check>>(

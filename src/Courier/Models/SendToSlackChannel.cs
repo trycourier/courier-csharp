@@ -12,13 +12,21 @@ public sealed record class SendToSlackChannel : JsonModel
 {
     public required string AccessToken
     {
-        get { return this._rawData.GetNotNullClass<string>("access_token"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("access_token");
+        }
         init { this._rawData.Set("access_token", value); }
     }
 
     public required string Channel
     {
-        get { return this._rawData.GetNotNullClass<string>("channel"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("channel");
+        }
         init { this._rawData.Set("channel", value); }
     }
 

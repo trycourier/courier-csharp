@@ -15,13 +15,21 @@ public sealed record class NotificationListResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 
     public required IReadOnlyList<Result> Results
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Result>>("results"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Result>>("results");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Result>>(
@@ -81,13 +89,21 @@ public sealed record class Result : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required long CreatedAt
     {
-        get { return this._rawData.GetNotNullStruct<long>("created_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("created_at");
+        }
         init { this._rawData.Set("created_at", value); }
     }
 
@@ -96,7 +112,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required IReadOnlyList<string> EventIds
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<string>>("event_ids"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<string>>("event_ids");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<string>>(
@@ -108,37 +128,61 @@ public sealed record class Result : JsonModel
 
     public required string Note
     {
-        get { return this._rawData.GetNotNullClass<string>("note"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("note");
+        }
         init { this._rawData.Set("note", value); }
     }
 
     public required MessageRouting Routing
     {
-        get { return this._rawData.GetNotNullClass<MessageRouting>("routing"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<MessageRouting>("routing");
+        }
         init { this._rawData.Set("routing", value); }
     }
 
     public required string TopicID
     {
-        get { return this._rawData.GetNotNullClass<string>("topic_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("topic_id");
+        }
         init { this._rawData.Set("topic_id", value); }
     }
 
     public required long UpdatedAt
     {
-        get { return this._rawData.GetNotNullStruct<long>("updated_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("updated_at");
+        }
         init { this._rawData.Set("updated_at", value); }
     }
 
     public Tags? Tags
     {
-        get { return this._rawData.GetNullableClass<Tags>("tags"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Tags>("tags");
+        }
         init { this._rawData.Set("tags", value); }
     }
 
     public string? Title
     {
-        get { return this._rawData.GetNullableClass<string>("title"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("title");
+        }
         init { this._rawData.Set("title", value); }
     }
 
@@ -193,7 +237,11 @@ public sealed record class Tags : JsonModel
 {
     public required IReadOnlyList<Data> Data
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Data>>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Data>>("data");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Data>>("data", ImmutableArray.ToImmutableArray(value));
@@ -253,13 +301,21 @@ public sealed record class Data : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required string Name
     {
-        get { return this._rawData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 

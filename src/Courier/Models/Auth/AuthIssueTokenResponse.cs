@@ -12,7 +12,11 @@ public sealed record class AuthIssueTokenResponse : JsonModel
 {
     public required string Token
     {
-        get { return this._rawData.GetNotNullClass<string>("token"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("token");
+        }
         init { this._rawData.Set("token", value); }
     }
 

@@ -17,7 +17,11 @@ public sealed record class AutomationTemplate : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
@@ -26,7 +30,11 @@ public sealed record class AutomationTemplate : JsonModel
     /// </summary>
     public required string Name
     {
-        get { return this._rawData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 
@@ -37,6 +45,7 @@ public sealed record class AutomationTemplate : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, AutomationTemplateVersion>>(
                 "version"
             );
@@ -49,7 +58,11 @@ public sealed record class AutomationTemplate : JsonModel
     /// </summary>
     public System::DateTimeOffset? CreatedAt
     {
-        get { return this._rawData.GetNullableStruct<System::DateTimeOffset>("createdAt"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<System::DateTimeOffset>("createdAt");
+        }
         init
         {
             if (value == null)
@@ -66,7 +79,11 @@ public sealed record class AutomationTemplate : JsonModel
     /// </summary>
     public System::DateTimeOffset? UpdatedAt
     {
-        get { return this._rawData.GetNullableStruct<System::DateTimeOffset>("updatedAt"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<System::DateTimeOffset>("updatedAt");
+        }
         init
         {
             if (value == null)

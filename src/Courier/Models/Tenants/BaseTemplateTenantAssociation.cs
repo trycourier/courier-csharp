@@ -17,7 +17,11 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
@@ -26,7 +30,11 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string CreatedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("created_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("created_at");
+        }
         init { this._rawData.Set("created_at", value); }
     }
 
@@ -35,7 +43,11 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string PublishedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("published_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("published_at");
+        }
         init { this._rawData.Set("published_at", value); }
     }
 
@@ -44,7 +56,11 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string UpdatedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("updated_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("updated_at");
+        }
         init { this._rawData.Set("updated_at", value); }
     }
 
@@ -53,7 +69,11 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string Version
     {
-        get { return this._rawData.GetNotNullClass<string>("version"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("version");
+        }
         init { this._rawData.Set("version", value); }
     }
 

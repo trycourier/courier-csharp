@@ -12,7 +12,11 @@ public sealed record class SendDirectMessage : JsonModel
 {
     public required string UserID
     {
-        get { return this._rawData.GetNotNullClass<string>("user_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("user_id");
+        }
         init { this._rawData.Set("user_id", value); }
     }
 

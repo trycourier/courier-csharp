@@ -15,7 +15,11 @@ public sealed record class PagerdutyRecipient : JsonModel
 {
     public required Pagerduty Pagerduty
     {
-        get { return this._rawData.GetNotNullClass<Pagerduty>("pagerduty"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Pagerduty>("pagerduty");
+        }
         init { this._rawData.Set("pagerduty", value); }
     }
 

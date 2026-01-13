@@ -12,7 +12,11 @@ public sealed record class SendToChannel : JsonModel
 {
     public required string ChannelID
     {
-        get { return this._rawData.GetNotNullClass<string>("channel_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("channel_id");
+        }
         init { this._rawData.Set("channel_id", value); }
     }
 

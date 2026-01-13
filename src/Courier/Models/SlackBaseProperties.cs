@@ -12,7 +12,11 @@ public sealed record class SlackBaseProperties : JsonModel
 {
     public required string AccessToken
     {
-        get { return this._rawData.GetNotNullClass<string>("access_token"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("access_token");
+        }
         init { this._rawData.Set("access_token", value); }
     }
 

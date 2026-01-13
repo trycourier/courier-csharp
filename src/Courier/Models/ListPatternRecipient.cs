@@ -17,6 +17,7 @@ public sealed record class ListPatternRecipient : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
         }
         init
@@ -30,7 +31,11 @@ public sealed record class ListPatternRecipient : JsonModel
 
     public string? ListPattern
     {
-        get { return this._rawData.GetNullableClass<string>("list_pattern"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("list_pattern");
+        }
         init { this._rawData.Set("list_pattern", value); }
     }
 

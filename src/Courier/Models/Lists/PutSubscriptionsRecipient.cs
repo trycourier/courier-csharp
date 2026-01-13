@@ -14,13 +14,21 @@ public sealed record class PutSubscriptionsRecipient : JsonModel
 {
     public required string RecipientID
     {
-        get { return this._rawData.GetNotNullClass<string>("recipientId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("recipientId");
+        }
         init { this._rawData.Set("recipientId", value); }
     }
 
     public RecipientPreferences? Preferences
     {
-        get { return this._rawData.GetNullableClass<RecipientPreferences>("preferences"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<RecipientPreferences>("preferences");
+        }
         init { this._rawData.Set("preferences", value); }
     }
 

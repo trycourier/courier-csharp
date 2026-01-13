@@ -12,13 +12,21 @@ public sealed record class Intercom : JsonModel
 {
     public required string From
     {
-        get { return this._rawData.GetNotNullClass<string>("from"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("from");
+        }
         init { this._rawData.Set("from", value); }
     }
 
     public required IntercomRecipient To
     {
-        get { return this._rawData.GetNotNullClass<IntercomRecipient>("to"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<IntercomRecipient>("to");
+        }
         init { this._rawData.Set("to", value); }
     }
 

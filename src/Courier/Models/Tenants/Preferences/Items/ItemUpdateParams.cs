@@ -31,6 +31,7 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status>
             >("status");
@@ -45,6 +46,7 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableStruct<
                 ImmutableArray<ApiEnum<string, ChannelClassification>>
             >("custom_routing");
@@ -64,7 +66,11 @@ public sealed record class ItemUpdateParams : ParamsBase
     /// </summary>
     public bool? HasCustomRouting
     {
-        get { return this._rawBodyData.GetNullableStruct<bool>("has_custom_routing"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<bool>("has_custom_routing");
+        }
         init { this._rawBodyData.Set("has_custom_routing", value); }
     }
 

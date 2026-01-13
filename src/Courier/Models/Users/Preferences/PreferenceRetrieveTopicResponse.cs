@@ -17,7 +17,11 @@ public sealed record class PreferenceRetrieveTopicResponse : JsonModel
 {
     public required TopicPreference Topic
     {
-        get { return this._rawData.GetNotNullClass<TopicPreference>("topic"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<TopicPreference>("topic");
+        }
         init { this._rawData.Set("topic", value); }
     }
 

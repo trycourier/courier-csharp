@@ -12,13 +12,21 @@ public sealed record class EmailHead : JsonModel
 {
     public required bool InheritDefault
     {
-        get { return this._rawData.GetNotNullStruct<bool>("inheritDefault"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("inheritDefault");
+        }
         init { this._rawData.Set("inheritDefault", value); }
     }
 
     public string? Content
     {
-        get { return this._rawData.GetNullableClass<string>("content"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("content");
+        }
         init { this._rawData.Set("content", value); }
     }
 

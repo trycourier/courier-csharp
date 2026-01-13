@@ -16,7 +16,11 @@ public sealed record class TokenListResponse : JsonModel
 {
     public required IReadOnlyList<UserToken> Tokens
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<UserToken>>("tokens"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<UserToken>>("tokens");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<UserToken>>(

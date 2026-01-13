@@ -12,31 +12,51 @@ public sealed record class Utm : JsonModel
 {
     public string? Campaign
     {
-        get { return this._rawData.GetNullableClass<string>("campaign"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("campaign");
+        }
         init { this._rawData.Set("campaign", value); }
     }
 
     public string? Content
     {
-        get { return this._rawData.GetNullableClass<string>("content"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("content");
+        }
         init { this._rawData.Set("content", value); }
     }
 
     public string? Medium
     {
-        get { return this._rawData.GetNullableClass<string>("medium"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("medium");
+        }
         init { this._rawData.Set("medium", value); }
     }
 
     public string? Source
     {
-        get { return this._rawData.GetNullableClass<string>("source"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("source");
+        }
         init { this._rawData.Set("source", value); }
     }
 
     public string? Term
     {
-        get { return this._rawData.GetNullableClass<string>("term"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("term");
+        }
         init { this._rawData.Set("term", value); }
     }
 

@@ -18,7 +18,11 @@ public sealed record class PreferenceRetrieveResponse : JsonModel
     /// </summary>
     public required IReadOnlyList<TopicPreference> Items
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<TopicPreference>>("items"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<TopicPreference>>("items");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<TopicPreference>>(
@@ -33,7 +37,11 @@ public sealed record class PreferenceRetrieveResponse : JsonModel
     /// </summary>
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 

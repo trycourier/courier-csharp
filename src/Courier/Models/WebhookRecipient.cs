@@ -15,7 +15,11 @@ public sealed record class WebhookRecipient : JsonModel
 {
     public required WebhookProfile Webhook
     {
-        get { return this._rawData.GetNotNullClass<WebhookProfile>("webhook"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<WebhookProfile>("webhook");
+        }
         init { this._rawData.Set("webhook", value); }
     }
 

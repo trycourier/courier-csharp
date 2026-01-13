@@ -15,7 +15,11 @@ public sealed record class SubscriptionTopicNew : JsonModel
 {
     public required ApiEnum<string, Status> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -26,6 +30,7 @@ public sealed record class SubscriptionTopicNew : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<
                 ImmutableArray<ApiEnum<string, ChannelClassification>>
             >("custom_routing");
@@ -45,7 +50,11 @@ public sealed record class SubscriptionTopicNew : JsonModel
     /// </summary>
     public bool? HasCustomRouting
     {
-        get { return this._rawData.GetNullableStruct<bool>("has_custom_routing"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("has_custom_routing");
+        }
         init { this._rawData.Set("has_custom_routing", value); }
     }
 
