@@ -19,14 +19,19 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
                     Name = "name",
                     UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new SingleFilterConfig()
+                            {
+                                Operator = SingleFilterConfigOperator.EndsWith,
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
                 },
             ],
             Paging = new() { More = true, Cursor = "cursor" },
@@ -39,14 +44,19 @@ public class AudienceListResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new SingleFilterConfig()
-                {
-                    Operator = SingleFilterConfigOperator.EndsWith,
-                    Path = "path",
-                    Value = "value",
-                },
                 Name = "name",
                 UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new SingleFilterConfig()
+                        {
+                            Operator = SingleFilterConfigOperator.EndsWith,
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
             },
         ];
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
@@ -71,14 +81,19 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
                     Name = "name",
                     UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new SingleFilterConfig()
+                            {
+                                Operator = SingleFilterConfigOperator.EndsWith,
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
                 },
             ],
             Paging = new() { More = true, Cursor = "cursor" },
@@ -102,14 +117,19 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
                     Name = "name",
                     UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new SingleFilterConfig()
+                            {
+                                Operator = SingleFilterConfigOperator.EndsWith,
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
                 },
             ],
             Paging = new() { More = true, Cursor = "cursor" },
@@ -126,14 +146,19 @@ public class AudienceListResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new SingleFilterConfig()
-                {
-                    Operator = SingleFilterConfigOperator.EndsWith,
-                    Path = "path",
-                    Value = "value",
-                },
                 Name = "name",
                 UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new SingleFilterConfig()
+                        {
+                            Operator = SingleFilterConfigOperator.EndsWith,
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
             },
         ];
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
@@ -158,14 +183,19 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
                     Name = "name",
                     UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new SingleFilterConfig()
+                            {
+                                Operator = SingleFilterConfigOperator.EndsWith,
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
                 },
             ],
             Paging = new() { More = true, Cursor = "cursor" },

@@ -13,45 +13,45 @@ namespace Courier.Models.Audiences;
 [JsonConverter(typeof(JsonModelConverter<NestedFilterConfig, NestedFilterConfigFromRaw>))]
 public sealed record class NestedFilterConfig : JsonModel
 {
-    /// <summary>
-    /// The operator to use for filtering
-    /// </summary>
-    public required ApiEnum<string, global::Courier.Models.Audiences.Operator> Operator
+    public required IReadOnlyList<FilterConfig> Filters
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, global::Courier.Models.Audiences.Operator>
-            >("operator");
-        }
-        init { this._rawData.Set("operator", value); }
-    }
-
-    public required IReadOnlyList<Filter> Rules
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<ImmutableArray<Filter>>("rules");
+            return this._rawData.GetNotNullStruct<ImmutableArray<FilterConfig>>("filters");
         }
         init
         {
-            this._rawData.Set<ImmutableArray<Filter>>(
-                "rules",
+            this._rawData.Set<ImmutableArray<FilterConfig>>(
+                "filters",
                 ImmutableArray.ToImmutableArray(value)
             );
         }
     }
 
+    /// <summary>
+    /// The operator to use for filtering
+    /// </summary>
+    public required ApiEnum<string, NestedFilterConfigOperator> Operator
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, NestedFilterConfigOperator>>(
+                "operator"
+            );
+        }
+        init { this._rawData.Set("operator", value); }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
-        this.Operator.Validate();
-        foreach (var item in this.Rules)
+        foreach (var item in this.Filters)
         {
             item.Validate();
         }
+        this.Operator.Validate();
     }
 
     public NestedFilterConfig() { }
@@ -91,8 +91,8 @@ class NestedFilterConfigFromRaw : IFromRawJson<NestedFilterConfig>
 /// <summary>
 /// The operator to use for filtering
 /// </summary>
-[JsonConverter(typeof(global::Courier.Models.Audiences.OperatorConverter))]
-public enum Operator
+[JsonConverter(typeof(NestedFilterConfigOperatorConverter))]
+public enum NestedFilterConfigOperator
 {
     EndsWith,
     Eq,
@@ -111,9 +111,9 @@ public enum Operator
     Or,
 }
 
-sealed class OperatorConverter : JsonConverter<global::Courier.Models.Audiences.Operator>
+sealed class NestedFilterConfigOperatorConverter : JsonConverter<NestedFilterConfigOperator>
 {
-    public override global::Courier.Models.Audiences.Operator Read(
+    public override NestedFilterConfigOperator Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -121,28 +121,28 @@ sealed class OperatorConverter : JsonConverter<global::Courier.Models.Audiences.
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "ENDS_WITH" => global::Courier.Models.Audiences.Operator.EndsWith,
-            "EQ" => global::Courier.Models.Audiences.Operator.Eq,
-            "EXISTS" => global::Courier.Models.Audiences.Operator.Exists,
-            "GT" => global::Courier.Models.Audiences.Operator.Gt,
-            "GTE" => global::Courier.Models.Audiences.Operator.Gte,
-            "INCLUDES" => global::Courier.Models.Audiences.Operator.Includes,
-            "IS_AFTER" => global::Courier.Models.Audiences.Operator.IsAfter,
-            "IS_BEFORE" => global::Courier.Models.Audiences.Operator.IsBefore,
-            "LT" => global::Courier.Models.Audiences.Operator.Lt,
-            "LTE" => global::Courier.Models.Audiences.Operator.Lte,
-            "NEQ" => global::Courier.Models.Audiences.Operator.Neq,
-            "OMIT" => global::Courier.Models.Audiences.Operator.Omit,
-            "STARTS_WITH" => global::Courier.Models.Audiences.Operator.StartsWith,
-            "AND" => global::Courier.Models.Audiences.Operator.And,
-            "OR" => global::Courier.Models.Audiences.Operator.Or,
-            _ => (global::Courier.Models.Audiences.Operator)(-1),
+            "ENDS_WITH" => NestedFilterConfigOperator.EndsWith,
+            "EQ" => NestedFilterConfigOperator.Eq,
+            "EXISTS" => NestedFilterConfigOperator.Exists,
+            "GT" => NestedFilterConfigOperator.Gt,
+            "GTE" => NestedFilterConfigOperator.Gte,
+            "INCLUDES" => NestedFilterConfigOperator.Includes,
+            "IS_AFTER" => NestedFilterConfigOperator.IsAfter,
+            "IS_BEFORE" => NestedFilterConfigOperator.IsBefore,
+            "LT" => NestedFilterConfigOperator.Lt,
+            "LTE" => NestedFilterConfigOperator.Lte,
+            "NEQ" => NestedFilterConfigOperator.Neq,
+            "OMIT" => NestedFilterConfigOperator.Omit,
+            "STARTS_WITH" => NestedFilterConfigOperator.StartsWith,
+            "AND" => NestedFilterConfigOperator.And,
+            "OR" => NestedFilterConfigOperator.Or,
+            _ => (NestedFilterConfigOperator)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        global::Courier.Models.Audiences.Operator value,
+        NestedFilterConfigOperator value,
         JsonSerializerOptions options
     )
     {
@@ -150,21 +150,21 @@ sealed class OperatorConverter : JsonConverter<global::Courier.Models.Audiences.
             writer,
             value switch
             {
-                global::Courier.Models.Audiences.Operator.EndsWith => "ENDS_WITH",
-                global::Courier.Models.Audiences.Operator.Eq => "EQ",
-                global::Courier.Models.Audiences.Operator.Exists => "EXISTS",
-                global::Courier.Models.Audiences.Operator.Gt => "GT",
-                global::Courier.Models.Audiences.Operator.Gte => "GTE",
-                global::Courier.Models.Audiences.Operator.Includes => "INCLUDES",
-                global::Courier.Models.Audiences.Operator.IsAfter => "IS_AFTER",
-                global::Courier.Models.Audiences.Operator.IsBefore => "IS_BEFORE",
-                global::Courier.Models.Audiences.Operator.Lt => "LT",
-                global::Courier.Models.Audiences.Operator.Lte => "LTE",
-                global::Courier.Models.Audiences.Operator.Neq => "NEQ",
-                global::Courier.Models.Audiences.Operator.Omit => "OMIT",
-                global::Courier.Models.Audiences.Operator.StartsWith => "STARTS_WITH",
-                global::Courier.Models.Audiences.Operator.And => "AND",
-                global::Courier.Models.Audiences.Operator.Or => "OR",
+                NestedFilterConfigOperator.EndsWith => "ENDS_WITH",
+                NestedFilterConfigOperator.Eq => "EQ",
+                NestedFilterConfigOperator.Exists => "EXISTS",
+                NestedFilterConfigOperator.Gt => "GT",
+                NestedFilterConfigOperator.Gte => "GTE",
+                NestedFilterConfigOperator.Includes => "INCLUDES",
+                NestedFilterConfigOperator.IsAfter => "IS_AFTER",
+                NestedFilterConfigOperator.IsBefore => "IS_BEFORE",
+                NestedFilterConfigOperator.Lt => "LT",
+                NestedFilterConfigOperator.Lte => "LTE",
+                NestedFilterConfigOperator.Neq => "NEQ",
+                NestedFilterConfigOperator.Omit => "OMIT",
+                NestedFilterConfigOperator.StartsWith => "STARTS_WITH",
+                NestedFilterConfigOperator.And => "AND",
+                NestedFilterConfigOperator.Or => "OR",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
