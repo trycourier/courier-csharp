@@ -89,15 +89,12 @@ public sealed class ProfileService : IProfileService
     }
 
     /// <inheritdoc/>
-    public async Task Update(
+    public Task Update(
         ProfileUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.Update(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Update(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -112,15 +109,12 @@ public sealed class ProfileService : IProfileService
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
+    public Task Delete(
         ProfileDeleteParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.Delete(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Delete(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>

@@ -35,15 +35,12 @@ public sealed class BulkService : IBulkService
     }
 
     /// <inheritdoc/>
-    public async Task AddUsers(
+    public Task AddUsers(
         BulkAddUsersParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.AddUsers(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.AddUsers(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -118,15 +115,9 @@ public sealed class BulkService : IBulkService
     }
 
     /// <inheritdoc/>
-    public async Task RunJob(
-        BulkRunJobParams parameters,
-        CancellationToken cancellationToken = default
-    )
+    public Task RunJob(BulkRunJobParams parameters, CancellationToken cancellationToken = default)
     {
-        using var response = await this
-            .WithRawResponse.RunJob(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.RunJob(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>

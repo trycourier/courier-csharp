@@ -63,15 +63,12 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
     }
 
     /// <inheritdoc/>
-    public async Task AddMultiple(
+    public Task AddMultiple(
         TenantAddMultipleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.AddMultiple(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.AddMultiple(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -86,15 +83,12 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
     }
 
     /// <inheritdoc/>
-    public async Task AddSingle(
+    public Task AddSingle(
         TenantAddSingleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.AddSingle(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.AddSingle(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -109,15 +103,12 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
     }
 
     /// <inheritdoc/>
-    public async Task RemoveAll(
+    public Task RemoveAll(
         TenantRemoveAllParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.RemoveAll(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.RemoveAll(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -134,15 +125,12 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
     }
 
     /// <inheritdoc/>
-    public async Task RemoveSingle(
+    public Task RemoveSingle(
         TenantRemoveSingleParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.RemoveSingle(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.RemoveSingle(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>

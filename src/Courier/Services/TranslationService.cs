@@ -57,15 +57,12 @@ public sealed class TranslationService : ITranslationService
     }
 
     /// <inheritdoc/>
-    public async Task Update(
+    public Task Update(
         TranslationUpdateParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.Update(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Update(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
