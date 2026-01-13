@@ -14,17 +14,14 @@ public sealed record class SubscribeToListsRequestItem : JsonModel
 {
     public required string ListID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "listId"); }
-        init { JsonModel.Set(this._rawData, "listId", value); }
+        get { return this._rawData.GetNotNullClass<string>("listId"); }
+        init { this._rawData.Set("listId", value); }
     }
 
     public RecipientPreferences? Preferences
     {
-        get
-        {
-            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
-        }
-        init { JsonModel.Set(this._rawData, "preferences", value); }
+        get { return this._rawData.GetNullableClass<RecipientPreferences>("preferences"); }
+        init { this._rawData.Set("preferences", value); }
     }
 
     /// <inheritdoc/>
@@ -41,14 +38,14 @@ public sealed record class SubscribeToListsRequestItem : JsonModel
 
     public SubscribeToListsRequestItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SubscribeToListsRequestItem(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

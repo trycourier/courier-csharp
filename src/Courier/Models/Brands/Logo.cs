@@ -12,14 +12,14 @@ public sealed record class Logo : JsonModel
 {
     public string? Href
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "href"); }
-        init { JsonModel.Set(this._rawData, "href", value); }
+        get { return this._rawData.GetNullableClass<string>("href"); }
+        init { this._rawData.Set("href", value); }
     }
 
     public string? Image
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "image"); }
-        init { JsonModel.Set(this._rawData, "image", value); }
+        get { return this._rawData.GetNullableClass<string>("image"); }
+        init { this._rawData.Set("image", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +36,14 @@ public sealed record class Logo : JsonModel
 
     public Logo(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Logo(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

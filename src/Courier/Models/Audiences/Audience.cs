@@ -15,14 +15,14 @@ public sealed record class Audience : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public required string CreatedAt
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "created_at"); }
-        init { JsonModel.Set(this._rawData, "created_at", value); }
+        get { return this._rawData.GetNotNullClass<string>("created_at"); }
+        init { this._rawData.Set("created_at", value); }
     }
 
     /// <summary>
@@ -30,8 +30,8 @@ public sealed record class Audience : JsonModel
     /// </summary>
     public required string Description
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "description"); }
-        init { JsonModel.Set(this._rawData, "description", value); }
+        get { return this._rawData.GetNotNullClass<string>("description"); }
+        init { this._rawData.Set("description", value); }
     }
 
     /// <summary>
@@ -39,8 +39,8 @@ public sealed record class Audience : JsonModel
     /// </summary>
     public required Filter Filter
     {
-        get { return JsonModel.GetNotNullClass<Filter>(this.RawData, "filter"); }
-        init { JsonModel.Set(this._rawData, "filter", value); }
+        get { return this._rawData.GetNotNullClass<Filter>("filter"); }
+        init { this._rawData.Set("filter", value); }
     }
 
     /// <summary>
@@ -48,14 +48,14 @@ public sealed record class Audience : JsonModel
     /// </summary>
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
-        init { JsonModel.Set(this._rawData, "name", value); }
+        get { return this._rawData.GetNotNullClass<string>("name"); }
+        init { this._rawData.Set("name", value); }
     }
 
     public required string UpdatedAt
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "updated_at"); }
-        init { JsonModel.Set(this._rawData, "updated_at", value); }
+        get { return this._rawData.GetNotNullClass<string>("updated_at"); }
+        init { this._rawData.Set("updated_at", value); }
     }
 
     /// <inheritdoc/>
@@ -76,14 +76,14 @@ public sealed record class Audience : JsonModel
 
     public Audience(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Audience(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

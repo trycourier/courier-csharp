@@ -12,14 +12,14 @@ public sealed record class EmailFooter : JsonModel
 {
     public string? Content
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "content"); }
-        init { JsonModel.Set(this._rawData, "content", value); }
+        get { return this._rawData.GetNullableClass<string>("content"); }
+        init { this._rawData.Set("content", value); }
     }
 
     public bool? InheritDefault
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "inheritDefault"); }
-        init { JsonModel.Set(this._rawData, "inheritDefault", value); }
+        get { return this._rawData.GetNullableStruct<bool>("inheritDefault"); }
+        init { this._rawData.Set("inheritDefault", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +36,14 @@ public sealed record class EmailFooter : JsonModel
 
     public EmailFooter(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     EmailFooter(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

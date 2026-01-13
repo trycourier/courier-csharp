@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -19,17 +20,23 @@ public sealed record class NestedFilterConfig : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<
+            return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Audiences.Operator>
-            >(this.RawData, "operator");
+            >("operator");
         }
-        init { JsonModel.Set(this._rawData, "operator", value); }
+        init { this._rawData.Set("operator", value); }
     }
 
     public required IReadOnlyList<Filter> Rules
     {
-        get { return JsonModel.GetNotNullClass<List<Filter>>(this.RawData, "rules"); }
-        init { JsonModel.Set(this._rawData, "rules", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<Filter>>("rules"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Filter>>(
+                "rules",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -49,14 +56,14 @@ public sealed record class NestedFilterConfig : JsonModel
 
     public NestedFilterConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     NestedFilterConfig(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

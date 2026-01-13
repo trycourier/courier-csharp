@@ -17,8 +17,8 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     /// <summary>
@@ -26,8 +26,8 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string CreatedAt
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "created_at"); }
-        init { JsonModel.Set(this._rawData, "created_at", value); }
+        get { return this._rawData.GetNotNullClass<string>("created_at"); }
+        init { this._rawData.Set("created_at", value); }
     }
 
     /// <summary>
@@ -35,8 +35,8 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string PublishedAt
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "published_at"); }
-        init { JsonModel.Set(this._rawData, "published_at", value); }
+        get { return this._rawData.GetNotNullClass<string>("published_at"); }
+        init { this._rawData.Set("published_at", value); }
     }
 
     /// <summary>
@@ -44,8 +44,8 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string UpdatedAt
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "updated_at"); }
-        init { JsonModel.Set(this._rawData, "updated_at", value); }
+        get { return this._rawData.GetNotNullClass<string>("updated_at"); }
+        init { this._rawData.Set("updated_at", value); }
     }
 
     /// <summary>
@@ -53,8 +53,8 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
     /// </summary>
     public required string Version
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "version"); }
-        init { JsonModel.Set(this._rawData, "version", value); }
+        get { return this._rawData.GetNotNullClass<string>("version"); }
+        init { this._rawData.Set("version", value); }
     }
 
     /// <inheritdoc/>
@@ -76,14 +76,14 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
 
     public BaseTemplateTenantAssociation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     BaseTemplateTenantAssociation(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

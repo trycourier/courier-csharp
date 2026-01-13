@@ -14,7 +14,7 @@ namespace Courier.Models.Audiences;
 /// </summary>
 public sealed record class AudienceUpdateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -27,8 +27,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public string? Description
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "description"); }
-        init { JsonModel.Set(this._rawBodyData, "description", value); }
+        get { return this._rawBodyData.GetNullableClass<string>("description"); }
+        init { this._rawBodyData.Set("description", value); }
     }
 
     /// <summary>
@@ -36,8 +36,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public Filter? Filter
     {
-        get { return JsonModel.GetNullableClass<Filter>(this.RawBodyData, "filter"); }
-        init { JsonModel.Set(this._rawBodyData, "filter", value); }
+        get { return this._rawBodyData.GetNullableClass<Filter>("filter"); }
+        init { this._rawBodyData.Set("filter", value); }
     }
 
     /// <summary>
@@ -45,8 +45,8 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public string? Name
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "name"); }
-        init { JsonModel.Set(this._rawBodyData, "name", value); }
+        get { return this._rawBodyData.GetNullableClass<string>("name"); }
+        init { this._rawBodyData.Set("name", value); }
     }
 
     public AudienceUpdateParams() { }
@@ -56,7 +56,7 @@ public sealed record class AudienceUpdateParams : ParamsBase
     {
         this.AudienceID = audienceUpdateParams.AudienceID;
 
-        this._rawBodyData = [.. audienceUpdateParams._rawBodyData];
+        this._rawBodyData = new(audienceUpdateParams._rawBodyData);
     }
 
     public AudienceUpdateParams(
@@ -65,9 +65,9 @@ public sealed record class AudienceUpdateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -78,9 +78,9 @@ public sealed record class AudienceUpdateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 

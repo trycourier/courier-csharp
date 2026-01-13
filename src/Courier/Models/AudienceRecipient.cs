@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -19,26 +20,35 @@ public sealed record class AudienceRecipient : JsonModel
     /// </summary>
     public required string AudienceID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "audience_id"); }
-        init { JsonModel.Set(this._rawData, "audience_id", value); }
+        get { return this._rawData.GetNotNullClass<string>("audience_id"); }
+        init { this._rawData.Set("audience_id", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "data"
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     public IReadOnlyList<AudienceFilter>? Filters
     {
-        get { return JsonModel.GetNullableClass<List<AudienceFilter>>(this.RawData, "filters"); }
-        init { JsonModel.Set(this._rawData, "filters", value); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<AudienceFilter>>("filters"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<AudienceFilter>?>(
+                "filters",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -59,14 +69,14 @@ public sealed record class AudienceRecipient : JsonModel
 
     public AudienceRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AudienceRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,14 +13,20 @@ public sealed record class AirshipProfile : JsonModel
 {
     public required AirshipProfileAudience Audience
     {
-        get { return JsonModel.GetNotNullClass<AirshipProfileAudience>(this.RawData, "audience"); }
-        init { JsonModel.Set(this._rawData, "audience", value); }
+        get { return this._rawData.GetNotNullClass<AirshipProfileAudience>("audience"); }
+        init { this._rawData.Set("audience", value); }
     }
 
     public required IReadOnlyList<string> DeviceTypes
     {
-        get { return JsonModel.GetNotNullClass<List<string>>(this.RawData, "device_types"); }
-        init { JsonModel.Set(this._rawData, "device_types", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<string>>("device_types"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<string>>(
+                "device_types",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -36,14 +43,14 @@ public sealed record class AirshipProfile : JsonModel
 
     public AirshipProfile(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AirshipProfile(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

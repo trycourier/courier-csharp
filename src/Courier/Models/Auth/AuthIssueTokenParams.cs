@@ -14,7 +14,7 @@ namespace Courier.Models.Auth;
 /// </summary>
 public sealed record class AuthIssueTokenParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -27,8 +27,8 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     /// </summary>
     public required string ExpiresIn
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "expires_in"); }
-        init { JsonModel.Set(this._rawBodyData, "expires_in", value); }
+        get { return this._rawBodyData.GetNotNullClass<string>("expires_in"); }
+        init { this._rawBodyData.Set("expires_in", value); }
     }
 
     /// <summary>
@@ -47,8 +47,8 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     /// </summary>
     public required string Scope
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "scope"); }
-        init { JsonModel.Set(this._rawBodyData, "scope", value); }
+        get { return this._rawBodyData.GetNotNullClass<string>("scope"); }
+        init { this._rawBodyData.Set("scope", value); }
     }
 
     public AuthIssueTokenParams() { }
@@ -56,7 +56,7 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     public AuthIssueTokenParams(AuthIssueTokenParams authIssueTokenParams)
         : base(authIssueTokenParams)
     {
-        this._rawBodyData = [.. authIssueTokenParams._rawBodyData];
+        this._rawBodyData = new(authIssueTokenParams._rawBodyData);
     }
 
     public AuthIssueTokenParams(
@@ -65,9 +65,9 @@ public sealed record class AuthIssueTokenParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -78,9 +78,9 @@ public sealed record class AuthIssueTokenParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 

@@ -12,50 +12,50 @@ public sealed record class Brand : JsonModel
 {
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public required long Created
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "created"); }
-        init { JsonModel.Set(this._rawData, "created", value); }
+        get { return this._rawData.GetNotNullStruct<long>("created"); }
+        init { this._rawData.Set("created", value); }
     }
 
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
-        init { JsonModel.Set(this._rawData, "name", value); }
+        get { return this._rawData.GetNotNullClass<string>("name"); }
+        init { this._rawData.Set("name", value); }
     }
 
     public required long Updated
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "updated"); }
-        init { JsonModel.Set(this._rawData, "updated", value); }
+        get { return this._rawData.GetNotNullStruct<long>("updated"); }
+        init { this._rawData.Set("updated", value); }
     }
 
     public long? Published
     {
-        get { return JsonModel.GetNullableStruct<long>(this.RawData, "published"); }
-        init { JsonModel.Set(this._rawData, "published", value); }
+        get { return this._rawData.GetNullableStruct<long>("published"); }
+        init { this._rawData.Set("published", value); }
     }
 
     public BrandSettings? Settings
     {
-        get { return JsonModel.GetNullableClass<BrandSettings>(this.RawData, "settings"); }
-        init { JsonModel.Set(this._rawData, "settings", value); }
+        get { return this._rawData.GetNullableClass<BrandSettings>("settings"); }
+        init { this._rawData.Set("settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get { return JsonModel.GetNullableClass<BrandSnippets>(this.RawData, "snippets"); }
-        init { JsonModel.Set(this._rawData, "snippets", value); }
+        get { return this._rawData.GetNullableClass<BrandSnippets>("snippets"); }
+        init { this._rawData.Set("snippets", value); }
     }
 
     public string? Version
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "version"); }
-        init { JsonModel.Set(this._rawData, "version", value); }
+        get { return this._rawData.GetNullableClass<string>("version"); }
+        init { this._rawData.Set("version", value); }
     }
 
     /// <inheritdoc/>
@@ -78,14 +78,14 @@ public sealed record class Brand : JsonModel
 
     public Brand(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Brand(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

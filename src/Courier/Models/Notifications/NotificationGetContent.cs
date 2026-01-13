@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,20 +15,32 @@ public sealed record class NotificationGetContent : JsonModel
 {
     public IReadOnlyList<Block>? Blocks
     {
-        get { return JsonModel.GetNullableClass<List<Block>>(this.RawData, "blocks"); }
-        init { JsonModel.Set(this._rawData, "blocks", value); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<Block>>("blocks"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Block>?>(
+                "blocks",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public IReadOnlyList<Channel>? Channels
     {
-        get { return JsonModel.GetNullableClass<List<Channel>>(this.RawData, "channels"); }
-        init { JsonModel.Set(this._rawData, "channels", value); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<Channel>>("channels"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Channel>?>(
+                "channels",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public string? Checksum
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "checksum"); }
-        init { JsonModel.Set(this._rawData, "checksum", value); }
+        get { return this._rawData.GetNullableClass<string>("checksum"); }
+        init { this._rawData.Set("checksum", value); }
     }
 
     /// <inheritdoc/>
@@ -51,14 +64,14 @@ public sealed record class NotificationGetContent : JsonModel
 
     public NotificationGetContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     NotificationGetContent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -84,47 +97,50 @@ public sealed record class Block : JsonModel
 {
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public required ApiEnum<string, BlockType> Type
     {
-        get { return JsonModel.GetNotNullClass<ApiEnum<string, BlockType>>(this.RawData, "type"); }
-        init { JsonModel.Set(this._rawData, "type", value); }
+        get { return this._rawData.GetNotNullClass<ApiEnum<string, BlockType>>("type"); }
+        init { this._rawData.Set("type", value); }
     }
 
     public string? Alias
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "alias"); }
-        init { JsonModel.Set(this._rawData, "alias", value); }
+        get { return this._rawData.GetNullableClass<string>("alias"); }
+        init { this._rawData.Set("alias", value); }
     }
 
     public string? Checksum
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "checksum"); }
-        init { JsonModel.Set(this._rawData, "checksum", value); }
+        get { return this._rawData.GetNullableClass<string>("checksum"); }
+        init { this._rawData.Set("checksum", value); }
     }
 
     public Content? Content
     {
-        get { return JsonModel.GetNullableClass<Content>(this.RawData, "content"); }
-        init { JsonModel.Set(this._rawData, "content", value); }
+        get { return this._rawData.GetNullableClass<Content>("content"); }
+        init { this._rawData.Set("content", value); }
     }
 
     public string? Context
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "context"); }
-        init { JsonModel.Set(this._rawData, "context", value); }
+        get { return this._rawData.GetNullableClass<string>("context"); }
+        init { this._rawData.Set("context", value); }
     }
 
     public IReadOnlyDictionary<string, Locale>? Locales
     {
-        get
+        get { return this._rawData.GetNullableClass<FrozenDictionary<string, Locale>>("locales"); }
+        init
         {
-            return JsonModel.GetNullableClass<Dictionary<string, Locale>>(this.RawData, "locales");
+            this._rawData.Set<FrozenDictionary<string, Locale>?>(
+                "locales",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
         }
-        init { JsonModel.Set(this._rawData, "locales", value); }
     }
 
     /// <inheritdoc/>
@@ -152,14 +168,14 @@ public sealed record class Block : JsonModel
 
     public Block(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Block(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -482,14 +498,14 @@ public sealed record class NotificationContentHierarchy : JsonModel
 {
     public string? Children
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "children"); }
-        init { JsonModel.Set(this._rawData, "children", value); }
+        get { return this._rawData.GetNullableClass<string>("children"); }
+        init { this._rawData.Set("children", value); }
     }
 
     public string? Parent
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "parent"); }
-        init { JsonModel.Set(this._rawData, "parent", value); }
+        get { return this._rawData.GetNullableClass<string>("parent"); }
+        init { this._rawData.Set("parent", value); }
     }
 
     /// <inheritdoc/>
@@ -506,14 +522,14 @@ public sealed record class NotificationContentHierarchy : JsonModel
 
     public NotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     NotificationContentHierarchy(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -777,14 +793,14 @@ public sealed record class LocaleNotificationContentHierarchy : JsonModel
 {
     public string? Children
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "children"); }
-        init { JsonModel.Set(this._rawData, "children", value); }
+        get { return this._rawData.GetNullableClass<string>("children"); }
+        init { this._rawData.Set("children", value); }
     }
 
     public string? Parent
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "parent"); }
-        init { JsonModel.Set(this._rawData, "parent", value); }
+        get { return this._rawData.GetNullableClass<string>("parent"); }
+        init { this._rawData.Set("parent", value); }
     }
 
     /// <inheritdoc/>
@@ -803,14 +819,14 @@ public sealed record class LocaleNotificationContentHierarchy : JsonModel
 
     public LocaleNotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     LocaleNotificationContentHierarchy(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -836,38 +852,41 @@ public sealed record class Channel : JsonModel
 {
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public string? Checksum
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "checksum"); }
-        init { JsonModel.Set(this._rawData, "checksum", value); }
+        get { return this._rawData.GetNullableClass<string>("checksum"); }
+        init { this._rawData.Set("checksum", value); }
     }
 
     public ChannelContent? Content
     {
-        get { return JsonModel.GetNullableClass<ChannelContent>(this.RawData, "content"); }
-        init { JsonModel.Set(this._rawData, "content", value); }
+        get { return this._rawData.GetNullableClass<ChannelContent>("content"); }
+        init { this._rawData.Set("content", value); }
     }
 
     public IReadOnlyDictionary<string, LocalesItem>? Locales
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, LocalesItem>>(
-                this.RawData,
-                "locales"
+            return this._rawData.GetNullableClass<FrozenDictionary<string, LocalesItem>>("locales");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, LocalesItem>?>(
+                "locales",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "locales", value); }
     }
 
     public string? Type
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "type"); }
-        init { JsonModel.Set(this._rawData, "type", value); }
+        get { return this._rawData.GetNullableClass<string>("type"); }
+        init { this._rawData.Set("type", value); }
     }
 
     /// <inheritdoc/>
@@ -893,14 +912,14 @@ public sealed record class Channel : JsonModel
 
     public Channel(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Channel(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -930,14 +949,14 @@ public sealed record class ChannelContent : JsonModel
 {
     public string? Subject
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "subject"); }
-        init { JsonModel.Set(this._rawData, "subject", value); }
+        get { return this._rawData.GetNullableClass<string>("subject"); }
+        init { this._rawData.Set("subject", value); }
     }
 
     public string? Title
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "title"); }
-        init { JsonModel.Set(this._rawData, "title", value); }
+        get { return this._rawData.GetNullableClass<string>("title"); }
+        init { this._rawData.Set("title", value); }
     }
 
     /// <inheritdoc/>
@@ -954,14 +973,14 @@ public sealed record class ChannelContent : JsonModel
 
     public ChannelContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ChannelContent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -984,14 +1003,14 @@ public sealed record class LocalesItem : JsonModel
 {
     public string? Subject
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "subject"); }
-        init { JsonModel.Set(this._rawData, "subject", value); }
+        get { return this._rawData.GetNullableClass<string>("subject"); }
+        init { this._rawData.Set("subject", value); }
     }
 
     public string? Title
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "title"); }
-        init { JsonModel.Set(this._rawData, "title", value); }
+        get { return this._rawData.GetNullableClass<string>("title"); }
+        init { this._rawData.Set("title", value); }
     }
 
     /// <inheritdoc/>
@@ -1008,14 +1027,14 @@ public sealed record class LocalesItem : JsonModel
 
     public LocalesItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     LocalesItem(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -17,20 +17,19 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public required string Token
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "token"); }
-        init { JsonModel.Set(this._rawData, "token", value); }
+        get { return this._rawData.GetNotNullClass<string>("token"); }
+        init { this._rawData.Set("token", value); }
     }
 
     public required ApiEnum<string, UserTokenProviderKey> ProviderKey
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
-                this.RawData,
+            return this._rawData.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
                 "provider_key"
             );
         }
-        init { JsonModel.Set(this._rawData, "provider_key", value); }
+        init { this._rawData.Set("provider_key", value); }
     }
 
     /// <summary>
@@ -38,8 +37,8 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public UserTokenDevice? Device
     {
-        get { return JsonModel.GetNullableClass<UserTokenDevice>(this.RawData, "device"); }
-        init { JsonModel.Set(this._rawData, "device", value); }
+        get { return this._rawData.GetNullableClass<UserTokenDevice>("device"); }
+        init { this._rawData.Set("device", value); }
     }
 
     /// <summary>
@@ -48,8 +47,8 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public UserTokenExpiryDate? ExpiryDate
     {
-        get { return JsonModel.GetNullableClass<UserTokenExpiryDate>(this.RawData, "expiry_date"); }
-        init { JsonModel.Set(this._rawData, "expiry_date", value); }
+        get { return this._rawData.GetNullableClass<UserTokenExpiryDate>("expiry_date"); }
+        init { this._rawData.Set("expiry_date", value); }
     }
 
     /// <summary>
@@ -57,7 +56,7 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public JsonElement? Properties
     {
-        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawData, "properties"); }
+        get { return this._rawData.GetNullableStruct<JsonElement>("properties"); }
         init
         {
             if (value == null)
@@ -65,7 +64,7 @@ public sealed record class TokenRetrieveResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "properties", value);
+            this._rawData.Set("properties", value);
         }
     }
 
@@ -74,14 +73,14 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public UserTokenTracking? Tracking
     {
-        get { return JsonModel.GetNullableClass<UserTokenTracking>(this.RawData, "tracking"); }
-        init { JsonModel.Set(this._rawData, "tracking", value); }
+        get { return this._rawData.GetNullableClass<UserTokenTracking>("tracking"); }
+        init { this._rawData.Set("tracking", value); }
     }
 
     public ApiEnum<string, Status>? Status
     {
-        get { return JsonModel.GetNullableClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        get { return this._rawData.GetNullableClass<ApiEnum<string, Status>>("status"); }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <summary>
@@ -89,8 +88,8 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public string? StatusReason
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "status_reason"); }
-        init { JsonModel.Set(this._rawData, "status_reason", value); }
+        get { return this._rawData.GetNullableClass<string>("status_reason"); }
+        init { this._rawData.Set("status_reason", value); }
     }
 
     public static implicit operator UserToken(TokenRetrieveResponse tokenRetrieveResponse) =>
@@ -124,14 +123,14 @@ public sealed record class TokenRetrieveResponse : JsonModel
 
     public TokenRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     TokenRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -162,8 +161,8 @@ public sealed record class IntersectionMember1 : JsonModel
 {
     public ApiEnum<string, Status>? Status
     {
-        get { return JsonModel.GetNullableClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        get { return this._rawData.GetNullableClass<ApiEnum<string, Status>>("status"); }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <summary>
@@ -171,8 +170,8 @@ public sealed record class IntersectionMember1 : JsonModel
     /// </summary>
     public string? StatusReason
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "status_reason"); }
-        init { JsonModel.Set(this._rawData, "status_reason", value); }
+        get { return this._rawData.GetNullableClass<string>("status_reason"); }
+        init { this._rawData.Set("status_reason", value); }
     }
 
     /// <inheritdoc/>
@@ -191,14 +190,14 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

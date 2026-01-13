@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -20,7 +21,7 @@ public sealed record class AutomationTemplateListResponse : JsonModel
     /// </summary>
     public string? Cursor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "cursor"); }
+        get { return this._rawData.GetNullableClass<string>("cursor"); }
         init
         {
             if (value == null)
@@ -28,7 +29,7 @@ public sealed record class AutomationTemplateListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "cursor", value);
+            this._rawData.Set("cursor", value);
         }
     }
 
@@ -36,7 +37,7 @@ public sealed record class AutomationTemplateListResponse : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<List<AutomationTemplate>>(this.RawData, "templates");
+            return this._rawData.GetNullableStruct<ImmutableArray<AutomationTemplate>>("templates");
         }
         init
         {
@@ -45,7 +46,10 @@ public sealed record class AutomationTemplateListResponse : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "templates", value);
+            this._rawData.Set<ImmutableArray<AutomationTemplate>?>(
+                "templates",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
@@ -68,14 +72,14 @@ public sealed record class AutomationTemplateListResponse : JsonModel
 
     public AutomationTemplateListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationTemplateListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

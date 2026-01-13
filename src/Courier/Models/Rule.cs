@@ -12,14 +12,14 @@ public sealed record class Rule : JsonModel
 {
     public required string Until
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "until"); }
-        init { JsonModel.Set(this._rawData, "until", value); }
+        get { return this._rawData.GetNotNullClass<string>("until"); }
+        init { this._rawData.Set("until", value); }
     }
 
     public string? Start
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "start"); }
-        init { JsonModel.Set(this._rawData, "start", value); }
+        get { return this._rawData.GetNullableClass<string>("start"); }
+        init { this._rawData.Set("start", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +36,14 @@ public sealed record class Rule : JsonModel
 
     public Rule(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Rule(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

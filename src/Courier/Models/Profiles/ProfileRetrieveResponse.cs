@@ -14,21 +14,21 @@ public sealed record class ProfileRetrieveResponse : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "profile"
+            return this._rawData.GetNotNullClass<FrozenDictionary<string, JsonElement>>("profile");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>>(
+                "profile",
+                FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     public RecipientPreferences? Preferences
     {
-        get
-        {
-            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
-        }
-        init { JsonModel.Set(this._rawData, "preferences", value); }
+        get { return this._rawData.GetNullableClass<RecipientPreferences>("preferences"); }
+        init { this._rawData.Set("preferences", value); }
     }
 
     /// <inheritdoc/>
@@ -45,14 +45,14 @@ public sealed record class ProfileRetrieveResponse : JsonModel
 
     public ProfileRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ProfileRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

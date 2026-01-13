@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,8 +13,14 @@ public sealed record class ElementalContent : JsonModel
 {
     public required IReadOnlyList<ElementalNode> Elements
     {
-        get { return JsonModel.GetNotNullClass<List<ElementalNode>>(this.RawData, "elements"); }
-        init { JsonModel.Set(this._rawData, "elements", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<ElementalNode>>("elements"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ElementalNode>>(
+                "elements",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <summary>
@@ -21,14 +28,14 @@ public sealed record class ElementalContent : JsonModel
     /// </summary>
     public required string Version
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "version"); }
-        init { JsonModel.Set(this._rawData, "version", value); }
+        get { return this._rawData.GetNotNullClass<string>("version"); }
+        init { this._rawData.Set("version", value); }
     }
 
     public string? Brand
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand"); }
-        init { JsonModel.Set(this._rawData, "brand", value); }
+        get { return this._rawData.GetNullableClass<string>("brand"); }
+        init { this._rawData.Set("brand", value); }
     }
 
     /// <inheritdoc/>
@@ -49,14 +56,14 @@ public sealed record class ElementalContent : JsonModel
 
     public ElementalContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ElementalContent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

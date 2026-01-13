@@ -14,7 +14,7 @@ namespace Courier.Models.Brands;
 /// </summary>
 public sealed record class BrandUpdateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -27,20 +27,20 @@ public sealed record class BrandUpdateParams : ParamsBase
     /// </summary>
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "name"); }
-        init { JsonModel.Set(this._rawBodyData, "name", value); }
+        get { return this._rawBodyData.GetNotNullClass<string>("name"); }
+        init { this._rawBodyData.Set("name", value); }
     }
 
     public BrandSettings? Settings
     {
-        get { return JsonModel.GetNullableClass<BrandSettings>(this.RawBodyData, "settings"); }
-        init { JsonModel.Set(this._rawBodyData, "settings", value); }
+        get { return this._rawBodyData.GetNullableClass<BrandSettings>("settings"); }
+        init { this._rawBodyData.Set("settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get { return JsonModel.GetNullableClass<BrandSnippets>(this.RawBodyData, "snippets"); }
-        init { JsonModel.Set(this._rawBodyData, "snippets", value); }
+        get { return this._rawBodyData.GetNullableClass<BrandSnippets>("snippets"); }
+        init { this._rawBodyData.Set("snippets", value); }
     }
 
     public BrandUpdateParams() { }
@@ -50,7 +50,7 @@ public sealed record class BrandUpdateParams : ParamsBase
     {
         this.BrandID = brandUpdateParams.BrandID;
 
-        this._rawBodyData = [.. brandUpdateParams._rawBodyData];
+        this._rawBodyData = new(brandUpdateParams._rawBodyData);
     }
 
     public BrandUpdateParams(
@@ -59,9 +59,9 @@ public sealed record class BrandUpdateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -72,9 +72,9 @@ public sealed record class BrandUpdateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 

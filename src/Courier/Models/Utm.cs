@@ -12,32 +12,32 @@ public sealed record class Utm : JsonModel
 {
     public string? Campaign
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "campaign"); }
-        init { JsonModel.Set(this._rawData, "campaign", value); }
+        get { return this._rawData.GetNullableClass<string>("campaign"); }
+        init { this._rawData.Set("campaign", value); }
     }
 
     public string? Content
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "content"); }
-        init { JsonModel.Set(this._rawData, "content", value); }
+        get { return this._rawData.GetNullableClass<string>("content"); }
+        init { this._rawData.Set("content", value); }
     }
 
     public string? Medium
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "medium"); }
-        init { JsonModel.Set(this._rawData, "medium", value); }
+        get { return this._rawData.GetNullableClass<string>("medium"); }
+        init { this._rawData.Set("medium", value); }
     }
 
     public string? Source
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "source"); }
-        init { JsonModel.Set(this._rawData, "source", value); }
+        get { return this._rawData.GetNullableClass<string>("source"); }
+        init { this._rawData.Set("source", value); }
     }
 
     public string? Term
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "term"); }
-        init { JsonModel.Set(this._rawData, "term", value); }
+        get { return this._rawData.GetNullableClass<string>("term"); }
+        init { this._rawData.Set("term", value); }
     }
 
     /// <inheritdoc/>
@@ -57,14 +57,14 @@ public sealed record class Utm : JsonModel
 
     public Utm(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Utm(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

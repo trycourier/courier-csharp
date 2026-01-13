@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -17,8 +18,14 @@ public sealed record class PreferenceRetrieveResponse : JsonModel
     /// </summary>
     public required IReadOnlyList<TopicPreference> Items
     {
-        get { return JsonModel.GetNotNullClass<List<TopicPreference>>(this.RawData, "items"); }
-        init { JsonModel.Set(this._rawData, "items", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<TopicPreference>>("items"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<TopicPreference>>(
+                "items",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <summary>
@@ -26,8 +33,8 @@ public sealed record class PreferenceRetrieveResponse : JsonModel
     /// </summary>
     public required Paging Paging
     {
-        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { JsonModel.Set(this._rawData, "paging", value); }
+        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        init { this._rawData.Set("paging", value); }
     }
 
     /// <inheritdoc/>
@@ -47,14 +54,14 @@ public sealed record class PreferenceRetrieveResponse : JsonModel
 
     public PreferenceRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     PreferenceRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -17,8 +17,8 @@ public sealed record class TenantAssociation : JsonModel
     /// </summary>
     public required string TenantID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "tenant_id"); }
-        init { JsonModel.Set(this._rawData, "tenant_id", value); }
+        get { return this._rawData.GetNotNullClass<string>("tenant_id"); }
+        init { this._rawData.Set("tenant_id", value); }
     }
 
     /// <summary>
@@ -28,24 +28,26 @@ public sealed record class TenantAssociation : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "profile"
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("profile");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "profile",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     public ApiEnum<string, global::Courier.Models.Tenants.Type>? Type
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, global::Courier.Models.Tenants.Type>>(
-                this.RawData,
-                "type"
-            );
+            return this._rawData.GetNullableClass<
+                ApiEnum<string, global::Courier.Models.Tenants.Type>
+            >("type");
         }
-        init { JsonModel.Set(this._rawData, "type", value); }
+        init { this._rawData.Set("type", value); }
     }
 
     /// <summary>
@@ -53,8 +55,8 @@ public sealed record class TenantAssociation : JsonModel
     /// </summary>
     public string? UserID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "user_id"); }
-        init { JsonModel.Set(this._rawData, "user_id", value); }
+        get { return this._rawData.GetNullableClass<string>("user_id"); }
+        init { this._rawData.Set("user_id", value); }
     }
 
     /// <inheritdoc/>
@@ -73,14 +75,14 @@ public sealed record class TenantAssociation : JsonModel
 
     public TenantAssociation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     TenantAssociation(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

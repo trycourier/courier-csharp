@@ -24,14 +24,14 @@ public sealed record class InboundBulkMessage : JsonModel
     /// </summary>
     public required string Event
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "event"); }
-        init { JsonModel.Set(this._rawData, "event", value); }
+        get { return this._rawData.GetNotNullClass<string>("event"); }
+        init { this._rawData.Set("event", value); }
     }
 
     public string? Brand
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand"); }
-        init { JsonModel.Set(this._rawData, "brand", value); }
+        get { return this._rawData.GetNullableClass<string>("brand"); }
+        init { this._rawData.Set("brand", value); }
     }
 
     /// <summary>
@@ -40,44 +40,63 @@ public sealed record class InboundBulkMessage : JsonModel
     /// </summary>
     public Content? Content
     {
-        get { return JsonModel.GetNullableClass<Content>(this.RawData, "content"); }
-        init { JsonModel.Set(this._rawData, "content", value); }
+        get { return this._rawData.GetNullableClass<Content>("content"); }
+        init { this._rawData.Set("content", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "data"
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
-    public IReadOnlyDictionary<string, Dictionary<string, JsonElement>>? Locale
+    public IReadOnlyDictionary<string, IReadOnlyDictionary<string, JsonElement>>? Locale
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, Dictionary<string, JsonElement>>>(
-                this.RawData,
-                "locale"
+            return this._rawData.GetNullableClass<
+                FrozenDictionary<string, FrozenDictionary<string, JsonElement>>
+            >("locale");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, FrozenDictionary<string, JsonElement>>?>(
+                "locale",
+                value == null
+                    ? null
+                    : FrozenDictionary.ToFrozenDictionary(
+                        value,
+                        entry => entry.Key,
+                        (entry) => FrozenDictionary.ToFrozenDictionary(entry.Value)
+                    )
             );
         }
-        init { JsonModel.Set(this._rawData, "locale", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Override
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "override"
             );
         }
-        init { JsonModel.Set(this._rawData, "override", value); }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "override",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     /// <summary>
@@ -87,8 +106,8 @@ public sealed record class InboundBulkMessage : JsonModel
     /// </summary>
     public string? Template
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "template"); }
-        init { JsonModel.Set(this._rawData, "template", value); }
+        get { return this._rawData.GetNullableClass<string>("template"); }
+        init { this._rawData.Set("template", value); }
     }
 
     /// <inheritdoc/>
@@ -110,14 +129,14 @@ public sealed record class InboundBulkMessage : JsonModel
 
     public InboundBulkMessage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     InboundBulkMessage(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

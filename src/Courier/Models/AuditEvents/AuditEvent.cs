@@ -12,38 +12,38 @@ public sealed record class AuditEvent : JsonModel
 {
     public required Actor Actor
     {
-        get { return JsonModel.GetNotNullClass<Actor>(this.RawData, "actor"); }
-        init { JsonModel.Set(this._rawData, "actor", value); }
+        get { return this._rawData.GetNotNullClass<Actor>("actor"); }
+        init { this._rawData.Set("actor", value); }
     }
 
     public required string AuditEventID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "auditEventId"); }
-        init { JsonModel.Set(this._rawData, "auditEventId", value); }
+        get { return this._rawData.GetNotNullClass<string>("auditEventId"); }
+        init { this._rawData.Set("auditEventId", value); }
     }
 
     public required string Source
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "source"); }
-        init { JsonModel.Set(this._rawData, "source", value); }
+        get { return this._rawData.GetNotNullClass<string>("source"); }
+        init { this._rawData.Set("source", value); }
     }
 
     public required string Target
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "target"); }
-        init { JsonModel.Set(this._rawData, "target", value); }
+        get { return this._rawData.GetNotNullClass<string>("target"); }
+        init { this._rawData.Set("target", value); }
     }
 
     public required string Timestamp
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "timestamp"); }
-        init { JsonModel.Set(this._rawData, "timestamp", value); }
+        get { return this._rawData.GetNotNullClass<string>("timestamp"); }
+        init { this._rawData.Set("timestamp", value); }
     }
 
     public required string Type
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "type"); }
-        init { JsonModel.Set(this._rawData, "type", value); }
+        get { return this._rawData.GetNotNullClass<string>("type"); }
+        init { this._rawData.Set("type", value); }
     }
 
     /// <inheritdoc/>
@@ -64,14 +64,14 @@ public sealed record class AuditEvent : JsonModel
 
     public AuditEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AuditEvent(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -94,14 +94,14 @@ public sealed record class Actor : JsonModel
 {
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public string? Email
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "email"); }
-        init { JsonModel.Set(this._rawData, "email", value); }
+        get { return this._rawData.GetNullableClass<string>("email"); }
+        init { this._rawData.Set("email", value); }
     }
 
     /// <inheritdoc/>
@@ -118,14 +118,14 @@ public sealed record class Actor : JsonModel
 
     public Actor(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Actor(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

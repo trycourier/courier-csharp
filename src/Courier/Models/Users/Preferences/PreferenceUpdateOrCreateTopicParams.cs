@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Courier.Models.Users.Preferences;
 /// </summary>
 public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -27,8 +28,8 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
 
     public required Topic Topic
     {
-        get { return JsonModel.GetNotNullClass<Topic>(this.RawBodyData, "topic"); }
-        init { JsonModel.Set(this._rawBodyData, "topic", value); }
+        get { return this._rawBodyData.GetNotNullClass<Topic>("topic"); }
+        init { this._rawBodyData.Set("topic", value); }
     }
 
     /// <summary>
@@ -36,8 +37,8 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
-        init { JsonModel.Set(this._rawQueryData, "tenant_id", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("tenant_id"); }
+        init { this._rawQueryData.Set("tenant_id", value); }
     }
 
     public PreferenceUpdateOrCreateTopicParams() { }
@@ -50,7 +51,7 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
         this.UserID = preferenceUpdateOrCreateTopicParams.UserID;
         this.TopicID = preferenceUpdateOrCreateTopicParams.TopicID;
 
-        this._rawBodyData = [.. preferenceUpdateOrCreateTopicParams._rawBodyData];
+        this._rawBodyData = new(preferenceUpdateOrCreateTopicParams._rawBodyData);
     }
 
     public PreferenceUpdateOrCreateTopicParams(
@@ -59,9 +60,9 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -72,9 +73,9 @@ public sealed record class PreferenceUpdateOrCreateTopicParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -127,14 +128,8 @@ public sealed record class Topic : JsonModel
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
-        get
-        {
-            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
-                this.RawData,
-                "status"
-            );
-        }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        get { return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status"); }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <summary>
@@ -144,18 +139,23 @@ public sealed record class Topic : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
-                this.RawData,
-                "custom_routing"
+            return this._rawData.GetNullableStruct<
+                ImmutableArray<ApiEnum<string, ChannelClassification>>
+            >("custom_routing");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ApiEnum<string, ChannelClassification>>?>(
+                "custom_routing",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "custom_routing", value); }
     }
 
     public bool? HasCustomRouting
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
-        init { JsonModel.Set(this._rawData, "has_custom_routing", value); }
+        get { return this._rawData.GetNullableStruct<bool>("has_custom_routing"); }
+        init { this._rawData.Set("has_custom_routing", value); }
     }
 
     /// <inheritdoc/>
@@ -176,14 +176,14 @@ public sealed record class Topic : JsonModel
 
     public Topic(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Topic(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

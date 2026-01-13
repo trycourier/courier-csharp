@@ -17,18 +17,21 @@ public sealed record class ListPatternRecipient : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "data"
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     public string? ListPattern
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "list_pattern"); }
-        init { JsonModel.Set(this._rawData, "list_pattern", value); }
+        get { return this._rawData.GetNullableClass<string>("list_pattern"); }
+        init { this._rawData.Set("list_pattern", value); }
     }
 
     /// <inheritdoc/>
@@ -45,14 +48,14 @@ public sealed record class ListPatternRecipient : JsonModel
 
     public ListPatternRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ListPatternRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

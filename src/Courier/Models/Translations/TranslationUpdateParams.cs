@@ -14,7 +14,7 @@ namespace Courier.Models.Translations;
 /// </summary>
 public sealed record class TranslationUpdateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -26,8 +26,8 @@ public sealed record class TranslationUpdateParams : ParamsBase
 
     public required string Body
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "body"); }
-        init { JsonModel.Set(this._rawBodyData, "body", value); }
+        get { return this._rawBodyData.GetNotNullClass<string>("body"); }
+        init { this._rawBodyData.Set("body", value); }
     }
 
     public TranslationUpdateParams() { }
@@ -38,7 +38,7 @@ public sealed record class TranslationUpdateParams : ParamsBase
         this.Domain = translationUpdateParams.Domain;
         this.Locale = translationUpdateParams.Locale;
 
-        this._rawBodyData = [.. translationUpdateParams._rawBodyData];
+        this._rawBodyData = new(translationUpdateParams._rawBodyData);
     }
 
     public TranslationUpdateParams(
@@ -47,9 +47,9 @@ public sealed record class TranslationUpdateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -60,9 +60,9 @@ public sealed record class TranslationUpdateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 

@@ -12,20 +12,20 @@ public sealed record class SendToMsTeamsEmail : JsonModel
 {
     public required string Email
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "email"); }
-        init { JsonModel.Set(this._rawData, "email", value); }
+        get { return this._rawData.GetNotNullClass<string>("email"); }
+        init { this._rawData.Set("email", value); }
     }
 
     public required string ServiceUrl
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "service_url"); }
-        init { JsonModel.Set(this._rawData, "service_url", value); }
+        get { return this._rawData.GetNotNullClass<string>("service_url"); }
+        init { this._rawData.Set("service_url", value); }
     }
 
     public required string TenantID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "tenant_id"); }
-        init { JsonModel.Set(this._rawData, "tenant_id", value); }
+        get { return this._rawData.GetNotNullClass<string>("tenant_id"); }
+        init { this._rawData.Set("tenant_id", value); }
     }
 
     /// <inheritdoc/>
@@ -43,14 +43,14 @@ public sealed record class SendToMsTeamsEmail : JsonModel
 
     public SendToMsTeamsEmail(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SendToMsTeamsEmail(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

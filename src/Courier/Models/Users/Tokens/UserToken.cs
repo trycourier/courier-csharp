@@ -17,20 +17,19 @@ public sealed record class UserToken : JsonModel
     /// </summary>
     public required string Token
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "token"); }
-        init { JsonModel.Set(this._rawData, "token", value); }
+        get { return this._rawData.GetNotNullClass<string>("token"); }
+        init { this._rawData.Set("token", value); }
     }
 
     public required ApiEnum<string, UserTokenProviderKey> ProviderKey
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
-                this.RawData,
+            return this._rawData.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
                 "provider_key"
             );
         }
-        init { JsonModel.Set(this._rawData, "provider_key", value); }
+        init { this._rawData.Set("provider_key", value); }
     }
 
     /// <summary>
@@ -38,8 +37,8 @@ public sealed record class UserToken : JsonModel
     /// </summary>
     public UserTokenDevice? Device
     {
-        get { return JsonModel.GetNullableClass<UserTokenDevice>(this.RawData, "device"); }
-        init { JsonModel.Set(this._rawData, "device", value); }
+        get { return this._rawData.GetNullableClass<UserTokenDevice>("device"); }
+        init { this._rawData.Set("device", value); }
     }
 
     /// <summary>
@@ -48,8 +47,8 @@ public sealed record class UserToken : JsonModel
     /// </summary>
     public UserTokenExpiryDate? ExpiryDate
     {
-        get { return JsonModel.GetNullableClass<UserTokenExpiryDate>(this.RawData, "expiry_date"); }
-        init { JsonModel.Set(this._rawData, "expiry_date", value); }
+        get { return this._rawData.GetNullableClass<UserTokenExpiryDate>("expiry_date"); }
+        init { this._rawData.Set("expiry_date", value); }
     }
 
     /// <summary>
@@ -57,7 +56,7 @@ public sealed record class UserToken : JsonModel
     /// </summary>
     public JsonElement? Properties
     {
-        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawData, "properties"); }
+        get { return this._rawData.GetNullableStruct<JsonElement>("properties"); }
         init
         {
             if (value == null)
@@ -65,7 +64,7 @@ public sealed record class UserToken : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "properties", value);
+            this._rawData.Set("properties", value);
         }
     }
 
@@ -74,8 +73,8 @@ public sealed record class UserToken : JsonModel
     /// </summary>
     public UserTokenTracking? Tracking
     {
-        get { return JsonModel.GetNullableClass<UserTokenTracking>(this.RawData, "tracking"); }
-        init { JsonModel.Set(this._rawData, "tracking", value); }
+        get { return this._rawData.GetNullableClass<UserTokenTracking>("tracking"); }
+        init { this._rawData.Set("tracking", value); }
     }
 
     /// <inheritdoc/>
@@ -96,14 +95,14 @@ public sealed record class UserToken : JsonModel
 
     public UserToken(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     UserToken(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -182,8 +181,8 @@ public sealed record class UserTokenDevice : JsonModel
     /// </summary>
     public string? AdID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "ad_id"); }
-        init { JsonModel.Set(this._rawData, "ad_id", value); }
+        get { return this._rawData.GetNullableClass<string>("ad_id"); }
+        init { this._rawData.Set("ad_id", value); }
     }
 
     /// <summary>
@@ -191,8 +190,8 @@ public sealed record class UserTokenDevice : JsonModel
     /// </summary>
     public string? AppID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "app_id"); }
-        init { JsonModel.Set(this._rawData, "app_id", value); }
+        get { return this._rawData.GetNullableClass<string>("app_id"); }
+        init { this._rawData.Set("app_id", value); }
     }
 
     /// <summary>
@@ -200,8 +199,8 @@ public sealed record class UserTokenDevice : JsonModel
     /// </summary>
     public string? DeviceID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "device_id"); }
-        init { JsonModel.Set(this._rawData, "device_id", value); }
+        get { return this._rawData.GetNullableClass<string>("device_id"); }
+        init { this._rawData.Set("device_id", value); }
     }
 
     /// <summary>
@@ -209,8 +208,8 @@ public sealed record class UserTokenDevice : JsonModel
     /// </summary>
     public string? Manufacturer
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "manufacturer"); }
-        init { JsonModel.Set(this._rawData, "manufacturer", value); }
+        get { return this._rawData.GetNullableClass<string>("manufacturer"); }
+        init { this._rawData.Set("manufacturer", value); }
     }
 
     /// <summary>
@@ -218,8 +217,8 @@ public sealed record class UserTokenDevice : JsonModel
     /// </summary>
     public string? Model
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "model"); }
-        init { JsonModel.Set(this._rawData, "model", value); }
+        get { return this._rawData.GetNullableClass<string>("model"); }
+        init { this._rawData.Set("model", value); }
     }
 
     /// <summary>
@@ -227,8 +226,8 @@ public sealed record class UserTokenDevice : JsonModel
     /// </summary>
     public string? Platform
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "platform"); }
-        init { JsonModel.Set(this._rawData, "platform", value); }
+        get { return this._rawData.GetNullableClass<string>("platform"); }
+        init { this._rawData.Set("platform", value); }
     }
 
     /// <inheritdoc/>
@@ -249,14 +248,14 @@ public sealed record class UserTokenDevice : JsonModel
 
     public UserTokenDevice(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     UserTokenDevice(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -512,8 +511,8 @@ public sealed record class UserTokenTracking : JsonModel
     /// </summary>
     public string? IP
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "ip"); }
-        init { JsonModel.Set(this._rawData, "ip", value); }
+        get { return this._rawData.GetNullableClass<string>("ip"); }
+        init { this._rawData.Set("ip", value); }
     }
 
     /// <summary>
@@ -521,8 +520,8 @@ public sealed record class UserTokenTracking : JsonModel
     /// </summary>
     public string? Lat
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "lat"); }
-        init { JsonModel.Set(this._rawData, "lat", value); }
+        get { return this._rawData.GetNullableClass<string>("lat"); }
+        init { this._rawData.Set("lat", value); }
     }
 
     /// <summary>
@@ -530,8 +529,8 @@ public sealed record class UserTokenTracking : JsonModel
     /// </summary>
     public string? Long
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "long"); }
-        init { JsonModel.Set(this._rawData, "long", value); }
+        get { return this._rawData.GetNullableClass<string>("long"); }
+        init { this._rawData.Set("long", value); }
     }
 
     /// <summary>
@@ -539,8 +538,8 @@ public sealed record class UserTokenTracking : JsonModel
     /// </summary>
     public string? OsVersion
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "os_version"); }
-        init { JsonModel.Set(this._rawData, "os_version", value); }
+        get { return this._rawData.GetNullableClass<string>("os_version"); }
+        init { this._rawData.Set("os_version", value); }
     }
 
     /// <inheritdoc/>
@@ -559,14 +558,14 @@ public sealed record class UserTokenTracking : JsonModel
 
     public UserTokenTracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     UserTokenTracking(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -36,6 +36,7 @@ public abstract record class ModelBase
     {
         Converters =
         {
+            new FrozenDictionaryConverterFactory(),
             new ApiEnumConverter<string, Alignment>(),
             new ApiEnumConverter<string, Operator>(),
             new ApiEnumConverter<string, Path>(),
