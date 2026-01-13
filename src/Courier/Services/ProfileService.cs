@@ -278,7 +278,7 @@ public sealed class ProfileServiceWithRawResponse : IProfileServiceWithRawRespon
 
         HttpRequest<ProfileUpdateParams> request = new()
         {
-            Method = CourierClient.PatchMethod,
+            Method = CourierClientWithRawResponse.PatchMethod,
             Params = parameters,
         };
         return this._client.Execute(request, cancellationToken);

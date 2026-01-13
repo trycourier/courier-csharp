@@ -229,7 +229,7 @@ public sealed class TokenServiceWithRawResponse : ITokenServiceWithRawResponse
 
         HttpRequest<TokenUpdateParams> request = new()
         {
-            Method = CourierClient.PatchMethod,
+            Method = CourierClientWithRawResponse.PatchMethod,
             Params = parameters,
         };
         return this._client.Execute(request, cancellationToken);
