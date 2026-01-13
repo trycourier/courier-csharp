@@ -35,15 +35,9 @@ public sealed class ItemService : IItemService
     }
 
     /// <inheritdoc/>
-    public async Task Update(
-        ItemUpdateParams parameters,
-        CancellationToken cancellationToken = default
-    )
+    public Task Update(ItemUpdateParams parameters, CancellationToken cancellationToken = default)
     {
-        using var response = await this
-            .WithRawResponse.Update(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Update(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -58,15 +52,9 @@ public sealed class ItemService : IItemService
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
-        ItemDeleteParams parameters,
-        CancellationToken cancellationToken = default
-    )
+    public Task Delete(ItemDeleteParams parameters, CancellationToken cancellationToken = default)
     {
-        using var response = await this
-            .WithRawResponse.Delete(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Delete(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
