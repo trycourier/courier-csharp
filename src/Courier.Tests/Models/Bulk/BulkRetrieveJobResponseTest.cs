@@ -25,7 +25,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {
                         {
                             "foo",
@@ -59,7 +59,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -100,7 +100,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {
                         {
                             "foo",
@@ -145,7 +145,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {
                         {
                             "foo",
@@ -183,7 +183,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -224,7 +224,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {
                         {
                             "foo",
@@ -267,7 +267,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -298,7 +298,7 @@ public class JobTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
                 {
                     "foo",
@@ -340,7 +340,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -382,7 +382,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -417,7 +417,7 @@ public class JobTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
                 {
                     "foo",
@@ -459,7 +459,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",

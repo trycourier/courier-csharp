@@ -19,7 +19,7 @@ public class InboundBulkMessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
                 {
                     "foo",
@@ -107,7 +107,7 @@ public class InboundBulkMessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
                 {
                     "foo",
@@ -142,7 +142,7 @@ public class InboundBulkMessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
                 {
                     "foo",
@@ -236,7 +236,7 @@ public class InboundBulkMessageTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
                 {
                     "foo",
