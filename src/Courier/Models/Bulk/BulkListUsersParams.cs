@@ -21,8 +21,8 @@ public sealed record class BulkListUsersParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cursor"); }
-        init { JsonModel.Set(this._rawQueryData, "cursor", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("cursor"); }
+        init { this._rawQueryData.Set("cursor", value); }
     }
 
     public BulkListUsersParams() { }
@@ -38,8 +38,8 @@ public sealed record class BulkListUsersParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -49,8 +49,8 @@ public sealed record class BulkListUsersParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 

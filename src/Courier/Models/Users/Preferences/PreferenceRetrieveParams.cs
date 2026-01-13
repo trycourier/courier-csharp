@@ -20,8 +20,8 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
-        init { JsonModel.Set(this._rawQueryData, "tenant_id", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("tenant_id"); }
+        init { this._rawQueryData.Set("tenant_id", value); }
     }
 
     public PreferenceRetrieveParams() { }
@@ -37,8 +37,8 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -48,8 +48,8 @@ public sealed record class PreferenceRetrieveParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 

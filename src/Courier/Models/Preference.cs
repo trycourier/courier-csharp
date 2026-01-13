@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,38 +15,43 @@ public sealed record class Preference : JsonModel
 {
     public required ApiEnum<string, PreferenceStatus> Status
     {
-        get
-        {
-            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
-                this.RawData,
-                "status"
-            );
-        }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        get { return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status"); }
+        init { this._rawData.Set("status", value); }
     }
 
     public IReadOnlyList<ChannelPreference>? ChannelPreferences
     {
         get
         {
-            return JsonModel.GetNullableClass<List<ChannelPreference>>(
-                this.RawData,
+            return this._rawData.GetNullableStruct<ImmutableArray<ChannelPreference>>(
                 "channel_preferences"
             );
         }
-        init { JsonModel.Set(this._rawData, "channel_preferences", value); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ChannelPreference>?>(
+                "channel_preferences",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public IReadOnlyList<Rule>? Rules
     {
-        get { return JsonModel.GetNullableClass<List<Rule>>(this.RawData, "rules"); }
-        init { JsonModel.Set(this._rawData, "rules", value); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<Rule>>("rules"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Rule>?>(
+                "rules",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public ApiEnum<string, Source>? Source
     {
-        get { return JsonModel.GetNullableClass<ApiEnum<string, Source>>(this.RawData, "source"); }
-        init { JsonModel.Set(this._rawData, "source", value); }
+        get { return this._rawData.GetNullableClass<ApiEnum<string, Source>>("source"); }
+        init { this._rawData.Set("source", value); }
     }
 
     /// <inheritdoc/>
@@ -70,14 +76,14 @@ public sealed record class Preference : JsonModel
 
     public Preference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Preference(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

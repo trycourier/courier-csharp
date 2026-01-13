@@ -12,26 +12,26 @@ public sealed record class Pagerduty : JsonModel
 {
     public string? EventAction
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "event_action"); }
-        init { JsonModel.Set(this._rawData, "event_action", value); }
+        get { return this._rawData.GetNullableClass<string>("event_action"); }
+        init { this._rawData.Set("event_action", value); }
     }
 
     public string? RoutingKey
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "routing_key"); }
-        init { JsonModel.Set(this._rawData, "routing_key", value); }
+        get { return this._rawData.GetNullableClass<string>("routing_key"); }
+        init { this._rawData.Set("routing_key", value); }
     }
 
     public string? Severity
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "severity"); }
-        init { JsonModel.Set(this._rawData, "severity", value); }
+        get { return this._rawData.GetNullableClass<string>("severity"); }
+        init { this._rawData.Set("severity", value); }
     }
 
     public string? Source
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "source"); }
-        init { JsonModel.Set(this._rawData, "source", value); }
+        get { return this._rawData.GetNullableClass<string>("source"); }
+        init { this._rawData.Set("source", value); }
     }
 
     /// <inheritdoc/>
@@ -50,14 +50,14 @@ public sealed record class Pagerduty : JsonModel
 
     public Pagerduty(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Pagerduty(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

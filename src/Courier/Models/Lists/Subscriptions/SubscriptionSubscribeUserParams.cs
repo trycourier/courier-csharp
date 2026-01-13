@@ -15,7 +15,7 @@ namespace Courier.Models.Lists.Subscriptions;
 /// </summary>
 public sealed record class SubscriptionSubscribeUserParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -27,14 +27,8 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
 
     public RecipientPreferences? Preferences
     {
-        get
-        {
-            return JsonModel.GetNullableClass<RecipientPreferences>(
-                this.RawBodyData,
-                "preferences"
-            );
-        }
-        init { JsonModel.Set(this._rawBodyData, "preferences", value); }
+        get { return this._rawBodyData.GetNullableClass<RecipientPreferences>("preferences"); }
+        init { this._rawBodyData.Set("preferences", value); }
     }
 
     public SubscriptionSubscribeUserParams() { }
@@ -47,7 +41,7 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
         this.ListID = subscriptionSubscribeUserParams.ListID;
         this.UserID = subscriptionSubscribeUserParams.UserID;
 
-        this._rawBodyData = [.. subscriptionSubscribeUserParams._rawBodyData];
+        this._rawBodyData = new(subscriptionSubscribeUserParams._rawBodyData);
     }
 
     public SubscriptionSubscribeUserParams(
@@ -56,9 +50,9 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -69,9 +63,9 @@ public sealed record class SubscriptionSubscribeUserParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 

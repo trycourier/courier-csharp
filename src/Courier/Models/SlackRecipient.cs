@@ -15,8 +15,8 @@ public sealed record class SlackRecipient : JsonModel
 {
     public required Slack Slack
     {
-        get { return JsonModel.GetNotNullClass<Slack>(this.RawData, "slack"); }
-        init { JsonModel.Set(this._rawData, "slack", value); }
+        get { return this._rawData.GetNotNullClass<Slack>("slack"); }
+        init { this._rawData.Set("slack", value); }
     }
 
     /// <inheritdoc/>
@@ -32,14 +32,14 @@ public sealed record class SlackRecipient : JsonModel
 
     public SlackRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SlackRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

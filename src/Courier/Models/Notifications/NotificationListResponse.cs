@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,14 +15,20 @@ public sealed record class NotificationListResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { JsonModel.Set(this._rawData, "paging", value); }
+        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        init { this._rawData.Set("paging", value); }
     }
 
     public required IReadOnlyList<Result> Results
     {
-        get { return JsonModel.GetNotNullClass<List<Result>>(this.RawData, "results"); }
-        init { JsonModel.Set(this._rawData, "results", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<Result>>("results"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Result>>(
+                "results",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -41,14 +48,14 @@ public sealed record class NotificationListResponse : JsonModel
 
     public NotificationListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     NotificationListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -74,14 +81,14 @@ public sealed record class Result : JsonModel
 {
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public required long CreatedAt
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "created_at"); }
-        init { JsonModel.Set(this._rawData, "created_at", value); }
+        get { return this._rawData.GetNotNullStruct<long>("created_at"); }
+        init { this._rawData.Set("created_at", value); }
     }
 
     /// <summary>
@@ -89,44 +96,50 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required IReadOnlyList<string> EventIds
     {
-        get { return JsonModel.GetNotNullClass<List<string>>(this.RawData, "event_ids"); }
-        init { JsonModel.Set(this._rawData, "event_ids", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<string>>("event_ids"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<string>>(
+                "event_ids",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public required string Note
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "note"); }
-        init { JsonModel.Set(this._rawData, "note", value); }
+        get { return this._rawData.GetNotNullClass<string>("note"); }
+        init { this._rawData.Set("note", value); }
     }
 
     public required MessageRouting Routing
     {
-        get { return JsonModel.GetNotNullClass<MessageRouting>(this.RawData, "routing"); }
-        init { JsonModel.Set(this._rawData, "routing", value); }
+        get { return this._rawData.GetNotNullClass<MessageRouting>("routing"); }
+        init { this._rawData.Set("routing", value); }
     }
 
     public required string TopicID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "topic_id"); }
-        init { JsonModel.Set(this._rawData, "topic_id", value); }
+        get { return this._rawData.GetNotNullClass<string>("topic_id"); }
+        init { this._rawData.Set("topic_id", value); }
     }
 
     public required long UpdatedAt
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "updated_at"); }
-        init { JsonModel.Set(this._rawData, "updated_at", value); }
+        get { return this._rawData.GetNotNullStruct<long>("updated_at"); }
+        init { this._rawData.Set("updated_at", value); }
     }
 
     public Tags? Tags
     {
-        get { return JsonModel.GetNullableClass<Tags>(this.RawData, "tags"); }
-        init { JsonModel.Set(this._rawData, "tags", value); }
+        get { return this._rawData.GetNullableClass<Tags>("tags"); }
+        init { this._rawData.Set("tags", value); }
     }
 
     public string? Title
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "title"); }
-        init { JsonModel.Set(this._rawData, "title", value); }
+        get { return this._rawData.GetNullableClass<string>("title"); }
+        init { this._rawData.Set("title", value); }
     }
 
     /// <inheritdoc/>
@@ -150,14 +163,14 @@ public sealed record class Result : JsonModel
 
     public Result(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Result(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -180,8 +193,11 @@ public sealed record class Tags : JsonModel
 {
     public required IReadOnlyList<Data> Data
     {
-        get { return JsonModel.GetNotNullClass<List<Data>>(this.RawData, "data"); }
-        init { JsonModel.Set(this._rawData, "data", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<Data>>("data"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Data>>("data", ImmutableArray.ToImmutableArray(value));
+        }
     }
 
     /// <inheritdoc/>
@@ -200,14 +216,14 @@ public sealed record class Tags : JsonModel
 
     public Tags(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Tags(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -237,14 +253,14 @@ public sealed record class Data : JsonModel
 {
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
-        init { JsonModel.Set(this._rawData, "name", value); }
+        get { return this._rawData.GetNotNullClass<string>("name"); }
+        init { this._rawData.Set("name", value); }
     }
 
     /// <inheritdoc/>
@@ -261,14 +277,14 @@ public sealed record class Data : JsonModel
 
     public Data(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Data(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -17,8 +17,8 @@ public sealed record class PreferenceRetrieveTopicResponse : JsonModel
 {
     public required TopicPreference Topic
     {
-        get { return JsonModel.GetNotNullClass<TopicPreference>(this.RawData, "topic"); }
-        init { JsonModel.Set(this._rawData, "topic", value); }
+        get { return this._rawData.GetNotNullClass<TopicPreference>("topic"); }
+        init { this._rawData.Set("topic", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +36,14 @@ public sealed record class PreferenceRetrieveTopicResponse : JsonModel
 
     public PreferenceRetrieveTopicResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     PreferenceRetrieveTopicResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

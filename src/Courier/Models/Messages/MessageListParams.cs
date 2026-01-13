@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text.Json;
@@ -19,8 +20,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public bool? Archived
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "archived"); }
-        init { JsonModel.Set(this._rawQueryData, "archived", value); }
+        get { return this._rawQueryData.GetNullableStruct<bool>("archived"); }
+        init { this._rawQueryData.Set("archived", value); }
     }
 
     /// <summary>
@@ -28,8 +29,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cursor"); }
-        init { JsonModel.Set(this._rawQueryData, "cursor", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("cursor"); }
+        init { this._rawQueryData.Set("cursor", value); }
     }
 
     /// <summary>
@@ -37,8 +38,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? EnqueuedAfter
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "enqueued_after"); }
-        init { JsonModel.Set(this._rawQueryData, "enqueued_after", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("enqueued_after"); }
+        init { this._rawQueryData.Set("enqueued_after", value); }
     }
 
     /// <summary>
@@ -46,8 +47,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Event
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "event"); }
-        init { JsonModel.Set(this._rawQueryData, "event", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("event"); }
+        init { this._rawQueryData.Set("event", value); }
     }
 
     /// <summary>
@@ -55,8 +56,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? List
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "list"); }
-        init { JsonModel.Set(this._rawQueryData, "list", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("list"); }
+        init { this._rawQueryData.Set("list", value); }
     }
 
     /// <summary>
@@ -65,8 +66,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? MessageID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "messageId"); }
-        init { JsonModel.Set(this._rawQueryData, "messageId", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("messageId"); }
+        init { this._rawQueryData.Set("messageId", value); }
     }
 
     /// <summary>
@@ -74,8 +75,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Notification
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "notification"); }
-        init { JsonModel.Set(this._rawQueryData, "notification", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("notification"); }
+        init { this._rawQueryData.Set("notification", value); }
     }
 
     /// <summary>
@@ -84,7 +85,7 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Provider
     {
-        get { return JsonModel.GetNullableClass<List<string?>>(this.RawQueryData, "provider"); }
+        get { return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("provider"); }
         init
         {
             if (value == null)
@@ -92,7 +93,10 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "provider", value);
+            this._rawQueryData.Set<ImmutableArray<string?>?>(
+                "provider",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
@@ -101,8 +105,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Recipient
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "recipient"); }
-        init { JsonModel.Set(this._rawQueryData, "recipient", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("recipient"); }
+        init { this._rawQueryData.Set("recipient", value); }
     }
 
     /// <summary>
@@ -111,7 +115,7 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Status
     {
-        get { return JsonModel.GetNullableClass<List<string?>>(this.RawQueryData, "status"); }
+        get { return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("status"); }
         init
         {
             if (value == null)
@@ -119,7 +123,10 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "status", value);
+            this._rawQueryData.Set<ImmutableArray<string?>?>(
+                "status",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
@@ -129,7 +136,7 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Tag
     {
-        get { return JsonModel.GetNullableClass<List<string?>>(this.RawQueryData, "tag"); }
+        get { return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("tag"); }
         init
         {
             if (value == null)
@@ -137,7 +144,10 @@ public sealed record class MessageListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "tag", value);
+            this._rawQueryData.Set<ImmutableArray<string?>?>(
+                "tag",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
@@ -147,8 +157,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Tags
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "tags"); }
-        init { JsonModel.Set(this._rawQueryData, "tags", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("tags"); }
+        init { this._rawQueryData.Set("tags", value); }
     }
 
     /// <summary>
@@ -156,8 +166,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "tenant_id"); }
-        init { JsonModel.Set(this._rawQueryData, "tenant_id", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("tenant_id"); }
+        init { this._rawQueryData.Set("tenant_id", value); }
     }
 
     /// <summary>
@@ -165,8 +175,8 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? TraceID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "traceId"); }
-        init { JsonModel.Set(this._rawQueryData, "traceId", value); }
+        get { return this._rawQueryData.GetNullableClass<string>("traceId"); }
+        init { this._rawQueryData.Set("traceId", value); }
     }
 
     public MessageListParams() { }
@@ -179,8 +189,8 @@ public sealed record class MessageListParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -190,8 +200,8 @@ public sealed record class MessageListParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 

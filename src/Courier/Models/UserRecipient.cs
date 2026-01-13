@@ -15,8 +15,8 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? AccountID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "account_id"); }
-        init { JsonModel.Set(this._rawData, "account_id", value); }
+        get { return this._rawData.GetNullableClass<string>("account_id"); }
+        init { this._rawData.Set("account_id", value); }
     }
 
     /// <summary>
@@ -24,20 +24,23 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public MessageContext? Context
     {
-        get { return JsonModel.GetNullableClass<MessageContext>(this.RawData, "context"); }
-        init { JsonModel.Set(this._rawData, "context", value); }
+        get { return this._rawData.GetNullableClass<MessageContext>("context"); }
+        init { this._rawData.Set("context", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "data"
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <summary>
@@ -45,8 +48,8 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? Email
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "email"); }
-        init { JsonModel.Set(this._rawData, "email", value); }
+        get { return this._rawData.GetNullableClass<string>("email"); }
+        init { this._rawData.Set("email", value); }
     }
 
     /// <summary>
@@ -54,8 +57,8 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? ListID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "list_id"); }
-        init { JsonModel.Set(this._rawData, "list_id", value); }
+        get { return this._rawData.GetNullableClass<string>("list_id"); }
+        init { this._rawData.Set("list_id", value); }
     }
 
     /// <summary>
@@ -63,8 +66,8 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? Locale
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "locale"); }
-        init { JsonModel.Set(this._rawData, "locale", value); }
+        get { return this._rawData.GetNullableClass<string>("locale"); }
+        init { this._rawData.Set("locale", value); }
     }
 
     /// <summary>
@@ -72,14 +75,14 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? PhoneNumber
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "phone_number"); }
-        init { JsonModel.Set(this._rawData, "phone_number", value); }
+        get { return this._rawData.GetNullableClass<string>("phone_number"); }
+        init { this._rawData.Set("phone_number", value); }
     }
 
     public Preferences? Preferences
     {
-        get { return JsonModel.GetNullableClass<Preferences>(this.RawData, "preferences"); }
-        init { JsonModel.Set(this._rawData, "preferences", value); }
+        get { return this._rawData.GetNullableClass<Preferences>("preferences"); }
+        init { this._rawData.Set("preferences", value); }
     }
 
     /// <summary>
@@ -87,8 +90,8 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? TenantID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "tenant_id"); }
-        init { JsonModel.Set(this._rawData, "tenant_id", value); }
+        get { return this._rawData.GetNullableClass<string>("tenant_id"); }
+        init { this._rawData.Set("tenant_id", value); }
     }
 
     /// <summary>
@@ -97,8 +100,8 @@ public sealed record class UserRecipient : JsonModel
     /// </summary>
     public string? UserID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "user_id"); }
-        init { JsonModel.Set(this._rawData, "user_id", value); }
+        get { return this._rawData.GetNullableClass<string>("user_id"); }
+        init { this._rawData.Set("user_id", value); }
     }
 
     /// <inheritdoc/>
@@ -123,14 +126,14 @@ public sealed record class UserRecipient : JsonModel
 
     public UserRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     UserRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -155,30 +158,40 @@ public sealed record class Preferences : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<Dictionary<string, Preference>>(
-                this.RawData,
+            return this._rawData.GetNotNullClass<FrozenDictionary<string, Preference>>(
                 "notifications"
             );
         }
-        init { JsonModel.Set(this._rawData, "notifications", value); }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, Preference>>(
+                "notifications",
+                FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public IReadOnlyDictionary<string, Preference>? Categories
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, Preference>>(
-                this.RawData,
+            return this._rawData.GetNullableClass<FrozenDictionary<string, Preference>>(
                 "categories"
             );
         }
-        init { JsonModel.Set(this._rawData, "categories", value); }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, Preference>?>(
+                "categories",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public string? TemplateID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "templateId"); }
-        init { JsonModel.Set(this._rawData, "templateId", value); }
+        get { return this._rawData.GetNullableClass<string>("templateId"); }
+        init { this._rawData.Set("templateId", value); }
     }
 
     /// <inheritdoc/>
@@ -205,14 +218,14 @@ public sealed record class Preferences : JsonModel
 
     public Preferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Preferences(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

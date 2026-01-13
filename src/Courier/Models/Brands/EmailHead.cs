@@ -12,14 +12,14 @@ public sealed record class EmailHead : JsonModel
 {
     public required bool InheritDefault
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "inheritDefault"); }
-        init { JsonModel.Set(this._rawData, "inheritDefault", value); }
+        get { return this._rawData.GetNotNullStruct<bool>("inheritDefault"); }
+        init { this._rawData.Set("inheritDefault", value); }
     }
 
     public string? Content
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "content"); }
-        init { JsonModel.Set(this._rawData, "content", value); }
+        get { return this._rawData.GetNullableClass<string>("content"); }
+        init { this._rawData.Set("content", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +36,14 @@ public sealed record class EmailHead : JsonModel
 
     public EmailHead(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     EmailHead(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

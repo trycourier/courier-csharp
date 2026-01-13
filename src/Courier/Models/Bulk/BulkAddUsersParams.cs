@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Courier.Models.Bulk;
 /// </summary>
 public sealed record class BulkAddUsersParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -30,12 +31,17 @@ public sealed record class BulkAddUsersParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNotNullClass<List<InboundBulkMessageUser>>(
-                this.RawBodyData,
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<InboundBulkMessageUser>>(
                 "users"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "users", value); }
+        init
+        {
+            this._rawBodyData.Set<ImmutableArray<InboundBulkMessageUser>>(
+                "users",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public BulkAddUsersParams() { }
@@ -45,7 +51,7 @@ public sealed record class BulkAddUsersParams : ParamsBase
     {
         this.JobID = bulkAddUsersParams.JobID;
 
-        this._rawBodyData = [.. bulkAddUsersParams._rawBodyData];
+        this._rawBodyData = new(bulkAddUsersParams._rawBodyData);
     }
 
     public BulkAddUsersParams(
@@ -54,9 +60,9 @@ public sealed record class BulkAddUsersParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -67,9 +73,9 @@ public sealed record class BulkAddUsersParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 

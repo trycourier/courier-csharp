@@ -12,8 +12,8 @@ public sealed record class AirshipProfileAudience : JsonModel
 {
     public required string NamedUser
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "named_user"); }
-        init { JsonModel.Set(this._rawData, "named_user", value); }
+        get { return this._rawData.GetNotNullClass<string>("named_user"); }
+        init { this._rawData.Set("named_user", value); }
     }
 
     /// <inheritdoc/>
@@ -29,14 +29,14 @@ public sealed record class AirshipProfileAudience : JsonModel
 
     public AirshipProfileAudience(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AirshipProfileAudience(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

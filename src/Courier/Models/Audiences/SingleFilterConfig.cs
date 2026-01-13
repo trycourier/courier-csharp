@@ -19,12 +19,11 @@ public sealed record class SingleFilterConfig : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, SingleFilterConfigOperator>>(
-                this.RawData,
+            return this._rawData.GetNotNullClass<ApiEnum<string, SingleFilterConfigOperator>>(
                 "operator"
             );
         }
-        init { JsonModel.Set(this._rawData, "operator", value); }
+        init { this._rawData.Set("operator", value); }
     }
 
     /// <summary>
@@ -33,8 +32,8 @@ public sealed record class SingleFilterConfig : JsonModel
     /// </summary>
     public required string Path
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "path"); }
-        init { JsonModel.Set(this._rawData, "path", value); }
+        get { return this._rawData.GetNotNullClass<string>("path"); }
+        init { this._rawData.Set("path", value); }
     }
 
     /// <summary>
@@ -42,8 +41,8 @@ public sealed record class SingleFilterConfig : JsonModel
     /// </summary>
     public required string Value
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "value"); }
-        init { JsonModel.Set(this._rawData, "value", value); }
+        get { return this._rawData.GetNotNullClass<string>("value"); }
+        init { this._rawData.Set("value", value); }
     }
 
     /// <inheritdoc/>
@@ -61,14 +60,14 @@ public sealed record class SingleFilterConfig : JsonModel
 
     public SingleFilterConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SingleFilterConfig(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

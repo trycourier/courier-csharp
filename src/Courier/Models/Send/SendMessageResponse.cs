@@ -18,8 +18,8 @@ public sealed record class SendMessageResponse : JsonModel
     /// </summary>
     public required string RequestID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "requestId"); }
-        init { JsonModel.Set(this._rawData, "requestId", value); }
+        get { return this._rawData.GetNotNullClass<string>("requestId"); }
+        init { this._rawData.Set("requestId", value); }
     }
 
     /// <inheritdoc/>
@@ -35,14 +35,14 @@ public sealed record class SendMessageResponse : JsonModel
 
     public SendMessageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SendMessageResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

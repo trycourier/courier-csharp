@@ -19,27 +19,21 @@ public sealed record class ListFilter : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, ListFilterOperator>>(
-                this.RawData,
-                "operator"
-            );
+            return this._rawData.GetNotNullClass<ApiEnum<string, ListFilterOperator>>("operator");
         }
-        init { JsonModel.Set(this._rawData, "operator", value); }
+        init { this._rawData.Set("operator", value); }
     }
 
     public required ApiEnum<string, ListFilterPath> Path
     {
-        get
-        {
-            return JsonModel.GetNotNullClass<ApiEnum<string, ListFilterPath>>(this.RawData, "path");
-        }
-        init { JsonModel.Set(this._rawData, "path", value); }
+        get { return this._rawData.GetNotNullClass<ApiEnum<string, ListFilterPath>>("path"); }
+        init { this._rawData.Set("path", value); }
     }
 
     public required string Value
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "value"); }
-        init { JsonModel.Set(this._rawData, "value", value); }
+        get { return this._rawData.GetNotNullClass<string>("value"); }
+        init { this._rawData.Set("value", value); }
     }
 
     /// <inheritdoc/>
@@ -57,14 +51,14 @@ public sealed record class ListFilter : JsonModel
 
     public ListFilter(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ListFilter(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -12,8 +12,8 @@ public sealed record class Token : JsonModel
 {
     public required string TokenValue
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "token"); }
-        init { JsonModel.Set(this._rawData, "token", value); }
+        get { return this._rawData.GetNotNullClass<string>("token"); }
+        init { this._rawData.Set("token", value); }
     }
 
     /// <inheritdoc/>
@@ -29,14 +29,14 @@ public sealed record class Token : JsonModel
 
     public Token(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Token(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

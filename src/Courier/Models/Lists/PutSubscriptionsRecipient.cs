@@ -14,17 +14,14 @@ public sealed record class PutSubscriptionsRecipient : JsonModel
 {
     public required string RecipientID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "recipientId"); }
-        init { JsonModel.Set(this._rawData, "recipientId", value); }
+        get { return this._rawData.GetNotNullClass<string>("recipientId"); }
+        init { this._rawData.Set("recipientId", value); }
     }
 
     public RecipientPreferences? Preferences
     {
-        get
-        {
-            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
-        }
-        init { JsonModel.Set(this._rawData, "preferences", value); }
+        get { return this._rawData.GetNullableClass<RecipientPreferences>("preferences"); }
+        init { this._rawData.Set("preferences", value); }
     }
 
     /// <inheritdoc/>
@@ -41,14 +38,14 @@ public sealed record class PutSubscriptionsRecipient : JsonModel
 
     public PutSubscriptionsRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     PutSubscriptionsRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

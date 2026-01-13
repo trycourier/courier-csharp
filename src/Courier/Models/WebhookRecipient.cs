@@ -15,8 +15,8 @@ public sealed record class WebhookRecipient : JsonModel
 {
     public required WebhookProfile Webhook
     {
-        get { return JsonModel.GetNotNullClass<WebhookProfile>(this.RawData, "webhook"); }
-        init { JsonModel.Set(this._rawData, "webhook", value); }
+        get { return this._rawData.GetNotNullClass<WebhookProfile>("webhook"); }
+        init { this._rawData.Set("webhook", value); }
     }
 
     /// <inheritdoc/>
@@ -32,14 +32,14 @@ public sealed record class WebhookRecipient : JsonModel
 
     public WebhookRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     WebhookRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

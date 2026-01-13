@@ -12,31 +12,31 @@ public sealed record class Check : JsonModel
 {
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public required ApiEnum<string, Status> Status
     {
-        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        init { this._rawData.Set("status", value); }
     }
 
     public required ApiEnum<string, global::Courier.Models.Notifications.Type> Type
     {
         get
         {
-            return JsonModel.GetNotNullClass<
+            return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Notifications.Type>
-            >(this.RawData, "type");
+            >("type");
         }
-        init { JsonModel.Set(this._rawData, "type", value); }
+        init { this._rawData.Set("type", value); }
     }
 
     public required long Updated
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "updated"); }
-        init { JsonModel.Set(this._rawData, "updated", value); }
+        get { return this._rawData.GetNotNullStruct<long>("updated"); }
+        init { this._rawData.Set("updated", value); }
     }
 
     public static implicit operator BaseCheck(Check check) =>
@@ -63,14 +63,14 @@ public sealed record class Check : JsonModel
 
     public Check(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Check(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -98,8 +98,8 @@ public sealed record class IntersectionMember1 : JsonModel
 {
     public required long Updated
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "updated"); }
-        init { JsonModel.Set(this._rawData, "updated", value); }
+        get { return this._rawData.GetNotNullStruct<long>("updated"); }
+        init { this._rawData.Set("updated", value); }
     }
 
     /// <inheritdoc/>
@@ -117,14 +117,14 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Courier.Models.Tenants.Preferences.Items;
 /// </summary>
 public sealed record class ItemUpdateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -30,11 +31,11 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNotNullClass<
+            return this._rawBodyData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Tenants.Preferences.Items.Status>
-            >(this.RawBodyData, "status");
+            >("status");
         }
-        init { JsonModel.Set(this._rawBodyData, "status", value); }
+        init { this._rawBodyData.Set("status", value); }
     }
 
     /// <summary>
@@ -44,12 +45,17 @@ public sealed record class ItemUpdateParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
-                this.RawBodyData,
-                "custom_routing"
+            return this._rawBodyData.GetNullableStruct<
+                ImmutableArray<ApiEnum<string, ChannelClassification>>
+            >("custom_routing");
+        }
+        init
+        {
+            this._rawBodyData.Set<ImmutableArray<ApiEnum<string, ChannelClassification>>?>(
+                "custom_routing",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "custom_routing", value); }
     }
 
     /// <summary>
@@ -58,8 +64,8 @@ public sealed record class ItemUpdateParams : ParamsBase
     /// </summary>
     public bool? HasCustomRouting
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawBodyData, "has_custom_routing"); }
-        init { JsonModel.Set(this._rawBodyData, "has_custom_routing", value); }
+        get { return this._rawBodyData.GetNullableStruct<bool>("has_custom_routing"); }
+        init { this._rawBodyData.Set("has_custom_routing", value); }
     }
 
     public ItemUpdateParams() { }
@@ -70,7 +76,7 @@ public sealed record class ItemUpdateParams : ParamsBase
         this.TenantID = itemUpdateParams.TenantID;
         this.TopicID = itemUpdateParams.TopicID;
 
-        this._rawBodyData = [.. itemUpdateParams._rawBodyData];
+        this._rawBodyData = new(itemUpdateParams._rawBodyData);
     }
 
     public ItemUpdateParams(
@@ -79,9 +85,9 @@ public sealed record class ItemUpdateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -92,9 +98,9 @@ public sealed record class ItemUpdateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 

@@ -17,8 +17,8 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : JsonModel
 {
     public required string Message
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "message"); }
-        init { JsonModel.Set(this._rawData, "message", value); }
+        get { return this._rawData.GetNotNullClass<string>("message"); }
+        init { this._rawData.Set("message", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +36,14 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : JsonModel
 
     public PreferenceUpdateOrCreateTopicResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     PreferenceUpdateOrCreateTopicResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

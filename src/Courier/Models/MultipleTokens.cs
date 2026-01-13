@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,8 +13,14 @@ public sealed record class MultipleTokens : JsonModel
 {
     public required IReadOnlyList<Token> Tokens
     {
-        get { return JsonModel.GetNotNullClass<List<Token>>(this.RawData, "tokens"); }
-        init { JsonModel.Set(this._rawData, "tokens", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<Token>>("tokens"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Token>>(
+                "tokens",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -32,14 +39,14 @@ public sealed record class MultipleTokens : JsonModel
 
     public MultipleTokens(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     MultipleTokens(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

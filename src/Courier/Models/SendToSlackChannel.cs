@@ -12,14 +12,14 @@ public sealed record class SendToSlackChannel : JsonModel
 {
     public required string AccessToken
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "access_token"); }
-        init { JsonModel.Set(this._rawData, "access_token", value); }
+        get { return this._rawData.GetNotNullClass<string>("access_token"); }
+        init { this._rawData.Set("access_token", value); }
     }
 
     public required string Channel
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "channel"); }
-        init { JsonModel.Set(this._rawData, "channel", value); }
+        get { return this._rawData.GetNotNullClass<string>("channel"); }
+        init { this._rawData.Set("channel", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +36,14 @@ public sealed record class SendToSlackChannel : JsonModel
 
     public SendToSlackChannel(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SendToSlackChannel(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

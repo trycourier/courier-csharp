@@ -12,14 +12,14 @@ public sealed record class Icons : JsonModel
 {
     public string? Bell
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "bell"); }
-        init { JsonModel.Set(this._rawData, "bell", value); }
+        get { return this._rawData.GetNullableClass<string>("bell"); }
+        init { this._rawData.Set("bell", value); }
     }
 
     public string? Message
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "message"); }
-        init { JsonModel.Set(this._rawData, "message", value); }
+        get { return this._rawData.GetNullableClass<string>("message"); }
+        init { this._rawData.Set("message", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +36,14 @@ public sealed record class Icons : JsonModel
 
     public Icons(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Icons(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

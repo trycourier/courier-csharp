@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,8 +16,8 @@ public sealed record class MessageListResponse : JsonModel
     /// </summary>
     public required Paging Paging
     {
-        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { JsonModel.Set(this._rawData, "paging", value); }
+        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        init { this._rawData.Set("paging", value); }
     }
 
     /// <summary>
@@ -24,8 +25,14 @@ public sealed record class MessageListResponse : JsonModel
     /// </summary>
     public required IReadOnlyList<MessageDetails> Results
     {
-        get { return JsonModel.GetNotNullClass<List<MessageDetails>>(this.RawData, "results"); }
-        init { JsonModel.Set(this._rawData, "results", value); }
+        get { return this._rawData.GetNotNullStruct<ImmutableArray<MessageDetails>>("results"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<MessageDetails>>(
+                "results",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -45,14 +52,14 @@ public sealed record class MessageListResponse : JsonModel
 
     public MessageListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     MessageListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

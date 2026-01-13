@@ -12,26 +12,26 @@ public sealed record class SubscriptionList : JsonModel
 {
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get { return this._rawData.GetNotNullClass<string>("id"); }
+        init { this._rawData.Set("id", value); }
     }
 
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
-        init { JsonModel.Set(this._rawData, "name", value); }
+        get { return this._rawData.GetNotNullClass<string>("name"); }
+        init { this._rawData.Set("name", value); }
     }
 
     public string? Created
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "created"); }
-        init { JsonModel.Set(this._rawData, "created", value); }
+        get { return this._rawData.GetNullableClass<string>("created"); }
+        init { this._rawData.Set("created", value); }
     }
 
     public string? Updated
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "updated"); }
-        init { JsonModel.Set(this._rawData, "updated", value); }
+        get { return this._rawData.GetNullableClass<string>("updated"); }
+        init { this._rawData.Set("updated", value); }
     }
 
     /// <inheritdoc/>
@@ -50,14 +50,14 @@ public sealed record class SubscriptionList : JsonModel
 
     public SubscriptionList(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SubscriptionList(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

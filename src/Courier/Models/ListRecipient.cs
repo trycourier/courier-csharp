@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -17,24 +18,33 @@ public sealed record class ListRecipient : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "data"
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     public IReadOnlyList<ListFilter>? Filters
     {
-        get { return JsonModel.GetNullableClass<List<ListFilter>>(this.RawData, "filters"); }
-        init { JsonModel.Set(this._rawData, "filters", value); }
+        get { return this._rawData.GetNullableStruct<ImmutableArray<ListFilter>>("filters"); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ListFilter>?>(
+                "filters",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public string? ListID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "list_id"); }
-        init { JsonModel.Set(this._rawData, "list_id", value); }
+        get { return this._rawData.GetNullableClass<string>("list_id"); }
+        init { this._rawData.Set("list_id", value); }
     }
 
     /// <inheritdoc/>
@@ -55,14 +65,14 @@ public sealed record class ListRecipient : JsonModel
 
     public ListRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ListRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

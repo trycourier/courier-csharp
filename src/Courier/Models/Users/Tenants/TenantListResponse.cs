@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -18,8 +19,8 @@ public sealed record class TenantListResponse : JsonModel
     /// </summary>
     public required bool HasMore
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "has_more"); }
-        init { JsonModel.Set(this._rawData, "has_more", value); }
+        get { return this._rawData.GetNotNullStruct<bool>("has_more"); }
+        init { this._rawData.Set("has_more", value); }
     }
 
     /// <summary>
@@ -29,11 +30,11 @@ public sealed record class TenantListResponse : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<
+            return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Users.Tenants.Type>
-            >(this.RawData, "type");
+            >("type");
         }
-        init { JsonModel.Set(this._rawData, "type", value); }
+        init { this._rawData.Set("type", value); }
     }
 
     /// <summary>
@@ -41,8 +42,8 @@ public sealed record class TenantListResponse : JsonModel
     /// </summary>
     public required string Url
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "url"); }
-        init { JsonModel.Set(this._rawData, "url", value); }
+        get { return this._rawData.GetNotNullClass<string>("url"); }
+        init { this._rawData.Set("url", value); }
     }
 
     /// <summary>
@@ -51,20 +52,25 @@ public sealed record class TenantListResponse : JsonModel
     /// </summary>
     public string? Cursor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "cursor"); }
-        init { JsonModel.Set(this._rawData, "cursor", value); }
+        get { return this._rawData.GetNullableClass<string>("cursor"); }
+        init { this._rawData.Set("cursor", value); }
     }
 
     public IReadOnlyList<Tenants::TenantAssociation>? Items
     {
         get
         {
-            return JsonModel.GetNullableClass<List<Tenants::TenantAssociation>>(
-                this.RawData,
+            return this._rawData.GetNullableStruct<ImmutableArray<Tenants::TenantAssociation>>(
                 "items"
             );
         }
-        init { JsonModel.Set(this._rawData, "items", value); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Tenants::TenantAssociation>?>(
+                "items",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <summary>
@@ -73,8 +79,8 @@ public sealed record class TenantListResponse : JsonModel
     /// </summary>
     public string? NextUrl
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "next_url"); }
-        init { JsonModel.Set(this._rawData, "next_url", value); }
+        get { return this._rawData.GetNullableClass<string>("next_url"); }
+        init { this._rawData.Set("next_url", value); }
     }
 
     /// <inheritdoc/>
@@ -98,14 +104,14 @@ public sealed record class TenantListResponse : JsonModel
 
     public TenantListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     TenantListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
