@@ -360,10 +360,7 @@ public class ElementalImageNodeWithTypeIntersectionMember1TypeTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
@@ -391,10 +388,7 @@ public class ElementalImageNodeWithTypeIntersectionMember1TypeTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>
