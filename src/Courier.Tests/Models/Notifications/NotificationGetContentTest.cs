@@ -587,23 +587,25 @@ public class ContentTest : TestBase
     [Fact]
     public void StringValidationWorks()
     {
-        Content value = new("string");
+        Content value = "string";
         value.Validate();
     }
 
     [Fact]
     public void NotificationContentHierarchyValidationWorks()
     {
-        Content value = new(
-            new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
-        );
+        Content value = new NotificationContentHierarchy()
+        {
+            Children = "children",
+            Parent = "parent",
+        };
         value.Validate();
     }
 
     [Fact]
     public void StringSerializationRoundtripWorks()
     {
-        Content value = new("string");
+        Content value = "string";
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Content>(element);
 
@@ -613,9 +615,11 @@ public class ContentTest : TestBase
     [Fact]
     public void NotificationContentHierarchySerializationRoundtripWorks()
     {
-        Content value = new(
-            new NotificationContentHierarchy() { Children = "children", Parent = "parent" }
-        );
+        Content value = new NotificationContentHierarchy()
+        {
+            Children = "children",
+            Parent = "parent",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Content>(element);
 
@@ -716,23 +720,25 @@ public class LocaleTest : TestBase
     [Fact]
     public void StringValidationWorks()
     {
-        Locale value = new("string");
+        Locale value = "string";
         value.Validate();
     }
 
     [Fact]
     public void NotificationContentHierarchyValidationWorks()
     {
-        Locale value = new(
-            new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
-        );
+        Locale value = new LocaleNotificationContentHierarchy()
+        {
+            Children = "children",
+            Parent = "parent",
+        };
         value.Validate();
     }
 
     [Fact]
     public void StringSerializationRoundtripWorks()
     {
-        Locale value = new("string");
+        Locale value = "string";
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Locale>(element);
 
@@ -742,9 +748,11 @@ public class LocaleTest : TestBase
     [Fact]
     public void NotificationContentHierarchySerializationRoundtripWorks()
     {
-        Locale value = new(
-            new LocaleNotificationContentHierarchy() { Children = "children", Parent = "parent" }
-        );
+        Locale value = new LocaleNotificationContentHierarchy()
+        {
+            Children = "children",
+            Parent = "parent",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Locale>(element);
 

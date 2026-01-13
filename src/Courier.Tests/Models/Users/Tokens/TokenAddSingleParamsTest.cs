@@ -434,21 +434,21 @@ public class ExpiryDateTest : TestBase
     [Fact]
     public void StringValidationWorks()
     {
-        ExpiryDate value = new("string");
+        ExpiryDate value = "string";
         value.Validate();
     }
 
     [Fact]
     public void BoolValidationWorks()
     {
-        ExpiryDate value = new(true);
+        ExpiryDate value = true;
         value.Validate();
     }
 
     [Fact]
     public void StringSerializationRoundtripWorks()
     {
-        ExpiryDate value = new("string");
+        ExpiryDate value = "string";
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<ExpiryDate>(element);
 
@@ -458,7 +458,7 @@ public class ExpiryDateTest : TestBase
     [Fact]
     public void BoolSerializationRoundtripWorks()
     {
-        ExpiryDate value = new(true);
+        ExpiryDate value = true;
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<ExpiryDate>(element);
 

@@ -8,49 +8,43 @@ public class FilterTest : TestBase
     [Fact]
     public void SingleFilterConfigValidationWorks()
     {
-        Filter value = new(
-            new SingleFilterConfig()
-            {
-                Operator = SingleFilterConfigOperator.EndsWith,
-                Path = "path",
-                Value = "value",
-            }
-        );
+        Filter value = new SingleFilterConfig()
+        {
+            Operator = SingleFilterConfigOperator.EndsWith,
+            Path = "path",
+            Value = "value",
+        };
         value.Validate();
     }
 
     [Fact]
     public void NestedFilterConfigValidationWorks()
     {
-        Filter value = new(
-            new NestedFilterConfig()
-            {
-                Operator = Operator.EndsWith,
-                Rules =
-                [
-                    new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
-                ],
-            }
-        );
+        Filter value = new NestedFilterConfig()
+        {
+            Operator = Operator.EndsWith,
+            Rules =
+            [
+                new SingleFilterConfig()
+                {
+                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+        };
         value.Validate();
     }
 
     [Fact]
     public void SingleFilterConfigSerializationRoundtripWorks()
     {
-        Filter value = new(
-            new SingleFilterConfig()
-            {
-                Operator = SingleFilterConfigOperator.EndsWith,
-                Path = "path",
-                Value = "value",
-            }
-        );
+        Filter value = new SingleFilterConfig()
+        {
+            Operator = SingleFilterConfigOperator.EndsWith,
+            Path = "path",
+            Value = "value",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Filter>(element);
 
@@ -60,21 +54,19 @@ public class FilterTest : TestBase
     [Fact]
     public void NestedFilterConfigSerializationRoundtripWorks()
     {
-        Filter value = new(
-            new NestedFilterConfig()
-            {
-                Operator = Operator.EndsWith,
-                Rules =
-                [
-                    new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
-                ],
-            }
-        );
+        Filter value = new NestedFilterConfig()
+        {
+            Operator = Operator.EndsWith,
+            Rules =
+            [
+                new SingleFilterConfig()
+                {
+                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Filter>(element);
 

@@ -336,38 +336,36 @@ public class ContentTest : TestBase
     [Fact]
     public void ElementalContentSugarValidationWorks()
     {
-        Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
+        Content value = new ElementalContentSugar() { Body = "body", Title = "title" };
         value.Validate();
     }
 
     [Fact]
     public void ElementalValidationWorks()
     {
-        Content value = new(
-            new ElementalContent()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-                Brand = "brand",
-            }
-        );
+        Content value = new ElementalContent()
+        {
+            Elements =
+            [
+                new ElementalTextNodeWithType()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                },
+            ],
+            Version = "version",
+            Brand = "brand",
+        };
         value.Validate();
     }
 
     [Fact]
     public void ElementalContentSugarSerializationRoundtripWorks()
     {
-        Content value = new(new ElementalContentSugar() { Body = "body", Title = "title" });
+        Content value = new ElementalContentSugar() { Body = "body", Title = "title" };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Content>(element);
 
@@ -377,24 +375,22 @@ public class ContentTest : TestBase
     [Fact]
     public void ElementalSerializationRoundtripWorks()
     {
-        Content value = new(
-            new ElementalContent()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-                Brand = "brand",
-            }
-        );
+        Content value = new ElementalContent()
+        {
+            Elements =
+            [
+                new ElementalTextNodeWithType()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                },
+            ],
+            Version = "version",
+            Brand = "brand",
+        };
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Content>(element);
 

@@ -8,21 +8,21 @@ public class DiscordTest : TestBase
     [Fact]
     public void SendToChannelValidationWorks()
     {
-        Discord value = new(new SendToChannel("channel_id"));
+        Discord value = new SendToChannel("channel_id");
         value.Validate();
     }
 
     [Fact]
     public void SendDirectMessageValidationWorks()
     {
-        Discord value = new(new SendDirectMessage("user_id"));
+        Discord value = new SendDirectMessage("user_id");
         value.Validate();
     }
 
     [Fact]
     public void SendToChannelSerializationRoundtripWorks()
     {
-        Discord value = new(new SendToChannel("channel_id"));
+        Discord value = new SendToChannel("channel_id");
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Discord>(element);
 
@@ -32,7 +32,7 @@ public class DiscordTest : TestBase
     [Fact]
     public void SendDirectMessageSerializationRoundtripWorks()
     {
-        Discord value = new(new SendDirectMessage("user_id"));
+        Discord value = new SendDirectMessage("user_id");
         string element = JsonSerializer.Serialize(value);
         var deserialized = JsonSerializer.Deserialize<Discord>(element);
 
