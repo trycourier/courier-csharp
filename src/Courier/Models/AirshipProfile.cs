@@ -13,13 +13,21 @@ public sealed record class AirshipProfile : JsonModel
 {
     public required AirshipProfileAudience Audience
     {
-        get { return this._rawData.GetNotNullClass<AirshipProfileAudience>("audience"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<AirshipProfileAudience>("audience");
+        }
         init { this._rawData.Set("audience", value); }
     }
 
     public required IReadOnlyList<string> DeviceTypes
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<string>>("device_types"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<string>>("device_types");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<string>>(

@@ -18,6 +18,7 @@ public sealed record class ListRecipient : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
         }
         init
@@ -31,7 +32,11 @@ public sealed record class ListRecipient : JsonModel
 
     public IReadOnlyList<ListFilter>? Filters
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<ListFilter>>("filters"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<ListFilter>>("filters");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<ListFilter>?>(
@@ -43,7 +48,11 @@ public sealed record class ListRecipient : JsonModel
 
     public string? ListID
     {
-        get { return this._rawData.GetNullableClass<string>("list_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("list_id");
+        }
         init { this._rawData.Set("list_id", value); }
     }
 

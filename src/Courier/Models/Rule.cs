@@ -12,13 +12,21 @@ public sealed record class Rule : JsonModel
 {
     public required string Until
     {
-        get { return this._rawData.GetNotNullClass<string>("until"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("until");
+        }
         init { this._rawData.Set("until", value); }
     }
 
     public string? Start
     {
-        get { return this._rawData.GetNullableClass<string>("start"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("start");
+        }
         init { this._rawData.Set("start", value); }
     }
 

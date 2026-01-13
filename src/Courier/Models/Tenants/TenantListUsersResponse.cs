@@ -18,7 +18,11 @@ public sealed record class TenantListUsersResponse : JsonModel
     /// </summary>
     public required bool HasMore
     {
-        get { return this._rawData.GetNotNullStruct<bool>("has_more"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("has_more");
+        }
         init { this._rawData.Set("has_more", value); }
     }
 
@@ -29,6 +33,7 @@ public sealed record class TenantListUsersResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, TenantListUsersResponseType>>(
                 "type"
             );
@@ -41,7 +46,11 @@ public sealed record class TenantListUsersResponse : JsonModel
     /// </summary>
     public required string Url
     {
-        get { return this._rawData.GetNotNullClass<string>("url"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("url");
+        }
         init { this._rawData.Set("url", value); }
     }
 
@@ -51,13 +60,21 @@ public sealed record class TenantListUsersResponse : JsonModel
     /// </summary>
     public string? Cursor
     {
-        get { return this._rawData.GetNullableClass<string>("cursor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("cursor");
+        }
         init { this._rawData.Set("cursor", value); }
     }
 
     public IReadOnlyList<TenantAssociation>? Items
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<TenantAssociation>>("items"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<TenantAssociation>>("items");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<TenantAssociation>?>(
@@ -73,7 +90,11 @@ public sealed record class TenantListUsersResponse : JsonModel
     /// </summary>
     public string? NextUrl
     {
-        get { return this._rawData.GetNullableClass<string>("next_url"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("next_url");
+        }
         init { this._rawData.Set("next_url", value); }
     }
 

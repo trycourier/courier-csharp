@@ -13,7 +13,11 @@ public sealed record class BrandSnippets : JsonModel
 {
     public IReadOnlyList<BrandSnippet>? Items
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<BrandSnippet>>("items"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<BrandSnippet>>("items");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<BrandSnippet>?>(

@@ -14,7 +14,11 @@ public sealed record class AutomationInvokeResponse : JsonModel
 {
     public required string RunID
     {
-        get { return this._rawData.GetNotNullClass<string>("runId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("runId");
+        }
         init { this._rawData.Set("runId", value); }
     }
 

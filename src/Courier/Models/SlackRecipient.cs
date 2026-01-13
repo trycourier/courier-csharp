@@ -15,7 +15,11 @@ public sealed record class SlackRecipient : JsonModel
 {
     public required Slack Slack
     {
-        get { return this._rawData.GetNotNullClass<Slack>("slack"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Slack>("slack");
+        }
         init { this._rawData.Set("slack", value); }
     }
 

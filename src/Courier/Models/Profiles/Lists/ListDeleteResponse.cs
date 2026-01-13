@@ -16,6 +16,7 @@ public sealed record class ListDeleteResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
             >("status");

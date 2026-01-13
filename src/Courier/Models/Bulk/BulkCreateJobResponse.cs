@@ -12,7 +12,11 @@ public sealed record class BulkCreateJobResponse : JsonModel
 {
     public required string JobID
     {
-        get { return this._rawData.GetNotNullClass<string>("jobId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("jobId");
+        }
         init { this._rawData.Set("jobId", value); }
     }
 

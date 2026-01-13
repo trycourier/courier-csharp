@@ -28,7 +28,11 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public required IReadOnlyList<Patch> Patch
     {
-        get { return this._rawBodyData.GetNotNullStruct<ImmutableArray<Patch>>("patch"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<Patch>>("patch");
+        }
         init
         {
             this._rawBodyData.Set<ImmutableArray<Patch>>(
@@ -126,7 +130,11 @@ public sealed record class Patch : JsonModel
     /// </summary>
     public required string Op
     {
-        get { return this._rawData.GetNotNullClass<string>("op"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("op");
+        }
         init { this._rawData.Set("op", value); }
     }
 
@@ -135,7 +143,11 @@ public sealed record class Patch : JsonModel
     /// </summary>
     public required string Path
     {
-        get { return this._rawData.GetNotNullClass<string>("path"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("path");
+        }
         init { this._rawData.Set("path", value); }
     }
 
@@ -144,7 +156,11 @@ public sealed record class Patch : JsonModel
     /// </summary>
     public string? Value
     {
-        get { return this._rawData.GetNullableClass<string>("value"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("value");
+        }
         init { this._rawData.Set("value", value); }
     }
 

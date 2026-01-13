@@ -16,6 +16,7 @@ public sealed record class MessageHistoryResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullStruct<
                 ImmutableArray<FrozenDictionary<string, JsonElement>>
             >("results");

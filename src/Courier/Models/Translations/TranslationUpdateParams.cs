@@ -26,7 +26,11 @@ public sealed record class TranslationUpdateParams : ParamsBase
 
     public required string Body
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("body"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("body");
+        }
         init { this._rawBodyData.Set("body", value); }
     }
 

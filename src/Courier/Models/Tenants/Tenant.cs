@@ -15,7 +15,11 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
@@ -24,7 +28,11 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public required string Name
     {
-        get { return this._rawData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 
@@ -33,7 +41,11 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public string? BrandID
     {
-        get { return this._rawData.GetNullableClass<string>("brand_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand_id");
+        }
         init { this._rawData.Set("brand_id", value); }
     }
 
@@ -43,7 +55,11 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public DefaultPreferences? DefaultPreferences
     {
-        get { return this._rawData.GetNullableClass<DefaultPreferences>("default_preferences"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<DefaultPreferences>("default_preferences");
+        }
         init { this._rawData.Set("default_preferences", value); }
     }
 
@@ -52,7 +68,11 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public string? ParentTenantID
     {
-        get { return this._rawData.GetNullableClass<string>("parent_tenant_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("parent_tenant_id");
+        }
         init { this._rawData.Set("parent_tenant_id", value); }
     }
 
@@ -63,6 +83,7 @@ public sealed record class Tenant : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "properties"
             );
@@ -83,6 +104,7 @@ public sealed record class Tenant : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "user_profile"
             );

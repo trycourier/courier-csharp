@@ -31,6 +31,7 @@ public sealed record class BulkAddUsersParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullStruct<ImmutableArray<InboundBulkMessageUser>>(
                 "users"
             );

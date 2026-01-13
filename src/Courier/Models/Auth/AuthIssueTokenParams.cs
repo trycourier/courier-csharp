@@ -27,7 +27,11 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     /// </summary>
     public required string ExpiresIn
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("expires_in"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("expires_in");
+        }
         init { this._rawBodyData.Set("expires_in", value); }
     }
 
@@ -47,7 +51,11 @@ public sealed record class AuthIssueTokenParams : ParamsBase
     /// </summary>
     public required string Scope
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("scope"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("scope");
+        }
         init { this._rawBodyData.Set("scope", value); }
     }
 

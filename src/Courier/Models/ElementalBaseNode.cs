@@ -13,7 +13,11 @@ public sealed record class ElementalBaseNode : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("channels"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("channels");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<string>?>(
@@ -25,19 +29,31 @@ public sealed record class ElementalBaseNode : JsonModel
 
     public string? If
     {
-        get { return this._rawData.GetNullableClass<string>("if"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("if");
+        }
         init { this._rawData.Set("if", value); }
     }
 
     public string? Loop
     {
-        get { return this._rawData.GetNullableClass<string>("loop"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("loop");
+        }
         init { this._rawData.Set("loop", value); }
     }
 
     public string? Ref
     {
-        get { return this._rawData.GetNullableClass<string>("ref"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("ref");
+        }
         init { this._rawData.Set("ref", value); }
     }
 

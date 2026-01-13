@@ -18,7 +18,11 @@ public sealed record class ListListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return this._rawQueryData.GetNullableClass<string>("cursor"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cursor");
+        }
         init { this._rawQueryData.Set("cursor", value); }
     }
 
@@ -30,7 +34,11 @@ public sealed record class ListListParams : ParamsBase
     /// </summary>
     public string? Pattern
     {
-        get { return this._rawQueryData.GetNullableClass<string>("pattern"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("pattern");
+        }
         init { this._rawQueryData.Set("pattern", value); }
     }
 

@@ -24,7 +24,11 @@ public sealed record class ElementalChannelNode : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("channels"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("channels");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<string>?>(
@@ -36,19 +40,31 @@ public sealed record class ElementalChannelNode : JsonModel
 
     public string? If
     {
-        get { return this._rawData.GetNullableClass<string>("if"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("if");
+        }
         init { this._rawData.Set("if", value); }
     }
 
     public string? Loop
     {
-        get { return this._rawData.GetNullableClass<string>("loop"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("loop");
+        }
         init { this._rawData.Set("loop", value); }
     }
 
     public string? Ref
     {
-        get { return this._rawData.GetNullableClass<string>("ref"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("ref");
+        }
         init { this._rawData.Set("ref", value); }
     }
 
@@ -58,7 +74,11 @@ public sealed record class ElementalChannelNode : JsonModel
     /// </summary>
     public required string Channel
     {
-        get { return this._rawData.GetNotNullClass<string>("channel"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("channel");
+        }
         init { this._rawData.Set("channel", value); }
     }
 
@@ -68,7 +88,11 @@ public sealed record class ElementalChannelNode : JsonModel
     /// </summary>
     public IReadOnlyDictionary<string, JsonElement>? Raw
     {
-        get { return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("raw"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("raw");
+        }
         init
         {
             this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
@@ -154,7 +178,11 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : JsonModel
     /// </summary>
     public required string Channel
     {
-        get { return this._rawData.GetNotNullClass<string>("channel"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("channel");
+        }
         init { this._rawData.Set("channel", value); }
     }
 
@@ -164,7 +192,11 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : JsonModel
     /// </summary>
     public IReadOnlyDictionary<string, JsonElement>? Raw
     {
-        get { return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("raw"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("raw");
+        }
         init
         {
             this._rawData.Set<FrozenDictionary<string, JsonElement>?>(

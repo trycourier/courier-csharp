@@ -28,6 +28,7 @@ public sealed record class ListSubscribeParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullStruct<ImmutableArray<SubscribeToListsRequestItem>>(
                 "lists"
             );

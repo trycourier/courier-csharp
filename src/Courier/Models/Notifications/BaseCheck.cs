@@ -14,13 +14,21 @@ public sealed record class BaseCheck : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required ApiEnum<string, Status> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -28,6 +36,7 @@ public sealed record class BaseCheck : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Notifications.Type>
             >("type");

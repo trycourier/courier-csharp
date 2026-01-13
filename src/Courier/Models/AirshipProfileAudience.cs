@@ -12,7 +12,11 @@ public sealed record class AirshipProfileAudience : JsonModel
 {
     public required string NamedUser
     {
-        get { return this._rawData.GetNotNullClass<string>("named_user"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("named_user");
+        }
         init { this._rawData.Set("named_user", value); }
     }
 

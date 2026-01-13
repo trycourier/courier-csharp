@@ -19,6 +19,7 @@ public sealed record class SingleFilterConfig : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, SingleFilterConfigOperator>>(
                 "operator"
             );
@@ -32,7 +33,11 @@ public sealed record class SingleFilterConfig : JsonModel
     /// </summary>
     public required string Path
     {
-        get { return this._rawData.GetNotNullClass<string>("path"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("path");
+        }
         init { this._rawData.Set("path", value); }
     }
 
@@ -41,7 +46,11 @@ public sealed record class SingleFilterConfig : JsonModel
     /// </summary>
     public required string Value
     {
-        get { return this._rawData.GetNotNullClass<string>("value"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("value");
+        }
         init { this._rawData.Set("value", value); }
     }
 

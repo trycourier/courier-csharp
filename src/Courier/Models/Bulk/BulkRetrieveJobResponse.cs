@@ -14,7 +14,11 @@ public sealed record class BulkRetrieveJobResponse : JsonModel
 {
     public required Job Job
     {
-        get { return this._rawData.GetNotNullClass<Job>("job"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Job>("job");
+        }
         init { this._rawData.Set("job", value); }
     }
 
@@ -76,31 +80,51 @@ public sealed record class Job : JsonModel
     /// </summary>
     public required InboundBulkMessage Definition
     {
-        get { return this._rawData.GetNotNullClass<InboundBulkMessage>("definition"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<InboundBulkMessage>("definition");
+        }
         init { this._rawData.Set("definition", value); }
     }
 
     public required long Enqueued
     {
-        get { return this._rawData.GetNotNullStruct<long>("enqueued"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("enqueued");
+        }
         init { this._rawData.Set("enqueued", value); }
     }
 
     public required long Failures
     {
-        get { return this._rawData.GetNotNullStruct<long>("failures"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("failures");
+        }
         init { this._rawData.Set("failures", value); }
     }
 
     public required long Received
     {
-        get { return this._rawData.GetNotNullStruct<long>("received"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("received");
+        }
         init { this._rawData.Set("received", value); }
     }
 
     public required ApiEnum<string, JobStatus> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, JobStatus>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, JobStatus>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 

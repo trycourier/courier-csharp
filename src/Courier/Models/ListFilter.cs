@@ -19,6 +19,7 @@ public sealed record class ListFilter : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, ListFilterOperator>>("operator");
         }
         init { this._rawData.Set("operator", value); }
@@ -26,13 +27,21 @@ public sealed record class ListFilter : JsonModel
 
     public required ApiEnum<string, ListFilterPath> Path
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, ListFilterPath>>("path"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, ListFilterPath>>("path");
+        }
         init { this._rawData.Set("path", value); }
     }
 
     public required string Value
     {
-        get { return this._rawData.GetNotNullClass<string>("value"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("value");
+        }
         init { this._rawData.Set("value", value); }
     }
 

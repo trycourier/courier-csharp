@@ -27,7 +27,11 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public required string Name
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("name");
+        }
         init { this._rawBodyData.Set("name", value); }
     }
 
@@ -36,7 +40,11 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public string? BrandID
     {
-        get { return this._rawBodyData.GetNullableClass<string>("brand_id"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("brand_id");
+        }
         init { this._rawBodyData.Set("brand_id", value); }
     }
 
@@ -48,6 +56,7 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<DefaultPreferences>("default_preferences");
         }
         init { this._rawBodyData.Set("default_preferences", value); }
@@ -58,7 +67,11 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public string? ParentTenantID
     {
-        get { return this._rawBodyData.GetNullableClass<string>("parent_tenant_id"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("parent_tenant_id");
+        }
         init { this._rawBodyData.Set("parent_tenant_id", value); }
     }
 
@@ -69,6 +82,7 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "properties"
             );
@@ -89,6 +103,7 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "user_profile"
             );

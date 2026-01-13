@@ -15,7 +15,11 @@ public sealed record class MsTeamsRecipient : JsonModel
 {
     public required MsTeams MsTeams
     {
-        get { return this._rawData.GetNotNullClass<MsTeams>("ms_teams"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<MsTeams>("ms_teams");
+        }
         init { this._rawData.Set("ms_teams", value); }
     }
 

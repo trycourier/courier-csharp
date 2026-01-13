@@ -15,7 +15,11 @@ public sealed record class SubscriptionListResponse : JsonModel
 {
     public required IReadOnlyList<Item> Items
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Item>>("items"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Item>>("items");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Item>>(
@@ -27,7 +31,11 @@ public sealed record class SubscriptionListResponse : JsonModel
 
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 
@@ -81,19 +89,31 @@ public sealed record class Item : JsonModel
 {
     public required string RecipientID
     {
-        get { return this._rawData.GetNotNullClass<string>("recipientId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("recipientId");
+        }
         init { this._rawData.Set("recipientId", value); }
     }
 
     public string? Created
     {
-        get { return this._rawData.GetNullableClass<string>("created"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("created");
+        }
         init { this._rawData.Set("created", value); }
     }
 
     public RecipientPreferences? Preferences
     {
-        get { return this._rawData.GetNullableClass<RecipientPreferences>("preferences"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<RecipientPreferences>("preferences");
+        }
         init { this._rawData.Set("preferences", value); }
     }
 

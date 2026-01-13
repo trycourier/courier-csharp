@@ -12,25 +12,41 @@ public sealed record class Pagerduty : JsonModel
 {
     public string? EventAction
     {
-        get { return this._rawData.GetNullableClass<string>("event_action"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("event_action");
+        }
         init { this._rawData.Set("event_action", value); }
     }
 
     public string? RoutingKey
     {
-        get { return this._rawData.GetNullableClass<string>("routing_key"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("routing_key");
+        }
         init { this._rawData.Set("routing_key", value); }
     }
 
     public string? Severity
     {
-        get { return this._rawData.GetNullableClass<string>("severity"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("severity");
+        }
         init { this._rawData.Set("severity", value); }
     }
 
     public string? Source
     {
-        get { return this._rawData.GetNullableClass<string>("source"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("source");
+        }
         init { this._rawData.Set("source", value); }
     }
 

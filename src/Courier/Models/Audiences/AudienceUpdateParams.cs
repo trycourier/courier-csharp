@@ -27,7 +27,11 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public string? Description
     {
-        get { return this._rawBodyData.GetNullableClass<string>("description"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("description");
+        }
         init { this._rawBodyData.Set("description", value); }
     }
 
@@ -36,7 +40,11 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public Filter? Filter
     {
-        get { return this._rawBodyData.GetNullableClass<Filter>("filter"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<Filter>("filter");
+        }
         init { this._rawBodyData.Set("filter", value); }
     }
 
@@ -45,7 +53,11 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// </summary>
     public string? Name
     {
-        get { return this._rawBodyData.GetNullableClass<string>("name"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("name");
+        }
         init { this._rawBodyData.Set("name", value); }
     }
 

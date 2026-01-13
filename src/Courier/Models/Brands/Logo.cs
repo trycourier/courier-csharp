@@ -12,13 +12,21 @@ public sealed record class Logo : JsonModel
 {
     public string? Href
     {
-        get { return this._rawData.GetNullableClass<string>("href"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("href");
+        }
         init { this._rawData.Set("href", value); }
     }
 
     public string? Image
     {
-        get { return this._rawData.GetNullableClass<string>("image"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("image");
+        }
         init { this._rawData.Set("image", value); }
     }
 

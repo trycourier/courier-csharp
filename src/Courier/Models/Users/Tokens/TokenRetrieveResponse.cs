@@ -17,7 +17,11 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public required string Token
     {
-        get { return this._rawData.GetNotNullClass<string>("token"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("token");
+        }
         init { this._rawData.Set("token", value); }
     }
 
@@ -25,6 +29,7 @@ public sealed record class TokenRetrieveResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
                 "provider_key"
             );
@@ -37,7 +42,11 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public UserTokenDevice? Device
     {
-        get { return this._rawData.GetNullableClass<UserTokenDevice>("device"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserTokenDevice>("device");
+        }
         init { this._rawData.Set("device", value); }
     }
 
@@ -47,7 +56,11 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public UserTokenExpiryDate? ExpiryDate
     {
-        get { return this._rawData.GetNullableClass<UserTokenExpiryDate>("expiry_date"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserTokenExpiryDate>("expiry_date");
+        }
         init { this._rawData.Set("expiry_date", value); }
     }
 
@@ -56,7 +69,11 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public JsonElement? Properties
     {
-        get { return this._rawData.GetNullableStruct<JsonElement>("properties"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<JsonElement>("properties");
+        }
         init
         {
             if (value == null)
@@ -73,13 +90,21 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public UserTokenTracking? Tracking
     {
-        get { return this._rawData.GetNullableClass<UserTokenTracking>("tracking"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserTokenTracking>("tracking");
+        }
         init { this._rawData.Set("tracking", value); }
     }
 
     public ApiEnum<string, Status>? Status
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -88,7 +113,11 @@ public sealed record class TokenRetrieveResponse : JsonModel
     /// </summary>
     public string? StatusReason
     {
-        get { return this._rawData.GetNullableClass<string>("status_reason"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("status_reason");
+        }
         init { this._rawData.Set("status_reason", value); }
     }
 
@@ -161,7 +190,11 @@ public sealed record class IntersectionMember1 : JsonModel
 {
     public ApiEnum<string, Status>? Status
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -170,7 +203,11 @@ public sealed record class IntersectionMember1 : JsonModel
     /// </summary>
     public string? StatusReason
     {
-        get { return this._rawData.GetNullableClass<string>("status_reason"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("status_reason");
+        }
         init { this._rawData.Set("status_reason", value); }
     }
 

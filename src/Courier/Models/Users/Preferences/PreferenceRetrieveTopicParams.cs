@@ -22,7 +22,11 @@ public sealed record class PreferenceRetrieveTopicParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return this._rawQueryData.GetNullableClass<string>("tenant_id"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("tenant_id");
+        }
         init { this._rawQueryData.Set("tenant_id", value); }
     }
 

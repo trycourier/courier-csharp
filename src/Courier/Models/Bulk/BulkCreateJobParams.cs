@@ -33,7 +33,11 @@ public sealed record class BulkCreateJobParams : ParamsBase
     /// </summary>
     public required InboundBulkMessage Message
     {
-        get { return this._rawBodyData.GetNotNullClass<InboundBulkMessage>("message"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<InboundBulkMessage>("message");
+        }
         init { this._rawBodyData.Set("message", value); }
     }
 

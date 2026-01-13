@@ -13,7 +13,11 @@ public sealed record class DefaultPreferences : JsonModel
 {
     public IReadOnlyList<Item>? Items
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<Item>>("items"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<Item>>("items");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Item>?>(
@@ -71,7 +75,11 @@ public sealed record class Item : JsonModel
 {
     public required ApiEnum<string, Status> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -82,6 +90,7 @@ public sealed record class Item : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<
                 ImmutableArray<ApiEnum<string, ChannelClassification>>
             >("custom_routing");
@@ -101,7 +110,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public bool? HasCustomRouting
     {
-        get { return this._rawData.GetNullableStruct<bool>("has_custom_routing"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("has_custom_routing");
+        }
         init { this._rawData.Set("has_custom_routing", value); }
     }
 
@@ -110,7 +123,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
@@ -179,7 +196,11 @@ public sealed record class IntersectionMember1 : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 

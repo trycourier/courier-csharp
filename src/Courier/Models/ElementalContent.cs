@@ -13,7 +13,11 @@ public sealed record class ElementalContent : JsonModel
 {
     public required IReadOnlyList<ElementalNode> Elements
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<ElementalNode>>("elements"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<ElementalNode>>("elements");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<ElementalNode>>(
@@ -28,13 +32,21 @@ public sealed record class ElementalContent : JsonModel
     /// </summary>
     public required string Version
     {
-        get { return this._rawData.GetNotNullClass<string>("version"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("version");
+        }
         init { this._rawData.Set("version", value); }
     }
 
     public string? Brand
     {
-        get { return this._rawData.GetNullableClass<string>("brand"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand");
+        }
         init { this._rawData.Set("brand", value); }
     }
 

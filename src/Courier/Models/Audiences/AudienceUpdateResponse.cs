@@ -12,7 +12,11 @@ public sealed record class AudienceUpdateResponse : JsonModel
 {
     public required Audience Audience
     {
-        get { return this._rawData.GetNotNullClass<Audience>("audience"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Audience>("audience");
+        }
         init { this._rawData.Set("audience", value); }
     }
 

@@ -18,7 +18,11 @@ public sealed record class TenantListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return this._rawQueryData.GetNullableClass<string>("cursor"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cursor");
+        }
         init { this._rawQueryData.Set("cursor", value); }
     }
 
@@ -27,7 +31,11 @@ public sealed record class TenantListParams : ParamsBase
     /// </summary>
     public long? Limit
     {
-        get { return this._rawQueryData.GetNullableStruct<long>("limit"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("limit");
+        }
         init { this._rawQueryData.Set("limit", value); }
     }
 
@@ -36,7 +44,11 @@ public sealed record class TenantListParams : ParamsBase
     /// </summary>
     public string? ParentTenantID
     {
-        get { return this._rawQueryData.GetNullableClass<string>("parent_tenant_id"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("parent_tenant_id");
+        }
         init { this._rawQueryData.Set("parent_tenant_id", value); }
     }
 

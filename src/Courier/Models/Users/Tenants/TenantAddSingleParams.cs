@@ -31,6 +31,7 @@ public sealed record class TenantAddSingleParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "profile"
             );

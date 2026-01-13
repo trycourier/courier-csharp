@@ -16,7 +16,11 @@ public sealed record class MessageContentResponse : JsonModel
     /// </summary>
     public required IReadOnlyList<Result> Results
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Result>>("results"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Result>>("results");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Result>>(
@@ -85,7 +89,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required string Channel
     {
-        get { return this._rawData.GetNotNullClass<string>("channel"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("channel");
+        }
         init { this._rawData.Set("channel", value); }
     }
 
@@ -94,7 +102,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required string ChannelID
     {
-        get { return this._rawData.GetNotNullClass<string>("channel_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("channel_id");
+        }
         init { this._rawData.Set("channel_id", value); }
     }
 
@@ -103,7 +115,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required Content Content
     {
-        get { return this._rawData.GetNotNullClass<Content>("content"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Content>("content");
+        }
         init { this._rawData.Set("content", value); }
     }
 
@@ -158,7 +174,11 @@ public sealed record class Content : JsonModel
     /// </summary>
     public required IReadOnlyList<Block> Blocks
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Block>>("blocks"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Block>>("blocks");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Block>>(
@@ -173,7 +193,11 @@ public sealed record class Content : JsonModel
     /// </summary>
     public required string Body
     {
-        get { return this._rawData.GetNotNullClass<string>("body"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("body");
+        }
         init { this._rawData.Set("body", value); }
     }
 
@@ -182,7 +206,11 @@ public sealed record class Content : JsonModel
     /// </summary>
     public required string Html
     {
-        get { return this._rawData.GetNotNullClass<string>("html"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("html");
+        }
         init { this._rawData.Set("html", value); }
     }
 
@@ -191,7 +219,11 @@ public sealed record class Content : JsonModel
     /// </summary>
     public required string Subject
     {
-        get { return this._rawData.GetNotNullClass<string>("subject"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("subject");
+        }
         init { this._rawData.Set("subject", value); }
     }
 
@@ -200,7 +232,11 @@ public sealed record class Content : JsonModel
     /// </summary>
     public required string Text
     {
-        get { return this._rawData.GetNotNullClass<string>("text"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("text");
+        }
         init { this._rawData.Set("text", value); }
     }
 
@@ -209,7 +245,11 @@ public sealed record class Content : JsonModel
     /// </summary>
     public required string Title
     {
-        get { return this._rawData.GetNotNullClass<string>("title"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("title");
+        }
         init { this._rawData.Set("title", value); }
     }
 
@@ -267,7 +307,11 @@ public sealed record class Block : JsonModel
     /// </summary>
     public required string Text
     {
-        get { return this._rawData.GetNotNullClass<string>("text"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("text");
+        }
         init { this._rawData.Set("text", value); }
     }
 
@@ -276,7 +320,11 @@ public sealed record class Block : JsonModel
     /// </summary>
     public required string Type
     {
-        get { return this._rawData.GetNotNullClass<string>("type"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("type");
+        }
         init { this._rawData.Set("type", value); }
     }
 

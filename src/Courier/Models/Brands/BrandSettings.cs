@@ -12,19 +12,31 @@ public sealed record class BrandSettings : JsonModel
 {
     public BrandColors? Colors
     {
-        get { return this._rawData.GetNullableClass<BrandColors>("colors"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<BrandColors>("colors");
+        }
         init { this._rawData.Set("colors", value); }
     }
 
     public BrandSettingsEmail? Email
     {
-        get { return this._rawData.GetNullableClass<BrandSettingsEmail>("email"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<BrandSettingsEmail>("email");
+        }
         init { this._rawData.Set("email", value); }
     }
 
     public BrandSettingsInApp? Inapp
     {
-        get { return this._rawData.GetNullableClass<BrandSettingsInApp>("inapp"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<BrandSettingsInApp>("inapp");
+        }
         init { this._rawData.Set("inapp", value); }
     }
 

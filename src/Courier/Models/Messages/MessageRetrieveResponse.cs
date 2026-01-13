@@ -18,7 +18,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
@@ -28,7 +32,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required long Clicked
     {
-        get { return this._rawData.GetNotNullStruct<long>("clicked"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("clicked");
+        }
         init { this._rawData.Set("clicked", value); }
     }
 
@@ -38,7 +46,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required long Delivered
     {
-        get { return this._rawData.GetNotNullStruct<long>("delivered"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("delivered");
+        }
         init { this._rawData.Set("delivered", value); }
     }
 
@@ -48,7 +60,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required long Enqueued
     {
-        get { return this._rawData.GetNotNullStruct<long>("enqueued"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("enqueued");
+        }
         init { this._rawData.Set("enqueued", value); }
     }
 
@@ -57,7 +73,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required string Event
     {
-        get { return this._rawData.GetNotNullClass<string>("event"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("event");
+        }
         init { this._rawData.Set("event", value); }
     }
 
@@ -66,7 +86,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required string Notification
     {
-        get { return this._rawData.GetNotNullClass<string>("notification"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("notification");
+        }
         init { this._rawData.Set("notification", value); }
     }
 
@@ -76,7 +100,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required long Opened
     {
-        get { return this._rawData.GetNotNullStruct<long>("opened"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("opened");
+        }
         init { this._rawData.Set("opened", value); }
     }
 
@@ -85,7 +113,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required string Recipient
     {
-        get { return this._rawData.GetNotNullClass<string>("recipient"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("recipient");
+        }
         init { this._rawData.Set("recipient", value); }
     }
 
@@ -95,7 +127,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required long Sent
     {
-        get { return this._rawData.GetNotNullStruct<long>("sent"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("sent");
+        }
         init { this._rawData.Set("sent", value); }
     }
 
@@ -104,7 +140,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public required ApiEnum<string, Status> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -113,7 +153,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public string? Error
     {
-        get { return this._rawData.GetNullableClass<string>("error"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("error");
+        }
         init { this._rawData.Set("error", value); }
     }
 
@@ -122,7 +166,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
     /// </summary>
     public ApiEnum<string, Reason>? Reason
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, Reason>>("reason"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Reason>>("reason");
+        }
         init { this._rawData.Set("reason", value); }
     }
 
@@ -130,6 +178,7 @@ public sealed record class MessageRetrieveResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<
                 ImmutableArray<FrozenDictionary<string, JsonElement>>
             >("providers");
@@ -234,6 +283,7 @@ public sealed record class IntersectionMember1 : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<
                 ImmutableArray<FrozenDictionary<string, JsonElement>>
             >("providers");

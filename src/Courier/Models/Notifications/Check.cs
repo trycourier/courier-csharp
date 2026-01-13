@@ -12,13 +12,21 @@ public sealed record class Check : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required ApiEnum<string, Status> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
@@ -26,6 +34,7 @@ public sealed record class Check : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Notifications.Type>
             >("type");
@@ -35,7 +44,11 @@ public sealed record class Check : JsonModel
 
     public required long Updated
     {
-        get { return this._rawData.GetNotNullStruct<long>("updated"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("updated");
+        }
         init { this._rawData.Set("updated", value); }
     }
 
@@ -98,7 +111,11 @@ public sealed record class IntersectionMember1 : JsonModel
 {
     public required long Updated
     {
-        get { return this._rawData.GetNotNullStruct<long>("updated"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("updated");
+        }
         init { this._rawData.Set("updated", value); }
     }
 

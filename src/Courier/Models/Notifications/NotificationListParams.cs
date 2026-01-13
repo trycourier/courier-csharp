@@ -12,7 +12,11 @@ public sealed record class NotificationListParams : ParamsBase
 {
     public string? Cursor
     {
-        get { return this._rawQueryData.GetNullableClass<string>("cursor"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cursor");
+        }
         init { this._rawQueryData.Set("cursor", value); }
     }
 
@@ -21,7 +25,11 @@ public sealed record class NotificationListParams : ParamsBase
     /// </summary>
     public bool? Notes
     {
-        get { return this._rawQueryData.GetNullableStruct<bool>("notes"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("notes");
+        }
         init { this._rawQueryData.Set("notes", value); }
     }
 

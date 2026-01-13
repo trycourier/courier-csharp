@@ -12,49 +12,81 @@ public sealed record class Brand : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required long Created
     {
-        get { return this._rawData.GetNotNullStruct<long>("created"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("created");
+        }
         init { this._rawData.Set("created", value); }
     }
 
     public required string Name
     {
-        get { return this._rawData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 
     public required long Updated
     {
-        get { return this._rawData.GetNotNullStruct<long>("updated"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("updated");
+        }
         init { this._rawData.Set("updated", value); }
     }
 
     public long? Published
     {
-        get { return this._rawData.GetNullableStruct<long>("published"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("published");
+        }
         init { this._rawData.Set("published", value); }
     }
 
     public BrandSettings? Settings
     {
-        get { return this._rawData.GetNullableClass<BrandSettings>("settings"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<BrandSettings>("settings");
+        }
         init { this._rawData.Set("settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get { return this._rawData.GetNullableClass<BrandSnippets>("snippets"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<BrandSnippets>("snippets");
+        }
         init { this._rawData.Set("snippets", value); }
     }
 
     public string? Version
     {
-        get { return this._rawData.GetNullableClass<string>("version"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("version");
+        }
         init { this._rawData.Set("version", value); }
     }
 

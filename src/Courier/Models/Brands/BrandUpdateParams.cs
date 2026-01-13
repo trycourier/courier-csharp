@@ -27,19 +27,31 @@ public sealed record class BrandUpdateParams : ParamsBase
     /// </summary>
     public required string Name
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("name");
+        }
         init { this._rawBodyData.Set("name", value); }
     }
 
     public BrandSettings? Settings
     {
-        get { return this._rawBodyData.GetNullableClass<BrandSettings>("settings"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<BrandSettings>("settings");
+        }
         init { this._rawBodyData.Set("settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get { return this._rawBodyData.GetNullableClass<BrandSnippets>("snippets"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<BrandSnippets>("snippets");
+        }
         init { this._rawBodyData.Set("snippets", value); }
     }
 

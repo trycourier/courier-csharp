@@ -17,6 +17,7 @@ public sealed record class MessageRouting : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullStruct<ImmutableArray<MessageRoutingChannel>>(
                 "channels"
             );
@@ -32,7 +33,11 @@ public sealed record class MessageRouting : JsonModel
 
     public required ApiEnum<string, Method> Method
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Method>>("method"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Method>>("method");
+        }
         init { this._rawData.Set("method", value); }
     }
 

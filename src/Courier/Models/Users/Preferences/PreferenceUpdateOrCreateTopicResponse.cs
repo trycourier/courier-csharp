@@ -17,7 +17,11 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : JsonModel
 {
     public required string Message
     {
-        get { return this._rawData.GetNotNullClass<string>("message"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("message");
+        }
         init { this._rawData.Set("message", value); }
     }
 

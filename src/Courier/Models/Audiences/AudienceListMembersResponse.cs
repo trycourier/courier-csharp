@@ -15,7 +15,11 @@ public sealed record class AudienceListMembersResponse : JsonModel
 {
     public required IReadOnlyList<Item> Items
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Item>>("items"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Item>>("items");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Item>>(
@@ -27,7 +31,11 @@ public sealed record class AudienceListMembersResponse : JsonModel
 
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 
@@ -81,31 +89,51 @@ public sealed record class Item : JsonModel
 {
     public required string AddedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("added_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("added_at");
+        }
         init { this._rawData.Set("added_at", value); }
     }
 
     public required string AudienceID
     {
-        get { return this._rawData.GetNotNullClass<string>("audience_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("audience_id");
+        }
         init { this._rawData.Set("audience_id", value); }
     }
 
     public required long AudienceVersion
     {
-        get { return this._rawData.GetNotNullStruct<long>("audience_version"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("audience_version");
+        }
         init { this._rawData.Set("audience_version", value); }
     }
 
     public required string MemberID
     {
-        get { return this._rawData.GetNotNullClass<string>("member_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("member_id");
+        }
         init { this._rawData.Set("member_id", value); }
     }
 
     public required string Reason
     {
-        get { return this._rawData.GetNotNullClass<string>("reason"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("reason");
+        }
         init { this._rawData.Set("reason", value); }
     }
 

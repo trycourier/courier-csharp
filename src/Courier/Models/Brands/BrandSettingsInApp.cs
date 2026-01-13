@@ -14,43 +14,71 @@ public sealed record class BrandSettingsInApp : JsonModel
 {
     public required BrandColors Colors
     {
-        get { return this._rawData.GetNotNullClass<BrandColors>("colors"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<BrandColors>("colors");
+        }
         init { this._rawData.Set("colors", value); }
     }
 
     public required Icons Icons
     {
-        get { return this._rawData.GetNotNullClass<Icons>("icons"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Icons>("icons");
+        }
         init { this._rawData.Set("icons", value); }
     }
 
     public required WidgetBackground WidgetBackground
     {
-        get { return this._rawData.GetNotNullClass<WidgetBackground>("widgetBackground"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<WidgetBackground>("widgetBackground");
+        }
         init { this._rawData.Set("widgetBackground", value); }
     }
 
     public string? BorderRadius
     {
-        get { return this._rawData.GetNullableClass<string>("borderRadius"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("borderRadius");
+        }
         init { this._rawData.Set("borderRadius", value); }
     }
 
     public bool? DisableMessageIcon
     {
-        get { return this._rawData.GetNullableStruct<bool>("disableMessageIcon"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("disableMessageIcon");
+        }
         init { this._rawData.Set("disableMessageIcon", value); }
     }
 
     public string? FontFamily
     {
-        get { return this._rawData.GetNullableClass<string>("fontFamily"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("fontFamily");
+        }
         init { this._rawData.Set("fontFamily", value); }
     }
 
     public ApiEnum<string, Placement>? Placement
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, Placement>>("placement"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Placement>>("placement");
+        }
         init { this._rawData.Set("placement", value); }
     }
 

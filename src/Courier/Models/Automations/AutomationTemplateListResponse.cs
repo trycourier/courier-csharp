@@ -21,7 +21,11 @@ public sealed record class AutomationTemplateListResponse : JsonModel
     /// </summary>
     public string? Cursor
     {
-        get { return this._rawData.GetNullableClass<string>("cursor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("cursor");
+        }
         init
         {
             if (value == null)
@@ -37,6 +41,7 @@ public sealed record class AutomationTemplateListResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableStruct<ImmutableArray<AutomationTemplate>>("templates");
         }
         init

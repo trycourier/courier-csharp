@@ -18,7 +18,11 @@ public sealed record class SendMessageResponse : JsonModel
     /// </summary>
     public required string RequestID
     {
-        get { return this._rawData.GetNotNullClass<string>("requestId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("requestId");
+        }
         init { this._rawData.Set("requestId", value); }
     }
 

@@ -18,7 +18,11 @@ public sealed record class ElementalContentSugar : JsonModel
     /// </summary>
     public required string Body
     {
-        get { return this._rawData.GetNotNullClass<string>("body"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("body");
+        }
         init { this._rawData.Set("body", value); }
     }
 
@@ -27,7 +31,11 @@ public sealed record class ElementalContentSugar : JsonModel
     /// </summary>
     public required string Title
     {
-        get { return this._rawData.GetNotNullClass<string>("title"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("title");
+        }
         init { this._rawData.Set("title", value); }
     }
 

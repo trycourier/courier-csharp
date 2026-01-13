@@ -15,13 +15,21 @@ public sealed record class Audience : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public required string CreatedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("created_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("created_at");
+        }
         init { this._rawData.Set("created_at", value); }
     }
 
@@ -30,7 +38,11 @@ public sealed record class Audience : JsonModel
     /// </summary>
     public required string Description
     {
-        get { return this._rawData.GetNotNullClass<string>("description"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("description");
+        }
         init { this._rawData.Set("description", value); }
     }
 
@@ -39,7 +51,11 @@ public sealed record class Audience : JsonModel
     /// </summary>
     public required Filter Filter
     {
-        get { return this._rawData.GetNotNullClass<Filter>("filter"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Filter>("filter");
+        }
         init { this._rawData.Set("filter", value); }
     }
 
@@ -48,13 +64,21 @@ public sealed record class Audience : JsonModel
     /// </summary>
     public required string Name
     {
-        get { return this._rawData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 
     public required string UpdatedAt
     {
-        get { return this._rawData.GetNotNullClass<string>("updated_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("updated_at");
+        }
         init { this._rawData.Set("updated_at", value); }
     }
 

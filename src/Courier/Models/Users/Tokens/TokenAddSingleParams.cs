@@ -31,7 +31,11 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public required string TokenValue
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("token"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("token");
+        }
         init { this._rawBodyData.Set("token", value); }
     }
 
@@ -39,6 +43,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNotNullClass<ApiEnum<string, ProviderKey>>("provider_key");
         }
         init { this._rawBodyData.Set("provider_key", value); }
@@ -49,7 +54,11 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public Device? Device
     {
-        get { return this._rawBodyData.GetNullableClass<Device>("device"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<Device>("device");
+        }
         init { this._rawBodyData.Set("device", value); }
     }
 
@@ -59,7 +68,11 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public ExpiryDate? ExpiryDate
     {
-        get { return this._rawBodyData.GetNullableClass<ExpiryDate>("expiry_date"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<ExpiryDate>("expiry_date");
+        }
         init { this._rawBodyData.Set("expiry_date", value); }
     }
 
@@ -68,7 +81,11 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public JsonElement? Properties
     {
-        get { return this._rawBodyData.GetNullableStruct<JsonElement>("properties"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<JsonElement>("properties");
+        }
         init
         {
             if (value == null)
@@ -85,7 +102,11 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public Tracking? Tracking
     {
-        get { return this._rawBodyData.GetNullableClass<Tracking>("tracking"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<Tracking>("tracking");
+        }
         init { this._rawBodyData.Set("tracking", value); }
     }
 
@@ -230,7 +251,11 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? AdID
     {
-        get { return this._rawData.GetNullableClass<string>("ad_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("ad_id");
+        }
         init { this._rawData.Set("ad_id", value); }
     }
 
@@ -239,7 +264,11 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? AppID
     {
-        get { return this._rawData.GetNullableClass<string>("app_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("app_id");
+        }
         init { this._rawData.Set("app_id", value); }
     }
 
@@ -248,7 +277,11 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? DeviceID
     {
-        get { return this._rawData.GetNullableClass<string>("device_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("device_id");
+        }
         init { this._rawData.Set("device_id", value); }
     }
 
@@ -257,7 +290,11 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? Manufacturer
     {
-        get { return this._rawData.GetNullableClass<string>("manufacturer"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("manufacturer");
+        }
         init { this._rawData.Set("manufacturer", value); }
     }
 
@@ -266,7 +303,11 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? Model
     {
-        get { return this._rawData.GetNullableClass<string>("model"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("model");
+        }
         init { this._rawData.Set("model", value); }
     }
 
@@ -275,7 +316,11 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? Platform
     {
-        get { return this._rawData.GetNullableClass<string>("platform"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("platform");
+        }
         init { this._rawData.Set("platform", value); }
     }
 
@@ -558,7 +603,11 @@ public sealed record class Tracking : JsonModel
     /// </summary>
     public string? IP
     {
-        get { return this._rawData.GetNullableClass<string>("ip"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("ip");
+        }
         init { this._rawData.Set("ip", value); }
     }
 
@@ -567,7 +616,11 @@ public sealed record class Tracking : JsonModel
     /// </summary>
     public string? Lat
     {
-        get { return this._rawData.GetNullableClass<string>("lat"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("lat");
+        }
         init { this._rawData.Set("lat", value); }
     }
 
@@ -576,7 +629,11 @@ public sealed record class Tracking : JsonModel
     /// </summary>
     public string? Long
     {
-        get { return this._rawData.GetNullableClass<string>("long"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("long");
+        }
         init { this._rawData.Set("long", value); }
     }
 
@@ -585,7 +642,11 @@ public sealed record class Tracking : JsonModel
     /// </summary>
     public string? OsVersion
     {
-        get { return this._rawData.GetNullableClass<string>("os_version"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("os_version");
+        }
         init { this._rawData.Set("os_version", value); }
     }
 

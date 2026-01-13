@@ -24,13 +24,21 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
 
     public required string? Recipient
     {
-        get { return this._rawBodyData.GetNullableClass<string>("recipient"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("recipient");
+        }
         init { this._rawBodyData.Set("recipient", value); }
     }
 
     public string? Brand
     {
-        get { return this._rawBodyData.GetNullableClass<string>("brand"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("brand");
+        }
         init { this._rawBodyData.Set("brand", value); }
     }
 
@@ -38,6 +46,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "data"
             );
@@ -55,6 +64,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
     {
         get
         {
+            this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "profile"
             );
@@ -70,7 +80,11 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
 
     public string? Template
     {
-        get { return this._rawBodyData.GetNullableClass<string>("template"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("template");
+        }
         init { this._rawBodyData.Set("template", value); }
     }
 

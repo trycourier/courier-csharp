@@ -13,7 +13,11 @@ public sealed record class ListRetrieveResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 
@@ -22,7 +26,11 @@ public sealed record class ListRetrieveResponse : JsonModel
     /// </summary>
     public required IReadOnlyList<Result> Results
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Result>>("results"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Result>>("results");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Result>>(
@@ -82,7 +90,11 @@ public sealed record class Result : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
@@ -91,7 +103,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required string Created
     {
-        get { return this._rawData.GetNotNullClass<string>("created"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("created");
+        }
         init { this._rawData.Set("created", value); }
     }
 
@@ -100,7 +116,11 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required string Name
     {
-        get { return this._rawData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
         init { this._rawData.Set("name", value); }
     }
 
@@ -109,13 +129,21 @@ public sealed record class Result : JsonModel
     /// </summary>
     public required string Updated
     {
-        get { return this._rawData.GetNotNullClass<string>("updated"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("updated");
+        }
         init { this._rawData.Set("updated", value); }
     }
 
     public RecipientPreferences? Preferences
     {
-        get { return this._rawData.GetNullableClass<RecipientPreferences>("preferences"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<RecipientPreferences>("preferences");
+        }
         init { this._rawData.Set("preferences", value); }
     }
 

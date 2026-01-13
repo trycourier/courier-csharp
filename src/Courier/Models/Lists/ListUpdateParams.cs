@@ -24,13 +24,21 @@ public sealed record class ListUpdateParams : ParamsBase
 
     public required string Name
     {
-        get { return this._rawBodyData.GetNotNullClass<string>("name"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("name");
+        }
         init { this._rawBodyData.Set("name", value); }
     }
 
     public RecipientPreferences? Preferences
     {
-        get { return this._rawBodyData.GetNullableClass<RecipientPreferences>("preferences"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<RecipientPreferences>("preferences");
+        }
         init { this._rawBodyData.Set("preferences", value); }
     }
 

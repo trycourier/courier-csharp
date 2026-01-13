@@ -16,7 +16,11 @@ public sealed record class MessageListResponse : JsonModel
     /// </summary>
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 
@@ -25,7 +29,11 @@ public sealed record class MessageListResponse : JsonModel
     /// </summary>
     public required IReadOnlyList<MessageDetails> Results
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<MessageDetails>>("results"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<MessageDetails>>("results");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<MessageDetails>>(

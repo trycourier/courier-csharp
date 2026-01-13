@@ -16,6 +16,7 @@ public sealed record class ListSubscribeResponse : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, ListSubscribeResponseStatus>>(
                 "status"
             );

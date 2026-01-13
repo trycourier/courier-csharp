@@ -12,37 +12,61 @@ public sealed record class AuditEvent : JsonModel
 {
     public required Actor Actor
     {
-        get { return this._rawData.GetNotNullClass<Actor>("actor"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Actor>("actor");
+        }
         init { this._rawData.Set("actor", value); }
     }
 
     public required string AuditEventID
     {
-        get { return this._rawData.GetNotNullClass<string>("auditEventId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("auditEventId");
+        }
         init { this._rawData.Set("auditEventId", value); }
     }
 
     public required string Source
     {
-        get { return this._rawData.GetNotNullClass<string>("source"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("source");
+        }
         init { this._rawData.Set("source", value); }
     }
 
     public required string Target
     {
-        get { return this._rawData.GetNotNullClass<string>("target"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("target");
+        }
         init { this._rawData.Set("target", value); }
     }
 
     public required string Timestamp
     {
-        get { return this._rawData.GetNotNullClass<string>("timestamp"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("timestamp");
+        }
         init { this._rawData.Set("timestamp", value); }
     }
 
     public required string Type
     {
-        get { return this._rawData.GetNotNullClass<string>("type"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("type");
+        }
         init { this._rawData.Set("type", value); }
     }
 
@@ -94,13 +118,21 @@ public sealed record class Actor : JsonModel
 {
     public required string ID
     {
-        get { return this._rawData.GetNotNullClass<string>("id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
         init { this._rawData.Set("id", value); }
     }
 
     public string? Email
     {
-        get { return this._rawData.GetNullableClass<string>("email"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("email");
+        }
         init { this._rawData.Set("email", value); }
     }
 

@@ -29,7 +29,11 @@ public sealed record class SendMessageParams : ParamsBase
     /// </summary>
     public required Message Message
     {
-        get { return this._rawBodyData.GetNotNullClass<Message>("message"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<Message>("message");
+        }
         init { this._rawBodyData.Set("message", value); }
     }
 
@@ -116,7 +120,11 @@ public sealed record class Message : JsonModel
 {
     public string? BrandID
     {
-        get { return this._rawData.GetNullableClass<string>("brand_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand_id");
+        }
         init { this._rawData.Set("brand_id", value); }
     }
 
@@ -128,6 +136,7 @@ public sealed record class Message : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, ChannelsItem>>(
                 "channels"
             );
@@ -146,7 +155,11 @@ public sealed record class Message : JsonModel
     /// </summary>
     public Content? Content
     {
-        get { return this._rawData.GetNullableClass<Content>("content"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Content>("content");
+        }
         init
         {
             if (value == null)
@@ -160,7 +173,11 @@ public sealed record class Message : JsonModel
 
     public MessageContext? Context
     {
-        get { return this._rawData.GetNullableClass<MessageContext>("context"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<MessageContext>("context");
+        }
         init { this._rawData.Set("context", value); }
     }
 
@@ -168,6 +185,7 @@ public sealed record class Message : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
         }
         init
@@ -181,19 +199,31 @@ public sealed record class Message : JsonModel
 
     public Delay? Delay
     {
-        get { return this._rawData.GetNullableClass<Delay>("delay"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Delay>("delay");
+        }
         init { this._rawData.Set("delay", value); }
     }
 
     public Expiry? Expiry
     {
-        get { return this._rawData.GetNullableClass<Expiry>("expiry"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Expiry>("expiry");
+        }
         init { this._rawData.Set("expiry", value); }
     }
 
     public MessageMetadata? Metadata
     {
-        get { return this._rawData.GetNullableClass<MessageMetadata>("metadata"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<MessageMetadata>("metadata");
+        }
         init { this._rawData.Set("metadata", value); }
     }
 
@@ -201,6 +231,7 @@ public sealed record class Message : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<global::Courier.Models.Send.Preferences>(
                 "preferences"
             );
@@ -212,6 +243,7 @@ public sealed record class Message : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, ProvidersItem>>(
                 "providers"
             );
@@ -230,19 +262,31 @@ public sealed record class Message : JsonModel
     /// </summary>
     public Routing? Routing
     {
-        get { return this._rawData.GetNullableClass<Routing>("routing"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Routing>("routing");
+        }
         init { this._rawData.Set("routing", value); }
     }
 
     public string? Template
     {
-        get { return this._rawData.GetNullableClass<string>("template"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("template");
+        }
         init { this._rawData.Set("template", value); }
     }
 
     public Timeout? Timeout
     {
-        get { return this._rawData.GetNullableClass<Timeout>("timeout"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Timeout>("timeout");
+        }
         init { this._rawData.Set("timeout", value); }
     }
 
@@ -251,7 +295,11 @@ public sealed record class Message : JsonModel
     /// </summary>
     public To? To
     {
-        get { return this._rawData.GetNullableClass<To>("to"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<To>("to");
+        }
         init { this._rawData.Set("to", value); }
     }
 
@@ -326,7 +374,11 @@ public sealed record class ChannelsItem : JsonModel
     /// </summary>
     public string? BrandID
     {
-        get { return this._rawData.GetNullableClass<string>("brand_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand_id");
+        }
         init { this._rawData.Set("brand_id", value); }
     }
 
@@ -335,13 +387,21 @@ public sealed record class ChannelsItem : JsonModel
     /// </summary>
     public string? If
     {
-        get { return this._rawData.GetNullableClass<string>("if"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("if");
+        }
         init { this._rawData.Set("if", value); }
     }
 
     public Metadata? Metadata
     {
-        get { return this._rawData.GetNullableClass<Metadata>("metadata"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Metadata>("metadata");
+        }
         init { this._rawData.Set("metadata", value); }
     }
 
@@ -352,6 +412,7 @@ public sealed record class ChannelsItem : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "override"
             );
@@ -370,7 +431,11 @@ public sealed record class ChannelsItem : JsonModel
     /// </summary>
     public IReadOnlyList<string>? Providers
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("providers"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("providers");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<string>?>(
@@ -387,6 +452,7 @@ public sealed record class ChannelsItem : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<ApiEnum<string, RoutingMethod>>("routing_method");
         }
         init { this._rawData.Set("routing_method", value); }
@@ -394,7 +460,11 @@ public sealed record class ChannelsItem : JsonModel
 
     public Timeouts? Timeouts
     {
-        get { return this._rawData.GetNullableClass<Timeouts>("timeouts"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Timeouts>("timeouts");
+        }
         init { this._rawData.Set("timeouts", value); }
     }
 
@@ -447,7 +517,11 @@ public sealed record class Metadata : JsonModel
 {
     public Utm? Utm
     {
-        get { return this._rawData.GetNullableClass<Utm>("utm"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Utm>("utm");
+        }
         init { this._rawData.Set("utm", value); }
     }
 
@@ -541,13 +615,21 @@ public sealed record class Timeouts : JsonModel
 {
     public long? Channel
     {
-        get { return this._rawData.GetNullableStruct<long>("channel"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("channel");
+        }
         init { this._rawData.Set("channel", value); }
     }
 
     public long? Provider
     {
-        get { return this._rawData.GetNullableStruct<long>("provider"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("provider");
+        }
         init { this._rawData.Set("provider", value); }
     }
 
@@ -830,7 +912,11 @@ public sealed record class Delay : JsonModel
     /// </summary>
     public long? Duration
     {
-        get { return this._rawData.GetNullableStruct<long>("duration"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("duration");
+        }
         init { this._rawData.Set("duration", value); }
     }
 
@@ -840,7 +926,11 @@ public sealed record class Delay : JsonModel
     /// </summary>
     public string? Timezone
     {
-        get { return this._rawData.GetNullableClass<string>("timezone"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("timezone");
+        }
         init { this._rawData.Set("timezone", value); }
     }
 
@@ -849,7 +939,11 @@ public sealed record class Delay : JsonModel
     /// </summary>
     public string? Until
     {
-        get { return this._rawData.GetNullableClass<string>("until"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("until");
+        }
         init { this._rawData.Set("until", value); }
     }
 
@@ -901,7 +995,11 @@ public sealed record class Expiry : JsonModel
     /// </summary>
     public required ExpiresIn ExpiresIn
     {
-        get { return this._rawData.GetNotNullClass<ExpiresIn>("expires_in"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ExpiresIn>("expires_in");
+        }
         init { this._rawData.Set("expires_in", value); }
     }
 
@@ -910,7 +1008,11 @@ public sealed record class Expiry : JsonModel
     /// </summary>
     public string? ExpiresAt
     {
-        get { return this._rawData.GetNullableClass<string>("expires_at"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("expires_at");
+        }
         init { this._rawData.Set("expires_at", value); }
     }
 
@@ -1189,13 +1291,21 @@ public sealed record class MessageMetadata : JsonModel
 {
     public string? Event
     {
-        get { return this._rawData.GetNullableClass<string>("event"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("event");
+        }
         init { this._rawData.Set("event", value); }
     }
 
     public IReadOnlyList<string>? Tags
     {
-        get { return this._rawData.GetNullableStruct<ImmutableArray<string>>("tags"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("tags");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<string>?>(
@@ -1207,13 +1317,21 @@ public sealed record class MessageMetadata : JsonModel
 
     public string? TraceID
     {
-        get { return this._rawData.GetNullableClass<string>("trace_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("trace_id");
+        }
         init { this._rawData.Set("trace_id", value); }
     }
 
     public Utm? Utm
     {
-        get { return this._rawData.GetNullableClass<Utm>("utm"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Utm>("utm");
+        }
         init { this._rawData.Set("utm", value); }
     }
 
@@ -1271,7 +1389,11 @@ public sealed record class Preferences : JsonModel
     /// </summary>
     public required string SubscriptionTopicID
     {
-        get { return this._rawData.GetNotNullClass<string>("subscription_topic_id"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("subscription_topic_id");
+        }
         init { this._rawData.Set("subscription_topic_id", value); }
     }
 
@@ -1331,13 +1453,21 @@ public sealed record class ProvidersItem : JsonModel
     /// </summary>
     public string? If
     {
-        get { return this._rawData.GetNullableClass<string>("if"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("if");
+        }
         init { this._rawData.Set("if", value); }
     }
 
     public ProvidersItemMetadata? Metadata
     {
-        get { return this._rawData.GetNullableClass<ProvidersItemMetadata>("metadata"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ProvidersItemMetadata>("metadata");
+        }
         init { this._rawData.Set("metadata", value); }
     }
 
@@ -1348,6 +1478,7 @@ public sealed record class ProvidersItem : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "override"
             );
@@ -1363,7 +1494,11 @@ public sealed record class ProvidersItem : JsonModel
 
     public long? Timeouts
     {
-        get { return this._rawData.GetNullableStruct<long>("timeouts"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("timeouts");
+        }
         init { this._rawData.Set("timeouts", value); }
     }
 
@@ -1413,7 +1548,11 @@ public sealed record class ProvidersItemMetadata : JsonModel
 {
     public Utm? Utm
     {
-        get { return this._rawData.GetNullableClass<Utm>("utm"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Utm>("utm");
+        }
         init { this._rawData.Set("utm", value); }
     }
 
@@ -1471,6 +1610,7 @@ public sealed record class Routing : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullStruct<ImmutableArray<MessageRoutingChannel>>(
                 "channels"
             );
@@ -1488,6 +1628,7 @@ public sealed record class Routing : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Send.Method>
             >("method");
@@ -1586,7 +1727,11 @@ public sealed record class Timeout : JsonModel
 {
     public IReadOnlyDictionary<string, long>? Channel
     {
-        get { return this._rawData.GetNullableClass<FrozenDictionary<string, long>>("channel"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, long>>("channel");
+        }
         init
         {
             this._rawData.Set<FrozenDictionary<string, long>?>(
@@ -1598,25 +1743,41 @@ public sealed record class Timeout : JsonModel
 
     public ApiEnum<string, Criteria>? Criteria
     {
-        get { return this._rawData.GetNullableClass<ApiEnum<string, Criteria>>("criteria"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Criteria>>("criteria");
+        }
         init { this._rawData.Set("criteria", value); }
     }
 
     public long? Escalation
     {
-        get { return this._rawData.GetNullableStruct<long>("escalation"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("escalation");
+        }
         init { this._rawData.Set("escalation", value); }
     }
 
     public long? Message
     {
-        get { return this._rawData.GetNullableStruct<long>("message"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("message");
+        }
         init { this._rawData.Set("message", value); }
     }
 
     public IReadOnlyDictionary<string, long>? Provider
     {
-        get { return this._rawData.GetNullableClass<FrozenDictionary<string, long>>("provider"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, long>>("provider");
+        }
         init
         {
             this._rawData.Set<FrozenDictionary<string, long>?>(

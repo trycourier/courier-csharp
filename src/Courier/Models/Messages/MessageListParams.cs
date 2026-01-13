@@ -20,7 +20,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public bool? Archived
     {
-        get { return this._rawQueryData.GetNullableStruct<bool>("archived"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("archived");
+        }
         init { this._rawQueryData.Set("archived", value); }
     }
 
@@ -29,7 +33,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return this._rawQueryData.GetNullableClass<string>("cursor"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cursor");
+        }
         init { this._rawQueryData.Set("cursor", value); }
     }
 
@@ -38,7 +46,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? EnqueuedAfter
     {
-        get { return this._rawQueryData.GetNullableClass<string>("enqueued_after"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("enqueued_after");
+        }
         init { this._rawQueryData.Set("enqueued_after", value); }
     }
 
@@ -47,7 +59,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Event
     {
-        get { return this._rawQueryData.GetNullableClass<string>("event"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("event");
+        }
         init { this._rawQueryData.Set("event", value); }
     }
 
@@ -56,7 +72,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? List
     {
-        get { return this._rawQueryData.GetNullableClass<string>("list"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("list");
+        }
         init { this._rawQueryData.Set("list", value); }
     }
 
@@ -66,7 +86,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? MessageID
     {
-        get { return this._rawQueryData.GetNullableClass<string>("messageId"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("messageId");
+        }
         init { this._rawQueryData.Set("messageId", value); }
     }
 
@@ -75,7 +99,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Notification
     {
-        get { return this._rawQueryData.GetNullableClass<string>("notification"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("notification");
+        }
         init { this._rawQueryData.Set("notification", value); }
     }
 
@@ -85,7 +113,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Provider
     {
-        get { return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("provider"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("provider");
+        }
         init
         {
             if (value == null)
@@ -105,7 +137,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Recipient
     {
-        get { return this._rawQueryData.GetNullableClass<string>("recipient"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("recipient");
+        }
         init { this._rawQueryData.Set("recipient", value); }
     }
 
@@ -115,7 +151,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Status
     {
-        get { return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("status"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("status");
+        }
         init
         {
             if (value == null)
@@ -136,7 +176,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string?>? Tag
     {
-        get { return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("tag"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<ImmutableArray<string?>>("tag");
+        }
         init
         {
             if (value == null)
@@ -157,7 +201,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? Tags
     {
-        get { return this._rawQueryData.GetNullableClass<string>("tags"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("tags");
+        }
         init { this._rawQueryData.Set("tags", value); }
     }
 
@@ -166,7 +214,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? TenantID
     {
-        get { return this._rawQueryData.GetNullableClass<string>("tenant_id"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("tenant_id");
+        }
         init { this._rawQueryData.Set("tenant_id", value); }
     }
 
@@ -175,7 +227,11 @@ public sealed record class MessageListParams : ParamsBase
     /// </summary>
     public string? TraceID
     {
-        get { return this._rawQueryData.GetNullableClass<string>("traceId"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("traceId");
+        }
         init { this._rawQueryData.Set("traceId", value); }
     }
 

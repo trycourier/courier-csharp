@@ -13,13 +13,21 @@ public sealed record class BrandListResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 
     public required IReadOnlyList<Brand> Results
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Brand>>("results"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Brand>>("results");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Brand>>(

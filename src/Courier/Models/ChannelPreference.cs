@@ -14,6 +14,7 @@ public sealed record class ChannelPreference : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNotNullClass<ApiEnum<string, ChannelClassification>>("channel");
         }
         init { this._rawData.Set("channel", value); }

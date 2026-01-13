@@ -15,7 +15,11 @@ public sealed record class BulkListUsersResponse : JsonModel
 {
     public required IReadOnlyList<Item> Items
     {
-        get { return this._rawData.GetNotNullStruct<ImmutableArray<Item>>("items"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Item>>("items");
+        }
         init
         {
             this._rawData.Set<ImmutableArray<Item>>(
@@ -27,7 +31,11 @@ public sealed record class BulkListUsersResponse : JsonModel
 
     public required Paging Paging
     {
-        get { return this._rawData.GetNotNullClass<Paging>("paging"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
         init { this._rawData.Set("paging", value); }
     }
 
@@ -84,7 +92,11 @@ public sealed record class Item : JsonModel
     /// </summary>
     public JsonElement? Data
     {
-        get { return this._rawData.GetNullableStruct<JsonElement>("data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<JsonElement>("data");
+        }
         init
         {
             if (value == null)
@@ -98,7 +110,11 @@ public sealed record class Item : JsonModel
 
     public RecipientPreferences? Preferences
     {
-        get { return this._rawData.GetNullableClass<RecipientPreferences>("preferences"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<RecipientPreferences>("preferences");
+        }
         init
         {
             if (value == null)
@@ -119,6 +135,7 @@ public sealed record class Item : JsonModel
     {
         get
         {
+            this._rawData.Freeze();
             return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("profile");
         }
         init
@@ -135,13 +152,21 @@ public sealed record class Item : JsonModel
     /// </summary>
     public string? Recipient
     {
-        get { return this._rawData.GetNullableClass<string>("recipient"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("recipient");
+        }
         init { this._rawData.Set("recipient", value); }
     }
 
     public UserRecipient? To
     {
-        get { return this._rawData.GetNullableClass<UserRecipient>("to"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserRecipient>("to");
+        }
         init
         {
             if (value == null)
@@ -155,13 +180,21 @@ public sealed record class Item : JsonModel
 
     public required ApiEnum<string, Status> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
     public string? MessageID
     {
-        get { return this._rawData.GetNullableClass<string>("messageId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("messageId");
+        }
         init { this._rawData.Set("messageId", value); }
     }
 
@@ -236,13 +269,21 @@ public sealed record class IntersectionMember1 : JsonModel
 {
     public required ApiEnum<string, Status> Status
     {
-        get { return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
         init { this._rawData.Set("status", value); }
     }
 
     public string? MessageID
     {
-        get { return this._rawData.GetNullableClass<string>("messageId"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("messageId");
+        }
         init { this._rawData.Set("messageId", value); }
     }
 
