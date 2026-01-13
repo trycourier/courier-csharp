@@ -16,6 +16,7 @@ using Send = Courier.Models.Send;
 using Templates = Courier.Models.Tenants.Templates;
 using Tenants = Courier.Models.Tenants;
 using Tokens = Courier.Models.Users.Tokens;
+using UsersTenants = Courier.Models.Users.Tenants;
 
 namespace Courier.Core;
 
@@ -91,7 +92,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Tenants::TenantListUsersResponseType>(),
             new ApiEnumConverter<string, Items::Status>(),
             new ApiEnumConverter<string, Templates::Type>(),
-            new ApiEnumConverter<string, global::Courier.Models.Users.Tenants.Type>(),
+            new ApiEnumConverter<string, UsersTenants::Type>(),
             new ApiEnumConverter<string, Tokens::UserTokenProviderKey>(),
             new ApiEnumConverter<string, Tokens::Status>(),
             new ApiEnumConverter<string, Tokens::ProviderKey>(),
