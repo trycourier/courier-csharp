@@ -170,13 +170,14 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Channel = "email",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
         };
 
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
         Assert.Null(model.Type);
         Assert.False(model.RawData.ContainsKey("type"));
     }
@@ -190,7 +191,6 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Channel = "email",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -209,16 +209,18 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Channel = "email",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
 
             // Null should be interpreted as omitted for these properties
+            Channel = null,
             Type = null,
         };
 
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
         Assert.Null(model.Type);
         Assert.False(model.RawData.ContainsKey("type"));
     }
@@ -232,13 +234,13 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Channel = "email",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
 
             // Null should be interpreted as omitted for these properties
+            Channel = null,
             Type = null,
         };
 

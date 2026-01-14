@@ -151,6 +151,86 @@ public class ElementalChannelNodeTest : TestBase
     }
 
     [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ElementalChannelNode
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ElementalChannelNode
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ElementalChannelNode
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+
+            // Null should be interpreted as omitted for these properties
+            Channel = null,
+        };
+
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ElementalChannelNode
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+
+            // Null should be interpreted as omitted for these properties
+            Channel = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
         var model = new ElementalChannelNode { Channel = "email" };
@@ -317,6 +397,70 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ElementalChannelNodeIntersectionMember1
+        {
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ElementalChannelNodeIntersectionMember1
+        {
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ElementalChannelNodeIntersectionMember1
+        {
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+
+            // Null should be interpreted as omitted for these properties
+            Channel = null,
+        };
+
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ElementalChannelNodeIntersectionMember1
+        {
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+
+            // Null should be interpreted as omitted for these properties
+            Channel = null,
         };
 
         model.Validate();

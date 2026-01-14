@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
+using Courier.Models;
 using Courier.Models.Audiences;
 
 namespace Courier.Tests.Models.Audiences;
@@ -19,9 +20,10 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -35,11 +37,12 @@ public class AudienceTest : TestBase
         string expectedDescription = "description";
         string expectedName = "name";
         string expectedUpdatedAt = "updated_at";
-        Filter expectedFilter = new(
+        AudienceFilterConfig expectedFilter = new(
             [
-                new SingleFilterConfig()
+                new()
                 {
-                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Operator = "operator",
+                    Filters = [],
                     Path = "path",
                     Value = "value",
                 },
@@ -68,9 +71,10 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -97,9 +101,10 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -120,11 +125,12 @@ public class AudienceTest : TestBase
         string expectedDescription = "description";
         string expectedName = "name";
         string expectedUpdatedAt = "updated_at";
-        Filter expectedFilter = new(
+        AudienceFilterConfig expectedFilter = new(
             [
-                new SingleFilterConfig()
+                new()
                 {
-                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Operator = "operator",
+                    Filters = [],
                     Path = "path",
                     Value = "value",
                 },
@@ -153,9 +159,10 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -179,9 +186,10 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -205,9 +213,10 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -230,9 +239,10 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -259,9 +269,10 @@ public class AudienceTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },

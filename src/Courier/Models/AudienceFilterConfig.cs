@@ -6,14 +6,17 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Courier.Core;
 
-namespace Courier.Models.Audiences;
+namespace Courier.Models;
 
 /// <summary>
-/// Filter that contains an array of FilterConfig items
+/// Filter configuration for audience membership containing an array of filter rules
 /// </summary>
-[JsonConverter(typeof(JsonModelConverter<Filter, FilterFromRaw>))]
-public sealed record class Filter : JsonModel
+[JsonConverter(typeof(JsonModelConverter<AudienceFilterConfig, AudienceFilterConfigFromRaw>))]
+public sealed record class AudienceFilterConfig : JsonModel
 {
+    /// <summary>
+    /// Array of filter rules (single conditions or nested groups)
+    /// </summary>
     public required IReadOnlyList<FilterConfig> Filters
     {
         get
@@ -39,41 +42,44 @@ public sealed record class Filter : JsonModel
         }
     }
 
-    public Filter() { }
+    public AudienceFilterConfig() { }
 
-    public Filter(Filter filter)
-        : base(filter) { }
+    public AudienceFilterConfig(AudienceFilterConfig audienceFilterConfig)
+        : base(audienceFilterConfig) { }
 
-    public Filter(IReadOnlyDictionary<string, JsonElement> rawData)
+    public AudienceFilterConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Filter(FrozenDictionary<string, JsonElement> rawData)
+    AudienceFilterConfig(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="FilterFromRaw.FromRawUnchecked"/>
-    public static Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="AudienceFilterConfigFromRaw.FromRawUnchecked"/>
+    public static AudienceFilterConfig FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 
     [SetsRequiredMembers]
-    public Filter(IReadOnlyList<FilterConfig> filters)
+    public AudienceFilterConfig(IReadOnlyList<FilterConfig> filters)
         : this()
     {
         this.Filters = filters;
     }
 }
 
-class FilterFromRaw : IFromRawJson<Filter>
+class AudienceFilterConfigFromRaw : IFromRawJson<AudienceFilterConfig>
 {
     /// <inheritdoc/>
-    public Filter FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        Filter.FromRawUnchecked(rawData);
+    public AudienceFilterConfig FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => AudienceFilterConfig.FromRawUnchecked(rawData);
 }

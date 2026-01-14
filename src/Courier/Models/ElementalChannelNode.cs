@@ -72,14 +72,22 @@ public sealed record class ElementalChannelNode : JsonModel
     /// The channel the contents of this element should be applied to. Can be `email`,
     /// `push`, `direct_message`, `sms` or a provider such as slack
     /// </summary>
-    public required string Channel
+    public string? Channel
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("channel");
+            return this._rawData.GetNullableClass<string>("channel");
         }
-        init { this._rawData.Set("channel", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("channel", value);
+        }
     }
 
     /// <summary>
@@ -147,13 +155,6 @@ public sealed record class ElementalChannelNode : JsonModel
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
-
-    [SetsRequiredMembers]
-    public ElementalChannelNode(string channel)
-        : this()
-    {
-        this.Channel = channel;
-    }
 }
 
 class ElementalChannelNodeFromRaw : IFromRawJson<ElementalChannelNode>
@@ -176,14 +177,22 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : JsonModel
     /// The channel the contents of this element should be applied to. Can be `email`,
     /// `push`, `direct_message`, `sms` or a provider such as slack
     /// </summary>
-    public required string Channel
+    public string? Channel
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("channel");
+            return this._rawData.GetNullableClass<string>("channel");
         }
-        init { this._rawData.Set("channel", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("channel", value);
+        }
     }
 
     /// <summary>
@@ -239,13 +248,6 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public ElementalChannelNodeIntersectionMember1(string channel)
-        : this()
-    {
-        this.Channel = channel;
     }
 }
 
