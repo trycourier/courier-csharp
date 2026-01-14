@@ -12,20 +12,32 @@ public sealed record class BrandSettings : JsonModel
 {
     public BrandColors? Colors
     {
-        get { return JsonModel.GetNullableClass<BrandColors>(this.RawData, "colors"); }
-        init { JsonModel.Set(this._rawData, "colors", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<BrandColors>("colors");
+        }
+        init { this._rawData.Set("colors", value); }
     }
 
     public BrandSettingsEmail? Email
     {
-        get { return JsonModel.GetNullableClass<BrandSettingsEmail>(this.RawData, "email"); }
-        init { JsonModel.Set(this._rawData, "email", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<BrandSettingsEmail>("email");
+        }
+        init { this._rawData.Set("email", value); }
     }
 
     public BrandSettingsInApp? Inapp
     {
-        get { return JsonModel.GetNullableClass<BrandSettingsInApp>(this.RawData, "inapp"); }
-        init { JsonModel.Set(this._rawData, "inapp", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<BrandSettingsInApp>("inapp");
+        }
+        init { this._rawData.Set("inapp", value); }
     }
 
     /// <inheritdoc/>
@@ -43,14 +55,14 @@ public sealed record class BrandSettings : JsonModel
 
     public BrandSettings(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     BrandSettings(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

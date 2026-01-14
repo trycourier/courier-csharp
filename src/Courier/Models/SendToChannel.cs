@@ -12,8 +12,12 @@ public sealed record class SendToChannel : JsonModel
 {
     public required string ChannelID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "channel_id"); }
-        init { JsonModel.Set(this._rawData, "channel_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("channel_id");
+        }
+        init { this._rawData.Set("channel_id", value); }
     }
 
     /// <inheritdoc/>
@@ -29,14 +33,14 @@ public sealed record class SendToChannel : JsonModel
 
     public SendToChannel(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SendToChannel(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -38,8 +39,11 @@ public class SendToMsTeamsChannelNameTest : TestBase
             TenantID = "tenant_id",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -55,8 +59,11 @@ public class SendToMsTeamsChannelNameTest : TestBase
             TenantID = "tenant_id",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedChannelName = "channel_name";

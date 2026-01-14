@@ -14,7 +14,7 @@ namespace Courier.Models.Automations.Invoke;
 /// </summary>
 public sealed record class InvokeInvokeByTemplateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -24,44 +24,68 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
 
     public required string? Recipient
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "recipient"); }
-        init { JsonModel.Set(this._rawBodyData, "recipient", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("recipient");
+        }
+        init { this._rawBodyData.Set("recipient", value); }
     }
 
     public string? Brand
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "brand"); }
-        init { JsonModel.Set(this._rawBodyData, "brand", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("brand");
+        }
+        init { this._rawBodyData.Set("brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawBodyData,
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "data"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "data", value); }
+        init
+        {
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawBodyData,
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "profile"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "profile", value); }
+        init
+        {
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
+                "profile",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public string? Template
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "template"); }
-        init { JsonModel.Set(this._rawBodyData, "template", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("template");
+        }
+        init { this._rawBodyData.Set("template", value); }
     }
 
     public InvokeInvokeByTemplateParams() { }
@@ -71,7 +95,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
     {
         this.TemplateID = invokeInvokeByTemplateParams.TemplateID;
 
-        this._rawBodyData = [.. invokeInvokeByTemplateParams._rawBodyData];
+        this._rawBodyData = new(invokeInvokeByTemplateParams._rawBodyData);
     }
 
     public InvokeInvokeByTemplateParams(
@@ -80,9 +104,9 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -93,9 +117,9 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -127,7 +151,7 @@ public sealed record class InvokeInvokeByTemplateParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );

@@ -12,8 +12,12 @@ public sealed record class AuthIssueTokenResponse : JsonModel
 {
     public required string Token
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "token"); }
-        init { JsonModel.Set(this._rawData, "token", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("token");
+        }
+        init { this._rawData.Set("token", value); }
     }
 
     /// <inheritdoc/>
@@ -29,14 +33,14 @@ public sealed record class AuthIssueTokenResponse : JsonModel
 
     public AuthIssueTokenResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AuthIssueTokenResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

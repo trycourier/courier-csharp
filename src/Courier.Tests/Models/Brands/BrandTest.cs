@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Brands;
 
 namespace Courier.Tests.Models.Brands;
@@ -195,8 +196,8 @@ public class BrandTest : TestBase
             Version = "version",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Brand>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Brand>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -262,8 +263,8 @@ public class BrandTest : TestBase
             Version = "version",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Brand>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Brand>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedID = "id";

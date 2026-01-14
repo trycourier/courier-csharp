@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Brands;
 
 namespace Courier.Tests.Models.Brands;
@@ -22,8 +23,8 @@ public class IconsTest : TestBase
     {
         var model = new Icons { Bell = "bell", Message = "message" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Icons>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Icons>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +34,8 @@ public class IconsTest : TestBase
     {
         var model = new Icons { Bell = "bell", Message = "message" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Icons>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Icons>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedBell = "bell";

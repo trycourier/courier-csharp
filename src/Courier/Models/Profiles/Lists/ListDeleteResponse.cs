@@ -16,11 +16,12 @@ public sealed record class ListDeleteResponse : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
-            >(this.RawData, "status");
+            >("status");
         }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +37,14 @@ public sealed record class ListDeleteResponse : JsonModel
 
     public ListDeleteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ListDeleteResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

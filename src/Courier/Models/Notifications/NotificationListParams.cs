@@ -12,8 +12,12 @@ public sealed record class NotificationListParams : ParamsBase
 {
     public string? Cursor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cursor"); }
-        init { JsonModel.Set(this._rawQueryData, "cursor", value); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cursor");
+        }
+        init { this._rawQueryData.Set("cursor", value); }
     }
 
     /// <summary>
@@ -21,8 +25,12 @@ public sealed record class NotificationListParams : ParamsBase
     /// </summary>
     public bool? Notes
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawQueryData, "notes"); }
-        init { JsonModel.Set(this._rawQueryData, "notes", value); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<bool>("notes");
+        }
+        init { this._rawQueryData.Set("notes", value); }
     }
 
     public NotificationListParams() { }
@@ -35,8 +43,8 @@ public sealed record class NotificationListParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -46,8 +54,8 @@ public sealed record class NotificationListParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 using Courier.Models.Lists.Subscriptions;
 
@@ -138,8 +139,11 @@ public class SubscriptionListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SubscriptionListResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SubscriptionListResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -187,8 +191,11 @@ public class SubscriptionListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<SubscriptionListResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SubscriptionListResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<Item> expectedItems =
@@ -392,8 +399,8 @@ public class ItemTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Item>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Item>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -434,8 +441,8 @@ public class ItemTest : TestBase
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Item>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Item>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedRecipientID = "recipientId";

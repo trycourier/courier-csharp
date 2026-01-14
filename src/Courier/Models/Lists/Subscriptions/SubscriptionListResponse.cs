@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,14 +15,28 @@ public sealed record class SubscriptionListResponse : JsonModel
 {
     public required IReadOnlyList<Item> Items
     {
-        get { return JsonModel.GetNotNullClass<List<Item>>(this.RawData, "items"); }
-        init { JsonModel.Set(this._rawData, "items", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Item>>("items");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Item>>(
+                "items",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public required Paging Paging
     {
-        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { JsonModel.Set(this._rawData, "paging", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
+        init { this._rawData.Set("paging", value); }
     }
 
     /// <inheritdoc/>
@@ -41,14 +56,14 @@ public sealed record class SubscriptionListResponse : JsonModel
 
     public SubscriptionListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SubscriptionListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -74,23 +89,32 @@ public sealed record class Item : JsonModel
 {
     public required string RecipientID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "recipientId"); }
-        init { JsonModel.Set(this._rawData, "recipientId", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("recipientId");
+        }
+        init { this._rawData.Set("recipientId", value); }
     }
 
     public string? Created
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "created"); }
-        init { JsonModel.Set(this._rawData, "created", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("created");
+        }
+        init { this._rawData.Set("created", value); }
     }
 
     public RecipientPreferences? Preferences
     {
         get
         {
-            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<RecipientPreferences>("preferences");
         }
-        init { JsonModel.Set(this._rawData, "preferences", value); }
+        init { this._rawData.Set("preferences", value); }
     }
 
     /// <inheritdoc/>
@@ -108,14 +132,14 @@ public sealed record class Item : JsonModel
 
     public Item(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Item(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

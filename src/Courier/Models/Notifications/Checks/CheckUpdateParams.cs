@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Courier.Models.Notifications.Checks;
 
 public sealed record class CheckUpdateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -23,8 +24,18 @@ public sealed record class CheckUpdateParams : ParamsBase
 
     public required IReadOnlyList<BaseCheck> Checks
     {
-        get { return JsonModel.GetNotNullClass<List<BaseCheck>>(this.RawBodyData, "checks"); }
-        init { JsonModel.Set(this._rawBodyData, "checks", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<BaseCheck>>("checks");
+        }
+        init
+        {
+            this._rawBodyData.Set<ImmutableArray<BaseCheck>>(
+                "checks",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public CheckUpdateParams() { }
@@ -35,7 +46,7 @@ public sealed record class CheckUpdateParams : ParamsBase
         this.ID = checkUpdateParams.ID;
         this.SubmissionID = checkUpdateParams.SubmissionID;
 
-        this._rawBodyData = [.. checkUpdateParams._rawBodyData];
+        this._rawBodyData = new(checkUpdateParams._rawBodyData);
     }
 
     public CheckUpdateParams(
@@ -44,9 +55,9 @@ public sealed record class CheckUpdateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -57,9 +68,9 @@ public sealed record class CheckUpdateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -91,7 +102,7 @@ public sealed record class CheckUpdateParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );

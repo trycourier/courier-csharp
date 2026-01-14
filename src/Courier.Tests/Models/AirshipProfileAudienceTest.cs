@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -20,8 +21,11 @@ public class AirshipProfileAudienceTest : TestBase
     {
         var model = new AirshipProfileAudience { NamedUser = "named_user" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AirshipProfileAudience>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AirshipProfileAudience>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -31,8 +35,11 @@ public class AirshipProfileAudienceTest : TestBase
     {
         var model = new AirshipProfileAudience { NamedUser = "named_user" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AirshipProfileAudience>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AirshipProfileAudience>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedNamedUser = "named_user";

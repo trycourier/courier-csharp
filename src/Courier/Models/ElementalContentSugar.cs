@@ -18,8 +18,12 @@ public sealed record class ElementalContentSugar : JsonModel
     /// </summary>
     public required string Body
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "body"); }
-        init { JsonModel.Set(this._rawData, "body", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("body");
+        }
+        init { this._rawData.Set("body", value); }
     }
 
     /// <summary>
@@ -27,8 +31,12 @@ public sealed record class ElementalContentSugar : JsonModel
     /// </summary>
     public required string Title
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "title"); }
-        init { JsonModel.Set(this._rawData, "title", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("title");
+        }
+        init { this._rawData.Set("title", value); }
     }
 
     /// <inheritdoc/>
@@ -45,14 +53,14 @@ public sealed record class ElementalContentSugar : JsonModel
 
     public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ElementalContentSugar(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 using Courier.Models.AuditEvents;
 
@@ -69,8 +70,11 @@ public class AuditEventListResponseTest : TestBase
             ],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AuditEventListResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AuditEventListResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -95,8 +99,11 @@ public class AuditEventListResponseTest : TestBase
             ],
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AuditEventListResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AuditEventListResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };

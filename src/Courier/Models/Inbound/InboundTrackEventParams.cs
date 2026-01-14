@@ -16,7 +16,7 @@ namespace Courier.Models.Inbound;
 /// </summary>
 public sealed record class InboundTrackEventParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -28,8 +28,12 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public required string Event
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "event"); }
-        init { JsonModel.Set(this._rawBodyData, "event", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("event");
+        }
+        init { this._rawBodyData.Set("event", value); }
     }
 
     /// <summary>
@@ -38,32 +42,42 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public required string MessageID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "messageId"); }
-        init { JsonModel.Set(this._rawBodyData, "messageId", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("messageId");
+        }
+        init { this._rawBodyData.Set("messageId", value); }
     }
 
     public required IReadOnlyDictionary<string, JsonElement> Properties
     {
         get
         {
-            return JsonModel.GetNotNullClass<Dictionary<string, JsonElement>>(
-                this.RawBodyData,
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<FrozenDictionary<string, JsonElement>>(
                 "properties"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "properties", value); }
+        init
+        {
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>>(
+                "properties",
+                FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public required ApiEnum<string, global::Courier.Models.Inbound.Type> Type
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, global::Courier.Models.Inbound.Type>>(
-                this.RawBodyData,
-                "type"
-            );
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<
+                ApiEnum<string, global::Courier.Models.Inbound.Type>
+            >("type");
         }
-        init { JsonModel.Set(this._rawBodyData, "type", value); }
+        init { this._rawBodyData.Set("type", value); }
     }
 
     /// <summary>
@@ -71,8 +85,12 @@ public sealed record class InboundTrackEventParams : ParamsBase
     /// </summary>
     public string? UserID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "userId"); }
-        init { JsonModel.Set(this._rawBodyData, "userId", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("userId");
+        }
+        init { this._rawBodyData.Set("userId", value); }
     }
 
     public InboundTrackEventParams() { }
@@ -80,7 +98,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     public InboundTrackEventParams(InboundTrackEventParams inboundTrackEventParams)
         : base(inboundTrackEventParams)
     {
-        this._rawBodyData = [.. inboundTrackEventParams._rawBodyData];
+        this._rawBodyData = new(inboundTrackEventParams._rawBodyData);
     }
 
     public InboundTrackEventParams(
@@ -89,9 +107,9 @@ public sealed record class InboundTrackEventParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -102,9 +120,9 @@ public sealed record class InboundTrackEventParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -133,7 +151,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );

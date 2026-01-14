@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -42,8 +43,8 @@ public class UtmTest : TestBase
             Term = "term",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Utm>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Utm>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -60,8 +61,8 @@ public class UtmTest : TestBase
             Term = "term",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Utm>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Utm>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedCampaign = "campaign";

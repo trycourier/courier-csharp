@@ -14,8 +14,12 @@ public sealed record class BulkRetrieveJobResponse : JsonModel
 {
     public required Job Job
     {
-        get { return JsonModel.GetNotNullClass<Job>(this.RawData, "job"); }
-        init { JsonModel.Set(this._rawData, "job", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Job>("job");
+        }
+        init { this._rawData.Set("job", value); }
     }
 
     /// <inheritdoc/>
@@ -31,14 +35,14 @@ public sealed record class BulkRetrieveJobResponse : JsonModel
 
     public BulkRetrieveJobResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     BulkRetrieveJobResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -76,35 +80,52 @@ public sealed record class Job : JsonModel
     /// </summary>
     public required InboundBulkMessage Definition
     {
-        get { return JsonModel.GetNotNullClass<InboundBulkMessage>(this.RawData, "definition"); }
-        init { JsonModel.Set(this._rawData, "definition", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<InboundBulkMessage>("definition");
+        }
+        init { this._rawData.Set("definition", value); }
     }
 
     public required long Enqueued
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "enqueued"); }
-        init { JsonModel.Set(this._rawData, "enqueued", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("enqueued");
+        }
+        init { this._rawData.Set("enqueued", value); }
     }
 
     public required long Failures
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "failures"); }
-        init { JsonModel.Set(this._rawData, "failures", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("failures");
+        }
+        init { this._rawData.Set("failures", value); }
     }
 
     public required long Received
     {
-        get { return JsonModel.GetNotNullStruct<long>(this.RawData, "received"); }
-        init { JsonModel.Set(this._rawData, "received", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("received");
+        }
+        init { this._rawData.Set("received", value); }
     }
 
     public required ApiEnum<string, JobStatus> Status
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, JobStatus>>(this.RawData, "status");
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, JobStatus>>("status");
         }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <inheritdoc/>
@@ -124,14 +145,14 @@ public sealed record class Job : JsonModel
 
     public Job(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Job(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

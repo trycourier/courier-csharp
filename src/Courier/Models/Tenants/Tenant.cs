@@ -15,8 +15,12 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public required string ID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "id"); }
-        init { JsonModel.Set(this._rawData, "id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
+        init { this._rawData.Set("id", value); }
     }
 
     /// <summary>
@@ -24,8 +28,12 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
-        init { JsonModel.Set(this._rawData, "name", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
+        init { this._rawData.Set("name", value); }
     }
 
     /// <summary>
@@ -33,8 +41,12 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public string? BrandID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand_id"); }
-        init { JsonModel.Set(this._rawData, "brand_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand_id");
+        }
+        init { this._rawData.Set("brand_id", value); }
     }
 
     /// <summary>
@@ -45,12 +57,10 @@ public sealed record class Tenant : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<DefaultPreferences>(
-                this.RawData,
-                "default_preferences"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<DefaultPreferences>("default_preferences");
         }
-        init { JsonModel.Set(this._rawData, "default_preferences", value); }
+        init { this._rawData.Set("default_preferences", value); }
     }
 
     /// <summary>
@@ -58,8 +68,12 @@ public sealed record class Tenant : JsonModel
     /// </summary>
     public string? ParentTenantID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "parent_tenant_id"); }
-        init { JsonModel.Set(this._rawData, "parent_tenant_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("parent_tenant_id");
+        }
+        init { this._rawData.Set("parent_tenant_id", value); }
     }
 
     /// <summary>
@@ -69,12 +83,18 @@ public sealed record class Tenant : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "properties"
             );
         }
-        init { JsonModel.Set(this._rawData, "properties", value); }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "properties",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     /// <summary>
@@ -84,12 +104,18 @@ public sealed record class Tenant : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "user_profile"
             );
         }
-        init { JsonModel.Set(this._rawData, "user_profile", value); }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "user_profile",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -111,14 +137,14 @@ public sealed record class Tenant : JsonModel
 
     public Tenant(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Tenant(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

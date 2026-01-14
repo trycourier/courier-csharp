@@ -15,8 +15,12 @@ public sealed record class MessageContext : JsonModel
     /// </summary>
     public string? TenantID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "tenant_id"); }
-        init { JsonModel.Set(this._rawData, "tenant_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("tenant_id");
+        }
+        init { this._rawData.Set("tenant_id", value); }
     }
 
     /// <inheritdoc/>
@@ -32,14 +36,14 @@ public sealed record class MessageContext : JsonModel
 
     public MessageContext(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     MessageContext(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

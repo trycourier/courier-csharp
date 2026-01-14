@@ -12,14 +12,22 @@ public sealed record class Intercom : JsonModel
 {
     public required string From
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "from"); }
-        init { JsonModel.Set(this._rawData, "from", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("from");
+        }
+        init { this._rawData.Set("from", value); }
     }
 
     public required IntercomRecipient To
     {
-        get { return JsonModel.GetNotNullClass<IntercomRecipient>(this.RawData, "to"); }
-        init { JsonModel.Set(this._rawData, "to", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<IntercomRecipient>("to");
+        }
+        init { this._rawData.Set("to", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +44,14 @@ public sealed record class Intercom : JsonModel
 
     public Intercom(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Intercom(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

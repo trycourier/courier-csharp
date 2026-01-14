@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -66,8 +67,11 @@ public class WebhookRecipientTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -93,8 +97,11 @@ public class WebhookRecipientTest : TestBase
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         WebhookProfile expectedWebhook = new()

@@ -67,15 +67,9 @@ public sealed class ListService : IListService
     }
 
     /// <inheritdoc/>
-    public async Task Update(
-        ListUpdateParams parameters,
-        CancellationToken cancellationToken = default
-    )
+    public Task Update(ListUpdateParams parameters, CancellationToken cancellationToken = default)
     {
-        using var response = await this
-            .WithRawResponse.Update(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Update(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -102,15 +96,9 @@ public sealed class ListService : IListService
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
-        ListDeleteParams parameters,
-        CancellationToken cancellationToken = default
-    )
+    public Task Delete(ListDeleteParams parameters, CancellationToken cancellationToken = default)
     {
-        using var response = await this
-            .WithRawResponse.Delete(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Delete(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -127,15 +115,9 @@ public sealed class ListService : IListService
     }
 
     /// <inheritdoc/>
-    public async Task Restore(
-        ListRestoreParams parameters,
-        CancellationToken cancellationToken = default
-    )
+    public Task Restore(ListRestoreParams parameters, CancellationToken cancellationToken = default)
     {
-        using var response = await this
-            .WithRawResponse.Restore(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Restore(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>

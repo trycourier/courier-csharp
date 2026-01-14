@@ -14,24 +14,36 @@ public sealed record class RecipientPreferences : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
-                this.RawData,
-                "categories"
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                FrozenDictionary<string, NotificationPreferenceDetails>
+            >("categories");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, NotificationPreferenceDetails>?>(
+                "categories",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "categories", value); }
     }
 
     public IReadOnlyDictionary<string, NotificationPreferenceDetails>? Notifications
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, NotificationPreferenceDetails>>(
-                this.RawData,
-                "notifications"
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
+                FrozenDictionary<string, NotificationPreferenceDetails>
+            >("notifications");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, NotificationPreferenceDetails>?>(
+                "notifications",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "notifications", value); }
     }
 
     /// <inheritdoc/>
@@ -60,14 +72,14 @@ public sealed record class RecipientPreferences : JsonModel
 
     public RecipientPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     RecipientPreferences(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

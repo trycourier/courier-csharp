@@ -15,8 +15,12 @@ public sealed record class WebhookProfile : JsonModel
     /// </summary>
     public required string Url
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "url"); }
-        init { JsonModel.Set(this._rawData, "url", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("url");
+        }
+        init { this._rawData.Set("url", value); }
     }
 
     /// <summary>
@@ -26,12 +30,10 @@ public sealed record class WebhookProfile : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<WebhookAuthentication>(
-                this.RawData,
-                "authentication"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<WebhookAuthentication>("authentication");
         }
-        init { JsonModel.Set(this._rawData, "authentication", value); }
+        init { this._rawData.Set("authentication", value); }
     }
 
     /// <summary>
@@ -41,9 +43,16 @@ public sealed record class WebhookProfile : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, string>>(this.RawData, "headers");
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
         }
-        init { JsonModel.Set(this._rawData, "headers", value); }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     /// <summary>
@@ -53,12 +62,10 @@ public sealed record class WebhookProfile : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, WebhookMethod>>(
-                this.RawData,
-                "method"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, WebhookMethod>>("method");
         }
-        init { JsonModel.Set(this._rawData, "method", value); }
+        init { this._rawData.Set("method", value); }
     }
 
     /// <summary>
@@ -69,12 +76,10 @@ public sealed record class WebhookProfile : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, WebhookProfileType>>(
-                this.RawData,
-                "profile"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, WebhookProfileType>>("profile");
         }
-        init { JsonModel.Set(this._rawData, "profile", value); }
+        init { this._rawData.Set("profile", value); }
     }
 
     /// <inheritdoc/>
@@ -94,14 +99,14 @@ public sealed record class WebhookProfile : JsonModel
 
     public WebhookProfile(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     WebhookProfile(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

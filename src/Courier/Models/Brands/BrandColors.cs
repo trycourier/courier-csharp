@@ -12,7 +12,11 @@ public sealed record class BrandColors : JsonModel
 {
     public string? Primary
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "primary"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("primary");
+        }
         init
         {
             if (value == null)
@@ -20,13 +24,17 @@ public sealed record class BrandColors : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "primary", value);
+            this._rawData.Set("primary", value);
         }
     }
 
     public string? Secondary
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "secondary"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("secondary");
+        }
         init
         {
             if (value == null)
@@ -34,7 +42,7 @@ public sealed record class BrandColors : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "secondary", value);
+            this._rawData.Set("secondary", value);
         }
     }
 
@@ -52,14 +60,14 @@ public sealed record class BrandColors : JsonModel
 
     public BrandColors(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     BrandColors(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,36 +15,42 @@ public sealed record class TopicPreference : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
                 "default_status"
             );
         }
-        init { JsonModel.Set(this._rawData, "default_status", value); }
+        init { this._rawData.Set("default_status", value); }
     }
 
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, PreferenceStatus>>(
-                this.RawData,
-                "status"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, PreferenceStatus>>("status");
         }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        init { this._rawData.Set("status", value); }
     }
 
     public required string TopicID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "topic_id"); }
-        init { JsonModel.Set(this._rawData, "topic_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("topic_id");
+        }
+        init { this._rawData.Set("topic_id", value); }
     }
 
     public required string TopicName
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "topic_name"); }
-        init { JsonModel.Set(this._rawData, "topic_name", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("topic_name");
+        }
+        init { this._rawData.Set("topic_name", value); }
     }
 
     /// <summary>
@@ -53,18 +60,28 @@ public sealed record class TopicPreference : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
-                this.RawData,
-                "custom_routing"
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<
+                ImmutableArray<ApiEnum<string, ChannelClassification>>
+            >("custom_routing");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ApiEnum<string, ChannelClassification>>?>(
+                "custom_routing",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "custom_routing", value); }
     }
 
     public bool? HasCustomRouting
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
-        init { JsonModel.Set(this._rawData, "has_custom_routing", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("has_custom_routing");
+        }
+        init { this._rawData.Set("has_custom_routing", value); }
     }
 
     /// <inheritdoc/>
@@ -88,14 +105,14 @@ public sealed record class TopicPreference : JsonModel
 
     public TopicPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     TopicPreference(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

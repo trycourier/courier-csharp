@@ -15,7 +15,11 @@ public sealed record class InboundBulkMessageUser : JsonModel
     /// </summary>
     public JsonElement? Data
     {
-        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawData, "data"); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<JsonElement>("data");
+        }
         init
         {
             if (value == null)
@@ -23,7 +27,7 @@ public sealed record class InboundBulkMessageUser : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "data", value);
+            this._rawData.Set("data", value);
         }
     }
 
@@ -31,9 +35,10 @@ public sealed record class InboundBulkMessageUser : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<RecipientPreferences>(this.RawData, "preferences");
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<RecipientPreferences>("preferences");
         }
-        init { JsonModel.Set(this._rawData, "preferences", value); }
+        init { this._rawData.Set("preferences", value); }
     }
 
     /// <summary>
@@ -45,12 +50,16 @@ public sealed record class InboundBulkMessageUser : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "profile"
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("profile");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "profile",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     /// <summary>
@@ -58,8 +67,12 @@ public sealed record class InboundBulkMessageUser : JsonModel
     /// </summary>
     public string? Recipient
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "recipient"); }
-        init { JsonModel.Set(this._rawData, "recipient", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("recipient");
+        }
+        init { this._rawData.Set("recipient", value); }
     }
 
     /// <summary>
@@ -69,8 +82,12 @@ public sealed record class InboundBulkMessageUser : JsonModel
     /// </summary>
     public UserRecipient? To
     {
-        get { return JsonModel.GetNullableClass<UserRecipient>(this.RawData, "to"); }
-        init { JsonModel.Set(this._rawData, "to", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserRecipient>("to");
+        }
+        init { this._rawData.Set("to", value); }
     }
 
     /// <inheritdoc/>
@@ -90,14 +107,14 @@ public sealed record class InboundBulkMessageUser : JsonModel
 
     public InboundBulkMessageUser(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     InboundBulkMessageUser(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

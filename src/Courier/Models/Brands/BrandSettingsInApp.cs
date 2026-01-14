@@ -14,53 +14,72 @@ public sealed record class BrandSettingsInApp : JsonModel
 {
     public required BrandColors Colors
     {
-        get { return JsonModel.GetNotNullClass<BrandColors>(this.RawData, "colors"); }
-        init { JsonModel.Set(this._rawData, "colors", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<BrandColors>("colors");
+        }
+        init { this._rawData.Set("colors", value); }
     }
 
     public required Icons Icons
     {
-        get { return JsonModel.GetNotNullClass<Icons>(this.RawData, "icons"); }
-        init { JsonModel.Set(this._rawData, "icons", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Icons>("icons");
+        }
+        init { this._rawData.Set("icons", value); }
     }
 
     public required WidgetBackground WidgetBackground
     {
         get
         {
-            return JsonModel.GetNotNullClass<WidgetBackground>(this.RawData, "widgetBackground");
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<WidgetBackground>("widgetBackground");
         }
-        init { JsonModel.Set(this._rawData, "widgetBackground", value); }
+        init { this._rawData.Set("widgetBackground", value); }
     }
 
     public string? BorderRadius
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "borderRadius"); }
-        init { JsonModel.Set(this._rawData, "borderRadius", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("borderRadius");
+        }
+        init { this._rawData.Set("borderRadius", value); }
     }
 
     public bool? DisableMessageIcon
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "disableMessageIcon"); }
-        init { JsonModel.Set(this._rawData, "disableMessageIcon", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("disableMessageIcon");
+        }
+        init { this._rawData.Set("disableMessageIcon", value); }
     }
 
     public string? FontFamily
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "fontFamily"); }
-        init { JsonModel.Set(this._rawData, "fontFamily", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("fontFamily");
+        }
+        init { this._rawData.Set("fontFamily", value); }
     }
 
     public ApiEnum<string, Placement>? Placement
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, Placement>>(
-                this.RawData,
-                "placement"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Placement>>("placement");
         }
-        init { JsonModel.Set(this._rawData, "placement", value); }
+        init { this._rawData.Set("placement", value); }
     }
 
     /// <inheritdoc/>
@@ -82,14 +101,14 @@ public sealed record class BrandSettingsInApp : JsonModel
 
     public BrandSettingsInApp(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     BrandSettingsInApp(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

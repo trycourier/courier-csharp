@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -22,8 +23,8 @@ public class PagingTest : TestBase
     {
         var model = new Paging { More = true, Cursor = "cursor" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Paging>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Paging>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +34,8 @@ public class PagingTest : TestBase
     {
         var model = new Paging { More = true, Cursor = "cursor" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Paging>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Paging>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         bool expectedMore = true;

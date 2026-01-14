@@ -14,8 +14,12 @@ public sealed record class AutomationInvokeResponse : JsonModel
 {
     public required string RunID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "runId"); }
-        init { JsonModel.Set(this._rawData, "runId", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("runId");
+        }
+        init { this._rawData.Set("runId", value); }
     }
 
     /// <inheritdoc/>
@@ -31,14 +35,14 @@ public sealed record class AutomationInvokeResponse : JsonModel
 
     public AutomationInvokeResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationInvokeResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -12,44 +12,72 @@ public sealed record class BrandTemplate : JsonModel
 {
     public required bool Enabled
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "enabled"); }
-        init { JsonModel.Set(this._rawData, "enabled", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("enabled");
+        }
+        init { this._rawData.Set("enabled", value); }
     }
 
     public string? BackgroundColor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "backgroundColor"); }
-        init { JsonModel.Set(this._rawData, "backgroundColor", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("backgroundColor");
+        }
+        init { this._rawData.Set("backgroundColor", value); }
     }
 
     public string? BlocksBackgroundColor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "blocksBackgroundColor"); }
-        init { JsonModel.Set(this._rawData, "blocksBackgroundColor", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("blocksBackgroundColor");
+        }
+        init { this._rawData.Set("blocksBackgroundColor", value); }
     }
 
     public string? Footer
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "footer"); }
-        init { JsonModel.Set(this._rawData, "footer", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("footer");
+        }
+        init { this._rawData.Set("footer", value); }
     }
 
     public string? Head
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "head"); }
-        init { JsonModel.Set(this._rawData, "head", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("head");
+        }
+        init { this._rawData.Set("head", value); }
     }
 
     public string? Header
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "header"); }
-        init { JsonModel.Set(this._rawData, "header", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("header");
+        }
+        init { this._rawData.Set("header", value); }
     }
 
     public string? Width
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "width"); }
-        init { JsonModel.Set(this._rawData, "width", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("width");
+        }
+        init { this._rawData.Set("width", value); }
     }
 
     /// <inheritdoc/>
@@ -71,14 +99,14 @@ public sealed record class BrandTemplate : JsonModel
 
     public BrandTemplate(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     BrandTemplate(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

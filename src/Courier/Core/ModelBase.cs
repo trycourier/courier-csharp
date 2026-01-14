@@ -16,6 +16,7 @@ using Send = Courier.Models.Send;
 using Templates = Courier.Models.Tenants.Templates;
 using Tenants = Courier.Models.Tenants;
 using Tokens = Courier.Models.Users.Tokens;
+using UsersTenants = Courier.Models.Users.Tenants;
 
 namespace Courier.Core;
 
@@ -35,6 +36,7 @@ public abstract record class ModelBase
     {
         Converters =
         {
+            new FrozenDictionaryConverterFactory(),
             new ApiEnumConverter<string, Alignment>(),
             new ApiEnumConverter<string, Operator>(),
             new ApiEnumConverter<string, Path>(),
@@ -58,8 +60,8 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Send::RoutingMethod>(),
             new ApiEnumConverter<string, Send::Method>(),
             new ApiEnumConverter<string, Send::Criteria>(),
+            new ApiEnumConverter<string, Audiences::AudienceOperator>(),
             new ApiEnumConverter<string, Audiences::Operator>(),
-            new ApiEnumConverter<string, Audiences::SingleFilterConfigOperator>(),
             new ApiEnumConverter<string, AutomationTemplateVersion>(),
             new ApiEnumConverter<string, Version>(),
             new ApiEnumConverter<string, Invoke::Action>(),
@@ -91,7 +93,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Tenants::TenantListUsersResponseType>(),
             new ApiEnumConverter<string, Items::Status>(),
             new ApiEnumConverter<string, Templates::Type>(),
-            new ApiEnumConverter<string, global::Courier.Models.Users.Tenants.Type>(),
+            new ApiEnumConverter<string, UsersTenants::Type>(),
             new ApiEnumConverter<string, Tokens::UserTokenProviderKey>(),
             new ApiEnumConverter<string, Tokens::Status>(),
             new ApiEnumConverter<string, Tokens::ProviderKey>(),

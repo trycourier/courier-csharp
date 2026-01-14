@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Courier.Models.Automations.Invoke;
 /// </summary>
 public sealed record class InvokeInvokeAdHocParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -26,50 +27,78 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
 
     public required Automation Automation
     {
-        get { return JsonModel.GetNotNullClass<Automation>(this.RawBodyData, "automation"); }
-        init { JsonModel.Set(this._rawBodyData, "automation", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<Automation>("automation");
+        }
+        init { this._rawBodyData.Set("automation", value); }
     }
 
     public string? Brand
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "brand"); }
-        init { JsonModel.Set(this._rawBodyData, "brand", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("brand");
+        }
+        init { this._rawBodyData.Set("brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawBodyData,
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "data"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "data", value); }
+        init
+        {
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawBodyData,
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "profile"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "profile", value); }
+        init
+        {
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
+                "profile",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public string? Recipient
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "recipient"); }
-        init { JsonModel.Set(this._rawBodyData, "recipient", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("recipient");
+        }
+        init { this._rawBodyData.Set("recipient", value); }
     }
 
     public string? Template
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "template"); }
-        init { JsonModel.Set(this._rawBodyData, "template", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("template");
+        }
+        init { this._rawBodyData.Set("template", value); }
     }
 
     public InvokeInvokeAdHocParams() { }
@@ -77,7 +106,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
     public InvokeInvokeAdHocParams(InvokeInvokeAdHocParams invokeInvokeAdHocParams)
         : base(invokeInvokeAdHocParams)
     {
-        this._rawBodyData = [.. invokeInvokeAdHocParams._rawBodyData];
+        this._rawBodyData = new(invokeInvokeAdHocParams._rawBodyData);
     }
 
     public InvokeInvokeAdHocParams(
@@ -86,9 +115,9 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -99,9 +128,9 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -132,7 +161,7 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );
@@ -153,14 +182,28 @@ public sealed record class Automation : JsonModel
 {
     public required IReadOnlyList<Step> Steps
     {
-        get { return JsonModel.GetNotNullClass<List<Step>>(this.RawData, "steps"); }
-        init { JsonModel.Set(this._rawData, "steps", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Step>>("steps");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Step>>(
+                "steps",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public string? CancelationToken
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "cancelation_token"); }
-        init { JsonModel.Set(this._rawData, "cancelation_token", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("cancelation_token");
+        }
+        init { this._rawData.Set("cancelation_token", value); }
     }
 
     /// <inheritdoc/>
@@ -180,14 +223,14 @@ public sealed record class Automation : JsonModel
 
     public Automation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Automation(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -198,7 +241,7 @@ public sealed record class Automation : JsonModel
     }
 
     [SetsRequiredMembers]
-    public Automation(List<Step> steps)
+    public Automation(IReadOnlyList<Step> steps)
         : this()
     {
         this.Steps = steps;
@@ -221,7 +264,13 @@ public record class Step : ModelBase
 
     public JsonElement Json
     {
-        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
+        get
+        {
+            return this._element ??= JsonSerializer.SerializeToElement(
+                this.Value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public string? Brand
@@ -746,20 +795,32 @@ public sealed record class AutomationDelayStep : JsonModel
 {
     public required ApiEnum<string, Action> Action
     {
-        get { return JsonModel.GetNotNullClass<ApiEnum<string, Action>>(this.RawData, "action"); }
-        init { JsonModel.Set(this._rawData, "action", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Action>>("action");
+        }
+        init { this._rawData.Set("action", value); }
     }
 
     public string? Duration
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "duration"); }
-        init { JsonModel.Set(this._rawData, "duration", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("duration");
+        }
+        init { this._rawData.Set("duration", value); }
     }
 
     public string? Until
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "until"); }
-        init { JsonModel.Set(this._rawData, "until", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("until");
+        }
+        init { this._rawData.Set("until", value); }
     }
 
     /// <inheritdoc/>
@@ -777,14 +838,14 @@ public sealed record class AutomationDelayStep : JsonModel
 
     public AutomationDelayStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationDelayStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -855,54 +916,74 @@ public sealed record class AutomationSendStep : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationSendStepAction>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, AutomationSendStepAction>>(
                 "action"
             );
         }
-        init { JsonModel.Set(this._rawData, "action", value); }
+        init { this._rawData.Set("action", value); }
     }
 
     public string? Brand
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand"); }
-        init { JsonModel.Set(this._rawData, "brand", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand");
+        }
+        init { this._rawData.Set("brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "data"
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Profile
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "profile"
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("profile");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "profile",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     public string? Recipient
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "recipient"); }
-        init { JsonModel.Set(this._rawData, "recipient", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("recipient");
+        }
+        init { this._rawData.Set("recipient", value); }
     }
 
     public string? Template
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "template"); }
-        init { JsonModel.Set(this._rawData, "template", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("template");
+        }
+        init { this._rawData.Set("template", value); }
     }
 
     /// <inheritdoc/>
@@ -923,14 +1004,14 @@ public sealed record class AutomationSendStep : JsonModel
 
     public AutomationSendStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationSendStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -1005,36 +1086,48 @@ public sealed record class AutomationSendListStep : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationSendListStepAction>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, AutomationSendListStepAction>>(
                 "action"
             );
         }
-        init { JsonModel.Set(this._rawData, "action", value); }
+        init { this._rawData.Set("action", value); }
     }
 
     public required string List
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "list"); }
-        init { JsonModel.Set(this._rawData, "list", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("list");
+        }
+        init { this._rawData.Set("list", value); }
     }
 
     public string? Brand
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "brand"); }
-        init { JsonModel.Set(this._rawData, "brand", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("brand");
+        }
+        init { this._rawData.Set("brand", value); }
     }
 
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "data"
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("data");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "data",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "data", value); }
     }
 
     /// <inheritdoc/>
@@ -1053,14 +1146,14 @@ public sealed record class AutomationSendListStep : JsonModel
 
     public AutomationSendListStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationSendListStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -1131,36 +1224,48 @@ public sealed record class AutomationUpdateProfileStep : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationUpdateProfileStepAction>>(
-                this.RawData,
-                "action"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<
+                ApiEnum<string, AutomationUpdateProfileStepAction>
+            >("action");
         }
-        init { JsonModel.Set(this._rawData, "action", value); }
+        init { this._rawData.Set("action", value); }
     }
 
     public required IReadOnlyDictionary<string, JsonElement> Profile
     {
         get
         {
-            return JsonModel.GetNotNullClass<Dictionary<string, JsonElement>>(
-                this.RawData,
-                "profile"
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<FrozenDictionary<string, JsonElement>>("profile");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>>(
+                "profile",
+                FrozenDictionary.ToFrozenDictionary(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "profile", value); }
     }
 
     public ApiEnum<string, Merge>? Merge
     {
-        get { return JsonModel.GetNullableClass<ApiEnum<string, Merge>>(this.RawData, "merge"); }
-        init { JsonModel.Set(this._rawData, "merge", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Merge>>("merge");
+        }
+        init { this._rawData.Set("merge", value); }
     }
 
     public string? RecipientID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "recipient_id"); }
-        init { JsonModel.Set(this._rawData, "recipient_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("recipient_id");
+        }
+        init { this._rawData.Set("recipient_id", value); }
     }
 
     /// <inheritdoc/>
@@ -1179,14 +1284,14 @@ public sealed record class AutomationUpdateProfileStep : JsonModel
 
     public AutomationUpdateProfileStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationUpdateProfileStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -1302,18 +1407,22 @@ public sealed record class AutomationCancelStep : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationCancelStepAction>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, AutomationCancelStepAction>>(
                 "action"
             );
         }
-        init { JsonModel.Set(this._rawData, "action", value); }
+        init { this._rawData.Set("action", value); }
     }
 
     public required string CancelationToken
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "cancelation_token"); }
-        init { JsonModel.Set(this._rawData, "cancelation_token", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("cancelation_token");
+        }
+        init { this._rawData.Set("cancelation_token", value); }
     }
 
     /// <inheritdoc/>
@@ -1330,14 +1439,14 @@ public sealed record class AutomationCancelStep : JsonModel
 
     public AutomationCancelStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationCancelStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -1406,30 +1515,32 @@ public sealed record class AutomationFetchDataStep : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationFetchDataStepAction>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, AutomationFetchDataStepAction>>(
                 "action"
             );
         }
-        init { JsonModel.Set(this._rawData, "action", value); }
+        init { this._rawData.Set("action", value); }
     }
 
     public required Webhook Webhook
     {
-        get { return JsonModel.GetNotNullClass<Webhook>(this.RawData, "webhook"); }
-        init { JsonModel.Set(this._rawData, "webhook", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Webhook>("webhook");
+        }
+        init { this._rawData.Set("webhook", value); }
     }
 
     public ApiEnum<string, MergeStrategy>? MergeStrategy
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, MergeStrategy>>(
-                this.RawData,
-                "merge_strategy"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, MergeStrategy>>("merge_strategy");
         }
-        init { JsonModel.Set(this._rawData, "merge_strategy", value); }
+        init { this._rawData.Set("merge_strategy", value); }
     }
 
     /// <inheritdoc/>
@@ -1447,14 +1558,14 @@ public sealed record class AutomationFetchDataStep : JsonModel
 
     public AutomationFetchDataStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationFetchDataStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -1523,32 +1634,48 @@ public sealed record class Webhook : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<
                 ApiEnum<string, global::Courier.Models.Automations.Invoke.Method>
-            >(this.RawData, "method");
+            >("method");
         }
-        init { JsonModel.Set(this._rawData, "method", value); }
+        init { this._rawData.Set("method", value); }
     }
 
     public required string Url
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "url"); }
-        init { JsonModel.Set(this._rawData, "url", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("url");
+        }
+        init { this._rawData.Set("url", value); }
     }
 
     public string? Body
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "body"); }
-        init { JsonModel.Set(this._rawData, "body", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("body");
+        }
+        init { this._rawData.Set("body", value); }
     }
 
     public IReadOnlyDictionary<string, string>? Headers
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, string>>(this.RawData, "headers");
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, string>>("headers");
         }
-        init { JsonModel.Set(this._rawData, "headers", value); }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, string>?>(
+                "headers",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -1567,14 +1694,14 @@ public sealed record class Webhook : JsonModel
 
     public Webhook(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Webhook(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -1699,18 +1826,22 @@ public sealed record class AutomationInvokeStep : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, AutomationInvokeStepAction>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, AutomationInvokeStepAction>>(
                 "action"
             );
         }
-        init { JsonModel.Set(this._rawData, "action", value); }
+        init { this._rawData.Set("action", value); }
     }
 
     public required string Template
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "template"); }
-        init { JsonModel.Set(this._rawData, "template", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("template");
+        }
+        init { this._rawData.Set("template", value); }
     }
 
     /// <inheritdoc/>
@@ -1727,14 +1858,14 @@ public sealed record class AutomationInvokeStep : JsonModel
 
     public AutomationInvokeStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AutomationInvokeStep(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

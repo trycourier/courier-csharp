@@ -12,8 +12,12 @@ public sealed record class AudienceUpdateResponse : JsonModel
 {
     public required Audience Audience
     {
-        get { return JsonModel.GetNotNullClass<Audience>(this.RawData, "audience"); }
-        init { JsonModel.Set(this._rawData, "audience", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Audience>("audience");
+        }
+        init { this._rawData.Set("audience", value); }
     }
 
     /// <inheritdoc/>
@@ -29,14 +33,14 @@ public sealed record class AudienceUpdateResponse : JsonModel
 
     public AudienceUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AudienceUpdateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

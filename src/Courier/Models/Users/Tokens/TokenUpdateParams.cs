@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Courier.Models.Users.Tokens;
 /// </summary>
 public sealed record class TokenUpdateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -27,8 +28,18 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public required IReadOnlyList<Patch> Patch
     {
-        get { return JsonModel.GetNotNullClass<List<Patch>>(this.RawBodyData, "patch"); }
-        init { JsonModel.Set(this._rawBodyData, "patch", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<Patch>>("patch");
+        }
+        init
+        {
+            this._rawBodyData.Set<ImmutableArray<Patch>>(
+                "patch",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public TokenUpdateParams() { }
@@ -39,7 +50,7 @@ public sealed record class TokenUpdateParams : ParamsBase
         this.UserID = tokenUpdateParams.UserID;
         this.Token = tokenUpdateParams.Token;
 
-        this._rawBodyData = [.. tokenUpdateParams._rawBodyData];
+        this._rawBodyData = new(tokenUpdateParams._rawBodyData);
     }
 
     public TokenUpdateParams(
@@ -48,9 +59,9 @@ public sealed record class TokenUpdateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -61,9 +72,9 @@ public sealed record class TokenUpdateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -95,7 +106,7 @@ public sealed record class TokenUpdateParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );
@@ -119,8 +130,12 @@ public sealed record class Patch : JsonModel
     /// </summary>
     public required string Op
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "op"); }
-        init { JsonModel.Set(this._rawData, "op", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("op");
+        }
+        init { this._rawData.Set("op", value); }
     }
 
     /// <summary>
@@ -128,8 +143,12 @@ public sealed record class Patch : JsonModel
     /// </summary>
     public required string Path
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "path"); }
-        init { JsonModel.Set(this._rawData, "path", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("path");
+        }
+        init { this._rawData.Set("path", value); }
     }
 
     /// <summary>
@@ -137,8 +156,12 @@ public sealed record class Patch : JsonModel
     /// </summary>
     public string? Value
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "value"); }
-        init { JsonModel.Set(this._rawData, "value", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("value");
+        }
+        init { this._rawData.Set("value", value); }
     }
 
     /// <inheritdoc/>
@@ -156,14 +179,14 @@ public sealed record class Patch : JsonModel
 
     public Patch(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Patch(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

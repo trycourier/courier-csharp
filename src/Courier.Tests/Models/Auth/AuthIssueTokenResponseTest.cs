@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Auth;
 
 namespace Courier.Tests.Models.Auth;
@@ -20,8 +21,11 @@ public class AuthIssueTokenResponseTest : TestBase
     {
         var model = new AuthIssueTokenResponse { Token = "token" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AuthIssueTokenResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AuthIssueTokenResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -31,8 +35,11 @@ public class AuthIssueTokenResponseTest : TestBase
     {
         var model = new AuthIssueTokenResponse { Token = "token" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AuthIssueTokenResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AuthIssueTokenResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedToken = "token";

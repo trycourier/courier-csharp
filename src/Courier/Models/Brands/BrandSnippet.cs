@@ -12,14 +12,22 @@ public sealed record class BrandSnippet : JsonModel
 {
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "name"); }
-        init { JsonModel.Set(this._rawData, "name", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
+        init { this._rawData.Set("name", value); }
     }
 
     public required string Value
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "value"); }
-        init { JsonModel.Set(this._rawData, "value", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("value");
+        }
+        init { this._rawData.Set("value", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +44,14 @@ public sealed record class BrandSnippet : JsonModel
 
     public BrandSnippet(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     BrandSnippet(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

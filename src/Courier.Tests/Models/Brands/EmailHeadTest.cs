@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Brands;
 
 namespace Courier.Tests.Models.Brands;
@@ -22,8 +23,8 @@ public class EmailHeadTest : TestBase
     {
         var model = new EmailHead { InheritDefault = true, Content = "content" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<EmailHead>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<EmailHead>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +34,11 @@ public class EmailHeadTest : TestBase
     {
         var model = new EmailHead { InheritDefault = true, Content = "content" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<EmailHead>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<EmailHead>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         bool expectedInheritDefault = true;

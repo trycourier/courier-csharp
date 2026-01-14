@@ -12,20 +12,32 @@ public sealed record class EmailHeader : JsonModel
 {
     public required Logo Logo
     {
-        get { return JsonModel.GetNotNullClass<Logo>(this.RawData, "logo"); }
-        init { JsonModel.Set(this._rawData, "logo", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Logo>("logo");
+        }
+        init { this._rawData.Set("logo", value); }
     }
 
     public string? BarColor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "barColor"); }
-        init { JsonModel.Set(this._rawData, "barColor", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("barColor");
+        }
+        init { this._rawData.Set("barColor", value); }
     }
 
     public bool? InheritDefault
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "inheritDefault"); }
-        init { JsonModel.Set(this._rawData, "inheritDefault", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("inheritDefault");
+        }
+        init { this._rawData.Set("inheritDefault", value); }
     }
 
     /// <inheritdoc/>
@@ -43,14 +55,14 @@ public sealed record class EmailHeader : JsonModel
 
     public EmailHeader(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     EmailHeader(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

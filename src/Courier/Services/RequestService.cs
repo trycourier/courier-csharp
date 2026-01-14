@@ -35,15 +35,12 @@ public sealed class RequestService : IRequestService
     }
 
     /// <inheritdoc/>
-    public async Task Archive(
+    public Task Archive(
         RequestArchiveParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.Archive(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Archive(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>

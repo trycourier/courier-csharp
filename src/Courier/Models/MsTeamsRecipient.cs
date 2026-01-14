@@ -15,8 +15,12 @@ public sealed record class MsTeamsRecipient : JsonModel
 {
     public required MsTeams MsTeams
     {
-        get { return JsonModel.GetNotNullClass<MsTeams>(this.RawData, "ms_teams"); }
-        init { JsonModel.Set(this._rawData, "ms_teams", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<MsTeams>("ms_teams");
+        }
+        init { this._rawData.Set("ms_teams", value); }
     }
 
     /// <inheritdoc/>
@@ -32,14 +36,14 @@ public sealed record class MsTeamsRecipient : JsonModel
 
     public MsTeamsRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     MsTeamsRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

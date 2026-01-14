@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -16,15 +17,28 @@ public sealed record class MessageRouting : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<List<MessageRoutingChannel>>(this.RawData, "channels");
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<MessageRoutingChannel>>(
+                "channels"
+            );
         }
-        init { JsonModel.Set(this._rawData, "channels", value); }
+        init
+        {
+            this._rawData.Set<ImmutableArray<MessageRoutingChannel>>(
+                "channels",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public required ApiEnum<string, Method> Method
     {
-        get { return JsonModel.GetNotNullClass<ApiEnum<string, Method>>(this.RawData, "method"); }
-        init { JsonModel.Set(this._rawData, "method", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Method>>("method");
+        }
+        init { this._rawData.Set("method", value); }
     }
 
     /// <inheritdoc/>
@@ -44,14 +58,14 @@ public sealed record class MessageRouting : JsonModel
 
     public MessageRouting(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     MessageRouting(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

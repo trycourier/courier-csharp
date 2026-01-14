@@ -21,7 +21,11 @@ public sealed record class AutomationListParams : ParamsBase
     /// </summary>
     public string? Cursor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawQueryData, "cursor"); }
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cursor");
+        }
         init
         {
             if (value == null)
@@ -29,7 +33,7 @@ public sealed record class AutomationListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "cursor", value);
+            this._rawQueryData.Set("cursor", value);
         }
     }
 
@@ -41,10 +45,8 @@ public sealed record class AutomationListParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<ApiEnum<string, Version>>(
-                this.RawQueryData,
-                "version"
-            );
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<ApiEnum<string, Version>>("version");
         }
         init
         {
@@ -53,7 +55,7 @@ public sealed record class AutomationListParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawQueryData, "version", value);
+            this._rawQueryData.Set("version", value);
         }
     }
 
@@ -67,8 +69,8 @@ public sealed record class AutomationListParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 
 #pragma warning disable CS8618
@@ -78,8 +80,8 @@ public sealed record class AutomationListParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawQueryData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
     }
 #pragma warning restore CS8618
 

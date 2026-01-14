@@ -20,7 +20,7 @@ namespace Courier.Models.Bulk;
 /// </summary>
 public sealed record class BulkCreateJobParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -33,8 +33,12 @@ public sealed record class BulkCreateJobParams : ParamsBase
     /// </summary>
     public required InboundBulkMessage Message
     {
-        get { return JsonModel.GetNotNullClass<InboundBulkMessage>(this.RawBodyData, "message"); }
-        init { JsonModel.Set(this._rawBodyData, "message", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<InboundBulkMessage>("message");
+        }
+        init { this._rawBodyData.Set("message", value); }
     }
 
     public BulkCreateJobParams() { }
@@ -42,7 +46,7 @@ public sealed record class BulkCreateJobParams : ParamsBase
     public BulkCreateJobParams(BulkCreateJobParams bulkCreateJobParams)
         : base(bulkCreateJobParams)
     {
-        this._rawBodyData = [.. bulkCreateJobParams._rawBodyData];
+        this._rawBodyData = new(bulkCreateJobParams._rawBodyData);
     }
 
     public BulkCreateJobParams(
@@ -51,9 +55,9 @@ public sealed record class BulkCreateJobParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -64,9 +68,9 @@ public sealed record class BulkCreateJobParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -95,7 +99,7 @@ public sealed record class BulkCreateJobParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );

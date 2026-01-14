@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -16,35 +17,58 @@ public sealed record class ElementalTextNodeWithType : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "channels"); }
-        init { JsonModel.Set(this._rawData, "channels", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("channels");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<string>?>(
+                "channels",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public string? If
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
-        init { JsonModel.Set(this._rawData, "if", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("if");
+        }
+        init { this._rawData.Set("if", value); }
     }
 
     public string? Loop
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "loop"); }
-        init { JsonModel.Set(this._rawData, "loop", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("loop");
+        }
+        init { this._rawData.Set("loop", value); }
     }
 
     public string? Ref
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "ref"); }
-        init { JsonModel.Set(this._rawData, "ref", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("ref");
+        }
+        init { this._rawData.Set("ref", value); }
     }
 
     public ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return JsonModel.GetNullableClass<
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
                 ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
-            >(this.RawData, "type");
+            >("type");
         }
         init
         {
@@ -53,7 +77,7 @@ public sealed record class ElementalTextNodeWithType : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "type", value);
+            this._rawData.Set("type", value);
         }
     }
 
@@ -85,14 +109,14 @@ public sealed record class ElementalTextNodeWithType : JsonModel
 
     public ElementalTextNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ElementalTextNodeWithType(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -125,9 +149,10 @@ public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : JsonMo
     {
         get
         {
-            return JsonModel.GetNullableClass<
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
                 ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
-            >(this.RawData, "type");
+            >("type");
         }
         init
         {
@@ -136,7 +161,7 @@ public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : JsonMo
                 return;
             }
 
-            JsonModel.Set(this._rawData, "type", value);
+            this._rawData.Set("type", value);
         }
     }
 
@@ -157,14 +182,14 @@ public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : JsonMo
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ElementalTextNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

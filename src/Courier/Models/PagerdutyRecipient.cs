@@ -15,8 +15,12 @@ public sealed record class PagerdutyRecipient : JsonModel
 {
     public required Pagerduty Pagerduty
     {
-        get { return JsonModel.GetNotNullClass<Pagerduty>(this.RawData, "pagerduty"); }
-        init { JsonModel.Set(this._rawData, "pagerduty", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Pagerduty>("pagerduty");
+        }
+        init { this._rawData.Set("pagerduty", value); }
     }
 
     /// <inheritdoc/>
@@ -32,14 +36,14 @@ public sealed record class PagerdutyRecipient : JsonModel
 
     public PagerdutyRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     PagerdutyRecipient(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

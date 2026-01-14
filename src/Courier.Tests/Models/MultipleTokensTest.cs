@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -25,8 +26,11 @@ public class MultipleTokensTest : TestBase
     {
         var model = new MultipleTokens { Tokens = [new("token")] };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MultipleTokens>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<MultipleTokens>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -36,8 +40,11 @@ public class MultipleTokensTest : TestBase
     {
         var model = new MultipleTokens { Tokens = [new("token")] };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MultipleTokens>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<MultipleTokens>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<Token> expectedTokens = [new("token")];

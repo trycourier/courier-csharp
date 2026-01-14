@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -27,36 +28,70 @@ public sealed record class ElementalChannelNodeWithType : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
-        get { return JsonModel.GetNullableClass<List<string>>(this.RawData, "channels"); }
-        init { JsonModel.Set(this._rawData, "channels", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<string>>("channels");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<string>?>(
+                "channels",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public string? If
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "if"); }
-        init { JsonModel.Set(this._rawData, "if", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("if");
+        }
+        init { this._rawData.Set("if", value); }
     }
 
     public string? Loop
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "loop"); }
-        init { JsonModel.Set(this._rawData, "loop", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("loop");
+        }
+        init { this._rawData.Set("loop", value); }
     }
 
     public string? Ref
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "ref"); }
-        init { JsonModel.Set(this._rawData, "ref", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("ref");
+        }
+        init { this._rawData.Set("ref", value); }
     }
 
     /// <summary>
     /// The channel the contents of this element should be applied to. Can be `email`,
     /// `push`, `direct_message`, `sms` or a provider such as slack
     /// </summary>
-    public required string Channel
+    public string? Channel
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "channel"); }
-        init { JsonModel.Set(this._rawData, "channel", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("channel");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("channel", value);
+        }
     }
 
     /// <summary>
@@ -67,18 +102,26 @@ public sealed record class ElementalChannelNodeWithType : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(this.RawData, "raw");
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, JsonElement>>("raw");
         }
-        init { JsonModel.Set(this._rawData, "raw", value); }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, JsonElement>?>(
+                "raw",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>? Type
     {
         get
         {
-            return JsonModel.GetNullableClass<
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
                 ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
-            >(this.RawData, "type");
+            >("type");
         }
         init
         {
@@ -87,7 +130,7 @@ public sealed record class ElementalChannelNodeWithType : JsonModel
                 return;
             }
 
-            JsonModel.Set(this._rawData, "type", value);
+            this._rawData.Set("type", value);
         }
     }
 
@@ -123,14 +166,14 @@ public sealed record class ElementalChannelNodeWithType : JsonModel
 
     public ElementalChannelNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ElementalChannelNodeWithType(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -140,13 +183,6 @@ public sealed record class ElementalChannelNodeWithType : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public ElementalChannelNodeWithType(string channel)
-        : this()
-    {
-        this.Channel = channel;
     }
 }
 
@@ -170,9 +206,10 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Jso
     {
         get
         {
-            return JsonModel.GetNullableClass<
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<
                 ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
-            >(this.RawData, "type");
+            >("type");
         }
         init
         {
@@ -181,7 +218,7 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Jso
                 return;
             }
 
-            JsonModel.Set(this._rawData, "type", value);
+            this._rawData.Set("type", value);
         }
     }
 
@@ -202,14 +239,14 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Jso
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ElementalChannelNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

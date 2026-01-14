@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -22,8 +23,8 @@ public class RuleTest : TestBase
     {
         var model = new Rule { Until = "until", Start = "start" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Rule>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Rule>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +34,8 @@ public class RuleTest : TestBase
     {
         var model = new Rule { Until = "until", Start = "start" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Rule>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Rule>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedUntil = "until";

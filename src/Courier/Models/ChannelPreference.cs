@@ -14,12 +14,10 @@ public sealed record class ChannelPreference : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, ChannelClassification>>(
-                this.RawData,
-                "channel"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, ChannelClassification>>("channel");
         }
-        init { JsonModel.Set(this._rawData, "channel", value); }
+        init { this._rawData.Set("channel", value); }
     }
 
     /// <inheritdoc/>
@@ -35,14 +33,14 @@ public sealed record class ChannelPreference : JsonModel
 
     public ChannelPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ChannelPreference(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -14,7 +14,7 @@ namespace Courier.Models.Tenants;
 /// </summary>
 public sealed record class TenantUpdateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -27,8 +27,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "name"); }
-        init { JsonModel.Set(this._rawBodyData, "name", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("name");
+        }
+        init { this._rawBodyData.Set("name", value); }
     }
 
     /// <summary>
@@ -36,8 +40,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public string? BrandID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "brand_id"); }
-        init { JsonModel.Set(this._rawBodyData, "brand_id", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("brand_id");
+        }
+        init { this._rawBodyData.Set("brand_id", value); }
     }
 
     /// <summary>
@@ -48,12 +56,10 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<DefaultPreferences>(
-                this.RawBodyData,
-                "default_preferences"
-            );
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<DefaultPreferences>("default_preferences");
         }
-        init { JsonModel.Set(this._rawBodyData, "default_preferences", value); }
+        init { this._rawBodyData.Set("default_preferences", value); }
     }
 
     /// <summary>
@@ -61,8 +67,12 @@ public sealed record class TenantUpdateParams : ParamsBase
     /// </summary>
     public string? ParentTenantID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "parent_tenant_id"); }
-        init { JsonModel.Set(this._rawBodyData, "parent_tenant_id", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("parent_tenant_id");
+        }
+        init { this._rawBodyData.Set("parent_tenant_id", value); }
     }
 
     /// <summary>
@@ -72,12 +82,18 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawBodyData,
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "properties"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "properties", value); }
+        init
+        {
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
+                "properties",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     /// <summary>
@@ -87,12 +103,18 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNullableClass<Dictionary<string, JsonElement>>(
-                this.RawBodyData,
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
                 "user_profile"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "user_profile", value); }
+        init
+        {
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
+                "user_profile",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
     }
 
     public TenantUpdateParams() { }
@@ -102,7 +124,7 @@ public sealed record class TenantUpdateParams : ParamsBase
     {
         this.TenantID = tenantUpdateParams.TenantID;
 
-        this._rawBodyData = [.. tenantUpdateParams._rawBodyData];
+        this._rawBodyData = new(tenantUpdateParams._rawBodyData);
     }
 
     public TenantUpdateParams(
@@ -111,9 +133,9 @@ public sealed record class TenantUpdateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -124,9 +146,9 @@ public sealed record class TenantUpdateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -157,7 +179,7 @@ public sealed record class TenantUpdateParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );

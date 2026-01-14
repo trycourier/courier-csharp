@@ -18,8 +18,12 @@ public sealed record class InboundTrackEventResponse : JsonModel
     /// </summary>
     public required string MessageID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "messageId"); }
-        init { JsonModel.Set(this._rawData, "messageId", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("messageId");
+        }
+        init { this._rawData.Set("messageId", value); }
     }
 
     /// <inheritdoc/>
@@ -35,14 +39,14 @@ public sealed record class InboundTrackEventResponse : JsonModel
 
     public InboundTrackEventResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     InboundTrackEventResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

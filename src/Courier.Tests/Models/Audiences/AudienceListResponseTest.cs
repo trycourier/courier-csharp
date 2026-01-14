@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 using Courier.Models.Audiences;
 
@@ -19,14 +20,20 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
                     Name = "name",
                     UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new()
+                            {
+                                Operator = "operator",
+                                Filters = [],
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
                 },
             ],
             Paging = new() { More = true, Cursor = "cursor" },
@@ -39,14 +46,20 @@ public class AudienceListResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new SingleFilterConfig()
-                {
-                    Operator = SingleFilterConfigOperator.EndsWith,
-                    Path = "path",
-                    Value = "value",
-                },
                 Name = "name",
                 UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new()
+                        {
+                            Operator = "operator",
+                            Filters = [],
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
             },
         ];
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
@@ -71,21 +84,30 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
                     Name = "name",
                     UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new()
+                            {
+                                Operator = "operator",
+                                Filters = [],
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
                 },
             ],
             Paging = new() { More = true, Cursor = "cursor" },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AudienceListResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AudienceListResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -102,21 +124,30 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
                     Name = "name",
                     UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new()
+                            {
+                                Operator = "operator",
+                                Filters = [],
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
                 },
             ],
             Paging = new() { More = true, Cursor = "cursor" },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AudienceListResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AudienceListResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<Audience> expectedItems =
@@ -126,14 +157,20 @@ public class AudienceListResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new SingleFilterConfig()
-                {
-                    Operator = SingleFilterConfigOperator.EndsWith,
-                    Path = "path",
-                    Value = "value",
-                },
                 Name = "name",
                 UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new()
+                        {
+                            Operator = "operator",
+                            Filters = [],
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
             },
         ];
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
@@ -158,14 +195,20 @@ public class AudienceListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = "created_at",
                     Description = "description",
-                    Filter = new SingleFilterConfig()
-                    {
-                        Operator = SingleFilterConfigOperator.EndsWith,
-                        Path = "path",
-                        Value = "value",
-                    },
                     Name = "name",
                     UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new()
+                            {
+                                Operator = "operator",
+                                Filters = [],
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
                 },
             ],
             Paging = new() { More = true, Cursor = "cursor" },

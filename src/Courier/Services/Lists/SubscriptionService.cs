@@ -61,15 +61,9 @@ public sealed class SubscriptionService : ISubscriptionService
     }
 
     /// <inheritdoc/>
-    public async Task Add(
-        SubscriptionAddParams parameters,
-        CancellationToken cancellationToken = default
-    )
+    public Task Add(SubscriptionAddParams parameters, CancellationToken cancellationToken = default)
     {
-        using var response = await this
-            .WithRawResponse.Add(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Add(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -84,15 +78,12 @@ public sealed class SubscriptionService : ISubscriptionService
     }
 
     /// <inheritdoc/>
-    public async Task Subscribe(
+    public Task Subscribe(
         SubscriptionSubscribeParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.Subscribe(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Subscribe(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -107,15 +98,12 @@ public sealed class SubscriptionService : ISubscriptionService
     }
 
     /// <inheritdoc/>
-    public async Task SubscribeUser(
+    public Task SubscribeUser(
         SubscriptionSubscribeUserParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.SubscribeUser(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.SubscribeUser(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -130,15 +118,12 @@ public sealed class SubscriptionService : ISubscriptionService
     }
 
     /// <inheritdoc/>
-    public async Task UnsubscribeUser(
+    public Task UnsubscribeUser(
         SubscriptionUnsubscribeUserParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        using var response = await this
-            .WithRawResponse.UnsubscribeUser(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.UnsubscribeUser(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>

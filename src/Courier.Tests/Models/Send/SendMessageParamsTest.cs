@@ -965,8 +965,8 @@ public class MessageTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Message>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Message>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -1123,8 +1123,11 @@ public class MessageTest : TestBase
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Message>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Message>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedBrandID = "brand_id";
@@ -2308,8 +2311,11 @@ public class ChannelsItemTest : TestBase
             Timeouts = new() { Channel = 0, Provider = 0 },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ChannelsItem>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ChannelsItem>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -2341,8 +2347,11 @@ public class ChannelsItemTest : TestBase
             Timeouts = new() { Channel = 0, Provider = 0 },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ChannelsItem>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ChannelsItem>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedBrandID = "brand_id";
@@ -2538,8 +2547,8 @@ public class MetadataTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Metadata>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Metadata>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -2559,8 +2568,11 @@ public class MetadataTest : TestBase
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Metadata>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Metadata>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         Models::Utm expectedUtm = new()
@@ -2644,7 +2656,7 @@ public class RoutingMethodTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -2673,7 +2685,7 @@ public class RoutingMethodTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -2705,8 +2717,8 @@ public class TimeoutsTest : TestBase
     {
         var model = new Timeouts { Channel = 0, Provider = 0 };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Timeouts>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Timeouts>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -2716,8 +2728,11 @@ public class TimeoutsTest : TestBase
     {
         var model = new Timeouts { Channel = 0, Provider = 0 };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Timeouts>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Timeouts>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         long expectedChannel = 0;
@@ -2779,40 +2794,41 @@ public class ContentTest : TestBase
     [Fact]
     public void ElementalContentSugarValidationWorks()
     {
-        Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
+        Content value = new Models::ElementalContentSugar() { Body = "body", Title = "title" };
         value.Validate();
     }
 
     [Fact]
     public void ElementalValidationWorks()
     {
-        Content value = new(
-            new Models::ElementalContent()
-            {
-                Elements =
-                [
-                    new Models::ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-                Brand = "brand",
-            }
-        );
+        Content value = new Models::ElementalContent()
+        {
+            Elements =
+            [
+                new Models::ElementalTextNodeWithType()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                },
+            ],
+            Version = "version",
+            Brand = "brand",
+        };
         value.Validate();
     }
 
     [Fact]
     public void ElementalContentSugarSerializationRoundtripWorks()
     {
-        Content value = new(new Models::ElementalContentSugar() { Body = "body", Title = "title" });
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(element);
+        Content value = new Models::ElementalContentSugar() { Body = "body", Title = "title" };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Content>(
+            element,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(value, deserialized);
     }
@@ -2820,26 +2836,27 @@ public class ContentTest : TestBase
     [Fact]
     public void ElementalSerializationRoundtripWorks()
     {
-        Content value = new(
-            new Models::ElementalContent()
-            {
-                Elements =
-                [
-                    new Models::ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-                Brand = "brand",
-            }
+        Content value = new Models::ElementalContent()
+        {
+            Elements =
+            [
+                new Models::ElementalTextNodeWithType()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                },
+            ],
+            Version = "version",
+            Brand = "brand",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Content>(
+            element,
+            ModelBase.SerializerOptions
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Content>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -2876,8 +2893,8 @@ public class DelayTest : TestBase
             Until = "until",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Delay>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Delay>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -2892,8 +2909,8 @@ public class DelayTest : TestBase
             Until = "until",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Delay>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Delay>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         long expectedDuration = 0;
@@ -2990,8 +3007,8 @@ public class ExpiryTest : TestBase
     {
         var model = new Expiry { ExpiresIn = "string", ExpiresAt = "expires_at" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Expiry>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Expiry>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -3001,8 +3018,8 @@ public class ExpiryTest : TestBase
     {
         var model = new Expiry { ExpiresIn = "string", ExpiresAt = "expires_at" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Expiry>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Expiry>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         ExpiresIn expectedExpiresIn = "string";
@@ -3070,23 +3087,26 @@ public class ExpiresInTest : TestBase
     [Fact]
     public void StringValidationWorks()
     {
-        ExpiresIn value = new("string");
+        ExpiresIn value = "string";
         value.Validate();
     }
 
     [Fact]
     public void LongValidationWorks()
     {
-        ExpiresIn value = new(0);
+        ExpiresIn value = 0;
         value.Validate();
     }
 
     [Fact]
     public void StringSerializationRoundtripWorks()
     {
-        ExpiresIn value = new("string");
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(element);
+        ExpiresIn value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(
+            element,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(value, deserialized);
     }
@@ -3094,9 +3114,12 @@ public class ExpiresInTest : TestBase
     [Fact]
     public void LongSerializationRoundtripWorks()
     {
-        ExpiresIn value = new(0);
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(element);
+        ExpiresIn value = 0;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ExpiresIn>(
+            element,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(value, deserialized);
     }
@@ -3163,8 +3186,11 @@ public class MessageMetadataTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MessageMetadata>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<MessageMetadata>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -3187,8 +3213,11 @@ public class MessageMetadataTest : TestBase
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<MessageMetadata>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<MessageMetadata>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedEvent = "event";
@@ -3311,8 +3340,11 @@ public class PreferencesTest : TestBase
     {
         var model = new Preferences { SubscriptionTopicID = "subscription_topic_id" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Preferences>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Preferences>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -3322,8 +3354,11 @@ public class PreferencesTest : TestBase
     {
         var model = new Preferences { SubscriptionTopicID = "subscription_topic_id" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Preferences>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Preferences>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedSubscriptionTopicID = "subscription_topic_id";
@@ -3421,8 +3456,11 @@ public class ProvidersItemTest : TestBase
             Timeouts = 0,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItem>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ProvidersItem>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -3451,8 +3489,11 @@ public class ProvidersItemTest : TestBase
             Timeouts = 0,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItem>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ProvidersItem>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedIf = "if";
@@ -3616,8 +3657,11 @@ public class ProvidersItemMetadataTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItemMetadata>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ProvidersItemMetadata>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -3637,8 +3681,11 @@ public class ProvidersItemMetadataTest : TestBase
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItemMetadata>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ProvidersItemMetadata>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         Models::Utm expectedUtm = new()
@@ -3729,8 +3776,8 @@ public class RoutingTest : TestBase
     {
         var model = new Routing { Channels = ["string"], Method = Method.All };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Routing>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Routing>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -3740,8 +3787,11 @@ public class RoutingTest : TestBase
     {
         var model = new Routing { Channels = ["string"], Method = Method.All };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Routing>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Routing>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<Models::MessageRoutingChannel> expectedChannels = ["string"];
@@ -3780,7 +3830,7 @@ public class MethodTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -3809,7 +3859,7 @@ public class MethodTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Method>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -3875,8 +3925,8 @@ public class TimeoutTest : TestBase
             Provider = new Dictionary<string, long>() { { "foo", 0 } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Timeout>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Timeout>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -3893,8 +3943,11 @@ public class TimeoutTest : TestBase
             Provider = new Dictionary<string, long>() { { "foo", 0 } },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Timeout>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Timeout>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         Dictionary<string, long> expectedChannel = new() { { "foo", 0 } };
@@ -4022,7 +4075,7 @@ public class CriteriaTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Criteria>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -4053,7 +4106,7 @@ public class CriteriaTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Criteria>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -4071,140 +4124,124 @@ public class ToTest : TestBase
     [Fact]
     public void UserRecipientValidationWorks()
     {
-        To value = new(
-            new Models::UserRecipient()
+        To value = new Models::UserRecipient()
+        {
+            AccountID = "account_id",
+            Context = new() { TenantID = "tenant_id" },
+            Data = new Dictionary<string, JsonElement>()
             {
-                AccountID = "account_id",
-                Context = new() { TenantID = "tenant_id" },
-                Data = new Dictionary<string, JsonElement>()
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Email = "email",
+            ListID = "list_id",
+            Locale = "locale",
+            PhoneNumber = "phone_number",
+            Preferences = new()
+            {
+                Notifications = new Dictionary<string, Models::Preference>()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                            Source = Models::Source.Subscription,
+                        }
+                    },
                 },
-                Email = "email",
-                ListID = "list_id",
-                Locale = "locale",
-                PhoneNumber = "phone_number",
-                Preferences = new()
+                Categories = new Dictionary<string, Models::Preference>()
                 {
-                    Notifications = new Dictionary<string, Models::Preference>()
                     {
+                        "foo",
+                        new()
                         {
-                            "foo",
-                            new()
-                            {
-                                Status = Models::PreferenceStatus.OptedIn,
-                                ChannelPreferences =
-                                [
-                                    new(Models::ChannelClassification.DirectMessage),
-                                ],
-                                Rules = [new() { Until = "until", Start = "start" }],
-                                Source = Models::Source.Subscription,
-                            }
-                        },
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                            Source = Models::Source.Subscription,
+                        }
                     },
-                    Categories = new Dictionary<string, Models::Preference>()
-                    {
-                        {
-                            "foo",
-                            new()
-                            {
-                                Status = Models::PreferenceStatus.OptedIn,
-                                ChannelPreferences =
-                                [
-                                    new(Models::ChannelClassification.DirectMessage),
-                                ],
-                                Rules = [new() { Until = "until", Start = "start" }],
-                                Source = Models::Source.Subscription,
-                            }
-                        },
-                    },
-                    TemplateID = "templateId",
                 },
-                TenantID = "tenant_id",
-                UserID = "user_id",
-            }
-        );
+                TemplateID = "templateId",
+            },
+            TenantID = "tenant_id",
+            UserID = "user_id",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AudienceRecipientValidationWorks()
     {
-        To value = new(
-            new Models::AudienceRecipient()
+        To value = new Models::AudienceRecipient()
+        {
+            AudienceID = "audience_id",
+            Data = new Dictionary<string, JsonElement>()
             {
-                AudienceID = "audience_id",
-                Data = new Dictionary<string, JsonElement>()
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Filters =
+            [
+                new()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    Operator = Models::Operator.MemberOf,
+                    Path = Models::Path.AccountID,
+                    Value = "value",
                 },
-                Filters =
-                [
-                    new()
-                    {
-                        Operator = Models::Operator.MemberOf,
-                        Path = Models::Path.AccountID,
-                        Value = "value",
-                    },
-                ],
-            }
-        );
+            ],
+        };
         value.Validate();
     }
 
     [Fact]
     public void ListRecipientValidationWorks()
     {
-        To value = new(
-            new Models::ListRecipient()
+        To value = new Models::ListRecipient()
+        {
+            Data = new Dictionary<string, JsonElement>()
             {
-                Data = new Dictionary<string, JsonElement>()
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Filters =
+            [
+                new()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    Operator = Models::ListFilterOperator.MemberOf,
+                    Path = Models::ListFilterPath.AccountID,
+                    Value = "value",
                 },
-                Filters =
-                [
-                    new()
-                    {
-                        Operator = Models::ListFilterOperator.MemberOf,
-                        Path = Models::ListFilterPath.AccountID,
-                        Value = "value",
-                    },
-                ],
-                ListID = "list_id",
-            }
-        );
+            ],
+            ListID = "list_id",
+        };
         value.Validate();
     }
 
     [Fact]
     public void ListPatternRecipientValidationWorks()
     {
-        To value = new(
-            new Models::ListPatternRecipient()
+        To value = new Models::ListPatternRecipient()
+        {
+            Data = new Dictionary<string, JsonElement>()
             {
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                ListPattern = "list_pattern",
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            ListPattern = "list_pattern",
+        };
         value.Validate();
     }
 
     [Fact]
     public void SlackRecipientValidationWorks()
     {
-        To value = new(
-            new Models::SlackRecipient(
-                new Models::Slack(
-                    new Models::SendToSlackChannel()
-                    {
-                        AccessToken = "access_token",
-                        Channel = "channel",
-                    }
-                )
+        To value = new Models::SlackRecipient(
+            new Models::Slack(
+                new Models::SendToSlackChannel()
+                {
+                    AccessToken = "access_token",
+                    Channel = "channel",
+                }
             )
         );
         value.Validate();
@@ -4213,16 +4250,14 @@ public class ToTest : TestBase
     [Fact]
     public void MsTeamsRecipientValidationWorks()
     {
-        To value = new(
-            new Models::MsTeamsRecipient(
-                new Models::MsTeams(
-                    new Models::SendToMsTeamsUserID()
-                    {
-                        ServiceUrl = "service_url",
-                        TenantID = "tenant_id",
-                        UserID = "user_id",
-                    }
-                )
+        To value = new Models::MsTeamsRecipient(
+            new Models::MsTeams(
+                new Models::SendToMsTeamsUserID()
+                {
+                    ServiceUrl = "service_url",
+                    TenantID = "tenant_id",
+                    UserID = "user_id",
+                }
             )
         );
         value.Validate();
@@ -4231,16 +4266,14 @@ public class ToTest : TestBase
     [Fact]
     public void PagerdutyRecipientValidationWorks()
     {
-        To value = new(
-            new Models::PagerdutyRecipient(
-                new Models::Pagerduty()
-                {
-                    EventAction = "event_action",
-                    RoutingKey = "routing_key",
-                    Severity = "severity",
-                    Source = "source",
-                }
-            )
+        To value = new Models::PagerdutyRecipient(
+            new Models::Pagerduty()
+            {
+                EventAction = "event_action",
+                RoutingKey = "routing_key",
+                Severity = "severity",
+                Source = "source",
+            }
         );
         value.Validate();
     }
@@ -4248,23 +4281,21 @@ public class ToTest : TestBase
     [Fact]
     public void WebhookRecipientValidationWorks()
     {
-        To value = new(
-            new Models::WebhookRecipient(
-                new Models::WebhookProfile()
+        To value = new Models::WebhookRecipient(
+            new Models::WebhookProfile()
+            {
+                Url = "url",
+                Authentication = new()
                 {
-                    Url = "url",
-                    Authentication = new()
-                    {
-                        Mode = Models::WebhookAuthMode.None,
-                        Token = "token",
-                        Password = "password",
-                        Username = "username",
-                    },
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Method = Models::WebhookMethod.Post,
-                    Profile = Models::WebhookProfileType.Limited,
-                }
-            )
+                    Mode = Models::WebhookAuthMode.None,
+                    Token = "token",
+                    Password = "password",
+                    Username = "username",
+                },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Method = Models::WebhookMethod.Post,
+                Profile = Models::WebhookProfileType.Limited,
+            }
         );
         value.Validate();
     }
@@ -4272,61 +4303,53 @@ public class ToTest : TestBase
     [Fact]
     public void UserRecipientSerializationRoundtripWorks()
     {
-        To value = new(
-            new Models::UserRecipient()
+        To value = new Models::UserRecipient()
+        {
+            AccountID = "account_id",
+            Context = new() { TenantID = "tenant_id" },
+            Data = new Dictionary<string, JsonElement>()
             {
-                AccountID = "account_id",
-                Context = new() { TenantID = "tenant_id" },
-                Data = new Dictionary<string, JsonElement>()
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Email = "email",
+            ListID = "list_id",
+            Locale = "locale",
+            PhoneNumber = "phone_number",
+            Preferences = new()
+            {
+                Notifications = new Dictionary<string, Models::Preference>()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                            Source = Models::Source.Subscription,
+                        }
+                    },
                 },
-                Email = "email",
-                ListID = "list_id",
-                Locale = "locale",
-                PhoneNumber = "phone_number",
-                Preferences = new()
+                Categories = new Dictionary<string, Models::Preference>()
                 {
-                    Notifications = new Dictionary<string, Models::Preference>()
                     {
+                        "foo",
+                        new()
                         {
-                            "foo",
-                            new()
-                            {
-                                Status = Models::PreferenceStatus.OptedIn,
-                                ChannelPreferences =
-                                [
-                                    new(Models::ChannelClassification.DirectMessage),
-                                ],
-                                Rules = [new() { Until = "until", Start = "start" }],
-                                Source = Models::Source.Subscription,
-                            }
-                        },
+                            Status = Models::PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(Models::ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                            Source = Models::Source.Subscription,
+                        }
                     },
-                    Categories = new Dictionary<string, Models::Preference>()
-                    {
-                        {
-                            "foo",
-                            new()
-                            {
-                                Status = Models::PreferenceStatus.OptedIn,
-                                ChannelPreferences =
-                                [
-                                    new(Models::ChannelClassification.DirectMessage),
-                                ],
-                                Rules = [new() { Until = "until", Start = "start" }],
-                                Source = Models::Source.Subscription,
-                            }
-                        },
-                    },
-                    TemplateID = "templateId",
                 },
-                TenantID = "tenant_id",
-                UserID = "user_id",
-            }
-        );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(element);
+                TemplateID = "templateId",
+            },
+            TenantID = "tenant_id",
+            UserID = "user_id",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<To>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -4334,27 +4357,25 @@ public class ToTest : TestBase
     [Fact]
     public void AudienceRecipientSerializationRoundtripWorks()
     {
-        To value = new(
-            new Models::AudienceRecipient()
+        To value = new Models::AudienceRecipient()
+        {
+            AudienceID = "audience_id",
+            Data = new Dictionary<string, JsonElement>()
             {
-                AudienceID = "audience_id",
-                Data = new Dictionary<string, JsonElement>()
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Filters =
+            [
+                new()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    Operator = Models::Operator.MemberOf,
+                    Path = Models::Path.AccountID,
+                    Value = "value",
                 },
-                Filters =
-                [
-                    new()
-                    {
-                        Operator = Models::Operator.MemberOf,
-                        Path = Models::Path.AccountID,
-                        Value = "value",
-                    },
-                ],
-            }
-        );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(element);
+            ],
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<To>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -4362,27 +4383,25 @@ public class ToTest : TestBase
     [Fact]
     public void ListRecipientSerializationRoundtripWorks()
     {
-        To value = new(
-            new Models::ListRecipient()
+        To value = new Models::ListRecipient()
+        {
+            Data = new Dictionary<string, JsonElement>()
             {
-                Data = new Dictionary<string, JsonElement>()
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Filters =
+            [
+                new()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    Operator = Models::ListFilterOperator.MemberOf,
+                    Path = Models::ListFilterPath.AccountID,
+                    Value = "value",
                 },
-                Filters =
-                [
-                    new()
-                    {
-                        Operator = Models::ListFilterOperator.MemberOf,
-                        Path = Models::ListFilterPath.AccountID,
-                        Value = "value",
-                    },
-                ],
-                ListID = "list_id",
-            }
-        );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(element);
+            ],
+            ListID = "list_id",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<To>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -4390,18 +4409,16 @@ public class ToTest : TestBase
     [Fact]
     public void ListPatternRecipientSerializationRoundtripWorks()
     {
-        To value = new(
-            new Models::ListPatternRecipient()
+        To value = new Models::ListPatternRecipient()
+        {
+            Data = new Dictionary<string, JsonElement>()
             {
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                ListPattern = "list_pattern",
-            }
-        );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(element);
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            ListPattern = "list_pattern",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<To>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -4409,19 +4426,17 @@ public class ToTest : TestBase
     [Fact]
     public void SlackRecipientSerializationRoundtripWorks()
     {
-        To value = new(
-            new Models::SlackRecipient(
-                new Models::Slack(
-                    new Models::SendToSlackChannel()
-                    {
-                        AccessToken = "access_token",
-                        Channel = "channel",
-                    }
-                )
+        To value = new Models::SlackRecipient(
+            new Models::Slack(
+                new Models::SendToSlackChannel()
+                {
+                    AccessToken = "access_token",
+                    Channel = "channel",
+                }
             )
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<To>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -4429,20 +4444,18 @@ public class ToTest : TestBase
     [Fact]
     public void MsTeamsRecipientSerializationRoundtripWorks()
     {
-        To value = new(
-            new Models::MsTeamsRecipient(
-                new Models::MsTeams(
-                    new Models::SendToMsTeamsUserID()
-                    {
-                        ServiceUrl = "service_url",
-                        TenantID = "tenant_id",
-                        UserID = "user_id",
-                    }
-                )
+        To value = new Models::MsTeamsRecipient(
+            new Models::MsTeams(
+                new Models::SendToMsTeamsUserID()
+                {
+                    ServiceUrl = "service_url",
+                    TenantID = "tenant_id",
+                    UserID = "user_id",
+                }
             )
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<To>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -4450,19 +4463,17 @@ public class ToTest : TestBase
     [Fact]
     public void PagerdutyRecipientSerializationRoundtripWorks()
     {
-        To value = new(
-            new Models::PagerdutyRecipient(
-                new Models::Pagerduty()
-                {
-                    EventAction = "event_action",
-                    RoutingKey = "routing_key",
-                    Severity = "severity",
-                    Source = "source",
-                }
-            )
+        To value = new Models::PagerdutyRecipient(
+            new Models::Pagerduty()
+            {
+                EventAction = "event_action",
+                RoutingKey = "routing_key",
+                Severity = "severity",
+                Source = "source",
+            }
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<To>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -4470,26 +4481,24 @@ public class ToTest : TestBase
     [Fact]
     public void WebhookRecipientSerializationRoundtripWorks()
     {
-        To value = new(
-            new Models::WebhookRecipient(
-                new Models::WebhookProfile()
+        To value = new Models::WebhookRecipient(
+            new Models::WebhookProfile()
+            {
+                Url = "url",
+                Authentication = new()
                 {
-                    Url = "url",
-                    Authentication = new()
-                    {
-                        Mode = Models::WebhookAuthMode.None,
-                        Token = "token",
-                        Password = "password",
-                        Username = "username",
-                    },
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                    Method = Models::WebhookMethod.Post,
-                    Profile = Models::WebhookProfileType.Limited,
-                }
-            )
+                    Mode = Models::WebhookAuthMode.None,
+                    Token = "token",
+                    Password = "password",
+                    Username = "username",
+                },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Method = Models::WebhookMethod.Post,
+                Profile = Models::WebhookProfileType.Limited,
+            }
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<To>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<To>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }

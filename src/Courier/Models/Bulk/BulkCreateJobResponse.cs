@@ -12,8 +12,12 @@ public sealed record class BulkCreateJobResponse : JsonModel
 {
     public required string JobID
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawData, "jobId"); }
-        init { JsonModel.Set(this._rawData, "jobId", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("jobId");
+        }
+        init { this._rawData.Set("jobId", value); }
     }
 
     /// <inheritdoc/>
@@ -29,14 +33,14 @@ public sealed record class BulkCreateJobResponse : JsonModel
 
     public BulkCreateJobResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     BulkCreateJobResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Audiences;
 
 namespace Courier.Tests.Models.Audiences;
@@ -15,14 +16,20 @@ public class AudienceUpdateResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new SingleFilterConfig()
-                {
-                    Operator = SingleFilterConfigOperator.EndsWith,
-                    Path = "path",
-                    Value = "value",
-                },
                 Name = "name",
                 UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new()
+                        {
+                            Operator = "operator",
+                            Filters = [],
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
             },
         };
 
@@ -31,14 +38,20 @@ public class AudienceUpdateResponseTest : TestBase
             ID = "id",
             CreatedAt = "created_at",
             Description = "description",
-            Filter = new SingleFilterConfig()
-            {
-                Operator = SingleFilterConfigOperator.EndsWith,
-                Path = "path",
-                Value = "value",
-            },
             Name = "name",
             UpdatedAt = "updated_at",
+            Filter = new(
+                [
+                    new()
+                    {
+                        Operator = "operator",
+                        Filters = [],
+                        Path = "path",
+                        Value = "value",
+                    },
+                ]
+            ),
+            Operator = AudienceOperator.And,
         };
 
         Assert.Equal(expectedAudience, model.Audience);
@@ -54,19 +67,28 @@ public class AudienceUpdateResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new SingleFilterConfig()
-                {
-                    Operator = SingleFilterConfigOperator.EndsWith,
-                    Path = "path",
-                    Value = "value",
-                },
                 Name = "name",
                 UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new()
+                        {
+                            Operator = "operator",
+                            Filters = [],
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AudienceUpdateResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AudienceUpdateResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -81,19 +103,28 @@ public class AudienceUpdateResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new SingleFilterConfig()
-                {
-                    Operator = SingleFilterConfigOperator.EndsWith,
-                    Path = "path",
-                    Value = "value",
-                },
                 Name = "name",
                 UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new()
+                        {
+                            Operator = "operator",
+                            Filters = [],
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<AudienceUpdateResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AudienceUpdateResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         Audience expectedAudience = new()
@@ -101,14 +132,20 @@ public class AudienceUpdateResponseTest : TestBase
             ID = "id",
             CreatedAt = "created_at",
             Description = "description",
-            Filter = new SingleFilterConfig()
-            {
-                Operator = SingleFilterConfigOperator.EndsWith,
-                Path = "path",
-                Value = "value",
-            },
             Name = "name",
             UpdatedAt = "updated_at",
+            Filter = new(
+                [
+                    new()
+                    {
+                        Operator = "operator",
+                        Filters = [],
+                        Path = "path",
+                        Value = "value",
+                    },
+                ]
+            ),
+            Operator = AudienceOperator.And,
         };
 
         Assert.Equal(expectedAudience, deserialized.Audience);
@@ -124,14 +161,20 @@ public class AudienceUpdateResponseTest : TestBase
                 ID = "id",
                 CreatedAt = "created_at",
                 Description = "description",
-                Filter = new SingleFilterConfig()
-                {
-                    Operator = SingleFilterConfigOperator.EndsWith,
-                    Path = "path",
-                    Value = "value",
-                },
                 Name = "name",
                 UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new()
+                        {
+                            Operator = "operator",
+                            Filters = [],
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
             },
         };
 

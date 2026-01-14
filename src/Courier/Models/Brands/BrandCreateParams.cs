@@ -14,7 +14,7 @@ namespace Courier.Models.Brands;
 /// </summary>
 public sealed record class BrandCreateParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -22,26 +22,42 @@ public sealed record class BrandCreateParams : ParamsBase
 
     public required string Name
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "name"); }
-        init { JsonModel.Set(this._rawBodyData, "name", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("name");
+        }
+        init { this._rawBodyData.Set("name", value); }
     }
 
     public string? ID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawBodyData, "id"); }
-        init { JsonModel.Set(this._rawBodyData, "id", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("id");
+        }
+        init { this._rawBodyData.Set("id", value); }
     }
 
     public BrandSettings? Settings
     {
-        get { return JsonModel.GetNullableClass<BrandSettings>(this.RawBodyData, "settings"); }
-        init { JsonModel.Set(this._rawBodyData, "settings", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<BrandSettings>("settings");
+        }
+        init { this._rawBodyData.Set("settings", value); }
     }
 
     public BrandSnippets? Snippets
     {
-        get { return JsonModel.GetNullableClass<BrandSnippets>(this.RawBodyData, "snippets"); }
-        init { JsonModel.Set(this._rawBodyData, "snippets", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<BrandSnippets>("snippets");
+        }
+        init { this._rawBodyData.Set("snippets", value); }
     }
 
     public BrandCreateParams() { }
@@ -49,7 +65,7 @@ public sealed record class BrandCreateParams : ParamsBase
     public BrandCreateParams(BrandCreateParams brandCreateParams)
         : base(brandCreateParams)
     {
-        this._rawBodyData = [.. brandCreateParams._rawBodyData];
+        this._rawBodyData = new(brandCreateParams._rawBodyData);
     }
 
     public BrandCreateParams(
@@ -58,9 +74,9 @@ public sealed record class BrandCreateParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -71,9 +87,9 @@ public sealed record class BrandCreateParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -102,7 +118,7 @@ public sealed record class BrandCreateParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );

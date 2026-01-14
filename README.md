@@ -1,12 +1,5 @@
 # Courier C# API Library
 
-> [!NOTE]
-> The Courier C# API Library is currently in **beta** and we're excited for you to experiment with it!
->
-> This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
->
-> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/trycourier/courier-csharp/issues/new).
-
 The Courier C# SDK provides convenient access to the [Courier REST API](https://www.courier.com/docs) from applications written in C#.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -122,9 +115,11 @@ To access this data, prefix any HTTP method call on a client or service with `Wi
 
 ```csharp
 var response = await client.WithRawResponse.Send.Message(parameters);
-var statusCode = response.Message.StatusCode;
-var headers = response.Message.Headers;
+var statusCode = response.StatusCode;
+var headers = response.Headers;
 ```
+
+The raw `HttpResponseMessage` can also be accessed through the `RawMessage` property.
 
 For non-streaming responses, you can deserialize the response into an instance of a C# class if needed:
 

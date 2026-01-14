@@ -17,12 +17,10 @@ public sealed record class WebhookAuthentication : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, WebhookAuthMode>>(
-                this.RawData,
-                "mode"
-            );
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, WebhookAuthMode>>("mode");
         }
-        init { JsonModel.Set(this._rawData, "mode", value); }
+        init { this._rawData.Set("mode", value); }
     }
 
     /// <summary>
@@ -30,8 +28,12 @@ public sealed record class WebhookAuthentication : JsonModel
     /// </summary>
     public string? Token
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "token"); }
-        init { JsonModel.Set(this._rawData, "token", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("token");
+        }
+        init { this._rawData.Set("token", value); }
     }
 
     /// <summary>
@@ -39,8 +41,12 @@ public sealed record class WebhookAuthentication : JsonModel
     /// </summary>
     public string? Password
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "password"); }
-        init { JsonModel.Set(this._rawData, "password", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("password");
+        }
+        init { this._rawData.Set("password", value); }
     }
 
     /// <summary>
@@ -48,8 +54,12 @@ public sealed record class WebhookAuthentication : JsonModel
     /// </summary>
     public string? Username
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "username"); }
-        init { JsonModel.Set(this._rawData, "username", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("username");
+        }
+        init { this._rawData.Set("username", value); }
     }
 
     /// <inheritdoc/>
@@ -68,14 +78,14 @@ public sealed record class WebhookAuthentication : JsonModel
 
     public WebhookAuthentication(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     WebhookAuthentication(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

@@ -108,15 +108,9 @@ public sealed class TenantService : ITenantService
     }
 
     /// <inheritdoc/>
-    public async Task Delete(
-        TenantDeleteParams parameters,
-        CancellationToken cancellationToken = default
-    )
+    public Task Delete(TenantDeleteParams parameters, CancellationToken cancellationToken = default)
     {
-        using var response = await this
-            .WithRawResponse.Delete(parameters, cancellationToken)
-            .ConfigureAwait(false);
-        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+        return this.WithRawResponse.Delete(parameters, cancellationToken);
     }
 
     /// <inheritdoc/>

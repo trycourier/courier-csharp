@@ -75,8 +75,11 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -98,8 +101,11 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalChannelNodeWithType>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -164,13 +170,14 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Channel = "email",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
         };
 
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
         Assert.Null(model.Type);
         Assert.False(model.RawData.ContainsKey("type"));
     }
@@ -184,7 +191,6 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Channel = "email",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -203,16 +209,18 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Channel = "email",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
 
             // Null should be interpreted as omitted for these properties
+            Channel = null,
             Type = null,
         };
 
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
         Assert.Null(model.Type);
         Assert.False(model.RawData.ContainsKey("type"));
     }
@@ -226,13 +234,13 @@ public class ElementalChannelNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Channel = "email",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
 
             // Null should be interpreted as omitted for these properties
+            Channel = null,
             Type = null,
         };
 
@@ -342,9 +350,12 @@ public class ElementalChannelNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalChannelNodeWithTypeIntersectionMember1>(json);
+            JsonSerializer.Deserialize<ElementalChannelNodeWithTypeIntersectionMember1>(
+                json,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(model, deserialized);
     }
@@ -357,9 +368,12 @@ public class ElementalChannelNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
         };
 
-        string element = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalChannelNodeWithTypeIntersectionMember1>(element);
+            JsonSerializer.Deserialize<ElementalChannelNodeWithTypeIntersectionMember1>(
+                element,
+                ModelBase.SerializerOptions
+            );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type> expectedType =
@@ -438,10 +452,7 @@ public class ElementalChannelNodeWithTypeIntersectionMember1TypeTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
@@ -469,10 +480,7 @@ public class ElementalChannelNodeWithTypeIntersectionMember1TypeTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalChannelNodeWithTypeIntersectionMember1Type>

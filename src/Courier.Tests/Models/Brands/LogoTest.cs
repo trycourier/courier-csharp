@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Brands;
 
 namespace Courier.Tests.Models.Brands;
@@ -22,8 +23,8 @@ public class LogoTest : TestBase
     {
         var model = new Logo { Href = "href", Image = "image" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Logo>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Logo>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +34,8 @@ public class LogoTest : TestBase
     {
         var model = new Logo { Href = "href", Image = "image" };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Logo>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Logo>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         string expectedHref = "href";

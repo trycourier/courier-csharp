@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,8 +16,18 @@ public sealed record class TokenListResponse : JsonModel
 {
     public required IReadOnlyList<UserToken> Tokens
     {
-        get { return JsonModel.GetNotNullClass<List<UserToken>>(this.RawData, "tokens"); }
-        init { JsonModel.Set(this._rawData, "tokens", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<UserToken>>("tokens");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<UserToken>>(
+                "tokens",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -35,14 +46,14 @@ public sealed record class TokenListResponse : JsonModel
 
     public TokenListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     TokenListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -55,7 +66,7 @@ public sealed record class TokenListResponse : JsonModel
     }
 
     [SetsRequiredMembers]
-    public TokenListResponse(List<UserToken> tokens)
+    public TokenListResponse(IReadOnlyList<UserToken> tokens)
         : this()
     {
         this.Tokens = tokens;

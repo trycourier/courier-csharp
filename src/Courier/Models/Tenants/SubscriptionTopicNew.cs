@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -14,8 +15,12 @@ public sealed record class SubscriptionTopicNew : JsonModel
 {
     public required ApiEnum<string, Status> Status
     {
-        get { return JsonModel.GetNotNullClass<ApiEnum<string, Status>>(this.RawData, "status"); }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
+        }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <summary>
@@ -25,12 +30,18 @@ public sealed record class SubscriptionTopicNew : JsonModel
     {
         get
         {
-            return JsonModel.GetNullableClass<List<ApiEnum<string, ChannelClassification>>>(
-                this.RawData,
-                "custom_routing"
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<
+                ImmutableArray<ApiEnum<string, ChannelClassification>>
+            >("custom_routing");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ApiEnum<string, ChannelClassification>>?>(
+                "custom_routing",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
-        init { JsonModel.Set(this._rawData, "custom_routing", value); }
     }
 
     /// <summary>
@@ -39,8 +50,12 @@ public sealed record class SubscriptionTopicNew : JsonModel
     /// </summary>
     public bool? HasCustomRouting
     {
-        get { return JsonModel.GetNullableStruct<bool>(this.RawData, "has_custom_routing"); }
-        init { JsonModel.Set(this._rawData, "has_custom_routing", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("has_custom_routing");
+        }
+        init { this._rawData.Set("has_custom_routing", value); }
     }
 
     /// <inheritdoc/>
@@ -61,14 +76,14 @@ public sealed record class SubscriptionTopicNew : JsonModel
 
     public SubscriptionTopicNew(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     SubscriptionTopicNew(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

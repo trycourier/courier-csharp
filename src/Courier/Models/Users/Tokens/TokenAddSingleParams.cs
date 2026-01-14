@@ -16,7 +16,7 @@ namespace Courier.Models.Users.Tokens;
 /// </summary>
 public sealed record class TokenAddSingleParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -31,20 +31,22 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public required string TokenValue
     {
-        get { return JsonModel.GetNotNullClass<string>(this.RawBodyData, "token"); }
-        init { JsonModel.Set(this._rawBodyData, "token", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("token");
+        }
+        init { this._rawBodyData.Set("token", value); }
     }
 
     public required ApiEnum<string, ProviderKey> ProviderKey
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, ProviderKey>>(
-                this.RawBodyData,
-                "provider_key"
-            );
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<ApiEnum<string, ProviderKey>>("provider_key");
         }
-        init { JsonModel.Set(this._rawBodyData, "provider_key", value); }
+        init { this._rawBodyData.Set("provider_key", value); }
     }
 
     /// <summary>
@@ -52,8 +54,12 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public Device? Device
     {
-        get { return JsonModel.GetNullableClass<Device>(this.RawBodyData, "device"); }
-        init { JsonModel.Set(this._rawBodyData, "device", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<Device>("device");
+        }
+        init { this._rawBodyData.Set("device", value); }
     }
 
     /// <summary>
@@ -62,8 +68,12 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public ExpiryDate? ExpiryDate
     {
-        get { return JsonModel.GetNullableClass<ExpiryDate>(this.RawBodyData, "expiry_date"); }
-        init { JsonModel.Set(this._rawBodyData, "expiry_date", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<ExpiryDate>("expiry_date");
+        }
+        init { this._rawBodyData.Set("expiry_date", value); }
     }
 
     /// <summary>
@@ -71,7 +81,11 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public JsonElement? Properties
     {
-        get { return JsonModel.GetNullableStruct<JsonElement>(this.RawBodyData, "properties"); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<JsonElement>("properties");
+        }
         init
         {
             if (value == null)
@@ -79,7 +93,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
                 return;
             }
 
-            JsonModel.Set(this._rawBodyData, "properties", value);
+            this._rawBodyData.Set("properties", value);
         }
     }
 
@@ -88,8 +102,12 @@ public sealed record class TokenAddSingleParams : ParamsBase
     /// </summary>
     public Tracking? Tracking
     {
-        get { return JsonModel.GetNullableClass<Tracking>(this.RawBodyData, "tracking"); }
-        init { JsonModel.Set(this._rawBodyData, "tracking", value); }
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<Tracking>("tracking");
+        }
+        init { this._rawBodyData.Set("tracking", value); }
     }
 
     public TokenAddSingleParams() { }
@@ -100,7 +118,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
         this.UserID = tokenAddSingleParams.UserID;
         this.Token = tokenAddSingleParams.Token;
 
-        this._rawBodyData = [.. tokenAddSingleParams._rawBodyData];
+        this._rawBodyData = new(tokenAddSingleParams._rawBodyData);
     }
 
     public TokenAddSingleParams(
@@ -109,9 +127,9 @@ public sealed record class TokenAddSingleParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -122,9 +140,9 @@ public sealed record class TokenAddSingleParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -156,7 +174,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );
@@ -233,8 +251,12 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? AdID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "ad_id"); }
-        init { JsonModel.Set(this._rawData, "ad_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("ad_id");
+        }
+        init { this._rawData.Set("ad_id", value); }
     }
 
     /// <summary>
@@ -242,8 +264,12 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? AppID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "app_id"); }
-        init { JsonModel.Set(this._rawData, "app_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("app_id");
+        }
+        init { this._rawData.Set("app_id", value); }
     }
 
     /// <summary>
@@ -251,8 +277,12 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? DeviceID
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "device_id"); }
-        init { JsonModel.Set(this._rawData, "device_id", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("device_id");
+        }
+        init { this._rawData.Set("device_id", value); }
     }
 
     /// <summary>
@@ -260,8 +290,12 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? Manufacturer
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "manufacturer"); }
-        init { JsonModel.Set(this._rawData, "manufacturer", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("manufacturer");
+        }
+        init { this._rawData.Set("manufacturer", value); }
     }
 
     /// <summary>
@@ -269,8 +303,12 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? Model
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "model"); }
-        init { JsonModel.Set(this._rawData, "model", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("model");
+        }
+        init { this._rawData.Set("model", value); }
     }
 
     /// <summary>
@@ -278,8 +316,12 @@ public sealed record class Device : JsonModel
     /// </summary>
     public string? Platform
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "platform"); }
-        init { JsonModel.Set(this._rawData, "platform", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("platform");
+        }
+        init { this._rawData.Set("platform", value); }
     }
 
     /// <inheritdoc/>
@@ -300,14 +342,14 @@ public sealed record class Device : JsonModel
 
     public Device(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Device(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -338,7 +380,13 @@ public record class ExpiryDate : ModelBase
 
     public JsonElement Json
     {
-        get { return this._element ??= JsonSerializer.SerializeToElement(this.Value); }
+        get
+        {
+            return this._element ??= JsonSerializer.SerializeToElement(
+                this.Value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public ExpiryDate(string value, JsonElement? element = null)
@@ -561,8 +609,12 @@ public sealed record class Tracking : JsonModel
     /// </summary>
     public string? IP
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "ip"); }
-        init { JsonModel.Set(this._rawData, "ip", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("ip");
+        }
+        init { this._rawData.Set("ip", value); }
     }
 
     /// <summary>
@@ -570,8 +622,12 @@ public sealed record class Tracking : JsonModel
     /// </summary>
     public string? Lat
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "lat"); }
-        init { JsonModel.Set(this._rawData, "lat", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("lat");
+        }
+        init { this._rawData.Set("lat", value); }
     }
 
     /// <summary>
@@ -579,8 +635,12 @@ public sealed record class Tracking : JsonModel
     /// </summary>
     public string? Long
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "long"); }
-        init { JsonModel.Set(this._rawData, "long", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("long");
+        }
+        init { this._rawData.Set("long", value); }
     }
 
     /// <summary>
@@ -588,8 +648,12 @@ public sealed record class Tracking : JsonModel
     /// </summary>
     public string? OsVersion
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "os_version"); }
-        init { JsonModel.Set(this._rawData, "os_version", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("os_version");
+        }
+        init { this._rawData.Set("os_version", value); }
     }
 
     /// <inheritdoc/>
@@ -608,14 +672,14 @@ public sealed record class Tracking : JsonModel
 
     public Tracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Tracking(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

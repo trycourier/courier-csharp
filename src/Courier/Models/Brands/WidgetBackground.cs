@@ -12,14 +12,22 @@ public sealed record class WidgetBackground : JsonModel
 {
     public string? BottomColor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "bottomColor"); }
-        init { JsonModel.Set(this._rawData, "bottomColor", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("bottomColor");
+        }
+        init { this._rawData.Set("bottomColor", value); }
     }
 
     public string? TopColor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "topColor"); }
-        init { JsonModel.Set(this._rawData, "topColor", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("topColor");
+        }
+        init { this._rawData.Set("topColor", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +44,14 @@ public sealed record class WidgetBackground : JsonModel
 
     public WidgetBackground(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     WidgetBackground(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

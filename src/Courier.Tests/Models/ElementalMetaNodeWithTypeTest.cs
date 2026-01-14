@@ -51,8 +51,11 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -69,8 +72,11 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithType>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -264,9 +270,10 @@ public class ElementalMetaNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithTypeIntersectionMember1>(
-            json
+            json,
+            ModelBase.SerializerOptions
         );
 
         Assert.Equal(model, deserialized);
@@ -280,9 +287,10 @@ public class ElementalMetaNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 
-        string element = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ElementalMetaNodeWithTypeIntersectionMember1>(
-            element
+            element,
+            ModelBase.SerializerOptions
         );
         Assert.NotNull(deserialized);
 
@@ -362,10 +370,7 @@ public class ElementalMetaNodeWithTypeIntersectionMember1TypeTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
@@ -393,10 +398,7 @@ public class ElementalMetaNodeWithTypeIntersectionMember1TypeTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>

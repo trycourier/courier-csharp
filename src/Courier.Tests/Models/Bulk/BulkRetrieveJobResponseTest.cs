@@ -25,7 +25,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {
                         {
                             "foo",
@@ -59,7 +59,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -100,7 +100,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {
                         {
                             "foo",
@@ -123,8 +123,11 @@ public class BulkRetrieveJobResponseTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BulkRetrieveJobResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<BulkRetrieveJobResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -145,7 +148,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {
                         {
                             "foo",
@@ -168,8 +171,11 @@ public class BulkRetrieveJobResponseTest : TestBase
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BulkRetrieveJobResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<BulkRetrieveJobResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         Job expectedJob = new()
@@ -183,7 +189,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -224,7 +230,7 @@ public class BulkRetrieveJobResponseTest : TestBase
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {
                         {
                             "foo",
@@ -267,7 +273,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -298,7 +304,7 @@ public class JobTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
                 {
                     "foo",
@@ -340,7 +346,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -362,8 +368,8 @@ public class JobTest : TestBase
             Status = JobStatus.Created,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Job>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Job>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -382,7 +388,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -404,8 +410,8 @@ public class JobTest : TestBase
             Status = JobStatus.Created,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Job>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Job>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         InboundBulkMessage expectedDefinition = new()
@@ -417,7 +423,7 @@ public class JobTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
-            Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
                 {
                     "foo",
@@ -459,7 +465,7 @@ public class JobTest : TestBase
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
-                Locale = new Dictionary<string, Dictionary<string, JsonElement>>()
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
                     {
                         "foo",
@@ -503,7 +509,7 @@ public class JobStatusTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -534,7 +540,7 @@ public class JobStatusTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, JobStatus>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

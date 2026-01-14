@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Courier.Models.Users.Tenants;
 /// </summary>
 public sealed record class TenantAddMultipleParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -29,9 +30,16 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNotNullClass<List<TenantAssociation>>(this.RawBodyData, "tenants");
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<TenantAssociation>>("tenants");
         }
-        init { JsonModel.Set(this._rawBodyData, "tenants", value); }
+        init
+        {
+            this._rawBodyData.Set<ImmutableArray<TenantAssociation>>(
+                "tenants",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public TenantAddMultipleParams() { }
@@ -41,7 +49,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     {
         this.UserID = tenantAddMultipleParams.UserID;
 
-        this._rawBodyData = [.. tenantAddMultipleParams._rawBodyData];
+        this._rawBodyData = new(tenantAddMultipleParams._rawBodyData);
     }
 
     public TenantAddMultipleParams(
@@ -50,9 +58,9 @@ public sealed record class TenantAddMultipleParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -63,9 +71,9 @@ public sealed record class TenantAddMultipleParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -97,7 +105,7 @@ public sealed record class TenantAddMultipleParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );

@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,8 +13,18 @@ public sealed record class CheckListResponse : JsonModel
 {
     public required IReadOnlyList<Check> Checks
     {
-        get { return JsonModel.GetNotNullClass<List<Check>>(this.RawData, "checks"); }
-        init { JsonModel.Set(this._rawData, "checks", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Check>>("checks");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Check>>(
+                "checks",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -32,14 +43,14 @@ public sealed record class CheckListResponse : JsonModel
 
     public CheckListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     CheckListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
@@ -52,7 +63,7 @@ public sealed record class CheckListResponse : JsonModel
     }
 
     [SetsRequiredMembers]
-    public CheckListResponse(List<Check> checks)
+    public CheckListResponse(IReadOnlyList<Check> checks)
         : this()
     {
         this.Checks = checks;

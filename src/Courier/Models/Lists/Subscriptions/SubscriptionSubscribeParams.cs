@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Courier.Models.Lists.Subscriptions;
 /// </summary>
 public sealed record class SubscriptionSubscribeParams : ParamsBase
 {
-    readonly FreezableDictionary<string, JsonElement> _rawBodyData = [];
+    readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
     {
         get { return this._rawBodyData.Freeze(); }
@@ -27,12 +28,18 @@ public sealed record class SubscriptionSubscribeParams : ParamsBase
     {
         get
         {
-            return JsonModel.GetNotNullClass<List<PutSubscriptionsRecipient>>(
-                this.RawBodyData,
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<PutSubscriptionsRecipient>>(
                 "recipients"
             );
         }
-        init { JsonModel.Set(this._rawBodyData, "recipients", value); }
+        init
+        {
+            this._rawBodyData.Set<ImmutableArray<PutSubscriptionsRecipient>>(
+                "recipients",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     public SubscriptionSubscribeParams() { }
@@ -42,7 +49,7 @@ public sealed record class SubscriptionSubscribeParams : ParamsBase
     {
         this.ListID = subscriptionSubscribeParams.ListID;
 
-        this._rawBodyData = [.. subscriptionSubscribeParams._rawBodyData];
+        this._rawBodyData = new(subscriptionSubscribeParams._rawBodyData);
     }
 
     public SubscriptionSubscribeParams(
@@ -51,9 +58,9 @@ public sealed record class SubscriptionSubscribeParams : ParamsBase
         IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
@@ -64,9 +71,9 @@ public sealed record class SubscriptionSubscribeParams : ParamsBase
         FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
-        this._rawHeaderData = [.. rawHeaderData];
-        this._rawQueryData = [.. rawQueryData];
-        this._rawBodyData = [.. rawBodyData];
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
@@ -98,7 +105,7 @@ public sealed record class SubscriptionSubscribeParams : ParamsBase
     internal override HttpContent? BodyContent()
     {
         return new StringContent(
-            JsonSerializer.Serialize(this.RawBodyData),
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
             Encoding.UTF8,
             "application/json"
         );

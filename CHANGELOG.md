@@ -1,5 +1,49 @@
 # Changelog
 
+## 5.2.0 (2026-01-14)
+
+Full Changelog: [v5.1.0...v5.2.0](https://github.com/trycourier/courier-csharp/compare/v5.1.0...v5.2.0)
+
+### Features
+
+* **client:** add helper functions for raw messages ([1781a38](https://github.com/trycourier/courier-csharp/commit/1781a383b5b5bcce7e006a7977330c60e0378792))
+
+
+### Bug Fixes
+
+* **client:** add missing serializer options ([73bd7dd](https://github.com/trycourier/courier-csharp/commit/73bd7dd5e3c5894b25f897bb017093d378425892))
+* **client:** bad deserialize call for void method ([a2a5845](https://github.com/trycourier/courier-csharp/commit/a2a584544f27a936f8fc5013aa62b49ca5cc183b))
+* **client:** bad reference ([9170476](https://github.com/trycourier/courier-csharp/commit/917047605d71bccfa9bf59761d2d25929dab6c3c))
+* **client:** dictionary type ([ad0d8ff](https://github.com/trycourier/courier-csharp/commit/ad0d8ff101b399e4641ed08152123a6a64817699))
+* **client:** ensure deep immutability for deep array/dict structures ([fda9700](https://github.com/trycourier/courier-csharp/commit/fda9700d880e6d5c2a599cc857eb5084cd6d878a))
+* **client:** freeze models on property access ([196bf8e](https://github.com/trycourier/courier-csharp/commit/196bf8ece6a08921215aa1bf4d3629c630a577f6))
+* **client:** missing immutable -&gt; readonly conversion ([2afcb10](https://github.com/trycourier/courier-csharp/commit/2afcb10726e2439230fd872b7034619f155f97f6))
+* **client:** throw api enum errors as invalid data exception ([9bf8de8](https://github.com/trycourier/courier-csharp/commit/9bf8de8236efef6e948df983098b1fc5a82a4a23))
+* **client:** use readonly type for param ([5b2c657](https://github.com/trycourier/courier-csharp/commit/5b2c6573f744cdf6456381871d0d2653aedeb796))
+
+
+### Performance Improvements
+
+* **client:** add json deserialization caching ([fda9700](https://github.com/trycourier/courier-csharp/commit/fda9700d880e6d5c2a599cc857eb5084cd6d878a))
+
+
+### Chores
+
+* **client:** consistently use serializer options ([bc7871a](https://github.com/trycourier/courier-csharp/commit/bc7871afce7fc9f938996de63e88cf72a19f5152))
+* **client:** refactor union instantiation ([ebb48fc](https://github.com/trycourier/courier-csharp/commit/ebb48fc9ce86e1dbb34b0dcb08e897dc29708c04))
+* **client:** use mutable collections for union deserialization ([2d1ab11](https://github.com/trycourier/courier-csharp/commit/2d1ab11aa146ff88da5b65e256c5f590ac8bd713))
+* **internal:** regenerate SDK with no functional changes ([0aed83e](https://github.com/trycourier/courier-csharp/commit/0aed83e54c9b607c1eb5d9bfb1d93842f12ec66b))
+* **internal:** regenerate SDK with no functional changes ([d7df223](https://github.com/trycourier/courier-csharp/commit/d7df223f4f4aa1c432793713da5d925d8ffbdbaf))
+* **internal:** use better namespace aliases ([b754fec](https://github.com/trycourier/courier-csharp/commit/b754fec848c4f2a633817e99521350471ce4500a))
+* **readme:** remove beta warning now that we're in ga ([1974856](https://github.com/trycourier/courier-csharp/commit/19748567c2051affb0156e4651f686cbddecf352))
+* remove custom code ([0324583](https://github.com/trycourier/courier-csharp/commit/0324583376b98670d8affb868689b3e16da9d366))
+
+
+### Refactors
+
+* **client:** add `JsonDictionary` identity methods ([588abd9](https://github.com/trycourier/courier-csharp/commit/588abd9557c5cc0a82b257ed9ac2cd17780ac060))
+* **internal:** `JsonElement` constant construction ([d9577f1](https://github.com/trycourier/courier-csharp/commit/d9577f117079196532685b723308272e2b53c1ff))
+
 ## 5.1.0 (2026-01-12)
 
 Full Changelog: [v5.0.0...v5.1.0](https://github.com/trycourier/courier-csharp/compare/v5.0.0...v5.1.0)

@@ -12,14 +12,22 @@ public sealed record class Paging : JsonModel
 {
     public required bool More
     {
-        get { return JsonModel.GetNotNullStruct<bool>(this.RawData, "more"); }
-        init { JsonModel.Set(this._rawData, "more", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<bool>("more");
+        }
+        init { this._rawData.Set("more", value); }
     }
 
     public string? Cursor
     {
-        get { return JsonModel.GetNullableClass<string>(this.RawData, "cursor"); }
-        init { JsonModel.Set(this._rawData, "cursor", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("cursor");
+        }
+        init { this._rawData.Set("cursor", value); }
     }
 
     /// <inheritdoc/>
@@ -36,14 +44,14 @@ public sealed record class Paging : JsonModel
 
     public Paging(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     Paging(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

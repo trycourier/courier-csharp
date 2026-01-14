@@ -313,8 +313,11 @@ public class AutomationTest : TestBase
             CancelationToken = "cancelation_token",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Automation>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Automation>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -336,8 +339,11 @@ public class AutomationTest : TestBase
             CancelationToken = "cancelation_token",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Automation>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Automation>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<Invoke::Step> expectedSteps =
@@ -467,135 +473,122 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationDelayValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationDelayStep()
-            {
-                Action = Invoke::Action.Delay,
-                Duration = "duration",
-                Until = "until",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationDelayStep()
+        {
+            Action = Invoke::Action.Delay,
+            Duration = "duration",
+            Until = "until",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationSendValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationSendStep()
+        Invoke::Step value = new Invoke::AutomationSendStep()
+        {
+            Action = Invoke::AutomationSendStepAction.Send,
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationSendStepAction.Send,
-                Brand = "brand",
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Profile = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Recipient = "recipient",
-                Template = "template",
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "recipient",
+            Template = "template",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationSendListValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationSendListStep()
+        Invoke::Step value = new Invoke::AutomationSendListStep()
+        {
+            Action = Invoke::AutomationSendListStepAction.SendList,
+            List = "list",
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationSendListStepAction.SendList,
-                List = "list",
-                Brand = "brand",
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationUpdateProfileValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationUpdateProfileStep()
+        Invoke::Step value = new Invoke::AutomationUpdateProfileStep()
+        {
+            Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
+            Profile = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
-                Profile = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Merge = Invoke::Merge.None,
-                RecipientID = "recipient_id",
-            }
-        );
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Merge = Invoke::Merge.None,
+            RecipientID = "recipient_id",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationCancelValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationCancelStep()
-            {
-                Action = Invoke::AutomationCancelStepAction.Cancel,
-                CancelationToken = "cancelation_token",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationCancelStep()
+        {
+            Action = Invoke::AutomationCancelStepAction.Cancel,
+            CancelationToken = "cancelation_token",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationFetchDataValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationFetchDataStep()
+        Invoke::Step value = new Invoke::AutomationFetchDataStep()
+        {
+            Action = Invoke::AutomationFetchDataStepAction.FetchData,
+            Webhook = new()
             {
-                Action = Invoke::AutomationFetchDataStepAction.FetchData,
-                Webhook = new()
-                {
-                    Method = Invoke::Method.Get,
-                    Url = "url",
-                    Body = "body",
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                },
-                MergeStrategy = Invoke::MergeStrategy.Replace,
-            }
-        );
+                Method = Invoke::Method.Get,
+                Url = "url",
+                Body = "body",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+            MergeStrategy = Invoke::MergeStrategy.Replace,
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationInvokeValidationWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationInvokeStep()
-            {
-                Action = Invoke::AutomationInvokeStepAction.Invoke,
-                Template = "template",
-            }
-        );
+        Invoke::Step value = new Invoke::AutomationInvokeStep()
+        {
+            Action = Invoke::AutomationInvokeStepAction.Invoke,
+            Template = "template",
+        };
         value.Validate();
     }
 
     [Fact]
     public void AutomationDelaySerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationDelayStep()
-            {
-                Action = Invoke::Action.Delay,
-                Duration = "duration",
-                Until = "until",
-            }
+        Invoke::Step value = new Invoke::AutomationDelayStep()
+        {
+            Action = Invoke::Action.Delay,
+            Duration = "duration",
+            Until = "until",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(
+            element,
+            ModelBase.SerializerOptions
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -603,25 +596,26 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationSendSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationSendStep()
+        Invoke::Step value = new Invoke::AutomationSendStep()
+        {
+            Action = Invoke::AutomationSendStepAction.Send,
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationSendStepAction.Send,
-                Brand = "brand",
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Profile = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Recipient = "recipient",
-                Template = "template",
-            }
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "recipient",
+            Template = "template",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(
+            element,
+            ModelBase.SerializerOptions
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -629,20 +623,21 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationSendListSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationSendListStep()
+        Invoke::Step value = new Invoke::AutomationSendListStep()
+        {
+            Action = Invoke::AutomationSendListStepAction.SendList,
+            List = "list",
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationSendListStepAction.SendList,
-                List = "list",
-                Brand = "brand",
-                Data = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-            }
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(
+            element,
+            ModelBase.SerializerOptions
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -650,20 +645,21 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationUpdateProfileSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationUpdateProfileStep()
+        Invoke::Step value = new Invoke::AutomationUpdateProfileStep()
+        {
+            Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
+            Profile = new Dictionary<string, JsonElement>()
             {
-                Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
-                Profile = new Dictionary<string, JsonElement>()
-                {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
-                },
-                Merge = Invoke::Merge.None,
-                RecipientID = "recipient_id",
-            }
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Merge = Invoke::Merge.None,
+            RecipientID = "recipient_id",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(
+            element,
+            ModelBase.SerializerOptions
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -671,15 +667,16 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationCancelSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationCancelStep()
-            {
-                Action = Invoke::AutomationCancelStepAction.Cancel,
-                CancelationToken = "cancelation_token",
-            }
+        Invoke::Step value = new Invoke::AutomationCancelStep()
+        {
+            Action = Invoke::AutomationCancelStepAction.Cancel,
+            CancelationToken = "cancelation_token",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(
+            element,
+            ModelBase.SerializerOptions
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -687,22 +684,23 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationFetchDataSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationFetchDataStep()
+        Invoke::Step value = new Invoke::AutomationFetchDataStep()
+        {
+            Action = Invoke::AutomationFetchDataStepAction.FetchData,
+            Webhook = new()
             {
-                Action = Invoke::AutomationFetchDataStepAction.FetchData,
-                Webhook = new()
-                {
-                    Method = Invoke::Method.Get,
-                    Url = "url",
-                    Body = "body",
-                    Headers = new Dictionary<string, string>() { { "foo", "string" } },
-                },
-                MergeStrategy = Invoke::MergeStrategy.Replace,
-            }
+                Method = Invoke::Method.Get,
+                Url = "url",
+                Body = "body",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+            MergeStrategy = Invoke::MergeStrategy.Replace,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(
+            element,
+            ModelBase.SerializerOptions
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -710,15 +708,16 @@ public class StepTest : TestBase
     [Fact]
     public void AutomationInvokeSerializationRoundtripWorks()
     {
-        Invoke::Step value = new(
-            new Invoke::AutomationInvokeStep()
-            {
-                Action = Invoke::AutomationInvokeStepAction.Invoke,
-                Template = "template",
-            }
+        Invoke::Step value = new Invoke::AutomationInvokeStep()
+        {
+            Action = Invoke::AutomationInvokeStepAction.Invoke,
+            Template = "template",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(
+            element,
+            ModelBase.SerializerOptions
         );
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Step>(element);
 
         Assert.Equal(value, deserialized);
     }
@@ -755,8 +754,11 @@ public class AutomationDelayStepTest : TestBase
             Until = "until",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationDelayStep>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationDelayStep>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -771,8 +773,11 @@ public class AutomationDelayStepTest : TestBase
             Until = "until",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationDelayStep>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationDelayStep>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::Action> expectedAction = Invoke::Action.Delay;
@@ -863,7 +868,7 @@ public class ActionTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::Action>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -891,7 +896,7 @@ public class ActionTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::Action>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -980,8 +985,11 @@ public class AutomationSendStepTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationSendStep>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationSendStep>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -1005,8 +1013,11 @@ public class AutomationSendStepTest : TestBase
             Template = "template",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationSendStep>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationSendStep>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::AutomationSendStepAction> expectedAction =
@@ -1157,7 +1168,7 @@ public class AutomationSendStepActionTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::AutomationSendStepAction>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -1184,7 +1195,7 @@ public class AutomationSendStepActionTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::AutomationSendStepAction>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -1248,8 +1259,11 @@ public class AutomationSendListStepTest : TestBase
             },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationSendListStep>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationSendListStep>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -1268,8 +1282,11 @@ public class AutomationSendListStepTest : TestBase
             },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationSendListStep>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationSendListStep>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::AutomationSendListStepAction> expectedAction =
@@ -1388,10 +1405,7 @@ public class AutomationSendListStepActionTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationSendListStepAction>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
@@ -1417,10 +1431,7 @@ public class AutomationSendListStepActionTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationSendListStepAction>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationSendListStepAction>
@@ -1481,8 +1492,11 @@ public class AutomationUpdateProfileStepTest : TestBase
             RecipientID = "recipient_id",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationUpdateProfileStep>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationUpdateProfileStep>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -1501,8 +1515,11 @@ public class AutomationUpdateProfileStepTest : TestBase
             RecipientID = "recipient_id",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationUpdateProfileStep>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationUpdateProfileStep>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::AutomationUpdateProfileStepAction> expectedAction =
@@ -1632,10 +1649,7 @@ public class AutomationUpdateProfileStepActionTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationUpdateProfileStepAction>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
@@ -1661,10 +1675,7 @@ public class AutomationUpdateProfileStepActionTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationUpdateProfileStepAction>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationUpdateProfileStepAction>
@@ -1692,7 +1703,7 @@ public class MergeTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::Merge>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -1723,7 +1734,7 @@ public class MergeTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::Merge>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -1764,8 +1775,11 @@ public class AutomationCancelStepTest : TestBase
             CancelationToken = "cancelation_token",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationCancelStep>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationCancelStep>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -1779,8 +1793,11 @@ public class AutomationCancelStepTest : TestBase
             CancelationToken = "cancelation_token",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationCancelStep>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationCancelStep>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::AutomationCancelStepAction> expectedAction =
@@ -1819,7 +1836,7 @@ public class AutomationCancelStepActionTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::AutomationCancelStepAction>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -1846,7 +1863,7 @@ public class AutomationCancelStepActionTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::AutomationCancelStepAction>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -1909,8 +1926,11 @@ public class AutomationFetchDataStepTest : TestBase
             MergeStrategy = Invoke::MergeStrategy.Replace,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationFetchDataStep>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationFetchDataStep>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -1931,8 +1951,11 @@ public class AutomationFetchDataStepTest : TestBase
             MergeStrategy = Invoke::MergeStrategy.Replace,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationFetchDataStep>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationFetchDataStep>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::AutomationFetchDataStepAction> expectedAction =
@@ -2066,10 +2089,7 @@ public class AutomationFetchDataStepActionTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationFetchDataStepAction>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
@@ -2095,10 +2115,7 @@ public class AutomationFetchDataStepActionTest : TestBase
     {
         var value = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationFetchDataStepAction>
-        >(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
-            ModelBase.SerializerOptions
-        );
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
             ApiEnum<string, Invoke::AutomationFetchDataStepAction>
@@ -2150,8 +2167,11 @@ public class WebhookTest : TestBase
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Webhook>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Webhook>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -2167,8 +2187,11 @@ public class WebhookTest : TestBase
             Headers = new Dictionary<string, string>() { { "foo", "string" } },
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::Webhook>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::Webhook>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::Method> expectedMethod = Invoke::Method.Get;
@@ -2275,7 +2298,7 @@ public class MethodTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::Method>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -2307,7 +2330,7 @@ public class MethodTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::Method>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -2337,7 +2360,7 @@ public class MergeStrategyTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::MergeStrategy>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -2367,7 +2390,7 @@ public class MergeStrategyTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::MergeStrategy>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -2408,8 +2431,11 @@ public class AutomationInvokeStepTest : TestBase
             Template = "template",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationInvokeStep>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationInvokeStep>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -2423,8 +2449,11 @@ public class AutomationInvokeStepTest : TestBase
             Template = "template",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationInvokeStep>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Invoke::AutomationInvokeStep>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Invoke::AutomationInvokeStepAction> expectedAction =
@@ -2463,7 +2492,7 @@ public class AutomationInvokeStepActionTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::AutomationInvokeStepAction>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
 
@@ -2490,7 +2519,7 @@ public class AutomationInvokeStepActionTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<ApiEnum<string, Invoke::AutomationInvokeStepAction>>(
-            JsonSerializer.Deserialize<JsonElement>("\"invalid value\""),
+            JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

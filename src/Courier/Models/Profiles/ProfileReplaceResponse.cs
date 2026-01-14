@@ -16,12 +16,12 @@ public sealed record class ProfileReplaceResponse : JsonModel
     {
         get
         {
-            return JsonModel.GetNotNullClass<ApiEnum<string, ProfileReplaceResponseStatus>>(
-                this.RawData,
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, ProfileReplaceResponseStatus>>(
                 "status"
             );
         }
-        init { JsonModel.Set(this._rawData, "status", value); }
+        init { this._rawData.Set("status", value); }
     }
 
     /// <inheritdoc/>
@@ -37,14 +37,14 @@ public sealed record class ProfileReplaceResponse : JsonModel
 
     public ProfileReplaceResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     ProfileReplaceResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 

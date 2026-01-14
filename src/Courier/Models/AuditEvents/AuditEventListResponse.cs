@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,14 +13,28 @@ public sealed record class AuditEventListResponse : JsonModel
 {
     public required Paging Paging
     {
-        get { return JsonModel.GetNotNullClass<Paging>(this.RawData, "paging"); }
-        init { JsonModel.Set(this._rawData, "paging", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
+        init { this._rawData.Set("paging", value); }
     }
 
     public required IReadOnlyList<AuditEvent> Results
     {
-        get { return JsonModel.GetNotNullClass<List<AuditEvent>>(this.RawData, "results"); }
-        init { JsonModel.Set(this._rawData, "results", value); }
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<AuditEvent>>("results");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<AuditEvent>>(
+                "results",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
     }
 
     /// <inheritdoc/>
@@ -39,14 +54,14 @@ public sealed record class AuditEventListResponse : JsonModel
 
     public AuditEventListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     AuditEventListResponse(FrozenDictionary<string, JsonElement> rawData)
     {
-        this._rawData = [.. rawData];
+        this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
