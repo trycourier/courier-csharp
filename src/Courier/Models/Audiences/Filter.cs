@@ -64,7 +64,7 @@ public sealed record class Filter : JsonModel
     }
 
     [SetsRequiredMembers]
-    public Filter(List<FilterConfig> filters)
+    public Filter(IReadOnlyList<FilterConfig> filters)
         : this()
     {
         this.Filters = filters;

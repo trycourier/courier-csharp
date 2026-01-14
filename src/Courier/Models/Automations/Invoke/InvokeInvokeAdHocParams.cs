@@ -241,7 +241,7 @@ public sealed record class Automation : JsonModel
     }
 
     [SetsRequiredMembers]
-    public Automation(List<Step> steps)
+    public Automation(IReadOnlyList<Step> steps)
         : this()
     {
         this.Steps = steps;

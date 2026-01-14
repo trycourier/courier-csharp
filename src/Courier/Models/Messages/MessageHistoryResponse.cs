@@ -65,7 +65,7 @@ public sealed record class MessageHistoryResponse : JsonModel
     }
 
     [SetsRequiredMembers]
-    public MessageHistoryResponse(List<Dictionary<string, JsonElement>> results)
+    public MessageHistoryResponse(IReadOnlyList<IReadOnlyDictionary<string, JsonElement>> results)
         : this()
     {
         this.Results = results;

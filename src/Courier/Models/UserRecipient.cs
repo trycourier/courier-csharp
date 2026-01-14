@@ -279,7 +279,7 @@ public sealed record class Preferences : JsonModel
     }
 
     [SetsRequiredMembers]
-    public Preferences(Dictionary<string, Preference> notifications)
+    public Preferences(IReadOnlyDictionary<string, Preference> notifications)
         : this()
     {
         this.Notifications = notifications;
