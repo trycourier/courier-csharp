@@ -51,8 +51,11 @@ public class ElementalTextNodeWithTypeTest : TestBase
             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -69,8 +72,11 @@ public class ElementalTextNodeWithTypeTest : TestBase
             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -264,9 +270,10 @@ public class ElementalTextNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithTypeIntersectionMember1>(
-            json
+            json,
+            ModelBase.SerializerOptions
         );
 
         Assert.Equal(model, deserialized);
@@ -280,9 +287,10 @@ public class ElementalTextNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
         };
 
-        string element = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithTypeIntersectionMember1>(
-            element
+            element,
+            ModelBase.SerializerOptions
         );
         Assert.NotNull(deserialized);
 

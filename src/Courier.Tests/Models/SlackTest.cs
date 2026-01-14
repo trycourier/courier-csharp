@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models;
 
 namespace Courier.Tests.Models;
@@ -38,8 +39,8 @@ public class SlackTest : TestBase
             AccessToken = "access_token",
             Channel = "channel",
         };
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Slack>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Slack>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -48,8 +49,8 @@ public class SlackTest : TestBase
     public void SendToSlackEmailSerializationRoundtripWorks()
     {
         Slack value = new SendToSlackEmail() { AccessToken = "access_token", Email = "email" };
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Slack>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Slack>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -58,8 +59,8 @@ public class SlackTest : TestBase
     public void SendToSlackUserIDSerializationRoundtripWorks()
     {
         Slack value = new SendToSlackUserID() { AccessToken = "access_token", UserID = "user_id" };
-        string element = JsonSerializer.Serialize(value);
-        var deserialized = JsonSerializer.Deserialize<Slack>(element);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Slack>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }

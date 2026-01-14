@@ -51,8 +51,11 @@ public class ElementalImageNodeWithTypeTest : TestBase
             Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -69,8 +72,11 @@ public class ElementalImageNodeWithTypeTest : TestBase
             Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -264,9 +270,12 @@ public class ElementalImageNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalImageNodeWithTypeIntersectionMember1>(json);
+            JsonSerializer.Deserialize<ElementalImageNodeWithTypeIntersectionMember1>(
+                json,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(model, deserialized);
     }
@@ -279,9 +288,12 @@ public class ElementalImageNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
-        string element = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalImageNodeWithTypeIntersectionMember1>(element);
+            JsonSerializer.Deserialize<ElementalImageNodeWithTypeIntersectionMember1>(
+                element,
+                ModelBase.SerializerOptions
+            );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> expectedType =

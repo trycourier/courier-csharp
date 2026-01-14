@@ -51,8 +51,11 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -69,8 +72,11 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -264,9 +270,12 @@ public class ElementalDividerNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalDividerNodeWithTypeIntersectionMember1>(json);
+            JsonSerializer.Deserialize<ElementalDividerNodeWithTypeIntersectionMember1>(
+                json,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(model, deserialized);
     }
@@ -279,9 +288,12 @@ public class ElementalDividerNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
-        string element = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalDividerNodeWithTypeIntersectionMember1>(element);
+            JsonSerializer.Deserialize<ElementalDividerNodeWithTypeIntersectionMember1>(
+                element,
+                ModelBase.SerializerOptions
+            );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type> expectedType =

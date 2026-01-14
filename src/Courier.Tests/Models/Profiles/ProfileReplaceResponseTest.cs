@@ -23,8 +23,11 @@ public class ProfileReplaceResponseTest : TestBase
     {
         var model = new ProfileReplaceResponse { Status = ProfileReplaceResponseStatus.Success };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProfileReplaceResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ProfileReplaceResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -34,8 +37,11 @@ public class ProfileReplaceResponseTest : TestBase
     {
         var model = new ProfileReplaceResponse { Status = ProfileReplaceResponseStatus.Success };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ProfileReplaceResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ProfileReplaceResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ProfileReplaceResponseStatus> expectedStatus =

@@ -62,8 +62,11 @@ public class NestedFilterConfigTest : TestBase
             Operator = NestedFilterConfigOperator.EndsWith,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<NestedFilterConfig>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<NestedFilterConfig>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -85,8 +88,11 @@ public class NestedFilterConfigTest : TestBase
             Operator = NestedFilterConfigOperator.EndsWith,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<NestedFilterConfig>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<NestedFilterConfig>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<FilterConfig> expectedFilters =
