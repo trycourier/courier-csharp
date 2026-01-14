@@ -122,9 +122,11 @@ To access this data, prefix any HTTP method call on a client or service with `Wi
 
 ```csharp
 var response = await client.WithRawResponse.Send.Message(parameters);
-var statusCode = response.Message.StatusCode;
-var headers = response.Message.Headers;
+var statusCode = response.StatusCode;
+var headers = response.Headers;
 ```
+
+The raw `HttpResponseMessage` can also be accessed through the `RawMessage` property.
 
 For non-streaming responses, you can deserialize the response into an instance of a C# class if needed:
 
