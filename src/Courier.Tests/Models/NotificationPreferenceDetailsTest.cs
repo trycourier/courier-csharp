@@ -49,8 +49,11 @@ public class NotificationPreferenceDetailsTest : TestBase
             Rules = [new() { Until = "until", Start = "start" }],
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<NotificationPreferenceDetails>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<NotificationPreferenceDetails>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -65,8 +68,11 @@ public class NotificationPreferenceDetailsTest : TestBase
             Rules = [new() { Until = "until", Start = "start" }],
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<NotificationPreferenceDetails>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<NotificationPreferenceDetails>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, PreferenceStatus> expectedStatus = PreferenceStatus.OptedIn;

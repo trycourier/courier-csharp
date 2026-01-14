@@ -147,8 +147,8 @@ public class TopicTest : TestBase
             HasCustomRouting = true,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Topic>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Topic>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -163,8 +163,8 @@ public class TopicTest : TestBase
             HasCustomRouting = true,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<Topic>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Topic>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
         ApiEnum<string, PreferenceStatus> expectedStatus = PreferenceStatus.OptedIn;

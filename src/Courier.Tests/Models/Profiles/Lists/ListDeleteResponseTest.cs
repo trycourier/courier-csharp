@@ -22,8 +22,11 @@ public class ListDeleteResponseTest : TestBase
     {
         var model = new ListDeleteResponse { Status = Status.Success };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListDeleteResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ListDeleteResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +36,11 @@ public class ListDeleteResponseTest : TestBase
     {
         var model = new ListDeleteResponse { Status = Status.Success };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ListDeleteResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ListDeleteResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, Status> expectedStatus = Status.Success;

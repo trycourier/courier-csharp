@@ -56,8 +56,11 @@ public class BrandSettingsInAppTest : TestBase
             Placement = Placement.Top,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandSettingsInApp>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<BrandSettingsInApp>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -76,8 +79,11 @@ public class BrandSettingsInAppTest : TestBase
             Placement = Placement.Top,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandSettingsInApp>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<BrandSettingsInApp>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         BrandColors expectedColors = new() { Primary = "primary", Secondary = "secondary" };

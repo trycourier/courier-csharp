@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Brands;
 
 namespace Courier.Tests.Models.Brands;
@@ -26,8 +27,11 @@ public class BrandSnippetsTest : TestBase
     {
         var model = new BrandSnippets { Items = [new() { Name = "name", Value = "value" }] };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandSnippets>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<BrandSnippets>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -37,8 +41,11 @@ public class BrandSnippetsTest : TestBase
     {
         var model = new BrandSnippets { Items = [new() { Name = "name", Value = "value" }] };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<BrandSnippets>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<BrandSnippets>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<BrandSnippet> expectedItems = [new() { Name = "name", Value = "value" }];

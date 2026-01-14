@@ -51,8 +51,11 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -69,8 +72,11 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<string> expectedChannels = ["string"];
@@ -264,9 +270,12 @@ public class ElementalQuoteNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
         };
 
-        string json = JsonSerializer.Serialize(model);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalQuoteNodeWithTypeIntersectionMember1>(json);
+            JsonSerializer.Deserialize<ElementalQuoteNodeWithTypeIntersectionMember1>(
+                json,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(model, deserialized);
     }
@@ -279,9 +288,12 @@ public class ElementalQuoteNodeWithTypeIntersectionMember1Test : TestBase
             Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
         };
 
-        string element = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized =
-            JsonSerializer.Deserialize<ElementalQuoteNodeWithTypeIntersectionMember1>(element);
+            JsonSerializer.Deserialize<ElementalQuoteNodeWithTypeIntersectionMember1>(
+                element,
+                ModelBase.SerializerOptions
+            );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ElementalQuoteNodeWithTypeIntersectionMember1Type> expectedType =

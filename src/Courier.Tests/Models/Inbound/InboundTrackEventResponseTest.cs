@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Inbound;
 
 namespace Courier.Tests.Models.Inbound;
@@ -26,8 +27,11 @@ public class InboundTrackEventResponseTest : TestBase
             MessageID = "1-65f240a0-47a6a120c8374de9bcf9f22c",
         };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InboundTrackEventResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<InboundTrackEventResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -40,8 +44,11 @@ public class InboundTrackEventResponseTest : TestBase
             MessageID = "1-65f240a0-47a6a120c8374de9bcf9f22c",
         };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<InboundTrackEventResponse>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<InboundTrackEventResponse>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedMessageID = "1-65f240a0-47a6a120c8374de9bcf9f22c";

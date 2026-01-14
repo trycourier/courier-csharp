@@ -22,8 +22,11 @@ public class ChannelPreferenceTest : TestBase
     {
         var model = new ChannelPreference { Channel = ChannelClassification.DirectMessage };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ChannelPreference>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ChannelPreference>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -33,8 +36,11 @@ public class ChannelPreferenceTest : TestBase
     {
         var model = new ChannelPreference { Channel = ChannelClassification.DirectMessage };
 
-        string element = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<ChannelPreference>(element);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ChannelPreference>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, ChannelClassification> expectedChannel =

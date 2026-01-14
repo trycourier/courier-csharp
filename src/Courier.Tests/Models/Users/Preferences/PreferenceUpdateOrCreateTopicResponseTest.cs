@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Courier.Core;
 using Courier.Models.Users.Preferences;
 
 namespace Courier.Tests.Models.Users.Preferences;
@@ -20,8 +21,11 @@ public class PreferenceUpdateOrCreateTopicResponseTest : TestBase
     {
         var model = new PreferenceUpdateOrCreateTopicResponse { Message = "success" };
 
-        string json = JsonSerializer.Serialize(model);
-        var deserialized = JsonSerializer.Deserialize<PreferenceUpdateOrCreateTopicResponse>(json);
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<PreferenceUpdateOrCreateTopicResponse>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -31,9 +35,10 @@ public class PreferenceUpdateOrCreateTopicResponseTest : TestBase
     {
         var model = new PreferenceUpdateOrCreateTopicResponse { Message = "success" };
 
-        string element = JsonSerializer.Serialize(model);
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<PreferenceUpdateOrCreateTopicResponse>(
-            element
+            element,
+            ModelBase.SerializerOptions
         );
         Assert.NotNull(deserialized);
 
