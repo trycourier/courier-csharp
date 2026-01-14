@@ -219,7 +219,7 @@ sealed class UserProfileFirebaseTokenConverter : JsonConverter<UserProfileFireba
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ImmutableArray<string>>(element, options);
+            var deserialized = JsonSerializer.Deserialize<List<string>>(element, options);
             if (deserialized != null)
             {
                 return new(deserialized, element);
