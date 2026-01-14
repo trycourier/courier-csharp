@@ -4,7 +4,7 @@
     <Company>Courier</Company>
     <PackageTags>sdk;api;http;library</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <Copyright>Copyright 2025 Courier</Copyright>
+    <Copyright>Copyright 2026 Courier</Copyright>
     <PackageProjectUrl>https://www.courier.com/docs</PackageProjectUrl>
     <RepositoryUrl>https://www.github.com/trycourier/courier-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

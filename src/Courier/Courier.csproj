@@ -4,19 +4,17 @@
     <AssemblyTitle>Courier C#</AssemblyTitle>
     <AssemblyName>Courier</AssemblyName>
     <VersionPrefix>5.1.0</VersionPrefix>
-    <Authors>Courier</Authors>
-    <Company>Courier</Company>
     <Description>The official .NET library for the Courier API.</Description>
     <OutputType>Library</OutputType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-    <InternalsVisibleTo Include="Courier.Tests"/>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
-    <PackageReference Include="System.Text.Json" Version="9.0.9"/>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+    <InternalsVisibleTo Include="Courier.Tests" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <PackageReference Include="System.Text.Json" Version="9.0.9" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Collections.Immutable" Version="8.0.0"/>
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
   </ItemGroup>
 </Project>
