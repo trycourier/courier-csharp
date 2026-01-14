@@ -282,7 +282,7 @@ public sealed record class Tags : JsonModel
     }
 
     [SetsRequiredMembers]
-    public Tags(List<Data> data)
+    public Tags(IReadOnlyList<Data> data)
         : this()
     {
         this.Data = data;

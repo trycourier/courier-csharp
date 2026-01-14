@@ -66,7 +66,7 @@ public sealed record class MessageContentResponse : JsonModel
     }
 
     [SetsRequiredMembers]
-    public MessageContentResponse(List<Result> results)
+    public MessageContentResponse(IReadOnlyList<Result> results)
         : this()
     {
         this.Results = results;

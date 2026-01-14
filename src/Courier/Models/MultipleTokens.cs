@@ -61,7 +61,7 @@ public sealed record class MultipleTokens : JsonModel
     }
 
     [SetsRequiredMembers]
-    public MultipleTokens(List<Token> tokens)
+    public MultipleTokens(IReadOnlyList<Token> tokens)
         : this()
     {
         this.Tokens = tokens;

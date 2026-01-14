@@ -63,7 +63,7 @@ public sealed record class CheckListResponse : JsonModel
     }
 
     [SetsRequiredMembers]
-    public CheckListResponse(List<Check> checks)
+    public CheckListResponse(IReadOnlyList<Check> checks)
         : this()
     {
         this.Checks = checks;

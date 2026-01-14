@@ -66,7 +66,7 @@ public sealed record class TokenListResponse : JsonModel
     }
 
     [SetsRequiredMembers]
-    public TokenListResponse(List<UserToken> tokens)
+    public TokenListResponse(IReadOnlyList<UserToken> tokens)
         : this()
     {
         this.Tokens = tokens;
