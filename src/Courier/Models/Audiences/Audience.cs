@@ -72,14 +72,14 @@ public sealed record class Audience : JsonModel
     }
 
     /// <summary>
-    /// Filter that contains an array of FilterConfig items
+    /// Filter configuration for audience membership containing an array of filter rules
     /// </summary>
-    public Filter? Filter
+    public AudienceFilterConfig? Filter
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<Filter>("filter");
+            return this._rawData.GetNullableClass<AudienceFilterConfig>("filter");
         }
         init { this._rawData.Set("filter", value); }
     }

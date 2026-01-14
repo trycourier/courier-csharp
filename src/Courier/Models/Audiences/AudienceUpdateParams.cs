@@ -38,14 +38,14 @@ public sealed record class AudienceUpdateParams : ParamsBase
     }
 
     /// <summary>
-    /// Filter that contains an array of FilterConfig items
+    /// Filter configuration for audience membership containing an array of filter rules
     /// </summary>
-    public Filter? Filter
+    public AudienceFilterConfig? Filter
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<Filter>("filter");
+            return this._rawBodyData.GetNullableClass<AudienceFilterConfig>("filter");
         }
         init { this._rawBodyData.Set("filter", value); }
     }

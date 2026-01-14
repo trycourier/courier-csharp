@@ -3,6 +3,7 @@ using System.Text.Json;
 using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Audiences;
+using Models = Courier.Models;
 
 namespace Courier.Tests.Models.Audiences;
 
@@ -17,9 +18,10 @@ public class AudienceUpdateParamsTest : TestBase
             Description = "description",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -31,11 +33,12 @@ public class AudienceUpdateParamsTest : TestBase
 
         string expectedAudienceID = "audience_id";
         string expectedDescription = "description";
-        Filter expectedFilter = new(
+        Models::AudienceFilterConfig expectedFilter = new(
             [
-                new SingleFilterConfig()
+                new()
                 {
-                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Operator = "operator",
+                    Filters = [],
                     Path = "path",
                     Value = "value",
                 },

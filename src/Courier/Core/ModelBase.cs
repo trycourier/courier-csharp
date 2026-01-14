@@ -61,8 +61,6 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Send::Method>(),
             new ApiEnumConverter<string, Send::Criteria>(),
             new ApiEnumConverter<string, Audiences::AudienceOperator>(),
-            new ApiEnumConverter<string, Audiences::NestedFilterConfigOperator>(),
-            new ApiEnumConverter<string, Audiences::SingleFilterConfigOperator>(),
             new ApiEnumConverter<string, Audiences::Operator>(),
             new ApiEnumConverter<string, AutomationTemplateVersion>(),
             new ApiEnumConverter<string, Version>(),

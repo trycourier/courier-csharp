@@ -20,9 +20,10 @@ public class AudienceUpdateResponseTest : TestBase
                 UpdatedAt = "updated_at",
                 Filter = new(
                     [
-                        new SingleFilterConfig()
+                        new()
                         {
-                            Operator = SingleFilterConfigOperator.EndsWith,
+                            Operator = "operator",
+                            Filters = [],
                             Path = "path",
                             Value = "value",
                         },
@@ -41,9 +42,10 @@ public class AudienceUpdateResponseTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -69,9 +71,10 @@ public class AudienceUpdateResponseTest : TestBase
                 UpdatedAt = "updated_at",
                 Filter = new(
                     [
-                        new SingleFilterConfig()
+                        new()
                         {
-                            Operator = SingleFilterConfigOperator.EndsWith,
+                            Operator = "operator",
+                            Filters = [],
                             Path = "path",
                             Value = "value",
                         },
@@ -104,9 +107,10 @@ public class AudienceUpdateResponseTest : TestBase
                 UpdatedAt = "updated_at",
                 Filter = new(
                     [
-                        new SingleFilterConfig()
+                        new()
                         {
-                            Operator = SingleFilterConfigOperator.EndsWith,
+                            Operator = "operator",
+                            Filters = [],
                             Path = "path",
                             Value = "value",
                         },
@@ -132,9 +136,10 @@ public class AudienceUpdateResponseTest : TestBase
             UpdatedAt = "updated_at",
             Filter = new(
                 [
-                    new SingleFilterConfig()
+                    new()
                     {
-                        Operator = SingleFilterConfigOperator.EndsWith,
+                        Operator = "operator",
+                        Filters = [],
                         Path = "path",
                         Value = "value",
                     },
@@ -160,9 +165,10 @@ public class AudienceUpdateResponseTest : TestBase
                 UpdatedAt = "updated_at",
                 Filter = new(
                     [
-                        new SingleFilterConfig()
+                        new()
                         {
-                            Operator = SingleFilterConfigOperator.EndsWith,
+                            Operator = "operator",
+                            Filters = [],
                             Path = "path",
                             Value = "value",
                         },

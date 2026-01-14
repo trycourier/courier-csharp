@@ -1,22 +1,23 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
-using Courier.Models.Audiences;
+using Courier.Models;
 
-namespace Courier.Tests.Models.Audiences;
+namespace Courier.Tests.Models;
 
-public class FilterTest : TestBase
+public class AudienceFilterConfigTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Filter
+        var model = new AudienceFilterConfig
         {
             Filters =
             [
-                new SingleFilterConfig()
+                new()
                 {
-                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Operator = "operator",
+                    Filters = [],
                     Path = "path",
                     Value = "value",
                 },
@@ -25,9 +26,10 @@ public class FilterTest : TestBase
 
         List<FilterConfig> expectedFilters =
         [
-            new SingleFilterConfig()
+            new()
             {
-                Operator = SingleFilterConfigOperator.EndsWith,
+                Operator = "operator",
+                Filters = [],
                 Path = "path",
                 Value = "value",
             },
@@ -43,13 +45,14 @@ public class FilterTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Filter
+        var model = new AudienceFilterConfig
         {
             Filters =
             [
-                new SingleFilterConfig()
+                new()
                 {
-                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Operator = "operator",
+                    Filters = [],
                     Path = "path",
                     Value = "value",
                 },
@@ -57,7 +60,10 @@ public class FilterTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Filter>(json, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AudienceFilterConfig>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -65,13 +71,14 @@ public class FilterTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Filter
+        var model = new AudienceFilterConfig
         {
             Filters =
             [
-                new SingleFilterConfig()
+                new()
                 {
-                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Operator = "operator",
+                    Filters = [],
                     Path = "path",
                     Value = "value",
                 },
@@ -79,14 +86,18 @@ public class FilterTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Filter>(element, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<AudienceFilterConfig>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         List<FilterConfig> expectedFilters =
         [
-            new SingleFilterConfig()
+            new()
             {
-                Operator = SingleFilterConfigOperator.EndsWith,
+                Operator = "operator",
+                Filters = [],
                 Path = "path",
                 Value = "value",
             },
@@ -102,13 +113,14 @@ public class FilterTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Filter
+        var model = new AudienceFilterConfig
         {
             Filters =
             [
-                new SingleFilterConfig()
+                new()
                 {
-                    Operator = SingleFilterConfigOperator.EndsWith,
+                    Operator = "operator",
+                    Filters = [],
                     Path = "path",
                     Value = "value",
                 },
