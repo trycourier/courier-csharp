@@ -127,7 +127,7 @@ sealed class StatusConverter : JsonConverter<Status>
     }
 }
 
-[JsonConverter(typeof(global::Courier.Models.Notifications.TypeConverter))]
+[JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
     Custom,

@@ -1630,14 +1630,12 @@ sealed class AutomationFetchDataStepActionConverter : JsonConverter<AutomationFe
 [JsonConverter(typeof(JsonModelConverter<Webhook, WebhookFromRaw>))]
 public sealed record class Webhook : JsonModel
 {
-    public required ApiEnum<string, global::Courier.Models.Automations.Invoke.Method> Method
+    public required ApiEnum<string, Method> Method
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, global::Courier.Models.Automations.Invoke.Method>
-            >("method");
+            return this._rawData.GetNotNullClass<ApiEnum<string, Method>>("method");
         }
         init { this._rawData.Set("method", value); }
     }
@@ -1719,7 +1717,7 @@ class WebhookFromRaw : IFromRawJson<Webhook>
         Webhook.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(global::Courier.Models.Automations.Invoke.MethodConverter))]
+[JsonConverter(typeof(MethodConverter))]
 public enum Method
 {
     Get,
@@ -1729,9 +1727,9 @@ public enum Method
     Delete,
 }
 
-sealed class MethodConverter : JsonConverter<global::Courier.Models.Automations.Invoke.Method>
+sealed class MethodConverter : JsonConverter<Method>
 {
-    public override global::Courier.Models.Automations.Invoke.Method Read(
+    public override Method Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1739,30 +1737,26 @@ sealed class MethodConverter : JsonConverter<global::Courier.Models.Automations.
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "GET" => global::Courier.Models.Automations.Invoke.Method.Get,
-            "POST" => global::Courier.Models.Automations.Invoke.Method.Post,
-            "PUT" => global::Courier.Models.Automations.Invoke.Method.Put,
-            "PATCH" => global::Courier.Models.Automations.Invoke.Method.Patch,
-            "DELETE" => global::Courier.Models.Automations.Invoke.Method.Delete,
-            _ => (global::Courier.Models.Automations.Invoke.Method)(-1),
+            "GET" => Method.Get,
+            "POST" => Method.Post,
+            "PUT" => Method.Put,
+            "PATCH" => Method.Patch,
+            "DELETE" => Method.Delete,
+            _ => (Method)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Courier.Models.Automations.Invoke.Method value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Method value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Courier.Models.Automations.Invoke.Method.Get => "GET",
-                global::Courier.Models.Automations.Invoke.Method.Post => "POST",
-                global::Courier.Models.Automations.Invoke.Method.Put => "PUT",
-                global::Courier.Models.Automations.Invoke.Method.Patch => "PATCH",
-                global::Courier.Models.Automations.Invoke.Method.Delete => "DELETE",
+                Method.Get => "GET",
+                Method.Post => "POST",
+                Method.Put => "PUT",
+                Method.Patch => "PATCH",
+                Method.Delete => "DELETE",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

@@ -152,7 +152,7 @@ class TenantListResponseFromRaw : IFromRawJson<TenantListResponse>
 /// <summary>
 /// Always set to `list`. Represents the type of this object.
 /// </summary>
-[JsonConverter(typeof(global::Courier.Models.Users.Tenants.TypeConverter))]
+[JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
     List,
