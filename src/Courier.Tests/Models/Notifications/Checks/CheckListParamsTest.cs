@@ -26,4 +26,14 @@ public class CheckListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/notifications/id/submissionId/checks"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new CheckListParams { ID = "id", SubmissionID = "submissionId" };
+
+        CheckListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

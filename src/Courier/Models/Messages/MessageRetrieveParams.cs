@@ -10,18 +10,25 @@ namespace Courier.Models.Messages;
 
 /// <summary>
 /// Fetch the status of a message you've previously sent.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class MessageRetrieveParams : ParamsBase
+public record class MessageRetrieveParams : ParamsBase
 {
     public string? MessageID { get; init; }
 
     public MessageRetrieveParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageRetrieveParams(MessageRetrieveParams messageRetrieveParams)
         : base(messageRetrieveParams)
     {
         this.MessageID = messageRetrieveParams.MessageID;
     }
+#pragma warning restore CS8618
 
     public MessageRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -56,6 +63,28 @@ public sealed record class MessageRetrieveParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["MessageID"] = this.MessageID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(MessageRetrieveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.MessageID?.Equals(other.MessageID) ?? other.MessageID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -73,5 +102,10 @@ public sealed record class MessageRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

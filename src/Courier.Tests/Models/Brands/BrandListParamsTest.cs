@@ -42,4 +42,14 @@ public class BrandListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/brands?cursor=cursor"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new BrandListParams { Cursor = "cursor" };
+
+        BrandListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

@@ -29,4 +29,14 @@ public class ItemDeleteParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ItemDeleteParams { TenantID = "tenant_id", TopicID = "topic_id" };
+
+        ItemDeleteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

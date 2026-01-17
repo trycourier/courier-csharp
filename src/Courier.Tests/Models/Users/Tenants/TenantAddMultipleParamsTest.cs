@@ -77,4 +77,30 @@ public class TenantAddMultipleParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tenants"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TenantAddMultipleParams
+        {
+            UserID = "user_id",
+            Tenants =
+            [
+                new()
+                {
+                    TenantID = "tenant_id",
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Type = Tenants::Type.User,
+                    UserID = "user_id",
+                },
+            ],
+        };
+
+        TenantAddMultipleParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

@@ -69,4 +69,19 @@ public class TemplateListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TemplateListParams
+        {
+            TenantID = "tenant_id",
+            Cursor = "cursor",
+            Limit = 0,
+        };
+
+        TemplateListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

@@ -10,8 +10,12 @@ namespace Courier.Models.Users.Tokens;
 
 /// <summary>
 /// Get single token available for a `:token`
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class TokenRetrieveParams : ParamsBase
+public record class TokenRetrieveParams : ParamsBase
 {
     public required string UserID { get; init; }
 
@@ -19,12 +23,15 @@ public sealed record class TokenRetrieveParams : ParamsBase
 
     public TokenRetrieveParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TokenRetrieveParams(TokenRetrieveParams tokenRetrieveParams)
         : base(tokenRetrieveParams)
     {
         this.UserID = tokenRetrieveParams.UserID;
         this.Token = tokenRetrieveParams.Token;
     }
+#pragma warning restore CS8618
 
     public TokenRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -59,6 +66,30 @@ public sealed record class TokenRetrieveParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["UserID"] = this.UserID,
+                ["Token"] = this.Token,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(TokenRetrieveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.UserID.Equals(other.UserID)
+            && (this.Token?.Equals(other.Token) ?? other.Token == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -77,5 +108,10 @@ public sealed record class TokenRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

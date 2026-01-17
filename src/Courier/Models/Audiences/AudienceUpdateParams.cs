@@ -13,8 +13,12 @@ namespace Courier.Models.Audiences;
 
 /// <summary>
 /// Creates or updates audience.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class AudienceUpdateParams : ParamsBase
+public record class AudienceUpdateParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -66,20 +70,20 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// <summary>
     /// The logical operator (AND/OR) for the top-level filter
     /// </summary>
-    public ApiEnum<string, global::Courier.Models.Audiences.Operator>? Operator
+    public ApiEnum<string, Operator>? Operator
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<
-                ApiEnum<string, global::Courier.Models.Audiences.Operator>
-            >("operator");
+            return this._rawBodyData.GetNullableClass<ApiEnum<string, Operator>>("operator");
         }
         init { this._rawBodyData.Set("operator", value); }
     }
 
     public AudienceUpdateParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AudienceUpdateParams(AudienceUpdateParams audienceUpdateParams)
         : base(audienceUpdateParams)
     {
@@ -87,6 +91,7 @@ public sealed record class AudienceUpdateParams : ParamsBase
 
         this._rawBodyData = new(audienceUpdateParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public AudienceUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -127,6 +132,30 @@ public sealed record class AudienceUpdateParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["AudienceID"] = this.AudienceID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(AudienceUpdateParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.AudienceID?.Equals(other.AudienceID) ?? other.AudienceID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(
@@ -155,21 +184,26 @@ public sealed record class AudienceUpdateParams : ParamsBase
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
 }
 
 /// <summary>
 /// The logical operator (AND/OR) for the top-level filter
 /// </summary>
-[JsonConverter(typeof(global::Courier.Models.Audiences.OperatorConverter))]
+[JsonConverter(typeof(OperatorConverter))]
 public enum Operator
 {
     And,
     Or,
 }
 
-sealed class OperatorConverter : JsonConverter<global::Courier.Models.Audiences.Operator>
+sealed class OperatorConverter : JsonConverter<Operator>
 {
-    public override global::Courier.Models.Audiences.Operator Read(
+    public override Operator Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -177,24 +211,20 @@ sealed class OperatorConverter : JsonConverter<global::Courier.Models.Audiences.
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "AND" => global::Courier.Models.Audiences.Operator.And,
-            "OR" => global::Courier.Models.Audiences.Operator.Or,
-            _ => (global::Courier.Models.Audiences.Operator)(-1),
+            "AND" => Operator.And,
+            "OR" => Operator.Or,
+            _ => (Operator)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Courier.Models.Audiences.Operator value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Operator value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Courier.Models.Audiences.Operator.And => "AND",
-                global::Courier.Models.Audiences.Operator.Or => "OR",
+                Operator.And => "AND",
+                Operator.Or => "OR",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

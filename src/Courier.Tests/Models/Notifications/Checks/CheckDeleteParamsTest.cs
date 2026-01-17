@@ -26,4 +26,14 @@ public class CheckDeleteParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/notifications/id/submissionId/checks"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new CheckDeleteParams { ID = "id", SubmissionID = "submissionId" };
+
+        CheckDeleteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

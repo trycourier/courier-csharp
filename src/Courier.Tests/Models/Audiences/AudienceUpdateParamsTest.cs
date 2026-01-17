@@ -101,6 +101,33 @@ public class AudienceUpdateParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/audiences/audience_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AudienceUpdateParams
+        {
+            AudienceID = "audience_id",
+            Description = "description",
+            Filter = new(
+                [
+                    new()
+                    {
+                        Operator = "operator",
+                        Filters = [],
+                        Path = "path",
+                        Value = "value",
+                    },
+                ]
+            ),
+            Name = "name",
+            Operator = Operator.And,
+        };
+
+        AudienceUpdateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class OperatorTest : TestBase

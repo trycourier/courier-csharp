@@ -10,18 +10,25 @@ namespace Courier.Models.Users.Tenants;
 
 /// <summary>
 /// Removes a user from any tenants they may have been associated with.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class TenantRemoveAllParams : ParamsBase
+public record class TenantRemoveAllParams : ParamsBase
 {
     public string? UserID { get; init; }
 
     public TenantRemoveAllParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TenantRemoveAllParams(TenantRemoveAllParams tenantRemoveAllParams)
         : base(tenantRemoveAllParams)
     {
         this.UserID = tenantRemoveAllParams.UserID;
     }
+#pragma warning restore CS8618
 
     public TenantRemoveAllParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -56,6 +63,28 @@ public sealed record class TenantRemoveAllParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["UserID"] = this.UserID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(TenantRemoveAllParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.UserID?.Equals(other.UserID) ?? other.UserID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -74,5 +103,10 @@ public sealed record class TenantRemoveAllParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

@@ -26,4 +26,14 @@ public class TokenDeleteParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tokens/token"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TokenDeleteParams { UserID = "user_id", Token = "token" };
+
+        TokenDeleteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

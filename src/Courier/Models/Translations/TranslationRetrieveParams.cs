@@ -10,8 +10,12 @@ namespace Courier.Models.Translations;
 
 /// <summary>
 /// Get translations by locale
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class TranslationRetrieveParams : ParamsBase
+public record class TranslationRetrieveParams : ParamsBase
 {
     public required string Domain { get; init; }
 
@@ -19,12 +23,15 @@ public sealed record class TranslationRetrieveParams : ParamsBase
 
     public TranslationRetrieveParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TranslationRetrieveParams(TranslationRetrieveParams translationRetrieveParams)
         : base(translationRetrieveParams)
     {
         this.Domain = translationRetrieveParams.Domain;
         this.Locale = translationRetrieveParams.Locale;
     }
+#pragma warning restore CS8618
 
     public TranslationRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -59,6 +66,30 @@ public sealed record class TranslationRetrieveParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["Domain"] = this.Domain,
+                ["Locale"] = this.Locale,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(TranslationRetrieveParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.Domain.Equals(other.Domain)
+            && (this.Locale?.Equals(other.Locale) ?? other.Locale == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -77,5 +108,10 @@ public sealed record class TranslationRetrieveParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

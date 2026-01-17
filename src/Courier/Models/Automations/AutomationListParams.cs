@@ -12,8 +12,12 @@ namespace Courier.Models.Automations;
 
 /// <summary>
 /// Get the list of automations.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class AutomationListParams : ParamsBase
+public record class AutomationListParams : ParamsBase
 {
     /// <summary>
     /// A cursor token for pagination. Use the cursor from the previous response
@@ -61,8 +65,11 @@ public sealed record class AutomationListParams : ParamsBase
 
     public AutomationListParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationListParams(AutomationListParams automationListParams)
         : base(automationListParams) { }
+#pragma warning restore CS8618
 
     public AutomationListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -97,6 +104,26 @@ public sealed record class AutomationListParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(AutomationListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/automations")
@@ -112,6 +139,11 @@ public sealed record class AutomationListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

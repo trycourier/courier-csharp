@@ -17,16 +17,14 @@ public interface IListService
     /// Returns a view of this service that provides access to raw HTTP responses
     /// for each method.
     /// </summary>
-    global::Courier.Services.Profiles.IListServiceWithRawResponse WithRawResponse { get; }
+    IListServiceWithRawResponse WithRawResponse { get; }
 
     /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
     /// </summary>
-    global::Courier.Services.Profiles.IListService WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    );
+    IListService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
     /// Returns the subscribed lists for a specified user.
@@ -76,7 +74,7 @@ public interface IListService
 }
 
 /// <summary>
-/// A view of <see cref="global::Courier.Services.Profiles.IListService"/> that provides access to raw
+/// A view of <see cref="IListService"/> that provides access to raw
 /// HTTP responses for each method.
 /// </summary>
 public interface IListServiceWithRawResponse
@@ -86,13 +84,11 @@ public interface IListServiceWithRawResponse
     ///
     /// <para>The original service is not modified.</para>
     /// </summary>
-    global::Courier.Services.Profiles.IListServiceWithRawResponse WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    );
+    IListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
     /// Returns a raw HTTP response for `get /profiles/{user_id}/lists`, but is otherwise the
-    /// same as <see cref="global::Courier.Services.Profiles.IListService.Retrieve(ListRetrieveParams, CancellationToken)"/>.
+    /// same as <see cref="IListService.Retrieve(ListRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ListRetrieveResponse>> Retrieve(
         ListRetrieveParams parameters,
@@ -108,7 +104,7 @@ public interface IListServiceWithRawResponse
 
     /// <summary>
     /// Returns a raw HTTP response for `delete /profiles/{user_id}/lists`, but is otherwise the
-    /// same as <see cref="global::Courier.Services.Profiles.IListService.Delete(ListDeleteParams, CancellationToken)"/>.
+    /// same as <see cref="IListService.Delete(ListDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ListDeleteResponse>> Delete(
         ListDeleteParams parameters,
@@ -124,7 +120,7 @@ public interface IListServiceWithRawResponse
 
     /// <summary>
     /// Returns a raw HTTP response for `post /profiles/{user_id}/lists`, but is otherwise the
-    /// same as <see cref="global::Courier.Services.Profiles.IListService.Subscribe(ListSubscribeParams, CancellationToken)"/>.
+    /// same as <see cref="IListService.Subscribe(ListSubscribeParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ListSubscribeResponse>> Subscribe(
         ListSubscribeParams parameters,

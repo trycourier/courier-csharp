@@ -10,8 +10,12 @@ namespace Courier.Models.Bulk;
 
 /// <summary>
 /// Get Bulk Job Users
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class BulkListUsersParams : ParamsBase
+public record class BulkListUsersParams : ParamsBase
 {
     public string? JobID { get; init; }
 
@@ -31,11 +35,14 @@ public sealed record class BulkListUsersParams : ParamsBase
 
     public BulkListUsersParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BulkListUsersParams(BulkListUsersParams bulkListUsersParams)
         : base(bulkListUsersParams)
     {
         this.JobID = bulkListUsersParams.JobID;
     }
+#pragma warning restore CS8618
 
     public BulkListUsersParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -70,6 +77,28 @@ public sealed record class BulkListUsersParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["JobID"] = this.JobID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(BulkListUsersParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.JobID?.Equals(other.JobID) ?? other.JobID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -87,5 +116,10 @@ public sealed record class BulkListUsersParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

@@ -112,6 +112,28 @@ public class InboundTrackEventParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/inbound/courier"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new Inbound::InboundTrackEventParams
+        {
+            Event = "New Order Placed",
+            MessageID = "4c62c457-b329-4bea-9bfc-17bba86c393f",
+            Properties = new Dictionary<string, JsonElement>()
+            {
+                { "order_id", JsonSerializer.SerializeToElement("bar") },
+                { "total_orders", JsonSerializer.SerializeToElement("bar") },
+                { "last_order_id", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = Inbound::Type.Track,
+            UserID = "1234",
+        };
+
+        Inbound::InboundTrackEventParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class TypeTest : TestBase

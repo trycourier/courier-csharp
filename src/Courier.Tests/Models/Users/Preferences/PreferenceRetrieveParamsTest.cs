@@ -56,4 +56,18 @@ public class PreferenceRetrieveParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new PreferenceRetrieveParams
+        {
+            UserID = "user_id",
+            TenantID = "tenant_id",
+        };
+
+        PreferenceRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

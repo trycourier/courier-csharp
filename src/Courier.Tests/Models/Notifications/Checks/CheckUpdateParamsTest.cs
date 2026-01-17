@@ -68,4 +68,27 @@ public class CheckUpdateParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/notifications/id/submissionId/checks"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new CheckUpdateParams
+        {
+            ID = "id",
+            SubmissionID = "submissionId",
+            Checks =
+            [
+                new()
+                {
+                    ID = "id",
+                    Status = Notifications::Status.Resolved,
+                    Type = Notifications::Type.Custom,
+                },
+            ],
+        };
+
+        CheckUpdateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

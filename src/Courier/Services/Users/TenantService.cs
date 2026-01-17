@@ -9,12 +9,12 @@ using Courier.Models.Users.Tenants;
 namespace Courier.Services.Users;
 
 /// <inheritdoc/>
-public sealed class TenantService : global::Courier.Services.Users.ITenantService
+public sealed class TenantService : ITenantService
 {
-    readonly Lazy<global::Courier.Services.Users.ITenantServiceWithRawResponse> _withRawResponse;
+    readonly Lazy<ITenantServiceWithRawResponse> _withRawResponse;
 
     /// <inheritdoc/>
-    public global::Courier.Services.Users.ITenantServiceWithRawResponse WithRawResponse
+    public ITenantServiceWithRawResponse WithRawResponse
     {
         get { return _withRawResponse.Value; }
     }
@@ -22,20 +22,16 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
     readonly ICourierClient _client;
 
     /// <inheritdoc/>
-    public global::Courier.Services.Users.ITenantService WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    )
+    public ITenantService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new global::Courier.Services.Users.TenantService(this._client.WithOptions(modifier));
+        return new TenantService(this._client.WithOptions(modifier));
     }
 
     public TenantService(ICourierClient client)
     {
         _client = client;
 
-        _withRawResponse = new(() =>
-            new global::Courier.Services.Users.TenantServiceWithRawResponse(client.WithRawResponse)
-        );
+        _withRawResponse = new(() => new TenantServiceWithRawResponse(client.WithRawResponse));
     }
 
     /// <inheritdoc/>
@@ -146,19 +142,14 @@ public sealed class TenantService : global::Courier.Services.Users.ITenantServic
 }
 
 /// <inheritdoc/>
-public sealed class TenantServiceWithRawResponse
-    : global::Courier.Services.Users.ITenantServiceWithRawResponse
+public sealed class TenantServiceWithRawResponse : ITenantServiceWithRawResponse
 {
     readonly ICourierClientWithRawResponse _client;
 
     /// <inheritdoc/>
-    public global::Courier.Services.Users.ITenantServiceWithRawResponse WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    )
+    public ITenantServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new global::Courier.Services.Users.TenantServiceWithRawResponse(
-            this._client.WithOptions(modifier)
-        );
+        return new TenantServiceWithRawResponse(this._client.WithOptions(modifier));
     }
 
     public TenantServiceWithRawResponse(ICourierClientWithRawResponse client)

@@ -60,4 +60,18 @@ public class AudienceListMembersParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AudienceListMembersParams
+        {
+            AudienceID = "audience_id",
+            Cursor = "cursor",
+        };
+
+        AudienceListMembersParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

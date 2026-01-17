@@ -24,4 +24,14 @@ public class TokenAddMultipleParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tokens"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TokenAddMultipleParams { UserID = "user_id" };
+
+        TokenAddMultipleParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

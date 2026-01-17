@@ -24,4 +24,14 @@ public class TenantRemoveAllParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tenants"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TenantRemoveAllParams { UserID = "user_id" };
+
+        TenantRemoveAllParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

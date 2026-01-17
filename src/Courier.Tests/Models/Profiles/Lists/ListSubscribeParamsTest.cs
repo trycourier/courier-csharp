@@ -140,4 +140,51 @@ public class ListSubscribeParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/profiles/user_id/lists"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ListSubscribeParams
+        {
+            UserID = "user_id",
+            Lists =
+            [
+                new()
+                {
+                    ListID = "listId",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+            ],
+        };
+
+        ListSubscribeParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

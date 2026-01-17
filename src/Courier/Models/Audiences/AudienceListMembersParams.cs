@@ -10,8 +10,12 @@ namespace Courier.Models.Audiences;
 
 /// <summary>
 /// Get list of members of an audience.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class AudienceListMembersParams : ParamsBase
+public record class AudienceListMembersParams : ParamsBase
 {
     public string? AudienceID { get; init; }
 
@@ -30,11 +34,14 @@ public sealed record class AudienceListMembersParams : ParamsBase
 
     public AudienceListMembersParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AudienceListMembersParams(AudienceListMembersParams audienceListMembersParams)
         : base(audienceListMembersParams)
     {
         this.AudienceID = audienceListMembersParams.AudienceID;
     }
+#pragma warning restore CS8618
 
     public AudienceListMembersParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -69,6 +76,28 @@ public sealed record class AudienceListMembersParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["AudienceID"] = this.AudienceID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(AudienceListMembersParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.AudienceID?.Equals(other.AudienceID) ?? other.AudienceID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -87,5 +116,10 @@ public sealed record class AudienceListMembersParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

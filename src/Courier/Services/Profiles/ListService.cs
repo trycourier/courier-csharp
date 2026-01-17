@@ -9,12 +9,12 @@ using Courier.Models.Profiles.Lists;
 namespace Courier.Services.Profiles;
 
 /// <inheritdoc/>
-public sealed class ListService : global::Courier.Services.Profiles.IListService
+public sealed class ListService : IListService
 {
-    readonly Lazy<global::Courier.Services.Profiles.IListServiceWithRawResponse> _withRawResponse;
+    readonly Lazy<IListServiceWithRawResponse> _withRawResponse;
 
     /// <inheritdoc/>
-    public global::Courier.Services.Profiles.IListServiceWithRawResponse WithRawResponse
+    public IListServiceWithRawResponse WithRawResponse
     {
         get { return _withRawResponse.Value; }
     }
@@ -22,22 +22,16 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
     readonly ICourierClient _client;
 
     /// <inheritdoc/>
-    public global::Courier.Services.Profiles.IListService WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    )
+    public IListService WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new global::Courier.Services.Profiles.ListService(
-            this._client.WithOptions(modifier)
-        );
+        return new ListService(this._client.WithOptions(modifier));
     }
 
     public ListService(ICourierClient client)
     {
         _client = client;
 
-        _withRawResponse = new(() =>
-            new global::Courier.Services.Profiles.ListServiceWithRawResponse(client.WithRawResponse)
-        );
+        _withRawResponse = new(() => new ListServiceWithRawResponse(client.WithRawResponse));
     }
 
     /// <inheritdoc/>
@@ -112,19 +106,14 @@ public sealed class ListService : global::Courier.Services.Profiles.IListService
 }
 
 /// <inheritdoc/>
-public sealed class ListServiceWithRawResponse
-    : global::Courier.Services.Profiles.IListServiceWithRawResponse
+public sealed class ListServiceWithRawResponse : IListServiceWithRawResponse
 {
     readonly ICourierClientWithRawResponse _client;
 
     /// <inheritdoc/>
-    public global::Courier.Services.Profiles.IListServiceWithRawResponse WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    )
+    public IListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
-        return new global::Courier.Services.Profiles.ListServiceWithRawResponse(
-            this._client.WithOptions(modifier)
-        );
+        return new ListServiceWithRawResponse(this._client.WithOptions(modifier));
     }
 
     public ListServiceWithRawResponse(ICourierClientWithRawResponse client)

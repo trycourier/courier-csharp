@@ -13,18 +13,25 @@ namespace Courier.Models.Messages;
 /// API call to the cancel message API will return either `200` status code for a
 /// successful cancellation or `409` status code for an unsuccessful cancellation.
 /// Both cases will include the actual message record in the response body (see details below).
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class MessageCancelParams : ParamsBase
+public record class MessageCancelParams : ParamsBase
 {
     public string? MessageID { get; init; }
 
     public MessageCancelParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageCancelParams(MessageCancelParams messageCancelParams)
         : base(messageCancelParams)
     {
         this.MessageID = messageCancelParams.MessageID;
     }
+#pragma warning restore CS8618
 
     public MessageCancelParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -59,6 +66,28 @@ public sealed record class MessageCancelParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["MessageID"] = this.MessageID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(MessageCancelParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.MessageID?.Equals(other.MessageID) ?? other.MessageID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -77,5 +106,10 @@ public sealed record class MessageCancelParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

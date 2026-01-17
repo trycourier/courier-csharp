@@ -24,4 +24,14 @@ public class AudienceDeleteParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/audiences/audience_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AudienceDeleteParams { AudienceID = "audience_id" };
+
+        AudienceDeleteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

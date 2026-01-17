@@ -10,18 +10,25 @@ namespace Courier.Models.Tenants;
 
 /// <summary>
 /// Delete a Tenant
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class TenantDeleteParams : ParamsBase
+public record class TenantDeleteParams : ParamsBase
 {
     public string? TenantID { get; init; }
 
     public TenantDeleteParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TenantDeleteParams(TenantDeleteParams tenantDeleteParams)
         : base(tenantDeleteParams)
     {
         this.TenantID = tenantDeleteParams.TenantID;
     }
+#pragma warning restore CS8618
 
     public TenantDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -56,6 +63,28 @@ public sealed record class TenantDeleteParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["TenantID"] = this.TenantID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(TenantDeleteParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.TenantID?.Equals(other.TenantID) ?? other.TenantID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -73,5 +102,10 @@ public sealed record class TenantDeleteParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

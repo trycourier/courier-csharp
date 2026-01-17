@@ -10,8 +10,12 @@ namespace Courier.Models.AuditEvents;
 
 /// <summary>
 /// Fetch the list of audit events
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class AuditEventListParams : ParamsBase
+public record class AuditEventListParams : ParamsBase
 {
     /// <summary>
     /// A unique identifier that allows for fetching the next set of audit events.
@@ -28,8 +32,11 @@ public sealed record class AuditEventListParams : ParamsBase
 
     public AuditEventListParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AuditEventListParams(AuditEventListParams auditEventListParams)
         : base(auditEventListParams) { }
+#pragma warning restore CS8618
 
     public AuditEventListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -64,6 +71,26 @@ public sealed record class AuditEventListParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(AuditEventListParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/audit-events")
@@ -79,5 +106,10 @@ public sealed record class AuditEventListParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

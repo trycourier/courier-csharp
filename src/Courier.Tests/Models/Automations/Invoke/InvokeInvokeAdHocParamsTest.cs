@@ -256,6 +256,57 @@ public class InvokeInvokeAdHocParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/automations/invoke"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new Invoke::InvokeInvokeAdHocParams
+        {
+            Automation = new()
+            {
+                Steps =
+                [
+                    new Invoke::AutomationDelayStep()
+                    {
+                        Action = Invoke::Action.Delay,
+                        Duration = "duration",
+                        Until = "20240408T080910.123",
+                    },
+                    new Invoke::AutomationSendStep()
+                    {
+                        Action = Invoke::AutomationSendStepAction.Send,
+                        Brand = "brand",
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Profile = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Recipient = "recipient",
+                        Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                    },
+                ],
+                CancelationToken = "delay-send--user-yes--abc-123",
+            },
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "name", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "tenant_id", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "user-yes",
+            Template = "template",
+        };
+
+        Invoke::InvokeInvokeAdHocParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class AutomationTest : TestBase

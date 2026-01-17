@@ -24,4 +24,14 @@ public class ProfileRetrieveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/profiles/user_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ProfileRetrieveParams { UserID = "user_id" };
+
+        ProfileRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

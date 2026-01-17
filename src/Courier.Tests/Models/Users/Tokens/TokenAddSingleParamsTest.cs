@@ -197,6 +197,40 @@ public class TokenAddSingleParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tokens/token"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TokenAddSingleParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            TokenValue = "token",
+            ProviderKey = ProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        TokenAddSingleParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class ProviderKeyTest : TestBase

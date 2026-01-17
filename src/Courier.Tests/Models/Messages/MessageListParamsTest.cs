@@ -240,4 +240,30 @@ public class MessageListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new MessageListParams
+        {
+            Archived = true,
+            Cursor = "cursor",
+            EnqueuedAfter = "enqueued_after",
+            Event = "event",
+            List = "list",
+            MessageID = "messageId",
+            Notification = "notification",
+            Provider = ["string"],
+            Recipient = "recipient",
+            Status = ["string"],
+            Tag = ["string"],
+            Tags = "tags",
+            TenantID = "tenant_id",
+            TraceID = "traceId",
+        };
+
+        MessageListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

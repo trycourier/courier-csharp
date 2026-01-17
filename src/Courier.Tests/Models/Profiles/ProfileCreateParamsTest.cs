@@ -51,4 +51,21 @@ public class ProfileCreateParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/profiles/user_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ProfileCreateParams
+        {
+            UserID = "user_id",
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        ProfileCreateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

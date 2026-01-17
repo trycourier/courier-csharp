@@ -142,4 +142,41 @@ public class TenantUpdateParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/tenants/tenant_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TenantUpdateParams
+        {
+            TenantID = "tenant_id",
+            Name = "name",
+            BrandID = "brand_id",
+            DefaultPreferences = new()
+            {
+                Items =
+                [
+                    new()
+                    {
+                        Status = Status.OptedOut,
+                        CustomRouting = [ChannelClassification.DirectMessage],
+                        HasCustomRouting = true,
+                        ID = "id",
+                    },
+                ],
+            },
+            ParentTenantID = "parent_tenant_id",
+            Properties = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            UserProfile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        TenantUpdateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

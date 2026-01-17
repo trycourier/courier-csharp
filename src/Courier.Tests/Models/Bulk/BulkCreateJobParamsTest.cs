@@ -105,4 +105,41 @@ public class BulkCreateJobParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/bulk"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new BulkCreateJobParams
+        {
+            Message = new()
+            {
+                Event = "event",
+                Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
+                {
+                    {
+                        "foo",
+                        new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        }
+                    },
+                },
+                Override = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Template = "template",
+            },
+        };
+
+        BulkCreateJobParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

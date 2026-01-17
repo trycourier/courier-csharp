@@ -15,9 +15,13 @@ namespace Courier.Models.Bulk;
 ///
 /// <para>**Important**: For email-based bulk jobs, each user must include `profile.email`
 ///  for provider routing to work correctly. The `to.email` field is not sufficient
-///  for email provider routing. </para>
+///  for email provider routing.</para>
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class BulkAddUsersParams : ParamsBase
+public record class BulkAddUsersParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -47,6 +51,8 @@ public sealed record class BulkAddUsersParams : ParamsBase
 
     public BulkAddUsersParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BulkAddUsersParams(BulkAddUsersParams bulkAddUsersParams)
         : base(bulkAddUsersParams)
     {
@@ -54,6 +60,7 @@ public sealed record class BulkAddUsersParams : ParamsBase
 
         this._rawBodyData = new(bulkAddUsersParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public BulkAddUsersParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -94,6 +101,30 @@ public sealed record class BulkAddUsersParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["JobID"] = this.JobID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(BulkAddUsersParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.JobID?.Equals(other.JobID) ?? other.JobID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -120,5 +151,10 @@ public sealed record class BulkAddUsersParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

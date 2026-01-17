@@ -48,4 +48,14 @@ public class ListListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/lists?cursor=cursor&pattern=pattern"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ListListParams { Cursor = "cursor", Pattern = "pattern" };
+
+        ListListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

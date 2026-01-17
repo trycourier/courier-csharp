@@ -24,4 +24,14 @@ public class NotificationRetrieveContentParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/notifications/id/content"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new NotificationRetrieveContentParams { ID = "id" };
+
+        NotificationRetrieveContentParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

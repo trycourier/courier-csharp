@@ -8,7 +8,12 @@ using Courier.Core;
 
 namespace Courier.Models.Notifications.Checks;
 
-public sealed record class CheckDeleteParams : ParamsBase
+/// <summary>
+/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
+/// changes in non-major versions. We may add new methods in the future that cause
+/// existing derived classes to break.
+/// </summary>
+public record class CheckDeleteParams : ParamsBase
 {
     public required string ID { get; init; }
 
@@ -16,12 +21,15 @@ public sealed record class CheckDeleteParams : ParamsBase
 
     public CheckDeleteParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public CheckDeleteParams(CheckDeleteParams checkDeleteParams)
         : base(checkDeleteParams)
     {
         this.ID = checkDeleteParams.ID;
         this.SubmissionID = checkDeleteParams.SubmissionID;
     }
+#pragma warning restore CS8618
 
     public CheckDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -56,6 +64,30 @@ public sealed record class CheckDeleteParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["ID"] = this.ID,
+                ["SubmissionID"] = this.SubmissionID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(CheckDeleteParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.ID.Equals(other.ID)
+            && (this.SubmissionID?.Equals(other.SubmissionID) ?? other.SubmissionID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -74,5 +106,10 @@ public sealed record class CheckDeleteParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

@@ -24,4 +24,14 @@ public class DraftRetrieveContentParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/notifications/id/draft/content"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new DraftRetrieveContentParams { ID = "id" };
+
+        DraftRetrieveContentParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

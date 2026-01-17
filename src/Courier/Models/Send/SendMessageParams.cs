@@ -14,8 +14,12 @@ namespace Courier.Models.Send;
 
 /// <summary>
 /// Send a message to one or more recipients.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class SendMessageParams : ParamsBase
+public record class SendMessageParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -39,11 +43,14 @@ public sealed record class SendMessageParams : ParamsBase
 
     public SendMessageParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SendMessageParams(SendMessageParams sendMessageParams)
         : base(sendMessageParams)
     {
         this._rawBodyData = new(sendMessageParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public SendMessageParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -84,6 +91,28 @@ public sealed record class SendMessageParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(SendMessageParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/send")
@@ -108,6 +137,11 @@ public sealed record class SendMessageParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -227,14 +261,12 @@ public sealed record class Message : JsonModel
         init { this._rawData.Set("metadata", value); }
     }
 
-    public global::Courier.Models.Send.Preferences? Preferences
+    public Preferences? Preferences
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<global::Courier.Models.Send.Preferences>(
-                "preferences"
-            );
+            return this._rawData.GetNullableClass<Preferences>("preferences");
         }
         init { this._rawData.Set("preferences", value); }
     }
@@ -1388,12 +1420,7 @@ class MessageMetadataFromRaw : IFromRawJson<MessageMetadata>
         MessageMetadata.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Courier.Models.Send.Preferences,
-        global::Courier.Models.Send.PreferencesFromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<Preferences, PreferencesFromRaw>))]
 public sealed record class Preferences : JsonModel
 {
     /// <summary>
@@ -1417,7 +1444,7 @@ public sealed record class Preferences : JsonModel
 
     public Preferences() { }
 
-    public Preferences(global::Courier.Models.Send.Preferences preferences)
+    public Preferences(Preferences preferences)
         : base(preferences) { }
 
     public Preferences(IReadOnlyDictionary<string, JsonElement> rawData)
@@ -1433,10 +1460,8 @@ public sealed record class Preferences : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Courier.Models.Send.PreferencesFromRaw.FromRawUnchecked"/>
-    public static global::Courier.Models.Send.Preferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="PreferencesFromRaw.FromRawUnchecked"/>
+    public static Preferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
@@ -1449,12 +1474,11 @@ public sealed record class Preferences : JsonModel
     }
 }
 
-class PreferencesFromRaw : IFromRawJson<global::Courier.Models.Send.Preferences>
+class PreferencesFromRaw : IFromRawJson<Preferences>
 {
     /// <inheritdoc/>
-    public global::Courier.Models.Send.Preferences FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Courier.Models.Send.Preferences.FromRawUnchecked(rawData);
+    public Preferences FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Preferences.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(JsonModelConverter<ProvidersItem, ProvidersItemFromRaw>))]
@@ -1636,14 +1660,12 @@ public sealed record class Routing : JsonModel
         }
     }
 
-    public required ApiEnum<string, global::Courier.Models.Send.Method> Method
+    public required ApiEnum<string, Method> Method
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, global::Courier.Models.Send.Method>
-            >("method");
+            return this._rawData.GetNotNullClass<ApiEnum<string, Method>>("method");
         }
         init { this._rawData.Set("method", value); }
     }
@@ -1690,16 +1712,16 @@ class RoutingFromRaw : IFromRawJson<Routing>
         Routing.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(global::Courier.Models.Send.MethodConverter))]
+[JsonConverter(typeof(MethodConverter))]
 public enum Method
 {
     All,
     Single,
 }
 
-sealed class MethodConverter : JsonConverter<global::Courier.Models.Send.Method>
+sealed class MethodConverter : JsonConverter<Method>
 {
-    public override global::Courier.Models.Send.Method Read(
+    public override Method Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1707,24 +1729,20 @@ sealed class MethodConverter : JsonConverter<global::Courier.Models.Send.Method>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "all" => global::Courier.Models.Send.Method.All,
-            "single" => global::Courier.Models.Send.Method.Single,
-            _ => (global::Courier.Models.Send.Method)(-1),
+            "all" => Method.All,
+            "single" => Method.Single,
+            _ => (Method)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Courier.Models.Send.Method value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Method value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Courier.Models.Send.Method.All => "all",
-                global::Courier.Models.Send.Method.Single => "single",
+                Method.All => "all",
+                Method.Single => "single",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

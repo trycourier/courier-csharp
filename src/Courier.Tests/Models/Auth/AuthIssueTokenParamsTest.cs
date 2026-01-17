@@ -37,4 +37,19 @@ public class AuthIssueTokenParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/auth/issue-token"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AuthIssueTokenParams
+        {
+            ExpiresIn = "$YOUR_NUMBER days",
+            Scope =
+                "user_id:$YOUR_USER_ID write:user-tokens inbox:read:messages inbox:write:events read:preferences write:preferences read:brands",
+        };
+
+        AuthIssueTokenParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

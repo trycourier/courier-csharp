@@ -117,4 +117,28 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/automations/templateId/invoke"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new InvokeInvokeByTemplateParams
+        {
+            TemplateID = "templateId",
+            Recipient = "recipient",
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Template = "template",
+        };
+
+        InvokeInvokeByTemplateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

@@ -72,4 +72,22 @@ public class TenantAddSingleParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tenants/tenant_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TenantAddSingleParams
+        {
+            UserID = "user_id",
+            TenantID = "tenant_id",
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        TenantAddSingleParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
