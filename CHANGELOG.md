@@ -1,5 +1,25 @@
 # Changelog
 
+## 5.3.0 (2026-01-17)
+
+Full Changelog: [v5.2.0...v5.3.0](https://github.com/trycourier/courier-csharp/compare/v5.2.0...v5.3.0)
+
+### Features
+
+* **client:** add `ToString` to `ApiEnum` ([afae7cb](https://github.com/trycourier/courier-csharp/commit/afae7cbcdd55579b25181b4a18b219516df860ac))
+* **client:** add Equals and ToString to params ([111ddf3](https://github.com/trycourier/courier-csharp/commit/111ddf3b539a5019db0ec88157585dd8fbdc4389))
+
+
+### Bug Fixes
+
+* **ci:** don't throw an error about missing lsof ([1677a29](https://github.com/trycourier/courier-csharp/commit/1677a29c8ca275b6a612623e9a709acbd28f29cb))
+
+
+### Chores
+
+* **internal:** simplify imports ([85e6232](https://github.com/trycourier/courier-csharp/commit/85e6232e04704906c159b7ef8f121d032a7ced57))
+* **internal:** update `actions/checkout` version ([853c44c](https://github.com/trycourier/courier-csharp/commit/853c44cf00ccd9a0731569edd1386b6e7c6936ce))
+
 ## 5.2.0 (2026-01-14)
 
 Full Changelog: [v5.1.0...v5.2.0](https://github.com/trycourier/courier-csharp/compare/v5.1.0...v5.2.0)
