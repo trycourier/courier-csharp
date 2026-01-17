@@ -65,6 +65,28 @@ public class ProfileUpdateParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/profiles/user_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ProfileUpdateParams
+        {
+            UserID = "user_id",
+            Patch =
+            [
+                new()
+                {
+                    Op = "op",
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+        };
+
+        ProfileUpdateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class PatchTest : TestBase

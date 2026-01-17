@@ -24,4 +24,14 @@ public class AuditEventRetrieveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/audit-events/audit-event-id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AuditEventRetrieveParams { AuditEventID = "audit-event-id" };
+
+        AuditEventRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

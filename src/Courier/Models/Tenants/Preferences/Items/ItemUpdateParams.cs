@@ -14,8 +14,12 @@ namespace Courier.Models.Tenants.Preferences.Items;
 
 /// <summary>
 /// Create or Replace Default Preferences For Topic
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class ItemUpdateParams : ParamsBase
+public record class ItemUpdateParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -74,6 +78,8 @@ public sealed record class ItemUpdateParams : ParamsBase
 
     public ItemUpdateParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ItemUpdateParams(ItemUpdateParams itemUpdateParams)
         : base(itemUpdateParams)
     {
@@ -82,6 +88,7 @@ public sealed record class ItemUpdateParams : ParamsBase
 
         this._rawBodyData = new(itemUpdateParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public ItemUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -122,6 +129,32 @@ public sealed record class ItemUpdateParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["TenantID"] = this.TenantID,
+                ["TopicID"] = this.TopicID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(ItemUpdateParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.TenantID.Equals(other.TenantID)
+            && (this.TopicID?.Equals(other.TopicID) ?? other.TopicID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(
@@ -153,6 +186,11 @@ public sealed record class ItemUpdateParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 

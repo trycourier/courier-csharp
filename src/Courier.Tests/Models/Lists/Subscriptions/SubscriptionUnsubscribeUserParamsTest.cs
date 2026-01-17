@@ -34,4 +34,18 @@ public class SubscriptionUnsubscribeUserParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/lists/list_id/subscriptions/user_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SubscriptionUnsubscribeUserParams
+        {
+            ListID = "list_id",
+            UserID = "user_id",
+        };
+
+        SubscriptionUnsubscribeUserParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

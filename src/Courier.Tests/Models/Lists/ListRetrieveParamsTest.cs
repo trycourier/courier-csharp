@@ -24,4 +24,14 @@ public class ListRetrieveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/lists/list_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ListRetrieveParams { ListID = "list_id" };
+
+        ListRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

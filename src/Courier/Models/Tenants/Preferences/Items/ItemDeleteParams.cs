@@ -10,8 +10,12 @@ namespace Courier.Models.Tenants.Preferences.Items;
 
 /// <summary>
 /// Remove Default Preferences For Topic
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class ItemDeleteParams : ParamsBase
+public record class ItemDeleteParams : ParamsBase
 {
     public required string TenantID { get; init; }
 
@@ -19,12 +23,15 @@ public sealed record class ItemDeleteParams : ParamsBase
 
     public ItemDeleteParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ItemDeleteParams(ItemDeleteParams itemDeleteParams)
         : base(itemDeleteParams)
     {
         this.TenantID = itemDeleteParams.TenantID;
         this.TopicID = itemDeleteParams.TopicID;
     }
+#pragma warning restore CS8618
 
     public ItemDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -59,6 +66,30 @@ public sealed record class ItemDeleteParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["TenantID"] = this.TenantID,
+                ["TopicID"] = this.TopicID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(ItemDeleteParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.TenantID.Equals(other.TenantID)
+            && (this.TopicID?.Equals(other.TopicID) ?? other.TopicID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -81,5 +112,10 @@ public sealed record class ItemDeleteParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

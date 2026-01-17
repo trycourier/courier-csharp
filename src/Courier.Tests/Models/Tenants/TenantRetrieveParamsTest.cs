@@ -24,4 +24,14 @@ public class TenantRetrieveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/tenants/tenant_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TenantRetrieveParams { TenantID = "tenant_id" };
+
+        TenantRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

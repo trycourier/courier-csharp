@@ -37,4 +37,18 @@ public class TemplateRetrieveParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TemplateRetrieveParams
+        {
+            TenantID = "tenant_id",
+            TemplateID = "template_id",
+        };
+
+        TemplateRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

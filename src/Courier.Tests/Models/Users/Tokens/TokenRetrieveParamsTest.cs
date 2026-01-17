@@ -26,4 +26,14 @@ public class TokenRetrieveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tokens/token"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TokenRetrieveParams { UserID = "user_id", Token = "token" };
+
+        TokenRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

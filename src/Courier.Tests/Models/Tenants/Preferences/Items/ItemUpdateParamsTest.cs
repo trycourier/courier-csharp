@@ -95,6 +95,23 @@ public class ItemUpdateParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ItemUpdateParams
+        {
+            TenantID = "tenant_id",
+            TopicID = "topic_id",
+            Status = Status.OptedIn,
+            CustomRouting = [ChannelClassification.Inbox],
+            HasCustomRouting = true,
+        };
+
+        ItemUpdateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class StatusTest : TestBase

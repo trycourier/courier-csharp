@@ -52,4 +52,14 @@ public class SubscriptionListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new SubscriptionListParams { ListID = "list_id", Cursor = "cursor" };
+
+        SubscriptionListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

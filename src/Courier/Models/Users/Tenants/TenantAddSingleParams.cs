@@ -14,8 +14,12 @@ namespace Courier.Models.Users.Tenants;
 ///
 /// <para>A custom profile can also be supplied with the tenant.  This profile will
 /// be merged with the user's main profile  when sending to the user with that tenant.</para>
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class TenantAddSingleParams : ParamsBase
+public record class TenantAddSingleParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -47,6 +51,8 @@ public sealed record class TenantAddSingleParams : ParamsBase
 
     public TenantAddSingleParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TenantAddSingleParams(TenantAddSingleParams tenantAddSingleParams)
         : base(tenantAddSingleParams)
     {
@@ -55,6 +61,7 @@ public sealed record class TenantAddSingleParams : ParamsBase
 
         this._rawBodyData = new(tenantAddSingleParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public TenantAddSingleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -95,6 +102,32 @@ public sealed record class TenantAddSingleParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["UserID"] = this.UserID,
+                ["TenantID"] = this.TenantID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(TenantAddSingleParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.UserID.Equals(other.UserID)
+            && (this.TenantID?.Equals(other.TenantID) ?? other.TenantID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -122,5 +155,10 @@ public sealed record class TenantAddSingleParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
