@@ -71,4 +71,19 @@ public class PreferenceRetrieveTopicParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new PreferenceRetrieveTopicParams
+        {
+            UserID = "user_id",
+            TopicID = "topic_id",
+            TenantID = "tenant_id",
+        };
+
+        PreferenceRetrieveTopicParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

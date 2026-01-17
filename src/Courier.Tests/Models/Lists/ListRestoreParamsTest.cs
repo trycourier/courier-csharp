@@ -24,4 +24,14 @@ public class ListRestoreParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/lists/list_id/restore"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ListRestoreParams { ListID = "list_id" };
+
+        ListRestoreParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

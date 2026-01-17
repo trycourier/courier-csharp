@@ -12,8 +12,12 @@ namespace Courier.Models.Profiles;
 /// <summary>
 /// Merge the supplied values with an existing profile or create a new profile if
 /// one doesn't already exist.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class ProfileCreateParams : ParamsBase
+public record class ProfileCreateParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -43,6 +47,8 @@ public sealed record class ProfileCreateParams : ParamsBase
 
     public ProfileCreateParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ProfileCreateParams(ProfileCreateParams profileCreateParams)
         : base(profileCreateParams)
     {
@@ -50,6 +56,7 @@ public sealed record class ProfileCreateParams : ParamsBase
 
         this._rawBodyData = new(profileCreateParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public ProfileCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -90,6 +97,30 @@ public sealed record class ProfileCreateParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["UserID"] = this.UserID,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(ProfileCreateParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.UserID?.Equals(other.UserID) ?? other.UserID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -116,5 +147,10 @@ public sealed record class ProfileCreateParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }

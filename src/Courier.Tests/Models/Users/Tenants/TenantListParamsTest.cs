@@ -69,4 +69,19 @@ public class TenantListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TenantListParams
+        {
+            UserID = "user_id",
+            Cursor = "cursor",
+            Limit = 0,
+        };
+
+        TenantListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

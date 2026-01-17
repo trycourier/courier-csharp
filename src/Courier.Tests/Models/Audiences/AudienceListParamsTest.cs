@@ -42,4 +42,14 @@ public class AudienceListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/audiences?cursor=cursor"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AudienceListParams { Cursor = "cursor" };
+
+        AudienceListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

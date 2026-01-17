@@ -24,4 +24,14 @@ public class TokenListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tokens"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TokenListParams { UserID = "user_id" };
+
+        TokenListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

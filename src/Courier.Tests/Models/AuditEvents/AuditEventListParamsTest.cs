@@ -42,4 +42,14 @@ public class AuditEventListParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/audit-events?cursor=cursor"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AuditEventListParams { Cursor = "cursor" };
+
+        AuditEventListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

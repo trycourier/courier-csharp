@@ -49,4 +49,14 @@ public class BulkListUsersParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/bulk/job_id/users?cursor=cursor"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new BulkListUsersParams { JobID = "job_id", Cursor = "cursor" };
+
+        BulkListUsersParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
