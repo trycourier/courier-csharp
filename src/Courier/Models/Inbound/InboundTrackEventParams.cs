@@ -167,7 +167,7 @@ public sealed record class InboundTrackEventParams : ParamsBase
     }
 }
 
-[JsonConverter(typeof(global::Courier.Models.Inbound.TypeConverter))]
+[JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
     Track,

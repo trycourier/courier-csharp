@@ -119,7 +119,7 @@ class TenantAssociationFromRaw : IFromRawJson<TenantAssociation>
         TenantAssociation.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(global::Courier.Models.Tenants.TypeConverter))]
+[JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
     User,

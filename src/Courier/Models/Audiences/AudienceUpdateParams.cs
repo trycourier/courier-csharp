@@ -66,14 +66,12 @@ public sealed record class AudienceUpdateParams : ParamsBase
     /// <summary>
     /// The logical operator (AND/OR) for the top-level filter
     /// </summary>
-    public ApiEnum<string, global::Courier.Models.Audiences.Operator>? Operator
+    public ApiEnum<string, Operator>? Operator
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<
-                ApiEnum<string, global::Courier.Models.Audiences.Operator>
-            >("operator");
+            return this._rawBodyData.GetNullableClass<ApiEnum<string, Operator>>("operator");
         }
         init { this._rawBodyData.Set("operator", value); }
     }
@@ -160,16 +158,16 @@ public sealed record class AudienceUpdateParams : ParamsBase
 /// <summary>
 /// The logical operator (AND/OR) for the top-level filter
 /// </summary>
-[JsonConverter(typeof(global::Courier.Models.Audiences.OperatorConverter))]
+[JsonConverter(typeof(OperatorConverter))]
 public enum Operator
 {
     And,
     Or,
 }
 
-sealed class OperatorConverter : JsonConverter<global::Courier.Models.Audiences.Operator>
+sealed class OperatorConverter : JsonConverter<Operator>
 {
-    public override global::Courier.Models.Audiences.Operator Read(
+    public override Operator Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -177,24 +175,20 @@ sealed class OperatorConverter : JsonConverter<global::Courier.Models.Audiences.
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "AND" => global::Courier.Models.Audiences.Operator.And,
-            "OR" => global::Courier.Models.Audiences.Operator.Or,
-            _ => (global::Courier.Models.Audiences.Operator)(-1),
+            "AND" => Operator.And,
+            "OR" => Operator.Or,
+            _ => (Operator)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Courier.Models.Audiences.Operator value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Operator value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Courier.Models.Audiences.Operator.And => "AND",
-                global::Courier.Models.Audiences.Operator.Or => "OR",
+                Operator.And => "AND",
+                Operator.Or => "OR",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

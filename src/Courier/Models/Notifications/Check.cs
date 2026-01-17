@@ -30,14 +30,12 @@ public sealed record class Check : JsonModel
         init { this._rawData.Set("status", value); }
     }
 
-    public required ApiEnum<string, global::Courier.Models.Notifications.Type> Type
+    public required ApiEnum<string, Type> Type
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, global::Courier.Models.Notifications.Type>
-            >("type");
+            return this._rawData.GetNotNullClass<ApiEnum<string, Type>>("type");
         }
         init { this._rawData.Set("type", value); }
     }
@@ -101,12 +99,7 @@ class CheckFromRaw : IFromRawJson<Check>
         Check.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Courier.Models.Notifications.IntersectionMember1,
-        global::Courier.Models.Notifications.IntersectionMember1FromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<IntersectionMember1, IntersectionMember1FromRaw>))]
 public sealed record class IntersectionMember1 : JsonModel
 {
     public required long Updated
@@ -127,9 +120,7 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(
-        global::Courier.Models.Notifications.IntersectionMember1 intersectionMember1
-    )
+    public IntersectionMember1(IntersectionMember1 intersectionMember1)
         : base(intersectionMember1) { }
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
@@ -145,8 +136,8 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Courier.Models.Notifications.IntersectionMember1FromRaw.FromRawUnchecked"/>
-    public static global::Courier.Models.Notifications.IntersectionMember1 FromRawUnchecked(
+    /// <inheritdoc cref="IntersectionMember1FromRaw.FromRawUnchecked"/>
+    public static IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -161,11 +152,9 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 }
 
-class IntersectionMember1FromRaw
-    : IFromRawJson<global::Courier.Models.Notifications.IntersectionMember1>
+class IntersectionMember1FromRaw : IFromRawJson<IntersectionMember1>
 {
     /// <inheritdoc/>
-    public global::Courier.Models.Notifications.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Courier.Models.Notifications.IntersectionMember1.FromRawUnchecked(rawData);
+    public IntersectionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        IntersectionMember1.FromRawUnchecked(rawData);
 }
