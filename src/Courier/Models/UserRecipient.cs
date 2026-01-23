@@ -158,8 +158,11 @@ public sealed record class UserRecipient : JsonModel
 
     public UserRecipient() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public UserRecipient(UserRecipient userRecipient)
         : base(userRecipient) { }
+#pragma warning restore CS8618
 
     public UserRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -256,8 +259,11 @@ public sealed record class Preferences : JsonModel
 
     public Preferences() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Preferences(Preferences preferences)
         : base(preferences) { }
+#pragma warning restore CS8618
 
     public Preferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {

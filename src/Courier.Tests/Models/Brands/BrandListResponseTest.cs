@@ -462,4 +462,81 @@ public class BrandListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BrandListResponse
+        {
+            Paging = new() { More = true, Cursor = "cursor" },
+            Results =
+            [
+                new()
+                {
+                    ID = "id",
+                    Created = 0,
+                    Name = "name",
+                    Updated = 0,
+                    Published = 0,
+                    Settings = new()
+                    {
+                        Colors = new() { Primary = "primary", Secondary = "secondary" },
+                        Email = new()
+                        {
+                            Footer = new() { Content = "content", InheritDefault = true },
+                            Head = new() { InheritDefault = true, Content = "content" },
+                            Header = new()
+                            {
+                                Logo = new() { Href = "href", Image = "image" },
+                                BarColor = "barColor",
+                                InheritDefault = true,
+                            },
+                            TemplateOverride = new()
+                            {
+                                Enabled = true,
+                                BackgroundColor = "backgroundColor",
+                                BlocksBackgroundColor = "blocksBackgroundColor",
+                                Footer = "footer",
+                                Head = "head",
+                                Header = "header",
+                                Width = "width",
+                                Mjml = new()
+                                {
+                                    Enabled = true,
+                                    BackgroundColor = "backgroundColor",
+                                    BlocksBackgroundColor = "blocksBackgroundColor",
+                                    Footer = "footer",
+                                    Head = "head",
+                                    Header = "header",
+                                    Width = "width",
+                                },
+                                FooterBackgroundColor = "footerBackgroundColor",
+                                FooterFullWidth = true,
+                            },
+                        },
+                        Inapp = new()
+                        {
+                            Colors = new() { Primary = "primary", Secondary = "secondary" },
+                            Icons = new() { Bell = "bell", Message = "message" },
+                            WidgetBackground = new()
+                            {
+                                BottomColor = "bottomColor",
+                                TopColor = "topColor",
+                            },
+                            BorderRadius = "borderRadius",
+                            DisableMessageIcon = true,
+                            FontFamily = "fontFamily",
+                            Placement = Placement.Top,
+                        },
+                    },
+                    Snippets = new() { Items = [new() { Name = "name", Value = "value" }] },
+                    Version = "version",
+                },
+            ],
+        };
+
+        BrandListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

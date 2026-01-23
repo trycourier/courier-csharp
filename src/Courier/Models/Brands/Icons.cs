@@ -39,8 +39,11 @@ public sealed record class Icons : JsonModel
 
     public Icons() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Icons(Icons icons)
         : base(icons) { }
+#pragma warning restore CS8618
 
     public Icons(IReadOnlyDictionary<string, JsonElement> rawData)
     {

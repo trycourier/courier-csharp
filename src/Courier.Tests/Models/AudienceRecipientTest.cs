@@ -223,4 +223,30 @@ public class AudienceRecipientTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AudienceRecipient
+        {
+            AudienceID = "audience_id",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Filters =
+            [
+                new()
+                {
+                    Operator = Operator.MemberOf,
+                    Path = Path.AccountID,
+                    Value = "value",
+                },
+            ],
+        };
+
+        AudienceRecipient copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

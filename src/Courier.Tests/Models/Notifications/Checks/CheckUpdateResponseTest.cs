@@ -130,4 +130,26 @@ public class CheckUpdateResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new CheckUpdateResponse
+        {
+            Checks =
+            [
+                new()
+                {
+                    ID = "id",
+                    Status = Status.Resolved,
+                    Type = Type.Custom,
+                    Updated = 0,
+                },
+            ],
+        };
+
+        CheckUpdateResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

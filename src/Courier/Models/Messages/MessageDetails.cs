@@ -193,8 +193,11 @@ public sealed record class MessageDetails : JsonModel
 
     public MessageDetails() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageDetails(MessageDetails messageDetails)
         : base(messageDetails) { }
+#pragma warning restore CS8618
 
     public MessageDetails(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -54,4 +54,14 @@ public class AuthIssueTokenResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AuthIssueTokenResponse { Token = "token" };
+
+        AuthIssueTokenResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

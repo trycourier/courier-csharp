@@ -150,4 +150,29 @@ public class AuditEventListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AuditEventListResponse
+        {
+            Paging = new() { More = true, Cursor = "cursor" },
+            Results =
+            [
+                new()
+                {
+                    Actor = new() { ID = "id", Email = "email" },
+                    AuditEventID = "auditEventId",
+                    Source = "source",
+                    Target = "target",
+                    Timestamp = "timestamp",
+                    Type = "type",
+                },
+            ],
+        };
+
+        AuditEventListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

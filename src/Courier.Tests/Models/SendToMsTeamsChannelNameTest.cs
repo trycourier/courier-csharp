@@ -90,4 +90,20 @@ public class SendToMsTeamsChannelNameTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            ServiceUrl = "service_url",
+            TeamID = "team_id",
+            TenantID = "tenant_id",
+        };
+
+        SendToMsTeamsChannelName copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

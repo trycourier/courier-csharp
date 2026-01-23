@@ -130,4 +130,26 @@ public class CheckListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new CheckListResponse
+        {
+            Checks =
+            [
+                new()
+                {
+                    ID = "id",
+                    Status = Status.Resolved,
+                    Type = Type.Custom,
+                    Updated = 0,
+                },
+            ],
+        };
+
+        CheckListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

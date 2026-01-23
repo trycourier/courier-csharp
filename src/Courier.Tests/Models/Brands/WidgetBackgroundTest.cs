@@ -96,4 +96,14 @@ public class WidgetBackgroundTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new WidgetBackground { BottomColor = "bottomColor", TopColor = "topColor" };
+
+        WidgetBackground copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

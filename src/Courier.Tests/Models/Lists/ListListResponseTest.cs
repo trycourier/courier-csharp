@@ -138,4 +138,27 @@ public class ListListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ListListResponse
+        {
+            Items =
+            [
+                new()
+                {
+                    ID = "id",
+                    Name = "name",
+                    Created = "created",
+                    Updated = "updated",
+                },
+            ],
+            Paging = new() { More = true, Cursor = "cursor" },
+        };
+
+        ListListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

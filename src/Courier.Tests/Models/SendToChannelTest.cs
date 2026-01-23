@@ -54,4 +54,14 @@ public class SendToChannelTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendToChannel { ChannelID = "channel_id" };
+
+        SendToChannel copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -28,8 +28,11 @@ public sealed record class AuthIssueTokenResponse : JsonModel
 
     public AuthIssueTokenResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AuthIssueTokenResponse(AuthIssueTokenResponse authIssueTokenResponse)
         : base(authIssueTokenResponse) { }
+#pragma warning restore CS8618
 
     public AuthIssueTokenResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

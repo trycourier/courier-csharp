@@ -146,4 +146,20 @@ public class WebhookAuthenticationTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new WebhookAuthentication
+        {
+            Mode = WebhookAuthMode.None,
+            Token = "token",
+            Password = "password",
+            Username = "username",
+        };
+
+        WebhookAuthentication copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

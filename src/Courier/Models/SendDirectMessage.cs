@@ -28,8 +28,11 @@ public sealed record class SendDirectMessage : JsonModel
 
     public SendDirectMessage() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SendDirectMessage(SendDirectMessage sendDirectMessage)
         : base(sendDirectMessage) { }
+#pragma warning restore CS8618
 
     public SendDirectMessage(IReadOnlyDictionary<string, JsonElement> rawData)
     {

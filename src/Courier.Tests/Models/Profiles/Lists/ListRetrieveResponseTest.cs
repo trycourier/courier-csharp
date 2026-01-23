@@ -300,6 +300,56 @@ public class ListRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ListRetrieveResponse
+        {
+            Paging = new() { More = true, Cursor = "cursor" },
+            Results =
+            [
+                new()
+                {
+                    ID = "id",
+                    Created = "created",
+                    Name = "name",
+                    Updated = "updated",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+            ],
+        };
+
+        ListRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ResultTest : TestBase
@@ -607,5 +657,48 @@ public class ResultTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Result
+        {
+            ID = "id",
+            Created = "created",
+            Name = "name",
+            Updated = "updated",
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+        };
+
+        Result copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

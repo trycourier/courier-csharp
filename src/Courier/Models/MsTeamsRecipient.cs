@@ -31,8 +31,11 @@ public sealed record class MsTeamsRecipient : JsonModel
 
     public MsTeamsRecipient() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MsTeamsRecipient(MsTeamsRecipient msTeamsRecipient)
         : base(msTeamsRecipient) { }
+#pragma warning restore CS8618
 
     public MsTeamsRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {

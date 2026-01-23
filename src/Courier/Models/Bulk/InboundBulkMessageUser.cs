@@ -102,8 +102,11 @@ public sealed record class InboundBulkMessageUser : JsonModel
 
     public InboundBulkMessageUser() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public InboundBulkMessageUser(InboundBulkMessageUser inboundBulkMessageUser)
         : base(inboundBulkMessageUser) { }
+#pragma warning restore CS8618
 
     public InboundBulkMessageUser(IReadOnlyDictionary<string, JsonElement> rawData)
     {

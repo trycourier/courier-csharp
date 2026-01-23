@@ -39,8 +39,11 @@ public sealed record class Paging : JsonModel
 
     public Paging() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Paging(Paging paging)
         : base(paging) { }
+#pragma warning restore CS8618
 
     public Paging(IReadOnlyDictionary<string, JsonElement> rawData)
     {

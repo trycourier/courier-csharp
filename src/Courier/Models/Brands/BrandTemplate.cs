@@ -94,8 +94,11 @@ public sealed record class BrandTemplate : JsonModel
 
     public BrandTemplate() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrandTemplate(BrandTemplate brandTemplate)
         : base(brandTemplate) { }
+#pragma warning restore CS8618
 
     public BrandTemplate(IReadOnlyDictionary<string, JsonElement> rawData)
     {

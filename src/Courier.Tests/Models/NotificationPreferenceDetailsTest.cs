@@ -159,4 +159,19 @@ public class NotificationPreferenceDetailsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new NotificationPreferenceDetails
+        {
+            Status = PreferenceStatus.OptedIn,
+            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+            Rules = [new() { Until = "until", Start = "start" }],
+        };
+
+        NotificationPreferenceDetails copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

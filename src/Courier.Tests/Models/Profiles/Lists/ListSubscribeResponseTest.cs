@@ -57,6 +57,16 @@ public class ListSubscribeResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ListSubscribeResponse { Status = ListSubscribeResponseStatus.Success };
+
+        ListSubscribeResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ListSubscribeResponseStatusTest : TestBase

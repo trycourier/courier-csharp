@@ -355,6 +355,35 @@ public class AudienceTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Audience
+        {
+            ID = "id",
+            CreatedAt = "created_at",
+            Description = "description",
+            Name = "name",
+            UpdatedAt = "updated_at",
+            Filter = new(
+                [
+                    new()
+                    {
+                        Operator = "operator",
+                        Filters = [],
+                        Path = "path",
+                        Value = "value",
+                    },
+                ]
+            ),
+            Operator = AudienceOperator.And,
+        };
+
+        Audience copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class AudienceOperatorTest : TestBase

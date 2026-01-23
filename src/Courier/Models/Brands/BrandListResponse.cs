@@ -49,8 +49,11 @@ public sealed record class BrandListResponse : JsonModel
 
     public BrandListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrandListResponse(BrandListResponse brandListResponse)
         : base(brandListResponse) { }
+#pragma warning restore CS8618
 
     public BrandListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

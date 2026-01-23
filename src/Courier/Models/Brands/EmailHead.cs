@@ -39,8 +39,11 @@ public sealed record class EmailHead : JsonModel
 
     public EmailHead() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public EmailHead(EmailHead emailHead)
         : base(emailHead) { }
+#pragma warning restore CS8618
 
     public EmailHead(IReadOnlyDictionary<string, JsonElement> rawData)
     {

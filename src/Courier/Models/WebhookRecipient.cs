@@ -31,8 +31,11 @@ public sealed record class WebhookRecipient : JsonModel
 
     public WebhookRecipient() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public WebhookRecipient(WebhookRecipient webhookRecipient)
         : base(webhookRecipient) { }
+#pragma warning restore CS8618
 
     public WebhookRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {

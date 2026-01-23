@@ -439,6 +439,60 @@ public class UserRecipientTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new UserRecipient
+        {
+            AccountID = "account_id",
+            Context = new() { TenantID = "tenant_id" },
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Email = "email",
+            ListID = "list_id",
+            Locale = "locale",
+            PhoneNumber = "phone_number",
+            Preferences = new()
+            {
+                Notifications = new Dictionary<string, Preference>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                            Source = Source.Subscription,
+                        }
+                    },
+                },
+                Categories = new Dictionary<string, Preference>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                            Source = Source.Subscription,
+                        }
+                    },
+                },
+                TemplateID = "templateId",
+            },
+            TenantID = "tenant_id",
+            UserID = "user_id",
+        };
+
+        UserRecipient copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class PreferencesTest : TestBase
@@ -792,5 +846,44 @@ public class PreferencesTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Preferences
+        {
+            Notifications = new Dictionary<string, Preference>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        Status = PreferenceStatus.OptedIn,
+                        ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                        Rules = [new() { Until = "until", Start = "start" }],
+                        Source = Source.Subscription,
+                    }
+                },
+            },
+            Categories = new Dictionary<string, Preference>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        Status = PreferenceStatus.OptedIn,
+                        ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                        Rules = [new() { Until = "until", Start = "start" }],
+                        Source = Source.Subscription,
+                    }
+                },
+            },
+            TemplateID = "templateId",
+        };
+
+        Preferences copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

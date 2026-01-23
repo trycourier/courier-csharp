@@ -38,8 +38,11 @@ public sealed record class CheckListResponse : JsonModel
 
     public CheckListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public CheckListResponse(CheckListResponse checkListResponse)
         : base(checkListResponse) { }
+#pragma warning restore CS8618
 
     public CheckListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

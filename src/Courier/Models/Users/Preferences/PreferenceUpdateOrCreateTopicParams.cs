@@ -226,8 +226,11 @@ public sealed record class Topic : JsonModel
 
     public Topic() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Topic(Topic topic)
         : base(topic) { }
+#pragma warning restore CS8618
 
     public Topic(IReadOnlyDictionary<string, JsonElement> rawData)
     {

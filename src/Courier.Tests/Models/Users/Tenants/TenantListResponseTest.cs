@@ -261,6 +261,36 @@ public class TenantListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TenantListResponse
+        {
+            HasMore = true,
+            Type = Type.List,
+            Url = "url",
+            Cursor = "cursor",
+            Items =
+            [
+                new()
+                {
+                    TenantID = "tenant_id",
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Type = Tenants::Type.User,
+                    UserID = "user_id",
+                },
+            ],
+            NextUrl = "next_url",
+        };
+
+        TenantListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class TypeTest : TestBase

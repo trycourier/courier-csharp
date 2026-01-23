@@ -145,4 +145,21 @@ public class ListPatternRecipientTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ListPatternRecipient
+        {
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            ListPattern = "list_pattern",
+        };
+
+        ListPatternRecipient copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

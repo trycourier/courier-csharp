@@ -68,6 +68,16 @@ public class MessageRoutingTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MessageRouting { Channels = ["string"], Method = Method.All };
+
+        MessageRouting copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class MethodTest : TestBase

@@ -180,4 +180,36 @@ public class AudienceUpdateResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AudienceUpdateResponse
+        {
+            Audience = new()
+            {
+                ID = "id",
+                CreatedAt = "created_at",
+                Description = "description",
+                Name = "name",
+                UpdatedAt = "updated_at",
+                Filter = new(
+                    [
+                        new()
+                        {
+                            Operator = "operator",
+                            Filters = [],
+                            Path = "path",
+                            Value = "value",
+                        },
+                    ]
+                ),
+                Operator = AudienceOperator.And,
+            },
+        };
+
+        AudienceUpdateResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

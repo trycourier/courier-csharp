@@ -212,4 +212,19 @@ public class PatchTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Patch
+        {
+            Op = "op",
+            Path = "path",
+            Value = "value",
+        };
+
+        Patch copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

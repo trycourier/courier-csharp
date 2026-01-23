@@ -34,8 +34,11 @@ public sealed record class SendMessageResponse : JsonModel
 
     public SendMessageResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SendMessageResponse(SendMessageResponse sendMessageResponse)
         : base(sendMessageResponse) { }
+#pragma warning restore CS8618
 
     public SendMessageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

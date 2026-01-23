@@ -99,4 +99,14 @@ public class BrandSnippetsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BrandSnippets { Items = [new() { Name = "name", Value = "value" }] };
+
+        BrandSnippets copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

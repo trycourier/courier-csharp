@@ -161,8 +161,11 @@ public sealed record class ElementalChannelNodeWithType : JsonModel
 
     public ElementalChannelNodeWithType() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalChannelNodeWithType(ElementalChannelNodeWithType elementalChannelNodeWithType)
         : base(elementalChannelNodeWithType) { }
+#pragma warning restore CS8618
 
     public ElementalChannelNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -230,10 +233,13 @@ public sealed record class ElementalChannelNodeWithTypeIntersectionMember1 : Jso
 
     public ElementalChannelNodeWithTypeIntersectionMember1() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalChannelNodeWithTypeIntersectionMember1(
         ElementalChannelNodeWithTypeIntersectionMember1 elementalChannelNodeWithTypeIntersectionMember1
     )
         : base(elementalChannelNodeWithTypeIntersectionMember1) { }
+#pragma warning restore CS8618
 
     public ElementalChannelNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

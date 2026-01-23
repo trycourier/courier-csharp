@@ -54,4 +54,14 @@ public class PreferenceUpdateOrCreateTopicResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new PreferenceUpdateOrCreateTopicResponse { Message = "success" };
+
+        PreferenceUpdateOrCreateTopicResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

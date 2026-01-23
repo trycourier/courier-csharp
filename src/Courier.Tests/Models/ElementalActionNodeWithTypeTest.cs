@@ -236,6 +236,23 @@ public class ElementalActionNodeWithTypeTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalActionNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = Type.Action,
+        };
+
+        ElementalActionNodeWithType copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -329,6 +346,16 @@ public class IntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new IntersectionMember1 { Type = Type.Action };
+
+        IntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

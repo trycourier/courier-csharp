@@ -145,4 +145,20 @@ public class PagerdutyTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Pagerduty
+        {
+            EventAction = "event_action",
+            RoutingKey = "routing_key",
+            Severity = "severity",
+            Source = "source",
+        };
+
+        Pagerduty copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

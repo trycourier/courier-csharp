@@ -252,8 +252,11 @@ public sealed record class Automation : JsonModel
 
     public Automation() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Automation(Automation automation)
         : base(automation) { }
+#pragma warning restore CS8618
 
     public Automation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -867,8 +870,11 @@ public sealed record class AutomationDelayStep : JsonModel
 
     public AutomationDelayStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationDelayStep(AutomationDelayStep automationDelayStep)
         : base(automationDelayStep) { }
+#pragma warning restore CS8618
 
     public AutomationDelayStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1033,8 +1039,11 @@ public sealed record class AutomationSendStep : JsonModel
 
     public AutomationSendStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationSendStep(AutomationSendStep automationSendStep)
         : base(automationSendStep) { }
+#pragma warning restore CS8618
 
     public AutomationSendStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1175,8 +1184,11 @@ public sealed record class AutomationSendListStep : JsonModel
 
     public AutomationSendListStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationSendListStep(AutomationSendListStep automationSendListStep)
         : base(automationSendListStep) { }
+#pragma warning restore CS8618
 
     public AutomationSendListStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1313,8 +1325,11 @@ public sealed record class AutomationUpdateProfileStep : JsonModel
 
     public AutomationUpdateProfileStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationUpdateProfileStep(AutomationUpdateProfileStep automationUpdateProfileStep)
         : base(automationUpdateProfileStep) { }
+#pragma warning restore CS8618
 
     public AutomationUpdateProfileStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1468,8 +1483,11 @@ public sealed record class AutomationCancelStep : JsonModel
 
     public AutomationCancelStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationCancelStep(AutomationCancelStep automationCancelStep)
         : base(automationCancelStep) { }
+#pragma warning restore CS8618
 
     public AutomationCancelStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1587,8 +1605,11 @@ public sealed record class AutomationFetchDataStep : JsonModel
 
     public AutomationFetchDataStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationFetchDataStep(AutomationFetchDataStep automationFetchDataStep)
         : base(automationFetchDataStep) { }
+#pragma warning restore CS8618
 
     public AutomationFetchDataStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1721,8 +1742,11 @@ public sealed record class Webhook : JsonModel
 
     public Webhook() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Webhook(Webhook webhook)
         : base(webhook) { }
+#pragma warning restore CS8618
 
     public Webhook(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1881,8 +1905,11 @@ public sealed record class AutomationInvokeStep : JsonModel
 
     public AutomationInvokeStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationInvokeStep(AutomationInvokeStep automationInvokeStep)
         : base(automationInvokeStep) { }
+#pragma warning restore CS8618
 
     public AutomationInvokeStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {

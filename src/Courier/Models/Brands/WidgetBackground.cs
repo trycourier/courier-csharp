@@ -39,8 +39,11 @@ public sealed record class WidgetBackground : JsonModel
 
     public WidgetBackground() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public WidgetBackground(WidgetBackground widgetBackground)
         : base(widgetBackground) { }
+#pragma warning restore CS8618
 
     public WidgetBackground(IReadOnlyDictionary<string, JsonElement> rawData)
     {

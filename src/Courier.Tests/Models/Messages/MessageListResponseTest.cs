@@ -186,4 +186,35 @@ public class MessageListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MessageListResponse
+        {
+            Paging = new() { More = true, Cursor = "cursor" },
+            Results =
+            [
+                new()
+                {
+                    ID = "id",
+                    Clicked = 0,
+                    Delivered = 0,
+                    Enqueued = 0,
+                    Event = "event",
+                    Notification = "notification",
+                    Opened = 0,
+                    Recipient = "recipient",
+                    Sent = 0,
+                    Status = Status.Canceled,
+                    Error = "error",
+                    Reason = Reason.Bounced,
+                },
+            ],
+        };
+
+        MessageListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -63,8 +63,11 @@ public sealed record class SendToMsTeamsChannelName : JsonModel
 
     public SendToMsTeamsChannelName() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SendToMsTeamsChannelName(SendToMsTeamsChannelName sendToMsTeamsChannelName)
         : base(sendToMsTeamsChannelName) { }
+#pragma warning restore CS8618
 
     public SendToMsTeamsChannelName(IReadOnlyDictionary<string, JsonElement> rawData)
     {

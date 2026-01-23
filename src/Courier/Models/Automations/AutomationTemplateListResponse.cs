@@ -70,10 +70,13 @@ public sealed record class AutomationTemplateListResponse : JsonModel
 
     public AutomationTemplateListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationTemplateListResponse(
         AutomationTemplateListResponse automationTemplateListResponse
     )
         : base(automationTemplateListResponse) { }
+#pragma warning restore CS8618
 
     public AutomationTemplateListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

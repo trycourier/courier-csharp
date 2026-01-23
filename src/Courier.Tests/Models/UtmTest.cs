@@ -156,4 +156,21 @@ public class UtmTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Utm
+        {
+            Campaign = "campaign",
+            Content = "content",
+            Medium = "medium",
+            Source = "source",
+            Term = "term",
+        };
+
+        Utm copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

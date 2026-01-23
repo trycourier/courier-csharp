@@ -115,8 +115,11 @@ public sealed record class TenantListResponse : JsonModel
 
     public TenantListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TenantListResponse(TenantListResponse tenantListResponse)
         : base(tenantListResponse) { }
+#pragma warning restore CS8618
 
     public TenantListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

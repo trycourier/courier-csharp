@@ -28,8 +28,11 @@ public sealed record class BulkCreateJobResponse : JsonModel
 
     public BulkCreateJobResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BulkCreateJobResponse(BulkCreateJobResponse bulkCreateJobResponse)
         : base(bulkCreateJobResponse) { }
+#pragma warning restore CS8618
 
     public BulkCreateJobResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

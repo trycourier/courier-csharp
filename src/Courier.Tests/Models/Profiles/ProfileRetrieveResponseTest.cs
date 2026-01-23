@@ -324,4 +324,47 @@ public class ProfileRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ProfileRetrieveResponse
+        {
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+        };
+
+        ProfileRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

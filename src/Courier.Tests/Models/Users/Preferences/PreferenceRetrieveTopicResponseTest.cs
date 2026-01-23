@@ -115,4 +115,25 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new PreferenceRetrieveTopicResponse
+        {
+            Topic = new()
+            {
+                DefaultStatus = PreferenceStatus.OptedIn,
+                Status = PreferenceStatus.OptedIn,
+                TopicID = "topic_id",
+                TopicName = "topic_name",
+                CustomRouting = [ChannelClassification.DirectMessage],
+                HasCustomRouting = true,
+            },
+        };
+
+        PreferenceRetrieveTopicResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

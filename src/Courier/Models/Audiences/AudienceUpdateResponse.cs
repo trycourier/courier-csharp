@@ -28,8 +28,11 @@ public sealed record class AudienceUpdateResponse : JsonModel
 
     public AudienceUpdateResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AudienceUpdateResponse(AudienceUpdateResponse audienceUpdateResponse)
         : base(audienceUpdateResponse) { }
+#pragma warning restore CS8618
 
     public AudienceUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

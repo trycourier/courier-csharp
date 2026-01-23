@@ -96,8 +96,11 @@ public sealed record class BrandSettingsInApp : JsonModel
 
     public BrandSettingsInApp() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrandSettingsInApp(BrandSettingsInApp brandSettingsInApp)
         : base(brandSettingsInApp) { }
+#pragma warning restore CS8618
 
     public BrandSettingsInApp(IReadOnlyDictionary<string, JsonElement> rawData)
     {

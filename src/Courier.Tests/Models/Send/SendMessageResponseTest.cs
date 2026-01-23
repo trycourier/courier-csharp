@@ -54,4 +54,14 @@ public class SendMessageResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendMessageResponse { RequestID = "1-65f240a0-47a6a120c8374de9bcf9f22c" };
+
+        SendMessageResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -50,8 +50,11 @@ public sealed record class BrandSettings : JsonModel
 
     public BrandSettings() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrandSettings(BrandSettings brandSettings)
         : base(brandSettings) { }
+#pragma warning restore CS8618
 
     public BrandSettings(IReadOnlyDictionary<string, JsonElement> rawData)
     {

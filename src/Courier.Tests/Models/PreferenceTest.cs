@@ -174,6 +174,22 @@ public class PreferenceTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Preference
+        {
+            Status = PreferenceStatus.OptedIn,
+            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+            Rules = [new() { Until = "until", Start = "start" }],
+            Source = Source.Subscription,
+        };
+
+        Preference copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class SourceTest : TestBase

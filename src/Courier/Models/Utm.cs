@@ -72,8 +72,11 @@ public sealed record class Utm : JsonModel
 
     public Utm() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Utm(Utm utm)
         : base(utm) { }
+#pragma warning restore CS8618
 
     public Utm(IReadOnlyDictionary<string, JsonElement> rawData)
     {
