@@ -33,10 +33,13 @@ public sealed record class PreferenceRetrieveTopicResponse : JsonModel
 
     public PreferenceRetrieveTopicResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public PreferenceRetrieveTopicResponse(
         PreferenceRetrieveTopicResponse preferenceRetrieveTopicResponse
     )
         : base(preferenceRetrieveTopicResponse) { }
+#pragma warning restore CS8618
 
     public PreferenceRetrieveTopicResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

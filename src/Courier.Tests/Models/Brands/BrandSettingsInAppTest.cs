@@ -199,6 +199,25 @@ public class BrandSettingsInAppTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BrandSettingsInApp
+        {
+            Colors = new() { Primary = "primary", Secondary = "secondary" },
+            Icons = new() { Bell = "bell", Message = "message" },
+            WidgetBackground = new() { BottomColor = "bottomColor", TopColor = "topColor" },
+            BorderRadius = "borderRadius",
+            DisableMessageIcon = true,
+            FontFamily = "fontFamily",
+            Placement = Placement.Top,
+        };
+
+        BrandSettingsInApp copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class PlacementTest : TestBase

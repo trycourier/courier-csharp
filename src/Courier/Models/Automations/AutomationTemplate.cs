@@ -107,8 +107,11 @@ public sealed record class AutomationTemplate : JsonModel
 
     public AutomationTemplate() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationTemplate(AutomationTemplate automationTemplate)
         : base(automationTemplate) { }
+#pragma warning restore CS8618
 
     public AutomationTemplate(IReadOnlyDictionary<string, JsonElement> rawData)
     {

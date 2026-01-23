@@ -96,4 +96,22 @@ public class MsTeamsRecipientTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MsTeamsRecipient
+        {
+            MsTeams = new SendToMsTeamsUserID()
+            {
+                ServiceUrl = "service_url",
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+        };
+
+        MsTeamsRecipient copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

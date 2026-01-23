@@ -71,8 +71,11 @@ public sealed record class SubscriptionTopicNew : JsonModel
 
     public SubscriptionTopicNew() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SubscriptionTopicNew(SubscriptionTopicNew subscriptionTopicNew)
         : base(subscriptionTopicNew) { }
+#pragma warning restore CS8618
 
     public SubscriptionTopicNew(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -238,8 +238,11 @@ public sealed record class MessageRetrieveResponse : JsonModel
 
     public MessageRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageRetrieveResponse(MessageRetrieveResponse messageRetrieveResponse)
         : base(messageRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public MessageRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -307,8 +310,11 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public IntersectionMember1(IntersectionMember1 intersectionMember1)
         : base(intersectionMember1) { }
+#pragma warning restore CS8618
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {

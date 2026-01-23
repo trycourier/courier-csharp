@@ -88,4 +88,14 @@ public class MessageContextTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MessageContext { TenantID = "tenant_id" };
+
+        MessageContext copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

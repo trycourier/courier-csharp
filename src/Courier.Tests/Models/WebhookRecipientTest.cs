@@ -145,4 +145,30 @@ public class WebhookRecipientTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new WebhookRecipient
+        {
+            Webhook = new()
+            {
+                Url = "url",
+                Authentication = new()
+                {
+                    Mode = WebhookAuthMode.None,
+                    Token = "token",
+                    Password = "password",
+                    Username = "username",
+                },
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+                Method = WebhookMethod.Post,
+                Profile = WebhookProfileType.Limited,
+            },
+        };
+
+        WebhookRecipient copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

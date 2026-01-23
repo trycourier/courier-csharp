@@ -96,4 +96,14 @@ public class RuleTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Rule { Until = "until", Start = "start" };
+
+        Rule copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

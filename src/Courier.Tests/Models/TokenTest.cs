@@ -48,4 +48,14 @@ public class TokenTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Token { TokenValue = "token" };
+
+        Token copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

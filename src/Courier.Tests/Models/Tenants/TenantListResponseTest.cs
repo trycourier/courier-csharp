@@ -485,6 +485,54 @@ public class TenantListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TenantListResponse
+        {
+            HasMore = true,
+            Items =
+            [
+                new()
+                {
+                    ID = "id",
+                    Name = "name",
+                    BrandID = "brand_id",
+                    DefaultPreferences = new()
+                    {
+                        Items =
+                        [
+                            new()
+                            {
+                                Status = Status.OptedOut,
+                                CustomRouting = [ChannelClassification.DirectMessage],
+                                HasCustomRouting = true,
+                                ID = "id",
+                            },
+                        ],
+                    },
+                    ParentTenantID = "parent_tenant_id",
+                    Properties = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    UserProfile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                },
+            ],
+            Type = TenantListResponseType.List,
+            Url = "url",
+            Cursor = "cursor",
+            NextUrl = "next_url",
+        };
+
+        TenantListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class TenantListResponseTypeTest : TestBase

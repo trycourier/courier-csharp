@@ -99,4 +99,14 @@ public class EmailHeadTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new EmailHead { InheritDefault = true, Content = "content" };
+
+        EmailHead copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

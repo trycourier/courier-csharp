@@ -67,8 +67,11 @@ public sealed record class RecipientPreferences : JsonModel
 
     public RecipientPreferences() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public RecipientPreferences(RecipientPreferences recipientPreferences)
         : base(recipientPreferences) { }
+#pragma warning restore CS8618
 
     public RecipientPreferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {

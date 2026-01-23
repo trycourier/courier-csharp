@@ -267,4 +267,19 @@ public class TopicTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Topic
+        {
+            Status = PreferenceStatus.OptedIn,
+            CustomRouting = [ChannelClassification.DirectMessage],
+            HasCustomRouting = true,
+        };
+
+        Topic copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

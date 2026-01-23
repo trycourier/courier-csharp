@@ -291,6 +291,41 @@ public class TemplateListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TemplateListResponse
+        {
+            HasMore = true,
+            Type = Type.List,
+            Url = "url",
+            Cursor = "cursor",
+            Items =
+            [
+                new()
+                {
+                    ID = "id",
+                    CreatedAt = "created_at",
+                    PublishedAt = "published_at",
+                    UpdatedAt = "updated_at",
+                    Version = "version",
+                    Data = new(
+                        new Models::MessageRouting()
+                        {
+                            Channels = ["string"],
+                            Method = Models::Method.All,
+                        }
+                    ),
+                },
+            ],
+            NextUrl = "next_url",
+        };
+
+        TemplateListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class TypeTest : TestBase
@@ -457,6 +492,26 @@ public class ItemTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Item
+        {
+            ID = "id",
+            CreatedAt = "created_at",
+            PublishedAt = "published_at",
+            UpdatedAt = "updated_at",
+            Version = "version",
+            Data = new(
+                new Models::MessageRouting() { Channels = ["string"], Method = Models::Method.All }
+            ),
+        };
+
+        Item copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -533,6 +588,21 @@ public class IntersectionMember1Test : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new IntersectionMember1
+        {
+            Data = new(
+                new Models::MessageRouting() { Channels = ["string"], Method = Models::Method.All }
+            ),
+        };
+
+        IntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class DataTest : TestBase
@@ -598,5 +668,18 @@ public class DataTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Data
+        {
+            Routing = new() { Channels = ["string"], Method = Models::Method.All },
+        };
+
+        Data copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

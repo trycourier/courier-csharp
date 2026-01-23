@@ -61,8 +61,11 @@ public sealed record class Pagerduty : JsonModel
 
     public Pagerduty() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Pagerduty(Pagerduty pagerduty)
         : base(pagerduty) { }
+#pragma warning restore CS8618
 
     public Pagerduty(IReadOnlyDictionary<string, JsonElement> rawData)
     {

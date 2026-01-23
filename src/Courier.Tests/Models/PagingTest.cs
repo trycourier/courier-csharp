@@ -96,4 +96,14 @@ public class PagingTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Paging { More = true, Cursor = "cursor" };
+
+        Paging copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -244,6 +244,23 @@ public class ElementalMetaNodeWithTypeTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalMetaNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+        };
+
+        ElementalMetaNodeWithType copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ElementalMetaNodeWithTypeIntersectionMember1Test : TestBase
@@ -351,6 +368,19 @@ public class ElementalMetaNodeWithTypeIntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalMetaNodeWithTypeIntersectionMember1
+        {
+            Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+        };
+
+        ElementalMetaNodeWithTypeIntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

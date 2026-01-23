@@ -54,8 +54,11 @@ public sealed record class BaseCheck : JsonModel
 
     public BaseCheck() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BaseCheck(BaseCheck baseCheck)
         : base(baseCheck) { }
+#pragma warning restore CS8618
 
     public BaseCheck(IReadOnlyDictionary<string, JsonElement> rawData)
     {

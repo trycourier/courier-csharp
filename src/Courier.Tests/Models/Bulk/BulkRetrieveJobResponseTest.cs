@@ -255,6 +255,50 @@ public class BulkRetrieveJobResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BulkRetrieveJobResponse
+        {
+            Job = new()
+            {
+                Definition = new()
+                {
+                    Event = "event",
+                    Brand = "brand",
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
+                    Data = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
+                    {
+                        {
+                            "foo",
+                            new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            }
+                        },
+                    },
+                    Override = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Template = "template",
+                },
+                Enqueued = 0,
+                Failures = 0,
+                Received = 0,
+                Status = JobStatus.Created,
+            },
+        };
+
+        BulkRetrieveJobResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class JobTest : TestBase
@@ -488,6 +532,47 @@ public class JobTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Job
+        {
+            Definition = new()
+            {
+                Event = "event",
+                Brand = "brand",
+                Content = new ElementalContentSugar() { Body = "body", Title = "title" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
+                {
+                    {
+                        "foo",
+                        new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        }
+                    },
+                },
+                Override = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Template = "template",
+            },
+            Enqueued = 0,
+            Failures = 0,
+            Received = 0,
+            Status = JobStatus.Created,
+        };
+
+        Job copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

@@ -245,4 +245,29 @@ public class ElementalContentTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalContent
+        {
+            Elements =
+            [
+                new ElementalTextNodeWithType()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                },
+            ],
+            Version = "version",
+            Brand = "brand",
+        };
+
+        ElementalContent copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

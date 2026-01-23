@@ -46,8 +46,11 @@ public sealed record class AirshipProfile : JsonModel
 
     public AirshipProfile() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AirshipProfile(AirshipProfile airshipProfile)
         : base(airshipProfile) { }
+#pragma warning restore CS8618
 
     public AirshipProfile(IReadOnlyDictionary<string, JsonElement> rawData)
     {

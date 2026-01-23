@@ -73,8 +73,11 @@ public sealed record class WebhookAuthentication : JsonModel
 
     public WebhookAuthentication() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public WebhookAuthentication(WebhookAuthentication webhookAuthentication)
         : base(webhookAuthentication) { }
+#pragma warning restore CS8618
 
     public WebhookAuthentication(IReadOnlyDictionary<string, JsonElement> rawData)
     {

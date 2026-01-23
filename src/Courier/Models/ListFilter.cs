@@ -55,8 +55,11 @@ public sealed record class ListFilter : JsonModel
 
     public ListFilter() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ListFilter(ListFilter listFilter)
         : base(listFilter) { }
+#pragma warning restore CS8618
 
     public ListFilter(IReadOnlyDictionary<string, JsonElement> rawData)
     {

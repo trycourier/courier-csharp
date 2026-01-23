@@ -319,6 +319,37 @@ public class MessageRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MessageRetrieveResponse
+        {
+            ID = "id",
+            Clicked = 0,
+            Delivered = 0,
+            Enqueued = 0,
+            Event = "event",
+            Notification = "notification",
+            Opened = 0,
+            Recipient = "recipient",
+            Sent = 0,
+            Status = Status.Canceled,
+            Error = "error",
+            Reason = Reason.Bounced,
+            Providers =
+            [
+                new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            ],
+        };
+
+        MessageRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -474,5 +505,24 @@ public class IntersectionMember1Test : TestBase
         var model = new IntersectionMember1 { Providers = null };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new IntersectionMember1
+        {
+            Providers =
+            [
+                new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            ],
+        };
+
+        IntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

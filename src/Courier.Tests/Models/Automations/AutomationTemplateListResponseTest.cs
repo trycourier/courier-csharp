@@ -194,4 +194,28 @@ public class AutomationTemplateListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AutomationTemplateListResponse
+        {
+            Cursor = "cursor",
+            Templates =
+            [
+                new()
+                {
+                    ID = "id",
+                    Name = "name",
+                    Version = AutomationTemplateVersion.Published,
+                    CreatedAt = DateTimeOffset.Parse("2019-12-27T18:11:19.117Z"),
+                    UpdatedAt = DateTimeOffset.Parse("2019-12-27T18:11:19.117Z"),
+                },
+            ],
+        };
+
+        AutomationTemplateListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -80,6 +80,21 @@ public class BaseCheckTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BaseCheck
+        {
+            ID = "id",
+            Status = Status.Resolved,
+            Type = Type.Custom,
+        };
+
+        BaseCheck copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class StatusTest : TestBase

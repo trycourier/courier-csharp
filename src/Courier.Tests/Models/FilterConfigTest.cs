@@ -213,4 +213,29 @@ public class FilterConfigTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new FilterConfig
+        {
+            Operator = "operator",
+            Filters =
+            [
+                new()
+                {
+                    Operator = "operator",
+                    Filters = [],
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+            Path = "path",
+            Value = "value",
+        };
+
+        FilterConfig copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

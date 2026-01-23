@@ -41,8 +41,11 @@ public sealed record class TokenListResponse : JsonModel
 
     public TokenListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TokenListResponse(TokenListResponse tokenListResponse)
         : base(tokenListResponse) { }
+#pragma warning restore CS8618
 
     public TokenListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

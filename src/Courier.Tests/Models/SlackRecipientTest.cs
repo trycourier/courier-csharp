@@ -74,4 +74,17 @@ public class SlackRecipientTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SlackRecipient
+        {
+            Slack = new SendToSlackChannel() { AccessToken = "access_token", Channel = "channel" },
+        };
+
+        SlackRecipient copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

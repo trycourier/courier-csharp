@@ -39,8 +39,11 @@ public sealed record class MsTeamsBaseProperties : JsonModel
 
     public MsTeamsBaseProperties() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MsTeamsBaseProperties(MsTeamsBaseProperties msTeamsBaseProperties)
         : base(msTeamsBaseProperties) { }
+#pragma warning restore CS8618
 
     public MsTeamsBaseProperties(IReadOnlyDictionary<string, JsonElement> rawData)
     {

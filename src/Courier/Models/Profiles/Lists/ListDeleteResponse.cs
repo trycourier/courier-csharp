@@ -30,8 +30,11 @@ public sealed record class ListDeleteResponse : JsonModel
 
     public ListDeleteResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ListDeleteResponse(ListDeleteResponse listDeleteResponse)
         : base(listDeleteResponse) { }
+#pragma warning restore CS8618
 
     public ListDeleteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -49,8 +49,11 @@ public sealed record class AuditEventListResponse : JsonModel
 
     public AuditEventListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AuditEventListResponse(AuditEventListResponse auditEventListResponse)
         : base(auditEventListResponse) { }
+#pragma warning restore CS8618
 
     public AuditEventListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

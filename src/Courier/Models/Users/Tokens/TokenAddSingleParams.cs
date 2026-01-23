@@ -375,8 +375,11 @@ public sealed record class Device : JsonModel
 
     public Device() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Device(Device device)
         : base(device) { }
+#pragma warning restore CS8618
 
     public Device(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -705,8 +708,11 @@ public sealed record class Tracking : JsonModel
 
     public Tracking() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Tracking(Tracking tracking)
         : base(tracking) { }
+#pragma warning restore CS8618
 
     public Tracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {

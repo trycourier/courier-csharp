@@ -104,8 +104,11 @@ public sealed record class ElementalImageNodeWithType : JsonModel
 
     public ElementalImageNodeWithType() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalImageNodeWithType(ElementalImageNodeWithType elementalImageNodeWithType)
         : base(elementalImageNodeWithType) { }
+#pragma warning restore CS8618
 
     public ElementalImageNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -173,10 +176,13 @@ public sealed record class ElementalImageNodeWithTypeIntersectionMember1 : JsonM
 
     public ElementalImageNodeWithTypeIntersectionMember1() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalImageNodeWithTypeIntersectionMember1(
         ElementalImageNodeWithTypeIntersectionMember1 elementalImageNodeWithTypeIntersectionMember1
     )
         : base(elementalImageNodeWithTypeIntersectionMember1) { }
+#pragma warning restore CS8618
 
     public ElementalImageNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

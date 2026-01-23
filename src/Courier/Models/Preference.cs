@@ -84,8 +84,11 @@ public sealed record class Preference : JsonModel
 
     public Preference() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Preference(Preference preference)
         : base(preference) { }
+#pragma warning restore CS8618
 
     public Preference(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -111,8 +111,11 @@ public sealed record class UserToken : JsonModel
 
     public UserToken() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public UserToken(UserToken userToken)
         : base(userToken) { }
+#pragma warning restore CS8618
 
     public UserToken(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -288,8 +291,11 @@ public sealed record class UserTokenDevice : JsonModel
 
     public UserTokenDevice() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public UserTokenDevice(UserTokenDevice userTokenDevice)
         : base(userTokenDevice) { }
+#pragma warning restore CS8618
 
     public UserTokenDevice(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -620,8 +626,11 @@ public sealed record class UserTokenTracking : JsonModel
 
     public UserTokenTracking() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public UserTokenTracking(UserTokenTracking userTokenTracking)
         : base(userTokenTracking) { }
+#pragma warning restore CS8618
 
     public UserTokenTracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {

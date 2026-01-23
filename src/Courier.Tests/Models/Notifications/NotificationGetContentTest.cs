@@ -324,6 +324,49 @@ public class NotificationGetContentTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new NotificationGetContent
+        {
+            Blocks =
+            [
+                new()
+                {
+                    ID = "id",
+                    Type = BlockType.Action,
+                    Alias = "alias",
+                    Checksum = "checksum",
+                    Content = "string",
+                    Context = "context",
+                    Locales = new Dictionary<string, Locale>() { { "foo", "string" } },
+                },
+            ],
+            Channels =
+            [
+                new()
+                {
+                    ID = "id",
+                    Checksum = "checksum",
+                    Content = new() { Subject = "subject", Title = "title" },
+                    Locales = new Dictionary<string, LocalesItem>()
+                    {
+                        {
+                            "foo",
+                            new() { Subject = "subject", Title = "title" }
+                        },
+                    },
+                    Type = "type",
+                },
+            ],
+            Checksum = "checksum",
+        };
+
+        NotificationGetContent copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class BlockTest : TestBase
@@ -513,6 +556,25 @@ public class BlockTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Block
+        {
+            ID = "id",
+            Type = BlockType.Action,
+            Alias = "alias",
+            Checksum = "checksum",
+            Content = "string",
+            Context = "context",
+            Locales = new Dictionary<string, Locale>() { { "foo", "string" } },
+        };
+
+        Block copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -731,6 +793,16 @@ public class NotificationContentHierarchyTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new NotificationContentHierarchy { Children = "children", Parent = "parent" };
+
+        NotificationContentHierarchy copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class LocaleTest : TestBase
@@ -885,6 +957,20 @@ public class LocaleNotificationContentHierarchyTest : TestBase
         var model = new LocaleNotificationContentHierarchy { Children = null, Parent = null };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new LocaleNotificationContentHierarchy
+        {
+            Children = "children",
+            Parent = "parent",
+        };
+
+        LocaleNotificationContentHierarchy copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -1091,6 +1177,29 @@ public class ChannelTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Channel
+        {
+            ID = "id",
+            Checksum = "checksum",
+            Content = new() { Subject = "subject", Title = "title" },
+            Locales = new Dictionary<string, LocalesItem>()
+            {
+                {
+                    "foo",
+                    new() { Subject = "subject", Title = "title" }
+                },
+            },
+            Type = "type",
+        };
+
+        Channel copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ChannelContentTest : TestBase
@@ -1185,6 +1294,16 @@ public class ChannelContentTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ChannelContent { Subject = "subject", Title = "title" };
+
+        ChannelContent copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class LocalesItemTest : TestBase
@@ -1278,5 +1397,15 @@ public class LocalesItemTest : TestBase
         var model = new LocalesItem { Subject = null, Title = null };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new LocalesItem { Subject = "subject", Title = "title" };
+
+        LocalesItem copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

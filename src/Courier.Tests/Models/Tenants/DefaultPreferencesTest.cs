@@ -166,6 +166,28 @@ public class DefaultPreferencesTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new DefaultPreferences
+        {
+            Items =
+            [
+                new()
+                {
+                    Status = Status.OptedOut,
+                    CustomRouting = [Models::ChannelClassification.DirectMessage],
+                    HasCustomRouting = true,
+                    ID = "id",
+                },
+            ],
+        };
+
+        DefaultPreferences copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ItemTest : TestBase
@@ -316,6 +338,22 @@ public class ItemTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Item
+        {
+            Status = Status.OptedOut,
+            CustomRouting = [Models::ChannelClassification.DirectMessage],
+            HasCustomRouting = true,
+            ID = "id",
+        };
+
+        Item copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -367,5 +405,15 @@ public class IntersectionMember1Test : TestBase
         var model = new IntersectionMember1 { ID = "id" };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new IntersectionMember1 { ID = "id" };
+
+        IntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

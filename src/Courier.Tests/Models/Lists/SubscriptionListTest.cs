@@ -142,4 +142,20 @@ public class SubscriptionListTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SubscriptionList
+        {
+            ID = "id",
+            Name = "name",
+            Created = "created",
+            Updated = "updated",
+        };
+
+        SubscriptionList copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

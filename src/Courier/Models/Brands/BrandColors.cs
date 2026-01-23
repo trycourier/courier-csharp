@@ -55,8 +55,11 @@ public sealed record class BrandColors : JsonModel
 
     public BrandColors() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrandColors(BrandColors brandColors)
         : base(brandColors) { }
+#pragma warning restore CS8618
 
     public BrandColors(IReadOnlyDictionary<string, JsonElement> rawData)
     {

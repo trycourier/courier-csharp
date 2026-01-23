@@ -73,10 +73,13 @@ public sealed record class NotificationPreferenceDetails : JsonModel
 
     public NotificationPreferenceDetails() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public NotificationPreferenceDetails(
         NotificationPreferenceDetails notificationPreferenceDetails
     )
         : base(notificationPreferenceDetails) { }
+#pragma warning restore CS8618
 
     public NotificationPreferenceDetails(IReadOnlyDictionary<string, JsonElement> rawData)
     {

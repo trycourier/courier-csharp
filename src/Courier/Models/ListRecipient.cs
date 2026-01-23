@@ -69,8 +69,11 @@ public sealed record class ListRecipient : JsonModel
 
     public ListRecipient() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ListRecipient(ListRecipient listRecipient)
         : base(listRecipient) { }
+#pragma warning restore CS8618
 
     public ListRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {

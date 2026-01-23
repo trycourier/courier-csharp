@@ -58,4 +58,14 @@ public class SendToSlackEmailTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendToSlackEmail { AccessToken = "access_token", Email = "email" };
+
+        SendToSlackEmail copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -180,6 +180,25 @@ public class TenantAssociationTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TenantAssociation
+        {
+            TenantID = "tenant_id",
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = Type.User,
+            UserID = "user_id",
+        };
+
+        TenantAssociation copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class TypeTest : TestBase

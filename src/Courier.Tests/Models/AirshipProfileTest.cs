@@ -67,4 +67,14 @@ public class AirshipProfileTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AirshipProfile { Audience = new("named_user"), DeviceTypes = ["string"] };
+
+        AirshipProfile copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -41,8 +41,11 @@ public sealed record class PutSubscriptionsRecipient : JsonModel
 
     public PutSubscriptionsRecipient() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public PutSubscriptionsRecipient(PutSubscriptionsRecipient putSubscriptionsRecipient)
         : base(putSubscriptionsRecipient) { }
+#pragma warning restore CS8618
 
     public PutSubscriptionsRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {

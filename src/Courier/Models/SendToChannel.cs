@@ -28,8 +28,11 @@ public sealed record class SendToChannel : JsonModel
 
     public SendToChannel() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SendToChannel(SendToChannel sendToChannel)
         : base(sendToChannel) { }
+#pragma warning restore CS8618
 
     public SendToChannel(IReadOnlyDictionary<string, JsonElement> rawData)
     {

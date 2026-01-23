@@ -34,8 +34,11 @@ public sealed record class InboundTrackEventResponse : JsonModel
 
     public InboundTrackEventResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public InboundTrackEventResponse(InboundTrackEventResponse inboundTrackEventResponse)
         : base(inboundTrackEventResponse) { }
+#pragma warning restore CS8618
 
     public InboundTrackEventResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

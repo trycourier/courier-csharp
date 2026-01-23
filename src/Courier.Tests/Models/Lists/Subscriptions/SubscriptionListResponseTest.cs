@@ -288,6 +288,54 @@ public class SubscriptionListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SubscriptionListResponse
+        {
+            Items =
+            [
+                new()
+                {
+                    RecipientID = "recipientId",
+                    Created = "created",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+            ],
+            Paging = new() { More = true, Cursor = "cursor" },
+        };
+
+        SubscriptionListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ItemTest : TestBase
@@ -567,5 +615,46 @@ public class ItemTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Item
+        {
+            RecipientID = "recipientId",
+            Created = "created",
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+        };
+
+        Item copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

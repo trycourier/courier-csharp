@@ -192,4 +192,22 @@ public class TopicPreferenceTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TopicPreference
+        {
+            DefaultStatus = PreferenceStatus.OptedIn,
+            Status = PreferenceStatus.OptedIn,
+            TopicID = "topic_id",
+            TopicName = "topic_name",
+            CustomRouting = [ChannelClassification.DirectMessage],
+            HasCustomRouting = true,
+        };
+
+        TopicPreference copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

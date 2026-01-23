@@ -39,8 +39,11 @@ public sealed record class Intercom : JsonModel
 
     public Intercom() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Intercom(Intercom intercom)
         : base(intercom) { }
+#pragma warning restore CS8618
 
     public Intercom(IReadOnlyDictionary<string, JsonElement> rawData)
     {

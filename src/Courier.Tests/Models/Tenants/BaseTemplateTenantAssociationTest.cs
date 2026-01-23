@@ -98,4 +98,21 @@ public class BaseTemplateTenantAssociationTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BaseTemplateTenantAssociation
+        {
+            ID = "id",
+            CreatedAt = "created_at",
+            PublishedAt = "published_at",
+            UpdatedAt = "updated_at",
+            Version = "version",
+        };
+
+        BaseTemplateTenantAssociation copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

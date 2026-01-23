@@ -84,6 +84,22 @@ public class CheckTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Check
+        {
+            ID = "id",
+            Status = Status.Resolved,
+            Type = Type.Custom,
+            Updated = 0,
+        };
+
+        Check copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -135,5 +151,15 @@ public class IntersectionMember1Test : TestBase
         var model = new IntersectionMember1 { Updated = 0 };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new IntersectionMember1 { Updated = 0 };
+
+        IntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

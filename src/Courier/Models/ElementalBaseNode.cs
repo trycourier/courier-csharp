@@ -68,8 +68,11 @@ public sealed record class ElementalBaseNode : JsonModel
 
     public ElementalBaseNode() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalBaseNode(ElementalBaseNode elementalBaseNode)
         : base(elementalBaseNode) { }
+#pragma warning restore CS8618
 
     public ElementalBaseNode(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -114,8 +114,11 @@ public sealed record class TemplateListResponse : JsonModel
 
     public TemplateListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TemplateListResponse(TemplateListResponse templateListResponse)
         : base(templateListResponse) { }
+#pragma warning restore CS8618
 
     public TemplateListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -295,8 +298,11 @@ public sealed record class Item : JsonModel
 
     public Item() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Item(Item item)
         : base(item) { }
+#pragma warning restore CS8618
 
     public Item(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -349,8 +355,11 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public IntersectionMember1(IntersectionMember1 intersectionMember1)
         : base(intersectionMember1) { }
+#pragma warning restore CS8618
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -412,8 +421,11 @@ public sealed record class Data : JsonModel
 
     public Data() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Data(Data data)
         : base(data) { }
+#pragma warning restore CS8618
 
     public Data(IReadOnlyDictionary<string, JsonElement> rawData)
     {

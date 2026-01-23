@@ -106,6 +106,24 @@ public class AuditEventTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AuditEvent
+        {
+            Actor = new() { ID = "id", Email = "email" },
+            AuditEventID = "auditEventId",
+            Source = "source",
+            Target = "target",
+            Timestamp = "timestamp",
+            Type = "type",
+        };
+
+        AuditEvent copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ActorTest : TestBase
@@ -199,5 +217,15 @@ public class ActorTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Actor { ID = "id", Email = "email" };
+
+        Actor copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

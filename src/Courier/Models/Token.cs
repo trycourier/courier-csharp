@@ -28,8 +28,11 @@ public sealed record class Token : JsonModel
 
     public Token() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Token(Token token)
         : base(token) { }
+#pragma warning restore CS8618
 
     public Token(IReadOnlyDictionary<string, JsonElement> rawData)
     {

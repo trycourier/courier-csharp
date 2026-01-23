@@ -31,8 +31,11 @@ public sealed record class SlackRecipient : JsonModel
 
     public SlackRecipient() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SlackRecipient(SlackRecipient slackRecipient)
         : base(slackRecipient) { }
+#pragma warning restore CS8618
 
     public SlackRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {

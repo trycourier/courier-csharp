@@ -50,8 +50,11 @@ public sealed record class SendToMsTeamsEmail : JsonModel
 
     public SendToMsTeamsEmail() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SendToMsTeamsEmail(SendToMsTeamsEmail sendToMsTeamsEmail)
         : base(sendToMsTeamsEmail) { }
+#pragma warning restore CS8618
 
     public SendToMsTeamsEmail(IReadOnlyDictionary<string, JsonElement> rawData)
     {

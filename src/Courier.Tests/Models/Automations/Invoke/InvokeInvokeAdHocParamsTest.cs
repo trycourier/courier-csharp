@@ -517,6 +517,28 @@ public class AutomationTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::Automation
+        {
+            Steps =
+            [
+                new Invoke::AutomationDelayStep()
+                {
+                    Action = Invoke::Action.Delay,
+                    Duration = "duration",
+                    Until = "until",
+                },
+            ],
+            CancelationToken = "cancelation_token",
+        };
+
+        Invoke::Automation copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class StepTest : TestBase
@@ -902,6 +924,21 @@ public class AutomationDelayStepTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::AutomationDelayStep
+        {
+            Action = Invoke::Action.Delay,
+            Duration = "duration",
+            Until = "until",
+        };
+
+        Invoke::AutomationDelayStep copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ActionTest : TestBase
@@ -1202,6 +1239,30 @@ public class AutomationSendStepTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::AutomationSendStep
+        {
+            Action = Invoke::AutomationSendStepAction.Send,
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "recipient",
+            Template = "template",
+        };
+
+        Invoke::AutomationSendStep copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class AutomationSendStepActionTest : TestBase
@@ -1437,6 +1498,25 @@ public class AutomationSendListStepTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::AutomationSendListStep
+        {
+            Action = Invoke::AutomationSendListStepAction.SendList,
+            List = "list",
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        Invoke::AutomationSendListStep copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -1682,6 +1762,25 @@ public class AutomationUpdateProfileStepTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::AutomationUpdateProfileStep
+        {
+            Action = Invoke::AutomationUpdateProfileStepAction.UpdateProfile,
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Merge = Invoke::Merge.None,
+            RecipientID = "recipient_id",
+        };
+
+        Invoke::AutomationUpdateProfileStep copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class AutomationUpdateProfileStepActionTest : TestBase
@@ -1869,6 +1968,20 @@ public class AutomationCancelStepTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::AutomationCancelStep
+        {
+            Action = Invoke::AutomationCancelStepAction.Cancel,
+            CancelationToken = "cancelation_token",
+        };
+
+        Invoke::AutomationCancelStep copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 
@@ -2122,6 +2235,27 @@ public class AutomationFetchDataStepTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::AutomationFetchDataStep
+        {
+            Action = Invoke::AutomationFetchDataStepAction.FetchData,
+            Webhook = new()
+            {
+                Method = Invoke::Method.Get,
+                Url = "url",
+                Body = "body",
+                Headers = new Dictionary<string, string>() { { "foo", "string" } },
+            },
+            MergeStrategy = Invoke::MergeStrategy.Replace,
+        };
+
+        Invoke::AutomationFetchDataStep copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class AutomationFetchDataStepActionTest : TestBase
@@ -2328,6 +2462,22 @@ public class WebhookTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::Webhook
+        {
+            Method = Invoke::Method.Get,
+            Url = "url",
+            Body = "body",
+            Headers = new Dictionary<string, string>() { { "foo", "string" } },
+        };
+
+        Invoke::Webhook copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class MethodTest : TestBase
@@ -2525,6 +2675,20 @@ public class AutomationInvokeStepTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Invoke::AutomationInvokeStep
+        {
+            Action = Invoke::AutomationInvokeStepAction.Invoke,
+            Template = "template",
+        };
+
+        Invoke::AutomationInvokeStep copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

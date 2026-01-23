@@ -171,6 +171,35 @@ public class MessageContentResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MessageContentResponse
+        {
+            Results =
+            [
+                new()
+                {
+                    Channel = "channel",
+                    ChannelID = "channel_id",
+                    Content = new()
+                    {
+                        Blocks = [new() { Text = "text", Type = "type" }],
+                        Body = "body",
+                        Html = "html",
+                        Subject = "subject",
+                        Text = "text",
+                        Title = "title",
+                    },
+                },
+            ],
+        };
+
+        MessageContentResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ResultTest : TestBase
@@ -293,6 +322,29 @@ public class ResultTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Result
+        {
+            Channel = "channel",
+            ChannelID = "channel_id",
+            Content = new()
+            {
+                Blocks = [new() { Text = "text", Type = "type" }],
+                Body = "body",
+                Html = "html",
+                Subject = "subject",
+                Text = "text",
+                Title = "title",
+            },
+        };
+
+        Result copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ContentTest : TestBase
@@ -402,6 +454,24 @@ public class ContentTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Content
+        {
+            Blocks = [new() { Text = "text", Type = "type" }],
+            Body = "body",
+            Html = "html",
+            Subject = "subject",
+            Text = "text",
+            Title = "title",
+        };
+
+        Content copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class BlockTest : TestBase
@@ -451,5 +521,15 @@ public class BlockTest : TestBase
         var model = new Block { Text = "text", Type = "type" };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Block { Text = "text", Type = "type" };
+
+        Block copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

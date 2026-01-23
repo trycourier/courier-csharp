@@ -304,6 +304,48 @@ public class BrandSettingsEmailTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BrandSettingsEmail
+        {
+            Footer = new() { Content = "content", InheritDefault = true },
+            Head = new() { InheritDefault = true, Content = "content" },
+            Header = new()
+            {
+                Logo = new() { Href = "href", Image = "image" },
+                BarColor = "barColor",
+                InheritDefault = true,
+            },
+            TemplateOverride = new()
+            {
+                Enabled = true,
+                BackgroundColor = "backgroundColor",
+                BlocksBackgroundColor = "blocksBackgroundColor",
+                Footer = "footer",
+                Head = "head",
+                Header = "header",
+                Width = "width",
+                Mjml = new()
+                {
+                    Enabled = true,
+                    BackgroundColor = "backgroundColor",
+                    BlocksBackgroundColor = "blocksBackgroundColor",
+                    Footer = "footer",
+                    Head = "head",
+                    Header = "header",
+                    Width = "width",
+                },
+                FooterBackgroundColor = "footerBackgroundColor",
+                FooterFullWidth = true,
+            },
+        };
+
+        BrandSettingsEmail copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class TemplateOverrideTest : TestBase
@@ -626,6 +668,37 @@ public class TemplateOverrideTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TemplateOverride
+        {
+            Enabled = true,
+            BackgroundColor = "backgroundColor",
+            BlocksBackgroundColor = "blocksBackgroundColor",
+            Footer = "footer",
+            Head = "head",
+            Header = "header",
+            Width = "width",
+            Mjml = new()
+            {
+                Enabled = true,
+                BackgroundColor = "backgroundColor",
+                BlocksBackgroundColor = "blocksBackgroundColor",
+                Footer = "footer",
+                Head = "head",
+                Header = "header",
+                Width = "width",
+            },
+            FooterBackgroundColor = "footerBackgroundColor",
+            FooterFullWidth = true,
+        };
+
+        TemplateOverride copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -851,5 +924,29 @@ public class IntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new IntersectionMember1
+        {
+            Mjml = new()
+            {
+                Enabled = true,
+                BackgroundColor = "backgroundColor",
+                BlocksBackgroundColor = "blocksBackgroundColor",
+                Footer = "footer",
+                Head = "head",
+                Header = "header",
+                Width = "width",
+            },
+            FooterBackgroundColor = "footerBackgroundColor",
+            FooterFullWidth = true,
+        };
+
+        IntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

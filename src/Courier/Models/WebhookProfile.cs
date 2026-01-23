@@ -94,8 +94,11 @@ public sealed record class WebhookProfile : JsonModel
 
     public WebhookProfile() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public WebhookProfile(WebhookProfile webhookProfile)
         : base(webhookProfile) { }
+#pragma warning restore CS8618
 
     public WebhookProfile(IReadOnlyDictionary<string, JsonElement> rawData)
     {

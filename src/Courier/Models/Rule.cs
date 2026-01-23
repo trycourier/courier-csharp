@@ -39,8 +39,11 @@ public sealed record class Rule : JsonModel
 
     public Rule() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Rule(Rule rule)
         : base(rule) { }
+#pragma warning restore CS8618
 
     public Rule(IReadOnlyDictionary<string, JsonElement> rawData)
     {

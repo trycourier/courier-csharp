@@ -58,4 +58,14 @@ public class BrandSnippetTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BrandSnippet { Name = "name", Value = "value" };
+
+        BrandSnippet copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

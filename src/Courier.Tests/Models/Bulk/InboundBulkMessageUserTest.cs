@@ -978,4 +978,94 @@ public class InboundBulkMessageUserTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new InboundBulkMessageUser
+        {
+            Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Preferences = new()
+            {
+                Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+                Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                {
+                    {
+                        "foo",
+                        new()
+                        {
+                            Status = PreferenceStatus.OptedIn,
+                            ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                            Rules = [new() { Until = "until", Start = "start" }],
+                        }
+                    },
+                },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "recipient",
+            To = new()
+            {
+                AccountID = "account_id",
+                Context = new() { TenantID = "tenant_id" },
+                Data = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Email = "email",
+                ListID = "list_id",
+                Locale = "locale",
+                PhoneNumber = "phone_number",
+                Preferences = new()
+                {
+                    Notifications = new Dictionary<string, Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = PreferenceStatus.OptedIn,
+                                ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Source.Subscription,
+                            }
+                        },
+                    },
+                    Categories = new Dictionary<string, Preference>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = PreferenceStatus.OptedIn,
+                                ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                                Source = Source.Subscription,
+                            }
+                        },
+                    },
+                    TemplateID = "templateId",
+                },
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+        };
+
+        InboundBulkMessageUser copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -104,8 +104,11 @@ public sealed record class ElementalMetaNodeWithType : JsonModel
 
     public ElementalMetaNodeWithType() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalMetaNodeWithType(ElementalMetaNodeWithType elementalMetaNodeWithType)
         : base(elementalMetaNodeWithType) { }
+#pragma warning restore CS8618
 
     public ElementalMetaNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -173,10 +176,13 @@ public sealed record class ElementalMetaNodeWithTypeIntersectionMember1 : JsonMo
 
     public ElementalMetaNodeWithTypeIntersectionMember1() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalMetaNodeWithTypeIntersectionMember1(
         ElementalMetaNodeWithTypeIntersectionMember1 elementalMetaNodeWithTypeIntersectionMember1
     )
         : base(elementalMetaNodeWithTypeIntersectionMember1) { }
+#pragma warning restore CS8618
 
     public ElementalMetaNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

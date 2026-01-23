@@ -57,6 +57,16 @@ public class ProfileReplaceResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ProfileReplaceResponse { Status = ProfileReplaceResponseStatus.Success };
+
+        ProfileReplaceResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ProfileReplaceResponseStatusTest : TestBase

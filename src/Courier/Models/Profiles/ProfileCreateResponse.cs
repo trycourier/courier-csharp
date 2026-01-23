@@ -30,8 +30,11 @@ public sealed record class ProfileCreateResponse : JsonModel
 
     public ProfileCreateResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ProfileCreateResponse(ProfileCreateResponse profileCreateResponse)
         : base(profileCreateResponse) { }
+#pragma warning restore CS8618
 
     public ProfileCreateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

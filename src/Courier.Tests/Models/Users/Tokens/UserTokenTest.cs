@@ -386,6 +386,38 @@ public class UserTokenTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new UserToken
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+        };
+
+        UserToken copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class UserTokenProviderKeyTest : TestBase
@@ -622,6 +654,24 @@ public class UserTokenDeviceTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new UserTokenDevice
+        {
+            AdID = "ad_id",
+            AppID = "app_id",
+            DeviceID = "device_id",
+            Manufacturer = "manufacturer",
+            Model = "model",
+            Platform = "platform",
+        };
+
+        UserTokenDevice copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class UserTokenExpiryDateTest : TestBase
@@ -810,5 +860,21 @@ public class UserTokenTrackingTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new UserTokenTracking
+        {
+            IP = "ip",
+            Lat = "lat",
+            Long = "long",
+            OsVersion = "os_version",
+        };
+
+        UserTokenTracking copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

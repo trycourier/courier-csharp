@@ -212,8 +212,11 @@ public sealed record class Patch : JsonModel
 
     public Patch() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Patch(Patch patch)
         : base(patch) { }
+#pragma warning restore CS8618
 
     public Patch(IReadOnlyDictionary<string, JsonElement> rawData)
     {

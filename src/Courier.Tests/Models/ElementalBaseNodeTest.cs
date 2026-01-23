@@ -159,4 +159,20 @@ public class ElementalBaseNodeTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalBaseNode
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+        };
+
+        ElementalBaseNode copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

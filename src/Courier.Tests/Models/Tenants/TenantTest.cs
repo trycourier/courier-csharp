@@ -316,4 +316,41 @@ public class TenantTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Tenant
+        {
+            ID = "id",
+            Name = "name",
+            BrandID = "brand_id",
+            DefaultPreferences = new()
+            {
+                Items =
+                [
+                    new()
+                    {
+                        Status = Status.OptedOut,
+                        CustomRouting = [ChannelClassification.DirectMessage],
+                        HasCustomRouting = true,
+                        ID = "id",
+                    },
+                ],
+            },
+            ParentTenantID = "parent_tenant_id",
+            Properties = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            UserProfile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        Tenant copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

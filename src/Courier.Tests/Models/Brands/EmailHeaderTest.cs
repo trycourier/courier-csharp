@@ -138,4 +138,19 @@ public class EmailHeaderTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new EmailHeader
+        {
+            Logo = new() { Href = "href", Image = "image" },
+            BarColor = "barColor",
+            InheritDefault = true,
+        };
+
+        EmailHeader copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

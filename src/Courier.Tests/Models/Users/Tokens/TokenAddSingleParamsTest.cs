@@ -461,6 +461,24 @@ public class DeviceTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Device
+        {
+            AdID = "ad_id",
+            AppID = "app_id",
+            DeviceID = "device_id",
+            Manufacturer = "manufacturer",
+            Model = "model",
+            Platform = "platform",
+        };
+
+        Device copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ExpiryDateTest : TestBase
@@ -646,5 +664,21 @@ public class TrackingTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Tracking
+        {
+            IP = "ip",
+            Lat = "lat",
+            Long = "long",
+            OsVersion = "os_version",
+        };
+
+        Tracking copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

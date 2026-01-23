@@ -368,8 +368,11 @@ public sealed record class Message : JsonModel
 
     public Message() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Message(Message message)
         : base(message) { }
+#pragma warning restore CS8618
 
     public Message(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -514,8 +517,11 @@ public sealed record class ChannelsItem : JsonModel
 
     public ChannelsItem() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ChannelsItem(ChannelsItem channelsItem)
         : base(channelsItem) { }
+#pragma warning restore CS8618
 
     public ChannelsItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -565,8 +571,11 @@ public sealed record class Metadata : JsonModel
 
     public Metadata() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Metadata(Metadata metadata)
         : base(metadata) { }
+#pragma warning restore CS8618
 
     public Metadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -674,8 +683,11 @@ public sealed record class Timeouts : JsonModel
 
     public Timeouts() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Timeouts(Timeouts timeouts)
         : base(timeouts) { }
+#pragma warning restore CS8618
 
     public Timeouts(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -995,8 +1007,11 @@ public sealed record class Delay : JsonModel
 
     public Delay() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Delay(Delay delay)
         : base(delay) { }
+#pragma warning restore CS8618
 
     public Delay(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1063,8 +1078,11 @@ public sealed record class Expiry : JsonModel
 
     public Expiry() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Expiry(Expiry expiry)
         : base(expiry) { }
+#pragma warning restore CS8618
 
     public Expiry(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1390,8 +1408,11 @@ public sealed record class MessageMetadata : JsonModel
 
     public MessageMetadata() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageMetadata(MessageMetadata messageMetadata)
         : base(messageMetadata) { }
+#pragma warning restore CS8618
 
     public MessageMetadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1444,8 +1465,11 @@ public sealed record class Preferences : JsonModel
 
     public Preferences() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Preferences(Preferences preferences)
         : base(preferences) { }
+#pragma warning restore CS8618
 
     public Preferences(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1549,8 +1573,11 @@ public sealed record class ProvidersItem : JsonModel
 
     public ProvidersItem() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ProvidersItem(ProvidersItem providersItem)
         : base(providersItem) { }
+#pragma warning restore CS8618
 
     public ProvidersItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1600,8 +1627,11 @@ public sealed record class ProvidersItemMetadata : JsonModel
 
     public ProvidersItemMetadata() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ProvidersItemMetadata(ProvidersItemMetadata providersItemMetadata)
         : base(providersItemMetadata) { }
+#pragma warning restore CS8618
 
     public ProvidersItemMetadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1682,8 +1712,11 @@ public sealed record class Routing : JsonModel
 
     public Routing() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Routing(Routing routing)
         : base(routing) { }
+#pragma warning restore CS8618
 
     public Routing(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1829,8 +1862,11 @@ public sealed record class Timeout : JsonModel
 
     public Timeout() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Timeout(Timeout timeout)
         : base(timeout) { }
+#pragma warning restore CS8618
 
     public Timeout(IReadOnlyDictionary<string, JsonElement> rawData)
     {
