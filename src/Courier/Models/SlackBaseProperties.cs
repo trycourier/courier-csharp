@@ -28,8 +28,11 @@ public sealed record class SlackBaseProperties : JsonModel
 
     public SlackBaseProperties() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SlackBaseProperties(SlackBaseProperties slackBaseProperties)
         : base(slackBaseProperties) { }
+#pragma warning restore CS8618
 
     public SlackBaseProperties(IReadOnlyDictionary<string, JsonElement> rawData)
     {

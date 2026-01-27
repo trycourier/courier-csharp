@@ -83,6 +83,21 @@ public class ListFilterTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ListFilter
+        {
+            Operator = ListFilterOperator.MemberOf,
+            Path = ListFilterPath.AccountID,
+            Value = "value",
+        };
+
+        ListFilter copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ListFilterOperatorTest : TestBase

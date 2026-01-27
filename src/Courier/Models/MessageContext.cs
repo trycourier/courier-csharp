@@ -31,8 +31,11 @@ public sealed record class MessageContext : JsonModel
 
     public MessageContext() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageContext(MessageContext messageContext)
         : base(messageContext) { }
+#pragma warning restore CS8618
 
     public MessageContext(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -117,8 +117,11 @@ public sealed record class TenantListResponse : JsonModel
 
     public TenantListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TenantListResponse(TenantListResponse tenantListResponse)
         : base(tenantListResponse) { }
+#pragma warning restore CS8618
 
     public TenantListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -152,7 +155,7 @@ class TenantListResponseFromRaw : IFromRawJson<TenantListResponse>
 /// <summary>
 /// Always set to `list`. Represents the type of this object.
 /// </summary>
-[JsonConverter(typeof(global::Courier.Models.Users.Tenants.TypeConverter))]
+[JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
     List,

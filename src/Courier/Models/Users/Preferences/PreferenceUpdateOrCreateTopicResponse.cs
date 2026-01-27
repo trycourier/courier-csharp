@@ -33,10 +33,13 @@ public sealed record class PreferenceUpdateOrCreateTopicResponse : JsonModel
 
     public PreferenceUpdateOrCreateTopicResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public PreferenceUpdateOrCreateTopicResponse(
         PreferenceUpdateOrCreateTopicResponse preferenceUpdateOrCreateTopicResponse
     )
         : base(preferenceUpdateOrCreateTopicResponse) { }
+#pragma warning restore CS8618
 
     public PreferenceUpdateOrCreateTopicResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

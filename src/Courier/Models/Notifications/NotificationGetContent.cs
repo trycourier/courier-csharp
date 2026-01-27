@@ -71,8 +71,11 @@ public sealed record class NotificationGetContent : JsonModel
 
     public NotificationGetContent() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public NotificationGetContent(NotificationGetContent notificationGetContent)
         : base(notificationGetContent) { }
+#pragma warning restore CS8618
 
     public NotificationGetContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -203,8 +206,11 @@ public sealed record class Block : JsonModel
 
     public Block() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Block(Block block)
         : base(block) { }
+#pragma warning restore CS8618
 
     public Block(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -571,8 +577,11 @@ public sealed record class NotificationContentHierarchy : JsonModel
 
     public NotificationContentHierarchy() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public NotificationContentHierarchy(NotificationContentHierarchy notificationContentHierarchy)
         : base(notificationContentHierarchy) { }
+#pragma warning restore CS8618
 
     public NotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -880,10 +889,13 @@ public sealed record class LocaleNotificationContentHierarchy : JsonModel
 
     public LocaleNotificationContentHierarchy() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public LocaleNotificationContentHierarchy(
         LocaleNotificationContentHierarchy localeNotificationContentHierarchy
     )
         : base(localeNotificationContentHierarchy) { }
+#pragma warning restore CS8618
 
     public LocaleNotificationContentHierarchy(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -992,8 +1004,11 @@ public sealed record class Channel : JsonModel
 
     public Channel() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Channel(Channel channel)
         : base(channel) { }
+#pragma warning restore CS8618
 
     public Channel(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1061,8 +1076,11 @@ public sealed record class ChannelContent : JsonModel
 
     public ChannelContent() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ChannelContent(ChannelContent channelContent)
         : base(channelContent) { }
+#pragma warning restore CS8618
 
     public ChannelContent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1123,8 +1141,11 @@ public sealed record class LocalesItem : JsonModel
 
     public LocalesItem() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public LocalesItem(LocalesItem localesItem)
         : base(localesItem) { }
+#pragma warning restore CS8618
 
     public LocalesItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {

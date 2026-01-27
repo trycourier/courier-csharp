@@ -66,4 +66,17 @@ public class InboundTrackEventResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new InboundTrackEventResponse
+        {
+            MessageID = "1-65f240a0-47a6a120c8374de9bcf9f22c",
+        };
+
+        InboundTrackEventResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

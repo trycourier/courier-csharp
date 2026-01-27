@@ -44,8 +44,11 @@ public sealed record class AudienceFilterConfig : JsonModel
 
     public AudienceFilterConfig() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AudienceFilterConfig(AudienceFilterConfig audienceFilterConfig)
         : base(audienceFilterConfig) { }
+#pragma warning restore CS8618
 
     public AudienceFilterConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {

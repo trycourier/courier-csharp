@@ -168,6 +168,23 @@ public class AutomationTemplateTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AutomationTemplate
+        {
+            ID = "id",
+            Name = "name",
+            Version = AutomationTemplateVersion.Published,
+            CreatedAt = DateTimeOffset.Parse("2019-12-27T18:11:19.117Z"),
+            UpdatedAt = DateTimeOffset.Parse("2019-12-27T18:11:19.117Z"),
+        };
+
+        AutomationTemplate copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class AutomationTemplateVersionTest : TestBase

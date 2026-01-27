@@ -132,8 +132,11 @@ public sealed record class Tenant : JsonModel
 
     public Tenant() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Tenant(Tenant tenant)
         : base(tenant) { }
+#pragma warning restore CS8618
 
     public Tenant(IReadOnlyDictionary<string, JsonElement> rawData)
     {

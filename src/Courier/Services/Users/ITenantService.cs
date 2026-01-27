@@ -17,16 +17,14 @@ public interface ITenantService
     /// Returns a view of this service that provides access to raw HTTP responses
     /// for each method.
     /// </summary>
-    global::Courier.Services.Users.ITenantServiceWithRawResponse WithRawResponse { get; }
+    ITenantServiceWithRawResponse WithRawResponse { get; }
 
     /// <summary>
     /// Returns a view of this service with the given option modifications applied.
     ///
     /// <para>The original service is not modified.</para>
     /// </summary>
-    global::Courier.Services.Users.ITenantService WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    );
+    ITenantService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
     /// Returns a paginated list of user tenant associations.
@@ -105,7 +103,7 @@ public interface ITenantService
 }
 
 /// <summary>
-/// A view of <see cref="global::Courier.Services.Users.ITenantService"/> that provides access to raw
+/// A view of <see cref="ITenantService"/> that provides access to raw
 /// HTTP responses for each method.
 /// </summary>
 public interface ITenantServiceWithRawResponse
@@ -115,13 +113,11 @@ public interface ITenantServiceWithRawResponse
     ///
     /// <para>The original service is not modified.</para>
     /// </summary>
-    global::Courier.Services.Users.ITenantServiceWithRawResponse WithOptions(
-        Func<ClientOptions, ClientOptions> modifier
-    );
+    ITenantServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
     /// Returns a raw HTTP response for `get /users/{user_id}/tenants`, but is otherwise the
-    /// same as <see cref="global::Courier.Services.Users.ITenantService.List(TenantListParams, CancellationToken)"/>.
+    /// same as <see cref="ITenantService.List(TenantListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<TenantListResponse>> List(
         TenantListParams parameters,
@@ -137,7 +133,7 @@ public interface ITenantServiceWithRawResponse
 
     /// <summary>
     /// Returns a raw HTTP response for `put /users/{user_id}/tenants`, but is otherwise the
-    /// same as <see cref="global::Courier.Services.Users.ITenantService.AddMultiple(TenantAddMultipleParams, CancellationToken)"/>.
+    /// same as <see cref="ITenantService.AddMultiple(TenantAddMultipleParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> AddMultiple(
         TenantAddMultipleParams parameters,
@@ -153,7 +149,7 @@ public interface ITenantServiceWithRawResponse
 
     /// <summary>
     /// Returns a raw HTTP response for `put /users/{user_id}/tenants/{tenant_id}`, but is otherwise the
-    /// same as <see cref="global::Courier.Services.Users.ITenantService.AddSingle(TenantAddSingleParams, CancellationToken)"/>.
+    /// same as <see cref="ITenantService.AddSingle(TenantAddSingleParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> AddSingle(
         TenantAddSingleParams parameters,
@@ -169,7 +165,7 @@ public interface ITenantServiceWithRawResponse
 
     /// <summary>
     /// Returns a raw HTTP response for `delete /users/{user_id}/tenants`, but is otherwise the
-    /// same as <see cref="global::Courier.Services.Users.ITenantService.RemoveAll(TenantRemoveAllParams, CancellationToken)"/>.
+    /// same as <see cref="ITenantService.RemoveAll(TenantRemoveAllParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> RemoveAll(
         TenantRemoveAllParams parameters,
@@ -185,7 +181,7 @@ public interface ITenantServiceWithRawResponse
 
     /// <summary>
     /// Returns a raw HTTP response for `delete /users/{user_id}/tenants/{tenant_id}`, but is otherwise the
-    /// same as <see cref="global::Courier.Services.Users.ITenantService.RemoveSingle(TenantRemoveSingleParams, CancellationToken)"/>.
+    /// same as <see cref="ITenantService.RemoveSingle(TenantRemoveSingleParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> RemoveSingle(
         TenantRemoveSingleParams parameters,

@@ -216,4 +216,40 @@ public class AudienceListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AudienceListResponse
+        {
+            Items =
+            [
+                new()
+                {
+                    ID = "id",
+                    CreatedAt = "created_at",
+                    Description = "description",
+                    Name = "name",
+                    UpdatedAt = "updated_at",
+                    Filter = new(
+                        [
+                            new()
+                            {
+                                Operator = "operator",
+                                Filters = [],
+                                Path = "path",
+                                Value = "value",
+                            },
+                        ]
+                    ),
+                    Operator = AudienceOperator.And,
+                },
+            ],
+            Paging = new() { More = true, Cursor = "cursor" },
+        };
+
+        AudienceListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

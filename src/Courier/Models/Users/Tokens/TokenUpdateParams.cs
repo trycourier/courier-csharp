@@ -13,8 +13,12 @@ namespace Courier.Models.Users.Tokens;
 
 /// <summary>
 /// Apply a JSON Patch (RFC 6902) to the specified token.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class TokenUpdateParams : ParamsBase
+public record class TokenUpdateParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -44,6 +48,8 @@ public sealed record class TokenUpdateParams : ParamsBase
 
     public TokenUpdateParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TokenUpdateParams(TokenUpdateParams tokenUpdateParams)
         : base(tokenUpdateParams)
     {
@@ -52,6 +58,7 @@ public sealed record class TokenUpdateParams : ParamsBase
 
         this._rawBodyData = new(tokenUpdateParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public TokenUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -92,6 +99,32 @@ public sealed record class TokenUpdateParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["UserID"] = this.UserID,
+                ["Token"] = this.Token,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(TokenUpdateParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.UserID.Equals(other.UserID)
+            && (this.Token?.Equals(other.Token) ?? other.Token == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
@@ -119,6 +152,11 @@ public sealed record class TokenUpdateParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -174,8 +212,11 @@ public sealed record class Patch : JsonModel
 
     public Patch() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Patch(Patch patch)
         : base(patch) { }
+#pragma warning restore CS8618
 
     public Patch(IReadOnlyDictionary<string, JsonElement> rawData)
     {

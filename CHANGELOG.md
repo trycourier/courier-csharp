@@ -1,5 +1,33 @@
 # Changelog
 
+## 5.3.0 (2026-01-27)
+
+Full Changelog: [v5.2.0...v5.3.0](https://github.com/trycourier/courier-csharp/compare/v5.2.0...v5.3.0)
+
+### Features
+
+* **client:** add `ToString` and `Equals` methods ([62f5474](https://github.com/trycourier/courier-csharp/commit/62f54749ab30c777fcbceb401ee297f4632829de))
+* **client:** add `ToString` to `ApiEnum` ([afae7cb](https://github.com/trycourier/courier-csharp/commit/afae7cbcdd55579b25181b4a18b219516df860ac))
+* **client:** add Equals and ToString to params ([111ddf3](https://github.com/trycourier/courier-csharp/commit/111ddf3b539a5019db0ec88157585dd8fbdc4389))
+
+
+### Bug Fixes
+
+* **ci:** don't throw an error about missing lsof ([1677a29](https://github.com/trycourier/courier-csharp/commit/1677a29c8ca275b6a612623e9a709acbd28f29cb))
+
+
+### Chores
+
+* change visibility of QueryString() and AddDefaultHeaders ([1766a12](https://github.com/trycourier/courier-csharp/commit/1766a12fa6f941c4532a1b353214e2194a1f0cf7))
+* **internal:** add copy constructor tests ([f251394](https://github.com/trycourier/courier-csharp/commit/f25139429b88e60a999e3dc9c601943b6c4e77a9))
+* **internal:** simplify imports ([85e6232](https://github.com/trycourier/courier-csharp/commit/85e6232e04704906c159b7ef8f121d032a7ced57))
+* **internal:** update `actions/checkout` version ([853c44c](https://github.com/trycourier/courier-csharp/commit/853c44cf00ccd9a0731569edd1386b6e7c6936ce))
+
+
+### Documentation
+
+* **types:** clarify Version description in AutomationTemplate ([136d3b9](https://github.com/trycourier/courier-csharp/commit/136d3b9a13e7bead3c7193dac067aa72c1ef3ceb))
+
 ## 5.2.0 (2026-01-14)
 
 Full Changelog: [v5.1.0...v5.2.0](https://github.com/trycourier/courier-csharp/compare/v5.1.0...v5.2.0)

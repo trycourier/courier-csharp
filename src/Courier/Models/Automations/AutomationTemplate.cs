@@ -39,7 +39,7 @@ public sealed record class AutomationTemplate : JsonModel
     }
 
     /// <summary>
-    /// The version of the template published, draft.
+    /// The version of the template published or drafted.
     /// </summary>
     public required ApiEnum<string, AutomationTemplateVersion> Version
     {
@@ -107,8 +107,11 @@ public sealed record class AutomationTemplate : JsonModel
 
     public AutomationTemplate() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationTemplate(AutomationTemplate automationTemplate)
         : base(automationTemplate) { }
+#pragma warning restore CS8618
 
     public AutomationTemplate(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -140,7 +143,7 @@ class AutomationTemplateFromRaw : IFromRawJson<AutomationTemplate>
 }
 
 /// <summary>
-/// The version of the template published, draft.
+/// The version of the template published or drafted.
 /// </summary>
 [JsonConverter(typeof(AutomationTemplateVersionConverter))]
 public enum AutomationTemplateVersion

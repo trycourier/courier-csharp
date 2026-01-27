@@ -48,8 +48,11 @@ public sealed record class ElementalContentSugar : JsonModel
 
     public ElementalContentSugar() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalContentSugar(ElementalContentSugar elementalContentSugar)
         : base(elementalContentSugar) { }
+#pragma warning restore CS8618
 
     public ElementalContentSugar(IReadOnlyDictionary<string, JsonElement> rawData)
     {

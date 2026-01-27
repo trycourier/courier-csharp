@@ -54,4 +54,14 @@ public class SendDirectMessageTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendDirectMessage { UserID = "user_id" };
+
+        SendDirectMessage copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

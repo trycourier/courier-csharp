@@ -104,8 +104,11 @@ public sealed record class ElementalDividerNodeWithType : JsonModel
 
     public ElementalDividerNodeWithType() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalDividerNodeWithType(ElementalDividerNodeWithType elementalDividerNodeWithType)
         : base(elementalDividerNodeWithType) { }
+#pragma warning restore CS8618
 
     public ElementalDividerNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -173,10 +176,13 @@ public sealed record class ElementalDividerNodeWithTypeIntersectionMember1 : Jso
 
     public ElementalDividerNodeWithTypeIntersectionMember1() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalDividerNodeWithTypeIntersectionMember1(
         ElementalDividerNodeWithTypeIntersectionMember1 elementalDividerNodeWithTypeIntersectionMember1
     )
         : base(elementalDividerNodeWithTypeIntersectionMember1) { }
+#pragma warning restore CS8618
 
     public ElementalDividerNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

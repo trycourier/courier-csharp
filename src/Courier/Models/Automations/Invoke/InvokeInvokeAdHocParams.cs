@@ -16,8 +16,12 @@ namespace Courier.Models.Automations.Invoke;
 /// Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a
 /// series of automation steps. For information about what steps are available, checkout
 /// the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class InvokeInvokeAdHocParams : ParamsBase
+public record class InvokeInvokeAdHocParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -103,11 +107,14 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
 
     public InvokeInvokeAdHocParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public InvokeInvokeAdHocParams(InvokeInvokeAdHocParams invokeInvokeAdHocParams)
         : base(invokeInvokeAdHocParams)
     {
         this._rawBodyData = new(invokeInvokeAdHocParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public InvokeInvokeAdHocParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -148,6 +155,28 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(InvokeInvokeAdHocParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(
@@ -174,6 +203,11 @@ public sealed record class InvokeInvokeAdHocParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -218,8 +252,11 @@ public sealed record class Automation : JsonModel
 
     public Automation() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Automation(Automation automation)
         : base(automation) { }
+#pragma warning restore CS8618
 
     public Automation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -833,8 +870,11 @@ public sealed record class AutomationDelayStep : JsonModel
 
     public AutomationDelayStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationDelayStep(AutomationDelayStep automationDelayStep)
         : base(automationDelayStep) { }
+#pragma warning restore CS8618
 
     public AutomationDelayStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -999,8 +1039,11 @@ public sealed record class AutomationSendStep : JsonModel
 
     public AutomationSendStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationSendStep(AutomationSendStep automationSendStep)
         : base(automationSendStep) { }
+#pragma warning restore CS8618
 
     public AutomationSendStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1141,8 +1184,11 @@ public sealed record class AutomationSendListStep : JsonModel
 
     public AutomationSendListStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationSendListStep(AutomationSendListStep automationSendListStep)
         : base(automationSendListStep) { }
+#pragma warning restore CS8618
 
     public AutomationSendListStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1279,8 +1325,11 @@ public sealed record class AutomationUpdateProfileStep : JsonModel
 
     public AutomationUpdateProfileStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationUpdateProfileStep(AutomationUpdateProfileStep automationUpdateProfileStep)
         : base(automationUpdateProfileStep) { }
+#pragma warning restore CS8618
 
     public AutomationUpdateProfileStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1434,8 +1483,11 @@ public sealed record class AutomationCancelStep : JsonModel
 
     public AutomationCancelStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationCancelStep(AutomationCancelStep automationCancelStep)
         : base(automationCancelStep) { }
+#pragma warning restore CS8618
 
     public AutomationCancelStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1553,8 +1605,11 @@ public sealed record class AutomationFetchDataStep : JsonModel
 
     public AutomationFetchDataStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationFetchDataStep(AutomationFetchDataStep automationFetchDataStep)
         : base(automationFetchDataStep) { }
+#pragma warning restore CS8618
 
     public AutomationFetchDataStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1630,14 +1685,12 @@ sealed class AutomationFetchDataStepActionConverter : JsonConverter<AutomationFe
 [JsonConverter(typeof(JsonModelConverter<Webhook, WebhookFromRaw>))]
 public sealed record class Webhook : JsonModel
 {
-    public required ApiEnum<string, global::Courier.Models.Automations.Invoke.Method> Method
+    public required ApiEnum<string, Method> Method
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, global::Courier.Models.Automations.Invoke.Method>
-            >("method");
+            return this._rawData.GetNotNullClass<ApiEnum<string, Method>>("method");
         }
         init { this._rawData.Set("method", value); }
     }
@@ -1689,8 +1742,11 @@ public sealed record class Webhook : JsonModel
 
     public Webhook() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Webhook(Webhook webhook)
         : base(webhook) { }
+#pragma warning restore CS8618
 
     public Webhook(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -1719,7 +1775,7 @@ class WebhookFromRaw : IFromRawJson<Webhook>
         Webhook.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(global::Courier.Models.Automations.Invoke.MethodConverter))]
+[JsonConverter(typeof(MethodConverter))]
 public enum Method
 {
     Get,
@@ -1729,9 +1785,9 @@ public enum Method
     Delete,
 }
 
-sealed class MethodConverter : JsonConverter<global::Courier.Models.Automations.Invoke.Method>
+sealed class MethodConverter : JsonConverter<Method>
 {
-    public override global::Courier.Models.Automations.Invoke.Method Read(
+    public override Method Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -1739,30 +1795,26 @@ sealed class MethodConverter : JsonConverter<global::Courier.Models.Automations.
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "GET" => global::Courier.Models.Automations.Invoke.Method.Get,
-            "POST" => global::Courier.Models.Automations.Invoke.Method.Post,
-            "PUT" => global::Courier.Models.Automations.Invoke.Method.Put,
-            "PATCH" => global::Courier.Models.Automations.Invoke.Method.Patch,
-            "DELETE" => global::Courier.Models.Automations.Invoke.Method.Delete,
-            _ => (global::Courier.Models.Automations.Invoke.Method)(-1),
+            "GET" => Method.Get,
+            "POST" => Method.Post,
+            "PUT" => Method.Put,
+            "PATCH" => Method.Patch,
+            "DELETE" => Method.Delete,
+            _ => (Method)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Courier.Models.Automations.Invoke.Method value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Method value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Courier.Models.Automations.Invoke.Method.Get => "GET",
-                global::Courier.Models.Automations.Invoke.Method.Post => "POST",
-                global::Courier.Models.Automations.Invoke.Method.Put => "PUT",
-                global::Courier.Models.Automations.Invoke.Method.Patch => "PATCH",
-                global::Courier.Models.Automations.Invoke.Method.Delete => "DELETE",
+                Method.Get => "GET",
+                Method.Post => "POST",
+                Method.Put => "PUT",
+                Method.Patch => "PATCH",
+                Method.Delete => "DELETE",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -1853,8 +1905,11 @@ public sealed record class AutomationInvokeStep : JsonModel
 
     public AutomationInvokeStep() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationInvokeStep(AutomationInvokeStep automationInvokeStep)
         : base(automationInvokeStep) { }
+#pragma warning restore CS8618
 
     public AutomationInvokeStep(IReadOnlyDictionary<string, JsonElement> rawData)
     {

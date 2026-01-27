@@ -39,8 +39,11 @@ public sealed record class Logo : JsonModel
 
     public Logo() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Logo(Logo logo)
         : base(logo) { }
+#pragma warning restore CS8618
 
     public Logo(IReadOnlyDictionary<string, JsonElement> rawData)
     {

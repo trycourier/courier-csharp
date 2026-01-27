@@ -67,6 +67,20 @@ public class AutomationListParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new Automations::AutomationListParams
+        {
+            Cursor = "cursor",
+            Version = Automations::Version.Published,
+        };
+
+        Automations::AutomationListParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class VersionTest : TestBase

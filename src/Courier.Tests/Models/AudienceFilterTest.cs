@@ -83,6 +83,21 @@ public class AudienceFilterTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AudienceFilter
+        {
+            Operator = Operator.MemberOf,
+            Path = Path.AccountID,
+            Value = "value",
+        };
+
+        AudienceFilter copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class OperatorTest : TestBase

@@ -82,4 +82,19 @@ public class SendToMsTeamsConversationIDTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendToMsTeamsConversationID
+        {
+            ConversationID = "conversation_id",
+            ServiceUrl = "service_url",
+            TenantID = "tenant_id",
+        };
+
+        SendToMsTeamsConversationID copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

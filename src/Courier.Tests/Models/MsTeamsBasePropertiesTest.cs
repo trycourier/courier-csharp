@@ -74,4 +74,18 @@ public class MsTeamsBasePropertiesTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MsTeamsBaseProperties
+        {
+            ServiceUrl = "service_url",
+            TenantID = "tenant_id",
+        };
+
+        MsTeamsBaseProperties copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

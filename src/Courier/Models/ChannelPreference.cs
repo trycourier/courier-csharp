@@ -28,8 +28,11 @@ public sealed record class ChannelPreference : JsonModel
 
     public ChannelPreference() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ChannelPreference(ChannelPreference channelPreference)
         : base(channelPreference) { }
+#pragma warning restore CS8618
 
     public ChannelPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {

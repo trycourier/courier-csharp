@@ -129,4 +129,26 @@ public class AudienceFilterConfigTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AudienceFilterConfig
+        {
+            Filters =
+            [
+                new()
+                {
+                    Operator = "operator",
+                    Filters = [],
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+        };
+
+        AudienceFilterConfig copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

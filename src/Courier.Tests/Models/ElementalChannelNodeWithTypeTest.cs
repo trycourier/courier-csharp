@@ -324,6 +324,28 @@ public class ElementalChannelNodeWithTypeTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalChannelNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Channel = "email",
+            Raw = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+        };
+
+        ElementalChannelNodeWithType copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ElementalChannelNodeWithTypeIntersectionMember1Test : TestBase
@@ -433,6 +455,19 @@ public class ElementalChannelNodeWithTypeIntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalChannelNodeWithTypeIntersectionMember1
+        {
+            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+        };
+
+        ElementalChannelNodeWithTypeIntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

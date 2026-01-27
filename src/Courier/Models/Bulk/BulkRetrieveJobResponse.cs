@@ -30,8 +30,11 @@ public sealed record class BulkRetrieveJobResponse : JsonModel
 
     public BulkRetrieveJobResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BulkRetrieveJobResponse(BulkRetrieveJobResponse bulkRetrieveJobResponse)
         : base(bulkRetrieveJobResponse) { }
+#pragma warning restore CS8618
 
     public BulkRetrieveJobResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -140,8 +143,11 @@ public sealed record class Job : JsonModel
 
     public Job() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Job(Job job)
         : base(job) { }
+#pragma warning restore CS8618
 
     public Job(IReadOnlyDictionary<string, JsonElement> rawData)
     {

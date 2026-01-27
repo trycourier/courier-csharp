@@ -82,4 +82,19 @@ public class SendToMsTeamsChannelIDTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendToMsTeamsChannelID
+        {
+            ChannelID = "channel_id",
+            ServiceUrl = "service_url",
+            TenantID = "tenant_id",
+        };
+
+        SendToMsTeamsChannelID copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -12,14 +12,12 @@ namespace Courier.Models.Profiles.Lists;
 [JsonConverter(typeof(JsonModelConverter<ListDeleteResponse, ListDeleteResponseFromRaw>))]
 public sealed record class ListDeleteResponse : JsonModel
 {
-    public required ApiEnum<string, global::Courier.Models.Profiles.Lists.Status> Status
+    public required ApiEnum<string, Status> Status
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, global::Courier.Models.Profiles.Lists.Status>
-            >("status");
+            return this._rawData.GetNotNullClass<ApiEnum<string, Status>>("status");
         }
         init { this._rawData.Set("status", value); }
     }
@@ -32,8 +30,11 @@ public sealed record class ListDeleteResponse : JsonModel
 
     public ListDeleteResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ListDeleteResponse(ListDeleteResponse listDeleteResponse)
         : base(listDeleteResponse) { }
+#pragma warning restore CS8618
 
     public ListDeleteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -57,7 +58,7 @@ public sealed record class ListDeleteResponse : JsonModel
     }
 
     [SetsRequiredMembers]
-    public ListDeleteResponse(ApiEnum<string, global::Courier.Models.Profiles.Lists.Status> status)
+    public ListDeleteResponse(ApiEnum<string, Status> status)
         : this()
     {
         this.Status = status;
@@ -71,15 +72,15 @@ class ListDeleteResponseFromRaw : IFromRawJson<ListDeleteResponse>
         ListDeleteResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(global::Courier.Models.Profiles.Lists.StatusConverter))]
+[JsonConverter(typeof(StatusConverter))]
 public enum Status
 {
     Success,
 }
 
-sealed class StatusConverter : JsonConverter<global::Courier.Models.Profiles.Lists.Status>
+sealed class StatusConverter : JsonConverter<Status>
 {
-    public override global::Courier.Models.Profiles.Lists.Status Read(
+    public override Status Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -87,22 +88,18 @@ sealed class StatusConverter : JsonConverter<global::Courier.Models.Profiles.Lis
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "SUCCESS" => global::Courier.Models.Profiles.Lists.Status.Success,
-            _ => (global::Courier.Models.Profiles.Lists.Status)(-1),
+            "SUCCESS" => Status.Success,
+            _ => (Status)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        global::Courier.Models.Profiles.Lists.Status value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                global::Courier.Models.Profiles.Lists.Status.Success => "SUCCESS",
+                Status.Success => "SUCCESS",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

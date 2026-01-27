@@ -24,4 +24,14 @@ public class BulkRetrieveJobParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/bulk/job_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new BulkRetrieveJobParams { JobID = "job_id" };
+
+        BulkRetrieveJobParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

@@ -58,4 +58,14 @@ public class SendToSlackUserIDTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendToSlackUserID { AccessToken = "access_token", UserID = "user_id" };
+
+        SendToSlackUserID copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

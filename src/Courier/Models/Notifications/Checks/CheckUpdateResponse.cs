@@ -38,8 +38,11 @@ public sealed record class CheckUpdateResponse : JsonModel
 
     public CheckUpdateResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public CheckUpdateResponse(CheckUpdateResponse checkUpdateResponse)
         : base(checkUpdateResponse) { }
+#pragma warning restore CS8618
 
     public CheckUpdateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

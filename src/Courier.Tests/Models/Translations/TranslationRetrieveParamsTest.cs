@@ -26,4 +26,14 @@ public class TranslationRetrieveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/translations/domain/locale"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TranslationRetrieveParams { Domain = "domain", Locale = "locale" };
+
+        TranslationRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

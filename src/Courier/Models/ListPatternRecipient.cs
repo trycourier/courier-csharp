@@ -48,8 +48,11 @@ public sealed record class ListPatternRecipient : JsonModel
 
     public ListPatternRecipient() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ListPatternRecipient(ListPatternRecipient listPatternRecipient)
         : base(listPatternRecipient) { }
+#pragma warning restore CS8618
 
     public ListPatternRecipient(IReadOnlyDictionary<string, JsonElement> rawData)
     {

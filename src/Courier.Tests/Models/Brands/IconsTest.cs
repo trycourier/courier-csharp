@@ -90,4 +90,14 @@ public class IconsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Icons { Bell = "bell", Message = "message" };
+
+        Icons copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

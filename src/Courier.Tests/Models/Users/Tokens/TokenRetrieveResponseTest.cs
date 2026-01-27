@@ -425,6 +425,40 @@ public class TokenRetrieveResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TokenRetrieveResponse
+        {
+            Token = "token",
+            ProviderKey = UserTokenProviderKey.FirebaseFcm,
+            Device = new()
+            {
+                AdID = "ad_id",
+                AppID = "app_id",
+                DeviceID = "device_id",
+                Manufacturer = "manufacturer",
+                Model = "model",
+                Platform = "platform",
+            },
+            ExpiryDate = "string",
+            Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+            Tracking = new()
+            {
+                IP = "ip",
+                Lat = "lat",
+                Long = "long",
+                OsVersion = "os_version",
+            },
+            Status = Status.Active,
+            StatusReason = "status_reason",
+        };
+
+        TokenRetrieveResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class IntersectionMember1Test : TestBase
@@ -534,6 +568,20 @@ public class IntersectionMember1Test : TestBase
         var model = new IntersectionMember1 { Status = null, StatusReason = null };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new IntersectionMember1
+        {
+            Status = Status.Active,
+            StatusReason = "status_reason",
+        };
+
+        IntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

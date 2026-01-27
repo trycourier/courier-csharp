@@ -63,4 +63,14 @@ public class MultipleTokensTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MultipleTokens { Tokens = [new("token")] };
+
+        MultipleTokens copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

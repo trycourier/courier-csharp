@@ -96,4 +96,14 @@ public class EmailFooterTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new EmailFooter { Content = "content", InheritDefault = true };
+
+        EmailFooter copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

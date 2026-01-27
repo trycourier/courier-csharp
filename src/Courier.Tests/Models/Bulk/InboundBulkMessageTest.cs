@@ -336,6 +336,40 @@ public class InboundBulkMessageTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new InboundBulkMessage
+        {
+            Event = "event",
+            Brand = "brand",
+            Content = new ElementalContentSugar() { Body = "body", Title = "title" },
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
+            {
+                {
+                    "foo",
+                    new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    }
+                },
+            },
+            Override = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Template = "template",
+        };
+
+        InboundBulkMessage copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ContentTest : TestBase

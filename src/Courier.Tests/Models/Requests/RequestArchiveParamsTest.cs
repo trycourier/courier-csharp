@@ -24,4 +24,14 @@ public class RequestArchiveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/requests/request_id/archive"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new RequestArchiveParams { RequestID = "request_id" };
+
+        RequestArchiveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

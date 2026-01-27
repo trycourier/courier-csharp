@@ -225,4 +225,30 @@ public class ListRecipientTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ListRecipient
+        {
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Filters =
+            [
+                new()
+                {
+                    Operator = ListFilterOperator.MemberOf,
+                    Path = ListFilterPath.AccountID,
+                    Value = "value",
+                },
+            ],
+            ListID = "list_id",
+        };
+
+        ListRecipient copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

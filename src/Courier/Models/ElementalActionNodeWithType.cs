@@ -104,8 +104,11 @@ public sealed record class ElementalActionNodeWithType : JsonModel
 
     public ElementalActionNodeWithType() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalActionNodeWithType(ElementalActionNodeWithType elementalActionNodeWithType)
         : base(elementalActionNodeWithType) { }
+#pragma warning restore CS8618
 
     public ElementalActionNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -168,8 +171,11 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public IntersectionMember1(IntersectionMember1 intersectionMember1)
         : base(intersectionMember1) { }
+#pragma warning restore CS8618
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {

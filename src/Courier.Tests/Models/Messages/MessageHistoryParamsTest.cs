@@ -49,4 +49,14 @@ public class MessageHistoryParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/messages/message_id/history?type=type"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new MessageHistoryParams { MessageID = "message_id", Type = "type" };
+
+        MessageHistoryParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

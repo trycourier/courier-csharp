@@ -56,4 +56,14 @@ public class ChannelPreferenceTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ChannelPreference { Channel = ChannelClassification.DirectMessage };
+
+        ChannelPreference copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

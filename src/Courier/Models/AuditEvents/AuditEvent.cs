@@ -83,8 +83,11 @@ public sealed record class AuditEvent : JsonModel
 
     public AuditEvent() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AuditEvent(AuditEvent auditEvent)
         : base(auditEvent) { }
+#pragma warning restore CS8618
 
     public AuditEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -145,8 +148,11 @@ public sealed record class Actor : JsonModel
 
     public Actor() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Actor(Actor actor)
         : base(actor) { }
+#pragma warning restore CS8618
 
     public Actor(IReadOnlyDictionary<string, JsonElement> rawData)
     {

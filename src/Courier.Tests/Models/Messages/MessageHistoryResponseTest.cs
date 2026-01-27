@@ -123,4 +123,23 @@ public class MessageHistoryResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new MessageHistoryResponse
+        {
+            Results =
+            [
+                new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            ],
+        };
+
+        MessageHistoryResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

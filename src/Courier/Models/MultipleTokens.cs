@@ -38,8 +38,11 @@ public sealed record class MultipleTokens : JsonModel
 
     public MultipleTokens() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MultipleTokens(MultipleTokens multipleTokens)
         : base(multipleTokens) { }
+#pragma warning restore CS8618
 
     public MultipleTokens(IReadOnlyDictionary<string, JsonElement> rawData)
     {

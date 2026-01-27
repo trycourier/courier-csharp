@@ -30,8 +30,11 @@ public sealed record class AutomationInvokeResponse : JsonModel
 
     public AutomationInvokeResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public AutomationInvokeResponse(AutomationInvokeResponse automationInvokeResponse)
         : base(automationInvokeResponse) { }
+#pragma warning restore CS8618
 
     public AutomationInvokeResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -69,6 +69,29 @@ public class TokenUpdateParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/users/user_id/tokens/token"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TokenUpdateParams
+        {
+            UserID = "user_id",
+            Token = "token",
+            Patch =
+            [
+                new()
+                {
+                    Op = "op",
+                    Path = "path",
+                    Value = "value",
+                },
+            ],
+        };
+
+        TokenUpdateParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class PatchTest : TestBase
@@ -188,5 +211,20 @@ public class PatchTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Patch
+        {
+            Op = "op",
+            Path = "path",
+            Value = "value",
+        };
+
+        Patch copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

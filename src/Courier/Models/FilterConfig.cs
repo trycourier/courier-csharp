@@ -114,8 +114,11 @@ public sealed record class FilterConfig : JsonModel
 
     public FilterConfig() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public FilterConfig(FilterConfig filterConfig)
         : base(filterConfig) { }
+#pragma warning restore CS8618
 
     public FilterConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -24,4 +24,14 @@ public class BrandDeleteParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/brands/brand_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new BrandDeleteParams { BrandID = "brand_id" };
+
+        BrandDeleteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

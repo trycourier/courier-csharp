@@ -58,4 +58,14 @@ public class ElementalContentSugarTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalContentSugar { Body = "body", Title = "title" };
+
+        ElementalContentSugar copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

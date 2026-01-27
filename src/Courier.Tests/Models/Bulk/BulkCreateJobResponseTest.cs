@@ -54,4 +54,14 @@ public class BulkCreateJobResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BulkCreateJobResponse { JobID = "jobId" };
+
+        BulkCreateJobResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

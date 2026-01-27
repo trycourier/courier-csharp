@@ -244,6 +244,23 @@ public class ElementalTextNodeWithTypeTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalTextNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+        };
+
+        ElementalTextNodeWithType copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ElementalTextNodeWithTypeIntersectionMember1Test : TestBase
@@ -351,6 +368,19 @@ public class ElementalTextNodeWithTypeIntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalTextNodeWithTypeIntersectionMember1
+        {
+            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+        };
+
+        ElementalTextNodeWithTypeIntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

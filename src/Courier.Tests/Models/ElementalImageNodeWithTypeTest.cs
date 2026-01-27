@@ -244,6 +244,23 @@ public class ElementalImageNodeWithTypeTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalImageNodeWithType
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
+        };
+
+        ElementalImageNodeWithType copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ElementalImageNodeWithTypeIntersectionMember1Test : TestBase
@@ -353,6 +370,19 @@ public class ElementalImageNodeWithTypeIntersectionMember1Test : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ElementalImageNodeWithTypeIntersectionMember1
+        {
+            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
+        };
+
+        ElementalImageNodeWithTypeIntersectionMember1 copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }
 

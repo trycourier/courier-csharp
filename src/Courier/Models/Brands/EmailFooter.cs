@@ -39,8 +39,11 @@ public sealed record class EmailFooter : JsonModel
 
     public EmailFooter() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public EmailFooter(EmailFooter emailFooter)
         : base(emailFooter) { }
+#pragma warning restore CS8618
 
     public EmailFooter(IReadOnlyDictionary<string, JsonElement> rawData)
     {

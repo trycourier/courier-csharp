@@ -106,6 +106,27 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
             url
         );
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new PreferenceUpdateOrCreateTopicParams
+        {
+            UserID = "user_id",
+            TopicID = "topic_id",
+            Topic = new()
+            {
+                Status = PreferenceStatus.OptedIn,
+                CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                HasCustomRouting = true,
+            },
+            TenantID = "tenant_id",
+        };
+
+        PreferenceUpdateOrCreateTopicParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
 
 public class TopicTest : TestBase
@@ -245,5 +266,20 @@ public class TopicTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Topic
+        {
+            Status = PreferenceStatus.OptedIn,
+            CustomRouting = [ChannelClassification.DirectMessage],
+            HasCustomRouting = true,
+        };
+
+        Topic copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

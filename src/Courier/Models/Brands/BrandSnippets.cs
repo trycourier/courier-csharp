@@ -38,8 +38,11 @@ public sealed record class BrandSnippets : JsonModel
 
     public BrandSnippets() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrandSnippets(BrandSnippets brandSnippets)
         : base(brandSnippets) { }
+#pragma warning restore CS8618
 
     public BrandSnippets(IReadOnlyDictionary<string, JsonElement> rawData)
     {

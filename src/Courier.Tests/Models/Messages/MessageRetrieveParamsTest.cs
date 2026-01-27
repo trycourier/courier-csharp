@@ -24,4 +24,14 @@ public class MessageRetrieveParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/messages/message_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new MessageRetrieveParams { MessageID = "message_id" };
+
+        MessageRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

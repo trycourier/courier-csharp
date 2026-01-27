@@ -368,8 +368,11 @@ public sealed record class UserProfile : JsonModel
 
     public UserProfile() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public UserProfile(UserProfile userProfile)
         : base(userProfile) { }
+#pragma warning restore CS8618
 
     public UserProfile(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -474,8 +477,11 @@ public sealed record class Address : JsonModel
 
     public Address() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Address(Address address)
         : base(address) { }
+#pragma warning restore CS8618
 
     public Address(IReadOnlyDictionary<string, JsonElement> rawData)
     {

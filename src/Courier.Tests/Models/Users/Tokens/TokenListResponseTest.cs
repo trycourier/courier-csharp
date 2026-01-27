@@ -225,4 +225,42 @@ public class TokenListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new TokenListResponse
+        {
+            Tokens =
+            [
+                new()
+                {
+                    Token = "token",
+                    ProviderKey = UserTokenProviderKey.FirebaseFcm,
+                    Device = new()
+                    {
+                        AdID = "ad_id",
+                        AppID = "app_id",
+                        DeviceID = "device_id",
+                        Manufacturer = "manufacturer",
+                        Model = "model",
+                        Platform = "platform",
+                    },
+                    ExpiryDate = "string",
+                    Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Tracking = new()
+                    {
+                        IP = "ip",
+                        Lat = "lat",
+                        Long = "long",
+                        OsVersion = "os_version",
+                    },
+                },
+            ],
+        };
+
+        TokenListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

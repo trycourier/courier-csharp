@@ -144,6 +144,30 @@ public class AudienceListMembersResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new AudienceListMembersResponse
+        {
+            Items =
+            [
+                new()
+                {
+                    AddedAt = "added_at",
+                    AudienceID = "audience_id",
+                    AudienceVersion = 0,
+                    MemberID = "member_id",
+                    Reason = "reason",
+                },
+            ],
+            Paging = new() { More = true, Cursor = "cursor" },
+        };
+
+        AudienceListMembersResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ItemTest : TestBase
@@ -233,5 +257,22 @@ public class ItemTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Item
+        {
+            AddedAt = "added_at",
+            AudienceID = "audience_id",
+            AudienceVersion = 0,
+            MemberID = "member_id",
+            Reason = "reason",
+        };
+
+        Item copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

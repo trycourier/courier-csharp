@@ -53,8 +53,11 @@ public sealed record class MessageRouting : JsonModel
 
     public MessageRouting() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageRouting(MessageRouting messageRouting)
         : base(messageRouting) { }
+#pragma warning restore CS8618
 
     public MessageRouting(IReadOnlyDictionary<string, JsonElement> rawData)
     {

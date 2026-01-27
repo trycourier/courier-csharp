@@ -147,8 +147,11 @@ public sealed record class TokenRetrieveResponse : JsonModel
 
     public TokenRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TokenRetrieveResponse(TokenRetrieveResponse tokenRetrieveResponse)
         : base(tokenRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public TokenRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -180,12 +183,7 @@ class TokenRetrieveResponseFromRaw : IFromRawJson<TokenRetrieveResponse>
     ) => TokenRetrieveResponse.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Courier.Models.Users.Tokens.IntersectionMember1,
-        global::Courier.Models.Users.Tokens.IntersectionMember1FromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<IntersectionMember1, IntersectionMember1FromRaw>))]
 public sealed record class IntersectionMember1 : JsonModel
 {
     public ApiEnum<string, Status>? Status
@@ -220,10 +218,11 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(
-        global::Courier.Models.Users.Tokens.IntersectionMember1 intersectionMember1
-    )
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public IntersectionMember1(IntersectionMember1 intersectionMember1)
         : base(intersectionMember1) { }
+#pragma warning restore CS8618
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -238,8 +237,8 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Courier.Models.Users.Tokens.IntersectionMember1FromRaw.FromRawUnchecked"/>
-    public static global::Courier.Models.Users.Tokens.IntersectionMember1 FromRawUnchecked(
+    /// <inheritdoc cref="IntersectionMember1FromRaw.FromRawUnchecked"/>
+    public static IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -247,13 +246,11 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 }
 
-class IntersectionMember1FromRaw
-    : IFromRawJson<global::Courier.Models.Users.Tokens.IntersectionMember1>
+class IntersectionMember1FromRaw : IFromRawJson<IntersectionMember1>
 {
     /// <inheritdoc/>
-    public global::Courier.Models.Users.Tokens.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Courier.Models.Users.Tokens.IntersectionMember1.FromRawUnchecked(rawData);
+    public IntersectionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        IntersectionMember1.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(StatusConverter))]

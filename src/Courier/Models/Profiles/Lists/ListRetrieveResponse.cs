@@ -52,8 +52,11 @@ public sealed record class ListRetrieveResponse : JsonModel
 
     public ListRetrieveResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ListRetrieveResponse(ListRetrieveResponse listRetrieveResponse)
         : base(listRetrieveResponse) { }
+#pragma warning restore CS8618
 
     public ListRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -159,8 +162,11 @@ public sealed record class Result : JsonModel
 
     public Result() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Result(Result result)
         : base(result) { }
+#pragma warning restore CS8618
 
     public Result(IReadOnlyDictionary<string, JsonElement> rawData)
     {

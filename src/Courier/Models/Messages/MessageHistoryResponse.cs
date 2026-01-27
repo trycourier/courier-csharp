@@ -40,8 +40,11 @@ public sealed record class MessageHistoryResponse : JsonModel
 
     public MessageHistoryResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageHistoryResponse(MessageHistoryResponse messageHistoryResponse)
         : base(messageHistoryResponse) { }
+#pragma warning restore CS8618
 
     public MessageHistoryResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {

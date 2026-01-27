@@ -61,8 +61,11 @@ public sealed record class BrandSettingsEmail : JsonModel
 
     public BrandSettingsEmail() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BrandSettingsEmail(BrandSettingsEmail brandSettingsEmail)
         : base(brandSettingsEmail) { }
+#pragma warning restore CS8618
 
     public BrandSettingsEmail(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -225,8 +228,11 @@ public sealed record class TemplateOverride : JsonModel
 
     public TemplateOverride() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TemplateOverride(TemplateOverride templateOverride)
         : base(templateOverride) { }
+#pragma warning restore CS8618
 
     public TemplateOverride(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -257,12 +263,7 @@ class TemplateOverrideFromRaw : IFromRawJson<TemplateOverride>
         TemplateOverride.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Courier.Models.Brands.IntersectionMember1,
-        global::Courier.Models.Brands.IntersectionMember1FromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<IntersectionMember1, IntersectionMember1FromRaw>))]
 public sealed record class IntersectionMember1 : JsonModel
 {
     public required BrandTemplate Mjml
@@ -305,10 +306,11 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(
-        global::Courier.Models.Brands.IntersectionMember1 intersectionMember1
-    )
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public IntersectionMember1(IntersectionMember1 intersectionMember1)
         : base(intersectionMember1) { }
+#pragma warning restore CS8618
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -323,8 +325,8 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Courier.Models.Brands.IntersectionMember1FromRaw.FromRawUnchecked"/>
-    public static global::Courier.Models.Brands.IntersectionMember1 FromRawUnchecked(
+    /// <inheritdoc cref="IntersectionMember1FromRaw.FromRawUnchecked"/>
+    public static IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -339,10 +341,9 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 }
 
-class IntersectionMember1FromRaw : IFromRawJson<global::Courier.Models.Brands.IntersectionMember1>
+class IntersectionMember1FromRaw : IFromRawJson<IntersectionMember1>
 {
     /// <inheritdoc/>
-    public global::Courier.Models.Brands.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Courier.Models.Brands.IntersectionMember1.FromRawUnchecked(rawData);
+    public IntersectionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        IntersectionMember1.FromRawUnchecked(rawData);
 }

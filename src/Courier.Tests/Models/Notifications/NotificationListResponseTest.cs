@@ -168,6 +168,34 @@ public class NotificationListResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new NotificationListResponse
+        {
+            Paging = new() { More = true, Cursor = "cursor" },
+            Results =
+            [
+                new()
+                {
+                    ID = "id",
+                    CreatedAt = 0,
+                    EventIds = ["string"],
+                    Note = "note",
+                    Routing = new() { Channels = ["string"], Method = Method.All },
+                    TopicID = "topic_id",
+                    UpdatedAt = 0,
+                    Tags = new([new() { ID = "id", Name = "name" }]),
+                    Title = "title",
+                },
+            ],
+        };
+
+        NotificationListResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class ResultTest : TestBase
@@ -378,6 +406,27 @@ public class ResultTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Result
+        {
+            ID = "id",
+            CreatedAt = 0,
+            EventIds = ["string"],
+            Note = "note",
+            Routing = new() { Channels = ["string"], Method = Method.All },
+            TopicID = "topic_id",
+            UpdatedAt = 0,
+            Tags = new([new() { ID = "id", Name = "name" }]),
+            Title = "title",
+        };
+
+        Result copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class TagsTest : TestBase
@@ -432,6 +481,16 @@ public class TagsTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Tags { Data = [new() { ID = "id", Name = "name" }] };
+
+        Tags copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class DataTest : TestBase
@@ -481,5 +540,15 @@ public class DataTest : TestBase
         var model = new Data { ID = "id", Name = "name" };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Data { ID = "id", Name = "name" };
+
+        Data copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

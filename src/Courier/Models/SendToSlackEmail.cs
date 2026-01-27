@@ -39,8 +39,11 @@ public sealed record class SendToSlackEmail : JsonModel
 
     public SendToSlackEmail() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SendToSlackEmail(SendToSlackEmail sendToSlackEmail)
         : base(sendToSlackEmail) { }
+#pragma warning restore CS8618
 
     public SendToSlackEmail(IReadOnlyDictionary<string, JsonElement> rawData)
     {

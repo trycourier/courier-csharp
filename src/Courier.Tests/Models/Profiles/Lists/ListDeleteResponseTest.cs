@@ -55,6 +55,16 @@ public class ListDeleteResponseTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new ListDeleteResponse { Status = Status.Success };
+
+        ListDeleteResponse copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class StatusTest : TestBase

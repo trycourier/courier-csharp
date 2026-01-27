@@ -68,18 +68,16 @@ public sealed record class TemplateListResponse : JsonModel
         init { this._rawData.Set("cursor", value); }
     }
 
-    public IReadOnlyList<global::Courier.Models.Tenants.Templates.Item>? Items
+    public IReadOnlyList<Item>? Items
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<
-                ImmutableArray<global::Courier.Models.Tenants.Templates.Item>
-            >("items");
+            return this._rawData.GetNullableStruct<ImmutableArray<Item>>("items");
         }
         init
         {
-            this._rawData.Set<ImmutableArray<global::Courier.Models.Tenants.Templates.Item>?>(
+            this._rawData.Set<ImmutableArray<Item>?>(
                 "items",
                 value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
@@ -116,8 +114,11 @@ public sealed record class TemplateListResponse : JsonModel
 
     public TemplateListResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TemplateListResponse(TemplateListResponse templateListResponse)
         : base(templateListResponse) { }
+#pragma warning restore CS8618
 
     public TemplateListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -152,7 +153,7 @@ class TemplateListResponseFromRaw : IFromRawJson<TemplateListResponse>
 /// <summary>
 /// Always set to `list`. Represents the type of this object.
 /// </summary>
-[JsonConverter(typeof(global::Courier.Models.Tenants.Templates.TypeConverter))]
+[JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
     List,
@@ -193,12 +194,7 @@ sealed class TypeConverter : JsonConverter<global::Courier.Models.Tenants.Templa
     }
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Courier.Models.Tenants.Templates.Item,
-        global::Courier.Models.Tenants.Templates.ItemFromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<Item, ItemFromRaw>))]
 public sealed record class Item : JsonModel
 {
     /// <summary>
@@ -279,9 +275,7 @@ public sealed record class Item : JsonModel
         init { this._rawData.Set("data", value); }
     }
 
-    public static implicit operator BaseTemplateTenantAssociation(
-        global::Courier.Models.Tenants.Templates.Item item
-    ) =>
+    public static implicit operator BaseTemplateTenantAssociation(Item item) =>
         new()
         {
             ID = item.ID,
@@ -304,8 +298,11 @@ public sealed record class Item : JsonModel
 
     public Item() { }
 
-    public Item(global::Courier.Models.Tenants.Templates.Item item)
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Item(Item item)
         : base(item) { }
+#pragma warning restore CS8618
 
     public Item(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -320,29 +317,21 @@ public sealed record class Item : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Courier.Models.Tenants.Templates.ItemFromRaw.FromRawUnchecked"/>
-    public static global::Courier.Models.Tenants.Templates.Item FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="ItemFromRaw.FromRawUnchecked"/>
+    public static Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class ItemFromRaw : IFromRawJson<global::Courier.Models.Tenants.Templates.Item>
+class ItemFromRaw : IFromRawJson<Item>
 {
     /// <inheritdoc/>
-    public global::Courier.Models.Tenants.Templates.Item FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Courier.Models.Tenants.Templates.Item.FromRawUnchecked(rawData);
+    public Item FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Item.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(
-    typeof(JsonModelConverter<
-        global::Courier.Models.Tenants.Templates.IntersectionMember1,
-        global::Courier.Models.Tenants.Templates.IntersectionMember1FromRaw
-    >)
-)]
+[JsonConverter(typeof(JsonModelConverter<IntersectionMember1, IntersectionMember1FromRaw>))]
 public sealed record class IntersectionMember1 : JsonModel
 {
     /// <summary>
@@ -366,10 +355,11 @@ public sealed record class IntersectionMember1 : JsonModel
 
     public IntersectionMember1() { }
 
-    public IntersectionMember1(
-        global::Courier.Models.Tenants.Templates.IntersectionMember1 intersectionMember1
-    )
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public IntersectionMember1(IntersectionMember1 intersectionMember1)
         : base(intersectionMember1) { }
+#pragma warning restore CS8618
 
     public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -384,8 +374,8 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="global::Courier.Models.Tenants.Templates.IntersectionMember1FromRaw.FromRawUnchecked"/>
-    public static global::Courier.Models.Tenants.Templates.IntersectionMember1 FromRawUnchecked(
+    /// <inheritdoc cref="IntersectionMember1FromRaw.FromRawUnchecked"/>
+    public static IntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -400,13 +390,11 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 }
 
-class IntersectionMember1FromRaw
-    : IFromRawJson<global::Courier.Models.Tenants.Templates.IntersectionMember1>
+class IntersectionMember1FromRaw : IFromRawJson<IntersectionMember1>
 {
     /// <inheritdoc/>
-    public global::Courier.Models.Tenants.Templates.IntersectionMember1 FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => global::Courier.Models.Tenants.Templates.IntersectionMember1.FromRawUnchecked(rawData);
+    public IntersectionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        IntersectionMember1.FromRawUnchecked(rawData);
 }
 
 /// <summary>
@@ -433,8 +421,11 @@ public sealed record class Data : JsonModel
 
     public Data() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Data(Data data)
         : base(data) { }
+#pragma warning restore CS8618
 
     public Data(IReadOnlyDictionary<string, JsonElement> rawData)
     {

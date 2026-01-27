@@ -80,8 +80,11 @@ public sealed record class TenantAssociation : JsonModel
 
     public TenantAssociation() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TenantAssociation(TenantAssociation tenantAssociation)
         : base(tenantAssociation) { }
+#pragma warning restore CS8618
 
     public TenantAssociation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -119,7 +122,7 @@ class TenantAssociationFromRaw : IFromRawJson<TenantAssociation>
         TenantAssociation.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(global::Courier.Models.Tenants.TypeConverter))]
+[JsonConverter(typeof(TypeConverter))]
 public enum Type
 {
     User,

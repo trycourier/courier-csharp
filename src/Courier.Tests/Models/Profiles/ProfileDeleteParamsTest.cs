@@ -24,4 +24,14 @@ public class ProfileDeleteParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/profiles/user_id"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ProfileDeleteParams { UserID = "user_id" };
+
+        ProfileDeleteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }

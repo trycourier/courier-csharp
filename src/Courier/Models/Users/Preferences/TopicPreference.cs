@@ -100,8 +100,11 @@ public sealed record class TopicPreference : JsonModel
 
     public TopicPreference() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TopicPreference(TopicPreference topicPreference)
         : base(topicPreference) { }
+#pragma warning restore CS8618
 
     public TopicPreference(IReadOnlyDictionary<string, JsonElement> rawData)
     {

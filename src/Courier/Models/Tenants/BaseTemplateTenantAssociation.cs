@@ -89,10 +89,13 @@ public sealed record class BaseTemplateTenantAssociation : JsonModel
 
     public BaseTemplateTenantAssociation() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public BaseTemplateTenantAssociation(
         BaseTemplateTenantAssociation baseTemplateTenantAssociation
     )
         : base(baseTemplateTenantAssociation) { }
+#pragma warning restore CS8618
 
     public BaseTemplateTenantAssociation(IReadOnlyDictionary<string, JsonElement> rawData)
     {

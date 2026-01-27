@@ -13,8 +13,12 @@ namespace Courier.Models.Users.Tokens;
 
 /// <summary>
 /// Adds a single token to a user and overwrites a matching existing token.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public sealed record class TokenAddSingleParams : ParamsBase
+public record class TokenAddSingleParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -112,6 +116,8 @@ public sealed record class TokenAddSingleParams : ParamsBase
 
     public TokenAddSingleParams() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public TokenAddSingleParams(TokenAddSingleParams tokenAddSingleParams)
         : base(tokenAddSingleParams)
     {
@@ -120,6 +126,7 @@ public sealed record class TokenAddSingleParams : ParamsBase
 
         this._rawBodyData = new(tokenAddSingleParams._rawBodyData);
     }
+#pragma warning restore CS8618
 
     public TokenAddSingleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
@@ -160,6 +167,32 @@ public sealed record class TokenAddSingleParams : ParamsBase
         );
     }
 
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            new Dictionary<string, object?>()
+            {
+                ["UserID"] = this.UserID,
+                ["Token"] = this.Token,
+                ["HeaderData"] = this._rawHeaderData.Freeze(),
+                ["QueryData"] = this._rawQueryData.Freeze(),
+                ["BodyData"] = this._rawBodyData.Freeze(),
+            },
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(TokenAddSingleParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this.UserID.Equals(other.UserID)
+            && (this.Token?.Equals(other.Token) ?? other.Token == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
     public override System::Uri Url(ClientOptions options)
     {
         return new System::UriBuilder(
@@ -187,6 +220,11 @@ public sealed record class TokenAddSingleParams : ParamsBase
         {
             ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
     }
 }
 
@@ -337,8 +375,11 @@ public sealed record class Device : JsonModel
 
     public Device() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Device(Device device)
         : base(device) { }
+#pragma warning restore CS8618
 
     public Device(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -667,8 +708,11 @@ public sealed record class Tracking : JsonModel
 
     public Tracking() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Tracking(Tracking tracking)
         : base(tracking) { }
+#pragma warning restore CS8618
 
     public Tracking(IReadOnlyDictionary<string, JsonElement> rawData)
     {

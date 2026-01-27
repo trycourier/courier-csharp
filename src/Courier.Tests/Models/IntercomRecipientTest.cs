@@ -54,4 +54,14 @@ public class IntercomRecipientTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new IntercomRecipient { ID = "id" };
+
+        IntercomRecipient copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

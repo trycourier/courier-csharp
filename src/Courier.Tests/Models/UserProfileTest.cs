@@ -653,6 +653,65 @@ public class UserProfileTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new UserProfile
+        {
+            Address = new()
+            {
+                Country = "country",
+                Formatted = "formatted",
+                Locality = "locality",
+                PostalCode = "postal_code",
+                Region = "region",
+                StreetAddress = "street_address",
+            },
+            Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
+            Apn = "apn",
+            Birthdate = "birthdate",
+            Custom = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Discord = new SendToChannel("channel_id"),
+            Email = "email",
+            EmailVerified = true,
+            Expo = new Token("token"),
+            FacebookPsid = "facebookPSID",
+            FamilyName = "family_name",
+            FirebaseToken = "string",
+            Gender = "gender",
+            GivenName = "given_name",
+            Intercom = new() { From = "from", To = new("id") },
+            Locale = "locale",
+            MiddleName = "middle_name",
+            MsTeams = new SendToMsTeamsUserID()
+            {
+                ServiceUrl = "service_url",
+                TenantID = "tenant_id",
+                UserID = "user_id",
+            },
+            Name = "name",
+            Nickname = "nickname",
+            PhoneNumber = "phone_number",
+            PhoneNumberVerified = true,
+            Picture = "picture",
+            PreferredName = "preferred_name",
+            Profile = "profile",
+            Slack = new SendToSlackChannel() { AccessToken = "access_token", Channel = "channel" },
+            Sub = "sub",
+            TargetArn = "target_arn",
+            UpdatedAt = "updated_at",
+            Website = "website",
+            Zoneinfo = "zoneinfo",
+        };
+
+        UserProfile copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }
 
 public class AddressTest : TestBase
@@ -753,5 +812,23 @@ public class AddressTest : TestBase
         };
 
         model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Address
+        {
+            Country = "country",
+            Formatted = "formatted",
+            Locality = "locality",
+            PostalCode = "postal_code",
+            Region = "region",
+            StreetAddress = "street_address",
+        };
+
+        Address copied = new(model);
+
+        Assert.Equal(model, copied);
     }
 }

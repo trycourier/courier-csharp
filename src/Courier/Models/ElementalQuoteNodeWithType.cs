@@ -104,8 +104,11 @@ public sealed record class ElementalQuoteNodeWithType : JsonModel
 
     public ElementalQuoteNodeWithType() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalQuoteNodeWithType(ElementalQuoteNodeWithType elementalQuoteNodeWithType)
         : base(elementalQuoteNodeWithType) { }
+#pragma warning restore CS8618
 
     public ElementalQuoteNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -173,10 +176,13 @@ public sealed record class ElementalQuoteNodeWithTypeIntersectionMember1 : JsonM
 
     public ElementalQuoteNodeWithTypeIntersectionMember1() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public ElementalQuoteNodeWithTypeIntersectionMember1(
         ElementalQuoteNodeWithTypeIntersectionMember1 elementalQuoteNodeWithTypeIntersectionMember1
     )
         : base(elementalQuoteNodeWithTypeIntersectionMember1) { }
+#pragma warning restore CS8618
 
     public ElementalQuoteNodeWithTypeIntersectionMember1(
         IReadOnlyDictionary<string, JsonElement> rawData

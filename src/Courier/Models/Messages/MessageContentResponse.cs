@@ -41,8 +41,11 @@ public sealed record class MessageContentResponse : JsonModel
 
     public MessageContentResponse() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public MessageContentResponse(MessageContentResponse messageContentResponse)
         : base(messageContentResponse) { }
+#pragma warning restore CS8618
 
     public MessageContentResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -133,8 +136,11 @@ public sealed record class Result : JsonModel
 
     public Result() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Result(Result result)
         : base(result) { }
+#pragma warning restore CS8618
 
     public Result(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -269,8 +275,11 @@ public sealed record class Content : JsonModel
 
     public Content() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Content(Content content)
         : base(content) { }
+#pragma warning restore CS8618
 
     public Content(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -337,8 +346,11 @@ public sealed record class Block : JsonModel
 
     public Block() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public Block(Block block)
         : base(block) { }
+#pragma warning restore CS8618
 
     public Block(IReadOnlyDictionary<string, JsonElement> rawData)
     {

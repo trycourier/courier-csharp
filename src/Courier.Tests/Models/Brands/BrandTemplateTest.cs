@@ -188,4 +188,23 @@ public class BrandTemplateTest : TestBase
 
         model.Validate();
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new BrandTemplate
+        {
+            Enabled = true,
+            BackgroundColor = "backgroundColor",
+            BlocksBackgroundColor = "blocksBackgroundColor",
+            Footer = "footer",
+            Head = "head",
+            Header = "header",
+            Width = "width",
+        };
+
+        BrandTemplate copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
 }

@@ -41,8 +41,11 @@ public sealed record class SubscribeToListsRequestItem : JsonModel
 
     public SubscribeToListsRequestItem() { }
 
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
     public SubscribeToListsRequestItem(SubscribeToListsRequestItem subscribeToListsRequestItem)
         : base(subscribeToListsRequestItem) { }
+#pragma warning restore CS8618
 
     public SubscribeToListsRequestItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {

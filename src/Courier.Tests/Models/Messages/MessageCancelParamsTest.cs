@@ -24,4 +24,14 @@ public class MessageCancelParamsTest : TestBase
 
         Assert.Equal(new Uri("https://api.courier.com/messages/message_id/cancel"), url);
     }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new MessageCancelParams { MessageID = "message_id" };
+
+        MessageCancelParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
 }
