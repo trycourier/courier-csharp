@@ -39,7 +39,7 @@ public sealed record class AutomationTemplate : JsonModel
     }
 
     /// <summary>
-    /// The version of the template published, draft.
+    /// The version of the template published or drafted.
     /// </summary>
     public required ApiEnum<string, AutomationTemplateVersion> Version
     {
@@ -143,7 +143,7 @@ class AutomationTemplateFromRaw : IFromRawJson<AutomationTemplate>
 }
 
 /// <summary>
-/// The version of the template published, draft.
+/// The version of the template published or drafted.
 /// </summary>
 [JsonConverter(typeof(AutomationTemplateVersionConverter))]
 public enum AutomationTemplateVersion
