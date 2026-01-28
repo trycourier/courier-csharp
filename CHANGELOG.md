@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.3.1 (2026-01-28)
+
+Full Changelog: [v5.3.0...v5.3.1](https://github.com/trycourier/courier-csharp/compare/v5.3.0...v5.3.1)
+
+### Bug Fixes
+
+* **client:** handle unions containing unknown types properly ([b233c01](https://github.com/trycourier/courier-csharp/commit/b233c01ebf9beccff17fa7cfa63bde14ad46e748))
+
+
+### Chores
+
+* **internal:** improve HttpResponse qualification ([0b31249](https://github.com/trycourier/courier-csharp/commit/0b312493f59c761159f727bbab290f5e9812f76e))
+
 ## 5.3.0 (2026-01-27)
 
 Full Changelog: [v5.2.0...v5.3.0](https://github.com/trycourier/courier-csharp/compare/v5.2.0...v5.3.0)
