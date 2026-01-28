@@ -1328,7 +1328,7 @@ sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
 
         try
         {
-            return new(JsonSerializer.Deserialize<long>(element, options));
+            return new(JsonSerializer.Deserialize<long>(element, options), element);
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
