@@ -619,7 +619,7 @@ sealed class ExpiryDateConverter : JsonConverter<ExpiryDate?>
 
         try
         {
-            return new(JsonSerializer.Deserialize<bool>(element, options));
+            return new(JsonSerializer.Deserialize<bool>(element, options), element);
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
         {
