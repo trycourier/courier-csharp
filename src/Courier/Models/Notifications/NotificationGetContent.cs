@@ -481,10 +481,10 @@ public record class Content : ModelBase
         );
     }
 
-    public virtual bool Equals(Content? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Content? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -493,6 +493,16 @@ public record class Content : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            NotificationContentHierarchy _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ContentConverter : JsonConverter<Content?>
@@ -790,10 +800,10 @@ public record class Locale : ModelBase
         );
     }
 
-    public virtual bool Equals(Locale? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Locale? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -802,6 +812,16 @@ public record class Locale : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            LocaleNotificationContentHierarchy _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class LocaleConverter : JsonConverter<Locale>

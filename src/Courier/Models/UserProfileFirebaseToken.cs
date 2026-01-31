@@ -187,10 +187,10 @@ public record class UserProfileFirebaseToken : ModelBase
         }
     }
 
-    public virtual bool Equals(UserProfileFirebaseToken? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(UserProfileFirebaseToken? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -199,6 +199,16 @@ public record class UserProfileFirebaseToken : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            IReadOnlyList<string> _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class UserProfileFirebaseTokenConverter : JsonConverter<UserProfileFirebaseToken>

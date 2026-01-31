@@ -328,10 +328,10 @@ public record class MsTeams : ModelBase
         );
     }
 
-    public virtual bool Equals(MsTeams? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(MsTeams? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -340,6 +340,19 @@ public record class MsTeams : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            SendToMsTeamsUserID _ => 0,
+            SendToMsTeamsEmail _ => 1,
+            SendToMsTeamsChannelID _ => 2,
+            SendToMsTeamsConversationID _ => 3,
+            SendToMsTeamsChannelName _ => 4,
+            _ => -1,
+        };
+    }
 }
 
 sealed class MsTeamsConverter : JsonConverter<MsTeams>

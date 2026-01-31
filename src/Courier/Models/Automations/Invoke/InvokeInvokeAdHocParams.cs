@@ -691,10 +691,10 @@ public record class Step : ModelBase
         );
     }
 
-    public virtual bool Equals(Step? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Step? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -703,6 +703,21 @@ public record class Step : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            AutomationDelayStep _ => 0,
+            AutomationSendStep _ => 1,
+            AutomationSendListStep _ => 2,
+            AutomationUpdateProfileStep _ => 3,
+            AutomationCancelStep _ => 4,
+            AutomationFetchDataStep _ => 5,
+            AutomationInvokeStep _ => 6,
+            _ => -1,
+        };
+    }
 }
 
 sealed class StepConverter : JsonConverter<Step>

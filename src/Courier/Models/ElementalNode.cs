@@ -460,10 +460,10 @@ public record class ElementalNode : ModelBase
         );
     }
 
-    public virtual bool Equals(ElementalNode? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(ElementalNode? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -472,6 +472,21 @@ public record class ElementalNode : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            ElementalTextNodeWithType _ => 0,
+            ElementalMetaNodeWithType _ => 1,
+            ElementalChannelNodeWithType _ => 2,
+            ElementalImageNodeWithType _ => 3,
+            ElementalActionNodeWithType _ => 4,
+            ElementalDividerNodeWithType _ => 5,
+            ElementalQuoteNodeWithType _ => 6,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ElementalNodeConverter : JsonConverter<ElementalNode>

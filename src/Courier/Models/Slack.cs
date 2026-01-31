@@ -232,10 +232,10 @@ public record class Slack : ModelBase
         );
     }
 
-    public virtual bool Equals(Slack? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Slack? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -244,6 +244,17 @@ public record class Slack : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            SendToSlackChannel _ => 0,
+            SendToSlackEmail _ => 1,
+            SendToSlackUserID _ => 2,
+            _ => -1,
+        };
+    }
 }
 
 sealed class SlackConverter : JsonConverter<Slack>

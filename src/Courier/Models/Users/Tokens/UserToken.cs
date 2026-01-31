@@ -499,10 +499,10 @@ public record class UserTokenExpiryDate : ModelBase
         }
     }
 
-    public virtual bool Equals(UserTokenExpiryDate? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(UserTokenExpiryDate? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -511,6 +511,16 @@ public record class UserTokenExpiryDate : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            bool _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class UserTokenExpiryDateConverter : JsonConverter<UserTokenExpiryDate?>
