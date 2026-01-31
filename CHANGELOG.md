@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.3.2 (2026-01-31)
+
+Full Changelog: [v5.3.1...v5.3.2](https://github.com/trycourier/courier-csharp/compare/v5.3.1...v5.3.2)
+
+### Bug Fixes
+
+* **client:** improve union equality method ([ef22dad](https://github.com/trycourier/courier-csharp/commit/ef22dadf300a9bdc1d6cad6a3105bc9ed81e9831))
+
+
+### Chores
+
+* **internal:** ignore stainless-internal artifacts ([ce5bab5](https://github.com/trycourier/courier-csharp/commit/ce5bab5dae7521ffa231e2b97623fe60f0e72f97))
+
 ## 5.3.1 (2026-01-28)
 
 Full Changelog: [v5.3.0...v5.3.1](https://github.com/trycourier/courier-csharp/compare/v5.3.0...v5.3.1)
