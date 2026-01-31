@@ -185,10 +185,10 @@ public record class MessageRoutingChannel : ModelBase
         this.Switch((_) => { }, (messageRouting) => messageRouting.Validate());
     }
 
-    public virtual bool Equals(MessageRoutingChannel? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(MessageRoutingChannel? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -197,6 +197,16 @@ public record class MessageRoutingChannel : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            MessageRouting _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class MessageRoutingChannelConverter : JsonConverter<MessageRoutingChannel>

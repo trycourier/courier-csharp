@@ -182,10 +182,10 @@ public record class Discord : ModelBase
         );
     }
 
-    public virtual bool Equals(Discord? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Discord? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -194,6 +194,16 @@ public record class Discord : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            SendToChannel _ => 0,
+            SendDirectMessage _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class DiscordConverter : JsonConverter<Discord>
