@@ -6,6 +6,7 @@ using Courier.Core;
 using Courier.Exceptions;
 using Courier.Models.Tenants;
 using Courier.Models.Tenants.Templates;
+using Courier.Services.Tenants.Templates;
 
 namespace Courier.Services.Tenants;
 
@@ -33,6 +34,13 @@ public sealed class TemplateService : ITemplateService
         _client = client;
 
         _withRawResponse = new(() => new TemplateServiceWithRawResponse(client.WithRawResponse));
+        _versions = new(() => new VersionService(client));
+    }
+
+    readonly Lazy<IVersionService> _versions;
+    public IVersionService Versions
+    {
+        get { return _versions.Value; }
     }
 
     /// <inheritdoc/>
@@ -80,6 +88,50 @@ public sealed class TemplateService : ITemplateService
 
         return this.List(parameters with { TenantID = tenantID }, cancellationToken);
     }
+
+    /// <inheritdoc/>
+    public async Task<PostTenantTemplatePublishResponse> Publish(
+        TemplatePublishParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Publish(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<PostTenantTemplatePublishResponse> Publish(
+        string templateID,
+        TemplatePublishParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Publish(parameters with { TemplateID = templateID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<PutTenantTemplateResponse> Replace(
+        TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Replace(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<PutTenantTemplateResponse> Replace(
+        string templateID,
+        TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Replace(parameters with { TemplateID = templateID }, cancellationToken);
+    }
 }
 
 /// <inheritdoc/>
@@ -96,6 +148,14 @@ public sealed class TemplateServiceWithRawResponse : ITemplateServiceWithRawResp
     public TemplateServiceWithRawResponse(ICourierClientWithRawResponse client)
     {
         _client = client;
+
+        _versions = new(() => new VersionServiceWithRawResponse(client));
+    }
+
+    readonly Lazy<IVersionServiceWithRawResponse> _versions;
+    public IVersionServiceWithRawResponse Versions
+    {
+        get { return _versions.Value; }
     }
 
     /// <inheritdoc/>
@@ -184,5 +244,91 @@ public sealed class TemplateServiceWithRawResponse : ITemplateServiceWithRawResp
         parameters ??= new();
 
         return this.List(parameters with { TenantID = tenantID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<PostTenantTemplatePublishResponse>> Publish(
+        TemplatePublishParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.TemplateID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TemplateID' cannot be null");
+        }
+
+        HttpRequest<TemplatePublishParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var postTenantTemplatePublishResponse = await response
+                    .Deserialize<PostTenantTemplatePublishResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    postTenantTemplatePublishResponse.Validate();
+                }
+                return postTenantTemplatePublishResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<PostTenantTemplatePublishResponse>> Publish(
+        string templateID,
+        TemplatePublishParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Publish(parameters with { TemplateID = templateID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<PutTenantTemplateResponse>> Replace(
+        TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.TemplateID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TemplateID' cannot be null");
+        }
+
+        HttpRequest<TemplateReplaceParams> request = new()
+        {
+            Method = HttpMethod.Put,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var putTenantTemplateResponse = await response
+                    .Deserialize<PutTenantTemplateResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    putTenantTemplateResponse.Validate();
+                }
+                return putTenantTemplateResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<PutTenantTemplateResponse>> Replace(
+        string templateID,
+        TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Replace(parameters with { TemplateID = templateID }, cancellationToken);
     }
 }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Tenants;
 using Courier.Models.Tenants.Templates;
+using Courier.Services.Tenants.Templates;
 
 namespace Courier.Services.Tenants;
 
@@ -26,6 +27,8 @@ public interface ITemplateService
     /// <para>The original service is not modified.</para>
     /// </summary>
     ITemplateService WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IVersionService Versions { get; }
 
     /// <summary>
     /// Get a Template in Tenant
@@ -56,6 +59,45 @@ public interface ITemplateService
         TemplateListParams? parameters = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Publishes a specific version of a notification template for a tenant.
+    ///
+    /// <para>The template must already exist in the tenant's notification map. If
+    /// no version is specified, defaults to publishing the "latest" version.</para>
+    /// </summary>
+    Task<PostTenantTemplatePublishResponse> Publish(
+        TemplatePublishParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Publish(TemplatePublishParams, CancellationToken)"/>
+    Task<PostTenantTemplatePublishResponse> Publish(
+        string templateID,
+        TemplatePublishParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Creates or updates a notification template for a tenant.
+    ///
+    /// <para>If the template already exists for the tenant, it will be updated (200).
+    /// Otherwise, a new template is created (201).</para>
+    ///
+    /// <para>Optionally publishes the template immediately if the `published` flag
+    /// is set to true.</para>
+    /// </summary>
+    Task<PutTenantTemplateResponse> Replace(
+        TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Replace(TemplateReplaceParams, CancellationToken)"/>
+    Task<PutTenantTemplateResponse> Replace(
+        string templateID,
+        TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
 }
 
 /// <summary>
@@ -70,6 +112,8 @@ public interface ITemplateServiceWithRawResponse
     /// <para>The original service is not modified.</para>
     /// </summary>
     ITemplateServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
+
+    IVersionServiceWithRawResponse Versions { get; }
 
     /// <summary>
     /// Returns a raw HTTP response for `get /tenants/{tenant_id}/templates/{template_id}`, but is otherwise the
@@ -100,6 +144,38 @@ public interface ITemplateServiceWithRawResponse
     Task<HttpResponse<TemplateListResponse>> List(
         string tenantID,
         TemplateListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `post /tenants/{tenant_id}/templates/{template_id}/publish`, but is otherwise the
+    /// same as <see cref="ITemplateService.Publish(TemplatePublishParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<PostTenantTemplatePublishResponse>> Publish(
+        TemplatePublishParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Publish(TemplatePublishParams, CancellationToken)"/>
+    Task<HttpResponse<PostTenantTemplatePublishResponse>> Publish(
+        string templateID,
+        TemplatePublishParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for `put /tenants/{tenant_id}/templates/{template_id}`, but is otherwise the
+    /// same as <see cref="ITemplateService.Replace(TemplateReplaceParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<PutTenantTemplateResponse>> Replace(
+        TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Replace(TemplateReplaceParams, CancellationToken)"/>
+    Task<HttpResponse<PutTenantTemplateResponse>> Replace(
+        string templateID,
+        TemplateReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 }
