@@ -89,6 +89,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Lists::ListSubscribeResponseStatus>(),
             new ApiEnumConverter<string, Tenants::Status>(),
             new ApiEnumConverter<string, Tenants::Type>(),
+            new ApiEnumConverter<string, Tenants::RoutingMethod>(),
             new ApiEnumConverter<string, Tenants::TenantListResponseType>(),
             new ApiEnumConverter<string, Tenants::TenantListUsersResponseType>(),
             new ApiEnumConverter<string, Items::Status>(),

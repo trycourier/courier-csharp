@@ -894,10 +894,10 @@ public record class Content : ModelBase
         );
     }
 
-    public virtual bool Equals(Content? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Content? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -906,6 +906,16 @@ public record class Content : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            ElementalContentSugar _ => 0,
+            ElementalContent _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ContentConverter : JsonConverter<Content>
@@ -1290,10 +1300,10 @@ public record class ExpiresIn : ModelBase
         }
     }
 
-    public virtual bool Equals(ExpiresIn? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(ExpiresIn? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -1302,6 +1312,16 @@ public record class ExpiresIn : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            long _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ExpiresInConverter : JsonConverter<ExpiresIn>
@@ -1974,7 +1994,8 @@ public record class To : ModelBase
                 slackRecipient: (_) => null,
                 msTeamsRecipient: (_) => null,
                 pagerdutyRecipient: (_) => null,
-                webhookRecipient: (_) => null
+                webhookRecipient: (_) => null,
+                recipients: (_) => null
             );
         }
     }
@@ -2024,6 +2045,12 @@ public record class To : ModelBase
     public To(WebhookRecipient value, JsonElement? element = null)
     {
         this.Value = value;
+        this._element = element;
+    }
+
+    public To(IReadOnlyList<Recipient> value, JsonElement? element = null)
+    {
+        this.Value = ImmutableArray.ToImmutableArray(value);
         this._element = element;
     }
 
@@ -2201,6 +2228,27 @@ public record class To : ModelBase
     }
 
     /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="IReadOnlyList<Recipient>"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickRecipients(out var value)) {
+    ///     // `value` is of type `IReadOnlyList<Recipient>`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickRecipients([NotNullWhen(true)] out IReadOnlyList<Recipient>? value)
+    {
+        value = this.Value as IReadOnlyList<Recipient>;
+        return value != null;
+    }
+
+    /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
     /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
@@ -2221,7 +2269,8 @@ public record class To : ModelBase
     ///     (SlackRecipient value) => {...},
     ///     (MsTeamsRecipient value) => {...},
     ///     (PagerdutyRecipient value) => {...},
-    ///     (WebhookRecipient value) => {...}
+    ///     (WebhookRecipient value) => {...},
+    ///     (IReadOnlyList<Recipient> value) => {...}
     /// );
     /// </code>
     /// </example>
@@ -2234,7 +2283,8 @@ public record class To : ModelBase
         System::Action<SlackRecipient> slackRecipient,
         System::Action<MsTeamsRecipient> msTeamsRecipient,
         System::Action<PagerdutyRecipient> pagerdutyRecipient,
-        System::Action<WebhookRecipient> webhookRecipient
+        System::Action<WebhookRecipient> webhookRecipient,
+        System::Action<IReadOnlyList<Recipient>> recipients
     )
     {
         switch (this.Value)
@@ -2263,6 +2313,9 @@ public record class To : ModelBase
             case WebhookRecipient value:
                 webhookRecipient(value);
                 break;
+            case IReadOnlyList<Recipient> value:
+                recipients(value);
+                break;
             default:
                 throw new CourierInvalidDataException("Data did not match any variant of To");
         }
@@ -2290,7 +2343,8 @@ public record class To : ModelBase
     ///     (SlackRecipient value) => {...},
     ///     (MsTeamsRecipient value) => {...},
     ///     (PagerdutyRecipient value) => {...},
-    ///     (WebhookRecipient value) => {...}
+    ///     (WebhookRecipient value) => {...},
+    ///     (IReadOnlyList<Recipient> value) => {...}
     /// );
     /// </code>
     /// </example>
@@ -2303,7 +2357,8 @@ public record class To : ModelBase
         System::Func<SlackRecipient, T> slackRecipient,
         System::Func<MsTeamsRecipient, T> msTeamsRecipient,
         System::Func<PagerdutyRecipient, T> pagerdutyRecipient,
-        System::Func<WebhookRecipient, T> webhookRecipient
+        System::Func<WebhookRecipient, T> webhookRecipient,
+        System::Func<IReadOnlyList<Recipient>, T> recipients
     )
     {
         return this.Value switch
@@ -2316,6 +2371,7 @@ public record class To : ModelBase
             MsTeamsRecipient value => msTeamsRecipient(value),
             PagerdutyRecipient value => pagerdutyRecipient(value),
             WebhookRecipient value => webhookRecipient(value),
+            IReadOnlyList<Recipient> value => recipients(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of To"),
         };
     }
@@ -2335,6 +2391,9 @@ public record class To : ModelBase
     public static implicit operator To(PagerdutyRecipient value) => new(value);
 
     public static implicit operator To(WebhookRecipient value) => new(value);
+
+    public static implicit operator To(List<Recipient> value) =>
+        new((IReadOnlyList<Recipient>)value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -2360,14 +2419,15 @@ public record class To : ModelBase
             (slackRecipient) => slackRecipient.Validate(),
             (msTeamsRecipient) => msTeamsRecipient.Validate(),
             (pagerdutyRecipient) => pagerdutyRecipient.Validate(),
-            (webhookRecipient) => webhookRecipient.Validate()
+            (webhookRecipient) => webhookRecipient.Validate(),
+            (_) => { }
         );
     }
 
-    public virtual bool Equals(To? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(To? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -2376,6 +2436,23 @@ public record class To : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            UserRecipient _ => 0,
+            AudienceRecipient _ => 1,
+            ListRecipient _ => 2,
+            ListPatternRecipient _ => 3,
+            SlackRecipient _ => 4,
+            MsTeamsRecipient _ => 5,
+            PagerdutyRecipient _ => 6,
+            WebhookRecipient _ => 7,
+            IReadOnlyList<Recipient> _ => 8,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ToConverter : JsonConverter<To?>
@@ -2499,11 +2576,621 @@ sealed class ToConverter : JsonConverter<To?>
             // ignore
         }
 
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<List<Recipient>>(element, options);
+            if (deserialized != null)
+            {
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
         return new(element);
     }
 
     public override void Write(Utf8JsonWriter writer, To? value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(writer, value?.Json, options);
+    }
+}
+
+/// <summary>
+/// A single recipient of the message. Choose one of the following types based on
+/// how you want to identify the recipient: - **User**: Send to a specific user by
+/// user_id, email, or phone number - **Audience**: Send to all users in an audience
+/// - **List**: Send to all users in a list - **List Pattern**: Send to users in lists
+/// matching a pattern - **Slack**: Send via Slack (channel, email, or user_id) -
+/// **MS Teams**: Send via Microsoft Teams - **PagerDuty**: Send via PagerDuty - **Webhook**:
+/// Send via webhook
+/// </summary>
+[JsonConverter(typeof(RecipientConverter))]
+public record class Recipient : ModelBase
+{
+    public object? Value { get; } = null;
+
+    JsonElement? _element = null;
+
+    public JsonElement Json
+    {
+        get
+        {
+            return this._element ??= JsonSerializer.SerializeToElement(
+                this.Value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public string? ListID
+    {
+        get
+        {
+            return Match<string?>(
+                user: (x) => x.ListID,
+                audience: (_) => null,
+                list: (x) => x.ListID,
+                listPattern: (_) => null,
+                slack: (_) => null,
+                msTeams: (_) => null,
+                pagerduty: (_) => null,
+                webhook: (_) => null
+            );
+        }
+    }
+
+    public Recipient(UserRecipient value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Recipient(AudienceRecipient value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Recipient(ListRecipient value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Recipient(ListPatternRecipient value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Recipient(SlackRecipient value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Recipient(MsTeamsRecipient value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Recipient(PagerdutyRecipient value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Recipient(WebhookRecipient value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Recipient(JsonElement element)
+    {
+        this._element = element;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="UserRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickUser(out var value)) {
+    ///     // `value` is of type `UserRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickUser([NotNullWhen(true)] out UserRecipient? value)
+    {
+        value = this.Value as UserRecipient;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="AudienceRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAudience(out var value)) {
+    ///     // `value` is of type `AudienceRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAudience([NotNullWhen(true)] out AudienceRecipient? value)
+    {
+        value = this.Value as AudienceRecipient;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ListRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickList(out var value)) {
+    ///     // `value` is of type `ListRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickList([NotNullWhen(true)] out ListRecipient? value)
+    {
+        value = this.Value as ListRecipient;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ListPatternRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickListPattern(out var value)) {
+    ///     // `value` is of type `ListPatternRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickListPattern([NotNullWhen(true)] out ListPatternRecipient? value)
+    {
+        value = this.Value as ListPatternRecipient;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="SlackRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickSlack(out var value)) {
+    ///     // `value` is of type `SlackRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickSlack([NotNullWhen(true)] out SlackRecipient? value)
+    {
+        value = this.Value as SlackRecipient;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="MsTeamsRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickMsTeams(out var value)) {
+    ///     // `value` is of type `MsTeamsRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickMsTeams([NotNullWhen(true)] out MsTeamsRecipient? value)
+    {
+        value = this.Value as MsTeamsRecipient;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="PagerdutyRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickPagerduty(out var value)) {
+    ///     // `value` is of type `PagerdutyRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickPagerduty([NotNullWhen(true)] out PagerdutyRecipient? value)
+    {
+        value = this.Value as PagerdutyRecipient;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="WebhookRecipient"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickWebhook(out var value)) {
+    ///     // `value` is of type `WebhookRecipient`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickWebhook([NotNullWhen(true)] out WebhookRecipient? value)
+    {
+        value = this.Value as WebhookRecipient;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (UserRecipient value) => {...},
+    ///     (AudienceRecipient value) => {...},
+    ///     (ListRecipient value) => {...},
+    ///     (ListPatternRecipient value) => {...},
+    ///     (SlackRecipient value) => {...},
+    ///     (MsTeamsRecipient value) => {...},
+    ///     (PagerdutyRecipient value) => {...},
+    ///     (WebhookRecipient value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public void Switch(
+        System::Action<UserRecipient> user,
+        System::Action<AudienceRecipient> audience,
+        System::Action<ListRecipient> list,
+        System::Action<ListPatternRecipient> listPattern,
+        System::Action<SlackRecipient> slack,
+        System::Action<MsTeamsRecipient> msTeams,
+        System::Action<PagerdutyRecipient> pagerduty,
+        System::Action<WebhookRecipient> webhook
+    )
+    {
+        switch (this.Value)
+        {
+            case UserRecipient value:
+                user(value);
+                break;
+            case AudienceRecipient value:
+                audience(value);
+                break;
+            case ListRecipient value:
+                list(value);
+                break;
+            case ListPatternRecipient value:
+                listPattern(value);
+                break;
+            case SlackRecipient value:
+                slack(value);
+                break;
+            case MsTeamsRecipient value:
+                msTeams(value);
+                break;
+            case PagerdutyRecipient value:
+                pagerduty(value);
+                break;
+            case WebhookRecipient value:
+                webhook(value);
+                break;
+            default:
+                throw new CourierInvalidDataException(
+                    "Data did not match any variant of Recipient"
+                );
+        }
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (UserRecipient value) => {...},
+    ///     (AudienceRecipient value) => {...},
+    ///     (ListRecipient value) => {...},
+    ///     (ListPatternRecipient value) => {...},
+    ///     (SlackRecipient value) => {...},
+    ///     (MsTeamsRecipient value) => {...},
+    ///     (PagerdutyRecipient value) => {...},
+    ///     (WebhookRecipient value) => {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public T Match<T>(
+        System::Func<UserRecipient, T> user,
+        System::Func<AudienceRecipient, T> audience,
+        System::Func<ListRecipient, T> list,
+        System::Func<ListPatternRecipient, T> listPattern,
+        System::Func<SlackRecipient, T> slack,
+        System::Func<MsTeamsRecipient, T> msTeams,
+        System::Func<PagerdutyRecipient, T> pagerduty,
+        System::Func<WebhookRecipient, T> webhook
+    )
+    {
+        return this.Value switch
+        {
+            UserRecipient value => user(value),
+            AudienceRecipient value => audience(value),
+            ListRecipient value => list(value),
+            ListPatternRecipient value => listPattern(value),
+            SlackRecipient value => slack(value),
+            MsTeamsRecipient value => msTeams(value),
+            PagerdutyRecipient value => pagerduty(value),
+            WebhookRecipient value => webhook(value),
+            _ => throw new CourierInvalidDataException(
+                "Data did not match any variant of Recipient"
+            ),
+        };
+    }
+
+    public static implicit operator Recipient(UserRecipient value) => new(value);
+
+    public static implicit operator Recipient(AudienceRecipient value) => new(value);
+
+    public static implicit operator Recipient(ListRecipient value) => new(value);
+
+    public static implicit operator Recipient(ListPatternRecipient value) => new(value);
+
+    public static implicit operator Recipient(SlackRecipient value) => new(value);
+
+    public static implicit operator Recipient(MsTeamsRecipient value) => new(value);
+
+    public static implicit operator Recipient(PagerdutyRecipient value) => new(value);
+
+    public static implicit operator Recipient(WebhookRecipient value) => new(value);
+
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
+    public override void Validate()
+    {
+        if (this.Value == null)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of Recipient");
+        }
+        this.Switch(
+            (user) => user.Validate(),
+            (audience) => audience.Validate(),
+            (list) => list.Validate(),
+            (listPattern) => listPattern.Validate(),
+            (slack) => slack.Validate(),
+            (msTeams) => msTeams.Validate(),
+            (pagerduty) => pagerduty.Validate(),
+            (webhook) => webhook.Validate()
+        );
+    }
+
+    public virtual bool Equals(Recipient? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            UserRecipient _ => 0,
+            AudienceRecipient _ => 1,
+            ListRecipient _ => 2,
+            ListPatternRecipient _ => 3,
+            SlackRecipient _ => 4,
+            MsTeamsRecipient _ => 5,
+            PagerdutyRecipient _ => 6,
+            WebhookRecipient _ => 7,
+            _ => -1,
+        };
+    }
+}
+
+sealed class RecipientConverter : JsonConverter<Recipient>
+{
+    public override Recipient? Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<UserRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<AudienceRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ListRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ListPatternRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<SlackRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<MsTeamsRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<PagerdutyRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        return new(element);
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        Recipient value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(writer, value.Json, options);
     }
 }

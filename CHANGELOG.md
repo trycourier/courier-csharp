@@ -1,5 +1,24 @@
 # Changelog
 
+## 5.4.0 (2026-02-06)
+
+Full Changelog: [v5.3.1...v5.4.0](https://github.com/trycourier/courier-csharp/compare/v5.3.1...v5.4.0)
+
+### Features
+
+* **api:** add publish/replace methods, versions subresource to tenants templates ([caa146e](https://github.com/trycourier/courier-csharp/commit/caa146e55ec944b48afa06a91e8c23511948e8d8))
+* **api:** add Recipient union type and recipients list variant to To parameter ([4f0d445](https://github.com/trycourier/courier-csharp/commit/4f0d445e4c02aea1f5d8d5d8b7b52d3a081af278))
+
+
+### Bug Fixes
+
+* **client:** improve union equality method ([ef22dad](https://github.com/trycourier/courier-csharp/commit/ef22dadf300a9bdc1d6cad6a3105bc9ed81e9831))
+
+
+### Chores
+
+* **internal:** ignore stainless-internal artifacts ([ce5bab5](https://github.com/trycourier/courier-csharp/commit/ce5bab5dae7521ffa231e2b97623fe60f0e72f97))
+
 ## 5.3.1 (2026-01-28)
 
 Full Changelog: [v5.3.0...v5.3.1](https://github.com/trycourier/courier-csharp/compare/v5.3.0...v5.3.1)

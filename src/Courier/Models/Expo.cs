@@ -173,10 +173,10 @@ public record class Expo : ModelBase
         this.Switch((token) => token.Validate(), (multipleTokens) => multipleTokens.Validate());
     }
 
-    public virtual bool Equals(Expo? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Expo? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -185,6 +185,16 @@ public record class Expo : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            Token _ => 0,
+            MultipleTokens _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ExpoConverter : JsonConverter<Expo>
