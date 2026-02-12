@@ -32,7 +32,6 @@ public class TemplateReplaceParamsTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -112,7 +111,6 @@ public class TemplateReplaceParamsTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
             Channels = new Dictionary<string, ChannelsItem>()
             {
@@ -202,7 +200,6 @@ public class TemplateReplaceParamsTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -290,7 +287,6 @@ public class TemplateReplaceParamsTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -381,7 +377,6 @@ public class TemplateReplaceParamsTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -473,7 +468,6 @@ public class TemplateReplaceParamsTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
