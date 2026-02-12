@@ -28,7 +28,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
             Channels = new Dictionary<string, ChannelsItem>()
             {
@@ -102,7 +101,6 @@ public class TenantTemplateInputTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
         };
         Dictionary<string, ChannelsItem> expectedChannels = new()
         {
@@ -200,7 +198,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
             Channels = new Dictionary<string, ChannelsItem>()
             {
@@ -288,7 +285,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
             Channels = new Dictionary<string, ChannelsItem>()
             {
@@ -369,7 +365,6 @@ public class TenantTemplateInputTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
         };
         Dictionary<string, ChannelsItem> expectedChannels = new()
         {
@@ -467,7 +462,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
             Channels = new Dictionary<string, ChannelsItem>()
             {
@@ -549,7 +543,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
         };
 
@@ -580,7 +573,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
         };
 
@@ -606,7 +598,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
 
             // Null should be interpreted as omitted for these properties
@@ -642,7 +633,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
 
             // Null should be interpreted as omitted for these properties
@@ -673,7 +663,6 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
             Channels = new Dictionary<string, ChannelsItem>()
             {
