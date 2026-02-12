@@ -3194,7 +3194,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
         };
         value.Validate();
     }
@@ -3229,7 +3228,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Content>(

@@ -40,16 +40,6 @@ public sealed record class ElementalContent : JsonModel
         init { this._rawData.Set("version", value); }
     }
 
-    public string? Brand
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("brand");
-        }
-        init { this._rawData.Set("brand", value); }
-    }
-
     /// <inheritdoc/>
     public override void Validate()
     {
@@ -58,7 +48,6 @@ public sealed record class ElementalContent : JsonModel
             item.Validate();
         }
         _ = this.Version;
-        _ = this.Brand;
     }
 
     public ElementalContent() { }
