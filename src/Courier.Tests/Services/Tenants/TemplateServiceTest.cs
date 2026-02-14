@@ -65,7 +65,6 @@ public class TemplateServiceTest : TestBase
                             },
                         ],
                         Version = "version",
-                        Brand = "brand",
                     },
                     Channels = new Dictionary<string, ChannelsItem>()
                     {

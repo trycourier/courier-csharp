@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.5.0 (2026-02-14)
+
+Full Changelog: [v5.4.0...v5.5.0](https://github.com/trycourier/courier-csharp/compare/v5.4.0...v5.5.0)
+
+### Features
+
+* **api:** remove brand field from elemental content ([cd9a6b6](https://github.com/trycourier/courier-csharp/commit/cd9a6b6a99ba1e5f79948ef04525140f17bf0f3b))
+* **client:** add equality and tostring for multipart data ([204e9ea](https://github.com/trycourier/courier-csharp/commit/204e9eae42ee91828bff78ae97e3d278bccd79d0))
+
+
+### Bug Fixes
+
+* **client:** improve behaviour for comma-delimited binary content in multipart requests ([c6f3e58](https://github.com/trycourier/courier-csharp/commit/c6f3e58af3d304ca3fd78b2875d746920ad8129f))
+
 ## 5.4.0 (2026-02-06)
 
 Full Changelog: [v5.3.1...v5.4.0](https://github.com/trycourier/courier-csharp/compare/v5.3.1...v5.4.0)
