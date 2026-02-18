@@ -2432,7 +2432,13 @@ public record class To : ModelBase
             (msTeamsRecipient) => msTeamsRecipient.Validate(),
             (pagerdutyRecipient) => pagerdutyRecipient.Validate(),
             (webhookRecipient) => webhookRecipient.Validate(),
-            (_) => { }
+            (recipients) =>
+            {
+                foreach (var item in recipients)
+                {
+                    item.Validate();
+                }
+            }
         );
     }
 
@@ -2596,6 +2602,10 @@ sealed class ToConverter : JsonConverter<To?>
             var deserialized = JsonSerializer.Deserialize<List<Recipient>>(element, options);
             if (deserialized != null)
             {
+                foreach (var item in deserialized)
+                {
+                    item.Validate();
+                }
                 return new(deserialized, element);
             }
         }
