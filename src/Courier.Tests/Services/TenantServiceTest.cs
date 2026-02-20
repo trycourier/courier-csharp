@@ -4,7 +4,7 @@ namespace Courier.Tests.Services;
 
 public class TenantServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var tenant = await this.client.Tenants.Retrieve(
@@ -15,7 +15,7 @@ public class TenantServiceTest : TestBase
         tenant.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         var tenant = await this.client.Tenants.Update(
@@ -26,20 +26,20 @@ public class TenantServiceTest : TestBase
         tenant.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var tenants = await this.client.Tenants.List(new(), TestContext.Current.CancellationToken);
         tenants.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Delete_Works()
     {
         await this.client.Tenants.Delete("tenant_id", new(), TestContext.Current.CancellationToken);
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task ListUsers_Works()
     {
         var response = await this.client.Tenants.ListUsers(
