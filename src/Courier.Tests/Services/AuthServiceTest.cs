@@ -4,7 +4,7 @@ namespace Courier.Tests.Services;
 
 public class AuthServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task IssueToken_Works()
     {
         var response = await this.client.Auth.IssueToken(

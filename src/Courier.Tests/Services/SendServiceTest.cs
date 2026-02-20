@@ -8,7 +8,7 @@ namespace Courier.Tests.Services;
 
 public class SendServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Message_Works()
     {
         var response = await this.client.Send.Message(

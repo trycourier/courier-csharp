@@ -4,7 +4,7 @@ namespace Courier.Tests.Services.Tenants.Templates;
 
 public class VersionServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var baseTemplateTenantAssociation = await this.client.Tenants.Templates.Versions.Retrieve(
