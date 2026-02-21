@@ -4,7 +4,7 @@ namespace Courier.Tests.Services;
 
 public class TranslationServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         await this.client.Translations.Retrieve(
@@ -14,7 +14,7 @@ public class TranslationServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         await this.client.Translations.Update(

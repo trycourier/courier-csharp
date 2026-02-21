@@ -7,7 +7,7 @@ namespace Courier.Tests.Services.Automations;
 
 public class InvokeServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task InvokeAdHoc_Works()
     {
         var automationInvokeResponse = await this.client.Automations.Invoke.InvokeAdHoc(
@@ -47,7 +47,7 @@ public class InvokeServiceTest : TestBase
         automationInvokeResponse.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task InvokeByTemplate_Works()
     {
         var automationInvokeResponse = await this.client.Automations.Invoke.InvokeByTemplate(

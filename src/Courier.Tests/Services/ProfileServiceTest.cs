@@ -6,7 +6,7 @@ namespace Courier.Tests.Services;
 
 public class ProfileServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Create_Works()
     {
         var profile = await this.client.Profiles.Create(
@@ -23,7 +23,7 @@ public class ProfileServiceTest : TestBase
         profile.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var profile = await this.client.Profiles.Retrieve(
@@ -34,7 +34,7 @@ public class ProfileServiceTest : TestBase
         profile.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         await this.client.Profiles.Update(
@@ -55,13 +55,13 @@ public class ProfileServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Delete_Works()
     {
         await this.client.Profiles.Delete("user_id", new(), TestContext.Current.CancellationToken);
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replace_Works()
     {
         var response = await this.client.Profiles.Replace(

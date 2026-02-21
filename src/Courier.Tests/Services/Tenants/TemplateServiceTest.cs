@@ -8,7 +8,7 @@ namespace Courier.Tests.Services.Tenants;
 
 public class TemplateServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var baseTemplateTenantAssociation = await this.client.Tenants.Templates.Retrieve(
@@ -19,7 +19,7 @@ public class TemplateServiceTest : TestBase
         baseTemplateTenantAssociation.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var templates = await this.client.Tenants.Templates.List(
@@ -30,7 +30,7 @@ public class TemplateServiceTest : TestBase
         templates.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Publish_Works()
     {
         var postTenantTemplatePublishResponse = await this.client.Tenants.Templates.Publish(
@@ -41,7 +41,7 @@ public class TemplateServiceTest : TestBase
         postTenantTemplatePublishResponse.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replace_Works()
     {
         var putTenantTemplateResponse = await this.client.Tenants.Templates.Replace(
@@ -65,7 +65,6 @@ public class TemplateServiceTest : TestBase
                             },
                         ],
                         Version = "version",
-                        Brand = "brand",
                     },
                     Channels = new Dictionary<string, ChannelsItem>()
                     {

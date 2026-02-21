@@ -4,7 +4,7 @@ namespace Courier.Tests.Services;
 
 public class MessageServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var message = await this.client.Messages.Retrieve(
@@ -15,7 +15,7 @@ public class MessageServiceTest : TestBase
         message.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var messages = await this.client.Messages.List(
@@ -25,7 +25,7 @@ public class MessageServiceTest : TestBase
         messages.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Cancel_Works()
     {
         var messageDetails = await this.client.Messages.Cancel(
@@ -36,7 +36,7 @@ public class MessageServiceTest : TestBase
         messageDetails.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Content_Works()
     {
         var response = await this.client.Messages.Content(
@@ -47,7 +47,7 @@ public class MessageServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task History_Works()
     {
         var response = await this.client.Messages.History(

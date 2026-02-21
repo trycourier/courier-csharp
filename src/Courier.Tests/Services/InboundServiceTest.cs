@@ -7,7 +7,7 @@ namespace Courier.Tests.Services;
 
 public class InboundServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task TrackEvent_Works()
     {
         var response = await this.client.Inbound.TrackEvent(
