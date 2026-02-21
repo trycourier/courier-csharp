@@ -1,5 +1,37 @@
 # Changelog
 
+## 5.5.0 (2026-02-21)
+
+Full Changelog: [v5.4.0...v5.5.0](https://github.com/trycourier/courier-csharp/compare/v5.4.0...v5.5.0)
+
+### Features
+
+* **api:** remove brand field from elemental content ([5bab12a](https://github.com/trycourier/courier-csharp/commit/5bab12a1ebe4b67fb6b53db097b96d7fff880225))
+* **client:** add equality and tostring for multipart data ([4baa4da](https://github.com/trycourier/courier-csharp/commit/4baa4da72e9b8369e0520fec4300c05c68677227))
+
+
+### Bug Fixes
+
+* **client:** improve behaviour for comma-delimited binary content in multipart requests ([45ff417](https://github.com/trycourier/courier-csharp/commit/45ff417009c39c1b1a28732027287299945a0d41))
+* **client:** validate unions properly ([135f8ec](https://github.com/trycourier/courier-csharp/commit/135f8ec7b706a0dfe98165072d01670b2bd08fdb))
+
+
+### Chores
+
+* **internal:** remove mock server code ([aea5a13](https://github.com/trycourier/courier-csharp/commit/aea5a13099951189ec98b82a3e5d06c0f5e82d50))
+* update mock server docs ([5d5bd51](https://github.com/trycourier/courier-csharp/commit/5d5bd51107afdf05f22914b4a39db4cd7c399627))
+
+
+### Documentation
+
+* add AUTO-GENERATED-OVERVIEW markers for README sync ([0ed6f0e](https://github.com/trycourier/courier-csharp/commit/0ed6f0ef10eeda3bf2fc988823a6ce8be1b72aba))
+* sync README from mintlify-docs (2026-02-20 18:11 UTC) ([9d6dd5c](https://github.com/trycourier/courier-csharp/commit/9d6dd5cefda7122a15b665aad4d04cc11c756b31))
+
+
+### Refactors
+
+* **internal:** default headers ([ceead7c](https://github.com/trycourier/courier-csharp/commit/ceead7ce080c310a5a2c2184105d6a7e3dee8846))
+
 ## 5.4.0 (2026-02-06)
 
 Full Changelog: [v5.3.1...v5.4.0](https://github.com/trycourier/courier-csharp/compare/v5.3.1...v5.4.0)
