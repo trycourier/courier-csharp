@@ -15,7 +15,6 @@ public class TokenAddSingleParamsTest : TestBase
         {
             UserID = "user_id",
             Token = "token",
-            TokenValue = "token",
             ProviderKey = ProviderKey.FirebaseFcm,
             Device = new()
             {
@@ -39,7 +38,6 @@ public class TokenAddSingleParamsTest : TestBase
 
         string expectedUserID = "user_id";
         string expectedToken = "token";
-        string expectedTokenValue = "token";
         ApiEnum<string, ProviderKey> expectedProviderKey = ProviderKey.FirebaseFcm;
         Device expectedDevice = new()
         {
@@ -62,7 +60,6 @@ public class TokenAddSingleParamsTest : TestBase
 
         Assert.Equal(expectedUserID, parameters.UserID);
         Assert.Equal(expectedToken, parameters.Token);
-        Assert.Equal(expectedTokenValue, parameters.TokenValue);
         Assert.Equal(expectedProviderKey, parameters.ProviderKey);
         Assert.Equal(expectedDevice, parameters.Device);
         Assert.Equal(expectedExpiryDate, parameters.ExpiryDate);
@@ -78,7 +75,6 @@ public class TokenAddSingleParamsTest : TestBase
         {
             UserID = "user_id",
             Token = "token",
-            TokenValue = "token",
             ProviderKey = ProviderKey.FirebaseFcm,
             Device = new()
             {
@@ -110,7 +106,6 @@ public class TokenAddSingleParamsTest : TestBase
         {
             UserID = "user_id",
             Token = "token",
-            TokenValue = "token",
             ProviderKey = ProviderKey.FirebaseFcm,
             Device = new()
             {
@@ -145,7 +140,6 @@ public class TokenAddSingleParamsTest : TestBase
         {
             UserID = "user_id",
             Token = "token",
-            TokenValue = "token",
             ProviderKey = ProviderKey.FirebaseFcm,
             Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
         };
@@ -165,7 +159,6 @@ public class TokenAddSingleParamsTest : TestBase
         {
             UserID = "user_id",
             Token = "token",
-            TokenValue = "token",
             ProviderKey = ProviderKey.FirebaseFcm,
             Properties = JsonSerializer.Deserialize<JsonElement>("{}"),
 
@@ -189,7 +182,6 @@ public class TokenAddSingleParamsTest : TestBase
         {
             UserID = "user_id",
             Token = "token",
-            TokenValue = "token",
             ProviderKey = ProviderKey.FirebaseFcm,
         };
 
@@ -205,7 +197,6 @@ public class TokenAddSingleParamsTest : TestBase
         {
             UserID = "user_id",
             Token = "token",
-            TokenValue = "token",
             ProviderKey = ProviderKey.FirebaseFcm,
             Device = new()
             {
