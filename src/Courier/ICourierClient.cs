@@ -61,6 +61,8 @@ public interface ICourierClient : IDisposable
 
     IAutomationService Automations { get; }
 
+    IJourneyService Journeys { get; }
+
     IBrandService Brands { get; }
 
     IBulkService Bulk { get; }
@@ -122,6 +124,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     IAuthServiceWithRawResponse Auth { get; }
 
     IAutomationServiceWithRawResponse Automations { get; }
+
+    IJourneyServiceWithRawResponse Journeys { get; }
 
     IBrandServiceWithRawResponse Brands { get; }
 

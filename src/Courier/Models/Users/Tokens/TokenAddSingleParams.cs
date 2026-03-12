@@ -30,19 +30,6 @@ public record class TokenAddSingleParams : ParamsBase
 
     public string? Token { get; init; }
 
-    /// <summary>
-    /// Full body of the token. Must match token in URL path parameter.
-    /// </summary>
-    public required string TokenValue
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<string>("token");
-        }
-        init { this._rawBodyData.Set("token", value); }
-    }
-
     public required ApiEnum<string, ProviderKey> ProviderKey
     {
         get

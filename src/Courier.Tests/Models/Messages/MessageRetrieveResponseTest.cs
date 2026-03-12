@@ -13,17 +13,17 @@ public class MessageRetrieveResponseTest : TestBase
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
-            Sent = 0,
             Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
             Error = "error",
+            Opened = 0,
             Reason = Reason.Bounced,
+            Sent = 0,
             Providers =
             [
                 new Dictionary<string, JsonElement>()
@@ -34,17 +34,17 @@ public class MessageRetrieveResponseTest : TestBase
         };
 
         string expectedID = "id";
-        long expectedClicked = 0;
-        long expectedDelivered = 0;
         long expectedEnqueued = 0;
         string expectedEvent = "event";
         string expectedNotification = "notification";
-        long expectedOpened = 0;
         string expectedRecipient = "recipient";
-        long expectedSent = 0;
         ApiEnum<string, Status> expectedStatus = Status.Canceled;
+        long expectedClicked = 0;
+        long expectedDelivered = 0;
         string expectedError = "error";
+        long expectedOpened = 0;
         ApiEnum<string, Reason> expectedReason = Reason.Bounced;
+        long expectedSent = 0;
         List<Dictionary<string, JsonElement>> expectedProviders =
         [
             new Dictionary<string, JsonElement>()
@@ -54,17 +54,17 @@ public class MessageRetrieveResponseTest : TestBase
         ];
 
         Assert.Equal(expectedID, model.ID);
-        Assert.Equal(expectedClicked, model.Clicked);
-        Assert.Equal(expectedDelivered, model.Delivered);
         Assert.Equal(expectedEnqueued, model.Enqueued);
         Assert.Equal(expectedEvent, model.Event);
         Assert.Equal(expectedNotification, model.Notification);
-        Assert.Equal(expectedOpened, model.Opened);
         Assert.Equal(expectedRecipient, model.Recipient);
-        Assert.Equal(expectedSent, model.Sent);
         Assert.Equal(expectedStatus, model.Status);
+        Assert.Equal(expectedClicked, model.Clicked);
+        Assert.Equal(expectedDelivered, model.Delivered);
         Assert.Equal(expectedError, model.Error);
+        Assert.Equal(expectedOpened, model.Opened);
         Assert.Equal(expectedReason, model.Reason);
+        Assert.Equal(expectedSent, model.Sent);
         Assert.NotNull(model.Providers);
         Assert.Equal(expectedProviders.Count, model.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
@@ -85,17 +85,17 @@ public class MessageRetrieveResponseTest : TestBase
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
-            Sent = 0,
             Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
             Error = "error",
+            Opened = 0,
             Reason = Reason.Bounced,
+            Sent = 0,
             Providers =
             [
                 new Dictionary<string, JsonElement>()
@@ -120,17 +120,17 @@ public class MessageRetrieveResponseTest : TestBase
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
-            Sent = 0,
             Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
             Error = "error",
+            Opened = 0,
             Reason = Reason.Bounced,
+            Sent = 0,
             Providers =
             [
                 new Dictionary<string, JsonElement>()
@@ -148,17 +148,17 @@ public class MessageRetrieveResponseTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
-        long expectedClicked = 0;
-        long expectedDelivered = 0;
         long expectedEnqueued = 0;
         string expectedEvent = "event";
         string expectedNotification = "notification";
-        long expectedOpened = 0;
         string expectedRecipient = "recipient";
-        long expectedSent = 0;
         ApiEnum<string, Status> expectedStatus = Status.Canceled;
+        long expectedClicked = 0;
+        long expectedDelivered = 0;
         string expectedError = "error";
+        long expectedOpened = 0;
         ApiEnum<string, Reason> expectedReason = Reason.Bounced;
+        long expectedSent = 0;
         List<Dictionary<string, JsonElement>> expectedProviders =
         [
             new Dictionary<string, JsonElement>()
@@ -168,17 +168,17 @@ public class MessageRetrieveResponseTest : TestBase
         ];
 
         Assert.Equal(expectedID, deserialized.ID);
-        Assert.Equal(expectedClicked, deserialized.Clicked);
-        Assert.Equal(expectedDelivered, deserialized.Delivered);
         Assert.Equal(expectedEnqueued, deserialized.Enqueued);
         Assert.Equal(expectedEvent, deserialized.Event);
         Assert.Equal(expectedNotification, deserialized.Notification);
-        Assert.Equal(expectedOpened, deserialized.Opened);
         Assert.Equal(expectedRecipient, deserialized.Recipient);
-        Assert.Equal(expectedSent, deserialized.Sent);
         Assert.Equal(expectedStatus, deserialized.Status);
+        Assert.Equal(expectedClicked, deserialized.Clicked);
+        Assert.Equal(expectedDelivered, deserialized.Delivered);
         Assert.Equal(expectedError, deserialized.Error);
+        Assert.Equal(expectedOpened, deserialized.Opened);
         Assert.Equal(expectedReason, deserialized.Reason);
+        Assert.Equal(expectedSent, deserialized.Sent);
         Assert.NotNull(deserialized.Providers);
         Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
         for (int i = 0; i < expectedProviders.Count; i++)
@@ -199,14 +199,71 @@ public class MessageRetrieveResponseTest : TestBase
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
+            Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
+            Error = "error",
+            Opened = 0,
+            Reason = Reason.Bounced,
             Sent = 0,
+            Providers =
+            [
+                new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            ],
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new MessageRetrieveResponse
+        {
+            ID = "id",
+            Enqueued = 0,
+            Event = "event",
+            Notification = "notification",
+            Recipient = "recipient",
+            Status = Status.Canceled,
+            Error = "error",
+            Reason = Reason.Bounced,
+            Providers =
+            [
+                new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            ],
+        };
+
+        Assert.Null(model.Clicked);
+        Assert.False(model.RawData.ContainsKey("clicked"));
+        Assert.Null(model.Delivered);
+        Assert.False(model.RawData.ContainsKey("delivered"));
+        Assert.Null(model.Opened);
+        Assert.False(model.RawData.ContainsKey("opened"));
+        Assert.Null(model.Sent);
+        Assert.False(model.RawData.ContainsKey("sent"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new MessageRetrieveResponse
+        {
+            ID = "id",
+            Enqueued = 0,
+            Event = "event",
+            Notification = "notification",
+            Recipient = "recipient",
             Status = Status.Canceled,
             Error = "error",
             Reason = Reason.Bounced,
@@ -223,20 +280,89 @@ public class MessageRetrieveResponseTest : TestBase
     }
 
     [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new MessageRetrieveResponse
+        {
+            ID = "id",
+            Enqueued = 0,
+            Event = "event",
+            Notification = "notification",
+            Recipient = "recipient",
+            Status = Status.Canceled,
+            Error = "error",
+            Reason = Reason.Bounced,
+            Providers =
+            [
+                new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            ],
+
+            // Null should be interpreted as omitted for these properties
+            Clicked = null,
+            Delivered = null,
+            Opened = null,
+            Sent = null,
+        };
+
+        Assert.Null(model.Clicked);
+        Assert.False(model.RawData.ContainsKey("clicked"));
+        Assert.Null(model.Delivered);
+        Assert.False(model.RawData.ContainsKey("delivered"));
+        Assert.Null(model.Opened);
+        Assert.False(model.RawData.ContainsKey("opened"));
+        Assert.Null(model.Sent);
+        Assert.False(model.RawData.ContainsKey("sent"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new MessageRetrieveResponse
+        {
+            ID = "id",
+            Enqueued = 0,
+            Event = "event",
+            Notification = "notification",
+            Recipient = "recipient",
+            Status = Status.Canceled,
+            Error = "error",
+            Reason = Reason.Bounced,
+            Providers =
+            [
+                new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+            ],
+
+            // Null should be interpreted as omitted for these properties
+            Clicked = null,
+            Delivered = null,
+            Opened = null,
+            Sent = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
-            Sent = 0,
             Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
+            Opened = 0,
+            Sent = 0,
         };
 
         Assert.Null(model.Error);
@@ -253,15 +379,15 @@ public class MessageRetrieveResponseTest : TestBase
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
-            Sent = 0,
             Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
+            Opened = 0,
+            Sent = 0,
         };
 
         model.Validate();
@@ -273,15 +399,15 @@ public class MessageRetrieveResponseTest : TestBase
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
-            Sent = 0,
             Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
+            Opened = 0,
+            Sent = 0,
 
             Error = null,
             Reason = null,
@@ -302,15 +428,15 @@ public class MessageRetrieveResponseTest : TestBase
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
-            Sent = 0,
             Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
+            Opened = 0,
+            Sent = 0,
 
             Error = null,
             Reason = null,
@@ -326,17 +452,17 @@ public class MessageRetrieveResponseTest : TestBase
         var model = new MessageRetrieveResponse
         {
             ID = "id",
-            Clicked = 0,
-            Delivered = 0,
             Enqueued = 0,
             Event = "event",
             Notification = "notification",
-            Opened = 0,
             Recipient = "recipient",
-            Sent = 0,
             Status = Status.Canceled,
+            Clicked = 0,
+            Delivered = 0,
             Error = "error",
+            Opened = 0,
             Reason = Reason.Bounced,
+            Sent = 0,
             Providers =
             [
                 new Dictionary<string, JsonElement>()

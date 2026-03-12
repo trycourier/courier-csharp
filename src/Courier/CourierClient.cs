@@ -102,6 +102,12 @@ public sealed class CourierClient : ICourierClient
         get { return _automations.Value; }
     }
 
+    readonly Lazy<IJourneyService> _journeys;
+    public IJourneyService Journeys
+    {
+        get { return _journeys.Value; }
+    }
+
     readonly Lazy<IBrandService> _brands;
     public IBrandService Brands
     {
@@ -180,6 +186,7 @@ public sealed class CourierClient : ICourierClient
         _auditEvents = new(() => new AuditEventService(this));
         _auth = new(() => new AuthService(this));
         _automations = new(() => new AutomationService(this));
+        _journeys = new(() => new JourneyService(this));
         _brands = new(() => new BrandService(this));
         _bulk = new(() => new BulkService(this));
         _inbound = new(() => new InboundService(this));
@@ -294,6 +301,12 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     public IAutomationServiceWithRawResponse Automations
     {
         get { return _automations.Value; }
+    }
+
+    readonly Lazy<IJourneyServiceWithRawResponse> _journeys;
+    public IJourneyServiceWithRawResponse Journeys
+    {
+        get { return _journeys.Value; }
     }
 
     readonly Lazy<IBrandServiceWithRawResponse> _brands;
@@ -464,7 +477,11 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     static TimeSpan ComputeRetryBackoff(int retries, HttpResponse? response)
     {
         TimeSpan? apiBackoff = ParseRetryAfterMsHeader(response) ?? ParseRetryAfterHeader(response);
-        if (apiBackoff != null && apiBackoff < TimeSpan.FromMinutes(1))
+        if (
+            apiBackoff != null
+            && apiBackoff > TimeSpan.Zero
+            && apiBackoff < TimeSpan.FromMinutes(1)
+        )
         {
             // If the API asks us to wait a certain amount of time (and it's a reasonable amount), then just
             // do what it says.
@@ -561,6 +578,7 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
         _auditEvents = new(() => new AuditEventServiceWithRawResponse(this));
         _auth = new(() => new AuthServiceWithRawResponse(this));
         _automations = new(() => new AutomationServiceWithRawResponse(this));
+        _journeys = new(() => new JourneyServiceWithRawResponse(this));
         _brands = new(() => new BrandServiceWithRawResponse(this));
         _bulk = new(() => new BulkServiceWithRawResponse(this));
         _inbound = new(() => new InboundServiceWithRawResponse(this));

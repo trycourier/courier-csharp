@@ -8,6 +8,7 @@ using Audiences = Courier.Models.Audiences;
 using Inbound = Courier.Models.Inbound;
 using Invoke = Courier.Models.Automations.Invoke;
 using Items = Courier.Models.Tenants.Preferences.Items;
+using Journeys = Courier.Models.Journeys;
 using Lists = Courier.Models.Profiles.Lists;
 using Messages = Courier.Models.Messages;
 using Notifications = Courier.Models.Notifications;
@@ -74,6 +75,8 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Invoke::Method>(),
             new ApiEnumConverter<string, Invoke::MergeStrategy>(),
             new ApiEnumConverter<string, Invoke::AutomationInvokeStepAction>(),
+            new ApiEnumConverter<string, Journeys::JourneyVersion>(),
+            new ApiEnumConverter<string, Journeys::Version>(),
             new ApiEnumConverter<string, Placement>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, JobStatus>(),
