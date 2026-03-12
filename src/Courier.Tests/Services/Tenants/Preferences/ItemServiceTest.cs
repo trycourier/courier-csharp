@@ -5,7 +5,7 @@ namespace Courier.Tests.Services.Tenants.Preferences;
 
 public class ItemServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         await this.client.Tenants.Preferences.Items.Update(
@@ -15,7 +15,7 @@ public class ItemServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Delete_Works()
     {
         await this.client.Tenants.Preferences.Items.Delete(

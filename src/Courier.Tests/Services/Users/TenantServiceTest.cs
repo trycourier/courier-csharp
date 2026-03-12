@@ -7,7 +7,7 @@ namespace Courier.Tests.Services.Users;
 
 public class TenantServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var tenants = await this.client.Users.Tenants.List(
@@ -18,7 +18,7 @@ public class TenantServiceTest : TestBase
         tenants.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task AddMultiple_Works()
     {
         await this.client.Users.Tenants.AddMultiple(
@@ -43,7 +43,7 @@ public class TenantServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task AddSingle_Works()
     {
         await this.client.Users.Tenants.AddSingle(
@@ -53,7 +53,7 @@ public class TenantServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RemoveAll_Works()
     {
         await this.client.Users.Tenants.RemoveAll(
@@ -63,7 +63,7 @@ public class TenantServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RemoveSingle_Works()
     {
         await this.client.Users.Tenants.RemoveSingle(

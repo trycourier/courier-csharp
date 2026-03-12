@@ -29,7 +29,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -107,7 +106,6 @@ public class PutTenantTemplateRequestTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
             Channels = new Dictionary<string, ChannelsItem>()
             {
@@ -193,7 +191,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -285,7 +282,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -370,7 +366,6 @@ public class PutTenantTemplateRequestTest : TestBase
                     },
                 ],
                 Version = "version",
-                Brand = "brand",
             },
             Channels = new Dictionary<string, ChannelsItem>()
             {
@@ -456,7 +451,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -542,7 +536,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -628,7 +621,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -713,7 +705,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -802,7 +793,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {
@@ -890,7 +880,6 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
-                    Brand = "brand",
                 },
                 Channels = new Dictionary<string, ChannelsItem>()
                 {

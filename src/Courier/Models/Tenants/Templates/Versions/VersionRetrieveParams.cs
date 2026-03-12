@@ -75,14 +75,20 @@ public record class VersionRetrieveParams : ParamsBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(
-            new Dictionary<string, object?>()
-            {
-                ["TenantID"] = this.TenantID,
-                ["TemplateID"] = this.TemplateID,
-                ["Version"] = this.Version,
-                ["HeaderData"] = this._rawHeaderData.Freeze(),
-                ["QueryData"] = this._rawQueryData.Freeze(),
-            },
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["TenantID"] = JsonSerializer.SerializeToElement(this.TenantID),
+                    ["TemplateID"] = JsonSerializer.SerializeToElement(this.TemplateID),
+                    ["Version"] = JsonSerializer.SerializeToElement(this.Version),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
             ModelBase.ToStringSerializerOptions
         );
 

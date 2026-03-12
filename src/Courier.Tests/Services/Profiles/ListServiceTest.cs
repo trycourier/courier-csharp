@@ -6,7 +6,7 @@ namespace Courier.Tests.Services.Profiles;
 
 public class ListServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var list = await this.client.Profiles.Lists.Retrieve(
@@ -17,7 +17,7 @@ public class ListServiceTest : TestBase
         list.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Delete_Works()
     {
         var list = await this.client.Profiles.Lists.Delete(
@@ -28,7 +28,7 @@ public class ListServiceTest : TestBase
         list.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Subscribe_Works()
     {
         var response = await this.client.Profiles.Lists.Subscribe(

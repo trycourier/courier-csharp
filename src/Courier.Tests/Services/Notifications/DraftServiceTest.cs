@@ -4,7 +4,7 @@ namespace Courier.Tests.Services.Notifications;
 
 public class DraftServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RetrieveContent_Works()
     {
         var notificationGetContent = await this.client.Notifications.Draft.RetrieveContent(

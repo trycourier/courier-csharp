@@ -7,7 +7,7 @@ namespace Courier.Tests.Services;
 
 public class BulkServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task AddUsers_Works()
     {
         await this.client.Bulk.AddUsers(
@@ -115,7 +115,7 @@ public class BulkServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task CreateJob_Works()
     {
         var response = await this.client.Bulk.CreateJob(
@@ -152,7 +152,7 @@ public class BulkServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task ListUsers_Works()
     {
         var response = await this.client.Bulk.ListUsers(
@@ -163,7 +163,7 @@ public class BulkServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RetrieveJob_Works()
     {
         var response = await this.client.Bulk.RetrieveJob(
@@ -174,7 +174,7 @@ public class BulkServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RunJob_Works()
     {
         await this.client.Bulk.RunJob("job_id", new(), TestContext.Current.CancellationToken);

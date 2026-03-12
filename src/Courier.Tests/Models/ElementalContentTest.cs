@@ -24,7 +24,6 @@ public class ElementalContentTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
         };
 
         List<ElementalNode> expectedElements =
@@ -39,7 +38,6 @@ public class ElementalContentTest : TestBase
             },
         ];
         string expectedVersion = "version";
-        string expectedBrand = "brand";
 
         Assert.Equal(expectedElements.Count, model.Elements.Count);
         for (int i = 0; i < expectedElements.Count; i++)
@@ -47,7 +45,6 @@ public class ElementalContentTest : TestBase
             Assert.Equal(expectedElements[i], model.Elements[i]);
         }
         Assert.Equal(expectedVersion, model.Version);
-        Assert.Equal(expectedBrand, model.Brand);
     }
 
     [Fact]
@@ -67,7 +64,6 @@ public class ElementalContentTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -96,7 +92,6 @@ public class ElementalContentTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -118,7 +113,6 @@ public class ElementalContentTest : TestBase
             },
         ];
         string expectedVersion = "version";
-        string expectedBrand = "brand";
 
         Assert.Equal(expectedElements.Count, deserialized.Elements.Count);
         for (int i = 0; i < expectedElements.Count; i++)
@@ -126,7 +120,6 @@ public class ElementalContentTest : TestBase
             Assert.Equal(expectedElements[i], deserialized.Elements[i]);
         }
         Assert.Equal(expectedVersion, deserialized.Version);
-        Assert.Equal(expectedBrand, deserialized.Brand);
     }
 
     [Fact]
@@ -146,101 +139,6 @@ public class ElementalContentTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new ElementalContent
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = "version",
-        };
-
-        Assert.Null(model.Brand);
-        Assert.False(model.RawData.ContainsKey("brand"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new ElementalContent
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = "version",
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
-    {
-        var model = new ElementalContent
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = "version",
-
-            Brand = null,
-        };
-
-        Assert.Null(model.Brand);
-        Assert.True(model.RawData.ContainsKey("brand"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new ElementalContent
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = "version",
-
-            Brand = null,
         };
 
         model.Validate();
@@ -263,7 +161,6 @@ public class ElementalContentTest : TestBase
                 },
             ],
             Version = "version",
-            Brand = "brand",
         };
 
         ElementalContent copied = new(model);

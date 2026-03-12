@@ -6,7 +6,7 @@ namespace Courier.Tests.Services.Lists;
 
 public class SubscriptionServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var subscriptions = await this.client.Lists.Subscriptions.List(
@@ -17,7 +17,7 @@ public class SubscriptionServiceTest : TestBase
         subscriptions.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Add_Works()
     {
         await this.client.Lists.Subscriptions.Add(
@@ -69,7 +69,7 @@ public class SubscriptionServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Subscribe_Works()
     {
         await this.client.Lists.Subscriptions.Subscribe(
@@ -121,7 +121,7 @@ public class SubscriptionServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task SubscribeUser_Works()
     {
         await this.client.Lists.Subscriptions.SubscribeUser(
@@ -131,7 +131,7 @@ public class SubscriptionServiceTest : TestBase
         );
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task UnsubscribeUser_Works()
     {
         await this.client.Lists.Subscriptions.UnsubscribeUser(

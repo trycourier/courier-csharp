@@ -5,7 +5,7 @@ namespace Courier.Tests.Services.Notifications;
 
 public class CheckServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Update_Works()
     {
         var check = await this.client.Notifications.Checks.Update(
@@ -28,7 +28,7 @@ public class CheckServiceTest : TestBase
         check.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var checks = await this.client.Notifications.Checks.List(
@@ -39,7 +39,7 @@ public class CheckServiceTest : TestBase
         checks.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Delete_Works()
     {
         await this.client.Notifications.Checks.Delete(

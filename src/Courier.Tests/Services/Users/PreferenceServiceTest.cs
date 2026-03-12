@@ -5,7 +5,7 @@ namespace Courier.Tests.Services.Users;
 
 public class PreferenceServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
         var preference = await this.client.Users.Preferences.Retrieve(
@@ -16,7 +16,7 @@ public class PreferenceServiceTest : TestBase
         preference.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RetrieveTopic_Works()
     {
         var response = await this.client.Users.Preferences.RetrieveTopic(
@@ -27,7 +27,7 @@ public class PreferenceServiceTest : TestBase
         response.Validate();
     }
 
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task UpdateOrCreateTopic_Works()
     {
         var response = await this.client.Users.Preferences.UpdateOrCreateTopic(

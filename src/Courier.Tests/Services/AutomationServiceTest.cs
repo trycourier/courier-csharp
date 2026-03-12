@@ -4,7 +4,7 @@ namespace Courier.Tests.Services;
 
 public class AutomationServiceTest : TestBase
 {
-    [Fact(Skip = "Prism tests are disabled")]
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task List_Works()
     {
         var automationTemplateListResponse = await this.client.Automations.List(
