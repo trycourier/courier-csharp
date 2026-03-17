@@ -54,7 +54,7 @@ public interface IAutomationServiceWithRawResponse
     IInvokeServiceWithRawResponse Invoke { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /automations`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /automations</c>, but is otherwise the
     /// same as <see cref="IAutomationService.List(AutomationListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AutomationTemplateListResponse>> List(

@@ -238,7 +238,7 @@ public record class Content : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalContentSugar"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -259,7 +259,7 @@ public record class Content : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalContent"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -279,7 +279,7 @@ public record class Content : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -290,8 +290,8 @@ public record class Content : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (ElementalContentSugar value) => {...},
-    ///     (ElementalContent value) => {...}
+    ///     (ElementalContentSugar value) =&gt; {...},
+    ///     (ElementalContent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -318,7 +318,7 @@ public record class Content : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -329,8 +329,8 @@ public record class Content : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (ElementalContentSugar value) => {...},
-    ///     (ElementalContent value) => {...}
+    ///     (ElementalContentSugar value) =&gt; {...},
+    ///     (ElementalContent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>

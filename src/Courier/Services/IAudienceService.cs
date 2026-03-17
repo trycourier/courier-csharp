@@ -106,7 +106,7 @@ public interface IAudienceServiceWithRawResponse
     IAudienceServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /audiences/{audience_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /audiences/{audience_id}</c>, but is otherwise the
     /// same as <see cref="IAudienceService.Retrieve(AudienceRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<Audience>> Retrieve(
@@ -122,7 +122,7 @@ public interface IAudienceServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /audiences/{audience_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /audiences/{audience_id}</c>, but is otherwise the
     /// same as <see cref="IAudienceService.Update(AudienceUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AudienceUpdateResponse>> Update(
@@ -138,7 +138,7 @@ public interface IAudienceServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /audiences`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /audiences</c>, but is otherwise the
     /// same as <see cref="IAudienceService.List(AudienceListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AudienceListResponse>> List(
@@ -147,7 +147,7 @@ public interface IAudienceServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /audiences/{audience_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /audiences/{audience_id}</c>, but is otherwise the
     /// same as <see cref="IAudienceService.Delete(AudienceDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Delete(
@@ -163,7 +163,7 @@ public interface IAudienceServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /audiences/{audience_id}/members`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /audiences/{audience_id}/members</c>, but is otherwise the
     /// same as <see cref="IAudienceService.ListMembers(AudienceListMembersParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AudienceListMembersResponse>> ListMembers(

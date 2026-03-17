@@ -115,7 +115,7 @@ public interface ITenantServiceWithRawResponse
     ITemplateServiceWithRawResponse Templates { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /tenants/{tenant_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /tenants/{tenant_id}</c>, but is otherwise the
     /// same as <see cref="ITenantService.Retrieve(TenantRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<Tenant>> Retrieve(
@@ -131,7 +131,7 @@ public interface ITenantServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /tenants/{tenant_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /tenants/{tenant_id}</c>, but is otherwise the
     /// same as <see cref="ITenantService.Update(TenantUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<Tenant>> Update(
@@ -147,7 +147,7 @@ public interface ITenantServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /tenants`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /tenants</c>, but is otherwise the
     /// same as <see cref="ITenantService.List(TenantListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<TenantListResponse>> List(
@@ -156,7 +156,7 @@ public interface ITenantServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /tenants/{tenant_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /tenants/{tenant_id}</c>, but is otherwise the
     /// same as <see cref="ITenantService.Delete(TenantDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Delete(
@@ -172,7 +172,7 @@ public interface ITenantServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /tenants/{tenant_id}/users`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /tenants/{tenant_id}/users</c>, but is otherwise the
     /// same as <see cref="ITenantService.ListUsers(TenantListUsersParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<TenantListUsersResponse>> ListUsers(

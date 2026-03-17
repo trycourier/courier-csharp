@@ -28,7 +28,7 @@ public interface IDraftService
     IDraftService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Sends a request to <c>get /notifications/{id}/draft/content<c/>.
+    /// Sends a request to <c>get /notifications/{id}/draft/content</c>.
     /// </summary>
     Task<NotificationGetContent> RetrieveContent(
         DraftRetrieveContentParams parameters,
@@ -57,7 +57,7 @@ public interface IDraftServiceWithRawResponse
     IDraftServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /notifications/{id}/draft/content`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /notifications/{id}/draft/content</c>, but is otherwise the
     /// same as <see cref="IDraftService.RetrieveContent(DraftRetrieveContentParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<NotificationGetContent>> RetrieveContent(

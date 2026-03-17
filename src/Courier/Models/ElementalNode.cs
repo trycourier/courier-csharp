@@ -152,7 +152,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalTextNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -173,7 +173,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalMetaNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -194,7 +194,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalChannelNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -217,7 +217,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalImageNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -238,7 +238,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalActionNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -261,7 +261,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalDividerNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -284,7 +284,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalQuoteNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -304,7 +304,7 @@ public record class ElementalNode : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -315,13 +315,13 @@ public record class ElementalNode : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (ElementalTextNodeWithType value) => {...},
-    ///     (ElementalMetaNodeWithType value) => {...},
-    ///     (ElementalChannelNodeWithType value) => {...},
-    ///     (ElementalImageNodeWithType value) => {...},
-    ///     (ElementalActionNodeWithType value) => {...},
-    ///     (ElementalDividerNodeWithType value) => {...},
-    ///     (ElementalQuoteNodeWithType value) => {...}
+    ///     (ElementalTextNodeWithType value) =&gt; {...},
+    ///     (ElementalMetaNodeWithType value) =&gt; {...},
+    ///     (ElementalChannelNodeWithType value) =&gt; {...},
+    ///     (ElementalImageNodeWithType value) =&gt; {...},
+    ///     (ElementalActionNodeWithType value) =&gt; {...},
+    ///     (ElementalDividerNodeWithType value) =&gt; {...},
+    ///     (ElementalQuoteNodeWithType value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -370,7 +370,7 @@ public record class ElementalNode : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -381,13 +381,13 @@ public record class ElementalNode : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (ElementalTextNodeWithType value) => {...},
-    ///     (ElementalMetaNodeWithType value) => {...},
-    ///     (ElementalChannelNodeWithType value) => {...},
-    ///     (ElementalImageNodeWithType value) => {...},
-    ///     (ElementalActionNodeWithType value) => {...},
-    ///     (ElementalDividerNodeWithType value) => {...},
-    ///     (ElementalQuoteNodeWithType value) => {...}
+    ///     (ElementalTextNodeWithType value) =&gt; {...},
+    ///     (ElementalMetaNodeWithType value) =&gt; {...},
+    ///     (ElementalChannelNodeWithType value) =&gt; {...},
+    ///     (ElementalImageNodeWithType value) =&gt; {...},
+    ///     (ElementalActionNodeWithType value) =&gt; {...},
+    ///     (ElementalDividerNodeWithType value) =&gt; {...},
+    ///     (ElementalQuoteNodeWithType value) =&gt; {...}
     /// );
     /// </code>
     /// </example>

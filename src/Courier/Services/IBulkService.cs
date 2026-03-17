@@ -29,9 +29,9 @@ public interface IBulkService
     /// <summary>
     /// Ingest user data into a Bulk Job.
     ///
-    /// <para>**Important**: For email-based bulk jobs, each user must include `profile.email`
-    ///  for provider routing to work correctly. The `to.email` field is not sufficient
-    ///  for email provider routing.</para>
+    /// <para>**Important**: For email-based bulk jobs, each user must include
+    /// `profile.email`  for provider routing to work correctly. The `to.email` field is
+    /// not sufficient  for email provider routing. </para>
     /// </summary>
     Task AddUsers(BulkAddUsersParams parameters, CancellationToken cancellationToken = default);
 
@@ -47,9 +47,9 @@ public interface IBulkService
     ///
     /// <para>**Required**: `message.event` (event ID or notification ID)</para>
     ///
-    /// <para>**Optional (V2 format)**: `message.template` (notification ID) or `message.content`
-    /// (Elemental content)  can be provided to override the notification associated
-    /// with the event.</para>
+    /// <para>**Optional (V2 format)**: `message.template` (notification ID) or
+    /// `message.content` (Elemental content)  can be provided to override the notification
+    /// associated with the event. </para>
     /// </summary>
     Task<BulkCreateJobResponse> CreateJob(
         BulkCreateJobParams parameters,
@@ -113,7 +113,7 @@ public interface IBulkServiceWithRawResponse
     IBulkServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /bulk/{job_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /bulk/{job_id}</c>, but is otherwise the
     /// same as <see cref="IBulkService.AddUsers(BulkAddUsersParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> AddUsers(
@@ -129,7 +129,7 @@ public interface IBulkServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /bulk`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /bulk</c>, but is otherwise the
     /// same as <see cref="IBulkService.CreateJob(BulkCreateJobParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<BulkCreateJobResponse>> CreateJob(
@@ -138,7 +138,7 @@ public interface IBulkServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /bulk/{job_id}/users`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /bulk/{job_id}/users</c>, but is otherwise the
     /// same as <see cref="IBulkService.ListUsers(BulkListUsersParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<BulkListUsersResponse>> ListUsers(
@@ -154,7 +154,7 @@ public interface IBulkServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /bulk/{job_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /bulk/{job_id}</c>, but is otherwise the
     /// same as <see cref="IBulkService.RetrieveJob(BulkRetrieveJobParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<BulkRetrieveJobResponse>> RetrieveJob(
@@ -170,7 +170,7 @@ public interface IBulkServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /bulk/{job_id}/run`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /bulk/{job_id}/run</c>, but is otherwise the
     /// same as <see cref="IBulkService.RunJob(BulkRunJobParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> RunJob(

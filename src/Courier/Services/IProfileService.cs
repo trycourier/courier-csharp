@@ -30,8 +30,8 @@ public interface IProfileService
     Profiles::IListService Lists { get; }
 
     /// <summary>
-    /// Merge the supplied values with an existing profile or create a new profile
-    /// if one doesn't already exist.
+    /// Merge the supplied values with an existing profile or create a new profile if
+    /// one doesn't already exist.
     /// </summary>
     Task<ProfileCreateResponse> Create(
         ProfileCreateParams parameters,
@@ -86,10 +86,10 @@ public interface IProfileService
 
     /// <summary>
     /// When using `PUT`, be sure to include all the key-value pairs required by the
-    /// recipient's profile.  Any key-value pairs that exist in the profile but fail
-    /// to be included in the `PUT` request will be  removed from the profile. Remember,
-    /// a `PUT` update is a full replacement of the data. For partial updates,  use
-    /// the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request.
+    /// recipient's profile.  Any key-value pairs that exist in the profile but fail to be
+    /// included in the `PUT` request will be  removed from the profile. Remember, a
+    /// `PUT` update is a full replacement of the data. For partial updates,  use the [Patch](https://www.courier.com/docs/reference/profiles/patch/)
+    /// request.
     /// </summary>
     Task<ProfileReplaceResponse> Replace(
         ProfileReplaceParams parameters,
@@ -120,7 +120,7 @@ public interface IProfileServiceWithRawResponse
     Profiles::IListServiceWithRawResponse Lists { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /profiles/{user_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /profiles/{user_id}</c>, but is otherwise the
     /// same as <see cref="IProfileService.Create(ProfileCreateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ProfileCreateResponse>> Create(
@@ -136,7 +136,7 @@ public interface IProfileServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /profiles/{user_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /profiles/{user_id}</c>, but is otherwise the
     /// same as <see cref="IProfileService.Retrieve(ProfileRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ProfileRetrieveResponse>> Retrieve(
@@ -152,7 +152,7 @@ public interface IProfileServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `patch /profiles/{user_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>patch /profiles/{user_id}</c>, but is otherwise the
     /// same as <see cref="IProfileService.Update(ProfileUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Update(
@@ -168,7 +168,7 @@ public interface IProfileServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /profiles/{user_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /profiles/{user_id}</c>, but is otherwise the
     /// same as <see cref="IProfileService.Delete(ProfileDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Delete(
@@ -184,7 +184,7 @@ public interface IProfileServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /profiles/{user_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /profiles/{user_id}</c>, but is otherwise the
     /// same as <see cref="IProfileService.Replace(ProfileReplaceParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ProfileReplaceResponse>> Replace(

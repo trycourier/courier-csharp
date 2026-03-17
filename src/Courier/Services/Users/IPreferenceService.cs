@@ -86,7 +86,7 @@ public interface IPreferenceServiceWithRawResponse
     IPreferenceServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /users/{user_id}/preferences`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /users/{user_id}/preferences</c>, but is otherwise the
     /// same as <see cref="IPreferenceService.Retrieve(PreferenceRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<PreferenceRetrieveResponse>> Retrieve(
@@ -102,7 +102,7 @@ public interface IPreferenceServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /users/{user_id}/preferences/{topic_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /users/{user_id}/preferences/{topic_id}</c>, but is otherwise the
     /// same as <see cref="IPreferenceService.RetrieveTopic(PreferenceRetrieveTopicParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<PreferenceRetrieveTopicResponse>> RetrieveTopic(
@@ -118,7 +118,7 @@ public interface IPreferenceServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /users/{user_id}/preferences/{topic_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /users/{user_id}/preferences/{topic_id}</c>, but is otherwise the
     /// same as <see cref="IPreferenceService.UpdateOrCreateTopic(PreferenceUpdateOrCreateTopicParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<PreferenceUpdateOrCreateTopicResponse>> UpdateOrCreateTopic(

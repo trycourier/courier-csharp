@@ -27,7 +27,7 @@ public interface ICheckService
     ICheckService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Sends a request to <c>put /notifications/{id}/{submissionId}/checks<c/>.
+    /// Sends a request to <c>put /notifications/{id}/{submissionId}/checks</c>.
     /// </summary>
     Task<CheckUpdateResponse> Update(
         CheckUpdateParams parameters,
@@ -42,7 +42,7 @@ public interface ICheckService
     );
 
     /// <summary>
-    /// Sends a request to <c>get /notifications/{id}/{submissionId}/checks<c/>.
+    /// Sends a request to <c>get /notifications/{id}/{submissionId}/checks</c>.
     /// </summary>
     Task<CheckListResponse> List(
         CheckListParams parameters,
@@ -57,7 +57,7 @@ public interface ICheckService
     );
 
     /// <summary>
-    /// Sends a request to <c>delete /notifications/{id}/{submissionId}/checks<c/>.
+    /// Sends a request to <c>delete /notifications/{id}/{submissionId}/checks</c>.
     /// </summary>
     Task Delete(CheckDeleteParams parameters, CancellationToken cancellationToken = default);
 
@@ -83,7 +83,7 @@ public interface ICheckServiceWithRawResponse
     ICheckServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /notifications/{id}/{submissionId}/checks`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /notifications/{id}/{submissionId}/checks</c>, but is otherwise the
     /// same as <see cref="ICheckService.Update(CheckUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<CheckUpdateResponse>> Update(
@@ -99,7 +99,7 @@ public interface ICheckServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /notifications/{id}/{submissionId}/checks`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /notifications/{id}/{submissionId}/checks</c>, but is otherwise the
     /// same as <see cref="ICheckService.List(CheckListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<CheckListResponse>> List(
@@ -115,7 +115,7 @@ public interface ICheckServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /notifications/{id}/{submissionId}/checks`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /notifications/{id}/{submissionId}/checks</c>, but is otherwise the
     /// same as <see cref="ICheckService.Delete(CheckDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Delete(

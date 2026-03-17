@@ -40,13 +40,13 @@ public record class AuthIssueTokenParams : ParamsBase
     }
 
     /// <summary>
-    /// Available scopes: - `user_id:<user-id>` - Defines which user the token will
-    /// be scoped to. Multiple can be listed if needed. Ex `user_id:pigeon user_id:bluebird`.
+    /// Available scopes: - `user_id:&lt;user-id&gt;` - Defines which user the token
+    /// will be scoped to. Multiple can be listed if needed. Ex `user_id:pigeon user_id:bluebird`.
     /// - `read:messages` - Read messages. - `read:user-tokens` - Read user push
-    /// tokens. - `write:user-tokens` - Write user push tokens. - `read:brands[:<brand_id>]`
+    /// tokens. - `write:user-tokens` - Write user push tokens. - `read:brands[:&lt;brand_id&gt;]`
     /// - Read brands, optionally restricted to a specific brand_id. Examples `read:brands`,
-    /// `read:brands:my_brand`. - `write:brands[:<brand_id>]` - Write brands, optionally
-    /// restricted to a specific brand_id. Examples `write:brands`, `write:brands:my_brand`.
+    /// `read:brands:my_brand`. - `write:brands[:&lt;brand_id&gt;]` - Write brands,
+    /// optionally restricted to a specific brand_id. Examples `write:brands`, `write:brands:my_brand`.
     /// - `inbox:read:messages` - Read inbox messages. - `inbox:write:events` - Write
     /// inbox events, such as mark message as read. - `read:preferences` - Read user
     /// preferences. - `write:preferences` - Write user preferences. Example: `user_id:user123
@@ -99,7 +99,7 @@ public record class AuthIssueTokenParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static AuthIssueTokenParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
