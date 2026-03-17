@@ -50,11 +50,11 @@ public interface IMessageService
     );
 
     /// <summary>
-    /// Cancel a message that is currently in the process of being delivered. A well-formatted
-    /// API call to the cancel message API will return either `200` status code for
-    /// a successful cancellation or `409` status code for an unsuccessful cancellation.
-    /// Both cases will include the actual message record in the response body (see
-    /// details below).
+    /// Cancel a message that is currently in the process of being delivered. A
+    /// well-formatted API call to the cancel message API will return either `200`
+    /// status code for a successful cancellation or `409` status code for an
+    /// unsuccessful cancellation. Both cases will include the actual message record in
+    /// the response body (see details below).
     /// </summary>
     Task<MessageDetails> Cancel(
         MessageCancelParams parameters,
@@ -113,7 +113,7 @@ public interface IMessageServiceWithRawResponse
     IMessageServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /messages/{message_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /messages/{message_id}</c>, but is otherwise the
     /// same as <see cref="IMessageService.Retrieve(MessageRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<MessageRetrieveResponse>> Retrieve(
@@ -129,7 +129,7 @@ public interface IMessageServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /messages`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /messages</c>, but is otherwise the
     /// same as <see cref="IMessageService.List(MessageListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<MessageListResponse>> List(
@@ -138,7 +138,7 @@ public interface IMessageServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /messages/{message_id}/cancel`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /messages/{message_id}/cancel</c>, but is otherwise the
     /// same as <see cref="IMessageService.Cancel(MessageCancelParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<MessageDetails>> Cancel(
@@ -154,7 +154,7 @@ public interface IMessageServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /messages/{message_id}/output`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /messages/{message_id}/output</c>, but is otherwise the
     /// same as <see cref="IMessageService.Content(MessageContentParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<MessageContentResponse>> Content(
@@ -170,7 +170,7 @@ public interface IMessageServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /messages/{message_id}/history`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /messages/{message_id}/history</c>, but is otherwise the
     /// same as <see cref="IMessageService.History(MessageHistoryParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<MessageHistoryResponse>> History(

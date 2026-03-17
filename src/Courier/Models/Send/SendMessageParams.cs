@@ -77,7 +77,7 @@ public record class SendMessageParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static SendMessageParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -764,7 +764,7 @@ public record class Content : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalContentSugar"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -785,7 +785,7 @@ public record class Content : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalContent"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -805,7 +805,7 @@ public record class Content : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -816,8 +816,8 @@ public record class Content : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (ElementalContentSugar value) => {...},
-    ///     (ElementalContent value) => {...}
+    ///     (ElementalContentSugar value) =&gt; {...},
+    ///     (ElementalContent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -844,7 +844,7 @@ public record class Content : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -855,8 +855,8 @@ public record class Content : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (ElementalContentSugar value) => {...},
-    ///     (ElementalContent value) => {...}
+    ///     (ElementalContentSugar value) =&gt; {...},
+    ///     (ElementalContent value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -1179,7 +1179,7 @@ public record class ExpiresIn : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="string"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -1200,7 +1200,7 @@ public record class ExpiresIn : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="long"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -1220,7 +1220,7 @@ public record class ExpiresIn : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -1231,8 +1231,8 @@ public record class ExpiresIn : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (string value) => {...},
-    ///     (long value) => {...}
+    ///     (string value) =&gt; {...},
+    ///     (long value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -1258,7 +1258,7 @@ public record class ExpiresIn : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -1269,8 +1269,8 @@ public record class ExpiresIn : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (string value) => {...},
-    ///     (long value) => {...}
+    ///     (string value) =&gt; {...},
+    ///     (long value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2075,7 +2075,7 @@ public record class To : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="UserRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2096,7 +2096,7 @@ public record class To : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AudienceRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2117,7 +2117,7 @@ public record class To : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ListRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2138,7 +2138,7 @@ public record class To : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ListPatternRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2159,7 +2159,7 @@ public record class To : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="SlackRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2180,7 +2180,7 @@ public record class To : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="MsTeamsRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2201,7 +2201,7 @@ public record class To : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="PagerdutyRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2222,7 +2222,7 @@ public record class To : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="WebhookRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2241,14 +2241,14 @@ public record class To : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="IReadOnlyList<Recipient>"/>.
+    /// type <see cref="List{T}"/> where <c>T</c> is a <c>Recipient</c>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickRecipients(out var value)) {
-    ///     // `value` is of type `IReadOnlyList<Recipient>`
+    ///     // `value` is of type `IReadOnlyList&lt;Recipient&gt;`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
@@ -2263,7 +2263,7 @@ public record class To : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -2274,15 +2274,15 @@ public record class To : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (UserRecipient value) => {...},
-    ///     (AudienceRecipient value) => {...},
-    ///     (ListRecipient value) => {...},
-    ///     (ListPatternRecipient value) => {...},
-    ///     (SlackRecipient value) => {...},
-    ///     (MsTeamsRecipient value) => {...},
-    ///     (PagerdutyRecipient value) => {...},
-    ///     (WebhookRecipient value) => {...},
-    ///     (IReadOnlyList<Recipient> value) => {...}
+    ///     (UserRecipient value) =&gt; {...},
+    ///     (AudienceRecipient value) =&gt; {...},
+    ///     (ListRecipient value) =&gt; {...},
+    ///     (ListPatternRecipient value) =&gt; {...},
+    ///     (SlackRecipient value) =&gt; {...},
+    ///     (MsTeamsRecipient value) =&gt; {...},
+    ///     (PagerdutyRecipient value) =&gt; {...},
+    ///     (WebhookRecipient value) =&gt; {...},
+    ///     (IReadOnlyList&lt;Recipient&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2337,7 +2337,7 @@ public record class To : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -2348,15 +2348,15 @@ public record class To : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (UserRecipient value) => {...},
-    ///     (AudienceRecipient value) => {...},
-    ///     (ListRecipient value) => {...},
-    ///     (ListPatternRecipient value) => {...},
-    ///     (SlackRecipient value) => {...},
-    ///     (MsTeamsRecipient value) => {...},
-    ///     (PagerdutyRecipient value) => {...},
-    ///     (WebhookRecipient value) => {...},
-    ///     (IReadOnlyList<Recipient> value) => {...}
+    ///     (UserRecipient value) =&gt; {...},
+    ///     (AudienceRecipient value) =&gt; {...},
+    ///     (ListRecipient value) =&gt; {...},
+    ///     (ListPatternRecipient value) =&gt; {...},
+    ///     (SlackRecipient value) =&gt; {...},
+    ///     (MsTeamsRecipient value) =&gt; {...},
+    ///     (PagerdutyRecipient value) =&gt; {...},
+    ///     (WebhookRecipient value) =&gt; {...},
+    ///     (IReadOnlyList&lt;Recipient&gt; value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2724,7 +2724,7 @@ public record class Recipient : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="UserRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2745,7 +2745,7 @@ public record class Recipient : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AudienceRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2766,7 +2766,7 @@ public record class Recipient : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ListRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2787,7 +2787,7 @@ public record class Recipient : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ListPatternRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2808,7 +2808,7 @@ public record class Recipient : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="SlackRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2829,7 +2829,7 @@ public record class Recipient : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="MsTeamsRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2850,7 +2850,7 @@ public record class Recipient : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="PagerdutyRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2871,7 +2871,7 @@ public record class Recipient : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="WebhookRecipient"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -2891,7 +2891,7 @@ public record class Recipient : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -2902,14 +2902,14 @@ public record class Recipient : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (UserRecipient value) => {...},
-    ///     (AudienceRecipient value) => {...},
-    ///     (ListRecipient value) => {...},
-    ///     (ListPatternRecipient value) => {...},
-    ///     (SlackRecipient value) => {...},
-    ///     (MsTeamsRecipient value) => {...},
-    ///     (PagerdutyRecipient value) => {...},
-    ///     (WebhookRecipient value) => {...}
+    ///     (UserRecipient value) =&gt; {...},
+    ///     (AudienceRecipient value) =&gt; {...},
+    ///     (ListRecipient value) =&gt; {...},
+    ///     (ListPatternRecipient value) =&gt; {...},
+    ///     (SlackRecipient value) =&gt; {...},
+    ///     (MsTeamsRecipient value) =&gt; {...},
+    ///     (PagerdutyRecipient value) =&gt; {...},
+    ///     (WebhookRecipient value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -2962,7 +2962,7 @@ public record class Recipient : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -2973,14 +2973,14 @@ public record class Recipient : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (UserRecipient value) => {...},
-    ///     (AudienceRecipient value) => {...},
-    ///     (ListRecipient value) => {...},
-    ///     (ListPatternRecipient value) => {...},
-    ///     (SlackRecipient value) => {...},
-    ///     (MsTeamsRecipient value) => {...},
-    ///     (PagerdutyRecipient value) => {...},
-    ///     (WebhookRecipient value) => {...}
+    ///     (UserRecipient value) =&gt; {...},
+    ///     (AudienceRecipient value) =&gt; {...},
+    ///     (ListRecipient value) =&gt; {...},
+    ///     (ListPatternRecipient value) =&gt; {...},
+    ///     (SlackRecipient value) =&gt; {...},
+    ///     (MsTeamsRecipient value) =&gt; {...},
+    ///     (PagerdutyRecipient value) =&gt; {...},
+    ///     (WebhookRecipient value) =&gt; {...}
     /// );
     /// </code>
     /// </example>

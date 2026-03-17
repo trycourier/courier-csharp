@@ -49,7 +49,7 @@ public interface IAuthServiceWithRawResponse
     IAuthServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /auth/issue-token`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /auth/issue-token</c>, but is otherwise the
     /// same as <see cref="IAuthService.IssueToken(AuthIssueTokenParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AuthIssueTokenResponse>> IssueToken(

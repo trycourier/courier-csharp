@@ -64,7 +64,7 @@ public interface IJourneyServiceWithRawResponse
     IJourneyServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /journeys`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /journeys</c>, but is otherwise the
     /// same as <see cref="IJourneyService.List(JourneyListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<JourneysListResponse>> List(
@@ -73,7 +73,7 @@ public interface IJourneyServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /journeys/{templateId}/invoke`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /journeys/{templateId}/invoke</c>, but is otherwise the
     /// same as <see cref="IJourneyService.Invoke(JourneyInvokeParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<JourneysInvokeResponse>> Invoke(

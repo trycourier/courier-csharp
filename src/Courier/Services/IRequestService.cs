@@ -53,7 +53,7 @@ public interface IRequestServiceWithRawResponse
     IRequestServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /requests/{request_id}/archive`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /requests/{request_id}/archive</c>, but is otherwise the
     /// same as <see cref="IRequestService.Archive(RequestArchiveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Archive(

@@ -65,7 +65,7 @@ public interface IItemServiceWithRawResponse
     IItemServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /tenants/{tenant_id}/default_preferences/items/{topic_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /tenants/{tenant_id}/default_preferences/items/{topic_id}</c>, but is otherwise the
     /// same as <see cref="IItemService.Update(ItemUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Update(
@@ -81,7 +81,7 @@ public interface IItemServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /tenants/{tenant_id}/default_preferences/items/{topic_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /tenants/{tenant_id}/default_preferences/items/{topic_id}</c>, but is otherwise the
     /// same as <see cref="IItemService.Delete(ItemDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Delete(

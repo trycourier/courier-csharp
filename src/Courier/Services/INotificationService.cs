@@ -32,7 +32,7 @@ public interface INotificationService
     ICheckService Checks { get; }
 
     /// <summary>
-    /// Sends a request to <c>get /notifications<c/>.
+    /// Sends a request to <c>get /notifications</c>.
     /// </summary>
     Task<NotificationListResponse> List(
         NotificationListParams? parameters = null,
@@ -40,7 +40,7 @@ public interface INotificationService
     );
 
     /// <summary>
-    /// Sends a request to <c>get /notifications/{id}/content<c/>.
+    /// Sends a request to <c>get /notifications/{id}/content</c>.
     /// </summary>
     Task<NotificationGetContent> RetrieveContent(
         NotificationRetrieveContentParams parameters,
@@ -73,7 +73,7 @@ public interface INotificationServiceWithRawResponse
     ICheckServiceWithRawResponse Checks { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /notifications`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /notifications</c>, but is otherwise the
     /// same as <see cref="INotificationService.List(NotificationListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<NotificationListResponse>> List(
@@ -82,7 +82,7 @@ public interface INotificationServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /notifications/{id}/content`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /notifications/{id}/content</c>, but is otherwise the
     /// same as <see cref="INotificationService.RetrieveContent(NotificationRetrieveContentParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<NotificationGetContent>> RetrieveContent(

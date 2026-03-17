@@ -141,7 +141,7 @@ public record class InvokeInvokeAdHocParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static InvokeInvokeAdHocParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -399,7 +399,7 @@ public record class Step : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AutomationDelayStep"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -420,7 +420,7 @@ public record class Step : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AutomationSendStep"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -441,7 +441,7 @@ public record class Step : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AutomationSendListStep"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -462,7 +462,7 @@ public record class Step : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AutomationUpdateProfileStep"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -485,7 +485,7 @@ public record class Step : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AutomationCancelStep"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -506,7 +506,7 @@ public record class Step : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AutomationFetchDataStep"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -527,7 +527,7 @@ public record class Step : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="AutomationInvokeStep"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -547,7 +547,7 @@ public record class Step : ModelBase
     /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -558,13 +558,13 @@ public record class Step : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (AutomationDelayStep value) => {...},
-    ///     (AutomationSendStep value) => {...},
-    ///     (AutomationSendListStep value) => {...},
-    ///     (AutomationUpdateProfileStep value) => {...},
-    ///     (AutomationCancelStep value) => {...},
-    ///     (AutomationFetchDataStep value) => {...},
-    ///     (AutomationInvokeStep value) => {...}
+    ///     (AutomationDelayStep value) =&gt; {...},
+    ///     (AutomationSendStep value) =&gt; {...},
+    ///     (AutomationSendListStep value) =&gt; {...},
+    ///     (AutomationUpdateProfileStep value) =&gt; {...},
+    ///     (AutomationCancelStep value) =&gt; {...},
+    ///     (AutomationFetchDataStep value) =&gt; {...},
+    ///     (AutomationInvokeStep value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -611,7 +611,7 @@ public record class Step : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -622,13 +622,13 @@ public record class Step : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (AutomationDelayStep value) => {...},
-    ///     (AutomationSendStep value) => {...},
-    ///     (AutomationSendListStep value) => {...},
-    ///     (AutomationUpdateProfileStep value) => {...},
-    ///     (AutomationCancelStep value) => {...},
-    ///     (AutomationFetchDataStep value) => {...},
-    ///     (AutomationInvokeStep value) => {...}
+    ///     (AutomationDelayStep value) =&gt; {...},
+    ///     (AutomationSendStep value) =&gt; {...},
+    ///     (AutomationSendListStep value) =&gt; {...},
+    ///     (AutomationUpdateProfileStep value) =&gt; {...},
+    ///     (AutomationCancelStep value) =&gt; {...},
+    ///     (AutomationFetchDataStep value) =&gt; {...},
+    ///     (AutomationInvokeStep value) =&gt; {...}
     /// );
     /// </code>
     /// </example>

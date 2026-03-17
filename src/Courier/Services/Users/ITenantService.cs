@@ -43,8 +43,8 @@ public interface ITenantService
 
     /// <summary>
     /// This endpoint is used to add a user to multiple tenants in one call. A custom
-    /// profile can also be supplied for each tenant.  This profile will be merged
-    /// with the user's main  profile when sending to the user with that tenant.
+    /// profile can also be supplied for each tenant.  This profile will be merged with the
+    /// user's main  profile when sending to the user with that tenant.
     /// </summary>
     Task AddMultiple(
         TenantAddMultipleParams parameters,
@@ -61,9 +61,8 @@ public interface ITenantService
     /// <summary>
     /// This endpoint is used to add a single tenant.
     ///
-    /// <para>A custom profile can also be supplied with the tenant.  This profile
-    /// will be merged with the user's main profile  when sending to the user with
-    /// that tenant.</para>
+    /// <para>A custom profile can also be supplied with the tenant.  This profile will be
+    /// merged with the user's main profile  when sending to the user with that tenant.</para>
     /// </summary>
     Task AddSingle(TenantAddSingleParams parameters, CancellationToken cancellationToken = default);
 
@@ -116,7 +115,7 @@ public interface ITenantServiceWithRawResponse
     ITenantServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /users/{user_id}/tenants`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /users/{user_id}/tenants</c>, but is otherwise the
     /// same as <see cref="ITenantService.List(TenantListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<TenantListResponse>> List(
@@ -132,7 +131,7 @@ public interface ITenantServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /users/{user_id}/tenants`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /users/{user_id}/tenants</c>, but is otherwise the
     /// same as <see cref="ITenantService.AddMultiple(TenantAddMultipleParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> AddMultiple(
@@ -148,7 +147,7 @@ public interface ITenantServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /users/{user_id}/tenants/{tenant_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /users/{user_id}/tenants/{tenant_id}</c>, but is otherwise the
     /// same as <see cref="ITenantService.AddSingle(TenantAddSingleParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> AddSingle(
@@ -164,7 +163,7 @@ public interface ITenantServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /users/{user_id}/tenants`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /users/{user_id}/tenants</c>, but is otherwise the
     /// same as <see cref="ITenantService.RemoveAll(TenantRemoveAllParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> RemoveAll(
@@ -180,7 +179,7 @@ public interface ITenantServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /users/{user_id}/tenants/{tenant_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /users/{user_id}/tenants/{tenant_id}</c>, but is otherwise the
     /// same as <see cref="ITenantService.RemoveSingle(TenantRemoveSingleParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> RemoveSingle(

@@ -32,7 +32,7 @@ public interface IVersionService
     ///
     /// <para>Supports the following version formats: - `latest` - The most recent
     /// version of the template - `published` - The currently published version -
-    /// `v{version}` - A specific version (e.g., "v1", "v2", "v1.0.0")</para>
+    /// `v{version}` - A specific version (e.g., "v1", "v2", "v1.0.0") </para>
     /// </summary>
     Task<BaseTemplateTenantAssociation> Retrieve(
         VersionRetrieveParams parameters,
@@ -61,7 +61,7 @@ public interface IVersionServiceWithRawResponse
     IVersionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /tenants/{tenant_id}/templates/{template_id}/versions/{version}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /tenants/{tenant_id}/templates/{template_id}/versions/{version}</c>, but is otherwise the
     /// same as <see cref="IVersionService.Retrieve(VersionRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<BaseTemplateTenantAssociation>> Retrieve(

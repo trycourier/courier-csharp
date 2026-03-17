@@ -49,7 +49,7 @@ public interface IInboundServiceWithRawResponse
     IInboundServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /inbound/courier`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /inbound/courier</c>, but is otherwise the
     /// same as <see cref="IInboundService.TrackEvent(InboundTrackEventParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<InboundTrackEventResponse>> TrackEvent(
