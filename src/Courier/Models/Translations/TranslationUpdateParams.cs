@@ -68,12 +68,16 @@ public record class TranslationUpdateParams : ParamsBase
     TranslationUpdateParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
-        FrozenDictionary<string, JsonElement> rawBodyData
+        FrozenDictionary<string, JsonElement> rawBodyData,
+        string domain,
+        string locale
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
         this._rawBodyData = new(rawBodyData);
+        this.Domain = domain;
+        this.Locale = locale;
     }
 #pragma warning restore CS8618
 
@@ -81,13 +85,17 @@ public record class TranslationUpdateParams : ParamsBase
     public static TranslationUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
-        IReadOnlyDictionary<string, JsonElement> rawBodyData
+        IReadOnlyDictionary<string, JsonElement> rawBodyData,
+        string domain,
+        string locale
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
             FrozenDictionary.ToFrozenDictionary(rawQueryData),
-            FrozenDictionary.ToFrozenDictionary(rawBodyData)
+            FrozenDictionary.ToFrozenDictionary(rawBodyData),
+            domain,
+            locale
         );
     }
 
