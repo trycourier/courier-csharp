@@ -9,36 +9,27 @@ using Courier.Core;
 namespace Courier.Models.Notifications;
 
 /// <summary>
-/// List notification templates in your workspace.
+/// Retrieve a notification template by ID. Returns the published version by default.
+/// Pass version=draft to retrieve an unpublished template.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public record class NotificationListParams : ParamsBase
+public record class NotificationRetrieveParams : ParamsBase
 {
-    /// <summary>
-    /// Opaque pagination cursor from a previous response. Omit for the first page.
-    /// </summary>
-    public string? Cursor
-    {
-        get
-        {
-            this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<string>("cursor");
-        }
-        init { this._rawQueryData.Set("cursor", value); }
-    }
+    public string? ID { get; init; }
 
     /// <summary>
-    /// Filter to templates linked to this event map ID.
+    /// Version to retrieve. One of "draft", "published", or a version string like
+    /// "v001". Defaults to "published".
     /// </summary>
-    public string? EventID
+    public string? Version
     {
         get
         {
             this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableClass<string>("event_id");
+            return this._rawQueryData.GetNullableClass<string>("version");
         }
         init
         {
@@ -47,32 +38,22 @@ public record class NotificationListParams : ParamsBase
                 return;
             }
 
-            this._rawQueryData.Set("event_id", value);
+            this._rawQueryData.Set("version", value);
         }
     }
 
-    /// <summary>
-    /// Include template notes in the response. Only applies to legacy templates.
-    /// </summary>
-    public bool? Notes
-    {
-        get
-        {
-            this._rawQueryData.Freeze();
-            return this._rawQueryData.GetNullableStruct<bool>("notes");
-        }
-        init { this._rawQueryData.Set("notes", value); }
-    }
-
-    public NotificationListParams() { }
+    public NotificationRetrieveParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public NotificationListParams(NotificationListParams notificationListParams)
-        : base(notificationListParams) { }
+    public NotificationRetrieveParams(NotificationRetrieveParams notificationRetrieveParams)
+        : base(notificationRetrieveParams)
+    {
+        this.ID = notificationRetrieveParams.ID;
+    }
 #pragma warning restore CS8618
 
-    public NotificationListParams(
+    public NotificationRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
@@ -83,25 +64,29 @@ public record class NotificationListParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationListParams(
+    NotificationRetrieveParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string id
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
+        this.ID = id;
     }
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static NotificationListParams FromRawUnchecked(
+    public static NotificationRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string id
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            id
         );
     }
 
@@ -110,6 +95,7 @@ public record class NotificationListParams : ParamsBase
             FriendlyJsonPrinter.PrintValue(
                 new Dictionary<string, JsonElement>()
                 {
+                    ["ID"] = JsonSerializer.SerializeToElement(this.ID),
                     ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
                         JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
                     ),
@@ -121,19 +107,22 @@ public record class NotificationListParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(NotificationListParams? other)
+    public virtual bool Equals(NotificationRetrieveParams? other)
     {
         if (other == null)
         {
             return false;
         }
-        return this._rawHeaderData.Equals(other._rawHeaderData)
+        return (this.ID?.Equals(other.ID) ?? other.ID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
             && this._rawQueryData.Equals(other._rawQueryData);
     }
 
     public override Uri Url(ClientOptions options)
     {
-        return new UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/notifications")
+        return new UriBuilder(
+            options.BaseUrl.ToString().TrimEnd('/') + string.Format("/notifications/{0}", this.ID)
+        )
         {
             Query = this.QueryString(options),
         }.Uri;

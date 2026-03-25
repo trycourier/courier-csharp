@@ -16,7 +16,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new()
+                new ResultNotification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -34,7 +34,7 @@ public class NotificationListResponseTest : TestBase
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
         List<Result> expectedResults =
         [
-            new()
+            new ResultNotification()
             {
                 ID = "id",
                 CreatedAt = 0,
@@ -64,7 +64,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new()
+                new ResultNotification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -96,7 +96,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new()
+                new ResultNotification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -121,7 +121,7 @@ public class NotificationListResponseTest : TestBase
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
         List<Result> expectedResults =
         [
-            new()
+            new ResultNotification()
             {
                 ID = "id",
                 CreatedAt = 0,
@@ -151,7 +151,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new()
+                new ResultNotification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -177,7 +177,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new()
+                new ResultNotification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -201,9 +201,88 @@ public class NotificationListResponseTest : TestBase
 public class ResultTest : TestBase
 {
     [Fact]
+    public void NotificationValidationWorks()
+    {
+        Result value = new ResultNotification()
+        {
+            ID = "id",
+            CreatedAt = 0,
+            EventIds = ["string"],
+            Note = "note",
+            Routing = new() { Channels = ["string"], Method = Method.All },
+            TopicID = "topic_id",
+            UpdatedAt = 0,
+            Tags = new([new() { ID = "id", Name = "name" }]),
+            Title = "title",
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void NotificationTemplateSummaryValidationWorks()
+    {
+        Result value = new NotificationTemplateSummary()
+        {
+            ID = "id",
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
+            State = NotificationTemplateSummaryState.Draft,
+            Tags = ["string"],
+            Updated = 0,
+            Updater = "updater",
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void NotificationSerializationRoundtripWorks()
+    {
+        Result value = new ResultNotification()
+        {
+            ID = "id",
+            CreatedAt = 0,
+            EventIds = ["string"],
+            Note = "note",
+            Routing = new() { Channels = ["string"], Method = Method.All },
+            TopicID = "topic_id",
+            UpdatedAt = 0,
+            Tags = new([new() { ID = "id", Name = "name" }]),
+            Title = "title",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Result>(element, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void NotificationTemplateSummarySerializationRoundtripWorks()
+    {
+        Result value = new NotificationTemplateSummary()
+        {
+            ID = "id",
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
+            State = NotificationTemplateSummaryState.Draft,
+            Tags = ["string"],
+            Updated = 0,
+            Updater = "updater",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Result>(element, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ResultNotificationTest : TestBase
+{
+    [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -244,7 +323,7 @@ public class ResultTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -258,7 +337,10 @@ public class ResultTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Result>(json, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ResultNotification>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -266,7 +348,7 @@ public class ResultTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -280,7 +362,10 @@ public class ResultTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Result>(element, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ResultNotification>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -311,7 +396,7 @@ public class ResultTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -330,7 +415,7 @@ public class ResultTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -350,7 +435,7 @@ public class ResultTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -367,7 +452,7 @@ public class ResultTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -390,7 +475,7 @@ public class ResultTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -410,7 +495,7 @@ public class ResultTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Result
+        var model = new ResultNotification
         {
             ID = "id",
             CreatedAt = 0,
@@ -423,7 +508,7 @@ public class ResultTest : TestBase
             Title = "title",
         };
 
-        Result copied = new(model);
+        ResultNotification copied = new(model);
 
         Assert.Equal(model, copied);
     }
