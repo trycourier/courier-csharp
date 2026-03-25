@@ -52,6 +52,42 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
+    public async Task<NotificationTemplateMutationResponse> Create(
+        NotificationCreateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Create(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationTemplateGetResponse> Retrieve(
+        NotificationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Retrieve(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationTemplateGetResponse> Retrieve(
+        string id,
+        NotificationRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Retrieve(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<NotificationListResponse> List(
         NotificationListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -61,6 +97,70 @@ public sealed class NotificationService : INotificationService
             .WithRawResponse.List(parameters, cancellationToken)
             .ConfigureAwait(false);
         return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task Archive(
+        NotificationArchiveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.WithRawResponse.Archive(parameters, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task Archive(
+        string id,
+        NotificationArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Archive(parameters with { ID = id }, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task Publish(
+        NotificationPublishParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.WithRawResponse.Publish(parameters, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task Publish(
+        string id,
+        NotificationPublishParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        await this.Publish(parameters with { ID = id }, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationTemplateMutationResponse> Replace(
+        NotificationReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Replace(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationTemplateMutationResponse> Replace(
+        string id,
+        NotificationReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Replace(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
@@ -122,6 +222,79 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
     }
 
     /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationTemplateMutationResponse>> Create(
+        NotificationCreateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        HttpRequest<NotificationCreateParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationTemplateMutationResponse = await response
+                    .Deserialize<NotificationTemplateMutationResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationTemplateMutationResponse.Validate();
+                }
+                return notificationTemplateMutationResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationTemplateGetResponse>> Retrieve(
+        NotificationRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<NotificationRetrieveParams> request = new()
+        {
+            Method = HttpMethod.Get,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationTemplateGetResponse = await response
+                    .Deserialize<NotificationTemplateGetResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationTemplateGetResponse.Validate();
+                }
+                return notificationTemplateGetResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationTemplateGetResponse>> Retrieve(
+        string id,
+        NotificationRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Retrieve(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<HttpResponse<NotificationListResponse>> List(
         NotificationListParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -149,6 +322,111 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
                 return notifications;
             }
         );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> Archive(
+        NotificationArchiveParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<NotificationArchiveParams> request = new()
+        {
+            Method = HttpMethod.Delete,
+            Params = parameters,
+        };
+        return this._client.Execute(request, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> Archive(
+        string id,
+        NotificationArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Archive(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> Publish(
+        NotificationPublishParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<NotificationPublishParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        return this._client.Execute(request, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> Publish(
+        string id,
+        NotificationPublishParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Publish(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationTemplateMutationResponse>> Replace(
+        NotificationReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<NotificationReplaceParams> request = new()
+        {
+            Method = HttpMethod.Put,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationTemplateMutationResponse = await response
+                    .Deserialize<NotificationTemplateMutationResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationTemplateMutationResponse.Validate();
+                }
+                return notificationTemplateMutationResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationTemplateMutationResponse>> Replace(
+        string id,
+        NotificationReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Replace(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>

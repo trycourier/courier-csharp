@@ -86,6 +86,16 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Notifications::Status>(),
             new ApiEnumConverter<string, Notifications::Type>(),
             new ApiEnumConverter<string, Notifications::BlockType>(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateCreateRequestState>(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateGetResponseState>(),
+            new ApiEnumConverter<
+                string,
+                Notifications::NotificationTemplateMutationResponseState
+            >(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateSummaryState>(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateUpdateRequestState>(),
+            new ApiEnumConverter<string, Notifications::State>(),
+            new ApiEnumConverter<string, Notifications::NotificationReplaceParamsState>(),
             new ApiEnumConverter<string, Profiles::Status>(),
             new ApiEnumConverter<string, Profiles::ProfileReplaceResponseStatus>(),
             new ApiEnumConverter<string, Lists::Status>(),
