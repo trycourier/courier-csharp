@@ -47,6 +47,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, ElementalDividerNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalImageNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalMetaNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, UnionMember7IntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalTextNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ListFilterOperator>(),
