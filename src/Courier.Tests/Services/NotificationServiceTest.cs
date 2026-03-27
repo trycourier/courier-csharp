@@ -64,6 +64,17 @@ public class NotificationServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task ListVersions_Works()
+    {
+        var notificationTemplateVersionListResponse = await this.client.Notifications.ListVersions(
+            "id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
+        notificationTemplateVersionListResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Publish_Works()
     {
         await this.client.Notifications.Publish("id", new(), TestContext.Current.CancellationToken);

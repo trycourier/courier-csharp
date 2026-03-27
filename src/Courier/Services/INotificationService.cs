@@ -80,7 +80,23 @@ public interface INotificationService
     );
 
     /// <summary>
-    /// Publish the current draft of a notification template.
+    /// List versions of a notification template.
+    /// </summary>
+    Task<NotificationTemplateVersionListResponse> ListVersions(
+        NotificationListVersionsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListVersions(NotificationListVersionsParams, CancellationToken)"/>
+    Task<NotificationTemplateVersionListResponse> ListVersions(
+        string id,
+        NotificationListVersionsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Publish a notification template. Publishes the current draft by default. Pass a
+    /// version in the request body to publish a specific historical version.
     /// </summary>
     Task Publish(
         NotificationPublishParams parameters,
@@ -189,6 +205,22 @@ public interface INotificationServiceWithRawResponse
     Task<HttpResponse> Archive(
         string id,
         NotificationArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>get /notifications/{id}/versions</c>, but is otherwise the
+    /// same as <see cref="INotificationService.ListVersions(NotificationListVersionsParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationTemplateVersionListResponse>> ListVersions(
+        NotificationListVersionsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListVersions(NotificationListVersionsParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationTemplateVersionListResponse>> ListVersions(
+        string id,
+        NotificationListVersionsParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
