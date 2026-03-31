@@ -2,32 +2,18 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Models;
-using Courier.Models.Tenants;
+using Courier.Models.RoutingStrategies;
 
-namespace Courier.Tests.Models.Tenants;
+namespace Courier.Tests.Models.RoutingStrategies;
 
-public class TenantTemplateInputTest : TestBase
+public class RoutingStrategyGetResponseTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyGetResponse
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            ID = "id",
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -57,6 +43,9 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -84,23 +73,13 @@ public class TenantTemplateInputTest : TestBase
                 },
             },
             Routing = new() { Channels = ["string"], Method = Method.All },
+            Description = "description",
+            Tags = ["string"],
+            Updated = 0,
+            Updater = "updater",
         };
 
-        ElementalContent expectedContent = new()
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = "version",
-        };
+        string expectedID = "id";
         Dictionary<string, Channel> expectedChannels = new()
         {
             {
@@ -130,6 +109,9 @@ public class TenantTemplateInputTest : TestBase
                 }
             },
         };
+        long expectedCreated = 0;
+        string expectedCreator = "creator";
+        string expectedName = "name";
         Dictionary<string, MessageProvidersType> expectedProviders = new()
         {
             {
@@ -157,9 +139,12 @@ public class TenantTemplateInputTest : TestBase
             },
         };
         MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
+        string expectedDescription = "description";
+        List<string> expectedTags = ["string"];
+        long expectedUpdated = 0;
+        string expectedUpdater = "updater";
 
-        Assert.Equal(expectedContent, model.Content);
-        Assert.NotNull(model.Channels);
+        Assert.Equal(expectedID, model.ID);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         foreach (var item in expectedChannels)
         {
@@ -167,7 +152,9 @@ public class TenantTemplateInputTest : TestBase
 
             Assert.Equal(value, model.Channels[item.Key]);
         }
-        Assert.NotNull(model.Providers);
+        Assert.Equal(expectedCreated, model.Created);
+        Assert.Equal(expectedCreator, model.Creator);
+        Assert.Equal(expectedName, model.Name);
         Assert.Equal(expectedProviders.Count, model.Providers.Count);
         foreach (var item in expectedProviders)
         {
@@ -176,28 +163,23 @@ public class TenantTemplateInputTest : TestBase
             Assert.Equal(value, model.Providers[item.Key]);
         }
         Assert.Equal(expectedRouting, model.Routing);
+        Assert.Equal(expectedDescription, model.Description);
+        Assert.NotNull(model.Tags);
+        Assert.Equal(expectedTags.Count, model.Tags.Count);
+        for (int i = 0; i < expectedTags.Count; i++)
+        {
+            Assert.Equal(expectedTags[i], model.Tags[i]);
+        }
+        Assert.Equal(expectedUpdated, model.Updated);
+        Assert.Equal(expectedUpdater, model.Updater);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyGetResponse
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            ID = "id",
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -227,6 +209,9 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -254,10 +239,14 @@ public class TenantTemplateInputTest : TestBase
                 },
             },
             Routing = new() { Channels = ["string"], Method = Method.All },
+            Description = "description",
+            Tags = ["string"],
+            Updated = 0,
+            Updater = "updater",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<TenantTemplateInput>(
+        var deserialized = JsonSerializer.Deserialize<RoutingStrategyGetResponse>(
             json,
             ModelBase.SerializerOptions
         );
@@ -268,23 +257,9 @@ public class TenantTemplateInputTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyGetResponse
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            ID = "id",
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -314,6 +289,9 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -341,30 +319,20 @@ public class TenantTemplateInputTest : TestBase
                 },
             },
             Routing = new() { Channels = ["string"], Method = Method.All },
+            Description = "description",
+            Tags = ["string"],
+            Updated = 0,
+            Updater = "updater",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<TenantTemplateInput>(
+        var deserialized = JsonSerializer.Deserialize<RoutingStrategyGetResponse>(
             element,
             ModelBase.SerializerOptions
         );
         Assert.NotNull(deserialized);
 
-        ElementalContent expectedContent = new()
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = "version",
-        };
+        string expectedID = "id";
         Dictionary<string, Channel> expectedChannels = new()
         {
             {
@@ -394,6 +362,9 @@ public class TenantTemplateInputTest : TestBase
                 }
             },
         };
+        long expectedCreated = 0;
+        string expectedCreator = "creator";
+        string expectedName = "name";
         Dictionary<string, MessageProvidersType> expectedProviders = new()
         {
             {
@@ -421,9 +392,12 @@ public class TenantTemplateInputTest : TestBase
             },
         };
         MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
+        string expectedDescription = "description";
+        List<string> expectedTags = ["string"];
+        long expectedUpdated = 0;
+        string expectedUpdater = "updater";
 
-        Assert.Equal(expectedContent, deserialized.Content);
-        Assert.NotNull(deserialized.Channels);
+        Assert.Equal(expectedID, deserialized.ID);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         foreach (var item in expectedChannels)
         {
@@ -431,7 +405,9 @@ public class TenantTemplateInputTest : TestBase
 
             Assert.Equal(value, deserialized.Channels[item.Key]);
         }
-        Assert.NotNull(deserialized.Providers);
+        Assert.Equal(expectedCreated, deserialized.Created);
+        Assert.Equal(expectedCreator, deserialized.Creator);
+        Assert.Equal(expectedName, deserialized.Name);
         Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
         foreach (var item in expectedProviders)
         {
@@ -440,28 +416,23 @@ public class TenantTemplateInputTest : TestBase
             Assert.Equal(value, deserialized.Providers[item.Key]);
         }
         Assert.Equal(expectedRouting, deserialized.Routing);
+        Assert.Equal(expectedDescription, deserialized.Description);
+        Assert.NotNull(deserialized.Tags);
+        Assert.Equal(expectedTags.Count, deserialized.Tags.Count);
+        for (int i = 0; i < expectedTags.Count; i++)
+        {
+            Assert.Equal(expectedTags[i], deserialized.Tags[i]);
+        }
+        Assert.Equal(expectedUpdated, deserialized.Updated);
+        Assert.Equal(expectedUpdater, deserialized.Updater);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyGetResponse
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            ID = "id",
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -491,6 +462,160 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
+            Providers = new Dictionary<string, MessageProvidersType>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Timeouts = 0,
+                    }
+                },
+            },
+            Routing = new() { Channels = ["string"], Method = Method.All },
+            Description = "description",
+            Tags = ["string"],
+            Updated = 0,
+            Updater = "updater",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new RoutingStrategyGetResponse
+        {
+            ID = "id",
+            Channels = new Dictionary<string, Channel>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        BrandID = "brand_id",
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Providers = ["string"],
+                        RoutingMethod = RoutingMethod.All,
+                        Timeouts = new() { Channel = 0, Provider = 0 },
+                    }
+                },
+            },
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
+            Providers = new Dictionary<string, MessageProvidersType>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Timeouts = 0,
+                    }
+                },
+            },
+            Routing = new() { Channels = ["string"], Method = Method.All },
+        };
+
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+        Assert.Null(model.Tags);
+        Assert.False(model.RawData.ContainsKey("tags"));
+        Assert.Null(model.Updated);
+        Assert.False(model.RawData.ContainsKey("updated"));
+        Assert.Null(model.Updater);
+        Assert.False(model.RawData.ContainsKey("updater"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new RoutingStrategyGetResponse
+        {
+            ID = "id",
+            Channels = new Dictionary<string, Channel>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        BrandID = "brand_id",
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Providers = ["string"],
+                        RoutingMethod = RoutingMethod.All,
+                        Timeouts = new() { Channel = 0, Provider = 0 },
+                    }
+                },
+            },
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -524,120 +649,157 @@ public class TenantTemplateInputTest : TestBase
     }
 
     [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyGetResponse
         {
-            Content = new()
+            ID = "id",
+            Channels = new Dictionary<string, Channel>()
             {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
+                {
+                    "foo",
+                    new()
                     {
-                        Channels = ["string"],
+                        BrandID = "brand_id",
                         If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Providers = ["string"],
+                        RoutingMethod = RoutingMethod.All,
+                        Timeouts = new() { Channel = 0, Provider = 0 },
+                    }
+                },
             },
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
+            Providers = new Dictionary<string, MessageProvidersType>()
+            {
+                {
+                    "foo",
+                    new()
+                    {
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Timeouts = 0,
+                    }
+                },
+            },
+            Routing = new() { Channels = ["string"], Method = Method.All },
+
+            Description = null,
+            Tags = null,
+            Updated = null,
+            Updater = null,
         };
 
-        Assert.Null(model.Channels);
-        Assert.False(model.RawData.ContainsKey("channels"));
-        Assert.Null(model.Providers);
-        Assert.False(model.RawData.ContainsKey("providers"));
-        Assert.Null(model.Routing);
-        Assert.False(model.RawData.ContainsKey("routing"));
+        Assert.Null(model.Description);
+        Assert.True(model.RawData.ContainsKey("description"));
+        Assert.Null(model.Tags);
+        Assert.True(model.RawData.ContainsKey("tags"));
+        Assert.Null(model.Updated);
+        Assert.True(model.RawData.ContainsKey("updated"));
+        Assert.Null(model.Updater);
+        Assert.True(model.RawData.ContainsKey("updater"));
     }
 
     [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyGetResponse
         {
-            Content = new()
+            ID = "id",
+            Channels = new Dictionary<string, Channel>()
             {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
+                {
+                    "foo",
+                    new()
                     {
-                        Channels = ["string"],
+                        BrandID = "brand_id",
                         If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Providers = ["string"],
+                        RoutingMethod = RoutingMethod.All,
+                        Timeouts = new() { Channel = 0, Provider = 0 },
+                    }
+                },
             },
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
-    {
-        var model = new TenantTemplateInput
-        {
-            Content = new()
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
+            Providers = new Dictionary<string, MessageProvidersType>()
             {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
+                {
+                    "foo",
+                    new()
                     {
-                        Channels = ["string"],
                         If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Timeouts = 0,
+                    }
+                },
             },
+            Routing = new() { Channels = ["string"], Method = Method.All },
 
-            // Null should be interpreted as omitted for these properties
-            Channels = null,
-            Providers = null,
-            Routing = null,
-        };
-
-        Assert.Null(model.Channels);
-        Assert.False(model.RawData.ContainsKey("channels"));
-        Assert.Null(model.Providers);
-        Assert.False(model.RawData.ContainsKey("providers"));
-        Assert.Null(model.Routing);
-        Assert.False(model.RawData.ContainsKey("routing"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new TenantTemplateInput
-        {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
-
-            // Null should be interpreted as omitted for these properties
-            Channels = null,
-            Providers = null,
-            Routing = null,
+            Description = null,
+            Tags = null,
+            Updated = null,
+            Updater = null,
         };
 
         model.Validate();
@@ -646,23 +808,9 @@ public class TenantTemplateInputTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyGetResponse
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            ID = "id",
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -692,6 +840,9 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Created = 0,
+            Creator = "creator",
+            Name = "name",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -719,9 +870,13 @@ public class TenantTemplateInputTest : TestBase
                 },
             },
             Routing = new() { Channels = ["string"], Method = Method.All },
+            Description = "description",
+            Tags = ["string"],
+            Updated = 0,
+            Updater = "updater",
         };
 
-        TenantTemplateInput copied = new(model);
+        RoutingStrategyGetResponse copied = new(model);
 
         Assert.Equal(model, copied);
     }
