@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Courier.Models.Send;
-using Models = Courier.Models;
+using Courier.Models;
+using Send = Courier.Models.Send;
 
 namespace Courier.Tests.Services;
 
@@ -17,7 +17,7 @@ public class SendServiceTest : TestBase
                 Message = new()
                 {
                     BrandID = "brand_id",
-                    Channels = new Dictionary<string, ChannelsItem>()
+                    Channels = new Dictionary<string, Channel>()
                     {
                         {
                             "foo",
@@ -46,11 +46,7 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Content = new Models::ElementalContentSugar()
-                    {
-                        Body = "body",
-                        Title = "title",
-                    },
+                    Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     Context = new() { TenantID = "tenant_id" },
                     Data = new Dictionary<string, JsonElement>()
                     {
@@ -78,7 +74,7 @@ public class SendServiceTest : TestBase
                         },
                     },
                     Preferences = new("subscription_topic_id"),
-                    Providers = new Dictionary<string, ProvidersItem>()
+                    Providers = new Dictionary<string, MessageProvidersType>()
                     {
                         {
                             "foo",
@@ -104,17 +100,17 @@ public class SendServiceTest : TestBase
                             }
                         },
                     },
-                    Routing = new() { Channels = ["string"], Method = Method.All },
+                    Routing = new() { Channels = ["string"], Method = Send::Method.All },
                     Template = "template_id",
                     Timeout = new()
                     {
                         Channel = new Dictionary<string, long>() { { "foo", 0 } },
-                        Criteria = Criteria.NoEscalation,
+                        Criteria = Send::Criteria.NoEscalation,
                         Escalation = 0,
                         Message = 0,
                         Provider = new Dictionary<string, long>() { { "foo", 0 } },
                     },
-                    To = new Models::UserRecipient()
+                    To = new UserRecipient()
                     {
                         AccountID = "account_id",
                         Context = new() { TenantID = "tenant_id" },
@@ -128,35 +124,35 @@ public class SendServiceTest : TestBase
                         PhoneNumber = "phone_number",
                         Preferences = new()
                         {
-                            Notifications = new Dictionary<string, Models::Preference>()
+                            Notifications = new Dictionary<string, Preference>()
                             {
                                 {
                                     "foo",
                                     new()
                                     {
-                                        Status = Models::PreferenceStatus.OptedIn,
+                                        Status = PreferenceStatus.OptedIn,
                                         ChannelPreferences =
                                         [
-                                            new(Models::ChannelClassification.DirectMessage),
+                                            new(ChannelClassification.DirectMessage),
                                         ],
                                         Rules = [new() { Until = "until", Start = "start" }],
-                                        Source = Models::Source.Subscription,
+                                        Source = Source.Subscription,
                                     }
                                 },
                             },
-                            Categories = new Dictionary<string, Models::Preference>()
+                            Categories = new Dictionary<string, Preference>()
                             {
                                 {
                                     "foo",
                                     new()
                                     {
-                                        Status = Models::PreferenceStatus.OptedIn,
+                                        Status = PreferenceStatus.OptedIn,
                                         ChannelPreferences =
                                         [
-                                            new(Models::ChannelClassification.DirectMessage),
+                                            new(ChannelClassification.DirectMessage),
                                         ],
                                         Rules = [new() { Until = "until", Start = "start" }],
-                                        Source = Models::Source.Subscription,
+                                        Source = Source.Subscription,
                                     }
                                 },
                             },

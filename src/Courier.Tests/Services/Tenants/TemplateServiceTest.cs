@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Courier.Models;
-using Courier.Models.Tenants;
 
 namespace Courier.Tests.Services.Tenants;
 
@@ -66,7 +65,7 @@ public class TemplateServiceTest : TestBase
                         ],
                         Version = "version",
                     },
-                    Channels = new Dictionary<string, ChannelsItem>()
+                    Channels = new Dictionary<string, Channel>()
                     {
                         {
                             "foo",
@@ -95,7 +94,7 @@ public class TemplateServiceTest : TestBase
                             }
                         },
                     },
-                    Providers = new Dictionary<string, ProvidersItem>()
+                    Providers = new Dictionary<string, MessageProvidersType>()
                     {
                         {
                             "foo",

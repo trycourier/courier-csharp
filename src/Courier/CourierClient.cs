@@ -150,6 +150,12 @@ public sealed class CourierClient : ICourierClient
         get { return _notifications.Value; }
     }
 
+    readonly Lazy<IRoutingStrategyService> _routingStrategies;
+    public IRoutingStrategyService RoutingStrategies
+    {
+        get { return _routingStrategies.Value; }
+    }
+
     readonly Lazy<IProfileService> _profiles;
     public IProfileService Profiles
     {
@@ -194,6 +200,7 @@ public sealed class CourierClient : ICourierClient
         _messages = new(() => new MessageService(this));
         _requests = new(() => new RequestService(this));
         _notifications = new(() => new NotificationService(this));
+        _routingStrategies = new(() => new RoutingStrategyService(this));
         _profiles = new(() => new ProfileService(this));
         _tenants = new(() => new TenantService(this));
         _translations = new(() => new TranslationService(this));
@@ -349,6 +356,12 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     public INotificationServiceWithRawResponse Notifications
     {
         get { return _notifications.Value; }
+    }
+
+    readonly Lazy<IRoutingStrategyServiceWithRawResponse> _routingStrategies;
+    public IRoutingStrategyServiceWithRawResponse RoutingStrategies
+    {
+        get { return _routingStrategies.Value; }
     }
 
     readonly Lazy<IProfileServiceWithRawResponse> _profiles;
@@ -586,6 +599,7 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
         _messages = new(() => new MessageServiceWithRawResponse(this));
         _requests = new(() => new RequestServiceWithRawResponse(this));
         _notifications = new(() => new NotificationServiceWithRawResponse(this));
+        _routingStrategies = new(() => new RoutingStrategyServiceWithRawResponse(this));
         _profiles = new(() => new ProfileServiceWithRawResponse(this));
         _tenants = new(() => new TenantServiceWithRawResponse(this));
         _translations = new(() => new TranslationServiceWithRawResponse(this));

@@ -279,7 +279,7 @@ SendMessageParams parameters = new
     Message = new()
     {
         BrandID = "brand_id",
-        Channels = new Dictionary<string, ChannelsItem>()
+        Channels = new Dictionary<string, Models::Channel>()
         {
             { "foo", new()
             {
@@ -304,7 +304,7 @@ SendMessageParams parameters = new
                 [
                     "string"
                 ],
-                RoutingMethod = RoutingMethod.All,
+                RoutingMethod = Models::RoutingMethod.All,
                 Timeouts = new()
                 {
                     Channel = 0,
@@ -351,7 +351,7 @@ SendMessageParams parameters = new
             },
         },
         Preferences = new("subscription_topic_id"),
-        Providers = new Dictionary<string, ProvidersItem>()
+        Providers = new Dictionary<string, Models::MessageProvidersType>()
         {
             { "foo", new()
             {

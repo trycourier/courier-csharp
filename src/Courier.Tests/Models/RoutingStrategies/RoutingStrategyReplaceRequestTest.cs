@@ -2,32 +2,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Courier.Core;
 using Courier.Models;
-using Courier.Models.Tenants;
+using Courier.Models.RoutingStrategies;
 
-namespace Courier.Tests.Models.Tenants;
+namespace Courier.Tests.Models.RoutingStrategies;
 
-public class TenantTemplateInputTest : TestBase
+public class RoutingStrategyReplaceRequestTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyReplaceRequest
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            Name = "name",
+            Routing = new() { Channels = ["string"], Method = Method.All },
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -57,6 +44,7 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Description = "description",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -83,24 +71,11 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
-            Routing = new() { Channels = ["string"], Method = Method.All },
+            Tags = ["string"],
         };
 
-        ElementalContent expectedContent = new()
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = "version",
-        };
+        string expectedName = "name";
+        MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
         Dictionary<string, Channel> expectedChannels = new()
         {
             {
@@ -130,6 +105,7 @@ public class TenantTemplateInputTest : TestBase
                 }
             },
         };
+        string expectedDescription = "description";
         Dictionary<string, MessageProvidersType> expectedProviders = new()
         {
             {
@@ -156,9 +132,10 @@ public class TenantTemplateInputTest : TestBase
                 }
             },
         };
-        MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
+        List<string> expectedTags = ["string"];
 
-        Assert.Equal(expectedContent, model.Content);
+        Assert.Equal(expectedName, model.Name);
+        Assert.Equal(expectedRouting, model.Routing);
         Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
         foreach (var item in expectedChannels)
@@ -167,6 +144,7 @@ public class TenantTemplateInputTest : TestBase
 
             Assert.Equal(value, model.Channels[item.Key]);
         }
+        Assert.Equal(expectedDescription, model.Description);
         Assert.NotNull(model.Providers);
         Assert.Equal(expectedProviders.Count, model.Providers.Count);
         foreach (var item in expectedProviders)
@@ -175,29 +153,21 @@ public class TenantTemplateInputTest : TestBase
 
             Assert.Equal(value, model.Providers[item.Key]);
         }
-        Assert.Equal(expectedRouting, model.Routing);
+        Assert.NotNull(model.Tags);
+        Assert.Equal(expectedTags.Count, model.Tags.Count);
+        for (int i = 0; i < expectedTags.Count; i++)
+        {
+            Assert.Equal(expectedTags[i], model.Tags[i]);
+        }
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyReplaceRequest
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            Name = "name",
+            Routing = new() { Channels = ["string"], Method = Method.All },
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -227,6 +197,7 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Description = "description",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -253,11 +224,11 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
-            Routing = new() { Channels = ["string"], Method = Method.All },
+            Tags = ["string"],
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<TenantTemplateInput>(
+        var deserialized = JsonSerializer.Deserialize<RoutingStrategyReplaceRequest>(
             json,
             ModelBase.SerializerOptions
         );
@@ -268,23 +239,10 @@ public class TenantTemplateInputTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyReplaceRequest
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            Name = "name",
+            Routing = new() { Channels = ["string"], Method = Method.All },
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -314,6 +272,7 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Description = "description",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -340,31 +299,18 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
-            Routing = new() { Channels = ["string"], Method = Method.All },
+            Tags = ["string"],
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<TenantTemplateInput>(
+        var deserialized = JsonSerializer.Deserialize<RoutingStrategyReplaceRequest>(
             element,
             ModelBase.SerializerOptions
         );
         Assert.NotNull(deserialized);
 
-        ElementalContent expectedContent = new()
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = "version",
-        };
+        string expectedName = "name";
+        MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
         Dictionary<string, Channel> expectedChannels = new()
         {
             {
@@ -394,6 +340,7 @@ public class TenantTemplateInputTest : TestBase
                 }
             },
         };
+        string expectedDescription = "description";
         Dictionary<string, MessageProvidersType> expectedProviders = new()
         {
             {
@@ -420,9 +367,10 @@ public class TenantTemplateInputTest : TestBase
                 }
             },
         };
-        MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
+        List<string> expectedTags = ["string"];
 
-        Assert.Equal(expectedContent, deserialized.Content);
+        Assert.Equal(expectedName, deserialized.Name);
+        Assert.Equal(expectedRouting, deserialized.Routing);
         Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
         foreach (var item in expectedChannels)
@@ -431,6 +379,7 @@ public class TenantTemplateInputTest : TestBase
 
             Assert.Equal(value, deserialized.Channels[item.Key]);
         }
+        Assert.Equal(expectedDescription, deserialized.Description);
         Assert.NotNull(deserialized.Providers);
         Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
         foreach (var item in expectedProviders)
@@ -439,29 +388,21 @@ public class TenantTemplateInputTest : TestBase
 
             Assert.Equal(value, deserialized.Providers[item.Key]);
         }
-        Assert.Equal(expectedRouting, deserialized.Routing);
+        Assert.NotNull(deserialized.Tags);
+        Assert.Equal(expectedTags.Count, deserialized.Tags.Count);
+        for (int i = 0; i < expectedTags.Count; i++)
+        {
+            Assert.Equal(expectedTags[i], deserialized.Tags[i]);
+        }
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyReplaceRequest
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            Name = "name",
+            Routing = new() { Channels = ["string"], Method = Method.All },
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -491,6 +432,7 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Description = "description",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -517,6 +459,37 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Tags = ["string"],
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new RoutingStrategyReplaceRequest
+        {
+            Name = "name",
+            Routing = new() { Channels = ["string"], Method = Method.All },
+        };
+
+        Assert.Null(model.Channels);
+        Assert.False(model.RawData.ContainsKey("channels"));
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
+        Assert.Null(model.Providers);
+        Assert.False(model.RawData.ContainsKey("providers"));
+        Assert.Null(model.Tags);
+        Assert.False(model.RawData.ContainsKey("tags"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new RoutingStrategyReplaceRequest
+        {
+            Name = "name",
             Routing = new() { Channels = ["string"], Method = Method.All },
         };
 
@@ -524,120 +497,41 @@ public class TenantTemplateInputTest : TestBase
     }
 
     [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyReplaceRequest
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            Name = "name",
+            Routing = new() { Channels = ["string"], Method = Method.All },
+
+            Channels = null,
+            Description = null,
+            Providers = null,
+            Tags = null,
         };
 
         Assert.Null(model.Channels);
-        Assert.False(model.RawData.ContainsKey("channels"));
+        Assert.True(model.RawData.ContainsKey("channels"));
+        Assert.Null(model.Description);
+        Assert.True(model.RawData.ContainsKey("description"));
         Assert.Null(model.Providers);
-        Assert.False(model.RawData.ContainsKey("providers"));
-        Assert.Null(model.Routing);
-        Assert.False(model.RawData.ContainsKey("routing"));
+        Assert.True(model.RawData.ContainsKey("providers"));
+        Assert.Null(model.Tags);
+        Assert.True(model.RawData.ContainsKey("tags"));
     }
 
     [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyReplaceRequest
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
-        };
+            Name = "name",
+            Routing = new() { Channels = ["string"], Method = Method.All },
 
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
-    {
-        var model = new TenantTemplateInput
-        {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
-
-            // Null should be interpreted as omitted for these properties
             Channels = null,
+            Description = null,
             Providers = null,
-            Routing = null,
-        };
-
-        Assert.Null(model.Channels);
-        Assert.False(model.RawData.ContainsKey("channels"));
-        Assert.Null(model.Providers);
-        Assert.False(model.RawData.ContainsKey("providers"));
-        Assert.Null(model.Routing);
-        Assert.False(model.RawData.ContainsKey("routing"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new TenantTemplateInput
-        {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
-
-            // Null should be interpreted as omitted for these properties
-            Channels = null,
-            Providers = null,
-            Routing = null,
+            Tags = null,
         };
 
         model.Validate();
@@ -646,23 +540,10 @@ public class TenantTemplateInputTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new TenantTemplateInput
+        var model = new RoutingStrategyReplaceRequest
         {
-            Content = new()
-            {
-                Elements =
-                [
-                    new ElementalTextNodeWithType()
-                    {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                    },
-                ],
-                Version = "version",
-            },
+            Name = "name",
+            Routing = new() { Channels = ["string"], Method = Method.All },
             Channels = new Dictionary<string, Channel>()
             {
                 {
@@ -692,6 +573,7 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
+            Description = "description",
             Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
@@ -718,10 +600,10 @@ public class TenantTemplateInputTest : TestBase
                     }
                 },
             },
-            Routing = new() { Channels = ["string"], Method = Method.All },
+            Tags = ["string"],
         };
 
-        TenantTemplateInput copied = new(model);
+        RoutingStrategyReplaceRequest copied = new(model);
 
         Assert.Equal(model, copied);
     }

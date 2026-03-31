@@ -30,7 +30,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -59,7 +59,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -107,7 +107,7 @@ public class PutTenantTemplateRequestTest : TestBase
                 ],
                 Version = "version",
             },
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Channel>()
             {
                 {
                     "foo",
@@ -136,7 +136,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     }
                 },
             },
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
                     "foo",
@@ -192,7 +192,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -221,7 +221,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -283,7 +283,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -312,7 +312,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -367,7 +367,7 @@ public class PutTenantTemplateRequestTest : TestBase
                 ],
                 Version = "version",
             },
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Channel>()
             {
                 {
                     "foo",
@@ -396,7 +396,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     }
                 },
             },
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
                     "foo",
@@ -452,7 +452,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -481,7 +481,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -537,7 +537,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -566,7 +566,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -622,7 +622,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -651,7 +651,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -706,7 +706,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -735,7 +735,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -794,7 +794,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -823,7 +823,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -881,7 +881,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -910,7 +910,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
