@@ -1,5 +1,39 @@
 # Changelog
 
+## 5.6.0 (2026-04-01)
+
+Full Changelog: [v5.5.0...v5.6.0](https://github.com/trycourier/courier-csharp/compare/v5.5.0...v5.6.0)
+
+### Features
+
+* **api:** add create/retrieve/archive/publish/replace methods, event_id param to notifications ([f857a51](https://github.com/trycourier/courier-csharp/commit/f857a51892cfa3b1089307011943f842bc56ad16))
+* **api:** add providers resource with CRUD and catalog endpoints ([d8a762f](https://github.com/trycourier/courier-csharp/commit/d8a762ff628fb461974cc119fa180801965b3545))
+* **api:** add routing strategies resource with create/list/retrieve/replace/archive methods ([634aa18](https://github.com/trycourier/courier-csharp/commit/634aa1890769a09509af9675735364ed8d1eb191))
+* **api:** add UnionMember7 variant to ElementalNode ([219d6b8](https://github.com/trycourier/courier-csharp/commit/219d6b832fe06f5e4891560bb5f31532ead47b93))
+* **client:** enable gzip decompression ([6db30fc](https://github.com/trycourier/courier-csharp/commit/6db30fc0171bfe7a157b270d61c99f4805befec1))
+
+
+### Bug Fixes
+
+* **client:** allow cancelling when enumerating over an http response ([fd79698](https://github.com/trycourier/courier-csharp/commit/fd7969849208b5a58f7de55bf88615e0a1db98ea))
+* **client:** handle path params correctly in `FromRawUnchecked` ([28c65e7](https://github.com/trycourier/courier-csharp/commit/28c65e7eaeaaede6d8e8da6799721855d14b56d2))
+* **client:** handle root bodies in requests properly ([2c32f15](https://github.com/trycourier/courier-csharp/commit/2c32f15599be8deb20137cebdd3cae4c78f9f092))
+* **docs:** make xml syntactically correct ([85753bd](https://github.com/trycourier/courier-csharp/commit/85753bd6bd99d8381c8ba3adaf0c7d8acb4faa41))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([2f7cd0a](https://github.com/trycourier/courier-csharp/commit/2f7cd0a8453b9e2f51c044eafdf727395aec3549))
+* **internal:** tweak CI branches ([f8720a0](https://github.com/trycourier/courier-csharp/commit/f8720a0bec29275a46e22a2e5d3481961ac33a96))
+* **internal:** update gitignore ([2d95668](https://github.com/trycourier/courier-csharp/commit/2d95668e1344cfb99b7bf2167fe99de0549f6e1b))
+* remove custom code ([e0fb6c0](https://github.com/trycourier/courier-csharp/commit/e0fb6c0dc11df4f1848d650303b1d8db6c0f9800))
+* **types:** rename UnionMember7 to ElementalHtmlNodeWithType ([09c113d](https://github.com/trycourier/courier-csharp/commit/09c113d251261571303278664bad67930ae4a092))
+
+
+### Documentation
+
+* add AGENTS.md for AI coding assistants ([8751217](https://github.com/trycourier/courier-csharp/commit/8751217069ca24cf18bbc1b46fa35681469e0d7d))
+
 ## 5.5.0 (2026-02-21)
 
 Full Changelog: [v5.4.0...v5.5.0](https://github.com/trycourier/courier-csharp/compare/v5.4.0...v5.5.0)
