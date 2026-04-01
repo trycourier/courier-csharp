@@ -55,6 +55,8 @@ public interface ICourierClient : IDisposable
 
     IAudienceService Audiences { get; }
 
+    IProviderService Providers { get; }
+
     IAuditEventService AuditEvents { get; }
 
     IAuthService Auth { get; }
@@ -120,6 +122,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     ISendServiceWithRawResponse Send { get; }
 
     IAudienceServiceWithRawResponse Audiences { get; }
+
+    IProviderServiceWithRawResponse Providers { get; }
 
     IAuditEventServiceWithRawResponse AuditEvents { get; }
 

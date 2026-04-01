@@ -84,6 +84,12 @@ public sealed class CourierClient : ICourierClient
         get { return _audiences.Value; }
     }
 
+    readonly Lazy<IProviderService> _providers;
+    public IProviderService Providers
+    {
+        get { return _providers.Value; }
+    }
+
     readonly Lazy<IAuditEventService> _auditEvents;
     public IAuditEventService AuditEvents
     {
@@ -189,6 +195,7 @@ public sealed class CourierClient : ICourierClient
         _withRawResponse = new(() => new CourierClientWithRawResponse(this._options));
         _send = new(() => new SendService(this));
         _audiences = new(() => new AudienceService(this));
+        _providers = new(() => new ProviderService(this));
         _auditEvents = new(() => new AuditEventService(this));
         _auth = new(() => new AuthService(this));
         _automations = new(() => new AutomationService(this));
@@ -290,6 +297,12 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     public IAudienceServiceWithRawResponse Audiences
     {
         get { return _audiences.Value; }
+    }
+
+    readonly Lazy<IProviderServiceWithRawResponse> _providers;
+    public IProviderServiceWithRawResponse Providers
+    {
+        get { return _providers.Value; }
     }
 
     readonly Lazy<IAuditEventServiceWithRawResponse> _auditEvents;
@@ -588,6 +601,7 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
 
         _send = new(() => new SendServiceWithRawResponse(this));
         _audiences = new(() => new AudienceServiceWithRawResponse(this));
+        _providers = new(() => new ProviderServiceWithRawResponse(this));
         _auditEvents = new(() => new AuditEventServiceWithRawResponse(this));
         _auth = new(() => new AuthServiceWithRawResponse(this));
         _automations = new(() => new AutomationServiceWithRawResponse(this));
