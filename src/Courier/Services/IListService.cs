@@ -105,7 +105,7 @@ public interface IListServiceWithRawResponse
     ISubscriptionServiceWithRawResponse Subscriptions { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /lists/{list_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /lists/{list_id}</c>, but is otherwise the
     /// same as <see cref="IListService.Retrieve(ListRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<SubscriptionList>> Retrieve(
@@ -121,7 +121,7 @@ public interface IListServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /lists/{list_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /lists/{list_id}</c>, but is otherwise the
     /// same as <see cref="IListService.Update(ListUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Update(
@@ -137,7 +137,7 @@ public interface IListServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /lists`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /lists</c>, but is otherwise the
     /// same as <see cref="IListService.List(ListListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ListListResponse>> List(
@@ -146,7 +146,7 @@ public interface IListServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /lists/{list_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /lists/{list_id}</c>, but is otherwise the
     /// same as <see cref="IListService.Delete(ListDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Delete(
@@ -162,7 +162,7 @@ public interface IListServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /lists/{list_id}/restore`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /lists/{list_id}/restore</c>, but is otherwise the
     /// same as <see cref="IListService.Restore(ListRestoreParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Restore(

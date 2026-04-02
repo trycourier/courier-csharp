@@ -33,7 +33,7 @@ public class TemplateReplaceParamsTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -62,7 +62,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -112,7 +112,7 @@ public class TemplateReplaceParamsTest : TestBase
                 ],
                 Version = "version",
             },
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Channel>()
             {
                 {
                     "foo",
@@ -141,7 +141,7 @@ public class TemplateReplaceParamsTest : TestBase
                     }
                 },
             },
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, MessageProvidersType>()
             {
                 {
                     "foo",
@@ -201,7 +201,7 @@ public class TemplateReplaceParamsTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -230,7 +230,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -288,7 +288,7 @@ public class TemplateReplaceParamsTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -317,7 +317,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -378,7 +378,7 @@ public class TemplateReplaceParamsTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -407,7 +407,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -469,7 +469,7 @@ public class TemplateReplaceParamsTest : TestBase
                     ],
                     Version = "version",
                 },
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Channel>()
                 {
                     {
                         "foo",
@@ -498,7 +498,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, MessageProvidersType>()
                 {
                     {
                         "foo",

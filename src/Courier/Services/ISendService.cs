@@ -49,7 +49,7 @@ public interface ISendServiceWithRawResponse
     ISendServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /send`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /send</c>, but is otherwise the
     /// same as <see cref="ISendService.Message(SendMessageParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<SendMessageResponse>> Message(

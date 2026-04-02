@@ -8,6 +8,7 @@ using Audiences = Courier.Models.Audiences;
 using Inbound = Courier.Models.Inbound;
 using Invoke = Courier.Models.Automations.Invoke;
 using Items = Courier.Models.Tenants.Preferences.Items;
+using Journeys = Courier.Models.Journeys;
 using Lists = Courier.Models.Profiles.Lists;
 using Messages = Courier.Models.Messages;
 using Notifications = Courier.Models.Notifications;
@@ -40,10 +41,12 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Alignment>(),
             new ApiEnumConverter<string, Operator>(),
             new ApiEnumConverter<string, Path>(),
+            new ApiEnumConverter<string, RoutingMethod>(),
             new ApiEnumConverter<string, ChannelClassification>(),
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, ElementalChannelNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalDividerNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, ElementalHtmlNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalImageNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalMetaNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalQuoteNodeWithTypeIntersectionMember1Type>(),
@@ -57,7 +60,6 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, WebhookAuthMode>(),
             new ApiEnumConverter<string, WebhookMethod>(),
             new ApiEnumConverter<string, WebhookProfileType>(),
-            new ApiEnumConverter<string, Send::RoutingMethod>(),
             new ApiEnumConverter<string, Send::Method>(),
             new ApiEnumConverter<string, Send::Criteria>(),
             new ApiEnumConverter<string, Audiences::AudienceOperator>(),
@@ -74,6 +76,8 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Invoke::Method>(),
             new ApiEnumConverter<string, Invoke::MergeStrategy>(),
             new ApiEnumConverter<string, Invoke::AutomationInvokeStepAction>(),
+            new ApiEnumConverter<string, Journeys::JourneyVersion>(),
+            new ApiEnumConverter<string, Journeys::Version>(),
             new ApiEnumConverter<string, Placement>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, JobStatus>(),
@@ -83,13 +87,22 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Notifications::Status>(),
             new ApiEnumConverter<string, Notifications::Type>(),
             new ApiEnumConverter<string, Notifications::BlockType>(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateCreateRequestState>(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateGetResponseState>(),
+            new ApiEnumConverter<
+                string,
+                Notifications::NotificationTemplateMutationResponseState
+            >(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateSummaryState>(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateUpdateRequestState>(),
+            new ApiEnumConverter<string, Notifications::State>(),
+            new ApiEnumConverter<string, Notifications::NotificationReplaceParamsState>(),
             new ApiEnumConverter<string, Profiles::Status>(),
             new ApiEnumConverter<string, Profiles::ProfileReplaceResponseStatus>(),
             new ApiEnumConverter<string, Lists::Status>(),
             new ApiEnumConverter<string, Lists::ListSubscribeResponseStatus>(),
             new ApiEnumConverter<string, Tenants::Status>(),
             new ApiEnumConverter<string, Tenants::Type>(),
-            new ApiEnumConverter<string, Tenants::RoutingMethod>(),
             new ApiEnumConverter<string, Tenants::TenantListResponseType>(),
             new ApiEnumConverter<string, Tenants::TenantListUsersResponseType>(),
             new ApiEnumConverter<string, Items::Status>(),

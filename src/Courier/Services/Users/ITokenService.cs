@@ -122,7 +122,7 @@ public interface ITokenServiceWithRawResponse
     ITokenServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /users/{user_id}/tokens/{token}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /users/{user_id}/tokens/{token}</c>, but is otherwise the
     /// same as <see cref="ITokenService.Retrieve(TokenRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<TokenRetrieveResponse>> Retrieve(
@@ -138,7 +138,7 @@ public interface ITokenServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `patch /users/{user_id}/tokens/{token}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>patch /users/{user_id}/tokens/{token}</c>, but is otherwise the
     /// same as <see cref="ITokenService.Update(TokenUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Update(
@@ -154,7 +154,7 @@ public interface ITokenServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /users/{user_id}/tokens`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /users/{user_id}/tokens</c>, but is otherwise the
     /// same as <see cref="ITokenService.List(TokenListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<TokenListResponse>> List(
@@ -170,7 +170,7 @@ public interface ITokenServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /users/{user_id}/tokens/{token}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /users/{user_id}/tokens/{token}</c>, but is otherwise the
     /// same as <see cref="ITokenService.Delete(TokenDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Delete(
@@ -186,7 +186,7 @@ public interface ITokenServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /users/{user_id}/tokens`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /users/{user_id}/tokens</c>, but is otherwise the
     /// same as <see cref="ITokenService.AddMultiple(TokenAddMultipleParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> AddMultiple(
@@ -202,7 +202,7 @@ public interface ITokenServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /users/{user_id}/tokens/{token}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /users/{user_id}/tokens/{token}</c>, but is otherwise the
     /// same as <see cref="ITokenService.AddSingle(TokenAddSingleParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> AddSingle(

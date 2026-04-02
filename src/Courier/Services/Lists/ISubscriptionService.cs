@@ -42,8 +42,8 @@ public interface ISubscriptionService
     );
 
     /// <summary>
-    /// Subscribes additional users to the list, without modifying existing subscriptions.
-    /// If the list does not exist, it will be automatically created.
+    /// Subscribes additional users to the list, without modifying existing
+    /// subscriptions. If the list does not exist, it will be automatically created.
     /// </summary>
     Task Add(SubscriptionAddParams parameters, CancellationToken cancellationToken = default);
 
@@ -55,8 +55,8 @@ public interface ISubscriptionService
     );
 
     /// <summary>
-    /// Subscribes the users to the list, overwriting existing subscriptions. If
-    /// the list does not exist, it will be automatically created.
+    /// Subscribes the users to the list, overwriting existing subscriptions. If the
+    /// list does not exist, it will be automatically created.
     /// </summary>
     Task Subscribe(
         SubscriptionSubscribeParams parameters,
@@ -71,8 +71,8 @@ public interface ISubscriptionService
     );
 
     /// <summary>
-    /// Subscribe a user to an existing list (note: if the List does not exist, it
-    /// will be automatically created).
+    /// Subscribe a user to an existing list (note: if the List does not exist, it will
+    /// be automatically created).
     /// </summary>
     Task SubscribeUser(
         SubscriptionSubscribeUserParams parameters,
@@ -116,7 +116,7 @@ public interface ISubscriptionServiceWithRawResponse
     ISubscriptionServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /lists/{list_id}/subscriptions`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /lists/{list_id}/subscriptions</c>, but is otherwise the
     /// same as <see cref="ISubscriptionService.List(SubscriptionListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<SubscriptionListResponse>> List(
@@ -132,7 +132,7 @@ public interface ISubscriptionServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /lists/{list_id}/subscriptions`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /lists/{list_id}/subscriptions</c>, but is otherwise the
     /// same as <see cref="ISubscriptionService.Add(SubscriptionAddParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Add(
@@ -148,7 +148,7 @@ public interface ISubscriptionServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /lists/{list_id}/subscriptions`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /lists/{list_id}/subscriptions</c>, but is otherwise the
     /// same as <see cref="ISubscriptionService.Subscribe(SubscriptionSubscribeParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Subscribe(
@@ -164,7 +164,7 @@ public interface ISubscriptionServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /lists/{list_id}/subscriptions/{user_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /lists/{list_id}/subscriptions/{user_id}</c>, but is otherwise the
     /// same as <see cref="ISubscriptionService.SubscribeUser(SubscriptionSubscribeUserParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> SubscribeUser(
@@ -180,7 +180,7 @@ public interface ISubscriptionServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /lists/{list_id}/subscriptions/{user_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /lists/{list_id}/subscriptions/{user_id}</c>, but is otherwise the
     /// same as <see cref="ISubscriptionService.UnsubscribeUser(SubscriptionUnsubscribeUserParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> UnsubscribeUser(

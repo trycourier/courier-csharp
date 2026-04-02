@@ -48,7 +48,8 @@ public record class ElementalNode : ModelBase
                 imageNodeWithType: (x) => x.Channels,
                 actionNodeWithType: (x) => x.Channels,
                 dividerNodeWithType: (x) => x.Channels,
-                quoteNodeWithType: (x) => x.Channels
+                quoteNodeWithType: (x) => x.Channels,
+                htmlNodeWithType: (x) => x.Channels
             );
         }
     }
@@ -64,7 +65,8 @@ public record class ElementalNode : ModelBase
                 imageNodeWithType: (x) => x.If,
                 actionNodeWithType: (x) => x.If,
                 dividerNodeWithType: (x) => x.If,
-                quoteNodeWithType: (x) => x.If
+                quoteNodeWithType: (x) => x.If,
+                htmlNodeWithType: (x) => x.If
             );
         }
     }
@@ -80,7 +82,8 @@ public record class ElementalNode : ModelBase
                 imageNodeWithType: (x) => x.Loop,
                 actionNodeWithType: (x) => x.Loop,
                 dividerNodeWithType: (x) => x.Loop,
-                quoteNodeWithType: (x) => x.Loop
+                quoteNodeWithType: (x) => x.Loop,
+                htmlNodeWithType: (x) => x.Loop
             );
         }
     }
@@ -96,7 +99,8 @@ public record class ElementalNode : ModelBase
                 imageNodeWithType: (x) => x.Ref,
                 actionNodeWithType: (x) => x.Ref,
                 dividerNodeWithType: (x) => x.Ref,
-                quoteNodeWithType: (x) => x.Ref
+                quoteNodeWithType: (x) => x.Ref,
+                htmlNodeWithType: (x) => x.Ref
             );
         }
     }
@@ -143,6 +147,12 @@ public record class ElementalNode : ModelBase
         this._element = element;
     }
 
+    public ElementalNode(ElementalHtmlNodeWithType value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
     public ElementalNode(JsonElement element)
     {
         this._element = element;
@@ -152,7 +162,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalTextNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -173,7 +183,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalMetaNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -194,7 +204,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalChannelNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -217,7 +227,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalImageNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -238,7 +248,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalActionNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -261,7 +271,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalDividerNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -284,7 +294,7 @@ public record class ElementalNode : ModelBase
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="ElementalQuoteNodeWithType"/>.
     ///
-    /// <para>Consider using <see cref="Switch"> or <see cref="Match"> if you need to handle every variant.</para>
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
@@ -302,9 +312,30 @@ public record class ElementalNode : ModelBase
     }
 
     /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="ElementalHtmlNodeWithType"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickHtmlNodeWithType(out var value)) {
+    ///     // `value` is of type `ElementalHtmlNodeWithType`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickHtmlNodeWithType([NotNullWhen(true)] out ElementalHtmlNodeWithType? value)
+    {
+        value = this.Value as ElementalHtmlNodeWithType;
+        return value != null;
+    }
+
+    /// <summary>
     /// Calls the function parameter corresponding to the variant the instance was constructed with.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
     /// if you need your function parameters to return something.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -315,13 +346,14 @@ public record class ElementalNode : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (ElementalTextNodeWithType value) => {...},
-    ///     (ElementalMetaNodeWithType value) => {...},
-    ///     (ElementalChannelNodeWithType value) => {...},
-    ///     (ElementalImageNodeWithType value) => {...},
-    ///     (ElementalActionNodeWithType value) => {...},
-    ///     (ElementalDividerNodeWithType value) => {...},
-    ///     (ElementalQuoteNodeWithType value) => {...}
+    ///     (ElementalTextNodeWithType value) =&gt; {...},
+    ///     (ElementalMetaNodeWithType value) =&gt; {...},
+    ///     (ElementalChannelNodeWithType value) =&gt; {...},
+    ///     (ElementalImageNodeWithType value) =&gt; {...},
+    ///     (ElementalActionNodeWithType value) =&gt; {...},
+    ///     (ElementalDividerNodeWithType value) =&gt; {...},
+    ///     (ElementalQuoteNodeWithType value) =&gt; {...},
+    ///     (ElementalHtmlNodeWithType value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -333,7 +365,8 @@ public record class ElementalNode : ModelBase
         System::Action<ElementalImageNodeWithType> imageNodeWithType,
         System::Action<ElementalActionNodeWithType> actionNodeWithType,
         System::Action<ElementalDividerNodeWithType> dividerNodeWithType,
-        System::Action<ElementalQuoteNodeWithType> quoteNodeWithType
+        System::Action<ElementalQuoteNodeWithType> quoteNodeWithType,
+        System::Action<ElementalHtmlNodeWithType> htmlNodeWithType
     )
     {
         switch (this.Value)
@@ -359,6 +392,9 @@ public record class ElementalNode : ModelBase
             case ElementalQuoteNodeWithType value:
                 quoteNodeWithType(value);
                 break;
+            case ElementalHtmlNodeWithType value:
+                htmlNodeWithType(value);
+                break;
             default:
                 throw new CourierInvalidDataException(
                     "Data did not match any variant of ElementalNode"
@@ -370,7 +406,7 @@ public record class ElementalNode : ModelBase
     /// Calls the function parameter corresponding to the variant the instance was constructed with and
     /// returns its result.
     ///
-    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch">
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
     /// if you don't need your function parameters to return a value.</para>
     ///
     /// <exception cref="CourierInvalidDataException">
@@ -381,13 +417,14 @@ public record class ElementalNode : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (ElementalTextNodeWithType value) => {...},
-    ///     (ElementalMetaNodeWithType value) => {...},
-    ///     (ElementalChannelNodeWithType value) => {...},
-    ///     (ElementalImageNodeWithType value) => {...},
-    ///     (ElementalActionNodeWithType value) => {...},
-    ///     (ElementalDividerNodeWithType value) => {...},
-    ///     (ElementalQuoteNodeWithType value) => {...}
+    ///     (ElementalTextNodeWithType value) =&gt; {...},
+    ///     (ElementalMetaNodeWithType value) =&gt; {...},
+    ///     (ElementalChannelNodeWithType value) =&gt; {...},
+    ///     (ElementalImageNodeWithType value) =&gt; {...},
+    ///     (ElementalActionNodeWithType value) =&gt; {...},
+    ///     (ElementalDividerNodeWithType value) =&gt; {...},
+    ///     (ElementalQuoteNodeWithType value) =&gt; {...},
+    ///     (ElementalHtmlNodeWithType value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
@@ -399,7 +436,8 @@ public record class ElementalNode : ModelBase
         System::Func<ElementalImageNodeWithType, T> imageNodeWithType,
         System::Func<ElementalActionNodeWithType, T> actionNodeWithType,
         System::Func<ElementalDividerNodeWithType, T> dividerNodeWithType,
-        System::Func<ElementalQuoteNodeWithType, T> quoteNodeWithType
+        System::Func<ElementalQuoteNodeWithType, T> quoteNodeWithType,
+        System::Func<ElementalHtmlNodeWithType, T> htmlNodeWithType
     )
     {
         return this.Value switch
@@ -411,6 +449,7 @@ public record class ElementalNode : ModelBase
             ElementalActionNodeWithType value => actionNodeWithType(value),
             ElementalDividerNodeWithType value => dividerNodeWithType(value),
             ElementalQuoteNodeWithType value => quoteNodeWithType(value),
+            ElementalHtmlNodeWithType value => htmlNodeWithType(value),
             _ => throw new CourierInvalidDataException(
                 "Data did not match any variant of ElementalNode"
             ),
@@ -430,6 +469,8 @@ public record class ElementalNode : ModelBase
     public static implicit operator ElementalNode(ElementalDividerNodeWithType value) => new(value);
 
     public static implicit operator ElementalNode(ElementalQuoteNodeWithType value) => new(value);
+
+    public static implicit operator ElementalNode(ElementalHtmlNodeWithType value) => new(value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -456,7 +497,8 @@ public record class ElementalNode : ModelBase
             (imageNodeWithType) => imageNodeWithType.Validate(),
             (actionNodeWithType) => actionNodeWithType.Validate(),
             (dividerNodeWithType) => dividerNodeWithType.Validate(),
-            (quoteNodeWithType) => quoteNodeWithType.Validate()
+            (quoteNodeWithType) => quoteNodeWithType.Validate(),
+            (htmlNodeWithType) => htmlNodeWithType.Validate()
         );
     }
 
@@ -487,6 +529,7 @@ public record class ElementalNode : ModelBase
             ElementalActionNodeWithType _ => 4,
             ElementalDividerNodeWithType _ => 5,
             ElementalQuoteNodeWithType _ => 6,
+            ElementalHtmlNodeWithType _ => 7,
             _ => -1,
         };
     }
@@ -606,6 +649,23 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ElementalHtmlNodeWithType>(
                 element,
                 options
             );

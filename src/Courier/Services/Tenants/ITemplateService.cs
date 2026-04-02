@@ -63,8 +63,8 @@ public interface ITemplateService
     /// <summary>
     /// Publishes a specific version of a notification template for a tenant.
     ///
-    /// <para>The template must already exist in the tenant's notification map. If
-    /// no version is specified, defaults to publishing the "latest" version.</para>
+    /// <para>The template must already exist in the tenant's notification map. If no
+    /// version is specified, defaults to publishing the "latest" version. </para>
     /// </summary>
     Task<PostTenantTemplatePublishResponse> Publish(
         TemplatePublishParams parameters,
@@ -84,8 +84,8 @@ public interface ITemplateService
     /// <para>If the template already exists for the tenant, it will be updated (200).
     /// Otherwise, a new template is created (201).</para>
     ///
-    /// <para>Optionally publishes the template immediately if the `published` flag
-    /// is set to true.</para>
+    /// <para>Optionally publishes the template immediately if the `published` flag is
+    /// set to true. </para>
     /// </summary>
     Task<PutTenantTemplateResponse> Replace(
         TemplateReplaceParams parameters,
@@ -116,7 +116,7 @@ public interface ITemplateServiceWithRawResponse
     IVersionServiceWithRawResponse Versions { get; }
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /tenants/{tenant_id}/templates/{template_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /tenants/{tenant_id}/templates/{template_id}</c>, but is otherwise the
     /// same as <see cref="ITemplateService.Retrieve(TemplateRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<BaseTemplateTenantAssociation>> Retrieve(
@@ -132,7 +132,7 @@ public interface ITemplateServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /tenants/{tenant_id}/templates`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /tenants/{tenant_id}/templates</c>, but is otherwise the
     /// same as <see cref="ITemplateService.List(TemplateListParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<TemplateListResponse>> List(
@@ -148,7 +148,7 @@ public interface ITemplateServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /tenants/{tenant_id}/templates/{template_id}/publish`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /tenants/{tenant_id}/templates/{template_id}/publish</c>, but is otherwise the
     /// same as <see cref="ITemplateService.Publish(TemplatePublishParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<PostTenantTemplatePublishResponse>> Publish(
@@ -164,7 +164,7 @@ public interface ITemplateServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /tenants/{tenant_id}/templates/{template_id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /tenants/{tenant_id}/templates/{template_id}</c>, but is otherwise the
     /// same as <see cref="ITemplateService.Replace(TemplateReplaceParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<PutTenantTemplateResponse>> Replace(

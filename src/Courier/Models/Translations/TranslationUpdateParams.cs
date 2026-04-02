@@ -18,11 +18,7 @@ namespace Courier.Models.Translations;
 /// </summary>
 public record class TranslationUpdateParams : ParamsBase
 {
-    readonly JsonDictionary _rawBodyData = new();
-    public IReadOnlyDictionary<string, JsonElement> RawBodyData
-    {
-        get { return this._rawBodyData.Freeze(); }
-    }
+    public JsonElement RawBodyData { get; private init; }
 
     public required string Domain { get; init; }
 
@@ -32,10 +28,9 @@ public record class TranslationUpdateParams : ParamsBase
     {
         get
         {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<string>("body");
+            return WrappedJsonSerializer.GetNotNullClass<string>(this.RawBodyData, "RawBodyData");
         }
-        init { this._rawBodyData.Set("body", value); }
+        init { this.RawBodyData = JsonSerializer.SerializeToElement(value); }
     }
 
     public TranslationUpdateParams() { }
@@ -48,19 +43,19 @@ public record class TranslationUpdateParams : ParamsBase
         this.Domain = translationUpdateParams.Domain;
         this.Locale = translationUpdateParams.Locale;
 
-        this._rawBodyData = new(translationUpdateParams._rawBodyData);
+        this.RawBodyData = translationUpdateParams.RawBodyData;
     }
 #pragma warning restore CS8618
 
     public TranslationUpdateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
-        IReadOnlyDictionary<string, JsonElement> rawBodyData
+        JsonElement rawBodyData
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
-        this._rawBodyData = new(rawBodyData);
+        this.RawBodyData = rawBodyData;
     }
 
 #pragma warning disable CS8618
@@ -68,26 +63,34 @@ public record class TranslationUpdateParams : ParamsBase
     TranslationUpdateParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
-        FrozenDictionary<string, JsonElement> rawBodyData
+        JsonElement rawBodyData,
+        string domain,
+        string locale
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
-        this._rawBodyData = new(rawBodyData);
+        this.RawBodyData = rawBodyData;
+        this.Domain = domain;
+        this.Locale = locale;
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static TranslationUpdateParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
-        IReadOnlyDictionary<string, JsonElement> rawBodyData
+        JsonElement rawBodyData,
+        string domain,
+        string locale
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
             FrozenDictionary.ToFrozenDictionary(rawQueryData),
-            FrozenDictionary.ToFrozenDictionary(rawBodyData)
+            rawBodyData,
+            domain,
+            locale
         );
     }
 
@@ -104,7 +107,7 @@ public record class TranslationUpdateParams : ParamsBase
                     ["QueryData"] = FriendlyJsonPrinter.PrintValue(
                         JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
                     ),
-                    ["BodyData"] = FriendlyJsonPrinter.PrintValue(this._rawBodyData.Freeze()),
+                    ["BodyData"] = FriendlyJsonPrinter.PrintValue(this.RawBodyData),
                 }
             ),
             ModelBase.ToStringSerializerOptions
@@ -120,7 +123,7 @@ public record class TranslationUpdateParams : ParamsBase
             && (this.Locale?.Equals(other.Locale) ?? other.Locale == null)
             && this._rawHeaderData.Equals(other._rawHeaderData)
             && this._rawQueryData.Equals(other._rawQueryData)
-            && this._rawBodyData.Equals(other._rawBodyData);
+            && this.RawBodyData.Equals(other.RawBodyData);
     }
 
     public override Uri Url(ClientOptions options)

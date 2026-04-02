@@ -55,11 +55,15 @@ public interface ICourierClient : IDisposable
 
     IAudienceService Audiences { get; }
 
+    IProviderService Providers { get; }
+
     IAuditEventService AuditEvents { get; }
 
     IAuthService Auth { get; }
 
     IAutomationService Automations { get; }
+
+    IJourneyService Journeys { get; }
 
     IBrandService Brands { get; }
 
@@ -74,6 +78,8 @@ public interface ICourierClient : IDisposable
     IRequestService Requests { get; }
 
     INotificationService Notifications { get; }
+
+    IRoutingStrategyService RoutingStrategies { get; }
 
     IProfileService Profiles { get; }
 
@@ -117,11 +123,15 @@ public interface ICourierClientWithRawResponse : IDisposable
 
     IAudienceServiceWithRawResponse Audiences { get; }
 
+    IProviderServiceWithRawResponse Providers { get; }
+
     IAuditEventServiceWithRawResponse AuditEvents { get; }
 
     IAuthServiceWithRawResponse Auth { get; }
 
     IAutomationServiceWithRawResponse Automations { get; }
+
+    IJourneyServiceWithRawResponse Journeys { get; }
 
     IBrandServiceWithRawResponse Brands { get; }
 
@@ -136,6 +146,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     IRequestServiceWithRawResponse Requests { get; }
 
     INotificationServiceWithRawResponse Notifications { get; }
+
+    IRoutingStrategyServiceWithRawResponse RoutingStrategies { get; }
 
     IProfileServiceWithRawResponse Profiles { get; }
 

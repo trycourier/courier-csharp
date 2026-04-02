@@ -28,9 +28,10 @@ public interface IInvokeService
     IInvokeService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Invoke an ad hoc automation run. This endpoint accepts a JSON payload with
-    /// a series of automation steps. For information about what steps are available,
-    /// checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
+    /// Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a
+    /// series of automation steps. For information about what steps are available,
+    /// checkout the ad hoc automation guide
+    /// [here](https://www.courier.com/docs/automations/steps/).
     /// </summary>
     Task<AutomationInvokeResponse> InvokeAdHoc(
         InvokeInvokeAdHocParams parameters,
@@ -67,7 +68,7 @@ public interface IInvokeServiceWithRawResponse
     IInvokeServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /automations/invoke`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /automations/invoke</c>, but is otherwise the
     /// same as <see cref="IInvokeService.InvokeAdHoc(InvokeInvokeAdHocParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AutomationInvokeResponse>> InvokeAdHoc(
@@ -76,7 +77,7 @@ public interface IInvokeServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /automations/{templateId}/invoke`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /automations/{templateId}/invoke</c>, but is otherwise the
     /// same as <see cref="IInvokeService.InvokeByTemplate(InvokeInvokeByTemplateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AutomationInvokeResponse>> InvokeByTemplate(

@@ -101,6 +101,20 @@ public class ElementalNodeTest : TestBase
     }
 
     [Fact]
+    public void HtmlNodeWithTypeValidationWorks()
+    {
+        ElementalNode value = new ElementalHtmlNodeWithType()
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
+        };
+        value.Validate();
+    }
+
+    [Fact]
     public void TextNodeWithTypeSerializationRoundtripWorks()
     {
         ElementalNode value = new ElementalTextNodeWithType()
@@ -226,6 +240,26 @@ public class ElementalNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ElementalNode>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void HtmlNodeWithTypeSerializationRoundtripWorks()
+    {
+        ElementalNode value = new ElementalHtmlNodeWithType()
+        {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ElementalNode>(

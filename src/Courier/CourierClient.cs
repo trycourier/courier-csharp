@@ -84,6 +84,12 @@ public sealed class CourierClient : ICourierClient
         get { return _audiences.Value; }
     }
 
+    readonly Lazy<IProviderService> _providers;
+    public IProviderService Providers
+    {
+        get { return _providers.Value; }
+    }
+
     readonly Lazy<IAuditEventService> _auditEvents;
     public IAuditEventService AuditEvents
     {
@@ -100,6 +106,12 @@ public sealed class CourierClient : ICourierClient
     public IAutomationService Automations
     {
         get { return _automations.Value; }
+    }
+
+    readonly Lazy<IJourneyService> _journeys;
+    public IJourneyService Journeys
+    {
+        get { return _journeys.Value; }
     }
 
     readonly Lazy<IBrandService> _brands;
@@ -144,6 +156,12 @@ public sealed class CourierClient : ICourierClient
         get { return _notifications.Value; }
     }
 
+    readonly Lazy<IRoutingStrategyService> _routingStrategies;
+    public IRoutingStrategyService RoutingStrategies
+    {
+        get { return _routingStrategies.Value; }
+    }
+
     readonly Lazy<IProfileService> _profiles;
     public IProfileService Profiles
     {
@@ -177,9 +195,11 @@ public sealed class CourierClient : ICourierClient
         _withRawResponse = new(() => new CourierClientWithRawResponse(this._options));
         _send = new(() => new SendService(this));
         _audiences = new(() => new AudienceService(this));
+        _providers = new(() => new ProviderService(this));
         _auditEvents = new(() => new AuditEventService(this));
         _auth = new(() => new AuthService(this));
         _automations = new(() => new AutomationService(this));
+        _journeys = new(() => new JourneyService(this));
         _brands = new(() => new BrandService(this));
         _bulk = new(() => new BulkService(this));
         _inbound = new(() => new InboundService(this));
@@ -187,6 +207,7 @@ public sealed class CourierClient : ICourierClient
         _messages = new(() => new MessageService(this));
         _requests = new(() => new RequestService(this));
         _notifications = new(() => new NotificationService(this));
+        _routingStrategies = new(() => new RoutingStrategyService(this));
         _profiles = new(() => new ProfileService(this));
         _tenants = new(() => new TenantService(this));
         _translations = new(() => new TranslationService(this));
@@ -278,6 +299,12 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
         get { return _audiences.Value; }
     }
 
+    readonly Lazy<IProviderServiceWithRawResponse> _providers;
+    public IProviderServiceWithRawResponse Providers
+    {
+        get { return _providers.Value; }
+    }
+
     readonly Lazy<IAuditEventServiceWithRawResponse> _auditEvents;
     public IAuditEventServiceWithRawResponse AuditEvents
     {
@@ -294,6 +321,12 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     public IAutomationServiceWithRawResponse Automations
     {
         get { return _automations.Value; }
+    }
+
+    readonly Lazy<IJourneyServiceWithRawResponse> _journeys;
+    public IJourneyServiceWithRawResponse Journeys
+    {
+        get { return _journeys.Value; }
     }
 
     readonly Lazy<IBrandServiceWithRawResponse> _brands;
@@ -336,6 +369,12 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     public INotificationServiceWithRawResponse Notifications
     {
         get { return _notifications.Value; }
+    }
+
+    readonly Lazy<IRoutingStrategyServiceWithRawResponse> _routingStrategies;
+    public IRoutingStrategyServiceWithRawResponse RoutingStrategies
+    {
+        get { return _routingStrategies.Value; }
     }
 
     readonly Lazy<IProfileServiceWithRawResponse> _profiles;
@@ -464,7 +503,11 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     static TimeSpan ComputeRetryBackoff(int retries, HttpResponse? response)
     {
         TimeSpan? apiBackoff = ParseRetryAfterMsHeader(response) ?? ParseRetryAfterHeader(response);
-        if (apiBackoff != null && apiBackoff < TimeSpan.FromMinutes(1))
+        if (
+            apiBackoff != null
+            && apiBackoff > TimeSpan.Zero
+            && apiBackoff < TimeSpan.FromMinutes(1)
+        )
         {
             // If the API asks us to wait a certain amount of time (and it's a reasonable amount), then just
             // do what it says.
@@ -558,9 +601,11 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
 
         _send = new(() => new SendServiceWithRawResponse(this));
         _audiences = new(() => new AudienceServiceWithRawResponse(this));
+        _providers = new(() => new ProviderServiceWithRawResponse(this));
         _auditEvents = new(() => new AuditEventServiceWithRawResponse(this));
         _auth = new(() => new AuthServiceWithRawResponse(this));
         _automations = new(() => new AutomationServiceWithRawResponse(this));
+        _journeys = new(() => new JourneyServiceWithRawResponse(this));
         _brands = new(() => new BrandServiceWithRawResponse(this));
         _bulk = new(() => new BulkServiceWithRawResponse(this));
         _inbound = new(() => new InboundServiceWithRawResponse(this));
@@ -568,6 +613,7 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
         _messages = new(() => new MessageServiceWithRawResponse(this));
         _requests = new(() => new RequestServiceWithRawResponse(this));
         _notifications = new(() => new NotificationServiceWithRawResponse(this));
+        _routingStrategies = new(() => new RoutingStrategyServiceWithRawResponse(this));
         _profiles = new(() => new ProfileServiceWithRawResponse(this));
         _tenants = new(() => new TenantServiceWithRawResponse(this));
         _translations = new(() => new TranslationServiceWithRawResponse(this));

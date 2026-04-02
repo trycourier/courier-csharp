@@ -9,12 +9,17 @@ using Courier.Core;
 namespace Courier.Models.Notifications;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// List notification templates in your workspace.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public record class NotificationListParams : ParamsBase
 {
+    /// <summary>
+    /// Opaque pagination cursor from a previous response. Omit for the first page.
+    /// </summary>
     public string? Cursor
     {
         get
@@ -26,7 +31,28 @@ public record class NotificationListParams : ParamsBase
     }
 
     /// <summary>
-    /// Retrieve the notes from the Notification template settings.
+    /// Filter to templates linked to this event map ID.
+    /// </summary>
+    public string? EventID
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("event_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("event_id", value);
+        }
+    }
+
+    /// <summary>
+    /// Include template notes in the response. Only applies to legacy templates.
     /// </summary>
     public bool? Notes
     {
@@ -67,7 +93,7 @@ public record class NotificationListParams : ParamsBase
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="IFromRawJson.FromRawUnchecked"/>
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static NotificationListParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

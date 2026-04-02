@@ -68,7 +68,7 @@ public interface ITranslationServiceWithRawResponse
     ITranslationServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /translations/{domain}/{locale}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /translations/{domain}/{locale}</c>, but is otherwise the
     /// same as <see cref="ITranslationService.Retrieve(TranslationRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<string>> Retrieve(
@@ -84,7 +84,7 @@ public interface ITranslationServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `put /translations/{domain}/{locale}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /translations/{domain}/{locale}</c>, but is otherwise the
     /// same as <see cref="ITranslationService.Update(TranslationUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse> Update(

@@ -19,17 +19,17 @@ public class MessageListResponseTest : TestBase
                 new()
                 {
                     ID = "id",
-                    Clicked = 0,
-                    Delivered = 0,
                     Enqueued = 0,
                     Event = "event",
                     Notification = "notification",
-                    Opened = 0,
                     Recipient = "recipient",
-                    Sent = 0,
                     Status = Status.Canceled,
+                    Clicked = 0,
+                    Delivered = 0,
                     Error = "error",
+                    Opened = 0,
                     Reason = Reason.Bounced,
+                    Sent = 0,
                 },
             ],
         };
@@ -40,17 +40,17 @@ public class MessageListResponseTest : TestBase
             new()
             {
                 ID = "id",
-                Clicked = 0,
-                Delivered = 0,
                 Enqueued = 0,
                 Event = "event",
                 Notification = "notification",
-                Opened = 0,
                 Recipient = "recipient",
-                Sent = 0,
                 Status = Status.Canceled,
+                Clicked = 0,
+                Delivered = 0,
                 Error = "error",
+                Opened = 0,
                 Reason = Reason.Bounced,
+                Sent = 0,
             },
         ];
 
@@ -73,17 +73,17 @@ public class MessageListResponseTest : TestBase
                 new()
                 {
                     ID = "id",
-                    Clicked = 0,
-                    Delivered = 0,
                     Enqueued = 0,
                     Event = "event",
                     Notification = "notification",
-                    Opened = 0,
                     Recipient = "recipient",
-                    Sent = 0,
                     Status = Status.Canceled,
+                    Clicked = 0,
+                    Delivered = 0,
                     Error = "error",
+                    Opened = 0,
                     Reason = Reason.Bounced,
+                    Sent = 0,
                 },
             ],
         };
@@ -108,17 +108,17 @@ public class MessageListResponseTest : TestBase
                 new()
                 {
                     ID = "id",
-                    Clicked = 0,
-                    Delivered = 0,
                     Enqueued = 0,
                     Event = "event",
                     Notification = "notification",
-                    Opened = 0,
                     Recipient = "recipient",
-                    Sent = 0,
                     Status = Status.Canceled,
+                    Clicked = 0,
+                    Delivered = 0,
                     Error = "error",
+                    Opened = 0,
                     Reason = Reason.Bounced,
+                    Sent = 0,
                 },
             ],
         };
@@ -136,17 +136,17 @@ public class MessageListResponseTest : TestBase
             new()
             {
                 ID = "id",
-                Clicked = 0,
-                Delivered = 0,
                 Enqueued = 0,
                 Event = "event",
                 Notification = "notification",
-                Opened = 0,
                 Recipient = "recipient",
-                Sent = 0,
                 Status = Status.Canceled,
+                Clicked = 0,
+                Delivered = 0,
                 Error = "error",
+                Opened = 0,
                 Reason = Reason.Bounced,
+                Sent = 0,
             },
         ];
 
@@ -169,17 +169,17 @@ public class MessageListResponseTest : TestBase
                 new()
                 {
                     ID = "id",
-                    Clicked = 0,
-                    Delivered = 0,
                     Enqueued = 0,
                     Event = "event",
                     Notification = "notification",
-                    Opened = 0,
                     Recipient = "recipient",
-                    Sent = 0,
                     Status = Status.Canceled,
+                    Clicked = 0,
+                    Delivered = 0,
                     Error = "error",
+                    Opened = 0,
                     Reason = Reason.Bounced,
+                    Sent = 0,
                 },
             ],
         };
@@ -198,17 +198,17 @@ public class MessageListResponseTest : TestBase
                 new()
                 {
                     ID = "id",
-                    Clicked = 0,
-                    Delivered = 0,
                     Enqueued = 0,
                     Event = "event",
                     Notification = "notification",
-                    Opened = 0,
                     Recipient = "recipient",
-                    Sent = 0,
                     Status = Status.Canceled,
+                    Clicked = 0,
+                    Delivered = 0,
                     Error = "error",
+                    Opened = 0,
                     Reason = Reason.Bounced,
+                    Sent = 0,
                 },
             ],
         };

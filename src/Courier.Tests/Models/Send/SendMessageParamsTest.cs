@@ -18,7 +18,7 @@ public class SendMessageParamsTest : TestBase
             Message = new()
             {
                 BrandID = "brand_id",
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Models::Channel>()
                 {
                     {
                         "foo",
@@ -42,7 +42,7 @@ public class SendMessageParamsTest : TestBase
                                 { "foo", JsonSerializer.SerializeToElement("bar") },
                             },
                             Providers = ["string"],
-                            RoutingMethod = RoutingMethod.All,
+                            RoutingMethod = Models::RoutingMethod.All,
                             Timeouts = new() { Channel = 0, Provider = 0 },
                         }
                     },
@@ -75,7 +75,7 @@ public class SendMessageParamsTest : TestBase
                     },
                 },
                 Preferences = new("subscription_topic_id"),
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, Models::MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -168,7 +168,7 @@ public class SendMessageParamsTest : TestBase
         Message expectedMessage = new()
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -192,7 +192,7 @@ public class SendMessageParamsTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -225,7 +225,7 @@ public class SendMessageParamsTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -325,7 +325,7 @@ public class SendMessageParamsTest : TestBase
             Message = new()
             {
                 BrandID = "brand_id",
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Models::Channel>()
                 {
                     {
                         "foo",
@@ -349,7 +349,7 @@ public class SendMessageParamsTest : TestBase
                                 { "foo", JsonSerializer.SerializeToElement("bar") },
                             },
                             Providers = ["string"],
-                            RoutingMethod = RoutingMethod.All,
+                            RoutingMethod = Models::RoutingMethod.All,
                             Timeouts = new() { Channel = 0, Provider = 0 },
                         }
                     },
@@ -382,7 +382,7 @@ public class SendMessageParamsTest : TestBase
                     },
                 },
                 Preferences = new("subscription_topic_id"),
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, Models::MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -485,7 +485,7 @@ public class SendMessageParamsTest : TestBase
             Message = new()
             {
                 BrandID = "brand_id",
-                Channels = new Dictionary<string, ChannelsItem>()
+                Channels = new Dictionary<string, Models::Channel>()
                 {
                     {
                         "foo",
@@ -509,7 +509,7 @@ public class SendMessageParamsTest : TestBase
                                 { "foo", JsonSerializer.SerializeToElement("bar") },
                             },
                             Providers = ["string"],
-                            RoutingMethod = RoutingMethod.All,
+                            RoutingMethod = Models::RoutingMethod.All,
                             Timeouts = new() { Channel = 0, Provider = 0 },
                         }
                     },
@@ -542,7 +542,7 @@ public class SendMessageParamsTest : TestBase
                     },
                 },
                 Preferences = new("subscription_topic_id"),
-                Providers = new Dictionary<string, ProvidersItem>()
+                Providers = new Dictionary<string, Models::MessageProvidersType>()
                 {
                     {
                         "foo",
@@ -646,7 +646,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -670,7 +670,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -703,7 +703,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -793,7 +793,7 @@ public class MessageTest : TestBase
         };
 
         string expectedBrandID = "brand_id";
-        Dictionary<string, ChannelsItem> expectedChannels = new()
+        Dictionary<string, Models::Channel> expectedChannels = new()
         {
             {
                 "foo",
@@ -817,7 +817,7 @@ public class MessageTest : TestBase
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
                     Providers = ["string"],
-                    RoutingMethod = RoutingMethod.All,
+                    RoutingMethod = Models::RoutingMethod.All,
                     Timeouts = new() { Channel = 0, Provider = 0 },
                 }
             },
@@ -839,7 +839,7 @@ public class MessageTest : TestBase
             Until = "until",
         };
         Expiry expectedExpiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" };
-        MessageMetadata expectedMetadata = new()
+        Metadata expectedMetadata = new()
         {
             Event = "event",
             Tags = ["string"],
@@ -854,7 +854,7 @@ public class MessageTest : TestBase
             },
         };
         Preferences expectedPreferences = new("subscription_topic_id");
-        Dictionary<string, ProvidersItem> expectedProviders = new()
+        Dictionary<string, Models::MessageProvidersType> expectedProviders = new()
         {
             {
                 "foo",
@@ -979,7 +979,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -1003,7 +1003,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -1036,7 +1036,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -1137,7 +1137,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -1161,7 +1161,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -1194,7 +1194,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -1291,7 +1291,7 @@ public class MessageTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedBrandID = "brand_id";
-        Dictionary<string, ChannelsItem> expectedChannels = new()
+        Dictionary<string, Models::Channel> expectedChannels = new()
         {
             {
                 "foo",
@@ -1315,7 +1315,7 @@ public class MessageTest : TestBase
                         { "foo", JsonSerializer.SerializeToElement("bar") },
                     },
                     Providers = ["string"],
-                    RoutingMethod = RoutingMethod.All,
+                    RoutingMethod = Models::RoutingMethod.All,
                     Timeouts = new() { Channel = 0, Provider = 0 },
                 }
             },
@@ -1337,7 +1337,7 @@ public class MessageTest : TestBase
             Until = "until",
         };
         Expiry expectedExpiry = new() { ExpiresIn = "string", ExpiresAt = "expires_at" };
-        MessageMetadata expectedMetadata = new()
+        Metadata expectedMetadata = new()
         {
             Event = "event",
             Tags = ["string"],
@@ -1352,7 +1352,7 @@ public class MessageTest : TestBase
             },
         };
         Preferences expectedPreferences = new("subscription_topic_id");
-        Dictionary<string, ProvidersItem> expectedProviders = new()
+        Dictionary<string, Models::MessageProvidersType> expectedProviders = new()
         {
             {
                 "foo",
@@ -1477,7 +1477,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -1501,7 +1501,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -1534,7 +1534,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -1632,7 +1632,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -1656,7 +1656,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -1688,7 +1688,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -1787,7 +1787,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -1811,7 +1811,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -1843,7 +1843,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -1941,7 +1941,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -1965,7 +1965,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -1997,7 +1997,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -2099,7 +2099,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -2123,7 +2123,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -2155,7 +2155,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -2378,7 +2378,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             BrandID = "brand_id",
-            Channels = new Dictionary<string, ChannelsItem>()
+            Channels = new Dictionary<string, Models::Channel>()
             {
                 {
                     "foo",
@@ -2402,7 +2402,7 @@ public class MessageTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                         Providers = ["string"],
-                        RoutingMethod = RoutingMethod.All,
+                        RoutingMethod = Models::RoutingMethod.All,
                         Timeouts = new() { Channel = 0, Provider = 0 },
                     }
                 },
@@ -2435,7 +2435,7 @@ public class MessageTest : TestBase
                 },
             },
             Preferences = new("subscription_topic_id"),
-            Providers = new Dictionary<string, ProvidersItem>()
+            Providers = new Dictionary<string, Models::MessageProvidersType>()
             {
                 {
                     "foo",
@@ -2525,644 +2525,6 @@ public class MessageTest : TestBase
         };
 
         Message copied = new(model);
-
-        Assert.Equal(model, copied);
-    }
-}
-
-public class ChannelsItemTest : TestBase
-{
-    [Fact]
-    public void FieldRoundtrip_Works()
-    {
-        var model = new ChannelsItem
-        {
-            BrandID = "brand_id",
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Providers = ["string"],
-            RoutingMethod = RoutingMethod.All,
-            Timeouts = new() { Channel = 0, Provider = 0 },
-        };
-
-        string expectedBrandID = "brand_id";
-        string expectedIf = "if";
-        Metadata expectedMetadata = new()
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-        Dictionary<string, JsonElement> expectedOverride = new()
-        {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
-        };
-        List<string> expectedProviders = ["string"];
-        ApiEnum<string, RoutingMethod> expectedRoutingMethod = RoutingMethod.All;
-        Timeouts expectedTimeouts = new() { Channel = 0, Provider = 0 };
-
-        Assert.Equal(expectedBrandID, model.BrandID);
-        Assert.Equal(expectedIf, model.If);
-        Assert.Equal(expectedMetadata, model.Metadata);
-        Assert.NotNull(model.Override);
-        Assert.Equal(expectedOverride.Count, model.Override.Count);
-        foreach (var item in expectedOverride)
-        {
-            Assert.True(model.Override.TryGetValue(item.Key, out var value));
-
-            Assert.True(JsonElement.DeepEquals(value, model.Override[item.Key]));
-        }
-        Assert.NotNull(model.Providers);
-        Assert.Equal(expectedProviders.Count, model.Providers.Count);
-        for (int i = 0; i < expectedProviders.Count; i++)
-        {
-            Assert.Equal(expectedProviders[i], model.Providers[i]);
-        }
-        Assert.Equal(expectedRoutingMethod, model.RoutingMethod);
-        Assert.Equal(expectedTimeouts, model.Timeouts);
-    }
-
-    [Fact]
-    public void SerializationRoundtrip_Works()
-    {
-        var model = new ChannelsItem
-        {
-            BrandID = "brand_id",
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Providers = ["string"],
-            RoutingMethod = RoutingMethod.All,
-            Timeouts = new() { Channel = 0, Provider = 0 },
-        };
-
-        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ChannelsItem>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(model, deserialized);
-    }
-
-    [Fact]
-    public void FieldRoundtripThroughSerialization_Works()
-    {
-        var model = new ChannelsItem
-        {
-            BrandID = "brand_id",
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Providers = ["string"],
-            RoutingMethod = RoutingMethod.All,
-            Timeouts = new() { Channel = 0, Provider = 0 },
-        };
-
-        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ChannelsItem>(
-            element,
-            ModelBase.SerializerOptions
-        );
-        Assert.NotNull(deserialized);
-
-        string expectedBrandID = "brand_id";
-        string expectedIf = "if";
-        Metadata expectedMetadata = new()
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-        Dictionary<string, JsonElement> expectedOverride = new()
-        {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
-        };
-        List<string> expectedProviders = ["string"];
-        ApiEnum<string, RoutingMethod> expectedRoutingMethod = RoutingMethod.All;
-        Timeouts expectedTimeouts = new() { Channel = 0, Provider = 0 };
-
-        Assert.Equal(expectedBrandID, deserialized.BrandID);
-        Assert.Equal(expectedIf, deserialized.If);
-        Assert.Equal(expectedMetadata, deserialized.Metadata);
-        Assert.NotNull(deserialized.Override);
-        Assert.Equal(expectedOverride.Count, deserialized.Override.Count);
-        foreach (var item in expectedOverride)
-        {
-            Assert.True(deserialized.Override.TryGetValue(item.Key, out var value));
-
-            Assert.True(JsonElement.DeepEquals(value, deserialized.Override[item.Key]));
-        }
-        Assert.NotNull(deserialized.Providers);
-        Assert.Equal(expectedProviders.Count, deserialized.Providers.Count);
-        for (int i = 0; i < expectedProviders.Count; i++)
-        {
-            Assert.Equal(expectedProviders[i], deserialized.Providers[i]);
-        }
-        Assert.Equal(expectedRoutingMethod, deserialized.RoutingMethod);
-        Assert.Equal(expectedTimeouts, deserialized.Timeouts);
-    }
-
-    [Fact]
-    public void Validation_Works()
-    {
-        var model = new ChannelsItem
-        {
-            BrandID = "brand_id",
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Providers = ["string"],
-            RoutingMethod = RoutingMethod.All,
-            Timeouts = new() { Channel = 0, Provider = 0 },
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new ChannelsItem { };
-
-        Assert.Null(model.BrandID);
-        Assert.False(model.RawData.ContainsKey("brand_id"));
-        Assert.Null(model.If);
-        Assert.False(model.RawData.ContainsKey("if"));
-        Assert.Null(model.Metadata);
-        Assert.False(model.RawData.ContainsKey("metadata"));
-        Assert.Null(model.Override);
-        Assert.False(model.RawData.ContainsKey("override"));
-        Assert.Null(model.Providers);
-        Assert.False(model.RawData.ContainsKey("providers"));
-        Assert.Null(model.RoutingMethod);
-        Assert.False(model.RawData.ContainsKey("routing_method"));
-        Assert.Null(model.Timeouts);
-        Assert.False(model.RawData.ContainsKey("timeouts"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new ChannelsItem { };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
-    {
-        var model = new ChannelsItem
-        {
-            BrandID = null,
-            If = null,
-            Metadata = null,
-            Override = null,
-            Providers = null,
-            RoutingMethod = null,
-            Timeouts = null,
-        };
-
-        Assert.Null(model.BrandID);
-        Assert.True(model.RawData.ContainsKey("brand_id"));
-        Assert.Null(model.If);
-        Assert.True(model.RawData.ContainsKey("if"));
-        Assert.Null(model.Metadata);
-        Assert.True(model.RawData.ContainsKey("metadata"));
-        Assert.Null(model.Override);
-        Assert.True(model.RawData.ContainsKey("override"));
-        Assert.Null(model.Providers);
-        Assert.True(model.RawData.ContainsKey("providers"));
-        Assert.Null(model.RoutingMethod);
-        Assert.True(model.RawData.ContainsKey("routing_method"));
-        Assert.Null(model.Timeouts);
-        Assert.True(model.RawData.ContainsKey("timeouts"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new ChannelsItem
-        {
-            BrandID = null,
-            If = null,
-            Metadata = null,
-            Override = null,
-            Providers = null,
-            RoutingMethod = null,
-            Timeouts = null,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void CopyConstructor_Works()
-    {
-        var model = new ChannelsItem
-        {
-            BrandID = "brand_id",
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Providers = ["string"],
-            RoutingMethod = RoutingMethod.All,
-            Timeouts = new() { Channel = 0, Provider = 0 },
-        };
-
-        ChannelsItem copied = new(model);
-
-        Assert.Equal(model, copied);
-    }
-}
-
-public class MetadataTest : TestBase
-{
-    [Fact]
-    public void FieldRoundtrip_Works()
-    {
-        var model = new Metadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        Models::Utm expectedUtm = new()
-        {
-            Campaign = "campaign",
-            Content = "content",
-            Medium = "medium",
-            Source = "source",
-            Term = "term",
-        };
-
-        Assert.Equal(expectedUtm, model.Utm);
-    }
-
-    [Fact]
-    public void SerializationRoundtrip_Works()
-    {
-        var model = new Metadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Metadata>(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(model, deserialized);
-    }
-
-    [Fact]
-    public void FieldRoundtripThroughSerialization_Works()
-    {
-        var model = new Metadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Metadata>(
-            element,
-            ModelBase.SerializerOptions
-        );
-        Assert.NotNull(deserialized);
-
-        Models::Utm expectedUtm = new()
-        {
-            Campaign = "campaign",
-            Content = "content",
-            Medium = "medium",
-            Source = "source",
-            Term = "term",
-        };
-
-        Assert.Equal(expectedUtm, deserialized.Utm);
-    }
-
-    [Fact]
-    public void Validation_Works()
-    {
-        var model = new Metadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new Metadata { };
-
-        Assert.Null(model.Utm);
-        Assert.False(model.RawData.ContainsKey("utm"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new Metadata { };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
-    {
-        var model = new Metadata { Utm = null };
-
-        Assert.Null(model.Utm);
-        Assert.True(model.RawData.ContainsKey("utm"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new Metadata { Utm = null };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void CopyConstructor_Works()
-    {
-        var model = new Metadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        Metadata copied = new(model);
-
-        Assert.Equal(model, copied);
-    }
-}
-
-public class RoutingMethodTest : TestBase
-{
-    [Theory]
-    [InlineData(RoutingMethod.All)]
-    [InlineData(RoutingMethod.Single)]
-    public void Validation_Works(RoutingMethod rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, RoutingMethod> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(RoutingMethod.All)]
-    [InlineData(RoutingMethod.Single)]
-    public void SerializationRoundtrip_Works(RoutingMethod rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, RoutingMethod> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, RoutingMethod>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class TimeoutsTest : TestBase
-{
-    [Fact]
-    public void FieldRoundtrip_Works()
-    {
-        var model = new Timeouts { Channel = 0, Provider = 0 };
-
-        long expectedChannel = 0;
-        long expectedProvider = 0;
-
-        Assert.Equal(expectedChannel, model.Channel);
-        Assert.Equal(expectedProvider, model.Provider);
-    }
-
-    [Fact]
-    public void SerializationRoundtrip_Works()
-    {
-        var model = new Timeouts { Channel = 0, Provider = 0 };
-
-        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Timeouts>(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(model, deserialized);
-    }
-
-    [Fact]
-    public void FieldRoundtripThroughSerialization_Works()
-    {
-        var model = new Timeouts { Channel = 0, Provider = 0 };
-
-        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Timeouts>(
-            element,
-            ModelBase.SerializerOptions
-        );
-        Assert.NotNull(deserialized);
-
-        long expectedChannel = 0;
-        long expectedProvider = 0;
-
-        Assert.Equal(expectedChannel, deserialized.Channel);
-        Assert.Equal(expectedProvider, deserialized.Provider);
-    }
-
-    [Fact]
-    public void Validation_Works()
-    {
-        var model = new Timeouts { Channel = 0, Provider = 0 };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new Timeouts { };
-
-        Assert.Null(model.Channel);
-        Assert.False(model.RawData.ContainsKey("channel"));
-        Assert.Null(model.Provider);
-        Assert.False(model.RawData.ContainsKey("provider"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new Timeouts { };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
-    {
-        var model = new Timeouts { Channel = null, Provider = null };
-
-        Assert.Null(model.Channel);
-        Assert.True(model.RawData.ContainsKey("channel"));
-        Assert.Null(model.Provider);
-        Assert.True(model.RawData.ContainsKey("provider"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new Timeouts { Channel = null, Provider = null };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void CopyConstructor_Works()
-    {
-        var model = new Timeouts { Channel = 0, Provider = 0 };
-
-        Timeouts copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -3527,12 +2889,12 @@ public class ExpiresInTest : TestBase
     }
 }
 
-public class MessageMetadataTest : TestBase
+public class MetadataTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new MessageMetadata
+        var model = new Metadata
         {
             Event = "event",
             Tags = ["string"],
@@ -3573,7 +2935,7 @@ public class MessageMetadataTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new MessageMetadata
+        var model = new Metadata
         {
             Event = "event",
             Tags = ["string"],
@@ -3589,10 +2951,7 @@ public class MessageMetadataTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<MessageMetadata>(
-            json,
-            ModelBase.SerializerOptions
-        );
+        var deserialized = JsonSerializer.Deserialize<Metadata>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -3600,7 +2959,7 @@ public class MessageMetadataTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new MessageMetadata
+        var model = new Metadata
         {
             Event = "event",
             Tags = ["string"],
@@ -3616,7 +2975,7 @@ public class MessageMetadataTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<MessageMetadata>(
+        var deserialized = JsonSerializer.Deserialize<Metadata>(
             element,
             ModelBase.SerializerOptions
         );
@@ -3648,7 +3007,7 @@ public class MessageMetadataTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new MessageMetadata
+        var model = new Metadata
         {
             Event = "event",
             Tags = ["string"],
@@ -3669,7 +3028,7 @@ public class MessageMetadataTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new MessageMetadata { };
+        var model = new Metadata { };
 
         Assert.Null(model.Event);
         Assert.False(model.RawData.ContainsKey("event"));
@@ -3684,7 +3043,7 @@ public class MessageMetadataTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new MessageMetadata { };
+        var model = new Metadata { };
 
         model.Validate();
     }
@@ -3692,7 +3051,7 @@ public class MessageMetadataTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new MessageMetadata
+        var model = new Metadata
         {
             Event = null,
             Tags = null,
@@ -3713,7 +3072,7 @@ public class MessageMetadataTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new MessageMetadata
+        var model = new Metadata
         {
             Event = null,
             Tags = null,
@@ -3727,7 +3086,7 @@ public class MessageMetadataTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new MessageMetadata
+        var model = new Metadata
         {
             Event = "event",
             Tags = ["string"],
@@ -3742,7 +3101,7 @@ public class MessageMetadataTest : TestBase
             },
         };
 
-        MessageMetadata copied = new(model);
+        Metadata copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -3805,433 +3164,6 @@ public class PreferencesTest : TestBase
         var model = new Preferences { SubscriptionTopicID = "subscription_topic_id" };
 
         Preferences copied = new(model);
-
-        Assert.Equal(model, copied);
-    }
-}
-
-public class ProvidersItemTest : TestBase
-{
-    [Fact]
-    public void FieldRoundtrip_Works()
-    {
-        var model = new ProvidersItem
-        {
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Timeouts = 0,
-        };
-
-        string expectedIf = "if";
-        ProvidersItemMetadata expectedMetadata = new()
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-        Dictionary<string, JsonElement> expectedOverride = new()
-        {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
-        };
-        long expectedTimeouts = 0;
-
-        Assert.Equal(expectedIf, model.If);
-        Assert.Equal(expectedMetadata, model.Metadata);
-        Assert.NotNull(model.Override);
-        Assert.Equal(expectedOverride.Count, model.Override.Count);
-        foreach (var item in expectedOverride)
-        {
-            Assert.True(model.Override.TryGetValue(item.Key, out var value));
-
-            Assert.True(JsonElement.DeepEquals(value, model.Override[item.Key]));
-        }
-        Assert.Equal(expectedTimeouts, model.Timeouts);
-    }
-
-    [Fact]
-    public void SerializationRoundtrip_Works()
-    {
-        var model = new ProvidersItem
-        {
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Timeouts = 0,
-        };
-
-        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItem>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(model, deserialized);
-    }
-
-    [Fact]
-    public void FieldRoundtripThroughSerialization_Works()
-    {
-        var model = new ProvidersItem
-        {
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Timeouts = 0,
-        };
-
-        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItem>(
-            element,
-            ModelBase.SerializerOptions
-        );
-        Assert.NotNull(deserialized);
-
-        string expectedIf = "if";
-        ProvidersItemMetadata expectedMetadata = new()
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-        Dictionary<string, JsonElement> expectedOverride = new()
-        {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
-        };
-        long expectedTimeouts = 0;
-
-        Assert.Equal(expectedIf, deserialized.If);
-        Assert.Equal(expectedMetadata, deserialized.Metadata);
-        Assert.NotNull(deserialized.Override);
-        Assert.Equal(expectedOverride.Count, deserialized.Override.Count);
-        foreach (var item in expectedOverride)
-        {
-            Assert.True(deserialized.Override.TryGetValue(item.Key, out var value));
-
-            Assert.True(JsonElement.DeepEquals(value, deserialized.Override[item.Key]));
-        }
-        Assert.Equal(expectedTimeouts, deserialized.Timeouts);
-    }
-
-    [Fact]
-    public void Validation_Works()
-    {
-        var model = new ProvidersItem
-        {
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Timeouts = 0,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new ProvidersItem { };
-
-        Assert.Null(model.If);
-        Assert.False(model.RawData.ContainsKey("if"));
-        Assert.Null(model.Metadata);
-        Assert.False(model.RawData.ContainsKey("metadata"));
-        Assert.Null(model.Override);
-        Assert.False(model.RawData.ContainsKey("override"));
-        Assert.Null(model.Timeouts);
-        Assert.False(model.RawData.ContainsKey("timeouts"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new ProvidersItem { };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
-    {
-        var model = new ProvidersItem
-        {
-            If = null,
-            Metadata = null,
-            Override = null,
-            Timeouts = null,
-        };
-
-        Assert.Null(model.If);
-        Assert.True(model.RawData.ContainsKey("if"));
-        Assert.Null(model.Metadata);
-        Assert.True(model.RawData.ContainsKey("metadata"));
-        Assert.Null(model.Override);
-        Assert.True(model.RawData.ContainsKey("override"));
-        Assert.Null(model.Timeouts);
-        Assert.True(model.RawData.ContainsKey("timeouts"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new ProvidersItem
-        {
-            If = null,
-            Metadata = null,
-            Override = null,
-            Timeouts = null,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void CopyConstructor_Works()
-    {
-        var model = new ProvidersItem
-        {
-            If = "if",
-            Metadata = new()
-            {
-                Utm = new()
-                {
-                    Campaign = "campaign",
-                    Content = "content",
-                    Medium = "medium",
-                    Source = "source",
-                    Term = "term",
-                },
-            },
-            Override = new Dictionary<string, JsonElement>()
-            {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
-            },
-            Timeouts = 0,
-        };
-
-        ProvidersItem copied = new(model);
-
-        Assert.Equal(model, copied);
-    }
-}
-
-public class ProvidersItemMetadataTest : TestBase
-{
-    [Fact]
-    public void FieldRoundtrip_Works()
-    {
-        var model = new ProvidersItemMetadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        Models::Utm expectedUtm = new()
-        {
-            Campaign = "campaign",
-            Content = "content",
-            Medium = "medium",
-            Source = "source",
-            Term = "term",
-        };
-
-        Assert.Equal(expectedUtm, model.Utm);
-    }
-
-    [Fact]
-    public void SerializationRoundtrip_Works()
-    {
-        var model = new ProvidersItemMetadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItemMetadata>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(model, deserialized);
-    }
-
-    [Fact]
-    public void FieldRoundtripThroughSerialization_Works()
-    {
-        var model = new ProvidersItemMetadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ProvidersItemMetadata>(
-            element,
-            ModelBase.SerializerOptions
-        );
-        Assert.NotNull(deserialized);
-
-        Models::Utm expectedUtm = new()
-        {
-            Campaign = "campaign",
-            Content = "content",
-            Medium = "medium",
-            Source = "source",
-            Term = "term",
-        };
-
-        Assert.Equal(expectedUtm, deserialized.Utm);
-    }
-
-    [Fact]
-    public void Validation_Works()
-    {
-        var model = new ProvidersItemMetadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new ProvidersItemMetadata { };
-
-        Assert.Null(model.Utm);
-        Assert.False(model.RawData.ContainsKey("utm"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new ProvidersItemMetadata { };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
-    {
-        var model = new ProvidersItemMetadata { Utm = null };
-
-        Assert.Null(model.Utm);
-        Assert.True(model.RawData.ContainsKey("utm"));
-    }
-
-    [Fact]
-    public void OptionalNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new ProvidersItemMetadata { Utm = null };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void CopyConstructor_Works()
-    {
-        var model = new ProvidersItemMetadata
-        {
-            Utm = new()
-            {
-                Campaign = "campaign",
-                Content = "content",
-                Medium = "medium",
-                Source = "source",
-                Term = "term",
-            },
-        };
-
-        ProvidersItemMetadata copied = new(model);
 
         Assert.Equal(model, copied);
     }

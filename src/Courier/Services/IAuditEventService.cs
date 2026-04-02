@@ -64,7 +64,7 @@ public interface IAuditEventServiceWithRawResponse
     IAuditEventServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /audit-events/{audit-event-id}`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /audit-events/{audit-event-id}</c>, but is otherwise the
     /// same as <see cref="IAuditEventService.Retrieve(AuditEventRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AuditEvent>> Retrieve(
@@ -80,7 +80,7 @@ public interface IAuditEventServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /audit-events`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /audit-events</c>, but is otherwise the
     /// same as <see cref="IAuditEventService.List(AuditEventListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<AuditEventListResponse>> List(

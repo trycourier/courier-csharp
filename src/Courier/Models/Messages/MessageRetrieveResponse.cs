@@ -27,34 +27,6 @@ public sealed record class MessageRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// A UTC timestamp at which the recipient clicked on a tracked link for the
-    /// first time. Stored as a millisecond representation of the Unix epoch.
-    /// </summary>
-    public required long Clicked
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<long>("clicked");
-        }
-        init { this._rawData.Set("clicked", value); }
-    }
-
-    /// <summary>
-    /// A UTC timestamp at which the Integration provider delivered the message. Stored
-    /// as a millisecond representation of the Unix epoch.
-    /// </summary>
-    public required long Delivered
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<long>("delivered");
-        }
-        init { this._rawData.Set("delivered", value); }
-    }
-
-    /// <summary>
     /// A UTC timestamp at which Courier received the message request. Stored as
     /// a millisecond representation of the Unix epoch.
     /// </summary>
@@ -95,20 +67,6 @@ public sealed record class MessageRetrieveResponse : JsonModel
     }
 
     /// <summary>
-    /// A UTC timestamp at which the recipient opened a message for the first time.
-    /// Stored as a millisecond representation of the Unix epoch.
-    /// </summary>
-    public required long Opened
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<long>("opened");
-        }
-        init { this._rawData.Set("opened", value); }
-    }
-
-    /// <summary>
     /// A unique identifier associated with the recipient of the delivered message.
     /// </summary>
     public required string Recipient
@@ -119,20 +77,6 @@ public sealed record class MessageRetrieveResponse : JsonModel
             return this._rawData.GetNotNullClass<string>("recipient");
         }
         init { this._rawData.Set("recipient", value); }
-    }
-
-    /// <summary>
-    /// A UTC timestamp at which Courier passed the message to the Integration provider.
-    /// Stored as a millisecond representation of the Unix epoch.
-    /// </summary>
-    public required long Sent
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<long>("sent");
-        }
-        init { this._rawData.Set("sent", value); }
     }
 
     /// <summary>
@@ -149,6 +93,50 @@ public sealed record class MessageRetrieveResponse : JsonModel
     }
 
     /// <summary>
+    /// A UTC timestamp at which the recipient clicked on a tracked link for the
+    /// first time. Stored as a millisecond representation of the Unix epoch.
+    /// </summary>
+    public long? Clicked
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("clicked");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("clicked", value);
+        }
+    }
+
+    /// <summary>
+    /// A UTC timestamp at which the Integration provider delivered the message. Stored
+    /// as a millisecond representation of the Unix epoch.
+    /// </summary>
+    public long? Delivered
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("delivered");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("delivered", value);
+        }
+    }
+
+    /// <summary>
     /// A message describing the error that occurred.
     /// </summary>
     public string? Error
@@ -162,6 +150,28 @@ public sealed record class MessageRetrieveResponse : JsonModel
     }
 
     /// <summary>
+    /// A UTC timestamp at which the recipient opened a message for the first time.
+    /// Stored as a millisecond representation of the Unix epoch.
+    /// </summary>
+    public long? Opened
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("opened");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("opened", value);
+        }
+    }
+
+    /// <summary>
     /// The reason for the current status of the message.
     /// </summary>
     public ApiEnum<string, Reason>? Reason
@@ -172,6 +182,28 @@ public sealed record class MessageRetrieveResponse : JsonModel
             return this._rawData.GetNullableClass<ApiEnum<string, Reason>>("reason");
         }
         init { this._rawData.Set("reason", value); }
+    }
+
+    /// <summary>
+    /// A UTC timestamp at which Courier passed the message to the Integration provider.
+    /// Stored as a millisecond representation of the Unix epoch.
+    /// </summary>
+    public long? Sent
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("sent");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("sent", value);
+        }
     }
 
     public IReadOnlyList<IReadOnlyDictionary<string, JsonElement>>? Providers
@@ -205,34 +237,34 @@ public sealed record class MessageRetrieveResponse : JsonModel
         new()
         {
             ID = messageRetrieveResponse.ID,
-            Clicked = messageRetrieveResponse.Clicked,
-            Delivered = messageRetrieveResponse.Delivered,
             Enqueued = messageRetrieveResponse.Enqueued,
             Event = messageRetrieveResponse.Event,
             Notification = messageRetrieveResponse.Notification,
-            Opened = messageRetrieveResponse.Opened,
             Recipient = messageRetrieveResponse.Recipient,
-            Sent = messageRetrieveResponse.Sent,
             Status = messageRetrieveResponse.Status,
+            Clicked = messageRetrieveResponse.Clicked,
+            Delivered = messageRetrieveResponse.Delivered,
             Error = messageRetrieveResponse.Error,
+            Opened = messageRetrieveResponse.Opened,
             Reason = messageRetrieveResponse.Reason,
+            Sent = messageRetrieveResponse.Sent,
         };
 
     /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
-        _ = this.Clicked;
-        _ = this.Delivered;
         _ = this.Enqueued;
         _ = this.Event;
         _ = this.Notification;
-        _ = this.Opened;
         _ = this.Recipient;
-        _ = this.Sent;
         this.Status.Validate();
+        _ = this.Clicked;
+        _ = this.Delivered;
         _ = this.Error;
+        _ = this.Opened;
         this.Reason?.Validate();
+        _ = this.Sent;
         _ = this.Providers;
     }
 

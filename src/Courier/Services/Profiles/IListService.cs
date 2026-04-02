@@ -57,8 +57,8 @@ public interface IListService
     );
 
     /// <summary>
-    /// Subscribes the given user to one or more lists. If the list does not exist,
-    /// it will be created.
+    /// Subscribes the given user to one or more lists. If the list does not exist, it
+    /// will be created.
     /// </summary>
     Task<ListSubscribeResponse> Subscribe(
         ListSubscribeParams parameters,
@@ -87,7 +87,7 @@ public interface IListServiceWithRawResponse
     IListServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a raw HTTP response for `get /profiles/{user_id}/lists`, but is otherwise the
+    /// Returns a raw HTTP response for <c>get /profiles/{user_id}/lists</c>, but is otherwise the
     /// same as <see cref="IListService.Retrieve(ListRetrieveParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ListRetrieveResponse>> Retrieve(
@@ -103,7 +103,7 @@ public interface IListServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `delete /profiles/{user_id}/lists`, but is otherwise the
+    /// Returns a raw HTTP response for <c>delete /profiles/{user_id}/lists</c>, but is otherwise the
     /// same as <see cref="IListService.Delete(ListDeleteParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ListDeleteResponse>> Delete(
@@ -119,7 +119,7 @@ public interface IListServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for `post /profiles/{user_id}/lists`, but is otherwise the
+    /// Returns a raw HTTP response for <c>post /profiles/{user_id}/lists</c>, but is otherwise the
     /// same as <see cref="IListService.Subscribe(ListSubscribeParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<ListSubscribeResponse>> Subscribe(

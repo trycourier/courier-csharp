@@ -74,12 +74,7 @@ public class TokenServiceTest : TestBase
     {
         await this.client.Users.Tokens.AddSingle(
             "token",
-            new()
-            {
-                UserID = "user_id",
-                TokenValue = "token",
-                ProviderKey = ProviderKey.FirebaseFcm,
-            },
+            new() { UserID = "user_id", ProviderKey = ProviderKey.FirebaseFcm },
             TestContext.Current.CancellationToken
         );
     }
