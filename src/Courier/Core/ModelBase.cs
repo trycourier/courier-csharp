@@ -93,6 +93,7 @@ public abstract record class ModelBase
                 string,
                 Notifications::NotificationTemplateMutationResponseState
             >(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateState>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateSummaryState>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateUpdateRequestState>(),
             new ApiEnumConverter<string, Notifications::State>(),

@@ -150,12 +150,12 @@ public sealed record class Block : JsonModel
         init { this._rawData.Set("checksum", value); }
     }
 
-    public Content? Content
+    public BlockContent? Content
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<Content>("content");
+            return this._rawData.GetNullableClass<BlockContent>("content");
         }
         init { this._rawData.Set("content", value); }
     }
@@ -304,8 +304,8 @@ sealed class BlockTypeConverter : JsonConverter<BlockType>
     }
 }
 
-[JsonConverter(typeof(ContentConverter))]
-public record class Content : ModelBase
+[JsonConverter(typeof(BlockContentConverter))]
+public record class BlockContent : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -322,19 +322,19 @@ public record class Content : ModelBase
         }
     }
 
-    public Content(string value, JsonElement? element = null)
+    public BlockContent(string value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
     }
 
-    public Content(NotificationContentHierarchy value, JsonElement? element = null)
+    public BlockContent(NotificationContentHierarchy value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
     }
 
-    public Content(JsonElement element)
+    public BlockContent(JsonElement element)
     {
         this._element = element;
     }
@@ -417,7 +417,9 @@ public record class Content : ModelBase
                 notificationContentHierarchy(value);
                 break;
             default:
-                throw new CourierInvalidDataException("Data did not match any variant of Content");
+                throw new CourierInvalidDataException(
+                    "Data did not match any variant of BlockContent"
+                );
         }
     }
 
@@ -451,13 +453,15 @@ public record class Content : ModelBase
         {
             string value => @string(value),
             NotificationContentHierarchy value => notificationContentHierarchy(value),
-            _ => throw new CourierInvalidDataException("Data did not match any variant of Content"),
+            _ => throw new CourierInvalidDataException(
+                "Data did not match any variant of BlockContent"
+            ),
         };
     }
 
-    public static implicit operator Content(string value) => new(value);
+    public static implicit operator BlockContent(string value) => new(value);
 
-    public static implicit operator Content(NotificationContentHierarchy value) => new(value);
+    public static implicit operator BlockContent(NotificationContentHierarchy value) => new(value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -473,7 +477,7 @@ public record class Content : ModelBase
     {
         if (this.Value == null)
         {
-            throw new CourierInvalidDataException("Data did not match any variant of Content");
+            throw new CourierInvalidDataException("Data did not match any variant of BlockContent");
         }
         this.Switch(
             (_) => { },
@@ -481,7 +485,7 @@ public record class Content : ModelBase
         );
     }
 
-    public virtual bool Equals(Content? other) =>
+    public virtual bool Equals(BlockContent? other) =>
         other != null
         && this.VariantIndex() == other.VariantIndex()
         && JsonElement.DeepEquals(this.Json, other.Json);
@@ -508,9 +512,9 @@ public record class Content : ModelBase
     }
 }
 
-sealed class ContentConverter : JsonConverter<Content?>
+sealed class BlockContentConverter : JsonConverter<BlockContent?>
 {
-    public override Content? Read(
+    public override BlockContent? Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -550,7 +554,11 @@ sealed class ContentConverter : JsonConverter<Content?>
         return new(element);
     }
 
-    public override void Write(Utf8JsonWriter writer, Content? value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        BlockContent? value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(writer, value?.Json, options);
     }
@@ -986,16 +994,18 @@ public sealed record class Channel : JsonModel
         init { this._rawData.Set("content", value); }
     }
 
-    public IReadOnlyDictionary<string, LocalesItem>? Locales
+    public IReadOnlyDictionary<string, ChannelLocalesItem>? Locales
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<FrozenDictionary<string, LocalesItem>>("locales");
+            return this._rawData.GetNullableClass<FrozenDictionary<string, ChannelLocalesItem>>(
+                "locales"
+            );
         }
         init
         {
-            this._rawData.Set<FrozenDictionary<string, LocalesItem>?>(
+            this._rawData.Set<FrozenDictionary<string, ChannelLocalesItem>?>(
                 "locales",
                 value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
@@ -1135,8 +1145,8 @@ class ChannelContentFromRaw : IFromRawJson<ChannelContent>
         ChannelContent.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(JsonModelConverter<LocalesItem, LocalesItemFromRaw>))]
-public sealed record class LocalesItem : JsonModel
+[JsonConverter(typeof(JsonModelConverter<ChannelLocalesItem, ChannelLocalesItemFromRaw>))]
+public sealed record class ChannelLocalesItem : JsonModel
 {
     public string? Subject
     {
@@ -1165,37 +1175,39 @@ public sealed record class LocalesItem : JsonModel
         _ = this.Title;
     }
 
-    public LocalesItem() { }
+    public ChannelLocalesItem() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public LocalesItem(LocalesItem localesItem)
-        : base(localesItem) { }
+    public ChannelLocalesItem(ChannelLocalesItem channelLocalesItem)
+        : base(channelLocalesItem) { }
 #pragma warning restore CS8618
 
-    public LocalesItem(IReadOnlyDictionary<string, JsonElement> rawData)
+    public ChannelLocalesItem(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    LocalesItem(FrozenDictionary<string, JsonElement> rawData)
+    ChannelLocalesItem(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="LocalesItemFromRaw.FromRawUnchecked"/>
-    public static LocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="ChannelLocalesItemFromRaw.FromRawUnchecked"/>
+    public static ChannelLocalesItem FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class LocalesItemFromRaw : IFromRawJson<LocalesItem>
+class ChannelLocalesItemFromRaw : IFromRawJson<ChannelLocalesItem>
 {
     /// <inheritdoc/>
-    public LocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        LocalesItem.FromRawUnchecked(rawData);
+    public ChannelLocalesItem FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ChannelLocalesItem.FromRawUnchecked(rawData);
 }
