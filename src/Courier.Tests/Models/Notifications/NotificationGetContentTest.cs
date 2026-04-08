@@ -33,7 +33,7 @@ public class NotificationGetContentTest : TestBase
                     ID = "id",
                     Checksum = "checksum",
                     Content = new() { Subject = "subject", Title = "title" },
-                    Locales = new Dictionary<string, LocalesItem>()
+                    Locales = new Dictionary<string, ChannelLocalesItem>()
                     {
                         {
                             "foo",
@@ -66,7 +66,7 @@ public class NotificationGetContentTest : TestBase
                 ID = "id",
                 Checksum = "checksum",
                 Content = new() { Subject = "subject", Title = "title" },
-                Locales = new Dictionary<string, LocalesItem>()
+                Locales = new Dictionary<string, ChannelLocalesItem>()
                 {
                     {
                         "foo",
@@ -118,7 +118,7 @@ public class NotificationGetContentTest : TestBase
                     ID = "id",
                     Checksum = "checksum",
                     Content = new() { Subject = "subject", Title = "title" },
-                    Locales = new Dictionary<string, LocalesItem>()
+                    Locales = new Dictionary<string, ChannelLocalesItem>()
                     {
                         {
                             "foo",
@@ -165,7 +165,7 @@ public class NotificationGetContentTest : TestBase
                     ID = "id",
                     Checksum = "checksum",
                     Content = new() { Subject = "subject", Title = "title" },
-                    Locales = new Dictionary<string, LocalesItem>()
+                    Locales = new Dictionary<string, ChannelLocalesItem>()
                     {
                         {
                             "foo",
@@ -205,7 +205,7 @@ public class NotificationGetContentTest : TestBase
                 ID = "id",
                 Checksum = "checksum",
                 Content = new() { Subject = "subject", Title = "title" },
-                Locales = new Dictionary<string, LocalesItem>()
+                Locales = new Dictionary<string, ChannelLocalesItem>()
                 {
                     {
                         "foo",
@@ -257,7 +257,7 @@ public class NotificationGetContentTest : TestBase
                     ID = "id",
                     Checksum = "checksum",
                     Content = new() { Subject = "subject", Title = "title" },
-                    Locales = new Dictionary<string, LocalesItem>()
+                    Locales = new Dictionary<string, ChannelLocalesItem>()
                     {
                         {
                             "foo",
@@ -350,7 +350,7 @@ public class NotificationGetContentTest : TestBase
                     ID = "id",
                     Checksum = "checksum",
                     Content = new() { Subject = "subject", Title = "title" },
-                    Locales = new Dictionary<string, LocalesItem>()
+                    Locales = new Dictionary<string, ChannelLocalesItem>()
                     {
                         {
                             "foo",
@@ -389,7 +389,7 @@ public class BlockTest : TestBase
         ApiEnum<string, BlockType> expectedType = BlockType.Action;
         string expectedAlias = "alias";
         string expectedChecksum = "checksum";
-        Content expectedContent = "string";
+        BlockContent expectedContent = "string";
         string expectedContext = "context";
         Dictionary<string, Locale> expectedLocales = new() { { "foo", "string" } };
 
@@ -451,7 +451,7 @@ public class BlockTest : TestBase
         ApiEnum<string, BlockType> expectedType = BlockType.Action;
         string expectedAlias = "alias";
         string expectedChecksum = "checksum";
-        Content expectedContent = "string";
+        BlockContent expectedContent = "string";
         string expectedContext = "context";
         Dictionary<string, Locale> expectedLocales = new() { { "foo", "string" } };
 
@@ -650,19 +650,19 @@ public class BlockTypeTest : TestBase
     }
 }
 
-public class ContentTest : TestBase
+public class BlockContentTest : TestBase
 {
     [Fact]
     public void StringValidationWorks()
     {
-        Content value = "string";
+        BlockContent value = "string";
         value.Validate();
     }
 
     [Fact]
     public void NotificationContentHierarchyValidationWorks()
     {
-        Content value = new NotificationContentHierarchy()
+        BlockContent value = new NotificationContentHierarchy()
         {
             Children = "children",
             Parent = "parent",
@@ -673,9 +673,9 @@ public class ContentTest : TestBase
     [Fact]
     public void StringSerializationRoundtripWorks()
     {
-        Content value = "string";
+        BlockContent value = "string";
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Content>(
+        var deserialized = JsonSerializer.Deserialize<BlockContent>(
             element,
             ModelBase.SerializerOptions
         );
@@ -686,13 +686,13 @@ public class ContentTest : TestBase
     [Fact]
     public void NotificationContentHierarchySerializationRoundtripWorks()
     {
-        Content value = new NotificationContentHierarchy()
+        BlockContent value = new NotificationContentHierarchy()
         {
             Children = "children",
             Parent = "parent",
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Content>(
+        var deserialized = JsonSerializer.Deserialize<BlockContent>(
             element,
             ModelBase.SerializerOptions
         );
@@ -984,7 +984,7 @@ public class ChannelTest : TestBase
             ID = "id",
             Checksum = "checksum",
             Content = new() { Subject = "subject", Title = "title" },
-            Locales = new Dictionary<string, LocalesItem>()
+            Locales = new Dictionary<string, ChannelLocalesItem>()
             {
                 {
                     "foo",
@@ -997,7 +997,7 @@ public class ChannelTest : TestBase
         string expectedID = "id";
         string expectedChecksum = "checksum";
         ChannelContent expectedContent = new() { Subject = "subject", Title = "title" };
-        Dictionary<string, LocalesItem> expectedLocales = new()
+        Dictionary<string, ChannelLocalesItem> expectedLocales = new()
         {
             {
                 "foo",
@@ -1028,7 +1028,7 @@ public class ChannelTest : TestBase
             ID = "id",
             Checksum = "checksum",
             Content = new() { Subject = "subject", Title = "title" },
-            Locales = new Dictionary<string, LocalesItem>()
+            Locales = new Dictionary<string, ChannelLocalesItem>()
             {
                 {
                     "foo",
@@ -1052,7 +1052,7 @@ public class ChannelTest : TestBase
             ID = "id",
             Checksum = "checksum",
             Content = new() { Subject = "subject", Title = "title" },
-            Locales = new Dictionary<string, LocalesItem>()
+            Locales = new Dictionary<string, ChannelLocalesItem>()
             {
                 {
                     "foo",
@@ -1072,7 +1072,7 @@ public class ChannelTest : TestBase
         string expectedID = "id";
         string expectedChecksum = "checksum";
         ChannelContent expectedContent = new() { Subject = "subject", Title = "title" };
-        Dictionary<string, LocalesItem> expectedLocales = new()
+        Dictionary<string, ChannelLocalesItem> expectedLocales = new()
         {
             {
                 "foo",
@@ -1103,7 +1103,7 @@ public class ChannelTest : TestBase
             ID = "id",
             Checksum = "checksum",
             Content = new() { Subject = "subject", Title = "title" },
-            Locales = new Dictionary<string, LocalesItem>()
+            Locales = new Dictionary<string, ChannelLocalesItem>()
             {
                 {
                     "foo",
@@ -1186,7 +1186,7 @@ public class ChannelTest : TestBase
             ID = "id",
             Checksum = "checksum",
             Content = new() { Subject = "subject", Title = "title" },
-            Locales = new Dictionary<string, LocalesItem>()
+            Locales = new Dictionary<string, ChannelLocalesItem>()
             {
                 {
                     "foo",
@@ -1306,12 +1306,12 @@ public class ChannelContentTest : TestBase
     }
 }
 
-public class LocalesItemTest : TestBase
+public class ChannelLocalesItemTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new LocalesItem { Subject = "subject", Title = "title" };
+        var model = new ChannelLocalesItem { Subject = "subject", Title = "title" };
 
         string expectedSubject = "subject";
         string expectedTitle = "title";
@@ -1323,10 +1323,10 @@ public class LocalesItemTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new LocalesItem { Subject = "subject", Title = "title" };
+        var model = new ChannelLocalesItem { Subject = "subject", Title = "title" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<LocalesItem>(
+        var deserialized = JsonSerializer.Deserialize<ChannelLocalesItem>(
             json,
             ModelBase.SerializerOptions
         );
@@ -1337,10 +1337,10 @@ public class LocalesItemTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new LocalesItem { Subject = "subject", Title = "title" };
+        var model = new ChannelLocalesItem { Subject = "subject", Title = "title" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<LocalesItem>(
+        var deserialized = JsonSerializer.Deserialize<ChannelLocalesItem>(
             element,
             ModelBase.SerializerOptions
         );
@@ -1356,7 +1356,7 @@ public class LocalesItemTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new LocalesItem { Subject = "subject", Title = "title" };
+        var model = new ChannelLocalesItem { Subject = "subject", Title = "title" };
 
         model.Validate();
     }
@@ -1364,7 +1364,7 @@ public class LocalesItemTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new LocalesItem { };
+        var model = new ChannelLocalesItem { };
 
         Assert.Null(model.Subject);
         Assert.False(model.RawData.ContainsKey("subject"));
@@ -1375,7 +1375,7 @@ public class LocalesItemTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new LocalesItem { };
+        var model = new ChannelLocalesItem { };
 
         model.Validate();
     }
@@ -1383,7 +1383,7 @@ public class LocalesItemTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new LocalesItem { Subject = null, Title = null };
+        var model = new ChannelLocalesItem { Subject = null, Title = null };
 
         Assert.Null(model.Subject);
         Assert.True(model.RawData.ContainsKey("subject"));
@@ -1394,7 +1394,7 @@ public class LocalesItemTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new LocalesItem { Subject = null, Title = null };
+        var model = new ChannelLocalesItem { Subject = null, Title = null };
 
         model.Validate();
     }
@@ -1402,9 +1402,9 @@ public class LocalesItemTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new LocalesItem { Subject = "subject", Title = "title" };
+        var model = new ChannelLocalesItem { Subject = "subject", Title = "title" };
 
-        LocalesItem copied = new(model);
+        ChannelLocalesItem copied = new(model);
 
         Assert.Equal(model, copied);
     }

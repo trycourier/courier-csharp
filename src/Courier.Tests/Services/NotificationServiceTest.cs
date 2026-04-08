@@ -81,6 +81,52 @@ public class NotificationServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task PutContent_Works()
+    {
+        var notificationContentMutationResponse = await this.client.Notifications.PutContent(
+            "id",
+            new()
+            {
+                Content = new()
+                {
+                    Elements =
+                    [
+                        new ElementalChannelNodeWithType()
+                        {
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                        },
+                    ],
+                    Version = "2022-01-01",
+                },
+            },
+            TestContext.Current.CancellationToken
+        );
+        notificationContentMutationResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task PutElement_Works()
+    {
+        var notificationContentMutationResponse = await this.client.Notifications.PutElement(
+            "elementId",
+            new() { ID = "id", Type = "text" },
+            TestContext.Current.CancellationToken
+        );
+        notificationContentMutationResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task PutLocale_Works()
+    {
+        var notificationContentMutationResponse = await this.client.Notifications.PutLocale(
+            "localeId",
+            new() { ID = "id", Elements = [new("elem_1"), new("elem_2")] },
+            TestContext.Current.CancellationToken
+        );
+        notificationContentMutationResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replace_Works()
     {
         var notificationTemplateMutationResponse = await this.client.Notifications.Replace(
@@ -115,11 +161,11 @@ public class NotificationServiceTest : TestBase
     [Fact(Skip = "Mock server tests are disabled")]
     public async Task RetrieveContent_Works()
     {
-        var notificationGetContent = await this.client.Notifications.RetrieveContent(
+        var response = await this.client.Notifications.RetrieveContent(
             "id",
             new(),
             TestContext.Current.CancellationToken
         );
-        notificationGetContent.Validate();
+        response.Validate();
     }
 }

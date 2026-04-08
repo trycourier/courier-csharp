@@ -27,8 +27,6 @@ public interface INotificationService
     /// </summary>
     INotificationService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
-    IDraftService Draft { get; }
-
     ICheckService Checks { get; }
 
     /// <summary>
@@ -111,6 +109,56 @@ public interface INotificationService
     );
 
     /// <summary>
+    /// Replace the elemental content of a notification template. Overwrites all
+    /// elements in the template with the provided content. Only supported for V2
+    /// (elemental) templates.
+    /// </summary>
+    Task<NotificationContentMutationResponse> PutContent(
+        NotificationPutContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutContent(NotificationPutContentParams, CancellationToken)"/>
+    Task<NotificationContentMutationResponse> PutContent(
+        string id,
+        NotificationPutContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Update a single element within a notification template. Only supported for V2
+    /// (elemental) templates.
+    /// </summary>
+    Task<NotificationContentMutationResponse> PutElement(
+        NotificationPutElementParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutElement(NotificationPutElementParams, CancellationToken)"/>
+    Task<NotificationContentMutationResponse> PutElement(
+        string elementID,
+        NotificationPutElementParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Set locale-specific content overrides for a notification template. Each element
+    /// override must reference an existing element by ID. Only supported for V2
+    /// (elemental) templates.
+    /// </summary>
+    Task<NotificationContentMutationResponse> PutLocale(
+        NotificationPutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutLocale(NotificationPutLocaleParams, CancellationToken)"/>
+    Task<NotificationContentMutationResponse> PutLocale(
+        string localeID,
+        NotificationPutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Replace a notification template. All fields are required.
     /// </summary>
     Task<NotificationTemplateMutationResponse> Replace(
@@ -126,15 +174,18 @@ public interface INotificationService
     );
 
     /// <summary>
-    /// Sends a request to <c>get /notifications/{id}/content</c>.
+    /// Retrieve the content of a notification template. The response shape depends on
+    /// whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use
+    /// the `version` query parameter to select draft, published, or a specific
+    /// historical version.
     /// </summary>
-    Task<NotificationGetContent> RetrieveContent(
+    Task<NotificationRetrieveContentResponse> RetrieveContent(
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="RetrieveContent(NotificationRetrieveContentParams, CancellationToken)"/>
-    Task<NotificationGetContent> RetrieveContent(
+    Task<NotificationRetrieveContentResponse> RetrieveContent(
         string id,
         NotificationRetrieveContentParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -153,8 +204,6 @@ public interface INotificationServiceWithRawResponse
     /// <para>The original service is not modified.</para>
     /// </summary>
     INotificationServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
-
-    IDraftServiceWithRawResponse Draft { get; }
 
     ICheckServiceWithRawResponse Checks { get; }
 
@@ -241,6 +290,54 @@ public interface INotificationServiceWithRawResponse
     );
 
     /// <summary>
+    /// Returns a raw HTTP response for <c>put /notifications/{id}/content</c>, but is otherwise the
+    /// same as <see cref="INotificationService.PutContent(NotificationPutContentParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutContent(
+        NotificationPutContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutContent(NotificationPutContentParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutContent(
+        string id,
+        NotificationPutContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>put /notifications/{id}/elements/{elementId}</c>, but is otherwise the
+    /// same as <see cref="INotificationService.PutElement(NotificationPutElementParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutElement(
+        NotificationPutElementParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutElement(NotificationPutElementParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutElement(
+        string elementID,
+        NotificationPutElementParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>put /notifications/{id}/locales/{localeId}</c>, but is otherwise the
+    /// same as <see cref="INotificationService.PutLocale(NotificationPutLocaleParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutLocale(
+        NotificationPutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutLocale(NotificationPutLocaleParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutLocale(
+        string localeID,
+        NotificationPutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Returns a raw HTTP response for <c>put /notifications/{id}</c>, but is otherwise the
     /// same as <see cref="INotificationService.Replace(NotificationReplaceParams, CancellationToken)"/>.
     /// </summary>
@@ -260,13 +357,13 @@ public interface INotificationServiceWithRawResponse
     /// Returns a raw HTTP response for <c>get /notifications/{id}/content</c>, but is otherwise the
     /// same as <see cref="INotificationService.RetrieveContent(NotificationRetrieveContentParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<NotificationGetContent>> RetrieveContent(
+    Task<HttpResponse<NotificationRetrieveContentResponse>> RetrieveContent(
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="RetrieveContent(NotificationRetrieveContentParams, CancellationToken)"/>
-    Task<HttpResponse<NotificationGetContent>> RetrieveContent(
+    Task<HttpResponse<NotificationRetrieveContentResponse>> RetrieveContent(
         string id,
         NotificationRetrieveContentParams? parameters = null,
         CancellationToken cancellationToken = default
