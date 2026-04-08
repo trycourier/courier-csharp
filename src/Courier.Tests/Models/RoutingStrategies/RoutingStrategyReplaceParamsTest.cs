@@ -64,7 +64,7 @@ public class RoutingStrategyReplaceParamsTest : TestBase
                                 Term = "term",
                             },
                         },
-                        Override = { },
+                        Override = new Dictionary<string, JsonElement>(),
                         Timeouts = 0,
                     }
                 },
@@ -123,7 +123,7 @@ public class RoutingStrategyReplaceParamsTest : TestBase
                             Term = "term",
                         },
                     },
-                    Override = { },
+                    Override = new Dictionary<string, JsonElement>(),
                     Timeouts = 0,
                 }
             },
@@ -274,7 +274,7 @@ public class RoutingStrategyReplaceParamsTest : TestBase
                                 Term = "term",
                             },
                         },
-                        Override = { },
+                        Override = new Dictionary<string, JsonElement>(),
                         Timeouts = 0,
                     }
                 },
