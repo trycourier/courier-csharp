@@ -51,6 +51,18 @@ public class RoutingStrategyServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task ListNotifications_Works()
+    {
+        var associatedNotificationListResponse =
+            await this.client.RoutingStrategies.ListNotifications(
+                "id",
+                new(),
+                TestContext.Current.CancellationToken
+            );
+        associatedNotificationListResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replace_Works()
     {
         var routingStrategyMutationResponse = await this.client.RoutingStrategies.Replace(
