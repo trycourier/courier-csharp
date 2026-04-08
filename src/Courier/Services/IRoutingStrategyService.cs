@@ -78,6 +78,22 @@ public interface IRoutingStrategyService
     );
 
     /// <summary>
+    /// List notification templates associated with a routing strategy. Includes
+    /// template metadata only, not full content.
+    /// </summary>
+    Task<AssociatedNotificationListResponse> ListNotifications(
+        RoutingStrategyListNotificationsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListNotifications(RoutingStrategyListNotificationsParams, CancellationToken)"/>
+    Task<AssociatedNotificationListResponse> ListNotifications(
+        string id,
+        RoutingStrategyListNotificationsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Replace a routing strategy. Full document replacement; the caller must send the
     /// complete desired state. Missing optional fields are cleared.
     /// </summary>
@@ -154,6 +170,22 @@ public interface IRoutingStrategyServiceWithRawResponse
     Task<HttpResponse> Archive(
         string id,
         RoutingStrategyArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>get /routing-strategies/{id}/notifications</c>, but is otherwise the
+    /// same as <see cref="IRoutingStrategyService.ListNotifications(RoutingStrategyListNotificationsParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<AssociatedNotificationListResponse>> ListNotifications(
+        RoutingStrategyListNotificationsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListNotifications(RoutingStrategyListNotificationsParams, CancellationToken)"/>
+    Task<HttpResponse<AssociatedNotificationListResponse>> ListNotifications(
+        string id,
+        RoutingStrategyListNotificationsParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
