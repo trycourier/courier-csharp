@@ -35,14 +35,7 @@ public sealed class NotificationService : INotificationService
         _withRawResponse = new(() =>
             new NotificationServiceWithRawResponse(client.WithRawResponse)
         );
-        _draft = new(() => new DraftService(client));
         _checks = new(() => new CheckService(client));
-    }
-
-    readonly Lazy<IDraftService> _draft;
-    public IDraftService Draft
-    {
-        get { return _draft.Value; }
     }
 
     readonly Lazy<ICheckService> _checks;
@@ -52,7 +45,7 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public async Task<NotificationTemplateMutationResponse> Create(
+    public async Task<NotificationTemplateGetResponse> Create(
         NotificationCreateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -166,7 +159,73 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public async Task<NotificationTemplateMutationResponse> Replace(
+    public async Task<NotificationContentMutationResponse> PutContent(
+        NotificationPutContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.PutContent(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationContentMutationResponse> PutContent(
+        string id,
+        NotificationPutContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutContent(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationContentMutationResponse> PutElement(
+        NotificationPutElementParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.PutElement(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationContentMutationResponse> PutElement(
+        string elementID,
+        NotificationPutElementParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutElement(parameters with { ElementID = elementID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationContentMutationResponse> PutLocale(
+        NotificationPutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.PutLocale(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationContentMutationResponse> PutLocale(
+        string localeID,
+        NotificationPutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutLocale(parameters with { LocaleID = localeID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationTemplateGetResponse> Replace(
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -178,7 +237,7 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public Task<NotificationTemplateMutationResponse> Replace(
+    public Task<NotificationTemplateGetResponse> Replace(
         string id,
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -188,7 +247,7 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public async Task<NotificationGetContent> RetrieveContent(
+    public async Task<NotificationRetrieveContentResponse> RetrieveContent(
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -200,7 +259,7 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public Task<NotificationGetContent> RetrieveContent(
+    public Task<NotificationRetrieveContentResponse> RetrieveContent(
         string id,
         NotificationRetrieveContentParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -229,14 +288,7 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
     {
         _client = client;
 
-        _draft = new(() => new DraftServiceWithRawResponse(client));
         _checks = new(() => new CheckServiceWithRawResponse(client));
-    }
-
-    readonly Lazy<IDraftServiceWithRawResponse> _draft;
-    public IDraftServiceWithRawResponse Draft
-    {
-        get { return _draft.Value; }
     }
 
     readonly Lazy<ICheckServiceWithRawResponse> _checks;
@@ -246,7 +298,7 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<NotificationTemplateMutationResponse>> Create(
+    public async Task<HttpResponse<NotificationTemplateGetResponse>> Create(
         NotificationCreateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -261,14 +313,14 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
             response,
             async (token) =>
             {
-                var notificationTemplateMutationResponse = await response
-                    .Deserialize<NotificationTemplateMutationResponse>(token)
+                var notificationTemplateGetResponse = await response
+                    .Deserialize<NotificationTemplateGetResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    notificationTemplateMutationResponse.Validate();
+                    notificationTemplateGetResponse.Validate();
                 }
-                return notificationTemplateMutationResponse;
+                return notificationTemplateGetResponse;
             }
         );
     }
@@ -456,7 +508,136 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<NotificationTemplateMutationResponse>> Replace(
+    public async Task<HttpResponse<NotificationContentMutationResponse>> PutContent(
+        NotificationPutContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<NotificationPutContentParams> request = new()
+        {
+            Method = HttpMethod.Put,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationContentMutationResponse = await response
+                    .Deserialize<NotificationContentMutationResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationContentMutationResponse.Validate();
+                }
+                return notificationContentMutationResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationContentMutationResponse>> PutContent(
+        string id,
+        NotificationPutContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutContent(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationContentMutationResponse>> PutElement(
+        NotificationPutElementParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ElementID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ElementID' cannot be null");
+        }
+
+        HttpRequest<NotificationPutElementParams> request = new()
+        {
+            Method = HttpMethod.Put,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationContentMutationResponse = await response
+                    .Deserialize<NotificationContentMutationResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationContentMutationResponse.Validate();
+                }
+                return notificationContentMutationResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationContentMutationResponse>> PutElement(
+        string elementID,
+        NotificationPutElementParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutElement(parameters with { ElementID = elementID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationContentMutationResponse>> PutLocale(
+        NotificationPutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.LocaleID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.LocaleID' cannot be null");
+        }
+
+        HttpRequest<NotificationPutLocaleParams> request = new()
+        {
+            Method = HttpMethod.Put,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationContentMutationResponse = await response
+                    .Deserialize<NotificationContentMutationResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationContentMutationResponse.Validate();
+                }
+                return notificationContentMutationResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationContentMutationResponse>> PutLocale(
+        string localeID,
+        NotificationPutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutLocale(parameters with { LocaleID = localeID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationTemplateGetResponse>> Replace(
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -476,20 +657,20 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
             response,
             async (token) =>
             {
-                var notificationTemplateMutationResponse = await response
-                    .Deserialize<NotificationTemplateMutationResponse>(token)
+                var notificationTemplateGetResponse = await response
+                    .Deserialize<NotificationTemplateGetResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    notificationTemplateMutationResponse.Validate();
+                    notificationTemplateGetResponse.Validate();
                 }
-                return notificationTemplateMutationResponse;
+                return notificationTemplateGetResponse;
             }
         );
     }
 
     /// <inheritdoc/>
-    public Task<HttpResponse<NotificationTemplateMutationResponse>> Replace(
+    public Task<HttpResponse<NotificationTemplateGetResponse>> Replace(
         string id,
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -499,7 +680,7 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<NotificationGetContent>> RetrieveContent(
+    public async Task<HttpResponse<NotificationRetrieveContentResponse>> RetrieveContent(
         NotificationRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -519,20 +700,20 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
             response,
             async (token) =>
             {
-                var notificationGetContent = await response
-                    .Deserialize<NotificationGetContent>(token)
+                var deserializedResponse = await response
+                    .Deserialize<NotificationRetrieveContentResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    notificationGetContent.Validate();
+                    deserializedResponse.Validate();
                 }
-                return notificationGetContent;
+                return deserializedResponse;
             }
         );
     }
 
     /// <inheritdoc/>
-    public Task<HttpResponse<NotificationGetContent>> RetrieveContent(
+    public Task<HttpResponse<NotificationRetrieveContentResponse>> RetrieveContent(
         string id,
         NotificationRetrieveContentParams? parameters = null,
         CancellationToken cancellationToken = default

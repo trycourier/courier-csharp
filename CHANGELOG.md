@@ -1,5 +1,20 @@
 # Changelog
 
+## 5.7.0 (2026-04-13)
+
+Full Changelog: [v5.6.0...v5.7.0](https://github.com/trycourier/courier-csharp/compare/v5.6.0...v5.7.0)
+
+### Features
+
+* **api:** add content/element/locale endpoints, remove draft, update checks API and types ([fd617c3](https://github.com/trycourier/courier-csharp/commit/fd617c368235418735aca04cf9b3d63a17c62fc5))
+* **api:** add ListNotifications method to routing strategies ([06ea0a4](https://github.com/trycourier/courier-csharp/commit/06ea0a4ea6152d5de06616b42dc12bcb868a9b61))
+
+
+### Bug Fixes
+
+* **api:** update notifications/routing strategies return types, correct providers HTTP method ([9c4dd35](https://github.com/trycourier/courier-csharp/commit/9c4dd352e9fbdb69eaefc766f5d5a0626c453e34))
+* **tests:** generate dictionary instantiations properly ([681248e](https://github.com/trycourier/courier-csharp/commit/681248e5012fc307cfdceb48fd3b3614087fc562))
+
 ## 5.6.0 (2026-04-01)
 
 Full Changelog: [v5.5.0...v5.6.0](https://github.com/trycourier/courier-csharp/compare/v5.5.0...v5.6.0)

@@ -37,7 +37,7 @@ public sealed class RoutingStrategyService : IRoutingStrategyService
     }
 
     /// <inheritdoc/>
-    public async Task<RoutingStrategyMutationResponse> Create(
+    public async Task<RoutingStrategyGetResponse> Create(
         RoutingStrategyCreateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -106,7 +106,31 @@ public sealed class RoutingStrategyService : IRoutingStrategyService
     }
 
     /// <inheritdoc/>
-    public async Task<RoutingStrategyMutationResponse> Replace(
+    public async Task<AssociatedNotificationListResponse> ListNotifications(
+        RoutingStrategyListNotificationsParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.ListNotifications(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<AssociatedNotificationListResponse> ListNotifications(
+        string id,
+        RoutingStrategyListNotificationsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.ListNotifications(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<RoutingStrategyGetResponse> Replace(
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -118,7 +142,7 @@ public sealed class RoutingStrategyService : IRoutingStrategyService
     }
 
     /// <inheritdoc/>
-    public Task<RoutingStrategyMutationResponse> Replace(
+    public Task<RoutingStrategyGetResponse> Replace(
         string id,
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -147,7 +171,7 @@ public sealed class RoutingStrategyServiceWithRawResponse : IRoutingStrategyServ
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<RoutingStrategyMutationResponse>> Create(
+    public async Task<HttpResponse<RoutingStrategyGetResponse>> Create(
         RoutingStrategyCreateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -162,14 +186,14 @@ public sealed class RoutingStrategyServiceWithRawResponse : IRoutingStrategyServ
             response,
             async (token) =>
             {
-                var routingStrategyMutationResponse = await response
-                    .Deserialize<RoutingStrategyMutationResponse>(token)
+                var routingStrategyGetResponse = await response
+                    .Deserialize<RoutingStrategyGetResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    routingStrategyMutationResponse.Validate();
+                    routingStrategyGetResponse.Validate();
                 }
-                return routingStrategyMutationResponse;
+                return routingStrategyGetResponse;
             }
         );
     }
@@ -281,7 +305,52 @@ public sealed class RoutingStrategyServiceWithRawResponse : IRoutingStrategyServ
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<RoutingStrategyMutationResponse>> Replace(
+    public async Task<HttpResponse<AssociatedNotificationListResponse>> ListNotifications(
+        RoutingStrategyListNotificationsParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<RoutingStrategyListNotificationsParams> request = new()
+        {
+            Method = HttpMethod.Get,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var associatedNotificationListResponse = await response
+                    .Deserialize<AssociatedNotificationListResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    associatedNotificationListResponse.Validate();
+                }
+                return associatedNotificationListResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<AssociatedNotificationListResponse>> ListNotifications(
+        string id,
+        RoutingStrategyListNotificationsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.ListNotifications(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<RoutingStrategyGetResponse>> Replace(
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -301,20 +370,20 @@ public sealed class RoutingStrategyServiceWithRawResponse : IRoutingStrategyServ
             response,
             async (token) =>
             {
-                var routingStrategyMutationResponse = await response
-                    .Deserialize<RoutingStrategyMutationResponse>(token)
+                var routingStrategyGetResponse = await response
+                    .Deserialize<RoutingStrategyGetResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    routingStrategyMutationResponse.Validate();
+                    routingStrategyGetResponse.Validate();
                 }
-                return routingStrategyMutationResponse;
+                return routingStrategyGetResponse;
             }
         );
     }
 
     /// <inheritdoc/>
-    public Task<HttpResponse<RoutingStrategyMutationResponse>> Replace(
+    public Task<HttpResponse<RoutingStrategyGetResponse>> Replace(
         string id,
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default

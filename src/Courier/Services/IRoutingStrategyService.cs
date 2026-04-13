@@ -30,7 +30,7 @@ public interface IRoutingStrategyService
     /// Create a routing strategy. Requires a name and routing configuration at minimum.
     /// Channels and providers default to empty if omitted.
     /// </summary>
-    Task<RoutingStrategyMutationResponse> Create(
+    Task<RoutingStrategyGetResponse> Create(
         RoutingStrategyCreateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -78,16 +78,32 @@ public interface IRoutingStrategyService
     );
 
     /// <summary>
+    /// List notification templates associated with a routing strategy. Includes
+    /// template metadata only, not full content.
+    /// </summary>
+    Task<AssociatedNotificationListResponse> ListNotifications(
+        RoutingStrategyListNotificationsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListNotifications(RoutingStrategyListNotificationsParams, CancellationToken)"/>
+    Task<AssociatedNotificationListResponse> ListNotifications(
+        string id,
+        RoutingStrategyListNotificationsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Replace a routing strategy. Full document replacement; the caller must send the
     /// complete desired state. Missing optional fields are cleared.
     /// </summary>
-    Task<RoutingStrategyMutationResponse> Replace(
+    Task<RoutingStrategyGetResponse> Replace(
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Replace(RoutingStrategyReplaceParams, CancellationToken)"/>
-    Task<RoutingStrategyMutationResponse> Replace(
+    Task<RoutingStrategyGetResponse> Replace(
         string id,
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -111,7 +127,7 @@ public interface IRoutingStrategyServiceWithRawResponse
     /// Returns a raw HTTP response for <c>post /routing-strategies</c>, but is otherwise the
     /// same as <see cref="IRoutingStrategyService.Create(RoutingStrategyCreateParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<RoutingStrategyMutationResponse>> Create(
+    Task<HttpResponse<RoutingStrategyGetResponse>> Create(
         RoutingStrategyCreateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -158,16 +174,32 @@ public interface IRoutingStrategyServiceWithRawResponse
     );
 
     /// <summary>
+    /// Returns a raw HTTP response for <c>get /routing-strategies/{id}/notifications</c>, but is otherwise the
+    /// same as <see cref="IRoutingStrategyService.ListNotifications(RoutingStrategyListNotificationsParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<AssociatedNotificationListResponse>> ListNotifications(
+        RoutingStrategyListNotificationsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListNotifications(RoutingStrategyListNotificationsParams, CancellationToken)"/>
+    Task<HttpResponse<AssociatedNotificationListResponse>> ListNotifications(
+        string id,
+        RoutingStrategyListNotificationsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Returns a raw HTTP response for <c>put /routing-strategies/{id}</c>, but is otherwise the
     /// same as <see cref="IRoutingStrategyService.Replace(RoutingStrategyReplaceParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<RoutingStrategyMutationResponse>> Replace(
+    Task<HttpResponse<RoutingStrategyGetResponse>> Replace(
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Replace(RoutingStrategyReplaceParams, CancellationToken)"/>
-    Task<HttpResponse<RoutingStrategyMutationResponse>> Replace(
+    Task<HttpResponse<RoutingStrategyGetResponse>> Replace(
         string id,
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default

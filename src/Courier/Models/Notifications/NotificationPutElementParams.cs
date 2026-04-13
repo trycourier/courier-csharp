@@ -1,26 +1,24 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Courier.Core;
 
-namespace Courier.Models.Providers;
+namespace Courier.Models.Notifications;
 
 /// <summary>
-/// Replace an existing provider configuration. The `provider` key is required and
-/// determines which provider-specific settings schema is applied. All other fields
-/// are optional — omitted fields are cleared from the stored configuration (this
-/// is a full replacement, not a partial merge). Changing the provider type for an
-/// existing configuration is not supported.
+/// Update a single element within a notification template. Only supported for V2
+/// (elemental) templates.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public record class ProviderUpdateParams : ParamsBase
+public record class NotificationPutElementParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -28,31 +26,29 @@ public record class ProviderUpdateParams : ParamsBase
         get { return this._rawBodyData.Freeze(); }
     }
 
-    public string? ID { get; init; }
+    public required string ID { get; init; }
+
+    public string? ElementID { get; init; }
 
     /// <summary>
-    /// The provider key identifying the type. Required on every request because it
-    /// selects the provider-specific settings schema for validation.
+    /// Element type (text, meta, action, image, etc.).
     /// </summary>
-    public required string Provider
+    public required string Type
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<string>("provider");
+            return this._rawBodyData.GetNotNullClass<string>("type");
         }
-        init { this._rawBodyData.Set("provider", value); }
+        init { this._rawBodyData.Set("type", value); }
     }
 
-    /// <summary>
-    /// Updated alias. Omit to clear.
-    /// </summary>
-    public string? Alias
+    public IReadOnlyList<string>? Channels
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("alias");
+            return this._rawBodyData.GetNullableStruct<ImmutableArray<string>>("channels");
         }
         init
         {
@@ -61,22 +57,20 @@ public record class ProviderUpdateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData.Set("alias", value);
+            this._rawBodyData.Set<ImmutableArray<string>?>(
+                "channels",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
-    /// <summary>
-    /// Provider-specific settings (snake_case keys). Replaces the full settings
-    /// object — omitted settings fields are removed. Use the catalog endpoint to
-    /// check required fields.
-    /// </summary>
-    public IReadOnlyDictionary<string, JsonElement>? Settings
+    public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
         {
             this._rawBodyData.Freeze();
             return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
-                "settings"
+                "data"
             );
         }
         init
@@ -87,21 +81,18 @@ public record class ProviderUpdateParams : ParamsBase
             }
 
             this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
-                "settings",
+                "data",
                 value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
         }
     }
 
-    /// <summary>
-    /// Updated display title.
-    /// </summary>
-    public string? Title
+    public string? If
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("title");
+            return this._rawBodyData.GetNullableClass<string>("if");
         }
         init
         {
@@ -110,24 +101,84 @@ public record class ProviderUpdateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData.Set("title", value);
+            this._rawBodyData.Set("if", value);
         }
     }
 
-    public ProviderUpdateParams() { }
+    public string? Loop
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("loop");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawBodyData.Set("loop", value);
+        }
+    }
+
+    public string? Ref
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("ref");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawBodyData.Set("ref", value);
+        }
+    }
+
+    /// <summary>
+    /// Template state. Defaults to `DRAFT`.
+    /// </summary>
+    public ApiEnum<string, NotificationTemplateState>? State
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<ApiEnum<string, NotificationTemplateState>>(
+                "state"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawBodyData.Set("state", value);
+        }
+    }
+
+    public NotificationPutElementParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public ProviderUpdateParams(ProviderUpdateParams providerUpdateParams)
-        : base(providerUpdateParams)
+    public NotificationPutElementParams(NotificationPutElementParams notificationPutElementParams)
+        : base(notificationPutElementParams)
     {
-        this.ID = providerUpdateParams.ID;
+        this.ID = notificationPutElementParams.ID;
+        this.ElementID = notificationPutElementParams.ElementID;
 
-        this._rawBodyData = new(providerUpdateParams._rawBodyData);
+        this._rawBodyData = new(notificationPutElementParams._rawBodyData);
     }
 #pragma warning restore CS8618
 
-    public ProviderUpdateParams(
+    public NotificationPutElementParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -140,33 +191,37 @@ public record class ProviderUpdateParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProviderUpdateParams(
+    NotificationPutElementParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
         FrozenDictionary<string, JsonElement> rawBodyData,
-        string id
+        string id,
+        string elementID
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
         this._rawBodyData = new(rawBodyData);
         this.ID = id;
+        this.ElementID = elementID;
     }
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static ProviderUpdateParams FromRawUnchecked(
+    public static NotificationPutElementParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData,
-        string id
+        string id,
+        string elementID
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
             FrozenDictionary.ToFrozenDictionary(rawQueryData),
             FrozenDictionary.ToFrozenDictionary(rawBodyData),
-            id
+            id,
+            elementID
         );
     }
 
@@ -176,6 +231,7 @@ public record class ProviderUpdateParams : ParamsBase
                 new Dictionary<string, JsonElement>()
                 {
                     ["ID"] = JsonSerializer.SerializeToElement(this.ID),
+                    ["ElementID"] = JsonSerializer.SerializeToElement(this.ElementID),
                     ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
                         JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
                     ),
@@ -188,13 +244,14 @@ public record class ProviderUpdateParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(ProviderUpdateParams? other)
+    public virtual bool Equals(NotificationPutElementParams? other)
     {
         if (other == null)
         {
             return false;
         }
-        return (this.ID?.Equals(other.ID) ?? other.ID == null)
+        return this.ID.Equals(other.ID)
+            && (this.ElementID?.Equals(other.ElementID) ?? other.ElementID == null)
             && this._rawHeaderData.Equals(other._rawHeaderData)
             && this._rawQueryData.Equals(other._rawQueryData)
             && this._rawBodyData.Equals(other._rawBodyData);
@@ -203,7 +260,8 @@ public record class ProviderUpdateParams : ParamsBase
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
-            options.BaseUrl.ToString().TrimEnd('/') + string.Format("/providers/{0}", this.ID)
+            options.BaseUrl.ToString().TrimEnd('/')
+                + string.Format("/notifications/{0}/elements/{1}", this.ID, this.ElementID)
         )
         {
             Query = this.QueryString(options),

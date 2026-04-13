@@ -1,26 +1,25 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Courier.Core;
 
-namespace Courier.Models.Providers;
+namespace Courier.Models.Notifications;
 
 /// <summary>
-/// Replace an existing provider configuration. The `provider` key is required and
-/// determines which provider-specific settings schema is applied. All other fields
-/// are optional — omitted fields are cleared from the stored configuration (this
-/// is a full replacement, not a partial merge). Changing the provider type for an
-/// existing configuration is not supported.
+/// Replace the elemental content of a notification template. Overwrites all elements
+/// in the template with the provided content. Only supported for V2 (elemental) templates.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public record class ProviderUpdateParams : ParamsBase
+public record class NotificationPutContentParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -31,52 +30,28 @@ public record class ProviderUpdateParams : ParamsBase
     public string? ID { get; init; }
 
     /// <summary>
-    /// The provider key identifying the type. Required on every request because it
-    /// selects the provider-specific settings schema for validation.
+    /// Elemental content payload. The server defaults `version` when omitted.
     /// </summary>
-    public required string Provider
+    public required Content Content
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<string>("provider");
+            return this._rawBodyData.GetNotNullClass<Content>("content");
         }
-        init { this._rawBodyData.Set("provider", value); }
+        init { this._rawBodyData.Set("content", value); }
     }
 
     /// <summary>
-    /// Updated alias. Omit to clear.
+    /// Template state. Defaults to `DRAFT`.
     /// </summary>
-    public string? Alias
+    public ApiEnum<string, NotificationTemplateState>? State
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("alias");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("alias", value);
-        }
-    }
-
-    /// <summary>
-    /// Provider-specific settings (snake_case keys). Replaces the full settings
-    /// object — omitted settings fields are removed. Use the catalog endpoint to
-    /// check required fields.
-    /// </summary>
-    public IReadOnlyDictionary<string, JsonElement>? Settings
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
-                "settings"
+            return this._rawBodyData.GetNullableClass<ApiEnum<string, NotificationTemplateState>>(
+                "state"
             );
         }
         init
@@ -86,48 +61,24 @@ public record class ProviderUpdateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
-                "settings",
-                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
-            );
+            this._rawBodyData.Set("state", value);
         }
     }
 
-    /// <summary>
-    /// Updated display title.
-    /// </summary>
-    public string? Title
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("title");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("title", value);
-        }
-    }
-
-    public ProviderUpdateParams() { }
+    public NotificationPutContentParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public ProviderUpdateParams(ProviderUpdateParams providerUpdateParams)
-        : base(providerUpdateParams)
+    public NotificationPutContentParams(NotificationPutContentParams notificationPutContentParams)
+        : base(notificationPutContentParams)
     {
-        this.ID = providerUpdateParams.ID;
+        this.ID = notificationPutContentParams.ID;
 
-        this._rawBodyData = new(providerUpdateParams._rawBodyData);
+        this._rawBodyData = new(notificationPutContentParams._rawBodyData);
     }
 #pragma warning restore CS8618
 
-    public ProviderUpdateParams(
+    public NotificationPutContentParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -140,7 +91,7 @@ public record class ProviderUpdateParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProviderUpdateParams(
+    NotificationPutContentParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
         FrozenDictionary<string, JsonElement> rawBodyData,
@@ -155,7 +106,7 @@ public record class ProviderUpdateParams : ParamsBase
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static ProviderUpdateParams FromRawUnchecked(
+    public static NotificationPutContentParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData,
@@ -188,7 +139,7 @@ public record class ProviderUpdateParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(ProviderUpdateParams? other)
+    public virtual bool Equals(NotificationPutContentParams? other)
     {
         if (other == null)
         {
@@ -203,7 +154,8 @@ public record class ProviderUpdateParams : ParamsBase
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
-            options.BaseUrl.ToString().TrimEnd('/') + string.Format("/providers/{0}", this.ID)
+            options.BaseUrl.ToString().TrimEnd('/')
+                + string.Format("/notifications/{0}/content", this.ID)
         )
         {
             Query = this.QueryString(options),
@@ -232,4 +184,100 @@ public record class ProviderUpdateParams : ParamsBase
     {
         return 0;
     }
+}
+
+/// <summary>
+/// Elemental content payload. The server defaults `version` when omitted.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Content, ContentFromRaw>))]
+public sealed record class Content : JsonModel
+{
+    public required IReadOnlyList<ElementalNode> Elements
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<ElementalNode>>("elements");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ElementalNode>>(
+                "elements",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Content version identifier (e.g., `2022-01-01`). Optional; server defaults
+    /// when omitted.
+    /// </summary>
+    public string? Version
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("version");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("version", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        foreach (var item in this.Elements)
+        {
+            item.Validate();
+        }
+        _ = this.Version;
+    }
+
+    public Content() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Content(Content content)
+        : base(content) { }
+#pragma warning restore CS8618
+
+    public Content(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Content(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ContentFromRaw.FromRawUnchecked"/>
+    public static Content FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public Content(IReadOnlyList<ElementalNode> elements)
+        : this()
+    {
+        this.Elements = elements;
+    }
+}
+
+class ContentFromRaw : IFromRawJson<Content>
+{
+    /// <inheritdoc/>
+    public Content FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Content.FromRawUnchecked(rawData);
 }

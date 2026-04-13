@@ -240,7 +240,7 @@ public sealed class ProviderServiceWithRawResponse : IProviderServiceWithRawResp
 
         HttpRequest<ProviderUpdateParams> request = new()
         {
-            Method = HttpMethod.Post,
+            Method = HttpMethod.Put,
             Params = parameters,
         };
         var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);

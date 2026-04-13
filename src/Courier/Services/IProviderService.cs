@@ -54,9 +54,11 @@ public interface IProviderService
     );
 
     /// <summary>
-    /// Update an existing provider configuration. The `provider` key is required. All
-    /// other fields are optional — omitted fields are cleared from the stored
-    /// configuration (this is a full replacement, not a partial merge).
+    /// Replace an existing provider configuration. The `provider` key is required and
+    /// determines which provider-specific settings schema is applied. All other fields
+    /// are optional — omitted fields are cleared from the stored configuration (this is
+    /// a full replacement, not a partial merge). Changing the provider type for an
+    /// existing configuration is not supported.
     /// </summary>
     Task<Provider> Update(
         ProviderUpdateParams parameters,
@@ -134,7 +136,7 @@ public interface IProviderServiceWithRawResponse
     );
 
     /// <summary>
-    /// Returns a raw HTTP response for <c>post /providers/{id}</c>, but is otherwise the
+    /// Returns a raw HTTP response for <c>put /providers/{id}</c>, but is otherwise the
     /// same as <see cref="IProviderService.Update(ProviderUpdateParams, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<Provider>> Update(

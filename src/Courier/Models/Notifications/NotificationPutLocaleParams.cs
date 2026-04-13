@@ -1,26 +1,25 @@
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Courier.Core;
 
-namespace Courier.Models.Providers;
+namespace Courier.Models.Notifications;
 
 /// <summary>
-/// Replace an existing provider configuration. The `provider` key is required and
-/// determines which provider-specific settings schema is applied. All other fields
-/// are optional — omitted fields are cleared from the stored configuration (this
-/// is a full replacement, not a partial merge). Changing the provider type for an
-/// existing configuration is not supported.
+/// Set locale-specific content overrides for a notification template. Each element
+/// override must reference an existing element by ID. Only supported for V2 (elemental) templates.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public record class ProviderUpdateParams : ParamsBase
+public record class NotificationPutLocaleParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -28,55 +27,39 @@ public record class ProviderUpdateParams : ParamsBase
         get { return this._rawBodyData.Freeze(); }
     }
 
-    public string? ID { get; init; }
+    public required string ID { get; init; }
+
+    public string? LocaleID { get; init; }
 
     /// <summary>
-    /// The provider key identifying the type. Required on every request because it
-    /// selects the provider-specific settings schema for validation.
+    /// Elements with locale-specific content overrides.
     /// </summary>
-    public required string Provider
+    public required IReadOnlyList<Element> Elements
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<string>("provider");
-        }
-        init { this._rawBodyData.Set("provider", value); }
-    }
-
-    /// <summary>
-    /// Updated alias. Omit to clear.
-    /// </summary>
-    public string? Alias
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("alias");
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<Element>>("elements");
         }
         init
         {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("alias", value);
+            this._rawBodyData.Set<ImmutableArray<Element>>(
+                "elements",
+                ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
     /// <summary>
-    /// Provider-specific settings (snake_case keys). Replaces the full settings
-    /// object — omitted settings fields are removed. Use the catalog endpoint to
-    /// check required fields.
+    /// Template state. Defaults to `DRAFT`.
     /// </summary>
-    public IReadOnlyDictionary<string, JsonElement>? Settings
+    public ApiEnum<string, NotificationTemplateState>? State
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
-                "settings"
+            return this._rawBodyData.GetNullableClass<ApiEnum<string, NotificationTemplateState>>(
+                "state"
             );
         }
         init
@@ -86,48 +69,25 @@ public record class ProviderUpdateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
-                "settings",
-                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
-            );
+            this._rawBodyData.Set("state", value);
         }
     }
 
-    /// <summary>
-    /// Updated display title.
-    /// </summary>
-    public string? Title
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("title");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("title", value);
-        }
-    }
-
-    public ProviderUpdateParams() { }
+    public NotificationPutLocaleParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public ProviderUpdateParams(ProviderUpdateParams providerUpdateParams)
-        : base(providerUpdateParams)
+    public NotificationPutLocaleParams(NotificationPutLocaleParams notificationPutLocaleParams)
+        : base(notificationPutLocaleParams)
     {
-        this.ID = providerUpdateParams.ID;
+        this.ID = notificationPutLocaleParams.ID;
+        this.LocaleID = notificationPutLocaleParams.LocaleID;
 
-        this._rawBodyData = new(providerUpdateParams._rawBodyData);
+        this._rawBodyData = new(notificationPutLocaleParams._rawBodyData);
     }
 #pragma warning restore CS8618
 
-    public ProviderUpdateParams(
+    public NotificationPutLocaleParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -140,33 +100,37 @@ public record class ProviderUpdateParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ProviderUpdateParams(
+    NotificationPutLocaleParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
         FrozenDictionary<string, JsonElement> rawBodyData,
-        string id
+        string id,
+        string localeID
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
         this._rawBodyData = new(rawBodyData);
         this.ID = id;
+        this.LocaleID = localeID;
     }
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static ProviderUpdateParams FromRawUnchecked(
+    public static NotificationPutLocaleParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData,
-        string id
+        string id,
+        string localeID
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
             FrozenDictionary.ToFrozenDictionary(rawQueryData),
             FrozenDictionary.ToFrozenDictionary(rawBodyData),
-            id
+            id,
+            localeID
         );
     }
 
@@ -176,6 +140,7 @@ public record class ProviderUpdateParams : ParamsBase
                 new Dictionary<string, JsonElement>()
                 {
                     ["ID"] = JsonSerializer.SerializeToElement(this.ID),
+                    ["LocaleID"] = JsonSerializer.SerializeToElement(this.LocaleID),
                     ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
                         JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
                     ),
@@ -188,13 +153,14 @@ public record class ProviderUpdateParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(ProviderUpdateParams? other)
+    public virtual bool Equals(NotificationPutLocaleParams? other)
     {
         if (other == null)
         {
             return false;
         }
-        return (this.ID?.Equals(other.ID) ?? other.ID == null)
+        return this.ID.Equals(other.ID)
+            && (this.LocaleID?.Equals(other.LocaleID) ?? other.LocaleID == null)
             && this._rawHeaderData.Equals(other._rawHeaderData)
             && this._rawQueryData.Equals(other._rawQueryData)
             && this._rawBodyData.Equals(other._rawBodyData);
@@ -203,7 +169,8 @@ public record class ProviderUpdateParams : ParamsBase
     public override Uri Url(ClientOptions options)
     {
         return new UriBuilder(
-            options.BaseUrl.ToString().TrimEnd('/') + string.Format("/providers/{0}", this.ID)
+            options.BaseUrl.ToString().TrimEnd('/')
+                + string.Format("/notifications/{0}/locales/{1}", this.ID, this.LocaleID)
         )
         {
             Query = this.QueryString(options),
@@ -232,4 +199,68 @@ public record class ProviderUpdateParams : ParamsBase
     {
         return 0;
     }
+}
+
+[JsonConverter(typeof(JsonModelConverter<Element, ElementFromRaw>))]
+public sealed record class Element : JsonModel
+{
+    /// <summary>
+    /// Target element ID.
+    /// </summary>
+    public required string ID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
+        init { this._rawData.Set("id", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ID;
+    }
+
+    public Element() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Element(Element element)
+        : base(element) { }
+#pragma warning restore CS8618
+
+    public Element(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Element(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ElementFromRaw.FromRawUnchecked"/>
+    public static Element FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public Element(string id)
+        : this()
+    {
+        this.ID = id;
+    }
+}
+
+class ElementFromRaw : IFromRawJson<Element>
+{
+    /// <inheritdoc/>
+    public Element FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Element.FromRawUnchecked(rawData);
 }

@@ -6,29 +6,68 @@ using System.Net.Http;
 using System.Text.Json;
 using Courier.Core;
 
-namespace Courier.Models.Notifications.Draft;
+namespace Courier.Models.RoutingStrategies;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// List notification templates associated with a routing strategy. Includes template
+/// metadata only, not full content.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
-public record class DraftRetrieveContentParams : ParamsBase
+public record class RoutingStrategyListNotificationsParams : ParamsBase
 {
     public string? ID { get; init; }
 
-    public DraftRetrieveContentParams() { }
+    /// <summary>
+    /// Opaque pagination cursor from a previous response. Omit for the first page.
+    /// </summary>
+    public string? Cursor
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("cursor");
+        }
+        init { this._rawQueryData.Set("cursor", value); }
+    }
+
+    /// <summary>
+    /// Maximum number of results per page. Default 20, max 100.
+    /// </summary>
+    public long? Limit
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableStruct<long>("limit");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("limit", value);
+        }
+    }
+
+    public RoutingStrategyListNotificationsParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public DraftRetrieveContentParams(DraftRetrieveContentParams draftRetrieveContentParams)
-        : base(draftRetrieveContentParams)
+    public RoutingStrategyListNotificationsParams(
+        RoutingStrategyListNotificationsParams routingStrategyListNotificationsParams
+    )
+        : base(routingStrategyListNotificationsParams)
     {
-        this.ID = draftRetrieveContentParams.ID;
+        this.ID = routingStrategyListNotificationsParams.ID;
     }
 #pragma warning restore CS8618
 
-    public DraftRetrieveContentParams(
+    public RoutingStrategyListNotificationsParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
@@ -39,7 +78,7 @@ public record class DraftRetrieveContentParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    DraftRetrieveContentParams(
+    RoutingStrategyListNotificationsParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
         string id
@@ -52,7 +91,7 @@ public record class DraftRetrieveContentParams : ParamsBase
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static DraftRetrieveContentParams FromRawUnchecked(
+    public static RoutingStrategyListNotificationsParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         string id
@@ -82,7 +121,7 @@ public record class DraftRetrieveContentParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(DraftRetrieveContentParams? other)
+    public virtual bool Equals(RoutingStrategyListNotificationsParams? other)
     {
         if (other == null)
         {
@@ -97,7 +136,7 @@ public record class DraftRetrieveContentParams : ParamsBase
     {
         return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/notifications/{0}/draft/content", this.ID)
+                + string.Format("/routing-strategies/{0}/notifications", this.ID)
         )
         {
             Query = this.QueryString(options),

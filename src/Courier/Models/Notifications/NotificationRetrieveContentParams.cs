@@ -9,13 +9,39 @@ using Courier.Core;
 namespace Courier.Models.Notifications;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Retrieve the content of a notification template. The response shape depends on
+/// whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use
+/// the `version` query parameter to select draft, published, or a specific historical version.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public record class NotificationRetrieveContentParams : ParamsBase
 {
     public string? ID { get; init; }
+
+    /// <summary>
+    /// Accepts `draft`, `published`, or a version string (e.g., `v001`). Defaults
+    /// to `published`.
+    /// </summary>
+    public string? Version
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("version");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("version", value);
+        }
+    }
 
     public NotificationRetrieveContentParams() { }
 
