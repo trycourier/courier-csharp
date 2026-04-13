@@ -37,7 +37,7 @@ public sealed class RoutingStrategyService : IRoutingStrategyService
     }
 
     /// <inheritdoc/>
-    public async Task<RoutingStrategyMutationResponse> Create(
+    public async Task<RoutingStrategyGetResponse> Create(
         RoutingStrategyCreateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -130,7 +130,7 @@ public sealed class RoutingStrategyService : IRoutingStrategyService
     }
 
     /// <inheritdoc/>
-    public async Task<RoutingStrategyMutationResponse> Replace(
+    public async Task<RoutingStrategyGetResponse> Replace(
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -142,7 +142,7 @@ public sealed class RoutingStrategyService : IRoutingStrategyService
     }
 
     /// <inheritdoc/>
-    public Task<RoutingStrategyMutationResponse> Replace(
+    public Task<RoutingStrategyGetResponse> Replace(
         string id,
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -171,7 +171,7 @@ public sealed class RoutingStrategyServiceWithRawResponse : IRoutingStrategyServ
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<RoutingStrategyMutationResponse>> Create(
+    public async Task<HttpResponse<RoutingStrategyGetResponse>> Create(
         RoutingStrategyCreateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -186,14 +186,14 @@ public sealed class RoutingStrategyServiceWithRawResponse : IRoutingStrategyServ
             response,
             async (token) =>
             {
-                var routingStrategyMutationResponse = await response
-                    .Deserialize<RoutingStrategyMutationResponse>(token)
+                var routingStrategyGetResponse = await response
+                    .Deserialize<RoutingStrategyGetResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    routingStrategyMutationResponse.Validate();
+                    routingStrategyGetResponse.Validate();
                 }
-                return routingStrategyMutationResponse;
+                return routingStrategyGetResponse;
             }
         );
     }
@@ -350,7 +350,7 @@ public sealed class RoutingStrategyServiceWithRawResponse : IRoutingStrategyServ
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<RoutingStrategyMutationResponse>> Replace(
+    public async Task<HttpResponse<RoutingStrategyGetResponse>> Replace(
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -370,20 +370,20 @@ public sealed class RoutingStrategyServiceWithRawResponse : IRoutingStrategyServ
             response,
             async (token) =>
             {
-                var routingStrategyMutationResponse = await response
-                    .Deserialize<RoutingStrategyMutationResponse>(token)
+                var routingStrategyGetResponse = await response
+                    .Deserialize<RoutingStrategyGetResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    routingStrategyMutationResponse.Validate();
+                    routingStrategyGetResponse.Validate();
                 }
-                return routingStrategyMutationResponse;
+                return routingStrategyGetResponse;
             }
         );
     }
 
     /// <inheritdoc/>
-    public Task<HttpResponse<RoutingStrategyMutationResponse>> Replace(
+    public Task<HttpResponse<RoutingStrategyGetResponse>> Replace(
         string id,
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default

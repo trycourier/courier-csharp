@@ -30,7 +30,7 @@ public interface IRoutingStrategyService
     /// Create a routing strategy. Requires a name and routing configuration at minimum.
     /// Channels and providers default to empty if omitted.
     /// </summary>
-    Task<RoutingStrategyMutationResponse> Create(
+    Task<RoutingStrategyGetResponse> Create(
         RoutingStrategyCreateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -97,13 +97,13 @@ public interface IRoutingStrategyService
     /// Replace a routing strategy. Full document replacement; the caller must send the
     /// complete desired state. Missing optional fields are cleared.
     /// </summary>
-    Task<RoutingStrategyMutationResponse> Replace(
+    Task<RoutingStrategyGetResponse> Replace(
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Replace(RoutingStrategyReplaceParams, CancellationToken)"/>
-    Task<RoutingStrategyMutationResponse> Replace(
+    Task<RoutingStrategyGetResponse> Replace(
         string id,
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -127,7 +127,7 @@ public interface IRoutingStrategyServiceWithRawResponse
     /// Returns a raw HTTP response for <c>post /routing-strategies</c>, but is otherwise the
     /// same as <see cref="IRoutingStrategyService.Create(RoutingStrategyCreateParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<RoutingStrategyMutationResponse>> Create(
+    Task<HttpResponse<RoutingStrategyGetResponse>> Create(
         RoutingStrategyCreateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -193,13 +193,13 @@ public interface IRoutingStrategyServiceWithRawResponse
     /// Returns a raw HTTP response for <c>put /routing-strategies/{id}</c>, but is otherwise the
     /// same as <see cref="IRoutingStrategyService.Replace(RoutingStrategyReplaceParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<RoutingStrategyMutationResponse>> Replace(
+    Task<HttpResponse<RoutingStrategyGetResponse>> Replace(
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Replace(RoutingStrategyReplaceParams, CancellationToken)"/>
-    Task<HttpResponse<RoutingStrategyMutationResponse>> Replace(
+    Task<HttpResponse<RoutingStrategyGetResponse>> Replace(
         string id,
         RoutingStrategyReplaceParams parameters,
         CancellationToken cancellationToken = default
