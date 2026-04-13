@@ -8,7 +8,7 @@ public class RoutingStrategyServiceTest : TestBase
     [Fact(Skip = "Mock server tests are disabled")]
     public async Task Create_Works()
     {
-        var routingStrategyMutationResponse = await this.client.RoutingStrategies.Create(
+        var routingStrategyGetResponse = await this.client.RoutingStrategies.Create(
             new()
             {
                 Name = "Email via SendGrid",
@@ -16,7 +16,7 @@ public class RoutingStrategyServiceTest : TestBase
             },
             TestContext.Current.CancellationToken
         );
-        routingStrategyMutationResponse.Validate();
+        routingStrategyGetResponse.Validate();
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
@@ -65,7 +65,7 @@ public class RoutingStrategyServiceTest : TestBase
     [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replace_Works()
     {
-        var routingStrategyMutationResponse = await this.client.RoutingStrategies.Replace(
+        var routingStrategyGetResponse = await this.client.RoutingStrategies.Replace(
             "id",
             new()
             {
@@ -74,6 +74,6 @@ public class RoutingStrategyServiceTest : TestBase
             },
             TestContext.Current.CancellationToken
         );
-        routingStrategyMutationResponse.Validate();
+        routingStrategyGetResponse.Validate();
     }
 }

@@ -45,7 +45,7 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public async Task<NotificationTemplateMutationResponse> Create(
+    public async Task<NotificationTemplateGetResponse> Create(
         NotificationCreateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -225,7 +225,7 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public async Task<NotificationTemplateMutationResponse> Replace(
+    public async Task<NotificationTemplateGetResponse> Replace(
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -237,7 +237,7 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
-    public Task<NotificationTemplateMutationResponse> Replace(
+    public Task<NotificationTemplateGetResponse> Replace(
         string id,
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -298,7 +298,7 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<NotificationTemplateMutationResponse>> Create(
+    public async Task<HttpResponse<NotificationTemplateGetResponse>> Create(
         NotificationCreateParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -313,14 +313,14 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
             response,
             async (token) =>
             {
-                var notificationTemplateMutationResponse = await response
-                    .Deserialize<NotificationTemplateMutationResponse>(token)
+                var notificationTemplateGetResponse = await response
+                    .Deserialize<NotificationTemplateGetResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    notificationTemplateMutationResponse.Validate();
+                    notificationTemplateGetResponse.Validate();
                 }
-                return notificationTemplateMutationResponse;
+                return notificationTemplateGetResponse;
             }
         );
     }
@@ -637,7 +637,7 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
     }
 
     /// <inheritdoc/>
-    public async Task<HttpResponse<NotificationTemplateMutationResponse>> Replace(
+    public async Task<HttpResponse<NotificationTemplateGetResponse>> Replace(
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
     )
@@ -657,20 +657,20 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
             response,
             async (token) =>
             {
-                var notificationTemplateMutationResponse = await response
-                    .Deserialize<NotificationTemplateMutationResponse>(token)
+                var notificationTemplateGetResponse = await response
+                    .Deserialize<NotificationTemplateGetResponse>(token)
                     .ConfigureAwait(false);
                 if (this._client.ResponseValidation)
                 {
-                    notificationTemplateMutationResponse.Validate();
+                    notificationTemplateGetResponse.Validate();
                 }
-                return notificationTemplateMutationResponse;
+                return notificationTemplateGetResponse;
             }
         );
     }
 
     /// <inheritdoc/>
-    public Task<HttpResponse<NotificationTemplateMutationResponse>> Replace(
+    public Task<HttpResponse<NotificationTemplateGetResponse>> Replace(
         string id,
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default

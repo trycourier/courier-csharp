@@ -33,7 +33,7 @@ public interface INotificationService
     /// Create a notification template. Requires all fields in the notification object.
     /// Templates are created in draft state by default.
     /// </summary>
-    Task<NotificationTemplateMutationResponse> Create(
+    Task<NotificationTemplateGetResponse> Create(
         NotificationCreateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -161,13 +161,13 @@ public interface INotificationService
     /// <summary>
     /// Replace a notification template. All fields are required.
     /// </summary>
-    Task<NotificationTemplateMutationResponse> Replace(
+    Task<NotificationTemplateGetResponse> Replace(
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Replace(NotificationReplaceParams, CancellationToken)"/>
-    Task<NotificationTemplateMutationResponse> Replace(
+    Task<NotificationTemplateGetResponse> Replace(
         string id,
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -211,7 +211,7 @@ public interface INotificationServiceWithRawResponse
     /// Returns a raw HTTP response for <c>post /notifications</c>, but is otherwise the
     /// same as <see cref="INotificationService.Create(NotificationCreateParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<NotificationTemplateMutationResponse>> Create(
+    Task<HttpResponse<NotificationTemplateGetResponse>> Create(
         NotificationCreateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -341,13 +341,13 @@ public interface INotificationServiceWithRawResponse
     /// Returns a raw HTTP response for <c>put /notifications/{id}</c>, but is otherwise the
     /// same as <see cref="INotificationService.Replace(NotificationReplaceParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<NotificationTemplateMutationResponse>> Replace(
+    Task<HttpResponse<NotificationTemplateGetResponse>> Replace(
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Replace(NotificationReplaceParams, CancellationToken)"/>
-    Task<HttpResponse<NotificationTemplateMutationResponse>> Replace(
+    Task<HttpResponse<NotificationTemplateGetResponse>> Replace(
         string id,
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default

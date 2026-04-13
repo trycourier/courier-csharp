@@ -10,9 +10,11 @@ using Courier.Core;
 namespace Courier.Models.Providers;
 
 /// <summary>
-/// Update an existing provider configuration. The `provider` key is required. All
-/// other fields are optional — omitted fields are cleared from the stored configuration
-/// (this is a full replacement, not a partial merge).
+/// Replace an existing provider configuration. The `provider` key is required and
+/// determines which provider-specific settings schema is applied. All other fields
+/// are optional — omitted fields are cleared from the stored configuration (this
+/// is a full replacement, not a partial merge). Changing the provider type for an
+/// existing configuration is not supported.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -29,7 +31,8 @@ public record class ProviderUpdateParams : ParamsBase
     public string? ID { get; init; }
 
     /// <summary>
-    /// The provider key identifying the type.
+    /// The provider key identifying the type. Required on every request because it
+    /// selects the provider-specific settings schema for validation.
     /// </summary>
     public required string Provider
     {
