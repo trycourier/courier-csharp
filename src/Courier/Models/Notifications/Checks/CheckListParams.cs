@@ -9,9 +9,11 @@ using Courier.Core;
 namespace Courier.Models.Notifications.Checks;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Retrieve the checks for a notification template submission.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public record class CheckListParams : ParamsBase
 {

@@ -33,7 +33,7 @@ public interface INotificationService
     /// Create a notification template. Requires all fields in the notification object.
     /// Templates are created in draft state by default.
     /// </summary>
-    Task<NotificationTemplateGetResponse> Create(
+    Task<NotificationTemplateResponse> Create(
         NotificationCreateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -42,13 +42,13 @@ public interface INotificationService
     /// Retrieve a notification template by ID. Returns the published version by
     /// default. Pass version=draft to retrieve an unpublished template.
     /// </summary>
-    Task<NotificationTemplateGetResponse> Retrieve(
+    Task<NotificationTemplateResponse> Retrieve(
         NotificationRetrieveParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Retrieve(NotificationRetrieveParams, CancellationToken)"/>
-    Task<NotificationTemplateGetResponse> Retrieve(
+    Task<NotificationTemplateResponse> Retrieve(
         string id,
         NotificationRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -161,13 +161,13 @@ public interface INotificationService
     /// <summary>
     /// Replace a notification template. All fields are required.
     /// </summary>
-    Task<NotificationTemplateGetResponse> Replace(
+    Task<NotificationTemplateResponse> Replace(
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Replace(NotificationReplaceParams, CancellationToken)"/>
-    Task<NotificationTemplateGetResponse> Replace(
+    Task<NotificationTemplateResponse> Replace(
         string id,
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -211,7 +211,7 @@ public interface INotificationServiceWithRawResponse
     /// Returns a raw HTTP response for <c>post /notifications</c>, but is otherwise the
     /// same as <see cref="INotificationService.Create(NotificationCreateParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<NotificationTemplateGetResponse>> Create(
+    Task<HttpResponse<NotificationTemplateResponse>> Create(
         NotificationCreateParams parameters,
         CancellationToken cancellationToken = default
     );
@@ -220,13 +220,13 @@ public interface INotificationServiceWithRawResponse
     /// Returns a raw HTTP response for <c>get /notifications/{id}</c>, but is otherwise the
     /// same as <see cref="INotificationService.Retrieve(NotificationRetrieveParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<NotificationTemplateGetResponse>> Retrieve(
+    Task<HttpResponse<NotificationTemplateResponse>> Retrieve(
         NotificationRetrieveParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Retrieve(NotificationRetrieveParams, CancellationToken)"/>
-    Task<HttpResponse<NotificationTemplateGetResponse>> Retrieve(
+    Task<HttpResponse<NotificationTemplateResponse>> Retrieve(
         string id,
         NotificationRetrieveParams? parameters = null,
         CancellationToken cancellationToken = default
@@ -341,13 +341,13 @@ public interface INotificationServiceWithRawResponse
     /// Returns a raw HTTP response for <c>put /notifications/{id}</c>, but is otherwise the
     /// same as <see cref="INotificationService.Replace(NotificationReplaceParams, CancellationToken)"/>.
     /// </summary>
-    Task<HttpResponse<NotificationTemplateGetResponse>> Replace(
+    Task<HttpResponse<NotificationTemplateResponse>> Replace(
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 
     /// <inheritdoc cref="Replace(NotificationReplaceParams, CancellationToken)"/>
-    Task<HttpResponse<NotificationTemplateGetResponse>> Replace(
+    Task<HttpResponse<NotificationTemplateResponse>> Replace(
         string id,
         NotificationReplaceParams parameters,
         CancellationToken cancellationToken = default

@@ -7,12 +7,12 @@ using Courier.Models.Notifications;
 
 namespace Courier.Tests.Models.Notifications;
 
-public class NotificationTemplateGetResponseTest : TestBase
+public class NotificationTemplateResponseTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -40,7 +40,7 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
             Updated = 0,
             Updater = "updater",
         };
@@ -71,8 +71,8 @@ public class NotificationTemplateGetResponseTest : TestBase
             Tags = ["string"],
             ID = "id",
         };
-        ApiEnum<string, NotificationTemplateGetResponseState> expectedState =
-            NotificationTemplateGetResponseState.Draft;
+        ApiEnum<string, NotificationTemplateResponseState> expectedState =
+            NotificationTemplateResponseState.Draft;
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -87,7 +87,7 @@ public class NotificationTemplateGetResponseTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -115,13 +115,13 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
             Updated = 0,
             Updater = "updater",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateGetResponse>(
+        var deserialized = JsonSerializer.Deserialize<NotificationTemplateResponse>(
             json,
             ModelBase.SerializerOptions
         );
@@ -132,7 +132,7 @@ public class NotificationTemplateGetResponseTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -160,13 +160,13 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
             Updated = 0,
             Updater = "updater",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateGetResponse>(
+        var deserialized = JsonSerializer.Deserialize<NotificationTemplateResponse>(
             element,
             ModelBase.SerializerOptions
         );
@@ -198,8 +198,8 @@ public class NotificationTemplateGetResponseTest : TestBase
             Tags = ["string"],
             ID = "id",
         };
-        ApiEnum<string, NotificationTemplateGetResponseState> expectedState =
-            NotificationTemplateGetResponseState.Draft;
+        ApiEnum<string, NotificationTemplateResponseState> expectedState =
+            NotificationTemplateResponseState.Draft;
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -214,7 +214,7 @@ public class NotificationTemplateGetResponseTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -242,7 +242,7 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
             Updated = 0,
             Updater = "updater",
         };
@@ -253,7 +253,7 @@ public class NotificationTemplateGetResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -281,7 +281,7 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
         };
 
         Assert.Null(model.Updated);
@@ -293,7 +293,7 @@ public class NotificationTemplateGetResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -321,7 +321,7 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
         };
 
         model.Validate();
@@ -330,7 +330,7 @@ public class NotificationTemplateGetResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -358,7 +358,7 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Updated = null,
@@ -374,7 +374,7 @@ public class NotificationTemplateGetResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -402,7 +402,7 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Updated = null,
@@ -415,7 +415,7 @@ public class NotificationTemplateGetResponseTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new NotificationTemplateGetResponse
+        var model = new NotificationTemplateResponse
         {
             Created = 0,
             Creator = "creator",
@@ -443,12 +443,12 @@ public class NotificationTemplateGetResponseTest : TestBase
                 Tags = ["string"],
                 ID = "id",
             },
-            State = NotificationTemplateGetResponseState.Draft,
+            State = NotificationTemplateResponseState.Draft,
             Updated = 0,
             Updater = "updater",
         };
 
-        NotificationTemplateGetResponse copied = new(model);
+        NotificationTemplateResponse copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -753,40 +753,41 @@ public class NotificationIntersectionMember1Test : TestBase
     }
 }
 
-public class NotificationTemplateGetResponseStateTest : TestBase
+public class NotificationTemplateResponseStateTest : TestBase
 {
     [Theory]
-    [InlineData(NotificationTemplateGetResponseState.Draft)]
-    [InlineData(NotificationTemplateGetResponseState.Published)]
-    public void Validation_Works(NotificationTemplateGetResponseState rawValue)
+    [InlineData(NotificationTemplateResponseState.Draft)]
+    [InlineData(NotificationTemplateResponseState.Published)]
+    public void Validation_Works(NotificationTemplateResponseState rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, NotificationTemplateGetResponseState> value = rawValue;
+        ApiEnum<string, NotificationTemplateResponseState> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateGetResponseState>
-        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        var value = JsonSerializer.Deserialize<ApiEnum<string, NotificationTemplateResponseState>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
 
         Assert.NotNull(value);
         Assert.Throws<CourierInvalidDataException>(() => value.Validate());
     }
 
     [Theory]
-    [InlineData(NotificationTemplateGetResponseState.Draft)]
-    [InlineData(NotificationTemplateGetResponseState.Published)]
-    public void SerializationRoundtrip_Works(NotificationTemplateGetResponseState rawValue)
+    [InlineData(NotificationTemplateResponseState.Draft)]
+    [InlineData(NotificationTemplateResponseState.Published)]
+    public void SerializationRoundtrip_Works(NotificationTemplateResponseState rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, NotificationTemplateGetResponseState> value = rawValue;
+        ApiEnum<string, NotificationTemplateResponseState> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateGetResponseState>
+            ApiEnum<string, NotificationTemplateResponseState>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
@@ -795,12 +796,13 @@ public class NotificationTemplateGetResponseStateTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateGetResponseState>
-        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        var value = JsonSerializer.Deserialize<ApiEnum<string, NotificationTemplateResponseState>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateGetResponseState>
+            ApiEnum<string, NotificationTemplateResponseState>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
