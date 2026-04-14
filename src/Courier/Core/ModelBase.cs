@@ -88,7 +88,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Notifications::Type>(),
             new ApiEnumConverter<string, Notifications::BlockType>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateCreateRequestState>(),
-            new ApiEnumConverter<string, Notifications::NotificationTemplateGetResponseState>(),
+            new ApiEnumConverter<
+                string,
+                Notifications::NotificationTemplateResponseIntersectionMember1State
+            >(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateState>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateSummaryState>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateUpdateRequestState>(),

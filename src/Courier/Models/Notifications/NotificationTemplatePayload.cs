@@ -9,8 +9,8 @@ using Courier.Core;
 namespace Courier.Models.Notifications;
 
 /// <summary>
-/// Full document shape used in POST and PUT request bodies, and returned inside the
-/// GET response envelope.
+/// Core template fields used in POST and PUT request bodies (nested under a `notification`
+/// key) and returned at the top level in responses.
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<NotificationTemplatePayload, NotificationTemplatePayloadFromRaw>)

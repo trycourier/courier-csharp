@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.7.1 (2026-04-14)
+
+Full Changelog: [v5.7.0...v5.7.1](https://github.com/trycourier/courier-csharp/compare/v5.7.0...v5.7.1)
+
+### Bug Fixes
+
+* **api:** flatten notification template response, make note optional, rename types ([ba7fd30](https://github.com/trycourier/courier-csharp/commit/ba7fd301f6ad86f9d9d71b5920990a6406226705))
+* **types:** flatten NotificationTemplateResponse, rename Notification and related models ([60f5f09](https://github.com/trycourier/courier-csharp/commit/60f5f09c3a658b53ec8a1222607891fccbdf2459))
+
 ## 5.7.0 (2026-04-13)
 
 Full Changelog: [v5.6.0...v5.7.0](https://github.com/trycourier/courier-csharp/compare/v5.6.0...v5.7.0)
