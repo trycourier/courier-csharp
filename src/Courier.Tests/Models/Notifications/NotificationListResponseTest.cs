@@ -21,10 +21,10 @@ public class NotificationListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = 0,
                     EventIds = ["string"],
-                    Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
                     UpdatedAt = 0,
+                    Note = "note",
                     Tags = new([new() { ID = "id", Name = "name" }]),
                     Title = "title",
                 },
@@ -39,10 +39,10 @@ public class NotificationListResponseTest : TestBase
                 ID = "id",
                 CreatedAt = 0,
                 EventIds = ["string"],
-                Note = "note",
                 Routing = new() { Channels = ["string"], Method = Method.All },
                 TopicID = "topic_id",
                 UpdatedAt = 0,
+                Note = "note",
                 Tags = new([new() { ID = "id", Name = "name" }]),
                 Title = "title",
             },
@@ -69,10 +69,10 @@ public class NotificationListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = 0,
                     EventIds = ["string"],
-                    Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
                     UpdatedAt = 0,
+                    Note = "note",
                     Tags = new([new() { ID = "id", Name = "name" }]),
                     Title = "title",
                 },
@@ -101,10 +101,10 @@ public class NotificationListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = 0,
                     EventIds = ["string"],
-                    Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
                     UpdatedAt = 0,
+                    Note = "note",
                     Tags = new([new() { ID = "id", Name = "name" }]),
                     Title = "title",
                 },
@@ -126,10 +126,10 @@ public class NotificationListResponseTest : TestBase
                 ID = "id",
                 CreatedAt = 0,
                 EventIds = ["string"],
-                Note = "note",
                 Routing = new() { Channels = ["string"], Method = Method.All },
                 TopicID = "topic_id",
                 UpdatedAt = 0,
+                Note = "note",
                 Tags = new([new() { ID = "id", Name = "name" }]),
                 Title = "title",
             },
@@ -156,10 +156,10 @@ public class NotificationListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = 0,
                     EventIds = ["string"],
-                    Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
                     UpdatedAt = 0,
+                    Note = "note",
                     Tags = new([new() { ID = "id", Name = "name" }]),
                     Title = "title",
                 },
@@ -182,10 +182,10 @@ public class NotificationListResponseTest : TestBase
                     ID = "id",
                     CreatedAt = 0,
                     EventIds = ["string"],
-                    Note = "note",
                     Routing = new() { Channels = ["string"], Method = Method.All },
                     TopicID = "topic_id",
                     UpdatedAt = 0,
+                    Note = "note",
                     Tags = new([new() { ID = "id", Name = "name" }]),
                     Title = "title",
                 },
@@ -208,10 +208,10 @@ public class ResultTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
             Tags = new([new() { ID = "id", Name = "name" }]),
             Title = "title",
         };
@@ -243,10 +243,10 @@ public class ResultTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
             Tags = new([new() { ID = "id", Name = "name" }]),
             Title = "title",
         };
@@ -287,10 +287,10 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
             Tags = new([new() { ID = "id", Name = "name" }]),
             Title = "title",
         };
@@ -298,10 +298,10 @@ public class ResultNotificationTest : TestBase
         string expectedID = "id";
         long expectedCreatedAt = 0;
         List<string> expectedEventIds = ["string"];
-        string expectedNote = "note";
         MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
         string expectedTopicID = "topic_id";
         long expectedUpdatedAt = 0;
+        string expectedNote = "note";
         Tags expectedTags = new([new() { ID = "id", Name = "name" }]);
         string expectedTitle = "title";
 
@@ -312,10 +312,10 @@ public class ResultNotificationTest : TestBase
         {
             Assert.Equal(expectedEventIds[i], model.EventIds[i]);
         }
-        Assert.Equal(expectedNote, model.Note);
         Assert.Equal(expectedRouting, model.Routing);
         Assert.Equal(expectedTopicID, model.TopicID);
         Assert.Equal(expectedUpdatedAt, model.UpdatedAt);
+        Assert.Equal(expectedNote, model.Note);
         Assert.Equal(expectedTags, model.Tags);
         Assert.Equal(expectedTitle, model.Title);
     }
@@ -328,10 +328,10 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
             Tags = new([new() { ID = "id", Name = "name" }]),
             Title = "title",
         };
@@ -353,10 +353,10 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
             Tags = new([new() { ID = "id", Name = "name" }]),
             Title = "title",
         };
@@ -371,10 +371,10 @@ public class ResultNotificationTest : TestBase
         string expectedID = "id";
         long expectedCreatedAt = 0;
         List<string> expectedEventIds = ["string"];
-        string expectedNote = "note";
         MessageRouting expectedRouting = new() { Channels = ["string"], Method = Method.All };
         string expectedTopicID = "topic_id";
         long expectedUpdatedAt = 0;
+        string expectedNote = "note";
         Tags expectedTags = new([new() { ID = "id", Name = "name" }]);
         string expectedTitle = "title";
 
@@ -385,10 +385,10 @@ public class ResultNotificationTest : TestBase
         {
             Assert.Equal(expectedEventIds[i], deserialized.EventIds[i]);
         }
-        Assert.Equal(expectedNote, deserialized.Note);
         Assert.Equal(expectedRouting, deserialized.Routing);
         Assert.Equal(expectedTopicID, deserialized.TopicID);
         Assert.Equal(expectedUpdatedAt, deserialized.UpdatedAt);
+        Assert.Equal(expectedNote, deserialized.Note);
         Assert.Equal(expectedTags, deserialized.Tags);
         Assert.Equal(expectedTitle, deserialized.Title);
     }
@@ -401,12 +401,92 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
+            Routing = new() { Channels = ["string"], Method = Method.All },
+            TopicID = "topic_id",
+            UpdatedAt = 0,
             Note = "note",
+            Tags = new([new() { ID = "id", Name = "name" }]),
+            Title = "title",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new ResultNotification
+        {
+            ID = "id",
+            CreatedAt = 0,
+            EventIds = ["string"],
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
             Tags = new([new() { ID = "id", Name = "name" }]),
             Title = "title",
+        };
+
+        Assert.Null(model.Note);
+        Assert.False(model.RawData.ContainsKey("note"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new ResultNotification
+        {
+            ID = "id",
+            CreatedAt = 0,
+            EventIds = ["string"],
+            Routing = new() { Channels = ["string"], Method = Method.All },
+            TopicID = "topic_id",
+            UpdatedAt = 0,
+            Tags = new([new() { ID = "id", Name = "name" }]),
+            Title = "title",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new ResultNotification
+        {
+            ID = "id",
+            CreatedAt = 0,
+            EventIds = ["string"],
+            Routing = new() { Channels = ["string"], Method = Method.All },
+            TopicID = "topic_id",
+            UpdatedAt = 0,
+            Tags = new([new() { ID = "id", Name = "name" }]),
+            Title = "title",
+
+            // Null should be interpreted as omitted for these properties
+            Note = null,
+        };
+
+        Assert.Null(model.Note);
+        Assert.False(model.RawData.ContainsKey("note"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new ResultNotification
+        {
+            ID = "id",
+            CreatedAt = 0,
+            EventIds = ["string"],
+            Routing = new() { Channels = ["string"], Method = Method.All },
+            TopicID = "topic_id",
+            UpdatedAt = 0,
+            Tags = new([new() { ID = "id", Name = "name" }]),
+            Title = "title",
+
+            // Null should be interpreted as omitted for these properties
+            Note = null,
         };
 
         model.Validate();
@@ -420,10 +500,10 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
         };
 
         Assert.Null(model.Tags);
@@ -440,10 +520,10 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
         };
 
         model.Validate();
@@ -457,10 +537,10 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
 
             Tags = null,
             Title = null,
@@ -480,10 +560,10 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
 
             Tags = null,
             Title = null,
@@ -500,10 +580,10 @@ public class ResultNotificationTest : TestBase
             ID = "id",
             CreatedAt = 0,
             EventIds = ["string"],
-            Note = "note",
             Routing = new() { Channels = ["string"], Method = Method.All },
             TopicID = "topic_id",
             UpdatedAt = 0,
+            Note = "note",
             Tags = new([new() { ID = "id", Name = "name" }]),
             Title = "title",
         };

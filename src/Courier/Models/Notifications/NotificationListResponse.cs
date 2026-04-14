@@ -395,16 +395,6 @@ public sealed record class ResultNotification : JsonModel
         }
     }
 
-    public required string Note
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("note");
-        }
-        init { this._rawData.Set("note", value); }
-    }
-
     public required MessageRouting Routing
     {
         get
@@ -435,6 +425,24 @@ public sealed record class ResultNotification : JsonModel
         init { this._rawData.Set("updated_at", value); }
     }
 
+    public string? Note
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("note");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("note", value);
+        }
+    }
+
     public Tags? Tags
     {
         get
@@ -461,10 +469,10 @@ public sealed record class ResultNotification : JsonModel
         _ = this.ID;
         _ = this.CreatedAt;
         _ = this.EventIds;
-        _ = this.Note;
         this.Routing.Validate();
         _ = this.TopicID;
         _ = this.UpdatedAt;
+        _ = this.Note;
         this.Tags?.Validate();
         _ = this.Title;
     }

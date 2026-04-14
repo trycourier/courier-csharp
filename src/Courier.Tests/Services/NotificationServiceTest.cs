@@ -8,7 +8,7 @@ public class NotificationServiceTest : TestBase
     [Fact(Skip = "Mock server tests are disabled")]
     public async Task Create_Works()
     {
-        var notificationTemplateGetResponse = await this.client.Notifications.Create(
+        var notificationTemplateResponse = await this.client.Notifications.Create(
             new()
             {
                 Notification = new()
@@ -33,18 +33,18 @@ public class NotificationServiceTest : TestBase
             },
             TestContext.Current.CancellationToken
         );
-        notificationTemplateGetResponse.Validate();
+        notificationTemplateResponse.Validate();
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
     public async Task Retrieve_Works()
     {
-        var notificationTemplateGetResponse = await this.client.Notifications.Retrieve(
+        var notificationTemplateResponse = await this.client.Notifications.Retrieve(
             "id",
             new(),
             TestContext.Current.CancellationToken
         );
-        notificationTemplateGetResponse.Validate();
+        notificationTemplateResponse.Validate();
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
@@ -129,7 +129,7 @@ public class NotificationServiceTest : TestBase
     [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replace_Works()
     {
-        var notificationTemplateGetResponse = await this.client.Notifications.Replace(
+        var notificationTemplateResponse = await this.client.Notifications.Replace(
             "id",
             new()
             {
@@ -155,7 +155,7 @@ public class NotificationServiceTest : TestBase
             },
             TestContext.Current.CancellationToken
         );
-        notificationTemplateGetResponse.Validate();
+        notificationTemplateResponse.Validate();
     }
 
     [Fact(Skip = "Mock server tests are disabled")]

@@ -11,16 +11,13 @@ using System = System;
 namespace Courier.Models.Notifications;
 
 /// <summary>
-/// Envelope response for GET /notifications/{id}. The notification object mirrors
-/// the POST/PUT input shape. Nullable fields return null when unset.
+/// Response for GET /notifications/{id}, POST /notifications, and PUT /notifications/{id}.
+/// Wraps the template payload inside a `notification` key alongside metadata.
 /// </summary>
 [JsonConverter(
-    typeof(JsonModelConverter<
-        NotificationTemplateGetResponse,
-        NotificationTemplateGetResponseFromRaw
-    >)
+    typeof(JsonModelConverter<NotificationTemplateResponse, NotificationTemplateResponseFromRaw>)
 )]
-public sealed record class NotificationTemplateGetResponse : JsonModel
+public sealed record class NotificationTemplateResponse : JsonModel
 {
     /// <summary>
     /// Epoch milliseconds when the template was created.
@@ -65,13 +62,13 @@ public sealed record class NotificationTemplateGetResponse : JsonModel
     /// <summary>
     /// The template state. Always uppercase.
     /// </summary>
-    public required ApiEnum<string, NotificationTemplateGetResponseState> State
+    public required ApiEnum<string, NotificationTemplateResponseState> State
     {
         get
         {
             this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
-                ApiEnum<string, NotificationTemplateGetResponseState>
+                ApiEnum<string, NotificationTemplateResponseState>
             >("state");
         }
         init { this._rawData.Set("state", value); }
@@ -130,31 +127,29 @@ public sealed record class NotificationTemplateGetResponse : JsonModel
         _ = this.Updater;
     }
 
-    public NotificationTemplateGetResponse() { }
+    public NotificationTemplateResponse() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public NotificationTemplateGetResponse(
-        NotificationTemplateGetResponse notificationTemplateGetResponse
-    )
-        : base(notificationTemplateGetResponse) { }
+    public NotificationTemplateResponse(NotificationTemplateResponse notificationTemplateResponse)
+        : base(notificationTemplateResponse) { }
 #pragma warning restore CS8618
 
-    public NotificationTemplateGetResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    public NotificationTemplateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationTemplateGetResponse(FrozenDictionary<string, JsonElement> rawData)
+    NotificationTemplateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="NotificationTemplateGetResponseFromRaw.FromRawUnchecked"/>
-    public static NotificationTemplateGetResponse FromRawUnchecked(
+    /// <inheritdoc cref="NotificationTemplateResponseFromRaw.FromRawUnchecked"/>
+    public static NotificationTemplateResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -162,12 +157,12 @@ public sealed record class NotificationTemplateGetResponse : JsonModel
     }
 }
 
-class NotificationTemplateGetResponseFromRaw : IFromRawJson<NotificationTemplateGetResponse>
+class NotificationTemplateResponseFromRaw : IFromRawJson<NotificationTemplateResponse>
 {
     /// <inheritdoc/>
-    public NotificationTemplateGetResponse FromRawUnchecked(
+    public NotificationTemplateResponse FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => NotificationTemplateGetResponse.FromRawUnchecked(rawData);
+    ) => NotificationTemplateResponse.FromRawUnchecked(rawData);
 }
 
 /// <summary>
@@ -406,17 +401,17 @@ class NotificationIntersectionMember1FromRaw : IFromRawJson<NotificationIntersec
 /// <summary>
 /// The template state. Always uppercase.
 /// </summary>
-[JsonConverter(typeof(NotificationTemplateGetResponseStateConverter))]
-public enum NotificationTemplateGetResponseState
+[JsonConverter(typeof(NotificationTemplateResponseStateConverter))]
+public enum NotificationTemplateResponseState
 {
     Draft,
     Published,
 }
 
-sealed class NotificationTemplateGetResponseStateConverter
-    : JsonConverter<NotificationTemplateGetResponseState>
+sealed class NotificationTemplateResponseStateConverter
+    : JsonConverter<NotificationTemplateResponseState>
 {
-    public override NotificationTemplateGetResponseState Read(
+    public override NotificationTemplateResponseState Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -424,15 +419,15 @@ sealed class NotificationTemplateGetResponseStateConverter
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "DRAFT" => NotificationTemplateGetResponseState.Draft,
-            "PUBLISHED" => NotificationTemplateGetResponseState.Published,
-            _ => (NotificationTemplateGetResponseState)(-1),
+            "DRAFT" => NotificationTemplateResponseState.Draft,
+            "PUBLISHED" => NotificationTemplateResponseState.Published,
+            _ => (NotificationTemplateResponseState)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        NotificationTemplateGetResponseState value,
+        NotificationTemplateResponseState value,
         JsonSerializerOptions options
     )
     {
@@ -440,8 +435,8 @@ sealed class NotificationTemplateGetResponseStateConverter
             writer,
             value switch
             {
-                NotificationTemplateGetResponseState.Draft => "DRAFT",
-                NotificationTemplateGetResponseState.Published => "PUBLISHED",
+                NotificationTemplateResponseState.Draft => "DRAFT",
+                NotificationTemplateResponseState.Published => "PUBLISHED",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
