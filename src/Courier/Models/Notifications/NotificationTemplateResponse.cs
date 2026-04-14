@@ -12,165 +12,12 @@ namespace Courier.Models.Notifications;
 
 /// <summary>
 /// Response for GET /notifications/{id}, POST /notifications, and PUT /notifications/{id}.
-/// Wraps the template payload inside a `notification` key alongside metadata.
+/// Returns all template fields at the top level.
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<NotificationTemplateResponse, NotificationTemplateResponseFromRaw>)
 )]
 public sealed record class NotificationTemplateResponse : JsonModel
-{
-    /// <summary>
-    /// Epoch milliseconds when the template was created.
-    /// </summary>
-    public required long Created
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<long>("created");
-        }
-        init { this._rawData.Set("created", value); }
-    }
-
-    /// <summary>
-    /// User ID of the creator.
-    /// </summary>
-    public required string Creator
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("creator");
-        }
-        init { this._rawData.Set("creator", value); }
-    }
-
-    /// <summary>
-    /// Full document shape used in POST and PUT request bodies, and returned inside
-    /// the GET response envelope.
-    /// </summary>
-    public required Notification Notification
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<Notification>("notification");
-        }
-        init { this._rawData.Set("notification", value); }
-    }
-
-    /// <summary>
-    /// The template state. Always uppercase.
-    /// </summary>
-    public required ApiEnum<string, NotificationTemplateResponseState> State
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<
-                ApiEnum<string, NotificationTemplateResponseState>
-            >("state");
-        }
-        init { this._rawData.Set("state", value); }
-    }
-
-    /// <summary>
-    /// Epoch milliseconds of last update.
-    /// </summary>
-    public long? Updated
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableStruct<long>("updated");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("updated", value);
-        }
-    }
-
-    /// <summary>
-    /// User ID of the last updater.
-    /// </summary>
-    public string? Updater
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("updater");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("updater", value);
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Validate()
-    {
-        _ = this.Created;
-        _ = this.Creator;
-        this.Notification.Validate();
-        this.State.Validate();
-        _ = this.Updated;
-        _ = this.Updater;
-    }
-
-    public NotificationTemplateResponse() { }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    public NotificationTemplateResponse(NotificationTemplateResponse notificationTemplateResponse)
-        : base(notificationTemplateResponse) { }
-#pragma warning restore CS8618
-
-    public NotificationTemplateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = new(rawData);
-    }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    NotificationTemplateResponse(FrozenDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = new(rawData);
-    }
-#pragma warning restore CS8618
-
-    /// <inheritdoc cref="NotificationTemplateResponseFromRaw.FromRawUnchecked"/>
-    public static NotificationTemplateResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
-    {
-        return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-}
-
-class NotificationTemplateResponseFromRaw : IFromRawJson<NotificationTemplateResponse>
-{
-    /// <inheritdoc/>
-    public NotificationTemplateResponse FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => NotificationTemplateResponse.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// Full document shape used in POST and PUT request bodies, and returned inside the
-/// GET response envelope.
-/// </summary>
-[JsonConverter(typeof(JsonModelConverter<Notification, NotificationFromRaw>))]
-public sealed record class Notification : JsonModel
 {
     /// <summary>
     /// Brand reference, or null for no brand.
@@ -266,15 +113,100 @@ public sealed record class Notification : JsonModel
         init { this._rawData.Set("id", value); }
     }
 
-    public static implicit operator NotificationTemplatePayload(Notification notification) =>
+    /// <summary>
+    /// Epoch milliseconds when the template was created.
+    /// </summary>
+    public required long Created
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("created");
+        }
+        init { this._rawData.Set("created", value); }
+    }
+
+    /// <summary>
+    /// User ID of the creator.
+    /// </summary>
+    public required string Creator
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("creator");
+        }
+        init { this._rawData.Set("creator", value); }
+    }
+
+    /// <summary>
+    /// The template state. Always uppercase.
+    /// </summary>
+    public required ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> State
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<
+                ApiEnum<string, NotificationTemplateResponseIntersectionMember1State>
+            >("state");
+        }
+        init { this._rawData.Set("state", value); }
+    }
+
+    /// <summary>
+    /// Epoch milliseconds of last update.
+    /// </summary>
+    public long? Updated
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("updated");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("updated", value);
+        }
+    }
+
+    /// <summary>
+    /// User ID of the last updater.
+    /// </summary>
+    public string? Updater
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("updater");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("updater", value);
+        }
+    }
+
+    public static implicit operator NotificationTemplatePayload(
+        NotificationTemplateResponse notificationTemplateResponse
+    ) =>
         new()
         {
-            Brand = notification.Brand,
-            Content = notification.Content,
-            Name = notification.Name,
-            Routing = notification.Routing,
-            Subscription = notification.Subscription,
-            Tags = notification.Tags,
+            Brand = notificationTemplateResponse.Brand,
+            Content = notificationTemplateResponse.Content,
+            Name = notificationTemplateResponse.Name,
+            Routing = notificationTemplateResponse.Routing,
+            Subscription = notificationTemplateResponse.Subscription,
+            Tags = notificationTemplateResponse.Tags,
         };
 
     /// <inheritdoc/>
@@ -287,50 +219,58 @@ public sealed record class Notification : JsonModel
         this.Subscription?.Validate();
         _ = this.Tags;
         _ = this.ID;
+        _ = this.Created;
+        _ = this.Creator;
+        this.State.Validate();
+        _ = this.Updated;
+        _ = this.Updater;
     }
 
-    public Notification() { }
+    public NotificationTemplateResponse() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public Notification(Notification notification)
-        : base(notification) { }
+    public NotificationTemplateResponse(NotificationTemplateResponse notificationTemplateResponse)
+        : base(notificationTemplateResponse) { }
 #pragma warning restore CS8618
 
-    public Notification(IReadOnlyDictionary<string, JsonElement> rawData)
+    public NotificationTemplateResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Notification(FrozenDictionary<string, JsonElement> rawData)
+    NotificationTemplateResponse(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="NotificationFromRaw.FromRawUnchecked"/>
-    public static Notification FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="NotificationTemplateResponseFromRaw.FromRawUnchecked"/>
+    public static NotificationTemplateResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class NotificationFromRaw : IFromRawJson<Notification>
+class NotificationTemplateResponseFromRaw : IFromRawJson<NotificationTemplateResponse>
 {
     /// <inheritdoc/>
-    public Notification FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        Notification.FromRawUnchecked(rawData);
+    public NotificationTemplateResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => NotificationTemplateResponse.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(
     typeof(JsonModelConverter<
-        NotificationIntersectionMember1,
-        NotificationIntersectionMember1FromRaw
+        NotificationTemplateResponseIntersectionMember1,
+        NotificationTemplateResponseIntersectionMember1FromRaw
     >)
 )]
-public sealed record class NotificationIntersectionMember1 : JsonModel
+public sealed record class NotificationTemplateResponseIntersectionMember1 : JsonModel
 {
     /// <summary>
     /// The template ID.
@@ -345,73 +285,157 @@ public sealed record class NotificationIntersectionMember1 : JsonModel
         init { this._rawData.Set("id", value); }
     }
 
+    /// <summary>
+    /// Epoch milliseconds when the template was created.
+    /// </summary>
+    public required long Created
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("created");
+        }
+        init { this._rawData.Set("created", value); }
+    }
+
+    /// <summary>
+    /// User ID of the creator.
+    /// </summary>
+    public required string Creator
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("creator");
+        }
+        init { this._rawData.Set("creator", value); }
+    }
+
+    /// <summary>
+    /// The template state. Always uppercase.
+    /// </summary>
+    public required ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> State
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<
+                ApiEnum<string, NotificationTemplateResponseIntersectionMember1State>
+            >("state");
+        }
+        init { this._rawData.Set("state", value); }
+    }
+
+    /// <summary>
+    /// Epoch milliseconds of last update.
+    /// </summary>
+    public long? Updated
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("updated");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("updated", value);
+        }
+    }
+
+    /// <summary>
+    /// User ID of the last updater.
+    /// </summary>
+    public string? Updater
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("updater");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("updater", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ID;
+        _ = this.Created;
+        _ = this.Creator;
+        this.State.Validate();
+        _ = this.Updated;
+        _ = this.Updater;
     }
 
-    public NotificationIntersectionMember1() { }
+    public NotificationTemplateResponseIntersectionMember1() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public NotificationIntersectionMember1(
-        NotificationIntersectionMember1 notificationIntersectionMember1
+    public NotificationTemplateResponseIntersectionMember1(
+        NotificationTemplateResponseIntersectionMember1 notificationTemplateResponseIntersectionMember1
     )
-        : base(notificationIntersectionMember1) { }
+        : base(notificationTemplateResponseIntersectionMember1) { }
 #pragma warning restore CS8618
 
-    public NotificationIntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
+    public NotificationTemplateResponseIntersectionMember1(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
+    NotificationTemplateResponseIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="NotificationIntersectionMember1FromRaw.FromRawUnchecked"/>
-    public static NotificationIntersectionMember1 FromRawUnchecked(
+    /// <inheritdoc cref="NotificationTemplateResponseIntersectionMember1FromRaw.FromRawUnchecked"/>
+    public static NotificationTemplateResponseIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
-
-    [SetsRequiredMembers]
-    public NotificationIntersectionMember1(string id)
-        : this()
-    {
-        this.ID = id;
-    }
 }
 
-class NotificationIntersectionMember1FromRaw : IFromRawJson<NotificationIntersectionMember1>
+class NotificationTemplateResponseIntersectionMember1FromRaw
+    : IFromRawJson<NotificationTemplateResponseIntersectionMember1>
 {
     /// <inheritdoc/>
-    public NotificationIntersectionMember1 FromRawUnchecked(
+    public NotificationTemplateResponseIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => NotificationIntersectionMember1.FromRawUnchecked(rawData);
+    ) => NotificationTemplateResponseIntersectionMember1.FromRawUnchecked(rawData);
 }
 
 /// <summary>
 /// The template state. Always uppercase.
 /// </summary>
-[JsonConverter(typeof(NotificationTemplateResponseStateConverter))]
-public enum NotificationTemplateResponseState
+[JsonConverter(typeof(NotificationTemplateResponseIntersectionMember1StateConverter))]
+public enum NotificationTemplateResponseIntersectionMember1State
 {
     Draft,
     Published,
 }
 
-sealed class NotificationTemplateResponseStateConverter
-    : JsonConverter<NotificationTemplateResponseState>
+sealed class NotificationTemplateResponseIntersectionMember1StateConverter
+    : JsonConverter<NotificationTemplateResponseIntersectionMember1State>
 {
-    public override NotificationTemplateResponseState Read(
+    public override NotificationTemplateResponseIntersectionMember1State Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -419,15 +443,15 @@ sealed class NotificationTemplateResponseStateConverter
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "DRAFT" => NotificationTemplateResponseState.Draft,
-            "PUBLISHED" => NotificationTemplateResponseState.Published,
-            _ => (NotificationTemplateResponseState)(-1),
+            "DRAFT" => NotificationTemplateResponseIntersectionMember1State.Draft,
+            "PUBLISHED" => NotificationTemplateResponseIntersectionMember1State.Published,
+            _ => (NotificationTemplateResponseIntersectionMember1State)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        NotificationTemplateResponseState value,
+        NotificationTemplateResponseIntersectionMember1State value,
         JsonSerializerOptions options
     )
     {
@@ -435,8 +459,8 @@ sealed class NotificationTemplateResponseStateConverter
             writer,
             value switch
             {
-                NotificationTemplateResponseState.Draft => "DRAFT",
-                NotificationTemplateResponseState.Published => "PUBLISHED",
+                NotificationTemplateResponseIntersectionMember1State.Draft => "DRAFT",
+                NotificationTemplateResponseIntersectionMember1State.Published => "PUBLISHED",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
