@@ -118,7 +118,7 @@ public record class Result : ModelBase
         get { return Match(notification: (x) => x.ID, notificationTemplateSummary: (x) => x.ID); }
     }
 
-    public Result(ResultNotification value, JsonElement? element = null)
+    public Result(Notification value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
@@ -137,22 +137,22 @@ public record class Result : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="ResultNotification"/>.
+    /// type <see cref="Notification"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
     /// if (instance.TryPickNotification(out var value)) {
-    ///     // `value` is of type `ResultNotification`
+    ///     // `value` is of type `Notification`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickNotification([NotNullWhen(true)] out ResultNotification? value)
+    public bool TryPickNotification([NotNullWhen(true)] out Notification? value)
     {
-        value = this.Value as ResultNotification;
+        value = this.Value as Notification;
         return value != null;
     }
 
@@ -193,20 +193,20 @@ public record class Result : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (ResultNotification value) =&gt; {...},
+    ///     (Notification value) =&gt; {...},
     ///     (NotificationTemplateSummary value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
     public void Switch(
-        System::Action<ResultNotification> notification,
+        System::Action<Notification> notification,
         System::Action<NotificationTemplateSummary> notificationTemplateSummary
     )
     {
         switch (this.Value)
         {
-            case ResultNotification value:
+            case Notification value:
                 notification(value);
                 break;
             case NotificationTemplateSummary value:
@@ -232,26 +232,26 @@ public record class Result : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (ResultNotification value) =&gt; {...},
+    ///     (Notification value) =&gt; {...},
     ///     (NotificationTemplateSummary value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
     public T Match<T>(
-        System::Func<ResultNotification, T> notification,
+        System::Func<Notification, T> notification,
         System::Func<NotificationTemplateSummary, T> notificationTemplateSummary
     )
     {
         return this.Value switch
         {
-            ResultNotification value => notification(value),
+            Notification value => notification(value),
             NotificationTemplateSummary value => notificationTemplateSummary(value),
             _ => throw new CourierInvalidDataException("Data did not match any variant of Result"),
         };
     }
 
-    public static implicit operator Result(ResultNotification value) => new(value);
+    public static implicit operator Result(Notification value) => new(value);
 
     public static implicit operator Result(NotificationTemplateSummary value) => new(value);
 
@@ -297,7 +297,7 @@ public record class Result : ModelBase
     {
         return this.Value switch
         {
-            ResultNotification _ => 0,
+            Notification _ => 0,
             NotificationTemplateSummary _ => 1,
             _ => -1,
         };
@@ -315,7 +315,7 @@ sealed class ResultConverter : JsonConverter<Result>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ResultNotification>(element, options);
+            var deserialized = JsonSerializer.Deserialize<Notification>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -353,8 +353,8 @@ sealed class ResultConverter : JsonConverter<Result>
     }
 }
 
-[JsonConverter(typeof(JsonModelConverter<ResultNotification, ResultNotificationFromRaw>))]
-public sealed record class ResultNotification : JsonModel
+[JsonConverter(typeof(JsonModelConverter<Notification, NotificationFromRaw>))]
+public sealed record class Notification : JsonModel
 {
     public required string ID
     {
@@ -477,41 +477,39 @@ public sealed record class ResultNotification : JsonModel
         _ = this.Title;
     }
 
-    public ResultNotification() { }
+    public Notification() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public ResultNotification(ResultNotification resultNotification)
-        : base(resultNotification) { }
+    public Notification(Notification notification)
+        : base(notification) { }
 #pragma warning restore CS8618
 
-    public ResultNotification(IReadOnlyDictionary<string, JsonElement> rawData)
+    public Notification(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ResultNotification(FrozenDictionary<string, JsonElement> rawData)
+    Notification(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="ResultNotificationFromRaw.FromRawUnchecked"/>
-    public static ResultNotification FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    /// <inheritdoc cref="NotificationFromRaw.FromRawUnchecked"/>
+    public static Notification FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class ResultNotificationFromRaw : IFromRawJson<ResultNotification>
+class NotificationFromRaw : IFromRawJson<Notification>
 {
     /// <inheritdoc/>
-    public ResultNotification FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        ResultNotification.FromRawUnchecked(rawData);
+    public Notification FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Notification.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(JsonModelConverter<Tags, TagsFromRaw>))]

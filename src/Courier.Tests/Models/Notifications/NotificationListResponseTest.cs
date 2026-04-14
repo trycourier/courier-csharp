@@ -16,7 +16,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new ResultNotification()
+                new Notification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -34,7 +34,7 @@ public class NotificationListResponseTest : TestBase
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
         List<Result> expectedResults =
         [
-            new ResultNotification()
+            new Notification()
             {
                 ID = "id",
                 CreatedAt = 0,
@@ -64,7 +64,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new ResultNotification()
+                new Notification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -96,7 +96,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new ResultNotification()
+                new Notification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -121,7 +121,7 @@ public class NotificationListResponseTest : TestBase
         Paging expectedPaging = new() { More = true, Cursor = "cursor" };
         List<Result> expectedResults =
         [
-            new ResultNotification()
+            new Notification()
             {
                 ID = "id",
                 CreatedAt = 0,
@@ -151,7 +151,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new ResultNotification()
+                new Notification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -177,7 +177,7 @@ public class NotificationListResponseTest : TestBase
             Paging = new() { More = true, Cursor = "cursor" },
             Results =
             [
-                new ResultNotification()
+                new Notification()
                 {
                     ID = "id",
                     CreatedAt = 0,
@@ -203,7 +203,7 @@ public class ResultTest : TestBase
     [Fact]
     public void NotificationValidationWorks()
     {
-        Result value = new ResultNotification()
+        Result value = new Notification()
         {
             ID = "id",
             CreatedAt = 0,
@@ -238,7 +238,7 @@ public class ResultTest : TestBase
     [Fact]
     public void NotificationSerializationRoundtripWorks()
     {
-        Result value = new ResultNotification()
+        Result value = new Notification()
         {
             ID = "id",
             CreatedAt = 0,
@@ -277,12 +277,12 @@ public class ResultTest : TestBase
     }
 }
 
-public class ResultNotificationTest : TestBase
+public class NotificationTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -323,7 +323,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -337,7 +337,7 @@ public class ResultNotificationTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ResultNotification>(
+        var deserialized = JsonSerializer.Deserialize<Notification>(
             json,
             ModelBase.SerializerOptions
         );
@@ -348,7 +348,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -362,7 +362,7 @@ public class ResultNotificationTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ResultNotification>(
+        var deserialized = JsonSerializer.Deserialize<Notification>(
             element,
             ModelBase.SerializerOptions
         );
@@ -396,7 +396,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -415,7 +415,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -434,7 +434,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -452,7 +452,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -474,7 +474,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -495,7 +495,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -515,7 +515,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -532,7 +532,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -555,7 +555,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -575,7 +575,7 @@ public class ResultNotificationTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new ResultNotification
+        var model = new Notification
         {
             ID = "id",
             CreatedAt = 0,
@@ -588,7 +588,7 @@ public class ResultNotificationTest : TestBase
             Title = "title",
         };
 
-        ResultNotification copied = new(model);
+        Notification copied = new(model);
 
         Assert.Equal(model, copied);
     }
