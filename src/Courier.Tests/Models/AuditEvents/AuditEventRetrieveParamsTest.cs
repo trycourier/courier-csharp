@@ -22,7 +22,9 @@ public class AuditEventRetrieveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/audit-events/audit-event-id"), url);
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.courier.com/audit-events/audit-event-id"), url)
+        );
     }
 
     [Fact]

@@ -40,7 +40,9 @@ public class AuditEventListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/audit-events?cursor=cursor"), url);
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.courier.com/audit-events?cursor=cursor"), url)
+        );
     }
 
     [Fact]

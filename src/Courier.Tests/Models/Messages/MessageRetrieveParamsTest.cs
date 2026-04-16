@@ -22,7 +22,9 @@ public class MessageRetrieveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/messages/message_id"), url);
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.courier.com/messages/message_id"), url)
+        );
     }
 
     [Fact]

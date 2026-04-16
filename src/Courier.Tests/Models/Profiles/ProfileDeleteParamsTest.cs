@@ -22,7 +22,7 @@ public class ProfileDeleteParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/profiles/user_id"), url);
+        Assert.True(TestBase.UrisEqual(new Uri("https://api.courier.com/profiles/user_id"), url));
     }
 
     [Fact]

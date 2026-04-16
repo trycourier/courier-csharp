@@ -64,9 +64,11 @@ public class TenantListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri("https://api.courier.com/users/user_id/tenants?cursor=cursor&limit=0"),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.courier.com/users/user_id/tenants?cursor=cursor&limit=0"),
+                url
+            )
         );
     }
 
