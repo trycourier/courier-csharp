@@ -51,9 +51,11 @@ public class PreferenceRetrieveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri("https://api.courier.com/users/user_id/preferences?tenant_id=tenant_id"),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.courier.com/users/user_id/preferences?tenant_id=tenant_id"),
+                url
+            )
         );
     }
 

@@ -46,7 +46,12 @@ public class ListListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/lists?cursor=cursor&pattern=pattern"), url);
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.courier.com/lists?cursor=cursor&pattern=pattern"),
+                url
+            )
+        );
     }
 
     [Fact]

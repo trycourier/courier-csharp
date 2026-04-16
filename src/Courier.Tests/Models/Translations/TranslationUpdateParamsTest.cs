@@ -36,7 +36,9 @@ public class TranslationUpdateParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/translations/domain/locale"), url);
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.courier.com/translations/domain/locale"), url)
+        );
     }
 
     [Fact]

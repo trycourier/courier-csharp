@@ -68,11 +68,13 @@ public class CatalogListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.courier.com/providers/catalog?channel=channel&keys=keys&name=name"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.courier.com/providers/catalog?channel=channel&keys=keys&name=name"
+                ),
+                url
+            )
         );
     }
 
