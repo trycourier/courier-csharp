@@ -30,6 +30,16 @@ public class TemplateServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task Delete_Works()
+    {
+        await this.client.Tenants.Templates.Delete(
+            "template_id",
+            new() { TenantID = "tenant_id" },
+            TestContext.Current.CancellationToken
+        );
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Publish_Works()
     {
         var postTenantTemplatePublishResponse = await this.client.Tenants.Templates.Publish(

@@ -61,6 +61,23 @@ public interface ITemplateService
     );
 
     /// <summary>
+    /// Deletes the tenant's notification template with the given `template_id`.
+    ///
+    /// <para>Returns **204 No Content** with an empty body on success.</para>
+    ///
+    /// <para>Returns **404** if there is no template with this ID for the tenant,
+    /// including a second `DELETE` after a successful removal. </para>
+    /// </summary>
+    Task Delete(TemplateDeleteParams parameters, CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="Delete(TemplateDeleteParams, CancellationToken)"/>
+    Task Delete(
+        string templateID,
+        TemplateDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Publishes a specific version of a notification template for a tenant.
     ///
     /// <para>The template must already exist in the tenant's notification map. If no
@@ -144,6 +161,22 @@ public interface ITemplateServiceWithRawResponse
     Task<HttpResponse<TemplateListResponse>> List(
         string tenantID,
         TemplateListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>delete /tenants/{tenant_id}/templates/{template_id}</c>, but is otherwise the
+    /// same as <see cref="ITemplateService.Delete(TemplateDeleteParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Delete(
+        TemplateDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Delete(TemplateDeleteParams, CancellationToken)"/>
+    Task<HttpResponse> Delete(
+        string templateID,
+        TemplateDeleteParams parameters,
         CancellationToken cancellationToken = default
     );
 
