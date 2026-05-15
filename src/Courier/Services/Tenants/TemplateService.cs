@@ -90,6 +90,26 @@ public sealed class TemplateService : ITemplateService
     }
 
     /// <inheritdoc/>
+    public Task Delete(
+        TemplateDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.WithRawResponse.Delete(parameters, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task Delete(
+        string templateID,
+        TemplateDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.Delete(parameters with { TemplateID = templateID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
     public async Task<PostTenantTemplatePublishResponse> Publish(
         TemplatePublishParams parameters,
         CancellationToken cancellationToken = default
@@ -244,6 +264,35 @@ public sealed class TemplateServiceWithRawResponse : ITemplateServiceWithRawResp
         parameters ??= new();
 
         return this.List(parameters with { TenantID = tenantID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> Delete(
+        TemplateDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.TemplateID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TemplateID' cannot be null");
+        }
+
+        HttpRequest<TemplateDeleteParams> request = new()
+        {
+            Method = HttpMethod.Delete,
+            Params = parameters,
+        };
+        return this._client.Execute(request, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> Delete(
+        string templateID,
+        TemplateDeleteParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.Delete(parameters with { TemplateID = templateID }, cancellationToken);
     }
 
     /// <inheritdoc/>
