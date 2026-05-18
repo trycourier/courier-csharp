@@ -9,9 +9,9 @@ public class SendMessageResponseTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new SendMessageResponse { RequestID = "1-65f240a0-47a6a120c8374de9bcf9f22c" };
+        var model = new SendMessageResponse { RequestID = "1-67f340b1-58b7b231d9485ef0cda0a38b" };
 
-        string expectedRequestID = "1-65f240a0-47a6a120c8374de9bcf9f22c";
+        string expectedRequestID = "1-67f340b1-58b7b231d9485ef0cda0a38b";
 
         Assert.Equal(expectedRequestID, model.RequestID);
     }
@@ -19,7 +19,7 @@ public class SendMessageResponseTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new SendMessageResponse { RequestID = "1-65f240a0-47a6a120c8374de9bcf9f22c" };
+        var model = new SendMessageResponse { RequestID = "1-67f340b1-58b7b231d9485ef0cda0a38b" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<SendMessageResponse>(
@@ -33,7 +33,7 @@ public class SendMessageResponseTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new SendMessageResponse { RequestID = "1-65f240a0-47a6a120c8374de9bcf9f22c" };
+        var model = new SendMessageResponse { RequestID = "1-67f340b1-58b7b231d9485ef0cda0a38b" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<SendMessageResponse>(
@@ -42,7 +42,7 @@ public class SendMessageResponseTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        string expectedRequestID = "1-65f240a0-47a6a120c8374de9bcf9f22c";
+        string expectedRequestID = "1-67f340b1-58b7b231d9485ef0cda0a38b";
 
         Assert.Equal(expectedRequestID, deserialized.RequestID);
     }
@@ -50,7 +50,7 @@ public class SendMessageResponseTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new SendMessageResponse { RequestID = "1-65f240a0-47a6a120c8374de9bcf9f22c" };
+        var model = new SendMessageResponse { RequestID = "1-67f340b1-58b7b231d9485ef0cda0a38b" };
 
         model.Validate();
     }
@@ -58,7 +58,7 @@ public class SendMessageResponseTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new SendMessageResponse { RequestID = "1-65f240a0-47a6a120c8374de9bcf9f22c" };
+        var model = new SendMessageResponse { RequestID = "1-67f340b1-58b7b231d9485ef0cda0a38b" };
 
         SendMessageResponse copied = new(model);
 
