@@ -10,7 +10,8 @@ using Courier.Core;
 namespace Courier.Models.Journeys;
 
 /// <summary>
-/// Invoke a journey run from a journey template.
+/// Invoke a journey by id or alias to start a new run. The response includes a `runId`
+/// identifying the run.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

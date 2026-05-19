@@ -8,6 +8,9 @@ using Courier.Core;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Paged list of journey-scoped notification templates.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneyTemplateListResponse, JourneyTemplateListResponseFromRaw>)
 )]

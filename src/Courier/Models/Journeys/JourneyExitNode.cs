@@ -9,6 +9,9 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Terminate the journey run.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneyExitNode, JourneyExitNodeFromRaw>))]
 public sealed record class JourneyExitNode : JsonModel
 {

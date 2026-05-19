@@ -13,8 +13,8 @@ using System = System;
 namespace Courier.Models.Journeys.Templates;
 
 /// <summary>
-/// Create a notification template scoped to this journey. The template is created
-/// in DRAFT state.
+/// Create a notification template scoped to this journey. Defaults to `DRAFT` state;
+/// pass `state: "PUBLISHED"` to publish on create.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

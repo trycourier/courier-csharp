@@ -9,6 +9,10 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Send a notification template to the recipient. Optionally override the recipient
+/// address, delay the send, or attach `data`.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneySendNode, JourneySendNodeFromRaw>))]
 public sealed record class JourneySendNode : JsonModel
 {

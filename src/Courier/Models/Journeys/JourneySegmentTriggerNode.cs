@@ -9,6 +9,9 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Trigger fired by a segment event (`identify`, `group`, or `track`).
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneySegmentTriggerNode, JourneySegmentTriggerNodeFromRaw>)
 )]

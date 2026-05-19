@@ -9,6 +9,10 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Invoke an AI step with `user_prompt` and optional `web_search`. Returns a structured
+/// response conforming to `output_schema`.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneyAINode, JourneyAINodeFromRaw>))]
 public sealed record class JourneyAINode : JsonModel
 {

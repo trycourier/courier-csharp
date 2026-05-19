@@ -5,6 +5,9 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Strategy for merging a fetch response into the journey run state.
+/// </summary>
 [JsonConverter(typeof(JourneyMergeStrategyConverter))]
 public enum JourneyMergeStrategy
 {

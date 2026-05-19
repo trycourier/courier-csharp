@@ -5,6 +5,9 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Lifecycle state of a journey.
+/// </summary>
 [JsonConverter(typeof(JourneyStateConverter))]
 public enum JourneyState
 {

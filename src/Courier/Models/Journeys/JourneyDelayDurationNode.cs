@@ -9,6 +9,9 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Pause the journey run for a fixed `duration`.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneyDelayDurationNode, JourneyDelayDurationNodeFromRaw>)
 )]

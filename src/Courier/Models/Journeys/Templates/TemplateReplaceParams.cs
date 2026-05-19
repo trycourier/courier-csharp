@@ -13,7 +13,7 @@ using System = System;
 namespace Courier.Models.Journeys.Templates;
 
 /// <summary>
-/// Replace a journey-scoped notification template draft.
+/// Replace the journey-scoped notification template draft.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

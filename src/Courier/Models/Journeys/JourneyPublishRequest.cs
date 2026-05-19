@@ -7,6 +7,10 @@ using Courier.Core;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Request body for publishing a journey. Pass `version` to roll back to a prior
+/// version; omit to publish the current draft.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneyPublishRequest, JourneyPublishRequestFromRaw>))]
 public sealed record class JourneyPublishRequest : JsonModel
 {

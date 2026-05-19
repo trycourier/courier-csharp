@@ -9,11 +9,18 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Issue an HTTP GET or DELETE request and merge the response into the journey state
+/// per `merge_strategy`.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneyFetchGetDeleteNode, JourneyFetchGetDeleteNodeFromRaw>)
 )]
 public sealed record class JourneyFetchGetDeleteNode : JsonModel
 {
+    /// <summary>
+    /// Strategy for merging a fetch response into the journey run state.
+    /// </summary>
     public required ApiEnum<string, JourneyMergeStrategy> MergeStrategy
     {
         get

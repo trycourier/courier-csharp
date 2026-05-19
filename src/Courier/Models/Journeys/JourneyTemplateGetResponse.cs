@@ -10,6 +10,9 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// A journey-scoped notification template.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneyTemplateGetResponse, JourneyTemplateGetResponseFromRaw>)
 )]

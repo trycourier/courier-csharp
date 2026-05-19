@@ -9,8 +9,8 @@ using Courier.Core;
 namespace Courier.Models.Journeys.Templates;
 
 /// <summary>
-/// List notification templates scoped to this journey. Templates scoped to a journey
-/// can only be referenced from `send` nodes of the same journey.
+/// List notification templates scoped to this journey. Journey-scoped notification
+/// templates can only be referenced from `send` nodes within the same journey.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -20,6 +20,9 @@ public record class TemplateListParams : ParamsBase
 {
     public string? TemplateID { get; init; }
 
+    /// <summary>
+    /// Pagination cursor from a prior response.
+    /// </summary>
     public string? Cursor
     {
         get
@@ -38,6 +41,9 @@ public record class TemplateListParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// Page size. Minimum 1, maximum 100.
+    /// </summary>
     public long? Limit
     {
         get

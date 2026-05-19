@@ -9,6 +9,10 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Throttle the journey by a static `scope` (`user` or `global`), allowing at most
+/// `max_allowed` invocations per `period`.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneyThrottleStaticNode, JourneyThrottleStaticNodeFromRaw>)
 )]

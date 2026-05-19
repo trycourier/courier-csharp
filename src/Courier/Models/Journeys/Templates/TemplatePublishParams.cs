@@ -10,7 +10,8 @@ using Courier.Core;
 namespace Courier.Models.Journeys.Templates;
 
 /// <summary>
-/// Publish the current draft of a journey-scoped notification template.
+/// Publish the current draft of the journey-scoped notification template as a new
+/// version. Optionally roll back to a prior version by passing `{ "version": "vN" }`.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
