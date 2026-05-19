@@ -48,7 +48,12 @@ public class NotificationRetrieveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/notifications/id?version=version"), url);
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.courier.com/notifications/id?version=version"),
+                url
+            )
+        );
     }
 
     [Fact]

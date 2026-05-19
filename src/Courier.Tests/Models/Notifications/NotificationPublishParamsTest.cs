@@ -48,7 +48,9 @@ public class NotificationPublishParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/notifications/id/publish"), url);
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.courier.com/notifications/id/publish"), url)
+        );
     }
 
     [Fact]

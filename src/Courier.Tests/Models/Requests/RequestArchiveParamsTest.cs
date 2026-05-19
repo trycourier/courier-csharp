@@ -22,7 +22,9 @@ public class RequestArchiveParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/requests/request_id/archive"), url);
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.courier.com/requests/request_id/archive"), url)
+        );
     }
 
     [Fact]

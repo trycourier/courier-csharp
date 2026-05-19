@@ -89,11 +89,13 @@ public class NotificationListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.courier.com/notifications?cursor=cursor&event_id=event_id&notes=true"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.courier.com/notifications?cursor=cursor&event_id=event_id&notes=true"
+                ),
+                url
+            )
         );
     }
 

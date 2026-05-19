@@ -14,8 +14,9 @@ using Messages = Courier.Models.Messages;
 using Notifications = Courier.Models.Notifications;
 using Profiles = Courier.Models.Profiles;
 using Send = Courier.Models.Send;
-using Templates = Courier.Models.Tenants.Templates;
+using Templates = Courier.Models.Journeys.Templates;
 using Tenants = Courier.Models.Tenants;
+using TenantsTemplates = Courier.Models.Tenants.Templates;
 using Tokens = Courier.Models.Users.Tokens;
 using UsersTenants = Courier.Models.Users.Tenants;
 
@@ -77,7 +78,53 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Invoke::MergeStrategy>(),
             new ApiEnumConverter<string, Invoke::AutomationInvokeStepAction>(),
             new ApiEnumConverter<string, Journeys::JourneyVersion>(),
+            new ApiEnumConverter<string, Journeys::Type>(),
+            new ApiEnumConverter<string, Journeys::TriggerType>(),
+            new ApiEnumConverter<string, Journeys::JourneyApiInvokeTriggerNodeType>(),
+            new ApiEnumConverter<string, Journeys::Mode>(),
+            new ApiEnumConverter<string, Journeys::JourneyDelayDurationNodeType>(),
+            new ApiEnumConverter<string, Journeys::JourneyDelayUntilNodeMode>(),
+            new ApiEnumConverter<string, Journeys::JourneyDelayUntilNodeType>(),
+            new ApiEnumConverter<string, Journeys::JourneyExitNodeType>(),
+            new ApiEnumConverter<string, Journeys::Method>(),
+            new ApiEnumConverter<string, Journeys::JourneyFetchGetDeleteNodeType>(),
+            new ApiEnumConverter<string, Journeys::JourneyFetchPostPutNodeMethod>(),
+            new ApiEnumConverter<string, Journeys::JourneyFetchPostPutNodeType>(),
+            new ApiEnumConverter<string, Journeys::JourneyMergeStrategy>(),
+            new ApiEnumConverter<string, Journeys::JourneyBranchNodeType>(),
+            new ApiEnumConverter<string, Journeys::RequestType>(),
+            new ApiEnumConverter<string, Journeys::JourneySegmentTriggerNodeTriggerType>(),
+            new ApiEnumConverter<string, Journeys::JourneySegmentTriggerNodeType>(),
+            new ApiEnumConverter<string, Journeys::JourneySendNodeType>(),
+            new ApiEnumConverter<string, Journeys::JourneyState>(),
+            new ApiEnumConverter<string, Journeys::ContentVersion>(),
+            new ApiEnumConverter<string, Journeys::Scope>(),
+            new ApiEnumConverter<string, Journeys::JourneyTemplateGetResponseContentVersion>(),
+            new ApiEnumConverter<string, Journeys::JourneyTemplateGetResponseContentScope>(),
+            new ApiEnumConverter<string, Journeys::State>(),
+            new ApiEnumConverter<
+                string,
+                Journeys::JourneyTemplateReplaceRequestNotificationContentVersion
+            >(),
+            new ApiEnumConverter<
+                string,
+                Journeys::JourneyTemplateReplaceRequestNotificationContentScope
+            >(),
+            new ApiEnumConverter<string, Journeys::JourneyThrottleDynamicNodeScope>(),
+            new ApiEnumConverter<string, Journeys::JourneyThrottleDynamicNodeType>(),
+            new ApiEnumConverter<string, Journeys::JourneyThrottleStaticNodeScope>(),
+            new ApiEnumConverter<string, Journeys::JourneyThrottleStaticNodeType>(),
             new ApiEnumConverter<string, Journeys::Version>(),
+            new ApiEnumConverter<string, Templates::Version>(),
+            new ApiEnumConverter<string, Templates::Scope>(),
+            new ApiEnumConverter<
+                string,
+                Templates::TemplateReplaceParamsNotificationContentVersion
+            >(),
+            new ApiEnumConverter<
+                string,
+                Templates::TemplateReplaceParamsNotificationContentScope
+            >(),
             new ApiEnumConverter<string, Placement>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, JobStatus>(),
@@ -106,7 +153,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Tenants::TenantListResponseType>(),
             new ApiEnumConverter<string, Tenants::TenantListUsersResponseType>(),
             new ApiEnumConverter<string, Items::Status>(),
-            new ApiEnumConverter<string, Templates::Type>(),
+            new ApiEnumConverter<string, TenantsTemplates::Type>(),
             new ApiEnumConverter<string, UsersTenants::Type>(),
             new ApiEnumConverter<string, Tokens::UserTokenProviderKey>(),
             new ApiEnumConverter<string, Tokens::Status>(),

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Courier.Core;
 using Courier.Models.Journeys;
+using Courier.Services.Journeys;
 
 namespace Courier.Services;
 
@@ -26,6 +27,37 @@ public interface IJourneyService
     /// </summary>
     IJourneyService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
+    ITemplateService Templates { get; }
+
+    /// <summary>
+    /// Create a journey. Defaults to `DRAFT` state; pass `state: "PUBLISHED"` to
+    /// publish on create. Send nodes are not allowed on `POST`. The standard flow is:
+    /// create the journey shell here, add notification templates with `POST
+    /// /journeys/{templateId}/templates`, then wire them into the journey with `PUT
+    /// /journeys/{templateId}`. Call `POST /journeys/{templateId}/publish` to publish a
+    /// draft after the fact.
+    /// </summary>
+    Task<JourneyResponse> Create(
+        JourneyCreateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Fetch a journey by id. Pass `?version=draft` (default `published`) to retrieve
+    /// the working draft, or `?version=vN` to retrieve a historical version.
+    /// </summary>
+    Task<JourneyResponse> Retrieve(
+        JourneyRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(JourneyRetrieveParams, CancellationToken)"/>
+    Task<JourneyResponse> Retrieve(
+        string templateID,
+        JourneyRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Get the list of journeys.
     /// </summary>
@@ -35,7 +67,21 @@ public interface IJourneyService
     );
 
     /// <summary>
-    /// Invoke a journey run from a journey template.
+    /// Archive a journey. Archived journeys cannot be invoked. Existing journey runs
+    /// continue to completion.
+    /// </summary>
+    Task Archive(JourneyArchiveParams parameters, CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="Archive(JourneyArchiveParams, CancellationToken)"/>
+    Task Archive(
+        string templateID,
+        JourneyArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Invoke a journey by id or alias to start a new run. The response includes a
+    /// `runId` identifying the run.
     /// </summary>
     Task<JourneysInvokeResponse> Invoke(
         JourneyInvokeParams parameters,
@@ -46,6 +92,57 @@ public interface IJourneyService
     Task<JourneysInvokeResponse> Invoke(
         string templateID,
         JourneyInvokeParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// List published versions of a journey, ordered most recent first.
+    /// </summary>
+    Task<JourneyVersionsListResponse> ListVersions(
+        JourneyListVersionsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListVersions(JourneyListVersionsParams, CancellationToken)"/>
+    Task<JourneyVersionsListResponse> ListVersions(
+        string templateID,
+        JourneyListVersionsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Publish the current draft as a new version. Body is optional; pass `{ "version":
+    /// "vN" }` to roll back to a prior version instead. Returns 404 if the journey has
+    /// no draft to publish.
+    /// </summary>
+    Task<JourneyResponse> Publish(
+        JourneyPublishParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Publish(JourneyPublishParams, CancellationToken)"/>
+    Task<JourneyResponse> Publish(
+        string templateID,
+        JourneyPublishParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Replace the journey draft. Updates the working draft only; call `POST
+    /// /journeys/{templateId}/publish` to make it live, or pass `state: "PUBLISHED"` in
+    /// this request to publish immediately. Send-node `template` ids must already exist
+    /// and be scoped to this journey, and node ids must not be claimed by another
+    /// journey.
+    /// </summary>
+    Task<JourneyResponse> Replace(
+        JourneyReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Replace(JourneyReplaceParams, CancellationToken)"/>
+    Task<JourneyResponse> Replace(
+        string templateID,
+        JourneyReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 }
@@ -63,12 +160,55 @@ public interface IJourneyServiceWithRawResponse
     /// </summary>
     IJourneyServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
+    ITemplateServiceWithRawResponse Templates { get; }
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>post /journeys</c>, but is otherwise the
+    /// same as <see cref="IJourneyService.Create(JourneyCreateParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<JourneyResponse>> Create(
+        JourneyCreateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>get /journeys/{templateId}</c>, but is otherwise the
+    /// same as <see cref="IJourneyService.Retrieve(JourneyRetrieveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<JourneyResponse>> Retrieve(
+        JourneyRetrieveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Retrieve(JourneyRetrieveParams, CancellationToken)"/>
+    Task<HttpResponse<JourneyResponse>> Retrieve(
+        string templateID,
+        JourneyRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
     /// <summary>
     /// Returns a raw HTTP response for <c>get /journeys</c>, but is otherwise the
     /// same as <see cref="IJourneyService.List(JourneyListParams?, CancellationToken)"/>.
     /// </summary>
     Task<HttpResponse<JourneysListResponse>> List(
         JourneyListParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>delete /journeys/{templateId}</c>, but is otherwise the
+    /// same as <see cref="IJourneyService.Archive(JourneyArchiveParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> Archive(
+        JourneyArchiveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Archive(JourneyArchiveParams, CancellationToken)"/>
+    Task<HttpResponse> Archive(
+        string templateID,
+        JourneyArchiveParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
@@ -85,6 +225,54 @@ public interface IJourneyServiceWithRawResponse
     Task<HttpResponse<JourneysInvokeResponse>> Invoke(
         string templateID,
         JourneyInvokeParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>get /journeys/{templateId}/versions</c>, but is otherwise the
+    /// same as <see cref="IJourneyService.ListVersions(JourneyListVersionsParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<JourneyVersionsListResponse>> ListVersions(
+        JourneyListVersionsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ListVersions(JourneyListVersionsParams, CancellationToken)"/>
+    Task<HttpResponse<JourneyVersionsListResponse>> ListVersions(
+        string templateID,
+        JourneyListVersionsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>post /journeys/{templateId}/publish</c>, but is otherwise the
+    /// same as <see cref="IJourneyService.Publish(JourneyPublishParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<JourneyResponse>> Publish(
+        JourneyPublishParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Publish(JourneyPublishParams, CancellationToken)"/>
+    Task<HttpResponse<JourneyResponse>> Publish(
+        string templateID,
+        JourneyPublishParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>put /journeys/{templateId}</c>, but is otherwise the
+    /// same as <see cref="IJourneyService.Replace(JourneyReplaceParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<JourneyResponse>> Replace(
+        JourneyReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Replace(JourneyReplaceParams, CancellationToken)"/>
+    Task<HttpResponse<JourneyResponse>> Replace(
+        string templateID,
+        JourneyReplaceParams parameters,
         CancellationToken cancellationToken = default
     );
 }

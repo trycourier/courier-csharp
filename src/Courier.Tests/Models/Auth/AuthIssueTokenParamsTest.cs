@@ -35,7 +35,7 @@ public class AuthIssueTokenParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/auth/issue-token"), url);
+        Assert.True(TestBase.UrisEqual(new Uri("https://api.courier.com/auth/issue-token"), url));
     }
 
     [Fact]

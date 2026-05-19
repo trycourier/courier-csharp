@@ -439,9 +439,11 @@ public class TemplateReplaceParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri("https://api.courier.com/tenants/tenant_id/templates/template_id"),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.courier.com/tenants/tenant_id/templates/template_id"),
+                url
+            )
         );
     }
 

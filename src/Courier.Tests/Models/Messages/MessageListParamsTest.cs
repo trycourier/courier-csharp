@@ -233,11 +233,13 @@ public class MessageListParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(
-            new Uri(
-                "https://api.courier.com/messages?archived=true&cursor=cursor&enqueued_after=enqueued_after&event=event&list=list&messageId=messageId&notification=notification&provider=string&recipient=recipient&status=string&tag=string&tags=tags&tenant_id=tenant_id&traceId=traceId"
-            ),
-            url
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri(
+                    "https://api.courier.com/messages?archived=true&cursor=cursor&enqueued_after=enqueued_after&event=event&list=list&messageId=messageId&notification=notification&provider=string&recipient=recipient&status=string&tag=string&tags=tags&tenant_id=tenant_id&traceId=traceId"
+                ),
+                url
+            )
         );
     }
 

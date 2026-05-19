@@ -47,7 +47,12 @@ public class BulkListUsersParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/bulk/job_id/users?cursor=cursor"), url);
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.courier.com/bulk/job_id/users?cursor=cursor"),
+                url
+            )
+        );
     }
 
     [Fact]

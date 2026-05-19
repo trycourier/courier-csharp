@@ -138,7 +138,9 @@ public class SubscriptionAddParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/lists/list_id/subscriptions"), url);
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.courier.com/lists/list_id/subscriptions"), url)
+        );
     }
 
     [Fact]

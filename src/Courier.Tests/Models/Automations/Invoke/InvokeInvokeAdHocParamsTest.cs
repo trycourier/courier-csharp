@@ -254,7 +254,7 @@ public class InvokeInvokeAdHocParamsTest : TestBase
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
-        Assert.Equal(new Uri("https://api.courier.com/automations/invoke"), url);
+        Assert.True(TestBase.UrisEqual(new Uri("https://api.courier.com/automations/invoke"), url));
     }
 
     [Fact]
