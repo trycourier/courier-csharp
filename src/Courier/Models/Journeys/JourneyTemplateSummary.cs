@@ -8,6 +8,9 @@ using Courier.Core;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Summary fields of a journey-scoped notification template returned in list responses.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneyTemplateSummary, JourneyTemplateSummaryFromRaw>))]
 public sealed record class JourneyTemplateSummary : JsonModel
 {

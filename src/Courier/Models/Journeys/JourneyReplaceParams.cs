@@ -11,8 +11,10 @@ using Courier.Core;
 namespace Courier.Models.Journeys;
 
 /// <summary>
-/// Replace the journey draft. Updates the working draft only; call POST /journeys/{templateId}/publish
-/// to make it live.
+/// Replace the journey draft. Updates the working draft only; call `POST /journeys/{templateId}/publish`
+/// to make it live, or pass `state: "PUBLISHED"` in this request to publish immediately.
+/// Send-node `template` ids must already exist and be scoped to this journey, and
+/// node ids must not be claimed by another journey.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -72,6 +74,9 @@ public record class JourneyReplaceParams : ParamsBase
         }
     }
 
+    /// <summary>
+    /// Lifecycle state of a journey.
+    /// </summary>
     public ApiEnum<string, JourneyState>? State
     {
         get

@@ -7,6 +7,9 @@ using Courier.Core;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// A published version of a journey.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneyVersionItem, JourneyVersionItemFromRaw>))]
 public sealed record class JourneyVersionItem : JsonModel
 {

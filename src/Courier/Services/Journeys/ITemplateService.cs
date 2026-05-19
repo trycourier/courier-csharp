@@ -29,8 +29,8 @@ public interface ITemplateService
     ITemplateService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Create a notification template scoped to this journey. The template is created
-    /// in DRAFT state.
+    /// Create a notification template scoped to this journey. Defaults to `DRAFT`
+    /// state; pass `state: "PUBLISHED"` to publish on create.
     /// </summary>
     Task<JourneyTemplateGetResponse> Create(
         TemplateCreateParams parameters,
@@ -62,8 +62,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// List notification templates scoped to this journey. Templates scoped to a
-    /// journey can only be referenced from `send` nodes of the same journey.
+    /// List notification templates scoped to this journey. Journey-scoped notification
+    /// templates can only be referenced from `send` nodes within the same journey.
     /// </summary>
     Task<JourneyTemplateListResponse> List(
         TemplateListParams parameters,
@@ -78,7 +78,7 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Archive a journey-scoped notification template. Archived templates cannot be
+    /// Archive the journey-scoped notification template. Archived templates cannot be
     /// sent.
     /// </summary>
     Task Archive(TemplateArchiveParams parameters, CancellationToken cancellationToken = default);
@@ -91,8 +91,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// List published versions of a journey-scoped notification template, ordered most
-    /// recent first.
+    /// List published versions of the journey-scoped notification template, ordered
+    /// most recent first.
     /// </summary>
     Task<NotificationTemplateVersionListResponse> ListVersions(
         TemplateListVersionsParams parameters,
@@ -107,7 +107,9 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Publish the current draft of a journey-scoped notification template.
+    /// Publish the current draft of the journey-scoped notification template as a new
+    /// version. Optionally roll back to a prior version by passing `{ "version": "vN"
+    /// }`.
     /// </summary>
     Task Publish(TemplatePublishParams parameters, CancellationToken cancellationToken = default);
 
@@ -119,7 +121,7 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Replace a journey-scoped notification template draft.
+    /// Replace the journey-scoped notification template draft.
     /// </summary>
     Task<JourneyTemplateGetResponse> Replace(
         TemplateReplaceParams parameters,

@@ -9,6 +9,10 @@ using System = System;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Trigger fired when the journey is invoked via the API. The optional `schema` field
+/// is a JSON Schema that validates the invocation payload.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneyApiInvokeTriggerNode, JourneyApiInvokeTriggerNodeFromRaw>)
 )]

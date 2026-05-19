@@ -20,6 +20,9 @@ public record class JourneyRetrieveParams : ParamsBase
 {
     public string? TemplateID { get; init; }
 
+    /// <summary>
+    /// Version selector: `draft`, `published` (default), or `vN`.
+    /// </summary>
     public string? Version
     {
         get

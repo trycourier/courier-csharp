@@ -8,6 +8,9 @@ using Courier.Core;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// A journey, with its current draft or published nodes and metadata.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneyResponse, JourneyResponseFromRaw>))]
 public sealed record class JourneyResponse : JsonModel
 {
@@ -87,6 +90,9 @@ public sealed record class JourneyResponse : JsonModel
         init { this._rawData.Set("published", value); }
     }
 
+    /// <summary>
+    /// Lifecycle state of a journey.
+    /// </summary>
     public required ApiEnum<string, JourneyState> State
     {
         get

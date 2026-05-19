@@ -8,6 +8,9 @@ using Courier.Core;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Request body for creating a journey.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<CreateJourneyRequest, CreateJourneyRequestFromRaw>))]
 public sealed record class CreateJourneyRequest : JsonModel
 {
@@ -55,6 +58,9 @@ public sealed record class CreateJourneyRequest : JsonModel
         }
     }
 
+    /// <summary>
+    /// Lifecycle state of a journey.
+    /// </summary>
     public ApiEnum<string, JourneyState>? State
     {
         get

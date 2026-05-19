@@ -9,7 +9,7 @@ using Courier.Core;
 namespace Courier.Models.Journeys.Templates;
 
 /// <summary>
-/// List published versions of a journey-scoped notification template, ordered most
+/// List published versions of the journey-scoped notification template, ordered most
 /// recent first.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with

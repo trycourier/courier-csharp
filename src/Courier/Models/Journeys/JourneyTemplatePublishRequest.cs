@@ -7,6 +7,10 @@ using Courier.Core;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Request body for publishing a journey-scoped notification template. Pass `version`
+/// to roll back to a prior version; omit to publish the current draft.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneyTemplatePublishRequest, JourneyTemplatePublishRequestFromRaw>)
 )]

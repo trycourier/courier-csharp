@@ -8,6 +8,9 @@ using Courier.Core;
 
 namespace Courier.Models.Journeys;
 
+/// <summary>
+/// Paged list of published journey versions, most recent first.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<JourneyVersionsListResponse, JourneyVersionsListResponseFromRaw>)
 )]
