@@ -1,5 +1,29 @@
 # Changelog
 
+## 5.8.0 (2026-05-19)
+
+Full Changelog: [v5.7.1...v5.8.0](https://github.com/trycourier/courier-csharp/compare/v5.7.1...v5.8.0)
+
+### Features
+
+* [C-18276] Publish Journeys endpoints + types in openapi.yml ([c034098](https://github.com/trycourier/courier-csharp/commit/c0340980ce2d84f1e423500a987aea9f01b2ee5a))
+* [C-18380] Journeys API reference: copy + naming cleanup ([d1f557f](https://github.com/trycourier/courier-csharp/commit/d1f557fbdbad7955be1259c6ca2d5bfa953d99b7))
+* [SUP-607] Add DELETE endpoint for Courier Create tenant templates ([cdd9a01](https://github.com/trycourier/courier-csharp/commit/cdd9a01d65932d070fecc19833a3217aaf26a96d))
+* support setting headers via env ([477445b](https://github.com/trycourier/courier-csharp/commit/477445bc8040e4c8d3ed5da14b5b11bf6d3c691d))
+* Update requestId description and example in SendMessageResponse ([3b220da](https://github.com/trycourier/courier-csharp/commit/3b220da97e33f22816034467025b629bbcb94591))
+
+
+### Bug Fixes
+
+* **internal:** disable default HttpClient timeout as we have our own ([1f8049e](https://github.com/trycourier/courier-csharp/commit/1f8049e578cc47409212fc1ff3b70b673cf5c325))
+* **tests:** round-trip urls correctly ([886f6ab](https://github.com/trycourier/courier-csharp/commit/886f6ab709bf1ce3dff3b8befe9f908f0f66f8e4))
+
+
+### Chores
+
+* **openapi:** bump requestId example to re-trigger docs sync ([0432a18](https://github.com/trycourier/courier-csharp/commit/0432a18b4b1969bc9f8c68ecc334bfc448c8d84e))
+* **openapi:** bump requestId example to re-trigger docs sync ([303cb3c](https://github.com/trycourier/courier-csharp/commit/303cb3ce9e45f9bcc4d402bfe0f3da6bdf5b52a2))
+
 ## 5.7.1 (2026-04-14)
 
 Full Changelog: [v5.7.0...v5.7.1](https://github.com/trycourier/courier-csharp/compare/v5.7.0...v5.7.1)
