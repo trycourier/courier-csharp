@@ -10,7 +10,8 @@ using Courier.Core;
 namespace Courier.Models.Brands;
 
 /// <summary>
-/// Create a new brand
+/// Create a new brand. Requires `name` and `settings` (with at least `colors.primary`
+/// and `colors.secondary`).
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -34,6 +35,16 @@ public record class BrandCreateParams : ParamsBase
         init { this._rawBodyData.Set("name", value); }
     }
 
+    public required BrandSettings Settings
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<BrandSettings>("settings");
+        }
+        init { this._rawBodyData.Set("settings", value); }
+    }
+
     public string? ID
     {
         get
@@ -42,16 +53,6 @@ public record class BrandCreateParams : ParamsBase
             return this._rawBodyData.GetNullableClass<string>("id");
         }
         init { this._rawBodyData.Set("id", value); }
-    }
-
-    public BrandSettings? Settings
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<BrandSettings>("settings");
-        }
-        init { this._rawBodyData.Set("settings", value); }
     }
 
     public BrandSnippets? Snippets
