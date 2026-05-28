@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.9.0 (2026-05-28)
+
+Full Changelog: [v5.8.0...v5.9.0](https://github.com/trycourier/courier-csharp/compare/v5.8.0...v5.9.0)
+
+### Features
+
+* C-18612 Add Journeys `batch` node variant to OpenAPI spec ([e87f00c](https://github.com/trycourier/courier-csharp/commit/e87f00c73b2b69f747be33e44e5e084ef8599c54))
+* Mark `settings` as required on POST /brands ([2b2cf2c](https://github.com/trycourier/courier-csharp/commit/2b2cf2ca7d0b812cf346a4c38c10636a7ca60141))
+
 ## 5.8.0 (2026-05-19)
 
 Full Changelog: [v5.7.1...v5.8.0](https://github.com/trycourier/courier-csharp/compare/v5.7.1...v5.8.0)
