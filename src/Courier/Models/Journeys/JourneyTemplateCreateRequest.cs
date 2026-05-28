@@ -315,12 +315,12 @@ public sealed record class Content : JsonModel
         init { this._rawData.Set("version", value); }
     }
 
-    public ApiEnum<string, Scope>? Scope
+    public ApiEnum<string, ContentScope>? Scope
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<ApiEnum<string, Scope>>("scope");
+            return this._rawData.GetNullableClass<ApiEnum<string, ContentScope>>("scope");
         }
         init
         {
@@ -420,16 +420,16 @@ sealed class ContentVersionConverter : JsonConverter<ContentVersion>
     }
 }
 
-[JsonConverter(typeof(ScopeConverter))]
-public enum Scope
+[JsonConverter(typeof(ContentScopeConverter))]
+public enum ContentScope
 {
     Default,
     Strict,
 }
 
-sealed class ScopeConverter : JsonConverter<Scope>
+sealed class ContentScopeConverter : JsonConverter<ContentScope>
 {
-    public override Scope Read(
+    public override ContentScope Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -437,20 +437,24 @@ sealed class ScopeConverter : JsonConverter<Scope>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "default" => Scope.Default,
-            "strict" => Scope.Strict,
-            _ => (Scope)(-1),
+            "default" => ContentScope.Default,
+            "strict" => ContentScope.Strict,
+            _ => (ContentScope)(-1),
         };
     }
 
-    public override void Write(Utf8JsonWriter writer, Scope value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        ContentScope value,
+        JsonSerializerOptions options
+    )
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                Scope.Default => "default",
-                Scope.Strict => "strict",
+                ContentScope.Default => "default",
+                ContentScope.Strict => "strict",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
