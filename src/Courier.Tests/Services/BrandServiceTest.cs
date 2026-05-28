@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Courier.Models.Brands;
 
 namespace Courier.Tests.Services;
 
@@ -8,7 +9,61 @@ public class BrandServiceTest : TestBase
     public async Task Create_Works()
     {
         var brand = await this.client.Brands.Create(
-            new() { Name = "name" },
+            new()
+            {
+                Name = "My Brand",
+                Settings = new()
+                {
+                    Colors = new() { Primary = "#9D3789", Secondary = "#FFFFFF" },
+                    Email = new()
+                    {
+                        Footer = new() { Content = "content", InheritDefault = true },
+                        Head = new() { InheritDefault = true, Content = "content" },
+                        Header = new()
+                        {
+                            Logo = new() { Href = "href", Image = "image" },
+                            BarColor = "barColor",
+                            InheritDefault = true,
+                        },
+                        TemplateOverride = new()
+                        {
+                            Enabled = true,
+                            BackgroundColor = "backgroundColor",
+                            BlocksBackgroundColor = "blocksBackgroundColor",
+                            Footer = "footer",
+                            Head = "head",
+                            Header = "header",
+                            Width = "width",
+                            Mjml = new()
+                            {
+                                Enabled = true,
+                                BackgroundColor = "backgroundColor",
+                                BlocksBackgroundColor = "blocksBackgroundColor",
+                                Footer = "footer",
+                                Head = "head",
+                                Header = "header",
+                                Width = "width",
+                            },
+                            FooterBackgroundColor = "footerBackgroundColor",
+                            FooterFullWidth = true,
+                        },
+                    },
+                    Inapp = new()
+                    {
+                        Colors = new() { Primary = "primary", Secondary = "secondary" },
+                        Icons = new() { Bell = "bell", Message = "message" },
+                        WidgetBackground = new()
+                        {
+                            BottomColor = "bottomColor",
+                            TopColor = "topColor",
+                        },
+                        BorderRadius = "borderRadius",
+                        DisableMessageIcon = true,
+                        FontFamily = "fontFamily",
+                        Placement = Placement.Top,
+                    },
+                },
+            },
             TestContext.Current.CancellationToken
         );
         brand.Validate();

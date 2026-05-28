@@ -27,7 +27,8 @@ public interface IBrandService
     IBrandService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Create a new brand
+    /// Create a new brand. Requires `name` and `settings` (with at least
+    /// `colors.primary` and `colors.secondary`).
     /// </summary>
     Task<Brand> Create(BrandCreateParams parameters, CancellationToken cancellationToken = default);
 
