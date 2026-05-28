@@ -189,6 +189,29 @@ public class JourneyNodeTest : TestBase
     }
 
     [Fact]
+    public void BatchValidationWorks()
+    {
+        JourneyNode value = new JourneyBatchNode()
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+            ID = "x",
+            CategoryKey = "x",
+            Conditions = new(["string", "string"]),
+            MaxItems = 1,
+        };
+        value.Validate();
+    }
+
+    [Fact]
     public void ExitValidationWorks()
     {
         JourneyNode value = new JourneyExitNode() { Type = JourneyExitNodeType.Exit, ID = "x" };
@@ -474,6 +497,35 @@ public class JourneyNodeTest : TestBase
     }
 
     [Fact]
+    public void BatchSerializationRoundtripWorks()
+    {
+        JourneyNode value = new JourneyBatchNode()
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+            ID = "x",
+            CategoryKey = "x",
+            Conditions = new(["string", "string"]),
+            MaxItems = 1,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<JourneyNode>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
     public void ExitSerializationRoundtripWorks()
     {
         JourneyNode value = new JourneyExitNode() { Type = JourneyExitNodeType.Exit, ID = "x" };
@@ -524,6 +576,607 @@ public class JourneyNodeTest : TestBase
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<JourneyNode>(
             element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class JourneyBatchNodeTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+            ID = "x",
+            CategoryKey = "x",
+            Conditions = new(["string", "string"]),
+            MaxItems = 1,
+        };
+
+        string expectedMaxWaitPeriod = "x";
+        Retain expectedRetain = new()
+        {
+            Count = 0,
+            Type = RetainType.First,
+            SortKey = "x",
+        };
+        ApiEnum<string, Scope> expectedScope = Scope.User;
+        ApiEnum<string, JourneyBatchNodeType> expectedType = JourneyBatchNodeType.Batch;
+        string expectedWaitPeriod = "x";
+        string expectedID = "x";
+        string expectedCategoryKey = "x";
+        JourneyConditionsField expectedConditions = new(["string", "string"]);
+        long expectedMaxItems = 1;
+
+        Assert.Equal(expectedMaxWaitPeriod, model.MaxWaitPeriod);
+        Assert.Equal(expectedRetain, model.Retain);
+        Assert.Equal(expectedScope, model.Scope);
+        Assert.Equal(expectedType, model.Type);
+        Assert.Equal(expectedWaitPeriod, model.WaitPeriod);
+        Assert.Equal(expectedID, model.ID);
+        Assert.Equal(expectedCategoryKey, model.CategoryKey);
+        Assert.Equal(expectedConditions, model.Conditions);
+        Assert.Equal(expectedMaxItems, model.MaxItems);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+            ID = "x",
+            CategoryKey = "x",
+            Conditions = new(["string", "string"]),
+            MaxItems = 1,
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<JourneyBatchNode>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+            ID = "x",
+            CategoryKey = "x",
+            Conditions = new(["string", "string"]),
+            MaxItems = 1,
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<JourneyBatchNode>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedMaxWaitPeriod = "x";
+        Retain expectedRetain = new()
+        {
+            Count = 0,
+            Type = RetainType.First,
+            SortKey = "x",
+        };
+        ApiEnum<string, Scope> expectedScope = Scope.User;
+        ApiEnum<string, JourneyBatchNodeType> expectedType = JourneyBatchNodeType.Batch;
+        string expectedWaitPeriod = "x";
+        string expectedID = "x";
+        string expectedCategoryKey = "x";
+        JourneyConditionsField expectedConditions = new(["string", "string"]);
+        long expectedMaxItems = 1;
+
+        Assert.Equal(expectedMaxWaitPeriod, deserialized.MaxWaitPeriod);
+        Assert.Equal(expectedRetain, deserialized.Retain);
+        Assert.Equal(expectedScope, deserialized.Scope);
+        Assert.Equal(expectedType, deserialized.Type);
+        Assert.Equal(expectedWaitPeriod, deserialized.WaitPeriod);
+        Assert.Equal(expectedID, deserialized.ID);
+        Assert.Equal(expectedCategoryKey, deserialized.CategoryKey);
+        Assert.Equal(expectedConditions, deserialized.Conditions);
+        Assert.Equal(expectedMaxItems, deserialized.MaxItems);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+            ID = "x",
+            CategoryKey = "x",
+            Conditions = new(["string", "string"]),
+            MaxItems = 1,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+        };
+
+        Assert.Null(model.ID);
+        Assert.False(model.RawData.ContainsKey("id"));
+        Assert.Null(model.CategoryKey);
+        Assert.False(model.RawData.ContainsKey("category_key"));
+        Assert.Null(model.Conditions);
+        Assert.False(model.RawData.ContainsKey("conditions"));
+        Assert.Null(model.MaxItems);
+        Assert.False(model.RawData.ContainsKey("max_items"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+
+            // Null should be interpreted as omitted for these properties
+            ID = null,
+            CategoryKey = null,
+            Conditions = null,
+            MaxItems = null,
+        };
+
+        Assert.Null(model.ID);
+        Assert.False(model.RawData.ContainsKey("id"));
+        Assert.Null(model.CategoryKey);
+        Assert.False(model.RawData.ContainsKey("category_key"));
+        Assert.Null(model.Conditions);
+        Assert.False(model.RawData.ContainsKey("conditions"));
+        Assert.Null(model.MaxItems);
+        Assert.False(model.RawData.ContainsKey("max_items"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+
+            // Null should be interpreted as omitted for these properties
+            ID = null,
+            CategoryKey = null,
+            Conditions = null,
+            MaxItems = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new JourneyBatchNode
+        {
+            MaxWaitPeriod = "x",
+            Retain = new()
+            {
+                Count = 0,
+                Type = RetainType.First,
+                SortKey = "x",
+            },
+            Scope = Scope.User,
+            Type = JourneyBatchNodeType.Batch,
+            WaitPeriod = "x",
+            ID = "x",
+            CategoryKey = "x",
+            Conditions = new(["string", "string"]),
+            MaxItems = 1,
+        };
+
+        JourneyBatchNode copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class RetainTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Retain
+        {
+            Count = 0,
+            Type = RetainType.First,
+            SortKey = "x",
+        };
+
+        long expectedCount = 0;
+        ApiEnum<string, RetainType> expectedType = RetainType.First;
+        string expectedSortKey = "x";
+
+        Assert.Equal(expectedCount, model.Count);
+        Assert.Equal(expectedType, model.Type);
+        Assert.Equal(expectedSortKey, model.SortKey);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Retain
+        {
+            Count = 0,
+            Type = RetainType.First,
+            SortKey = "x",
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Retain>(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Retain
+        {
+            Count = 0,
+            Type = RetainType.First,
+            SortKey = "x",
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Retain>(element, ModelBase.SerializerOptions);
+        Assert.NotNull(deserialized);
+
+        long expectedCount = 0;
+        ApiEnum<string, RetainType> expectedType = RetainType.First;
+        string expectedSortKey = "x";
+
+        Assert.Equal(expectedCount, deserialized.Count);
+        Assert.Equal(expectedType, deserialized.Type);
+        Assert.Equal(expectedSortKey, deserialized.SortKey);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Retain
+        {
+            Count = 0,
+            Type = RetainType.First,
+            SortKey = "x",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new Retain { Count = 0, Type = RetainType.First };
+
+        Assert.Null(model.SortKey);
+        Assert.False(model.RawData.ContainsKey("sort_key"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new Retain { Count = 0, Type = RetainType.First };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new Retain
+        {
+            Count = 0,
+            Type = RetainType.First,
+
+            // Null should be interpreted as omitted for these properties
+            SortKey = null,
+        };
+
+        Assert.Null(model.SortKey);
+        Assert.False(model.RawData.ContainsKey("sort_key"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new Retain
+        {
+            Count = 0,
+            Type = RetainType.First,
+
+            // Null should be interpreted as omitted for these properties
+            SortKey = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Retain
+        {
+            Count = 0,
+            Type = RetainType.First,
+            SortKey = "x",
+        };
+
+        Retain copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class RetainTypeTest : TestBase
+{
+    [Theory]
+    [InlineData(RetainType.First)]
+    [InlineData(RetainType.Last)]
+    [InlineData(RetainType.Highest)]
+    [InlineData(RetainType.Lowest)]
+    public void Validation_Works(RetainType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, RetainType> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, RetainType>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(RetainType.First)]
+    [InlineData(RetainType.Last)]
+    [InlineData(RetainType.Highest)]
+    [InlineData(RetainType.Lowest)]
+    public void SerializationRoundtrip_Works(RetainType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, RetainType> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, RetainType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, RetainType>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, RetainType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ScopeTest : TestBase
+{
+    [Theory]
+    [InlineData(Scope.User)]
+    public void Validation_Works(Scope rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Scope> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Scope.User)]
+    public void SerializationRoundtrip_Works(Scope rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Scope> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class JourneyBatchNodeTypeTest : TestBase
+{
+    [Theory]
+    [InlineData(JourneyBatchNodeType.Batch)]
+    public void Validation_Works(JourneyBatchNodeType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, JourneyBatchNodeType> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, JourneyBatchNodeType>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(JourneyBatchNodeType.Batch)]
+    public void SerializationRoundtrip_Works(JourneyBatchNodeType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, JourneyBatchNodeType> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, JourneyBatchNodeType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, JourneyBatchNodeType>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, JourneyBatchNodeType>>(
+            json,
             ModelBase.SerializerOptions
         );
 

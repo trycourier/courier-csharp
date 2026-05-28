@@ -48,6 +48,7 @@ public record class JourneyNode : ModelBase
                 ai: (x) => x.ID,
                 throttleStatic: (x) => x.ID,
                 throttleDynamic: (x) => x.ID,
+                batch: (x) => x.ID,
                 exit: (x) => x.ID,
                 branch: (x) => x.ID
             );
@@ -69,6 +70,7 @@ public record class JourneyNode : ModelBase
                 ai: (x) => x.Conditions,
                 throttleStatic: (x) => x.Conditions,
                 throttleDynamic: (x) => x.Conditions,
+                batch: (x) => x.Conditions,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -90,6 +92,7 @@ public record class JourneyNode : ModelBase
                 ai: (_) => null,
                 throttleStatic: (_) => null,
                 throttleDynamic: (_) => null,
+                batch: (_) => null,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -111,6 +114,7 @@ public record class JourneyNode : ModelBase
                 ai: (_) => null,
                 throttleStatic: (_) => null,
                 throttleDynamic: (_) => null,
+                batch: (_) => null,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -132,6 +136,7 @@ public record class JourneyNode : ModelBase
                 ai: (_) => null,
                 throttleStatic: (x) => x.MaxAllowed,
                 throttleDynamic: (x) => x.MaxAllowed,
+                batch: (_) => null,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -153,6 +158,7 @@ public record class JourneyNode : ModelBase
                 ai: (_) => null,
                 throttleStatic: (x) => x.Period,
                 throttleDynamic: (x) => x.Period,
+                batch: (_) => null,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -214,6 +220,12 @@ public record class JourneyNode : ModelBase
     }
 
     public JourneyNode(JourneyThrottleDynamicNode value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public JourneyNode(JourneyBatchNode value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
@@ -448,6 +460,27 @@ public record class JourneyNode : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="JourneyBatchNode"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickBatch(out var value)) {
+    ///     // `value` is of type `JourneyBatchNode`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickBatch([NotNullWhen(true)] out JourneyBatchNode? value)
+    {
+        value = this.Value as JourneyBatchNode;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="JourneyExitNode"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
@@ -512,6 +545,7 @@ public record class JourneyNode : ModelBase
     ///     (JourneyAINode value) =&gt; {...},
     ///     (JourneyThrottleStaticNode value) =&gt; {...},
     ///     (JourneyThrottleDynamicNode value) =&gt; {...},
+    ///     (JourneyBatchNode value) =&gt; {...},
     ///     (JourneyExitNode value) =&gt; {...},
     ///     (JourneyBranchNode value) =&gt; {...}
     /// );
@@ -529,6 +563,7 @@ public record class JourneyNode : ModelBase
         System::Action<JourneyAINode> ai,
         System::Action<JourneyThrottleStaticNode> throttleStatic,
         System::Action<JourneyThrottleDynamicNode> throttleDynamic,
+        System::Action<JourneyBatchNode> batch,
         System::Action<JourneyExitNode> exit,
         System::Action<JourneyBranchNode> branch
     )
@@ -564,6 +599,9 @@ public record class JourneyNode : ModelBase
                 break;
             case JourneyThrottleDynamicNode value:
                 throttleDynamic(value);
+                break;
+            case JourneyBatchNode value:
+                batch(value);
                 break;
             case JourneyExitNode value:
                 exit(value);
@@ -603,6 +641,7 @@ public record class JourneyNode : ModelBase
     ///     (JourneyAINode value) =&gt; {...},
     ///     (JourneyThrottleStaticNode value) =&gt; {...},
     ///     (JourneyThrottleDynamicNode value) =&gt; {...},
+    ///     (JourneyBatchNode value) =&gt; {...},
     ///     (JourneyExitNode value) =&gt; {...},
     ///     (JourneyBranchNode value) =&gt; {...}
     /// );
@@ -620,6 +659,7 @@ public record class JourneyNode : ModelBase
         System::Func<JourneyAINode, T> ai,
         System::Func<JourneyThrottleStaticNode, T> throttleStatic,
         System::Func<JourneyThrottleDynamicNode, T> throttleDynamic,
+        System::Func<JourneyBatchNode, T> batch,
         System::Func<JourneyExitNode, T> exit,
         System::Func<JourneyBranchNode, T> branch
     )
@@ -636,6 +676,7 @@ public record class JourneyNode : ModelBase
             JourneyAINode value => ai(value),
             JourneyThrottleStaticNode value => throttleStatic(value),
             JourneyThrottleDynamicNode value => throttleDynamic(value),
+            JourneyBatchNode value => batch(value),
             JourneyExitNode value => exit(value),
             JourneyBranchNode value => branch(value),
             _ => throw new CourierInvalidDataException(
@@ -663,6 +704,8 @@ public record class JourneyNode : ModelBase
     public static implicit operator JourneyNode(JourneyThrottleStaticNode value) => new(value);
 
     public static implicit operator JourneyNode(JourneyThrottleDynamicNode value) => new(value);
+
+    public static implicit operator JourneyNode(JourneyBatchNode value) => new(value);
 
     public static implicit operator JourneyNode(JourneyExitNode value) => new(value);
 
@@ -695,6 +738,7 @@ public record class JourneyNode : ModelBase
             (ai) => ai.Validate(),
             (throttleStatic) => throttleStatic.Validate(),
             (throttleDynamic) => throttleDynamic.Validate(),
+            (batch) => batch.Validate(),
             (exit) => exit.Validate(),
             (branch) => branch.Validate()
         );
@@ -730,8 +774,9 @@ public record class JourneyNode : ModelBase
             JourneyAINode _ => 7,
             JourneyThrottleStaticNode _ => 8,
             JourneyThrottleDynamicNode _ => 9,
-            JourneyExitNode _ => 10,
-            JourneyBranchNode _ => 11,
+            JourneyBatchNode _ => 10,
+            JourneyExitNode _ => 11,
+            JourneyBranchNode _ => 12,
             _ => -1,
         };
     }
@@ -909,6 +954,20 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
 
         try
         {
+            var deserialized = JsonSerializer.Deserialize<JourneyBatchNode>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
             var deserialized = JsonSerializer.Deserialize<JourneyExitNode>(element, options);
             if (deserialized != null)
             {
@@ -945,6 +1004,433 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
     )
     {
         JsonSerializer.Serialize(writer, value.Json, options);
+    }
+}
+
+/// <summary>
+/// Collect events arriving at the node into a single batch and fire one downstream
+/// step with the aggregated payload. The first event into a batch owns the run;
+/// later contributing events terminate at the batch step. The batch releases when
+/// any of `max_items` is reached, a quiet window of `wait_period` elapses, or the
+/// `max_wait_period` ceiling hits.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<JourneyBatchNode, JourneyBatchNodeFromRaw>))]
+public sealed record class JourneyBatchNode : JsonModel
+{
+    /// <summary>
+    /// ISO 8601 duration. Hard ceiling from the first event into the batch; releases
+    /// the batch unconditionally when it elapses.
+    /// </summary>
+    public required string MaxWaitPeriod
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("max_wait_period");
+        }
+        init { this._rawData.Set("max_wait_period", value); }
+    }
+
+    /// <summary>
+    /// How to select which collected events to retain in the aggregated payload
+    /// when the batch releases.
+    /// </summary>
+    public required Retain Retain
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Retain>("retain");
+        }
+        init { this._rawData.Set("retain", value); }
+    }
+
+    public required ApiEnum<string, Scope> Scope
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Scope>>("scope");
+        }
+        init { this._rawData.Set("scope", value); }
+    }
+
+    public required ApiEnum<string, JourneyBatchNodeType> Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, JourneyBatchNodeType>>("type");
+        }
+        init { this._rawData.Set("type", value); }
+    }
+
+    /// <summary>
+    /// ISO 8601 duration. Quiet window that releases the batch when it elapses with
+    /// no new contributing events. Must be less than `max_wait_period`.
+    /// </summary>
+    public required string WaitPeriod
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("wait_period");
+        }
+        init { this._rawData.Set("wait_period", value); }
+    }
+
+    public string? ID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("id", value);
+        }
+    }
+
+    /// <summary>
+    /// Optional partition key. Events with the same `category_key` are batched together;
+    /// events with different values are batched separately.
+    /// </summary>
+    public string? CategoryKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("category_key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("category_key", value);
+        }
+    }
+
+    /// <summary>
+    /// Condition spec for a journey node. Accepts a single condition atom, an AND/OR
+    /// group, or an AND/OR nested group. Omit the `conditions` property entirely
+    /// to express "no conditions".
+    /// </summary>
+    public JourneyConditionsField? Conditions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<JourneyConditionsField>("conditions");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("conditions", value);
+        }
+    }
+
+    /// <summary>
+    /// Releases the batch once this many events have been collected.
+    /// </summary>
+    public long? MaxItems
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<long>("max_items");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("max_items", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.MaxWaitPeriod;
+        this.Retain.Validate();
+        this.Scope.Validate();
+        this.Type.Validate();
+        _ = this.WaitPeriod;
+        _ = this.ID;
+        _ = this.CategoryKey;
+        this.Conditions?.Validate();
+        _ = this.MaxItems;
+    }
+
+    public JourneyBatchNode() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public JourneyBatchNode(JourneyBatchNode journeyBatchNode)
+        : base(journeyBatchNode) { }
+#pragma warning restore CS8618
+
+    public JourneyBatchNode(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    JourneyBatchNode(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="JourneyBatchNodeFromRaw.FromRawUnchecked"/>
+    public static JourneyBatchNode FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class JourneyBatchNodeFromRaw : IFromRawJson<JourneyBatchNode>
+{
+    /// <inheritdoc/>
+    public JourneyBatchNode FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        JourneyBatchNode.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// How to select which collected events to retain in the aggregated payload when
+/// the batch releases.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Retain, RetainFromRaw>))]
+public sealed record class Retain : JsonModel
+{
+    public required long Count
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("count");
+        }
+        init { this._rawData.Set("count", value); }
+    }
+
+    public required ApiEnum<string, RetainType> Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, RetainType>>("type");
+        }
+        init { this._rawData.Set("type", value); }
+    }
+
+    /// <summary>
+    /// Dot-path into the event payload (e.g. `data.priority`). Required when `type`
+    /// is `highest` or `lowest`.
+    /// </summary>
+    public string? SortKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("sort_key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("sort_key", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Count;
+        this.Type.Validate();
+        _ = this.SortKey;
+    }
+
+    public Retain() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Retain(Retain retain)
+        : base(retain) { }
+#pragma warning restore CS8618
+
+    public Retain(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Retain(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="RetainFromRaw.FromRawUnchecked"/>
+    public static Retain FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class RetainFromRaw : IFromRawJson<Retain>
+{
+    /// <inheritdoc/>
+    public Retain FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Retain.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(RetainTypeConverter))]
+public enum RetainType
+{
+    First,
+    Last,
+    Highest,
+    Lowest,
+}
+
+sealed class RetainTypeConverter : JsonConverter<RetainType>
+{
+    public override RetainType Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "first" => RetainType.First,
+            "last" => RetainType.Last,
+            "highest" => RetainType.Highest,
+            "lowest" => RetainType.Lowest,
+            _ => (RetainType)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        RetainType value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                RetainType.First => "first",
+                RetainType.Last => "last",
+                RetainType.Highest => "highest",
+                RetainType.Lowest => "lowest",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+[JsonConverter(typeof(ScopeConverter))]
+public enum Scope
+{
+    User,
+}
+
+sealed class ScopeConverter : JsonConverter<Scope>
+{
+    public override Scope Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "user" => Scope.User,
+            _ => (Scope)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Scope value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Scope.User => "user",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+[JsonConverter(typeof(JourneyBatchNodeTypeConverter))]
+public enum JourneyBatchNodeType
+{
+    Batch,
+}
+
+sealed class JourneyBatchNodeTypeConverter : JsonConverter<JourneyBatchNodeType>
+{
+    public override JourneyBatchNodeType Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "batch" => JourneyBatchNodeType.Batch,
+            _ => (JourneyBatchNodeType)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        JourneyBatchNodeType value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                JourneyBatchNodeType.Batch => "batch",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }
 

@@ -32,7 +32,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -60,7 +60,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = Scope.Default,
+                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -98,7 +98,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -140,7 +140,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -175,7 +175,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = Scope.Default,
+                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -213,7 +213,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -249,7 +249,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -286,7 +286,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -320,7 +320,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -361,7 +361,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -399,7 +399,7 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = Scope.Default,
+                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -437,7 +437,7 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = Scope.Default,
+                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -459,7 +459,7 @@ public class NotificationTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = Scope.Default,
+            Scope = ContentScope.Default,
         };
         string expectedName = "name";
         Subscription expectedSubscription = new("topic_id");
@@ -496,7 +496,7 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = Scope.Default,
+                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -532,7 +532,7 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = Scope.Default,
+                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -561,7 +561,7 @@ public class NotificationTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = Scope.Default,
+            Scope = ContentScope.Default,
         };
         string expectedName = "name";
         Subscription expectedSubscription = new("topic_id");
@@ -598,7 +598,7 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = Scope.Default,
+                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -628,7 +628,7 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = Scope.Default,
+                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -716,7 +716,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = Scope.Default,
+            Scope = ContentScope.Default,
         };
 
         List<ElementalNode> expectedElements =
@@ -731,7 +731,7 @@ public class ContentTest : TestBase
             },
         ];
         ApiEnum<string, ContentVersion> expectedVersion = ContentVersion.V2022_01_01;
-        ApiEnum<string, Scope> expectedScope = Scope.Default;
+        ApiEnum<string, ContentScope> expectedScope = ContentScope.Default;
 
         Assert.Equal(expectedElements.Count, model.Elements.Count);
         for (int i = 0; i < expectedElements.Count; i++)
@@ -759,7 +759,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = Scope.Default,
+            Scope = ContentScope.Default,
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -785,7 +785,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = Scope.Default,
+            Scope = ContentScope.Default,
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -807,7 +807,7 @@ public class ContentTest : TestBase
             },
         ];
         ApiEnum<string, ContentVersion> expectedVersion = ContentVersion.V2022_01_01;
-        ApiEnum<string, Scope> expectedScope = Scope.Default;
+        ApiEnum<string, ContentScope> expectedScope = ContentScope.Default;
 
         Assert.Equal(expectedElements.Count, deserialized.Elements.Count);
         for (int i = 0; i < expectedElements.Count; i++)
@@ -835,7 +835,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = Scope.Default,
+            Scope = ContentScope.Default,
         };
 
         model.Validate();
@@ -954,7 +954,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = Scope.Default,
+            Scope = ContentScope.Default,
         };
 
         Content copied = new(model);
@@ -1019,22 +1019,22 @@ public class ContentVersionTest : TestBase
     }
 }
 
-public class ScopeTest : TestBase
+public class ContentScopeTest : TestBase
 {
     [Theory]
-    [InlineData(Scope.Default)]
-    [InlineData(Scope.Strict)]
-    public void Validation_Works(Scope rawValue)
+    [InlineData(ContentScope.Default)]
+    [InlineData(ContentScope.Strict)]
+    public void Validation_Works(ContentScope rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Scope> value = rawValue;
+        ApiEnum<string, ContentScope> value = rawValue;
         value.Validate();
     }
 
     [Fact]
     public void InvalidEnumValidationThrows_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, ContentScope>>(
             JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
@@ -1044,15 +1044,15 @@ public class ScopeTest : TestBase
     }
 
     [Theory]
-    [InlineData(Scope.Default)]
-    [InlineData(Scope.Strict)]
-    public void SerializationRoundtrip_Works(Scope rawValue)
+    [InlineData(ContentScope.Default)]
+    [InlineData(ContentScope.Strict)]
+    public void SerializationRoundtrip_Works(ContentScope rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Scope> value = rawValue;
+        ApiEnum<string, ContentScope> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ContentScope>>(
             json,
             ModelBase.SerializerOptions
         );
@@ -1063,12 +1063,12 @@ public class ScopeTest : TestBase
     [Fact]
     public void InvalidEnumSerializationRoundtrip_Works()
     {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+        var value = JsonSerializer.Deserialize<ApiEnum<string, ContentScope>>(
             JsonSerializer.SerializeToElement("invalid value"),
             ModelBase.SerializerOptions
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ContentScope>>(
             json,
             ModelBase.SerializerOptions
         );
