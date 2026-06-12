@@ -126,6 +126,12 @@ public sealed class CourierClient : ICourierClient
         get { return _bulk.Value; }
     }
 
+    readonly Lazy<IDigestService> _digests;
+    public IDigestService Digests
+    {
+        get { return _digests.Value; }
+    }
+
     readonly Lazy<IInboundService> _inbound;
     public IInboundService Inbound
     {
@@ -202,6 +208,7 @@ public sealed class CourierClient : ICourierClient
         _journeys = new(() => new JourneyService(this));
         _brands = new(() => new BrandService(this));
         _bulk = new(() => new BulkService(this));
+        _digests = new(() => new DigestService(this));
         _inbound = new(() => new InboundService(this));
         _lists = new(() => new ListService(this));
         _messages = new(() => new MessageService(this));
@@ -339,6 +346,12 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     public IBulkServiceWithRawResponse Bulk
     {
         get { return _bulk.Value; }
+    }
+
+    readonly Lazy<IDigestServiceWithRawResponse> _digests;
+    public IDigestServiceWithRawResponse Digests
+    {
+        get { return _digests.Value; }
     }
 
     readonly Lazy<IInboundServiceWithRawResponse> _inbound;
@@ -608,6 +621,7 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
         _journeys = new(() => new JourneyServiceWithRawResponse(this));
         _brands = new(() => new BrandServiceWithRawResponse(this));
         _bulk = new(() => new BulkServiceWithRawResponse(this));
+        _digests = new(() => new DigestServiceWithRawResponse(this));
         _inbound = new(() => new InboundServiceWithRawResponse(this));
         _lists = new(() => new ListServiceWithRawResponse(this));
         _messages = new(() => new MessageServiceWithRawResponse(this));
