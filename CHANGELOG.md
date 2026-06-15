@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.10.0 (2026-06-12)
+
+Full Changelog: [v5.9.0...v5.10.0](https://github.com/trycourier/courier-csharp/compare/v5.9.0...v5.10.0)
+
+### Features
+
+* **digests:** document digest REST endpoints in OpenAPI spec ([0571ecc](https://github.com/trycourier/courier-csharp/commit/0571ecc5d4e4127afad66ceece3f98668975e9f5))
+
+
+### Bug Fixes
+
+* **csharp:** resolve ambiguity in parsing query strings ([66ab73f](https://github.com/trycourier/courier-csharp/commit/66ab73f48d611090e0a528664d9b5b63e258b4dc))
+
 ## 5.9.0 (2026-05-28)
 
 Full Changelog: [v5.8.0...v5.9.0](https://github.com/trycourier/courier-csharp/compare/v5.8.0...v5.9.0)

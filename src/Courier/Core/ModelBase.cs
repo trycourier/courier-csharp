@@ -5,6 +5,7 @@ using Courier.Models.Automations;
 using Courier.Models.Brands;
 using Courier.Models.Bulk;
 using Audiences = Courier.Models.Audiences;
+using Digests = Courier.Models.Digests;
 using Inbound = Courier.Models.Inbound;
 using Invoke = Courier.Models.Automations.Invoke;
 using Items = Courier.Models.Tenants.Preferences.Items;
@@ -131,6 +132,9 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Placement>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, JobStatus>(),
+            new ApiEnumConverter<string, Digests::Retain>(),
+            new ApiEnumConverter<string, Digests::Status>(),
+            new ApiEnumConverter<string, Digests::Type>(),
             new ApiEnumConverter<string, Inbound::Type>(),
             new ApiEnumConverter<string, Messages::Status>(),
             new ApiEnumConverter<string, Messages::Reason>(),

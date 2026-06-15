@@ -69,6 +69,8 @@ public interface ICourierClient : IDisposable
 
     IBulkService Bulk { get; }
 
+    IDigestService Digests { get; }
+
     IInboundService Inbound { get; }
 
     IListService Lists { get; }
@@ -136,6 +138,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     IBrandServiceWithRawResponse Brands { get; }
 
     IBulkServiceWithRawResponse Bulk { get; }
+
+    IDigestServiceWithRawResponse Digests { get; }
 
     IInboundServiceWithRawResponse Inbound { get; }
 
