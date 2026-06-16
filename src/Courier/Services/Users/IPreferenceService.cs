@@ -42,6 +42,23 @@ public interface IPreferenceService
     );
 
     /// <summary>
+    /// Remove a user's preferences for a specific subscription topic, resetting the
+    /// topic to its effective default. This operation is idempotent: deleting a
+    /// preference that does not exist succeeds with no error.
+    /// </summary>
+    Task DeleteTopic(
+        PreferenceDeleteTopicParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="DeleteTopic(PreferenceDeleteTopicParams, CancellationToken)"/>
+    Task DeleteTopic(
+        string topicID,
+        PreferenceDeleteTopicParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Fetch user preferences for a specific subscription topic.
     /// </summary>
     Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
@@ -98,6 +115,22 @@ public interface IPreferenceServiceWithRawResponse
     Task<HttpResponse<PreferenceRetrieveResponse>> Retrieve(
         string userID,
         PreferenceRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>delete /users/{user_id}/preferences/{topic_id}</c>, but is otherwise the
+    /// same as <see cref="IPreferenceService.DeleteTopic(PreferenceDeleteTopicParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> DeleteTopic(
+        PreferenceDeleteTopicParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="DeleteTopic(PreferenceDeleteTopicParams, CancellationToken)"/>
+    Task<HttpResponse> DeleteTopic(
+        string topicID,
+        PreferenceDeleteTopicParams parameters,
         CancellationToken cancellationToken = default
     );
 

@@ -17,6 +17,16 @@ public class PreferenceServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task DeleteTopic_Works()
+    {
+        await this.client.Users.Preferences.DeleteTopic(
+            "topic_id",
+            new() { UserID = "user_id" },
+            TestContext.Current.CancellationToken
+        );
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task RetrieveTopic_Works()
     {
         var response = await this.client.Users.Preferences.RetrieveTopic(
