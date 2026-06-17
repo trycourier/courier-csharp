@@ -1,0 +1,37 @@
+using System;
+using TryCourier.Models.Brands;
+
+namespace TryCourier.Tests.Models.Brands;
+
+public class BrandRetrieveParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new BrandRetrieveParams { BrandID = "brand_id" };
+
+        string expectedBrandID = "brand_id";
+
+        Assert.Equal(expectedBrandID, parameters.BrandID);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        BrandRetrieveParams parameters = new() { BrandID = "brand_id" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.True(TestBase.UrisEqual(new Uri("https://api.courier.com/brands/brand_id"), url));
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new BrandRetrieveParams { BrandID = "brand_id" };
+
+        BrandRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
+}
