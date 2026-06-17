@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.11.0 (2026-06-17)
+
+Full Changelog: [v5.10.0...v5.11.0](https://github.com/trycourier/courier-csharp/compare/v5.10.0...v5.11.0)
+
+### Features
+
+* **openapi:** add add-to-digest JourneyNode variant ([d19c5da](https://github.com/trycourier/courier-csharp/commit/d19c5da4684e8fb1c9038ae010d4d14cce807b77))
+* **openapi:** add DELETE /users/{id}/preferences/{topicId} ([5c0ebe0](https://github.com/trycourier/courier-csharp/commit/5c0ebe0269ee900257075829956234099c66d773))
+
 ## 5.10.0 (2026-06-12)
 
 Full Changelog: [v5.9.0...v5.10.0](https://github.com/trycourier/courier-csharp/compare/v5.9.0...v5.10.0)
