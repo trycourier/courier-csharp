@@ -59,6 +59,26 @@ public sealed class PreferenceService : IPreferenceService
     }
 
     /// <inheritdoc/>
+    public Task DeleteTopic(
+        PreferenceDeleteTopicParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.WithRawResponse.DeleteTopic(parameters, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task DeleteTopic(
+        string topicID,
+        PreferenceDeleteTopicParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.DeleteTopic(parameters with { TopicID = topicID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
     public async Task<PreferenceRetrieveTopicResponse> RetrieveTopic(
         PreferenceRetrieveTopicParams parameters,
         CancellationToken cancellationToken = default
@@ -164,6 +184,35 @@ public sealed class PreferenceServiceWithRawResponse : IPreferenceServiceWithRaw
         parameters ??= new();
 
         return this.Retrieve(parameters with { UserID = userID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> DeleteTopic(
+        PreferenceDeleteTopicParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.TopicID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TopicID' cannot be null");
+        }
+
+        HttpRequest<PreferenceDeleteTopicParams> request = new()
+        {
+            Method = HttpMethod.Delete,
+            Params = parameters,
+        };
+        return this._client.Execute(request, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> DeleteTopic(
+        string topicID,
+        PreferenceDeleteTopicParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.DeleteTopic(parameters with { TopicID = topicID }, cancellationToken);
     }
 
     /// <inheritdoc/>

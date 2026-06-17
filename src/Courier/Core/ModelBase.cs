@@ -95,6 +95,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Journeys::RetainType>(),
             new ApiEnumConverter<string, Journeys::Scope>(),
             new ApiEnumConverter<string, Journeys::JourneyBatchNodeType>(),
+            new ApiEnumConverter<string, Journeys::JourneyAddToDigestNodeType>(),
             new ApiEnumConverter<string, Journeys::JourneyBranchNodeType>(),
             new ApiEnumConverter<string, Journeys::RequestType>(),
             new ApiEnumConverter<string, Journeys::JourneySegmentTriggerNodeTriggerType>(),
