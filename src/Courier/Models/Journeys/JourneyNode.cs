@@ -49,6 +49,7 @@ public record class JourneyNode : ModelBase
                 throttleStatic: (x) => x.ID,
                 throttleDynamic: (x) => x.ID,
                 batch: (x) => x.ID,
+                addToDigest: (x) => x.ID,
                 exit: (x) => x.ID,
                 branch: (x) => x.ID
             );
@@ -71,6 +72,7 @@ public record class JourneyNode : ModelBase
                 throttleStatic: (x) => x.Conditions,
                 throttleDynamic: (x) => x.Conditions,
                 batch: (x) => x.Conditions,
+                addToDigest: (x) => x.Conditions,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -93,6 +95,7 @@ public record class JourneyNode : ModelBase
                 throttleStatic: (_) => null,
                 throttleDynamic: (_) => null,
                 batch: (_) => null,
+                addToDigest: (_) => null,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -115,6 +118,7 @@ public record class JourneyNode : ModelBase
                 throttleStatic: (_) => null,
                 throttleDynamic: (_) => null,
                 batch: (_) => null,
+                addToDigest: (_) => null,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -137,6 +141,7 @@ public record class JourneyNode : ModelBase
                 throttleStatic: (x) => x.MaxAllowed,
                 throttleDynamic: (x) => x.MaxAllowed,
                 batch: (_) => null,
+                addToDigest: (_) => null,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -159,6 +164,7 @@ public record class JourneyNode : ModelBase
                 throttleStatic: (x) => x.Period,
                 throttleDynamic: (x) => x.Period,
                 batch: (_) => null,
+                addToDigest: (_) => null,
                 exit: (_) => null,
                 branch: (_) => null
             );
@@ -226,6 +232,12 @@ public record class JourneyNode : ModelBase
     }
 
     public JourneyNode(JourneyBatchNode value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public JourneyNode(JourneyAddToDigestNode value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
@@ -481,6 +493,27 @@ public record class JourneyNode : ModelBase
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="JourneyAddToDigestNode"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAddToDigest(out var value)) {
+    ///     // `value` is of type `JourneyAddToDigestNode`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAddToDigest([NotNullWhen(true)] out JourneyAddToDigestNode? value)
+    {
+        value = this.Value as JourneyAddToDigestNode;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
     /// type <see cref="JourneyExitNode"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
@@ -546,6 +579,7 @@ public record class JourneyNode : ModelBase
     ///     (JourneyThrottleStaticNode value) =&gt; {...},
     ///     (JourneyThrottleDynamicNode value) =&gt; {...},
     ///     (JourneyBatchNode value) =&gt; {...},
+    ///     (JourneyAddToDigestNode value) =&gt; {...},
     ///     (JourneyExitNode value) =&gt; {...},
     ///     (JourneyBranchNode value) =&gt; {...}
     /// );
@@ -564,6 +598,7 @@ public record class JourneyNode : ModelBase
         System::Action<JourneyThrottleStaticNode> throttleStatic,
         System::Action<JourneyThrottleDynamicNode> throttleDynamic,
         System::Action<JourneyBatchNode> batch,
+        System::Action<JourneyAddToDigestNode> addToDigest,
         System::Action<JourneyExitNode> exit,
         System::Action<JourneyBranchNode> branch
     )
@@ -602,6 +637,9 @@ public record class JourneyNode : ModelBase
                 break;
             case JourneyBatchNode value:
                 batch(value);
+                break;
+            case JourneyAddToDigestNode value:
+                addToDigest(value);
                 break;
             case JourneyExitNode value:
                 exit(value);
@@ -642,6 +680,7 @@ public record class JourneyNode : ModelBase
     ///     (JourneyThrottleStaticNode value) =&gt; {...},
     ///     (JourneyThrottleDynamicNode value) =&gt; {...},
     ///     (JourneyBatchNode value) =&gt; {...},
+    ///     (JourneyAddToDigestNode value) =&gt; {...},
     ///     (JourneyExitNode value) =&gt; {...},
     ///     (JourneyBranchNode value) =&gt; {...}
     /// );
@@ -660,6 +699,7 @@ public record class JourneyNode : ModelBase
         System::Func<JourneyThrottleStaticNode, T> throttleStatic,
         System::Func<JourneyThrottleDynamicNode, T> throttleDynamic,
         System::Func<JourneyBatchNode, T> batch,
+        System::Func<JourneyAddToDigestNode, T> addToDigest,
         System::Func<JourneyExitNode, T> exit,
         System::Func<JourneyBranchNode, T> branch
     )
@@ -677,6 +717,7 @@ public record class JourneyNode : ModelBase
             JourneyThrottleStaticNode value => throttleStatic(value),
             JourneyThrottleDynamicNode value => throttleDynamic(value),
             JourneyBatchNode value => batch(value),
+            JourneyAddToDigestNode value => addToDigest(value),
             JourneyExitNode value => exit(value),
             JourneyBranchNode value => branch(value),
             _ => throw new CourierInvalidDataException(
@@ -706,6 +747,8 @@ public record class JourneyNode : ModelBase
     public static implicit operator JourneyNode(JourneyThrottleDynamicNode value) => new(value);
 
     public static implicit operator JourneyNode(JourneyBatchNode value) => new(value);
+
+    public static implicit operator JourneyNode(JourneyAddToDigestNode value) => new(value);
 
     public static implicit operator JourneyNode(JourneyExitNode value) => new(value);
 
@@ -739,6 +782,7 @@ public record class JourneyNode : ModelBase
             (throttleStatic) => throttleStatic.Validate(),
             (throttleDynamic) => throttleDynamic.Validate(),
             (batch) => batch.Validate(),
+            (addToDigest) => addToDigest.Validate(),
             (exit) => exit.Validate(),
             (branch) => branch.Validate()
         );
@@ -775,8 +819,9 @@ public record class JourneyNode : ModelBase
             JourneyThrottleStaticNode _ => 8,
             JourneyThrottleDynamicNode _ => 9,
             JourneyBatchNode _ => 10,
-            JourneyExitNode _ => 11,
-            JourneyBranchNode _ => 12,
+            JourneyAddToDigestNode _ => 11,
+            JourneyExitNode _ => 12,
+            JourneyBranchNode _ => 13,
             _ => -1,
         };
     }
@@ -955,6 +1000,20 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<JourneyBatchNode>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneyAddToDigestNode>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -1425,6 +1484,167 @@ sealed class JourneyBatchNodeTypeConverter : JsonConverter<JourneyBatchNodeType>
             value switch
             {
                 JourneyBatchNodeType.Batch => "batch",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+/// <summary>
+/// Add the current event to a digest keyed by the given subscription topic. The
+/// digest accumulates events and releases them on the schedule configured for the topic.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<JourneyAddToDigestNode, JourneyAddToDigestNodeFromRaw>))]
+public sealed record class JourneyAddToDigestNode : JsonModel
+{
+    /// <summary>
+    /// The subscription topic that owns the digest the event is added to.
+    /// </summary>
+    public required string SubscriptionTopicID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("subscription_topic_id");
+        }
+        init { this._rawData.Set("subscription_topic_id", value); }
+    }
+
+    public required ApiEnum<string, JourneyAddToDigestNodeType> Type
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, JourneyAddToDigestNodeType>>(
+                "type"
+            );
+        }
+        init { this._rawData.Set("type", value); }
+    }
+
+    public string? ID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("id", value);
+        }
+    }
+
+    /// <summary>
+    /// Condition spec for a journey node. Accepts a single condition atom, an AND/OR
+    /// group, or an AND/OR nested group. Omit the `conditions` property entirely
+    /// to express "no conditions".
+    /// </summary>
+    public JourneyConditionsField? Conditions
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<JourneyConditionsField>("conditions");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("conditions", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.SubscriptionTopicID;
+        this.Type.Validate();
+        _ = this.ID;
+        this.Conditions?.Validate();
+    }
+
+    public JourneyAddToDigestNode() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public JourneyAddToDigestNode(JourneyAddToDigestNode journeyAddToDigestNode)
+        : base(journeyAddToDigestNode) { }
+#pragma warning restore CS8618
+
+    public JourneyAddToDigestNode(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    JourneyAddToDigestNode(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="JourneyAddToDigestNodeFromRaw.FromRawUnchecked"/>
+    public static JourneyAddToDigestNode FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class JourneyAddToDigestNodeFromRaw : IFromRawJson<JourneyAddToDigestNode>
+{
+    /// <inheritdoc/>
+    public JourneyAddToDigestNode FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => JourneyAddToDigestNode.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(JourneyAddToDigestNodeTypeConverter))]
+public enum JourneyAddToDigestNodeType
+{
+    AddToDigest,
+}
+
+sealed class JourneyAddToDigestNodeTypeConverter : JsonConverter<JourneyAddToDigestNodeType>
+{
+    public override JourneyAddToDigestNodeType Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "add-to-digest" => JourneyAddToDigestNodeType.AddToDigest,
+            _ => (JourneyAddToDigestNodeType)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        JourneyAddToDigestNodeType value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                JourneyAddToDigestNodeType.AddToDigest => "add-to-digest",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

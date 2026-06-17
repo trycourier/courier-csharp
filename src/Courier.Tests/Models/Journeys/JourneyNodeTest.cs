@@ -212,6 +212,19 @@ public class JourneyNodeTest : TestBase
     }
 
     [Fact]
+    public void AddToDigestValidationWorks()
+    {
+        JourneyNode value = new JourneyAddToDigestNode()
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+        };
+        value.Validate();
+    }
+
+    [Fact]
     public void ExitValidationWorks()
     {
         JourneyNode value = new JourneyExitNode() { Type = JourneyExitNodeType.Exit, ID = "x" };
@@ -515,6 +528,25 @@ public class JourneyNodeTest : TestBase
             CategoryKey = "x",
             Conditions = new(["string", "string"]),
             MaxItems = 1,
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<JourneyNode>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void AddToDigestSerializationRoundtripWorks()
+    {
+        JourneyNode value = new JourneyAddToDigestNode()
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+            ID = "x",
+            Conditions = new(["string", "string"]),
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<JourneyNode>(
@@ -1176,6 +1208,230 @@ public class JourneyBatchNodeTypeTest : TestBase
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ApiEnum<string, JourneyBatchNodeType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class JourneyAddToDigestNodeTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+        };
+
+        string expectedSubscriptionTopicID = "x";
+        ApiEnum<string, JourneyAddToDigestNodeType> expectedType =
+            JourneyAddToDigestNodeType.AddToDigest;
+        string expectedID = "x";
+        JourneyConditionsField expectedConditions = new(["string", "string"]);
+
+        Assert.Equal(expectedSubscriptionTopicID, model.SubscriptionTopicID);
+        Assert.Equal(expectedType, model.Type);
+        Assert.Equal(expectedID, model.ID);
+        Assert.Equal(expectedConditions, model.Conditions);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+        };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<JourneyAddToDigestNode>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+        };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<JourneyAddToDigestNode>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedSubscriptionTopicID = "x";
+        ApiEnum<string, JourneyAddToDigestNodeType> expectedType =
+            JourneyAddToDigestNodeType.AddToDigest;
+        string expectedID = "x";
+        JourneyConditionsField expectedConditions = new(["string", "string"]);
+
+        Assert.Equal(expectedSubscriptionTopicID, deserialized.SubscriptionTopicID);
+        Assert.Equal(expectedType, deserialized.Type);
+        Assert.Equal(expectedID, deserialized.ID);
+        Assert.Equal(expectedConditions, deserialized.Conditions);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+        };
+
+        Assert.Null(model.ID);
+        Assert.False(model.RawData.ContainsKey("id"));
+        Assert.Null(model.Conditions);
+        Assert.False(model.RawData.ContainsKey("conditions"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+
+            // Null should be interpreted as omitted for these properties
+            ID = null,
+            Conditions = null,
+        };
+
+        Assert.Null(model.ID);
+        Assert.False(model.RawData.ContainsKey("id"));
+        Assert.Null(model.Conditions);
+        Assert.False(model.RawData.ContainsKey("conditions"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+
+            // Null should be interpreted as omitted for these properties
+            ID = null,
+            Conditions = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new JourneyAddToDigestNode
+        {
+            SubscriptionTopicID = "x",
+            Type = JourneyAddToDigestNodeType.AddToDigest,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+        };
+
+        JourneyAddToDigestNode copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class JourneyAddToDigestNodeTypeTest : TestBase
+{
+    [Theory]
+    [InlineData(JourneyAddToDigestNodeType.AddToDigest)]
+    public void Validation_Works(JourneyAddToDigestNodeType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, JourneyAddToDigestNodeType> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, JourneyAddToDigestNodeType>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(JourneyAddToDigestNodeType.AddToDigest)]
+    public void SerializationRoundtrip_Works(JourneyAddToDigestNodeType rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, JourneyAddToDigestNodeType> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, JourneyAddToDigestNodeType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, JourneyAddToDigestNodeType>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, JourneyAddToDigestNodeType>>(
             json,
             ModelBase.SerializerOptions
         );
