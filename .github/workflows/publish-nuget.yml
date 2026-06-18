@@ -1,6 +1,19 @@
 # This workflow is triggered when a GitHub release is created.
 # It can also be run manually to re-publish to NuGet in case it failed for some reason.
 # You can run this workflow by navigating to https://www.github.com/trycourier/courier-csharp/actions/workflows/publish-nuget.yml
+#
+# Publishing uses NuGet Trusted Publishing (OIDC) instead of a long-lived API key.
+# See: https://learn.microsoft.com/en-us/nuget/nuget-org/trusted-publishing
+#
+# Prerequisites (one-time, on nuget.org):
+#   1. Sign in to nuget.org, open your username menu -> "Trusted Publishing".
+#   2. Add a policy owned by the org/user that owns the TryCourier package with:
+#        Repository Owner: trycourier
+#        Repository:       courier-csharp
+#        Workflow File:    publish-nuget.yml   (file name only, no path)
+#        Environment:      (leave empty)
+#   3. Set the `NUGET_USER` repo secret to the nuget.org account username
+#      (profile name, NOT an email) that the policy is associated with.
 name: Publish to NuGet
 on:
   workflow_dispatch:
@@ -10,6 +23,10 @@ jobs:
   publish:
     name: publish
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # enable GitHub OIDC token issuance for Trusted Publishing
+      contents: read
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -24,10 +41,14 @@ jobs:
           --configuration Release
           --output "${{github.workspace}}/artifacts/packages"
 
+      - name: NuGet login (OIDC -> short-lived API key)
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
       - name: Publish package to nuget.org
         run: dotnet nuget push
           $(find ${{ github.workspace }}/artifacts/packages/*.nupkg ! -name "*.symbols.nupkg")
           --source https://api.nuget.org/v3/index.json
-          --api-key $NUGET_API_KEY
-        env:
-          NUGET_API_KEY: ${{ secrets.COURIER_NUGET_API_KEY || secrets.NUGET_API_KEY }}
+          --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
