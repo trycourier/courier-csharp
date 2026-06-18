@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.12.0 (2026-06-18)
+
+Full Changelog: [v5.11.0...v5.12.0](https://github.com/trycourier/courier-csharp/compare/v5.11.0...v5.12.0)
+
+### Features
+
+* **csharp:** enable NuGet publishing as TryCourier ([aee991e](https://github.com/trycourier/courier-csharp/commit/aee991e17d095b4163f673bef19558489f050731))
+
 ## 5.11.0 (2026-06-17)
 
 Full Changelog: [v5.10.0...v5.11.0](https://github.com/trycourier/courier-csharp/compare/v5.10.0...v5.11.0)
