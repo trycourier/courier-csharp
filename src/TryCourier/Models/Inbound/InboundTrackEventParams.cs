@@ -1,0 +1,249 @@
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using TryCourier.Core;
+using TryCourier.Exceptions;
+using System = System;
+
+namespace TryCourier.Models.Inbound;
+
+/// <summary>
+/// Courier Track Event
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
+/// </summary>
+public record class InboundTrackEventParams : ParamsBase
+{
+    readonly JsonDictionary _rawBodyData = new();
+    public IReadOnlyDictionary<string, JsonElement> RawBodyData
+    {
+        get { return this._rawBodyData.Freeze(); }
+    }
+
+    /// <summary>
+    /// A descriptive name of the event. This name will appear as a trigger in the
+    /// Courier Automation Trigger node.
+    /// </summary>
+    public required string Event
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("event");
+        }
+        init { this._rawBodyData.Set("event", value); }
+    }
+
+    /// <summary>
+    /// A required unique identifier that will be used to de-duplicate requests. If
+    /// not unique, will respond with 409 Conflict status
+    /// </summary>
+    public required string MessageID
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<string>("messageId");
+        }
+        init { this._rawBodyData.Set("messageId", value); }
+    }
+
+    public required IReadOnlyDictionary<string, JsonElement> Properties
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<FrozenDictionary<string, JsonElement>>(
+                "properties"
+            );
+        }
+        init
+        {
+            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>>(
+                "properties",
+                FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    public required ApiEnum<string, global::TryCourier.Models.Inbound.Type> Type
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNotNullClass<
+                ApiEnum<string, global::TryCourier.Models.Inbound.Type>
+            >("type");
+        }
+        init { this._rawBodyData.Set("type", value); }
+    }
+
+    /// <summary>
+    /// The user id associated with the track
+    /// </summary>
+    public string? UserID
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("userId");
+        }
+        init { this._rawBodyData.Set("userId", value); }
+    }
+
+    public InboundTrackEventParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public InboundTrackEventParams(InboundTrackEventParams inboundTrackEventParams)
+        : base(inboundTrackEventParams)
+    {
+        this._rawBodyData = new(inboundTrackEventParams._rawBodyData);
+    }
+#pragma warning restore CS8618
+
+    public InboundTrackEventParams(
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
+    )
+    {
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    InboundTrackEventParams(
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        FrozenDictionary<string, JsonElement> rawBodyData
+    )
+    {
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
+    public static InboundTrackEventParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            FrozenDictionary.ToFrozenDictionary(rawBodyData)
+        );
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                    ["BodyData"] = FriendlyJsonPrinter.PrintValue(this._rawBodyData.Freeze()),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(InboundTrackEventParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
+    }
+
+    public override System::Uri Url(ClientOptions options)
+    {
+        return new System::UriBuilder(options.BaseUrl.ToString().TrimEnd('/') + "/inbound/courier")
+        {
+            Query = this.QueryString(options),
+        }.Uri;
+    }
+
+    internal override HttpContent? BodyContent()
+    {
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
+            Encoding.UTF8,
+            "application/json"
+        );
+    }
+
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
+    {
+        ParamsBase.AddDefaultHeaders(request, options);
+        foreach (var item in this.RawHeaderData)
+        {
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+        }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
+}
+
+[JsonConverter(typeof(TypeConverter))]
+public enum Type
+{
+    Track,
+}
+
+sealed class TypeConverter : JsonConverter<global::TryCourier.Models.Inbound.Type>
+{
+    public override global::TryCourier.Models.Inbound.Type Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "track" => global::TryCourier.Models.Inbound.Type.Track,
+            _ => (global::TryCourier.Models.Inbound.Type)(-1),
+        };
+    }
+
+    public override void Write(
+        Utf8JsonWriter writer,
+        global::TryCourier.Models.Inbound.Type value,
+        JsonSerializerOptions options
+    )
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                global::TryCourier.Models.Inbound.Type.Track => "track",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}

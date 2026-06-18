@@ -1,0 +1,37 @@
+using System;
+using TryCourier.Models.Tenants;
+
+namespace TryCourier.Tests.Models.Tenants;
+
+public class TenantRetrieveParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new TenantRetrieveParams { TenantID = "tenant_id" };
+
+        string expectedTenantID = "tenant_id";
+
+        Assert.Equal(expectedTenantID, parameters.TenantID);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        TenantRetrieveParams parameters = new() { TenantID = "tenant_id" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.True(TestBase.UrisEqual(new Uri("https://api.courier.com/tenants/tenant_id"), url));
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new TenantRetrieveParams { TenantID = "tenant_id" };
+
+        TenantRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
+}

@@ -8,9 +8,10 @@ The REST API documentation can be found on [www.courier.com](https://www.courier
 
 ## Installation
 
+Install the package from [NuGet](https://www.nuget.org/packages/TryCourier):
+
 ```bash
-git clone git@github.com:trycourier/courier-csharp.git
-dotnet add reference courier-csharp/src/Courier
+dotnet add package TryCourier
 ```
 
 ## Requirements
@@ -25,9 +26,9 @@ See the [`examples`](examples) directory for complete and runnable examples.
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Courier;
-using Courier.Models;
-using Courier.Models.Send;
+using TryCourier;
+using TryCourier.Models;
+using TryCourier.Models.Send;
 
 CourierClient client = new();
 
@@ -54,7 +55,7 @@ Console.WriteLine(response);
 Configure the client using environment variables:
 
 ```csharp
-using Courier;
+using TryCourier;
 
 // Configured using the COURIER_API_KEY and COURIER_BASE_URL environment variables
 CourierClient client = new();
@@ -63,7 +64,7 @@ CourierClient client = new();
 Or manually:
 
 ```csharp
-using Courier;
+using TryCourier;
 
 CourierClient client = new() { ApiKey = "My API Key" };
 ```
@@ -125,7 +126,7 @@ For non-streaming responses, you can deserialize the response into an instance o
 
 ```csharp
 using System;
-using Courier.Models.Send;
+using TryCourier.Models.Send;
 
 var response = await client.WithRawResponse.Send.Message(parameters);
 SendMessageResponse deserialized = await response.Deserialize();
@@ -176,7 +177,7 @@ The API may also explicitly instruct the SDK to retry or not retry a request.
 To set a custom number of retries, configure the client using the `MaxRetries` method:
 
 ```csharp
-using Courier;
+using TryCourier;
 
 CourierClient client = new() { MaxRetries = 3 };
 ```
@@ -203,7 +204,7 @@ To set a custom timeout, configure the client using the `Timeout` option:
 
 ```csharp
 using System;
-using Courier;
+using TryCourier;
 
 CourierClient client = new() { Timeout = TimeSpan.FromSeconds(42) };
 ```
@@ -229,7 +230,7 @@ To route requests through a proxy, configure your client with a custom [`HttpCli
 ```csharp
 using System.Net;
 using System.Net.Http;
-using Courier;
+using TryCourier;
 
 var httpClient = new HttpClient
 (
@@ -253,8 +254,8 @@ To set undocumented parameters, a constructor exists that accepts dictionaries f
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using Models = Courier.Models;
-using Courier.Models.Send;
+using Models = TryCourier.Models;
+using TryCourier.Models.Send;
 
 SendMessageParams parameters = new
 (
@@ -461,7 +462,7 @@ This can also be used to set a documented parameter to an undocumented or not ye
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using Courier.Models.Send;
+using TryCourier.Models.Send;
 
 var parameters = SendMessageParams.FromRawUnchecked
 (
@@ -485,7 +486,7 @@ Undocumented properties, or undocumented values of documented properties, on nes
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using Courier.Models.Send;
+using TryCourier.Models.Send;
 
 SendMessageParams parameters = new()
 {
@@ -504,7 +505,7 @@ Required properties on the nested parameter can also be changed or omitted using
 ```csharp
 using System.Collections.Generic;
 using System.Text.Json;
-using Courier.Models.Send;
+using TryCourier.Models.Send;
 
 SendMessageParams parameters = new()
 {
@@ -550,7 +551,7 @@ response.Validate();
 Or configure the client using the `ResponseValidation` option:
 
 ```csharp
-using Courier;
+using TryCourier;
 
 CourierClient client = new() { ResponseValidation = true };
 ```

@@ -1,0 +1,125 @@
+using System;
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Net.Http;
+using System.Text.Json;
+using TryCourier.Core;
+
+namespace TryCourier.Models.Messages;
+
+/// <summary>
+/// Cancel a message that is currently in the process of being delivered. A well-formatted
+/// API call to the cancel message API will return either `200` status code for a
+/// successful cancellation or `409` status code for an unsuccessful cancellation.
+/// Both cases will include the actual message record in the response body (see details below).
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
+/// </summary>
+public record class MessageCancelParams : ParamsBase
+{
+    public string? MessageID { get; init; }
+
+    public MessageCancelParams() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public MessageCancelParams(MessageCancelParams messageCancelParams)
+        : base(messageCancelParams)
+    {
+        this.MessageID = messageCancelParams.MessageID;
+    }
+#pragma warning restore CS8618
+
+    public MessageCancelParams(
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData
+    )
+    {
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    MessageCancelParams(
+        FrozenDictionary<string, JsonElement> rawHeaderData,
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        string messageID
+    )
+    {
+        this._rawHeaderData = new(rawHeaderData);
+        this._rawQueryData = new(rawQueryData);
+        this.MessageID = messageID;
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
+    public static MessageCancelParams FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawHeaderData,
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        string messageID
+    )
+    {
+        return new(
+            FrozenDictionary.ToFrozenDictionary(rawHeaderData),
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            messageID
+        );
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(
+                new Dictionary<string, JsonElement>()
+                {
+                    ["MessageID"] = JsonSerializer.SerializeToElement(this.MessageID),
+                    ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
+                    ),
+                    ["QueryData"] = FriendlyJsonPrinter.PrintValue(
+                        JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
+                    ),
+                }
+            ),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    public virtual bool Equals(MessageCancelParams? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        return (this.MessageID?.Equals(other.MessageID) ?? other.MessageID == null)
+            && this._rawHeaderData.Equals(other._rawHeaderData)
+            && this._rawQueryData.Equals(other._rawQueryData);
+    }
+
+    public override Uri Url(ClientOptions options)
+    {
+        return new UriBuilder(
+            options.BaseUrl.ToString().TrimEnd('/')
+                + string.Format("/messages/{0}/cancel", this.MessageID)
+        )
+        {
+            Query = this.QueryString(options),
+        }.Uri;
+    }
+
+    internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)
+    {
+        ParamsBase.AddDefaultHeaders(request, options);
+        foreach (var item in this.RawHeaderData)
+        {
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+        }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
+}

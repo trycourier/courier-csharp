@@ -1,0 +1,78 @@
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using TryCourier.Core;
+
+namespace TryCourier.Models.Inbound;
+
+[JsonConverter(
+    typeof(JsonModelConverter<InboundTrackEventResponse, InboundTrackEventResponseFromRaw>)
+)]
+public sealed record class InboundTrackEventResponse : JsonModel
+{
+    /// <summary>
+    /// A successful call returns a `202` status code along with a `requestId` in
+    /// the response body.
+    /// </summary>
+    public required string MessageID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("messageId");
+        }
+        init { this._rawData.Set("messageId", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.MessageID;
+    }
+
+    public InboundTrackEventResponse() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public InboundTrackEventResponse(InboundTrackEventResponse inboundTrackEventResponse)
+        : base(inboundTrackEventResponse) { }
+#pragma warning restore CS8618
+
+    public InboundTrackEventResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    InboundTrackEventResponse(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="InboundTrackEventResponseFromRaw.FromRawUnchecked"/>
+    public static InboundTrackEventResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public InboundTrackEventResponse(string messageID)
+        : this()
+    {
+        this.MessageID = messageID;
+    }
+}
+
+class InboundTrackEventResponseFromRaw : IFromRawJson<InboundTrackEventResponse>
+{
+    /// <inheritdoc/>
+    public InboundTrackEventResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => InboundTrackEventResponse.FromRawUnchecked(rawData);
+}

@@ -1,0 +1,39 @@
+using System;
+using TryCourier.Models.Audiences;
+
+namespace TryCourier.Tests.Models.Audiences;
+
+public class AudienceDeleteParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new AudienceDeleteParams { AudienceID = "audience_id" };
+
+        string expectedAudienceID = "audience_id";
+
+        Assert.Equal(expectedAudienceID, parameters.AudienceID);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        AudienceDeleteParams parameters = new() { AudienceID = "audience_id" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.True(
+            TestBase.UrisEqual(new Uri("https://api.courier.com/audiences/audience_id"), url)
+        );
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new AudienceDeleteParams { AudienceID = "audience_id" };
+
+        AudienceDeleteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
+}
