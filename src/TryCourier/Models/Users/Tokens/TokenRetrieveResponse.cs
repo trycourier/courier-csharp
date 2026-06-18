@@ -1,0 +1,300 @@
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using TryCourier.Core;
+using TryCourier.Exceptions;
+using System = System;
+
+namespace TryCourier.Models.Users.Tokens;
+
+[JsonConverter(typeof(JsonModelConverter<TokenRetrieveResponse, TokenRetrieveResponseFromRaw>))]
+public sealed record class TokenRetrieveResponse : JsonModel
+{
+    /// <summary>
+    /// Full body of the token. Must match token in URL path parameter.
+    /// </summary>
+    public required string Token
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("token");
+        }
+        init { this._rawData.Set("token", value); }
+    }
+
+    public required ApiEnum<string, UserTokenProviderKey> ProviderKey
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, UserTokenProviderKey>>(
+                "provider_key"
+            );
+        }
+        init { this._rawData.Set("provider_key", value); }
+    }
+
+    /// <summary>
+    /// Information about the device the token came from.
+    /// </summary>
+    public UserTokenDevice? Device
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserTokenDevice>("device");
+        }
+        init { this._rawData.Set("device", value); }
+    }
+
+    /// <summary>
+    /// ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false
+    /// to disable expiration.
+    /// </summary>
+    public UserTokenExpiryDate? ExpiryDate
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserTokenExpiryDate>("expiry_date");
+        }
+        init { this._rawData.Set("expiry_date", value); }
+    }
+
+    /// <summary>
+    /// Properties about the token.
+    /// </summary>
+    public JsonElement? Properties
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<JsonElement>("properties");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("properties", value);
+        }
+    }
+
+    /// <summary>
+    /// Tracking information about the device the token came from.
+    /// </summary>
+    public UserTokenTracking? Tracking
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<UserTokenTracking>("tracking");
+        }
+        init { this._rawData.Set("tracking", value); }
+    }
+
+    public ApiEnum<string, Status>? Status
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Status>>("status");
+        }
+        init { this._rawData.Set("status", value); }
+    }
+
+    /// <summary>
+    /// The reason for the token status.
+    /// </summary>
+    public string? StatusReason
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("status_reason");
+        }
+        init { this._rawData.Set("status_reason", value); }
+    }
+
+    public static implicit operator UserToken(TokenRetrieveResponse tokenRetrieveResponse) =>
+        new()
+        {
+            Token = tokenRetrieveResponse.Token,
+            ProviderKey = tokenRetrieveResponse.ProviderKey,
+            Device = tokenRetrieveResponse.Device,
+            ExpiryDate = tokenRetrieveResponse.ExpiryDate,
+            Properties = tokenRetrieveResponse.Properties,
+            Tracking = tokenRetrieveResponse.Tracking,
+        };
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Token;
+        this.ProviderKey.Validate();
+        this.Device?.Validate();
+        this.ExpiryDate?.Validate();
+        _ = this.Properties;
+        this.Tracking?.Validate();
+        this.Status?.Validate();
+        _ = this.StatusReason;
+    }
+
+    public TokenRetrieveResponse() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public TokenRetrieveResponse(TokenRetrieveResponse tokenRetrieveResponse)
+        : base(tokenRetrieveResponse) { }
+#pragma warning restore CS8618
+
+    public TokenRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    TokenRetrieveResponse(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="TokenRetrieveResponseFromRaw.FromRawUnchecked"/>
+    public static TokenRetrieveResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class TokenRetrieveResponseFromRaw : IFromRawJson<TokenRetrieveResponse>
+{
+    /// <inheritdoc/>
+    public TokenRetrieveResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => TokenRetrieveResponse.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(JsonModelConverter<IntersectionMember1, IntersectionMember1FromRaw>))]
+public sealed record class IntersectionMember1 : JsonModel
+{
+    public ApiEnum<string, Status>? Status
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Status>>("status");
+        }
+        init { this._rawData.Set("status", value); }
+    }
+
+    /// <summary>
+    /// The reason for the token status.
+    /// </summary>
+    public string? StatusReason
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("status_reason");
+        }
+        init { this._rawData.Set("status_reason", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Status?.Validate();
+        _ = this.StatusReason;
+    }
+
+    public IntersectionMember1() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public IntersectionMember1(IntersectionMember1 intersectionMember1)
+        : base(intersectionMember1) { }
+#pragma warning restore CS8618
+
+    public IntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    IntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="IntersectionMember1FromRaw.FromRawUnchecked"/>
+    public static IntersectionMember1 FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class IntersectionMember1FromRaw : IFromRawJson<IntersectionMember1>
+{
+    /// <inheritdoc/>
+    public IntersectionMember1 FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        IntersectionMember1.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(StatusConverter))]
+public enum Status
+{
+    Active,
+    Unknown,
+    Failed,
+    Revoked,
+}
+
+sealed class StatusConverter : JsonConverter<Status>
+{
+    public override Status Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "active" => Status.Active,
+            "unknown" => Status.Unknown,
+            "failed" => Status.Failed,
+            "revoked" => Status.Revoked,
+            _ => (Status)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Status.Active => "active",
+                Status.Unknown => "unknown",
+                Status.Failed => "failed",
+                Status.Revoked => "revoked",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}

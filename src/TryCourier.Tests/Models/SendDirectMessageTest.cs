@@ -1,0 +1,67 @@
+using System.Text.Json;
+using TryCourier.Core;
+using TryCourier.Models;
+
+namespace TryCourier.Tests.Models;
+
+public class SendDirectMessageTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new SendDirectMessage { UserID = "user_id" };
+
+        string expectedUserID = "user_id";
+
+        Assert.Equal(expectedUserID, model.UserID);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new SendDirectMessage { UserID = "user_id" };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SendDirectMessage>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new SendDirectMessage { UserID = "user_id" };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<SendDirectMessage>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedUserID = "user_id";
+
+        Assert.Equal(expectedUserID, deserialized.UserID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new SendDirectMessage { UserID = "user_id" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new SendDirectMessage { UserID = "user_id" };
+
+        SendDirectMessage copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}

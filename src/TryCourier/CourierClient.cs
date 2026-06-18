@@ -1,0 +1,642 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using TryCourier.Core;
+using TryCourier.Exceptions;
+using TryCourier.Services;
+
+namespace TryCourier;
+
+/// <inheritdoc/>
+public sealed class CourierClient : ICourierClient
+{
+    readonly ClientOptions _options;
+
+    /// <inheritdoc/>
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    /// <inheritdoc/>
+    public int? MaxRetries
+    {
+        get { return this._options.MaxRetries; }
+        init { this._options.MaxRetries = value; }
+    }
+
+    /// <inheritdoc/>
+    public TimeSpan? Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
+    /// <inheritdoc/>
+    public string ApiKey
+    {
+        get { return this._options.ApiKey; }
+        init { this._options.ApiKey = value; }
+    }
+
+    readonly Lazy<ICourierClientWithRawResponse> _withRawResponse;
+
+    /// <inheritdoc/>
+    public ICourierClientWithRawResponse WithRawResponse
+    {
+        get { return _withRawResponse.Value; }
+    }
+
+    /// <inheritdoc/>
+    public ICourierClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new CourierClient(modifier(this._options));
+    }
+
+    readonly Lazy<ISendService> _send;
+    public ISendService Send
+    {
+        get { return _send.Value; }
+    }
+
+    readonly Lazy<IAudienceService> _audiences;
+    public IAudienceService Audiences
+    {
+        get { return _audiences.Value; }
+    }
+
+    readonly Lazy<IProviderService> _providers;
+    public IProviderService Providers
+    {
+        get { return _providers.Value; }
+    }
+
+    readonly Lazy<IAuditEventService> _auditEvents;
+    public IAuditEventService AuditEvents
+    {
+        get { return _auditEvents.Value; }
+    }
+
+    readonly Lazy<IAuthService> _auth;
+    public IAuthService Auth
+    {
+        get { return _auth.Value; }
+    }
+
+    readonly Lazy<IAutomationService> _automations;
+    public IAutomationService Automations
+    {
+        get { return _automations.Value; }
+    }
+
+    readonly Lazy<IJourneyService> _journeys;
+    public IJourneyService Journeys
+    {
+        get { return _journeys.Value; }
+    }
+
+    readonly Lazy<IBrandService> _brands;
+    public IBrandService Brands
+    {
+        get { return _brands.Value; }
+    }
+
+    readonly Lazy<IBulkService> _bulk;
+    public IBulkService Bulk
+    {
+        get { return _bulk.Value; }
+    }
+
+    readonly Lazy<IDigestService> _digests;
+    public IDigestService Digests
+    {
+        get { return _digests.Value; }
+    }
+
+    readonly Lazy<IInboundService> _inbound;
+    public IInboundService Inbound
+    {
+        get { return _inbound.Value; }
+    }
+
+    readonly Lazy<IListService> _lists;
+    public IListService Lists
+    {
+        get { return _lists.Value; }
+    }
+
+    readonly Lazy<IMessageService> _messages;
+    public IMessageService Messages
+    {
+        get { return _messages.Value; }
+    }
+
+    readonly Lazy<IRequestService> _requests;
+    public IRequestService Requests
+    {
+        get { return _requests.Value; }
+    }
+
+    readonly Lazy<INotificationService> _notifications;
+    public INotificationService Notifications
+    {
+        get { return _notifications.Value; }
+    }
+
+    readonly Lazy<IRoutingStrategyService> _routingStrategies;
+    public IRoutingStrategyService RoutingStrategies
+    {
+        get { return _routingStrategies.Value; }
+    }
+
+    readonly Lazy<IProfileService> _profiles;
+    public IProfileService Profiles
+    {
+        get { return _profiles.Value; }
+    }
+
+    readonly Lazy<ITenantService> _tenants;
+    public ITenantService Tenants
+    {
+        get { return _tenants.Value; }
+    }
+
+    readonly Lazy<ITranslationService> _translations;
+    public ITranslationService Translations
+    {
+        get { return _translations.Value; }
+    }
+
+    readonly Lazy<IUserService> _users;
+    public IUserService Users
+    {
+        get { return _users.Value; }
+    }
+
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public CourierClient()
+    {
+        _options = new();
+
+        _withRawResponse = new(() => new CourierClientWithRawResponse(this._options));
+        _send = new(() => new SendService(this));
+        _audiences = new(() => new AudienceService(this));
+        _providers = new(() => new ProviderService(this));
+        _auditEvents = new(() => new AuditEventService(this));
+        _auth = new(() => new AuthService(this));
+        _automations = new(() => new AutomationService(this));
+        _journeys = new(() => new JourneyService(this));
+        _brands = new(() => new BrandService(this));
+        _bulk = new(() => new BulkService(this));
+        _digests = new(() => new DigestService(this));
+        _inbound = new(() => new InboundService(this));
+        _lists = new(() => new ListService(this));
+        _messages = new(() => new MessageService(this));
+        _requests = new(() => new RequestService(this));
+        _notifications = new(() => new NotificationService(this));
+        _routingStrategies = new(() => new RoutingStrategyService(this));
+        _profiles = new(() => new ProfileService(this));
+        _tenants = new(() => new TenantService(this));
+        _translations = new(() => new TranslationService(this));
+        _users = new(() => new UserService(this));
+    }
+
+    public CourierClient(ClientOptions options)
+        : this()
+    {
+        _options = options;
+    }
+}
+
+/// <inheritdoc/>
+public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
+{
+#if NET
+    static readonly Random Random = Random.Shared;
+#else
+    static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random());
+
+    static Random Random
+    {
+        get { return _threadLocalRandom.Value!; }
+    }
+#endif
+
+    internal static HttpMethod PatchMethod = new("PATCH");
+
+    readonly ClientOptions _options;
+
+    /// <inheritdoc/>
+    public HttpClient HttpClient
+    {
+        get { return this._options.HttpClient; }
+        init { this._options.HttpClient = value; }
+    }
+
+    /// <inheritdoc/>
+    public string BaseUrl
+    {
+        get { return this._options.BaseUrl; }
+        init { this._options.BaseUrl = value; }
+    }
+
+    /// <inheritdoc/>
+    public bool ResponseValidation
+    {
+        get { return this._options.ResponseValidation; }
+        init { this._options.ResponseValidation = value; }
+    }
+
+    /// <inheritdoc/>
+    public int? MaxRetries
+    {
+        get { return this._options.MaxRetries; }
+        init { this._options.MaxRetries = value; }
+    }
+
+    /// <inheritdoc/>
+    public TimeSpan? Timeout
+    {
+        get { return this._options.Timeout; }
+        init { this._options.Timeout = value; }
+    }
+
+    /// <inheritdoc/>
+    public string ApiKey
+    {
+        get { return this._options.ApiKey; }
+        init { this._options.ApiKey = value; }
+    }
+
+    /// <inheritdoc/>
+    public ICourierClientWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    {
+        return new CourierClientWithRawResponse(modifier(this._options));
+    }
+
+    readonly Lazy<ISendServiceWithRawResponse> _send;
+    public ISendServiceWithRawResponse Send
+    {
+        get { return _send.Value; }
+    }
+
+    readonly Lazy<IAudienceServiceWithRawResponse> _audiences;
+    public IAudienceServiceWithRawResponse Audiences
+    {
+        get { return _audiences.Value; }
+    }
+
+    readonly Lazy<IProviderServiceWithRawResponse> _providers;
+    public IProviderServiceWithRawResponse Providers
+    {
+        get { return _providers.Value; }
+    }
+
+    readonly Lazy<IAuditEventServiceWithRawResponse> _auditEvents;
+    public IAuditEventServiceWithRawResponse AuditEvents
+    {
+        get { return _auditEvents.Value; }
+    }
+
+    readonly Lazy<IAuthServiceWithRawResponse> _auth;
+    public IAuthServiceWithRawResponse Auth
+    {
+        get { return _auth.Value; }
+    }
+
+    readonly Lazy<IAutomationServiceWithRawResponse> _automations;
+    public IAutomationServiceWithRawResponse Automations
+    {
+        get { return _automations.Value; }
+    }
+
+    readonly Lazy<IJourneyServiceWithRawResponse> _journeys;
+    public IJourneyServiceWithRawResponse Journeys
+    {
+        get { return _journeys.Value; }
+    }
+
+    readonly Lazy<IBrandServiceWithRawResponse> _brands;
+    public IBrandServiceWithRawResponse Brands
+    {
+        get { return _brands.Value; }
+    }
+
+    readonly Lazy<IBulkServiceWithRawResponse> _bulk;
+    public IBulkServiceWithRawResponse Bulk
+    {
+        get { return _bulk.Value; }
+    }
+
+    readonly Lazy<IDigestServiceWithRawResponse> _digests;
+    public IDigestServiceWithRawResponse Digests
+    {
+        get { return _digests.Value; }
+    }
+
+    readonly Lazy<IInboundServiceWithRawResponse> _inbound;
+    public IInboundServiceWithRawResponse Inbound
+    {
+        get { return _inbound.Value; }
+    }
+
+    readonly Lazy<IListServiceWithRawResponse> _lists;
+    public IListServiceWithRawResponse Lists
+    {
+        get { return _lists.Value; }
+    }
+
+    readonly Lazy<IMessageServiceWithRawResponse> _messages;
+    public IMessageServiceWithRawResponse Messages
+    {
+        get { return _messages.Value; }
+    }
+
+    readonly Lazy<IRequestServiceWithRawResponse> _requests;
+    public IRequestServiceWithRawResponse Requests
+    {
+        get { return _requests.Value; }
+    }
+
+    readonly Lazy<INotificationServiceWithRawResponse> _notifications;
+    public INotificationServiceWithRawResponse Notifications
+    {
+        get { return _notifications.Value; }
+    }
+
+    readonly Lazy<IRoutingStrategyServiceWithRawResponse> _routingStrategies;
+    public IRoutingStrategyServiceWithRawResponse RoutingStrategies
+    {
+        get { return _routingStrategies.Value; }
+    }
+
+    readonly Lazy<IProfileServiceWithRawResponse> _profiles;
+    public IProfileServiceWithRawResponse Profiles
+    {
+        get { return _profiles.Value; }
+    }
+
+    readonly Lazy<ITenantServiceWithRawResponse> _tenants;
+    public ITenantServiceWithRawResponse Tenants
+    {
+        get { return _tenants.Value; }
+    }
+
+    readonly Lazy<ITranslationServiceWithRawResponse> _translations;
+    public ITranslationServiceWithRawResponse Translations
+    {
+        get { return _translations.Value; }
+    }
+
+    readonly Lazy<IUserServiceWithRawResponse> _users;
+    public IUserServiceWithRawResponse Users
+    {
+        get { return _users.Value; }
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse> Execute<T>(
+        HttpRequest<T> request,
+        CancellationToken cancellationToken = default
+    )
+        where T : ParamsBase
+    {
+        var maxRetries = this.MaxRetries ?? ClientOptions.DefaultMaxRetries;
+        var retries = 0;
+        while (true)
+        {
+            HttpResponse? response = null;
+            try
+            {
+                response = await ExecuteOnce(request, retries, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                if (++retries > maxRetries || !ShouldRetry(e))
+                {
+                    throw;
+                }
+            }
+
+            if (response != null && (++retries > maxRetries || !ShouldRetry(response)))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return response;
+                }
+
+                try
+                {
+                    throw CourierExceptionFactory.CreateApiException(
+                        response.StatusCode,
+                        await response.ReadAsString(cancellationToken).ConfigureAwait(false)
+                    );
+                }
+                catch (HttpRequestException e)
+                {
+                    throw new CourierIOException("I/O Exception", e);
+                }
+                finally
+                {
+                    response.Dispose();
+                }
+            }
+
+            var backoff = ComputeRetryBackoff(retries, response);
+            response?.Dispose();
+            await Task.Delay(backoff, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    async Task<HttpResponse> ExecuteOnce<T>(
+        HttpRequest<T> request,
+        int retryCount,
+        CancellationToken cancellationToken = default
+    )
+        where T : ParamsBase
+    {
+        using HttpRequestMessage requestMessage = new(
+            request.Method,
+            request.Params.Url(this._options)
+        )
+        {
+            Content = request.Params.BodyContent(),
+        };
+        request.Params.AddHeadersToRequest(requestMessage, this._options);
+        if (!requestMessage.Headers.Contains("x-stainless-retry-count"))
+        {
+            requestMessage.Headers.Add("x-stainless-retry-count", retryCount.ToString());
+        }
+        using CancellationTokenSource timeoutCts = new(
+            this.Timeout ?? ClientOptions.DefaultTimeout
+        );
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(
+            timeoutCts.Token,
+            cancellationToken
+        );
+        HttpResponseMessage responseMessage;
+        try
+        {
+            responseMessage = await this
+                .HttpClient.SendAsync(
+                    requestMessage,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    cts.Token
+                )
+                .ConfigureAwait(false);
+        }
+        catch (HttpRequestException e)
+        {
+            throw new CourierIOException("I/O exception", e);
+        }
+        return new() { RawMessage = responseMessage, CancellationToken = cts.Token };
+    }
+
+    static TimeSpan ComputeRetryBackoff(int retries, HttpResponse? response)
+    {
+        TimeSpan? apiBackoff = ParseRetryAfterMsHeader(response) ?? ParseRetryAfterHeader(response);
+        if (
+            apiBackoff != null
+            && apiBackoff > TimeSpan.Zero
+            && apiBackoff < TimeSpan.FromMinutes(1)
+        )
+        {
+            // If the API asks us to wait a certain amount of time (and it's a reasonable amount), then just
+            // do what it says.
+            return (TimeSpan)apiBackoff;
+        }
+
+        // Apply exponential backoff, but not more than the max.
+        var backoffSeconds = Math.Min(0.5 * Math.Pow(2.0, retries - 1), 8.0);
+        var jitter = 1.0 - 0.25 * Random.NextDouble();
+        return TimeSpan.FromSeconds(backoffSeconds * jitter);
+    }
+
+    static TimeSpan? ParseRetryAfterMsHeader(HttpResponse? response)
+    {
+        IEnumerable<string>? headerValues = null;
+        response?.TryGetHeaderValues("Retry-After-Ms", out headerValues);
+        var headerValue = headerValues == null ? null : Enumerable.FirstOrDefault(headerValues);
+        if (headerValue == null)
+        {
+            return null;
+        }
+
+        if (float.TryParse(headerValue, out var retryAfterMs))
+        {
+            return TimeSpan.FromMilliseconds(retryAfterMs);
+        }
+
+        return null;
+    }
+
+    static TimeSpan? ParseRetryAfterHeader(HttpResponse? response)
+    {
+        IEnumerable<string>? headerValues = null;
+        response?.TryGetHeaderValues("Retry-After", out headerValues);
+        var headerValue = headerValues == null ? null : Enumerable.FirstOrDefault(headerValues);
+        if (headerValue == null)
+        {
+            return null;
+        }
+
+        if (float.TryParse(headerValue, out var retryAfterSeconds))
+        {
+            return TimeSpan.FromSeconds(retryAfterSeconds);
+        }
+        else if (DateTimeOffset.TryParse(headerValue, out var retryAfterDate))
+        {
+            return retryAfterDate - DateTimeOffset.Now;
+        }
+
+        return null;
+    }
+
+    static bool ShouldRetry(HttpResponse response)
+    {
+        if (
+            response.TryGetHeaderValues("X-Should-Retry", out var headerValues)
+            && bool.TryParse(Enumerable.FirstOrDefault(headerValues), out var shouldRetry)
+        )
+        {
+            // If the server explicitly says whether to retry, then we obey.
+            return shouldRetry;
+        }
+
+        return (int)response.StatusCode switch
+        {
+            // Retry on request timeouts
+            408
+            or
+            // Retry on lock timeouts
+            409
+            or
+            // Retry on rate limits
+            429
+            or
+            // Retry internal errors
+            >= 500 => true,
+            _ => false,
+        };
+    }
+
+    static bool ShouldRetry(Exception e)
+    {
+        return e is IOException || e is CourierIOException;
+    }
+
+    public void Dispose() => this.HttpClient.Dispose();
+
+    public CourierClientWithRawResponse()
+    {
+        _options = new();
+
+        _send = new(() => new SendServiceWithRawResponse(this));
+        _audiences = new(() => new AudienceServiceWithRawResponse(this));
+        _providers = new(() => new ProviderServiceWithRawResponse(this));
+        _auditEvents = new(() => new AuditEventServiceWithRawResponse(this));
+        _auth = new(() => new AuthServiceWithRawResponse(this));
+        _automations = new(() => new AutomationServiceWithRawResponse(this));
+        _journeys = new(() => new JourneyServiceWithRawResponse(this));
+        _brands = new(() => new BrandServiceWithRawResponse(this));
+        _bulk = new(() => new BulkServiceWithRawResponse(this));
+        _digests = new(() => new DigestServiceWithRawResponse(this));
+        _inbound = new(() => new InboundServiceWithRawResponse(this));
+        _lists = new(() => new ListServiceWithRawResponse(this));
+        _messages = new(() => new MessageServiceWithRawResponse(this));
+        _requests = new(() => new RequestServiceWithRawResponse(this));
+        _notifications = new(() => new NotificationServiceWithRawResponse(this));
+        _routingStrategies = new(() => new RoutingStrategyServiceWithRawResponse(this));
+        _profiles = new(() => new ProfileServiceWithRawResponse(this));
+        _tenants = new(() => new TenantServiceWithRawResponse(this));
+        _translations = new(() => new TranslationServiceWithRawResponse(this));
+        _users = new(() => new UserServiceWithRawResponse(this));
+    }
+
+    public CourierClientWithRawResponse(ClientOptions options)
+        : this()
+    {
+        _options = options;
+    }
+}

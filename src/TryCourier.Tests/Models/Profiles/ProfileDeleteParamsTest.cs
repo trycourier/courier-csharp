@@ -1,0 +1,37 @@
+using System;
+using TryCourier.Models.Profiles;
+
+namespace TryCourier.Tests.Models.Profiles;
+
+public class ProfileDeleteParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new ProfileDeleteParams { UserID = "user_id" };
+
+        string expectedUserID = "user_id";
+
+        Assert.Equal(expectedUserID, parameters.UserID);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        ProfileDeleteParams parameters = new() { UserID = "user_id" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.True(TestBase.UrisEqual(new Uri("https://api.courier.com/profiles/user_id"), url));
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new ProfileDeleteParams { UserID = "user_id" };
+
+        ProfileDeleteParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
+}

@@ -1,0 +1,645 @@
+using System.Collections.Frozen;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using TryCourier.Core;
+using TryCourier.Exceptions;
+using System = System;
+
+namespace TryCourier.Models.Notifications;
+
+[JsonConverter(
+    typeof(JsonModelConverter<NotificationListResponse, NotificationListResponseFromRaw>)
+)]
+public sealed record class NotificationListResponse : JsonModel
+{
+    public required Paging Paging
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<Paging>("paging");
+        }
+        init { this._rawData.Set("paging", value); }
+    }
+
+    /// <summary>
+    /// Notification templates in this workspace.
+    /// </summary>
+    public required IReadOnlyList<Result> Results
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Result>>("results");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Result>>(
+                "results",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Paging.Validate();
+        foreach (var item in this.Results)
+        {
+            item.Validate();
+        }
+    }
+
+    public NotificationListResponse() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public NotificationListResponse(NotificationListResponse notificationListResponse)
+        : base(notificationListResponse) { }
+#pragma warning restore CS8618
+
+    public NotificationListResponse(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    NotificationListResponse(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="NotificationListResponseFromRaw.FromRawUnchecked"/>
+    public static NotificationListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    )
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class NotificationListResponseFromRaw : IFromRawJson<NotificationListResponse>
+{
+    /// <inheritdoc/>
+    public NotificationListResponse FromRawUnchecked(
+        IReadOnlyDictionary<string, JsonElement> rawData
+    ) => NotificationListResponse.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// V2 (CDS) template summary returned in list responses.
+/// </summary>
+[JsonConverter(typeof(ResultConverter))]
+public record class Result : ModelBase
+{
+    public object? Value { get; } = null;
+
+    JsonElement? _element = null;
+
+    public JsonElement Json
+    {
+        get
+        {
+            return this._element ??= JsonSerializer.SerializeToElement(
+                this.Value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
+    public string ID
+    {
+        get { return Match(notification: (x) => x.ID, notificationTemplateSummary: (x) => x.ID); }
+    }
+
+    public Result(Notification value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Result(NotificationTemplateSummary value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public Result(JsonElement element)
+    {
+        this._element = element;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="Notification"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickNotification(out var value)) {
+    ///     // `value` is of type `Notification`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickNotification([NotNullWhen(true)] out Notification? value)
+    {
+        value = this.Value as Notification;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="NotificationTemplateSummary"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickNotificationTemplateSummary(out var value)) {
+    ///     // `value` is of type `NotificationTemplateSummary`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickNotificationTemplateSummary(
+        [NotNullWhen(true)] out NotificationTemplateSummary? value
+    )
+    {
+        value = this.Value as NotificationTemplateSummary;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Match"/>
+    /// if you need your function parameters to return something.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// instance.Switch(
+    ///     (Notification value) =&gt; {...},
+    ///     (NotificationTemplateSummary value) =&gt; {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public void Switch(
+        System::Action<Notification> notification,
+        System::Action<NotificationTemplateSummary> notificationTemplateSummary
+    )
+    {
+        switch (this.Value)
+        {
+            case Notification value:
+                notification(value);
+                break;
+            case NotificationTemplateSummary value:
+                notificationTemplateSummary(value);
+                break;
+            default:
+                throw new CourierInvalidDataException("Data did not match any variant of Result");
+        }
+    }
+
+    /// <summary>
+    /// Calls the function parameter corresponding to the variant the instance was constructed with and
+    /// returns its result.
+    ///
+    /// <para>Use the <c>TryPick</c> method(s) if you don't need to handle every variant, or <see cref="Switch"/>
+    /// if you don't need your function parameters to return a value.</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance was constructed with an unknown variant (e.g. deserialized from raw data
+    /// that doesn't match any variant's expected shape).
+    /// </exception>
+    ///
+    /// <example>
+    /// <code>
+    /// var result = instance.Match(
+    ///     (Notification value) =&gt; {...},
+    ///     (NotificationTemplateSummary value) =&gt; {...}
+    /// );
+    /// </code>
+    /// </example>
+    /// </summary>
+    public T Match<T>(
+        System::Func<Notification, T> notification,
+        System::Func<NotificationTemplateSummary, T> notificationTemplateSummary
+    )
+    {
+        return this.Value switch
+        {
+            Notification value => notification(value),
+            NotificationTemplateSummary value => notificationTemplateSummary(value),
+            _ => throw new CourierInvalidDataException("Data did not match any variant of Result"),
+        };
+    }
+
+    public static implicit operator Result(Notification value) => new(value);
+
+    public static implicit operator Result(NotificationTemplateSummary value) => new(value);
+
+    /// <summary>
+    /// Validates that the instance was constructed with a known variant and that this variant is valid
+    /// (based on its own <c>Validate</c> method).
+    ///
+    /// <para>This is useful for instances constructed from raw JSON data (e.g. deserialized from an API response).</para>
+    ///
+    /// <exception cref="CourierInvalidDataException">
+    /// Thrown when the instance does not pass validation.
+    /// </exception>
+    /// </summary>
+    public override void Validate()
+    {
+        if (this.Value == null)
+        {
+            throw new CourierInvalidDataException("Data did not match any variant of Result");
+        }
+        this.Switch(
+            (notification) => notification.Validate(),
+            (notificationTemplateSummary) => notificationTemplateSummary.Validate()
+        );
+    }
+
+    public virtual bool Equals(Result? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
+
+    public override string ToString() =>
+        JsonSerializer.Serialize(
+            FriendlyJsonPrinter.PrintValue(this.Json),
+            ModelBase.ToStringSerializerOptions
+        );
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            Notification _ => 0,
+            NotificationTemplateSummary _ => 1,
+            _ => -1,
+        };
+    }
+}
+
+sealed class ResultConverter : JsonConverter<Result>
+{
+    public override Result? Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<Notification>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<NotificationTemplateSummary>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        return new(element);
+    }
+
+    public override void Write(Utf8JsonWriter writer, Result value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(writer, value.Json, options);
+    }
+}
+
+[JsonConverter(typeof(JsonModelConverter<Notification, NotificationFromRaw>))]
+public sealed record class Notification : JsonModel
+{
+    public required string ID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
+        init { this._rawData.Set("id", value); }
+    }
+
+    public required long CreatedAt
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("created_at");
+        }
+        init { this._rawData.Set("created_at", value); }
+    }
+
+    /// <summary>
+    /// Array of event IDs associated with this notification
+    /// </summary>
+    public required IReadOnlyList<string> EventIds
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<string>>("event_ids");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<string>>(
+                "event_ids",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    public required MessageRouting Routing
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<MessageRouting>("routing");
+        }
+        init { this._rawData.Set("routing", value); }
+    }
+
+    public required string TopicID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("topic_id");
+        }
+        init { this._rawData.Set("topic_id", value); }
+    }
+
+    public required long UpdatedAt
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<long>("updated_at");
+        }
+        init { this._rawData.Set("updated_at", value); }
+    }
+
+    public string? Note
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("note");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("note", value);
+        }
+    }
+
+    public Tags? Tags
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Tags>("tags");
+        }
+        init { this._rawData.Set("tags", value); }
+    }
+
+    public string? Title
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("title");
+        }
+        init { this._rawData.Set("title", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ID;
+        _ = this.CreatedAt;
+        _ = this.EventIds;
+        this.Routing.Validate();
+        _ = this.TopicID;
+        _ = this.UpdatedAt;
+        _ = this.Note;
+        this.Tags?.Validate();
+        _ = this.Title;
+    }
+
+    public Notification() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Notification(Notification notification)
+        : base(notification) { }
+#pragma warning restore CS8618
+
+    public Notification(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Notification(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="NotificationFromRaw.FromRawUnchecked"/>
+    public static Notification FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class NotificationFromRaw : IFromRawJson<Notification>
+{
+    /// <inheritdoc/>
+    public Notification FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Notification.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(JsonModelConverter<Tags, TagsFromRaw>))]
+public sealed record class Tags : JsonModel
+{
+    public required IReadOnlyList<Data> Data
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<Data>>("data");
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<Data>>("data", ImmutableArray.ToImmutableArray(value));
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        foreach (var item in this.Data)
+        {
+            item.Validate();
+        }
+    }
+
+    public Tags() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Tags(Tags tags)
+        : base(tags) { }
+#pragma warning restore CS8618
+
+    public Tags(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Tags(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="TagsFromRaw.FromRawUnchecked"/>
+    public static Tags FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public Tags(IReadOnlyList<Data> data)
+        : this()
+    {
+        this.Data = data;
+    }
+}
+
+class TagsFromRaw : IFromRawJson<Tags>
+{
+    /// <inheritdoc/>
+    public Tags FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Tags.FromRawUnchecked(rawData);
+}
+
+[JsonConverter(typeof(JsonModelConverter<Data, DataFromRaw>))]
+public sealed record class Data : JsonModel
+{
+    public required string ID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("id");
+        }
+        init { this._rawData.Set("id", value); }
+    }
+
+    public required string Name
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("name");
+        }
+        init { this._rawData.Set("name", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.ID;
+        _ = this.Name;
+    }
+
+    public Data() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Data(Data data)
+        : base(data) { }
+#pragma warning restore CS8618
+
+    public Data(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Data(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="DataFromRaw.FromRawUnchecked"/>
+    public static Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class DataFromRaw : IFromRawJson<Data>
+{
+    /// <inheritdoc/>
+    public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Data.FromRawUnchecked(rawData);
+}
