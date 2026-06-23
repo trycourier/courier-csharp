@@ -179,6 +179,56 @@ public sealed class TemplateService : ITemplateService
     }
 
     /// <inheritdoc/>
+    public async Task<NotificationContentMutationResponse> PutContent(
+        TemplatePutContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.PutContent(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationContentMutationResponse> PutContent(
+        string notificationID,
+        TemplatePutContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutContent(
+            parameters with
+            {
+                NotificationID = notificationID,
+            },
+            cancellationToken
+        );
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationContentMutationResponse> PutLocale(
+        TemplatePutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.PutLocale(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationContentMutationResponse> PutLocale(
+        string localeID,
+        TemplatePutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutLocale(parameters with { LocaleID = localeID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<JourneyTemplateGetResponse> Replace(
         TemplateReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -198,6 +248,34 @@ public sealed class TemplateService : ITemplateService
     )
     {
         return this.Replace(parameters with { NotificationID = notificationID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<NotificationContentGetResponse> RetrieveContent(
+        TemplateRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.RetrieveContent(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationContentGetResponse> RetrieveContent(
+        string notificationID,
+        TemplateRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.RetrieveContent(
+            parameters with
+            {
+                NotificationID = notificationID,
+            },
+            cancellationToken
+        );
     }
 }
 
@@ -462,6 +540,98 @@ public sealed class TemplateServiceWithRawResponse : ITemplateServiceWithRawResp
     }
 
     /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationContentMutationResponse>> PutContent(
+        TemplatePutContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.NotificationID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.NotificationID' cannot be null");
+        }
+
+        HttpRequest<TemplatePutContentParams> request = new()
+        {
+            Method = HttpMethod.Put,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationContentMutationResponse = await response
+                    .Deserialize<NotificationContentMutationResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationContentMutationResponse.Validate();
+                }
+                return notificationContentMutationResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationContentMutationResponse>> PutContent(
+        string notificationID,
+        TemplatePutContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutContent(
+            parameters with
+            {
+                NotificationID = notificationID,
+            },
+            cancellationToken
+        );
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationContentMutationResponse>> PutLocale(
+        TemplatePutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.LocaleID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.LocaleID' cannot be null");
+        }
+
+        HttpRequest<TemplatePutLocaleParams> request = new()
+        {
+            Method = HttpMethod.Put,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationContentMutationResponse = await response
+                    .Deserialize<NotificationContentMutationResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationContentMutationResponse.Validate();
+                }
+                return notificationContentMutationResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationContentMutationResponse>> PutLocale(
+        string localeID,
+        TemplatePutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.PutLocale(parameters with { LocaleID = localeID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<HttpResponse<JourneyTemplateGetResponse>> Replace(
         TemplateReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -502,5 +672,54 @@ public sealed class TemplateServiceWithRawResponse : ITemplateServiceWithRawResp
     )
     {
         return this.Replace(parameters with { NotificationID = notificationID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationContentGetResponse>> RetrieveContent(
+        TemplateRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.NotificationID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.NotificationID' cannot be null");
+        }
+
+        HttpRequest<TemplateRetrieveContentParams> request = new()
+        {
+            Method = HttpMethod.Get,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationContentGetResponse = await response
+                    .Deserialize<NotificationContentGetResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationContentGetResponse.Validate();
+                }
+                return notificationContentGetResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationContentGetResponse>> RetrieveContent(
+        string notificationID,
+        TemplateRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.RetrieveContent(
+            parameters with
+            {
+                NotificationID = notificationID,
+            },
+            cancellationToken
+        );
     }
 }
