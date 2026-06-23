@@ -122,6 +122,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Journeys::Version>(),
             new ApiEnumConverter<string, Templates::Version>(),
             new ApiEnumConverter<string, Templates::Scope>(),
+            new ApiEnumConverter<string, Notifications::NotificationTemplateState>(),
             new ApiEnumConverter<
                 string,
                 Templates::TemplateReplaceParamsNotificationContentVersion
@@ -147,7 +148,6 @@ public abstract record class ModelBase
                 string,
                 Notifications::NotificationTemplateResponseIntersectionMember1State
             >(),
-            new ApiEnumConverter<string, Notifications::NotificationTemplateState>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateSummaryState>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateUpdateRequestState>(),
             new ApiEnumConverter<string, Notifications::State>(),

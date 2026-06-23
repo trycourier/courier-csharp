@@ -98,6 +98,47 @@ public class TemplateServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task PutContent_Works()
+    {
+        var notificationContentMutationResponse = await this.client.Journeys.Templates.PutContent(
+            "x",
+            new()
+            {
+                TemplateID = "x",
+                Content = new()
+                {
+                    Elements =
+                    [
+                        new ElementalChannelNodeWithType()
+                        {
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                        },
+                    ],
+                    Version = "2022-01-01",
+                },
+            },
+            TestContext.Current.CancellationToken
+        );
+        notificationContentMutationResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task PutLocale_Works()
+    {
+        var notificationContentMutationResponse = await this.client.Journeys.Templates.PutLocale(
+            "x",
+            new()
+            {
+                TemplateID = "x",
+                NotificationID = "x",
+                Elements = [new("elem_1"), new("elem_2")],
+            },
+            TestContext.Current.CancellationToken
+        );
+        notificationContentMutationResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replace_Works()
     {
         var journeyTemplateGetResponse = await this.client.Journeys.Templates.Replace(
@@ -132,5 +173,16 @@ public class TemplateServiceTest : TestBase
             TestContext.Current.CancellationToken
         );
         journeyTemplateGetResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task RetrieveContent_Works()
+    {
+        var notificationContentGetResponse = await this.client.Journeys.Templates.RetrieveContent(
+            "x",
+            new() { TemplateID = "x" },
+            TestContext.Current.CancellationToken
+        );
+        notificationContentGetResponse.Validate();
     }
 }
