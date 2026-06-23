@@ -121,6 +121,38 @@ public interface ITemplateService
     );
 
     /// <summary>
+    /// Replace the elemental content of a journey-scoped notification template.
+    /// Overwrites all elements in the template draft with the provided content.
+    /// </summary>
+    Task<NotificationContentMutationResponse> PutContent(
+        TemplatePutContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutContent(TemplatePutContentParams, CancellationToken)"/>
+    Task<NotificationContentMutationResponse> PutContent(
+        string notificationID,
+        TemplatePutContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Set locale-specific content overrides for a journey-scoped notification
+    /// template. Each element override must reference an existing element by ID.
+    /// </summary>
+    Task<NotificationContentMutationResponse> PutLocale(
+        TemplatePutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutLocale(TemplatePutLocaleParams, CancellationToken)"/>
+    Task<NotificationContentMutationResponse> PutLocale(
+        string localeID,
+        TemplatePutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Replace the journey-scoped notification template draft.
     /// </summary>
     Task<JourneyTemplateGetResponse> Replace(
@@ -132,6 +164,25 @@ public interface ITemplateService
     Task<JourneyTemplateGetResponse> Replace(
         string notificationID,
         TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Retrieve the elemental content of a journey-scoped notification template. The
+    /// response contains the versioned elements along with their content checksums,
+    /// which can be used to detect changes between versions. Pass `?version=draft`
+    /// (default `published`) to retrieve the working draft, or `?version=vN` for a
+    /// historical version.
+    /// </summary>
+    Task<NotificationContentGetResponse> RetrieveContent(
+        TemplateRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="RetrieveContent(TemplateRetrieveContentParams, CancellationToken)"/>
+    Task<NotificationContentGetResponse> RetrieveContent(
+        string notificationID,
+        TemplateRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     );
 }
@@ -246,6 +297,38 @@ public interface ITemplateServiceWithRawResponse
     );
 
     /// <summary>
+    /// Returns a raw HTTP response for <c>put /journeys/{templateId}/templates/{notificationId}/content</c>, but is otherwise the
+    /// same as <see cref="ITemplateService.PutContent(TemplatePutContentParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutContent(
+        TemplatePutContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutContent(TemplatePutContentParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutContent(
+        string notificationID,
+        TemplatePutContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>put /journeys/{templateId}/templates/{notificationId}/locales/{localeId}</c>, but is otherwise the
+    /// same as <see cref="ITemplateService.PutLocale(TemplatePutLocaleParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutLocale(
+        TemplatePutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="PutLocale(TemplatePutLocaleParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationContentMutationResponse>> PutLocale(
+        string localeID,
+        TemplatePutLocaleParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Returns a raw HTTP response for <c>put /journeys/{templateId}/templates/{notificationId}</c>, but is otherwise the
     /// same as <see cref="ITemplateService.Replace(TemplateReplaceParams, CancellationToken)"/>.
     /// </summary>
@@ -258,6 +341,22 @@ public interface ITemplateServiceWithRawResponse
     Task<HttpResponse<JourneyTemplateGetResponse>> Replace(
         string notificationID,
         TemplateReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>get /journeys/{templateId}/templates/{notificationId}/content</c>, but is otherwise the
+    /// same as <see cref="ITemplateService.RetrieveContent(TemplateRetrieveContentParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationContentGetResponse>> RetrieveContent(
+        TemplateRetrieveContentParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="RetrieveContent(TemplateRetrieveContentParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationContentGetResponse>> RetrieveContent(
+        string notificationID,
+        TemplateRetrieveContentParams parameters,
         CancellationToken cancellationToken = default
     );
 }
