@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.13.0 (2026-06-23)
+
+Full Changelog: [v5.12.0...v5.13.0](https://github.com/trycourier/courier-csharp/compare/v5.12.0...v5.13.0)
+
+### Features
+
+* **journeys:** add content + locale endpoints to journey-scoped templates ([929be77](https://github.com/trycourier/courier-csharp/commit/929be7701dfbc11de6ed104fe5efac50f75b0dd7))
+
+
+### Documentation
+
+* **journeys:** clarify checksum usage + re-trigger docs sync for journey content endpoints ([408d46d](https://github.com/trycourier/courier-csharp/commit/408d46da984a97dbe0c7f10aa7abb43b73eb11bf))
+
 ## 5.12.0 (2026-06-18)
 
 Full Changelog: [v5.11.0...v5.12.0](https://github.com/trycourier/courier-csharp/compare/v5.11.0...v5.12.0)
