@@ -168,6 +168,12 @@ public sealed class CourierClient : ICourierClient
         get { return _routingStrategies.Value; }
     }
 
+    readonly Lazy<IPreferenceSectionService> _preferenceSections;
+    public IPreferenceSectionService PreferenceSections
+    {
+        get { return _preferenceSections.Value; }
+    }
+
     readonly Lazy<IProfileService> _profiles;
     public IProfileService Profiles
     {
@@ -215,6 +221,7 @@ public sealed class CourierClient : ICourierClient
         _requests = new(() => new RequestService(this));
         _notifications = new(() => new NotificationService(this));
         _routingStrategies = new(() => new RoutingStrategyService(this));
+        _preferenceSections = new(() => new PreferenceSectionService(this));
         _profiles = new(() => new ProfileService(this));
         _tenants = new(() => new TenantService(this));
         _translations = new(() => new TranslationService(this));
@@ -388,6 +395,12 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
     public IRoutingStrategyServiceWithRawResponse RoutingStrategies
     {
         get { return _routingStrategies.Value; }
+    }
+
+    readonly Lazy<IPreferenceSectionServiceWithRawResponse> _preferenceSections;
+    public IPreferenceSectionServiceWithRawResponse PreferenceSections
+    {
+        get { return _preferenceSections.Value; }
     }
 
     readonly Lazy<IProfileServiceWithRawResponse> _profiles;
@@ -628,6 +641,7 @@ public sealed class CourierClientWithRawResponse : ICourierClientWithRawResponse
         _requests = new(() => new RequestServiceWithRawResponse(this));
         _notifications = new(() => new NotificationServiceWithRawResponse(this));
         _routingStrategies = new(() => new RoutingStrategyServiceWithRawResponse(this));
+        _preferenceSections = new(() => new PreferenceSectionServiceWithRawResponse(this));
         _profiles = new(() => new ProfileServiceWithRawResponse(this));
         _tenants = new(() => new TenantServiceWithRawResponse(this));
         _translations = new(() => new TranslationServiceWithRawResponse(this));

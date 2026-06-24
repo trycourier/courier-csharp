@@ -4,6 +4,7 @@ using TryCourier.Models;
 using TryCourier.Models.Automations;
 using TryCourier.Models.Brands;
 using TryCourier.Models.Bulk;
+using TryCourier.Models.PreferenceSections;
 using Audiences = TryCourier.Models.Audiences;
 using Digests = TryCourier.Models.Digests;
 using Inbound = TryCourier.Models.Inbound;
@@ -19,6 +20,7 @@ using Templates = TryCourier.Models.Journeys.Templates;
 using Tenants = TryCourier.Models.Tenants;
 using TenantsTemplates = TryCourier.Models.Tenants.Templates;
 using Tokens = TryCourier.Models.Users.Tokens;
+using Topics = TryCourier.Models.PreferenceSections.Topics;
 using UsersTenants = TryCourier.Models.Users.Tenants;
 
 namespace TryCourier.Core;
@@ -152,6 +154,16 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Notifications::NotificationTemplateUpdateRequestState>(),
             new ApiEnumConverter<string, Notifications::State>(),
             new ApiEnumConverter<string, Notifications::NotificationReplaceParamsState>(),
+            new ApiEnumConverter<string, DefaultStatus>(),
+            new ApiEnumConverter<string, AllowedPreference>(),
+            new ApiEnumConverter<string, PreferenceTopicGetResponseAllowedPreference>(),
+            new ApiEnumConverter<string, PreferenceTopicGetResponseDefaultStatus>(),
+            new ApiEnumConverter<string, PreferenceTopicReplaceRequestDefaultStatus>(),
+            new ApiEnumConverter<string, PreferenceTopicReplaceRequestAllowedPreference>(),
+            new ApiEnumConverter<string, Topics::DefaultStatus>(),
+            new ApiEnumConverter<string, Topics::AllowedPreference>(),
+            new ApiEnumConverter<string, Topics::TopicReplaceParamsDefaultStatus>(),
+            new ApiEnumConverter<string, Topics::TopicReplaceParamsAllowedPreference>(),
             new ApiEnumConverter<string, Profiles::Status>(),
             new ApiEnumConverter<string, Profiles::ProfileReplaceResponseStatus>(),
             new ApiEnumConverter<string, Lists::Status>(),
