@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.14.0 (2026-06-24)
+
+Full Changelog: [v5.13.0...v5.14.0](https://github.com/trycourier/courier-csharp/compare/v5.13.0...v5.14.0)
+
+### Features
+
+* **preferences:** workspace preference sections & nested topics endpoints ([ff2fa6c](https://github.com/trycourier/courier-csharp/commit/ff2fa6c935a0623bee72927160af13dc6de568bc))
+
 ## 5.13.0 (2026-06-23)
 
 Full Changelog: [v5.12.0...v5.13.0](https://github.com/trycourier/courier-csharp/compare/v5.12.0...v5.13.0)
