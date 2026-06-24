@@ -83,6 +83,8 @@ public interface ICourierClient : IDisposable
 
     IRoutingStrategyService RoutingStrategies { get; }
 
+    IPreferenceSectionService PreferenceSections { get; }
+
     IProfileService Profiles { get; }
 
     ITenantService Tenants { get; }
@@ -152,6 +154,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     INotificationServiceWithRawResponse Notifications { get; }
 
     IRoutingStrategyServiceWithRawResponse RoutingStrategies { get; }
+
+    IPreferenceSectionServiceWithRawResponse PreferenceSections { get; }
 
     IProfileServiceWithRawResponse Profiles { get; }
 
