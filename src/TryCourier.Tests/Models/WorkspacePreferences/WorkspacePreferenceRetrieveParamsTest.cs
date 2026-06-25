@@ -1,0 +1,42 @@
+using System;
+using TryCourier.Models.WorkspacePreferences;
+
+namespace TryCourier.Tests.Models.WorkspacePreferences;
+
+public class WorkspacePreferenceRetrieveParamsTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var parameters = new WorkspacePreferenceRetrieveParams { SectionID = "section_id" };
+
+        string expectedSectionID = "section_id";
+
+        Assert.Equal(expectedSectionID, parameters.SectionID);
+    }
+
+    [Fact]
+    public void Url_Works()
+    {
+        WorkspacePreferenceRetrieveParams parameters = new() { SectionID = "section_id" };
+
+        var url = parameters.Url(new() { ApiKey = "My API Key" });
+
+        Assert.True(
+            TestBase.UrisEqual(
+                new Uri("https://api.courier.com/preferences/sections/section_id"),
+                url
+            )
+        );
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var parameters = new WorkspacePreferenceRetrieveParams { SectionID = "section_id" };
+
+        WorkspacePreferenceRetrieveParams copied = new(parameters);
+
+        Assert.Equal(parameters, copied);
+    }
+}
