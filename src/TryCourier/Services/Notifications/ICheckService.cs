@@ -57,7 +57,7 @@ public interface ICheckService
     );
 
     /// <summary>
-    /// Cancel a notification template submission.
+    /// Cancel a submission for a notification template.
     /// </summary>
     Task Delete(CheckDeleteParams parameters, CancellationToken cancellationToken = default);
 
