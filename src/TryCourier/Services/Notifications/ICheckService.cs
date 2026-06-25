@@ -27,7 +27,7 @@ public interface ICheckService
     ICheckService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Replace the checks for a notification template submission.
+    /// Replace the submission checks for a notification template.
     /// </summary>
     Task<CheckUpdateResponse> Update(
         CheckUpdateParams parameters,
