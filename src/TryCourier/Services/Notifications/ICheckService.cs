@@ -42,7 +42,7 @@ public interface ICheckService
     );
 
     /// <summary>
-    /// Retrieve the checks for a notification template submission.
+    /// Retrieve the submission checks for a notification template.
     /// </summary>
     Task<CheckListResponse> List(
         CheckListParams parameters,
