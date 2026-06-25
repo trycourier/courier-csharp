@@ -4,7 +4,7 @@ using TryCourier.Models;
 using TryCourier.Models.Automations;
 using TryCourier.Models.Brands;
 using TryCourier.Models.Bulk;
-using TryCourier.Models.PreferenceSections;
+using TryCourier.Models.WorkspacePreferences;
 using Audiences = TryCourier.Models.Audiences;
 using Digests = TryCourier.Models.Digests;
 using Inbound = TryCourier.Models.Inbound;
@@ -20,7 +20,7 @@ using Templates = TryCourier.Models.Journeys.Templates;
 using Tenants = TryCourier.Models.Tenants;
 using TenantsTemplates = TryCourier.Models.Tenants.Templates;
 using Tokens = TryCourier.Models.Users.Tokens;
-using Topics = TryCourier.Models.PreferenceSections.Topics;
+using Topics = TryCourier.Models.WorkspacePreferences.Topics;
 using UsersTenants = TryCourier.Models.Users.Tenants;
 
 namespace TryCourier.Core;
@@ -156,10 +156,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Notifications::NotificationReplaceParamsState>(),
             new ApiEnumConverter<string, DefaultStatus>(),
             new ApiEnumConverter<string, AllowedPreference>(),
-            new ApiEnumConverter<string, PreferenceTopicGetResponseAllowedPreference>(),
-            new ApiEnumConverter<string, PreferenceTopicGetResponseDefaultStatus>(),
-            new ApiEnumConverter<string, PreferenceTopicReplaceRequestDefaultStatus>(),
-            new ApiEnumConverter<string, PreferenceTopicReplaceRequestAllowedPreference>(),
+            new ApiEnumConverter<string, WorkspacePreferenceTopicGetResponseAllowedPreference>(),
+            new ApiEnumConverter<string, WorkspacePreferenceTopicGetResponseDefaultStatus>(),
+            new ApiEnumConverter<string, WorkspacePreferenceTopicReplaceRequestDefaultStatus>(),
+            new ApiEnumConverter<string, WorkspacePreferenceTopicReplaceRequestAllowedPreference>(),
             new ApiEnumConverter<string, Topics::DefaultStatus>(),
             new ApiEnumConverter<string, Topics::AllowedPreference>(),
             new ApiEnumConverter<string, Topics::TopicReplaceParamsDefaultStatus>(),
