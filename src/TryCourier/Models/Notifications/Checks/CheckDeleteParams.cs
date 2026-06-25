@@ -9,7 +9,7 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications.Checks;
 
 /// <summary>
-/// Cancel a notification template submission.
+/// Cancel a submission for a notification template.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
