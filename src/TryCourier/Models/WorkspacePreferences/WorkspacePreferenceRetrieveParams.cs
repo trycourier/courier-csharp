@@ -6,34 +6,33 @@ using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Core;
 
-namespace TryCourier.Models.Notifications.Checks;
+namespace TryCourier.Models.WorkspacePreferences;
 
 /// <summary>
-/// Cancel a submission for a notification template.
+/// Retrieve a workspace preference by id, including its topics.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public record class CheckDeleteParams : ParamsBase
+public record class WorkspacePreferenceRetrieveParams : ParamsBase
 {
-    public required string ID { get; init; }
+    public string? SectionID { get; init; }
 
-    public string? SubmissionID { get; init; }
-
-    public CheckDeleteParams() { }
+    public WorkspacePreferenceRetrieveParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public CheckDeleteParams(CheckDeleteParams checkDeleteParams)
-        : base(checkDeleteParams)
+    public WorkspacePreferenceRetrieveParams(
+        WorkspacePreferenceRetrieveParams workspacePreferenceRetrieveParams
+    )
+        : base(workspacePreferenceRetrieveParams)
     {
-        this.ID = checkDeleteParams.ID;
-        this.SubmissionID = checkDeleteParams.SubmissionID;
+        this.SectionID = workspacePreferenceRetrieveParams.SectionID;
     }
 #pragma warning restore CS8618
 
-    public CheckDeleteParams(
+    public WorkspacePreferenceRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
@@ -44,33 +43,29 @@ public record class CheckDeleteParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    CheckDeleteParams(
+    WorkspacePreferenceRetrieveParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
-        string id,
-        string submissionID
+        string sectionID
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
-        this.ID = id;
-        this.SubmissionID = submissionID;
+        this.SectionID = sectionID;
     }
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static CheckDeleteParams FromRawUnchecked(
+    public static WorkspacePreferenceRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
-        string id,
-        string submissionID
+        string sectionID
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
             FrozenDictionary.ToFrozenDictionary(rawQueryData),
-            id,
-            submissionID
+            sectionID
         );
     }
 
@@ -79,8 +74,7 @@ public record class CheckDeleteParams : ParamsBase
             FriendlyJsonPrinter.PrintValue(
                 new Dictionary<string, JsonElement>()
                 {
-                    ["ID"] = JsonSerializer.SerializeToElement(this.ID),
-                    ["SubmissionID"] = JsonSerializer.SerializeToElement(this.SubmissionID),
+                    ["SectionID"] = JsonSerializer.SerializeToElement(this.SectionID),
                     ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
                         JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
                     ),
@@ -92,14 +86,13 @@ public record class CheckDeleteParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(CheckDeleteParams? other)
+    public virtual bool Equals(WorkspacePreferenceRetrieveParams? other)
     {
         if (other == null)
         {
             return false;
         }
-        return this.ID.Equals(other.ID)
-            && (this.SubmissionID?.Equals(other.SubmissionID) ?? other.SubmissionID == null)
+        return (this.SectionID?.Equals(other.SectionID) ?? other.SectionID == null)
             && this._rawHeaderData.Equals(other._rawHeaderData)
             && this._rawQueryData.Equals(other._rawQueryData);
     }
@@ -108,7 +101,7 @@ public record class CheckDeleteParams : ParamsBase
     {
         return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/notifications/{0}/{1}/checks", this.ID, this.SubmissionID)
+                + string.Format("/preferences/sections/{0}", this.SectionID)
         )
         {
             Query = this.QueryString(options),

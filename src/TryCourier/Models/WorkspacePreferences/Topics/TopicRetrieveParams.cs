@@ -6,34 +6,36 @@ using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Core;
 
-namespace TryCourier.Models.Notifications.Checks;
+namespace TryCourier.Models.WorkspacePreferences.Topics;
 
 /// <summary>
-/// Cancel a submission for a notification template.
+/// Retrieve a topic within a workspace preference. Returns 404 if the workspace
+/// preference does not exist, the topic does not exist, or the topic belongs to
+/// a different workspace preference.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public record class CheckDeleteParams : ParamsBase
+public record class TopicRetrieveParams : ParamsBase
 {
-    public required string ID { get; init; }
+    public required string SectionID { get; init; }
 
-    public string? SubmissionID { get; init; }
+    public string? TopicID { get; init; }
 
-    public CheckDeleteParams() { }
+    public TopicRetrieveParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public CheckDeleteParams(CheckDeleteParams checkDeleteParams)
-        : base(checkDeleteParams)
+    public TopicRetrieveParams(TopicRetrieveParams topicRetrieveParams)
+        : base(topicRetrieveParams)
     {
-        this.ID = checkDeleteParams.ID;
-        this.SubmissionID = checkDeleteParams.SubmissionID;
+        this.SectionID = topicRetrieveParams.SectionID;
+        this.TopicID = topicRetrieveParams.TopicID;
     }
 #pragma warning restore CS8618
 
-    public CheckDeleteParams(
+    public TopicRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData
     )
@@ -44,33 +46,33 @@ public record class CheckDeleteParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    CheckDeleteParams(
+    TopicRetrieveParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
-        string id,
-        string submissionID
+        string sectionID,
+        string topicID
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
-        this.ID = id;
-        this.SubmissionID = submissionID;
+        this.SectionID = sectionID;
+        this.TopicID = topicID;
     }
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static CheckDeleteParams FromRawUnchecked(
+    public static TopicRetrieveParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
-        string id,
-        string submissionID
+        string sectionID,
+        string topicID
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
             FrozenDictionary.ToFrozenDictionary(rawQueryData),
-            id,
-            submissionID
+            sectionID,
+            topicID
         );
     }
 
@@ -79,8 +81,8 @@ public record class CheckDeleteParams : ParamsBase
             FriendlyJsonPrinter.PrintValue(
                 new Dictionary<string, JsonElement>()
                 {
-                    ["ID"] = JsonSerializer.SerializeToElement(this.ID),
-                    ["SubmissionID"] = JsonSerializer.SerializeToElement(this.SubmissionID),
+                    ["SectionID"] = JsonSerializer.SerializeToElement(this.SectionID),
+                    ["TopicID"] = JsonSerializer.SerializeToElement(this.TopicID),
                     ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
                         JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
                     ),
@@ -92,14 +94,14 @@ public record class CheckDeleteParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(CheckDeleteParams? other)
+    public virtual bool Equals(TopicRetrieveParams? other)
     {
         if (other == null)
         {
             return false;
         }
-        return this.ID.Equals(other.ID)
-            && (this.SubmissionID?.Equals(other.SubmissionID) ?? other.SubmissionID == null)
+        return this.SectionID.Equals(other.SectionID)
+            && (this.TopicID?.Equals(other.TopicID) ?? other.TopicID == null)
             && this._rawHeaderData.Equals(other._rawHeaderData)
             && this._rawQueryData.Equals(other._rawQueryData);
     }
@@ -108,7 +110,11 @@ public record class CheckDeleteParams : ParamsBase
     {
         return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/notifications/{0}/{1}/checks", this.ID, this.SubmissionID)
+                + string.Format(
+                    "/preferences/sections/{0}/topics/{1}",
+                    this.SectionID,
+                    this.TopicID
+                )
         )
         {
             Query = this.QueryString(options),

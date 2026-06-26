@@ -8,16 +8,17 @@ using System.Text;
 using System.Text.Json;
 using TryCourier.Core;
 
-namespace TryCourier.Models.Notifications.Checks;
+namespace TryCourier.Models.WorkspacePreferences;
 
 /// <summary>
-/// Replace the submission checks for a notification template.
+/// Replace a workspace preference. Full document replacement; missing optional fields
+/// are cleared. Topics attached to the workspace preference are unaffected.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>
 /// </summary>
-public record class CheckUpdateParams : ParamsBase
+public record class WorkspacePreferenceReplaceParams : ParamsBase
 {
     readonly JsonDictionary _rawBodyData = new();
     public IReadOnlyDictionary<string, JsonElement> RawBodyData
@@ -25,41 +26,71 @@ public record class CheckUpdateParams : ParamsBase
         get { return this._rawBodyData.Freeze(); }
     }
 
-    public required string ID { get; init; }
+    public string? SectionID { get; init; }
 
-    public string? SubmissionID { get; init; }
-
-    public required IReadOnlyList<BaseCheck> Checks
+    /// <summary>
+    /// Human-readable name for the workspace preference.
+    /// </summary>
+    public required string Name
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullStruct<ImmutableArray<BaseCheck>>("checks");
+            return this._rawBodyData.GetNotNullClass<string>("name");
+        }
+        init { this._rawBodyData.Set("name", value); }
+    }
+
+    /// <summary>
+    /// Whether the workspace preference defines custom routing for its topics.
+    /// </summary>
+    public bool? HasCustomRouting
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<bool>("has_custom_routing");
+        }
+        init { this._rawBodyData.Set("has_custom_routing", value); }
+    }
+
+    /// <summary>
+    /// Default channels for the workspace preference. Omit to clear.
+    /// </summary>
+    public IReadOnlyList<ApiEnum<string, ChannelClassification>>? RoutingOptions
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableStruct<
+                ImmutableArray<ApiEnum<string, ChannelClassification>>
+            >("routing_options");
         }
         init
         {
-            this._rawBodyData.Set<ImmutableArray<BaseCheck>>(
-                "checks",
-                ImmutableArray.ToImmutableArray(value)
+            this._rawBodyData.Set<ImmutableArray<ApiEnum<string, ChannelClassification>>?>(
+                "routing_options",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
             );
         }
     }
 
-    public CheckUpdateParams() { }
+    public WorkspacePreferenceReplaceParams() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public CheckUpdateParams(CheckUpdateParams checkUpdateParams)
-        : base(checkUpdateParams)
+    public WorkspacePreferenceReplaceParams(
+        WorkspacePreferenceReplaceParams workspacePreferenceReplaceParams
+    )
+        : base(workspacePreferenceReplaceParams)
     {
-        this.ID = checkUpdateParams.ID;
-        this.SubmissionID = checkUpdateParams.SubmissionID;
+        this.SectionID = workspacePreferenceReplaceParams.SectionID;
 
-        this._rawBodyData = new(checkUpdateParams._rawBodyData);
+        this._rawBodyData = new(workspacePreferenceReplaceParams._rawBodyData);
     }
 #pragma warning restore CS8618
 
-    public CheckUpdateParams(
+    public WorkspacePreferenceReplaceParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData
@@ -72,37 +103,33 @@ public record class CheckUpdateParams : ParamsBase
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    CheckUpdateParams(
+    WorkspacePreferenceReplaceParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
         FrozenDictionary<string, JsonElement> rawQueryData,
         FrozenDictionary<string, JsonElement> rawBodyData,
-        string id,
-        string submissionID
+        string sectionID
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
         this._rawBodyData = new(rawBodyData);
-        this.ID = id;
-        this.SubmissionID = submissionID;
+        this.SectionID = sectionID;
     }
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
-    public static CheckUpdateParams FromRawUnchecked(
+    public static WorkspacePreferenceReplaceParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
         IReadOnlyDictionary<string, JsonElement> rawBodyData,
-        string id,
-        string submissionID
+        string sectionID
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
             FrozenDictionary.ToFrozenDictionary(rawQueryData),
             FrozenDictionary.ToFrozenDictionary(rawBodyData),
-            id,
-            submissionID
+            sectionID
         );
     }
 
@@ -111,8 +138,7 @@ public record class CheckUpdateParams : ParamsBase
             FriendlyJsonPrinter.PrintValue(
                 new Dictionary<string, JsonElement>()
                 {
-                    ["ID"] = JsonSerializer.SerializeToElement(this.ID),
-                    ["SubmissionID"] = JsonSerializer.SerializeToElement(this.SubmissionID),
+                    ["SectionID"] = JsonSerializer.SerializeToElement(this.SectionID),
                     ["HeaderData"] = FriendlyJsonPrinter.PrintValue(
                         JsonSerializer.SerializeToElement(this._rawHeaderData.Freeze())
                     ),
@@ -125,14 +151,13 @@ public record class CheckUpdateParams : ParamsBase
             ModelBase.ToStringSerializerOptions
         );
 
-    public virtual bool Equals(CheckUpdateParams? other)
+    public virtual bool Equals(WorkspacePreferenceReplaceParams? other)
     {
         if (other == null)
         {
             return false;
         }
-        return this.ID.Equals(other.ID)
-            && (this.SubmissionID?.Equals(other.SubmissionID) ?? other.SubmissionID == null)
+        return (this.SectionID?.Equals(other.SectionID) ?? other.SectionID == null)
             && this._rawHeaderData.Equals(other._rawHeaderData)
             && this._rawQueryData.Equals(other._rawQueryData)
             && this._rawBodyData.Equals(other._rawBodyData);
@@ -142,7 +167,7 @@ public record class CheckUpdateParams : ParamsBase
     {
         return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
-                + string.Format("/notifications/{0}/{1}/checks", this.ID, this.SubmissionID)
+                + string.Format("/preferences/sections/{0}", this.SectionID)
         )
         {
             Query = this.QueryString(options),

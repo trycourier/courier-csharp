@@ -27,7 +27,7 @@ public interface ICheckService
     ICheckService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Replace the checks for a notification template submission.
+    /// Replace the submission checks for a notification template.
     /// </summary>
     Task<CheckUpdateResponse> Update(
         CheckUpdateParams parameters,
@@ -42,7 +42,7 @@ public interface ICheckService
     );
 
     /// <summary>
-    /// Retrieve the checks for a notification template submission.
+    /// Retrieve the submission checks for a notification template.
     /// </summary>
     Task<CheckListResponse> List(
         CheckListParams parameters,
@@ -57,7 +57,7 @@ public interface ICheckService
     );
 
     /// <summary>
-    /// Cancel a notification template submission.
+    /// Cancel a submission for a notification template.
     /// </summary>
     Task Delete(CheckDeleteParams parameters, CancellationToken cancellationToken = default);
 

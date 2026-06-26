@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.14.1 (2026-06-25)
+
+Full Changelog: [v5.14.0...v5.14.1](https://github.com/trycourier/courier-csharp/compare/v5.14.0...v5.14.1)
+
+### Documentation
+
+* **openapi:** add full response examples to every endpoint ([e5da86d](https://github.com/trycourier/courier-csharp/commit/e5da86d7d8a5480e1c447f9af6aab97e75c5a732))
+* **openapi:** reword Cancel Submission description ([6e96604](https://github.com/trycourier/courier-csharp/commit/6e96604eec5e1abcbeaa547ded30a11aff885f94))
+* **openapi:** reword Get Submission Checks description ([610d309](https://github.com/trycourier/courier-csharp/commit/610d309541748df5f7f2ef34be176aa115933fb1))
+* **openapi:** reword Replace Submission Checks description ([b6cfc92](https://github.com/trycourier/courier-csharp/commit/b6cfc92e6e0b399cf67dc8964787d5067bd8df97))
+
 ## 5.14.0 (2026-06-24)
 
 Full Changelog: [v5.13.0...v5.14.0](https://github.com/trycourier/courier-csharp/compare/v5.13.0...v5.14.0)
