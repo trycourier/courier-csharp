@@ -113,6 +113,18 @@ public sealed class JourneyService : IJourneyService
     }
 
     /// <inheritdoc/>
+    public async Task<CancelJourneyResponse> Cancel(
+        JourneyCancelParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Cancel(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
     public async Task<JourneysInvokeResponse> Invoke(
         JourneyInvokeParams parameters,
         CancellationToken cancellationToken = default
@@ -363,6 +375,34 @@ public sealed class JourneyServiceWithRawResponse : IJourneyServiceWithRawRespon
         parameters ??= new();
 
         return this.Archive(parameters with { TemplateID = templateID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<CancelJourneyResponse>> Cancel(
+        JourneyCancelParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        HttpRequest<JourneyCancelParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var cancelJourneyResponse = await response
+                    .Deserialize<CancelJourneyResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    cancelJourneyResponse.Validate();
+                }
+                return cancelJourneyResponse;
+            }
+        );
     }
 
     /// <inheritdoc/>

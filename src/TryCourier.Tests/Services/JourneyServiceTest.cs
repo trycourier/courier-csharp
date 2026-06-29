@@ -73,6 +73,16 @@ public class JourneyServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task Cancel_Works()
+    {
+        var cancelJourneyResponse = await this.client.Journeys.Cancel(
+            new() { CancelJourneyRequest = new ByCancelationToken("order-1234") },
+            TestContext.Current.CancellationToken
+        );
+        cancelJourneyResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Invoke_Works()
     {
         var journeysInvokeResponse = await this.client.Journeys.Invoke(
