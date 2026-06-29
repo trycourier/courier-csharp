@@ -47,12 +47,12 @@ public class JourneyNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -63,6 +63,29 @@ public class JourneyNodeTest : TestBase
             Type = JourneySendNodeType.Send,
             ID = "x",
             Conditions = new(["string", "string"]),
+            Experiment = new()
+            {
+                BucketingKey = "x",
+                Variants =
+                [
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                ],
+                ID = "x",
+                Name = "name",
+            },
         };
         value.Validate();
     }
@@ -320,12 +343,12 @@ public class JourneyNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -336,6 +359,29 @@ public class JourneyNodeTest : TestBase
             Type = JourneySendNodeType.Send,
             ID = "x",
             Conditions = new(["string", "string"]),
+            Experiment = new()
+            {
+                BucketingKey = "x",
+                Variants =
+                [
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                ],
+                ID = "x",
+                Name = "name",
+            },
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<JourneyNode>(
