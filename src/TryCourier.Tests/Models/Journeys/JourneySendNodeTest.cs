@@ -15,12 +15,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -31,16 +31,39 @@ public class JourneySendNodeTest : TestBase
             Type = JourneySendNodeType.Send,
             ID = "x",
             Conditions = new(["string", "string"]),
+            Experiment = new()
+            {
+                BucketingKey = "x",
+                Variants =
+                [
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                ],
+                ID = "x",
+                Name = "name",
+            },
         };
 
         Message expectedMessage = new()
         {
-            Template = "x",
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Delay = new() { Until = "x", Timezone = "x" },
+            Template = "x",
             To = new()
             {
                 EmailOverride = "x",
@@ -51,11 +74,35 @@ public class JourneySendNodeTest : TestBase
         ApiEnum<string, JourneySendNodeType> expectedType = JourneySendNodeType.Send;
         string expectedID = "x";
         JourneyConditionsField expectedConditions = new(["string", "string"]);
+        JourneyExperiment expectedExperiment = new()
+        {
+            BucketingKey = "x",
+            Variants =
+            [
+                new()
+                {
+                    ID = "x",
+                    TemplateID = "x",
+                    Weight = 0,
+                    Name = "name",
+                },
+                new()
+                {
+                    ID = "x",
+                    TemplateID = "x",
+                    Weight = 0,
+                    Name = "name",
+                },
+            ],
+            ID = "x",
+            Name = "name",
+        };
 
         Assert.Equal(expectedMessage, model.Message);
         Assert.Equal(expectedType, model.Type);
         Assert.Equal(expectedID, model.ID);
         Assert.Equal(expectedConditions, model.Conditions);
+        Assert.Equal(expectedExperiment, model.Experiment);
     }
 
     [Fact]
@@ -65,12 +112,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -81,6 +128,29 @@ public class JourneySendNodeTest : TestBase
             Type = JourneySendNodeType.Send,
             ID = "x",
             Conditions = new(["string", "string"]),
+            Experiment = new()
+            {
+                BucketingKey = "x",
+                Variants =
+                [
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                ],
+                ID = "x",
+                Name = "name",
+            },
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -99,12 +169,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -115,6 +185,29 @@ public class JourneySendNodeTest : TestBase
             Type = JourneySendNodeType.Send,
             ID = "x",
             Conditions = new(["string", "string"]),
+            Experiment = new()
+            {
+                BucketingKey = "x",
+                Variants =
+                [
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                ],
+                ID = "x",
+                Name = "name",
+            },
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -126,12 +219,12 @@ public class JourneySendNodeTest : TestBase
 
         Message expectedMessage = new()
         {
-            Template = "x",
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Delay = new() { Until = "x", Timezone = "x" },
+            Template = "x",
             To = new()
             {
                 EmailOverride = "x",
@@ -142,11 +235,35 @@ public class JourneySendNodeTest : TestBase
         ApiEnum<string, JourneySendNodeType> expectedType = JourneySendNodeType.Send;
         string expectedID = "x";
         JourneyConditionsField expectedConditions = new(["string", "string"]);
+        JourneyExperiment expectedExperiment = new()
+        {
+            BucketingKey = "x",
+            Variants =
+            [
+                new()
+                {
+                    ID = "x",
+                    TemplateID = "x",
+                    Weight = 0,
+                    Name = "name",
+                },
+                new()
+                {
+                    ID = "x",
+                    TemplateID = "x",
+                    Weight = 0,
+                    Name = "name",
+                },
+            ],
+            ID = "x",
+            Name = "name",
+        };
 
         Assert.Equal(expectedMessage, deserialized.Message);
         Assert.Equal(expectedType, deserialized.Type);
         Assert.Equal(expectedID, deserialized.ID);
         Assert.Equal(expectedConditions, deserialized.Conditions);
+        Assert.Equal(expectedExperiment, deserialized.Experiment);
     }
 
     [Fact]
@@ -156,12 +273,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -172,6 +289,29 @@ public class JourneySendNodeTest : TestBase
             Type = JourneySendNodeType.Send,
             ID = "x",
             Conditions = new(["string", "string"]),
+            Experiment = new()
+            {
+                BucketingKey = "x",
+                Variants =
+                [
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                ],
+                ID = "x",
+                Name = "name",
+            },
         };
 
         model.Validate();
@@ -184,12 +324,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -204,6 +344,8 @@ public class JourneySendNodeTest : TestBase
         Assert.False(model.RawData.ContainsKey("id"));
         Assert.Null(model.Conditions);
         Assert.False(model.RawData.ContainsKey("conditions"));
+        Assert.Null(model.Experiment);
+        Assert.False(model.RawData.ContainsKey("experiment"));
     }
 
     [Fact]
@@ -213,12 +355,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -239,12 +381,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -257,12 +399,15 @@ public class JourneySendNodeTest : TestBase
             // Null should be interpreted as omitted for these properties
             ID = null,
             Conditions = null,
+            Experiment = null,
         };
 
         Assert.Null(model.ID);
         Assert.False(model.RawData.ContainsKey("id"));
         Assert.Null(model.Conditions);
         Assert.False(model.RawData.ContainsKey("conditions"));
+        Assert.Null(model.Experiment);
+        Assert.False(model.RawData.ContainsKey("experiment"));
     }
 
     [Fact]
@@ -272,12 +417,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -290,6 +435,7 @@ public class JourneySendNodeTest : TestBase
             // Null should be interpreted as omitted for these properties
             ID = null,
             Conditions = null,
+            Experiment = null,
         };
 
         model.Validate();
@@ -302,12 +448,12 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
-                Template = "x",
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
                 },
                 Delay = new() { Until = "x", Timezone = "x" },
+                Template = "x",
                 To = new()
                 {
                     EmailOverride = "x",
@@ -318,6 +464,29 @@ public class JourneySendNodeTest : TestBase
             Type = JourneySendNodeType.Send,
             ID = "x",
             Conditions = new(["string", "string"]),
+            Experiment = new()
+            {
+                BucketingKey = "x",
+                Variants =
+                [
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                    new()
+                    {
+                        ID = "x",
+                        TemplateID = "x",
+                        Weight = 0,
+                        Name = "name",
+                    },
+                ],
+                ID = "x",
+                Name = "name",
+            },
         };
 
         JourneySendNode copied = new(model);
@@ -333,12 +502,12 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
-            Template = "x",
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Delay = new() { Until = "x", Timezone = "x" },
+            Template = "x",
             To = new()
             {
                 EmailOverride = "x",
@@ -347,12 +516,12 @@ public class MessageTest : TestBase
             },
         };
 
-        string expectedTemplate = "x";
         Dictionary<string, JsonElement> expectedData = new()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
         Delay expectedDelay = new() { Until = "x", Timezone = "x" };
+        string expectedTemplate = "x";
         To expectedTo = new()
         {
             EmailOverride = "x",
@@ -360,7 +529,6 @@ public class MessageTest : TestBase
             UserIDOverride = "x",
         };
 
-        Assert.Equal(expectedTemplate, model.Template);
         Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
@@ -370,6 +538,7 @@ public class MessageTest : TestBase
             Assert.True(JsonElement.DeepEquals(value, model.Data[item.Key]));
         }
         Assert.Equal(expectedDelay, model.Delay);
+        Assert.Equal(expectedTemplate, model.Template);
         Assert.Equal(expectedTo, model.To);
     }
 
@@ -378,12 +547,12 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
-            Template = "x",
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Delay = new() { Until = "x", Timezone = "x" },
+            Template = "x",
             To = new()
             {
                 EmailOverride = "x",
@@ -403,12 +572,12 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
-            Template = "x",
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Delay = new() { Until = "x", Timezone = "x" },
+            Template = "x",
             To = new()
             {
                 EmailOverride = "x",
@@ -424,12 +593,12 @@ public class MessageTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        string expectedTemplate = "x";
         Dictionary<string, JsonElement> expectedData = new()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
         Delay expectedDelay = new() { Until = "x", Timezone = "x" };
+        string expectedTemplate = "x";
         To expectedTo = new()
         {
             EmailOverride = "x",
@@ -437,7 +606,6 @@ public class MessageTest : TestBase
             UserIDOverride = "x",
         };
 
-        Assert.Equal(expectedTemplate, deserialized.Template);
         Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
@@ -447,6 +615,7 @@ public class MessageTest : TestBase
             Assert.True(JsonElement.DeepEquals(value, deserialized.Data[item.Key]));
         }
         Assert.Equal(expectedDelay, deserialized.Delay);
+        Assert.Equal(expectedTemplate, deserialized.Template);
         Assert.Equal(expectedTo, deserialized.To);
     }
 
@@ -455,12 +624,12 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
-            Template = "x",
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Delay = new() { Until = "x", Timezone = "x" },
+            Template = "x",
             To = new()
             {
                 EmailOverride = "x",
@@ -475,12 +644,14 @@ public class MessageTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Message { Template = "x" };
+        var model = new Message { };
 
         Assert.Null(model.Data);
         Assert.False(model.RawData.ContainsKey("data"));
         Assert.Null(model.Delay);
         Assert.False(model.RawData.ContainsKey("delay"));
+        Assert.Null(model.Template);
+        Assert.False(model.RawData.ContainsKey("template"));
         Assert.Null(model.To);
         Assert.False(model.RawData.ContainsKey("to"));
     }
@@ -488,7 +659,7 @@ public class MessageTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Message { Template = "x" };
+        var model = new Message { };
 
         model.Validate();
     }
@@ -498,11 +669,10 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
-            Template = "x",
-
             // Null should be interpreted as omitted for these properties
             Data = null,
             Delay = null,
+            Template = null,
             To = null,
         };
 
@@ -510,6 +680,8 @@ public class MessageTest : TestBase
         Assert.False(model.RawData.ContainsKey("data"));
         Assert.Null(model.Delay);
         Assert.False(model.RawData.ContainsKey("delay"));
+        Assert.Null(model.Template);
+        Assert.False(model.RawData.ContainsKey("template"));
         Assert.Null(model.To);
         Assert.False(model.RawData.ContainsKey("to"));
     }
@@ -519,11 +691,10 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
-            Template = "x",
-
             // Null should be interpreted as omitted for these properties
             Data = null,
             Delay = null,
+            Template = null,
             To = null,
         };
 
@@ -535,12 +706,12 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
-            Template = "x",
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Delay = new() { Until = "x", Timezone = "x" },
+            Template = "x",
             To = new()
             {
                 EmailOverride = "x",

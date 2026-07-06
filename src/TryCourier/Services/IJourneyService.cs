@@ -80,6 +80,19 @@ public interface IJourneyService
     );
 
     /// <summary>
+    /// Cancel journey runs. The request body must include EXACTLY ONE of
+    /// `cancelation_token` (cancels every run associated with the token) or `run_id`
+    /// (cancels a single tenant-scoped run). Supplying both or neither returns a `400`.
+    /// A `run_id` that does not match a run for the tenant returns `404`. Cancelation
+    /// is idempotent: a run that has already finished (`PROCESSED`/`ERROR`) or was
+    /// already `CANCELED` is left unchanged and its current status is returned.
+    /// </summary>
+    Task<CancelJourneyResponse> Cancel(
+        JourneyCancelParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Invoke a journey by id or alias to start a new run. The response includes a
     /// `runId` identifying the run.
     /// </summary>
@@ -209,6 +222,15 @@ public interface IJourneyServiceWithRawResponse
     Task<HttpResponse> Archive(
         string templateID,
         JourneyArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>post /journeys/cancel</c>, but is otherwise the
+    /// same as <see cref="IJourneyService.Cancel(JourneyCancelParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<CancelJourneyResponse>> Cancel(
+        JourneyCancelParams parameters,
         CancellationToken cancellationToken = default
     );
 

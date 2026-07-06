@@ -10,8 +10,10 @@ using System = System;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Send a notification template to the recipient. Optionally override the recipient
-/// address, delay the send, or attach `data`.
+/// Send to the recipient. A send node sources its content from EXACTLY ONE of `message.template`
+/// (a single notification template) or `experiment` (an A/B split across weighted
+/// template variants) — supplying both, or neither, is rejected. Optionally override
+/// the recipient address, delay the send, or attach `data`.
 /// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneySendNode, JourneySendNodeFromRaw>))]
 public sealed record class JourneySendNode : JsonModel
@@ -77,6 +79,29 @@ public sealed record class JourneySendNode : JsonModel
         }
     }
 
+    /// <summary>
+    /// A/B experiment config for a send node. The recipient is deterministically
+    /// bucketed by `bucketingKey` and routed to one of the `variants` in proportion
+    /// to its `weight`. Present on a send node INSTEAD OF `message.template`.
+    /// </summary>
+    public JourneyExperiment? Experiment
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<JourneyExperiment>("experiment");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("experiment", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
@@ -84,6 +109,7 @@ public sealed record class JourneySendNode : JsonModel
         this.Type.Validate();
         _ = this.ID;
         this.Conditions?.Validate();
+        this.Experiment?.Validate();
     }
 
     public JourneySendNode() { }
@@ -124,16 +150,6 @@ class JourneySendNodeFromRaw : IFromRawJson<JourneySendNode>
 [JsonConverter(typeof(JsonModelConverter<Message, MessageFromRaw>))]
 public sealed record class Message : JsonModel
 {
-    public required string Template
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("template");
-        }
-        init { this._rawData.Set("template", value); }
-    }
-
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
@@ -173,6 +189,24 @@ public sealed record class Message : JsonModel
         }
     }
 
+    public string? Template
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("template");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("template", value);
+        }
+    }
+
     public To? To
     {
         get
@@ -194,9 +228,9 @@ public sealed record class Message : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.Template;
         _ = this.Data;
         this.Delay?.Validate();
+        _ = this.Template;
         this.To?.Validate();
     }
 
@@ -225,13 +259,6 @@ public sealed record class Message : JsonModel
     public static Message FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public Message(string template)
-        : this()
-    {
-        this.Template = template;
     }
 }
 

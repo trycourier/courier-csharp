@@ -1,5 +1,20 @@
 # Changelog
 
+## 5.15.0 (2026-07-06)
+
+Full Changelog: [v5.14.1...v5.15.0](https://github.com/trycourier/courier-csharp/compare/v5.14.1...v5.15.0)
+
+### Features
+
+* **openapi:** Journeys cancel-by-token endpoint + send-node experiments (C-18986) ([02a2736](https://github.com/trycourier/courier-csharp/commit/02a2736e187cb5122838466c3d60b7f7c64a4a44))
+
+
+### Documentation
+
+* **openapi:** reword Cancel journey runs 400 description (re-trigger deploy) ([61b7742](https://github.com/trycourier/courier-csharp/commit/61b77420b5d68cbcc6af0dd5c4cd8da8035247ff))
+* **openapi:** reword Cancel journey runs description (re-trigger deploy) ([2cb9604](https://github.com/trycourier/courier-csharp/commit/2cb9604175162d783448e8fc3cb1e7906f0f076a))
+* **openapi:** tighten Journeys cancel/experiment copy (C-19177) ([eaca5a8](https://github.com/trycourier/courier-csharp/commit/eaca5a8ee12f5f4bc0b72235177d1e67d8667d57))
+
 ## 5.14.1 (2026-06-25)
 
 Full Changelog: [v5.14.0...v5.14.1](https://github.com/trycourier/courier-csharp/compare/v5.14.0...v5.14.1)
