@@ -10,7 +10,7 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Cancel journey runs. The request body must contain EXACTLY ONE of `cancelation_token`
+/// Cancel journey runs. The request body must include EXACTLY ONE of `cancelation_token`
 /// (cancels every run associated with the token) or `run_id` (cancels a single tenant-scoped
 /// run). Supplying both or neither is a `400`. A `run_id` that does not match a
 /// run for the tenant returns `404`. Cancelation is idempotent: a run that has already
