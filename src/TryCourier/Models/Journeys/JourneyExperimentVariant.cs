@@ -8,8 +8,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// A single weighted arm of an experiment. Variant ids must be unique within the
-/// experiment and the sum of all variant weights must be greater than 0. Weights
+/// A single weighted variant of an experiment. Variant ids must be unique within
+/// the experiment and the sum of all variant weights must be greater than 0. Weights
 /// are relative (no sum-to-100 requirement) — routing normalizes them proportionally.
 /// </summary>
 [JsonConverter(
@@ -54,7 +54,7 @@ public sealed record class JourneyExperimentVariant : JsonModel
     }
 
     /// <summary>
-    /// Optional, cosmetic display name for the variant.
+    /// Optional display name for the variant.
     /// </summary>
     public string? Name
     {
