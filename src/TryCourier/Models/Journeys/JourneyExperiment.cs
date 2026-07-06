@@ -52,8 +52,8 @@ public sealed record class JourneyExperiment : JsonModel
     }
 
     /// <summary>
-    /// Server-authoritative experiment id (prefixed `exp_`). Omit to have the server
-    /// mint one; when supplied it must be a valid `exp_` id.
+    /// Unique experiment id (prefixed `exp_`). Omit to have one generated automatically;
+    /// when supplied it must be a valid `exp_` id.
     /// </summary>
     public string? ID
     {
@@ -74,7 +74,7 @@ public sealed record class JourneyExperiment : JsonModel
     }
 
     /// <summary>
-    /// Optional, cosmetic display name for the experiment.
+    /// Optional display name for the experiment.
     /// </summary>
     public string? Name
     {
