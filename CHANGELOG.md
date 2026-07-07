@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.15.1 (2026-07-07)
+
+Full Changelog: [v5.15.0...v5.15.1](https://github.com/trycourier/courier-csharp/compare/v5.15.0...v5.15.1)
+
+### Documentation
+
+* **openapi:** document audiences filter combinator (SUP-686) ([ecfe450](https://github.com/trycourier/courier-csharp/commit/ecfe4505a55faaf5eb2e687861f48e67d6a439b7))
+
 ## 5.15.0 (2026-07-06)
 
 Full Changelog: [v5.14.1...v5.15.0](https://github.com/trycourier/courier-csharp/compare/v5.14.1...v5.15.0)
