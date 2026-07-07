@@ -16,7 +16,9 @@ public class AudienceUpdateParamsTest : TestBase
         {
             AudienceID = "audience_id",
             Description = "description",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -25,15 +27,18 @@ public class AudienceUpdateParamsTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = Models::AudienceFilterConfigOperator.And,
+            },
             Name = "name",
             Operator = Operator.And,
         };
 
         string expectedAudienceID = "audience_id";
         string expectedDescription = "description";
-        Models::AudienceFilterConfig expectedFilter = new(
+        Models::AudienceFilterConfig expectedFilter = new()
+        {
+            Filters =
             [
                 new()
                 {
@@ -42,8 +47,9 @@ public class AudienceUpdateParamsTest : TestBase
                     Path = "path",
                     Value = "value",
                 },
-            ]
-        );
+            ],
+            Operator = Models::AudienceFilterConfigOperator.And,
+        };
         string expectedName = "name";
         ApiEnum<string, Operator> expectedOperator = Operator.And;
 
@@ -111,7 +117,9 @@ public class AudienceUpdateParamsTest : TestBase
         {
             AudienceID = "audience_id",
             Description = "description",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -120,8 +128,9 @@ public class AudienceUpdateParamsTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = Models::AudienceFilterConfigOperator.And,
+            },
             Name = "name",
             Operator = Operator.And,
         };

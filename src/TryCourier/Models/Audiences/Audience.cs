@@ -85,7 +85,8 @@ public sealed record class Audience : JsonModel
     }
 
     /// <summary>
-    /// The logical operator (AND/OR) for the top-level filter
+    /// The logical operator (AND/OR) combining the top-level `filter.filters`. Convenience
+    /// alias for `filter.operator`.
     /// </summary>
     public ApiEnum<string, AudienceOperator>? Operator
     {
@@ -153,7 +154,8 @@ class AudienceFromRaw : IFromRawJson<Audience>
 }
 
 /// <summary>
-/// The logical operator (AND/OR) for the top-level filter
+/// The logical operator (AND/OR) combining the top-level `filter.filters`. Convenience
+/// alias for `filter.operator`.
 /// </summary>
 [JsonConverter(typeof(AudienceOperatorConverter))]
 public enum AudienceOperator

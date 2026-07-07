@@ -45,6 +45,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Alignment>(),
             new ApiEnumConverter<string, Operator>(),
             new ApiEnumConverter<string, Path>(),
+            new ApiEnumConverter<string, AudienceFilterConfigOperator>(),
             new ApiEnumConverter<string, RoutingMethod>(),
             new ApiEnumConverter<string, ChannelClassification>(),
             new ApiEnumConverter<string, Type>(),
