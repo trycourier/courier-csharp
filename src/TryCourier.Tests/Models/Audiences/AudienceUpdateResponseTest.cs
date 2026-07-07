@@ -1,5 +1,6 @@
 using System.Text.Json;
 using TryCourier.Core;
+using TryCourier.Models;
 using TryCourier.Models.Audiences;
 
 namespace TryCourier.Tests.Models.Audiences;
@@ -18,7 +19,9 @@ public class AudienceUpdateResponseTest : TestBase
                 Description = "description",
                 Name = "name",
                 UpdatedAt = "updated_at",
-                Filter = new(
+                Filter = new()
+                {
+                    Filters =
                     [
                         new()
                         {
@@ -27,8 +30,9 @@ public class AudienceUpdateResponseTest : TestBase
                             Path = "path",
                             Value = "value",
                         },
-                    ]
-                ),
+                    ],
+                    Operator = AudienceFilterConfigOperator.And,
+                },
                 Operator = AudienceOperator.And,
             },
         };
@@ -40,7 +44,9 @@ public class AudienceUpdateResponseTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -49,8 +55,9 @@ public class AudienceUpdateResponseTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
             Operator = AudienceOperator.And,
         };
 
@@ -69,7 +76,9 @@ public class AudienceUpdateResponseTest : TestBase
                 Description = "description",
                 Name = "name",
                 UpdatedAt = "updated_at",
-                Filter = new(
+                Filter = new()
+                {
+                    Filters =
                     [
                         new()
                         {
@@ -78,8 +87,9 @@ public class AudienceUpdateResponseTest : TestBase
                             Path = "path",
                             Value = "value",
                         },
-                    ]
-                ),
+                    ],
+                    Operator = AudienceFilterConfigOperator.And,
+                },
                 Operator = AudienceOperator.And,
             },
         };
@@ -105,7 +115,9 @@ public class AudienceUpdateResponseTest : TestBase
                 Description = "description",
                 Name = "name",
                 UpdatedAt = "updated_at",
-                Filter = new(
+                Filter = new()
+                {
+                    Filters =
                     [
                         new()
                         {
@@ -114,8 +126,9 @@ public class AudienceUpdateResponseTest : TestBase
                             Path = "path",
                             Value = "value",
                         },
-                    ]
-                ),
+                    ],
+                    Operator = AudienceFilterConfigOperator.And,
+                },
                 Operator = AudienceOperator.And,
             },
         };
@@ -134,7 +147,9 @@ public class AudienceUpdateResponseTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -143,8 +158,9 @@ public class AudienceUpdateResponseTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
             Operator = AudienceOperator.And,
         };
 
@@ -163,7 +179,9 @@ public class AudienceUpdateResponseTest : TestBase
                 Description = "description",
                 Name = "name",
                 UpdatedAt = "updated_at",
-                Filter = new(
+                Filter = new()
+                {
+                    Filters =
                     [
                         new()
                         {
@@ -172,8 +190,9 @@ public class AudienceUpdateResponseTest : TestBase
                             Path = "path",
                             Value = "value",
                         },
-                    ]
-                ),
+                    ],
+                    Operator = AudienceFilterConfigOperator.And,
+                },
                 Operator = AudienceOperator.And,
             },
         };
@@ -193,7 +212,9 @@ public class AudienceUpdateResponseTest : TestBase
                 Description = "description",
                 Name = "name",
                 UpdatedAt = "updated_at",
-                Filter = new(
+                Filter = new()
+                {
+                    Filters =
                     [
                         new()
                         {
@@ -202,8 +223,9 @@ public class AudienceUpdateResponseTest : TestBase
                             Path = "path",
                             Value = "value",
                         },
-                    ]
-                ),
+                    ],
+                    Operator = AudienceFilterConfigOperator.And,
+                },
                 Operator = AudienceOperator.And,
             },
         };

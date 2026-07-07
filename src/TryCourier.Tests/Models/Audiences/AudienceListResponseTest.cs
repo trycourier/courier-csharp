@@ -22,7 +22,9 @@ public class AudienceListResponseTest : TestBase
                     Description = "description",
                     Name = "name",
                     UpdatedAt = "updated_at",
-                    Filter = new(
+                    Filter = new()
+                    {
+                        Filters =
                         [
                             new()
                             {
@@ -31,8 +33,9 @@ public class AudienceListResponseTest : TestBase
                                 Path = "path",
                                 Value = "value",
                             },
-                        ]
-                    ),
+                        ],
+                        Operator = AudienceFilterConfigOperator.And,
+                    },
                     Operator = AudienceOperator.And,
                 },
             ],
@@ -48,7 +51,9 @@ public class AudienceListResponseTest : TestBase
                 Description = "description",
                 Name = "name",
                 UpdatedAt = "updated_at",
-                Filter = new(
+                Filter = new()
+                {
+                    Filters =
                     [
                         new()
                         {
@@ -57,8 +62,9 @@ public class AudienceListResponseTest : TestBase
                             Path = "path",
                             Value = "value",
                         },
-                    ]
-                ),
+                    ],
+                    Operator = AudienceFilterConfigOperator.And,
+                },
                 Operator = AudienceOperator.And,
             },
         ];
@@ -86,7 +92,9 @@ public class AudienceListResponseTest : TestBase
                     Description = "description",
                     Name = "name",
                     UpdatedAt = "updated_at",
-                    Filter = new(
+                    Filter = new()
+                    {
+                        Filters =
                         [
                             new()
                             {
@@ -95,8 +103,9 @@ public class AudienceListResponseTest : TestBase
                                 Path = "path",
                                 Value = "value",
                             },
-                        ]
-                    ),
+                        ],
+                        Operator = AudienceFilterConfigOperator.And,
+                    },
                     Operator = AudienceOperator.And,
                 },
             ],
@@ -126,7 +135,9 @@ public class AudienceListResponseTest : TestBase
                     Description = "description",
                     Name = "name",
                     UpdatedAt = "updated_at",
-                    Filter = new(
+                    Filter = new()
+                    {
+                        Filters =
                         [
                             new()
                             {
@@ -135,8 +146,9 @@ public class AudienceListResponseTest : TestBase
                                 Path = "path",
                                 Value = "value",
                             },
-                        ]
-                    ),
+                        ],
+                        Operator = AudienceFilterConfigOperator.And,
+                    },
                     Operator = AudienceOperator.And,
                 },
             ],
@@ -159,7 +171,9 @@ public class AudienceListResponseTest : TestBase
                 Description = "description",
                 Name = "name",
                 UpdatedAt = "updated_at",
-                Filter = new(
+                Filter = new()
+                {
+                    Filters =
                     [
                         new()
                         {
@@ -168,8 +182,9 @@ public class AudienceListResponseTest : TestBase
                             Path = "path",
                             Value = "value",
                         },
-                    ]
-                ),
+                    ],
+                    Operator = AudienceFilterConfigOperator.And,
+                },
                 Operator = AudienceOperator.And,
             },
         ];
@@ -197,7 +212,9 @@ public class AudienceListResponseTest : TestBase
                     Description = "description",
                     Name = "name",
                     UpdatedAt = "updated_at",
-                    Filter = new(
+                    Filter = new()
+                    {
+                        Filters =
                         [
                             new()
                             {
@@ -206,8 +223,9 @@ public class AudienceListResponseTest : TestBase
                                 Path = "path",
                                 Value = "value",
                             },
-                        ]
-                    ),
+                        ],
+                        Operator = AudienceFilterConfigOperator.And,
+                    },
                     Operator = AudienceOperator.And,
                 },
             ],
@@ -231,7 +249,9 @@ public class AudienceListResponseTest : TestBase
                     Description = "description",
                     Name = "name",
                     UpdatedAt = "updated_at",
-                    Filter = new(
+                    Filter = new()
+                    {
+                        Filters =
                         [
                             new()
                             {
@@ -240,8 +260,9 @@ public class AudienceListResponseTest : TestBase
                                 Path = "path",
                                 Value = "value",
                             },
-                        ]
-                    ),
+                        ],
+                        Operator = AudienceFilterConfigOperator.And,
+                    },
                     Operator = AudienceOperator.And,
                 },
             ],
