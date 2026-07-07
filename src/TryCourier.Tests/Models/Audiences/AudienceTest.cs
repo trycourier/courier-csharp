@@ -18,7 +18,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -27,8 +29,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
             Operator = AudienceOperator.And,
         };
 
@@ -37,7 +40,9 @@ public class AudienceTest : TestBase
         string expectedDescription = "description";
         string expectedName = "name";
         string expectedUpdatedAt = "updated_at";
-        AudienceFilterConfig expectedFilter = new(
+        AudienceFilterConfig expectedFilter = new()
+        {
+            Filters =
             [
                 new()
                 {
@@ -46,8 +51,9 @@ public class AudienceTest : TestBase
                     Path = "path",
                     Value = "value",
                 },
-            ]
-        );
+            ],
+            Operator = AudienceFilterConfigOperator.And,
+        };
         ApiEnum<string, AudienceOperator> expectedOperator = AudienceOperator.And;
 
         Assert.Equal(expectedID, model.ID);
@@ -69,7 +75,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -78,8 +86,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
             Operator = AudienceOperator.And,
         };
 
@@ -99,7 +108,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -108,8 +119,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
             Operator = AudienceOperator.And,
         };
 
@@ -125,7 +137,9 @@ public class AudienceTest : TestBase
         string expectedDescription = "description";
         string expectedName = "name";
         string expectedUpdatedAt = "updated_at";
-        AudienceFilterConfig expectedFilter = new(
+        AudienceFilterConfig expectedFilter = new()
+        {
+            Filters =
             [
                 new()
                 {
@@ -134,8 +148,9 @@ public class AudienceTest : TestBase
                     Path = "path",
                     Value = "value",
                 },
-            ]
-        );
+            ],
+            Operator = AudienceFilterConfigOperator.And,
+        };
         ApiEnum<string, AudienceOperator> expectedOperator = AudienceOperator.And;
 
         Assert.Equal(expectedID, deserialized.ID);
@@ -157,7 +172,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -166,8 +183,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
             Operator = AudienceOperator.And,
         };
 
@@ -184,7 +202,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -193,8 +213,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
         };
 
         Assert.Null(model.Operator);
@@ -211,7 +232,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -220,8 +243,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
         };
 
         model.Validate();
@@ -237,7 +261,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -246,8 +272,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
 
             // Null should be interpreted as omitted for these properties
             Operator = null,
@@ -267,7 +294,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -276,8 +305,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
 
             // Null should be interpreted as omitted for these properties
             Operator = null,
@@ -366,7 +396,9 @@ public class AudienceTest : TestBase
             Description = "description",
             Name = "name",
             UpdatedAt = "updated_at",
-            Filter = new(
+            Filter = new()
+            {
+                Filters =
                 [
                     new()
                     {
@@ -375,8 +407,9 @@ public class AudienceTest : TestBase
                         Path = "path",
                         Value = "value",
                     },
-                ]
-            ),
+                ],
+                Operator = AudienceFilterConfigOperator.And,
+            },
             Operator = AudienceOperator.And,
         };
 
