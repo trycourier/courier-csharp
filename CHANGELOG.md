@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.16.1 (2026-07-09)
+
+Full Changelog: [v5.16.0...v5.16.1](https://github.com/trycourier/courier-csharp/compare/v5.16.0...v5.16.1)
+
 ## 5.16.0 (2026-07-09)
 
 Full Changelog: [v5.15.2...v5.16.0](https://github.com/trycourier/courier-csharp/compare/v5.15.2...v5.16.0)
