@@ -21,14 +21,14 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
-                    TopicID = "5Q4QGFBEX481DP6JRPMV751H4YU",
+                    TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
                     CustomRouting = [ChannelClassification.DirectMessage],
                     HasCustomRouting = true,
                 },
@@ -42,14 +42,14 @@ public class PreferenceBulkUpdateParamsTest : TestBase
             new()
             {
                 Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
-                TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                 CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                 HasCustomRouting = true,
             },
             new()
             {
                 Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
-                TopicID = "5Q4QGFBEX481DP6JRPMV751H4YU",
+                TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
                 CustomRouting = [ChannelClassification.DirectMessage],
                 HasCustomRouting = true,
             },
@@ -76,14 +76,14 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
-                    TopicID = "5Q4QGFBEX481DP6JRPMV751H4YU",
+                    TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
                     CustomRouting = [ChannelClassification.DirectMessage],
                     HasCustomRouting = true,
                 },
@@ -105,14 +105,14 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
-                    TopicID = "5Q4QGFBEX481DP6JRPMV751H4YU",
+                    TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
                     CustomRouting = [ChannelClassification.DirectMessage],
                     HasCustomRouting = true,
                 },
@@ -136,14 +136,14 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
-                    TopicID = "5Q4QGFBEX481DP6JRPMV751H4YU",
+                    TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
                     CustomRouting = [ChannelClassification.DirectMessage],
                     HasCustomRouting = true,
                 },
@@ -172,14 +172,14 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
                 new()
                 {
                     Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
-                    TopicID = "5Q4QGFBEX481DP6JRPMV751H4YU",
+                    TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
                     CustomRouting = [ChannelClassification.DirectMessage],
                     HasCustomRouting = true,
                 },

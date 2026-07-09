@@ -27,7 +27,7 @@ public class NotificationServiceTest : TestBase
                     },
                     Name = "Welcome Email",
                     Routing = new("rs_123"),
-                    Subscription = new("marketing"),
+                    Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                     Tags = ["onboarding", "welcome"],
                 },
             },

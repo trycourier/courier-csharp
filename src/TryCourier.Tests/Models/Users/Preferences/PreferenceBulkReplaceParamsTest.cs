@@ -21,7 +21,7 @@ public class PreferenceBulkReplaceParamsTest : TestBase
                 new()
                 {
                     Status = Status.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
@@ -35,7 +35,7 @@ public class PreferenceBulkReplaceParamsTest : TestBase
             new()
             {
                 Status = Status.OptedIn,
-                TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                 CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                 HasCustomRouting = true,
             },
@@ -62,7 +62,7 @@ public class PreferenceBulkReplaceParamsTest : TestBase
                 new()
                 {
                     Status = Status.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
@@ -84,7 +84,7 @@ public class PreferenceBulkReplaceParamsTest : TestBase
                 new()
                 {
                     Status = Status.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
@@ -108,7 +108,7 @@ public class PreferenceBulkReplaceParamsTest : TestBase
                 new()
                 {
                     Status = Status.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
@@ -137,7 +137,7 @@ public class PreferenceBulkReplaceParamsTest : TestBase
                 new()
                 {
                     Status = Status.OptedIn,
-                    TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
                     HasCustomRouting = true,
                 },
