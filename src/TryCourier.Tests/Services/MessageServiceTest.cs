@@ -57,4 +57,15 @@ public class MessageServiceTest : TestBase
         );
         response.Validate();
     }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task Resend_Works()
+    {
+        var response = await this.client.Messages.Resend(
+            "message_id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
+        response.Validate();
+    }
 }
