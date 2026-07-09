@@ -67,7 +67,7 @@ public record class PreferenceBulkReplaceParams : ParamsBase
     }
 
     /// <summary>
-    /// Update the preferences of a user for this specific tenant context.
+    /// Replace the preferences of a user for this specific tenant context.
     /// </summary>
     public string? TenantID
     {
