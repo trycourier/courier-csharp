@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.15.2 (2026-07-09)
+
+Full Changelog: [v5.15.1...v5.15.2](https://github.com/trycourier/courier-csharp/compare/v5.15.1...v5.15.2)
+
+### Chores
+
+* update api-spec with new message resend endpoint ([d8eee94](https://github.com/trycourier/courier-csharp/commit/d8eee945a64bc07470fb572f7651aa78250d434e))
+
 ## 5.15.1 (2026-07-07)
 
 Full Changelog: [v5.15.0...v5.15.1](https://github.com/trycourier/courier-csharp/compare/v5.15.0...v5.15.1)

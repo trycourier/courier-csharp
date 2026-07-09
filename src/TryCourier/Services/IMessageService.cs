@@ -97,6 +97,25 @@ public interface IMessageService
         MessageHistoryParams? parameters = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Resend a previously sent message. The original send request is loaded from
+    /// storage and a brand-new send is enqueued for the same recipient and content,
+    /// producing a **new** `messageId` — the original message is not modified.
+    /// Throttled by a per-message rate limit; a repeat inside the limit window returns
+    /// `429 Too Many Requests`.
+    /// </summary>
+    Task<MessageResendResponse> Resend(
+        MessageResendParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Resend(MessageResendParams, CancellationToken)"/>
+    Task<MessageResendResponse> Resend(
+        string messageID,
+        MessageResendParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }
 
 /// <summary>
@@ -182,6 +201,22 @@ public interface IMessageServiceWithRawResponse
     Task<HttpResponse<MessageHistoryResponse>> History(
         string messageID,
         MessageHistoryParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>post /messages/{message_id}/resend</c>, but is otherwise the
+    /// same as <see cref="IMessageService.Resend(MessageResendParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<MessageResendResponse>> Resend(
+        MessageResendParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Resend(MessageResendParams, CancellationToken)"/>
+    Task<HttpResponse<MessageResendResponse>> Resend(
+        string messageID,
+        MessageResendParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 }
