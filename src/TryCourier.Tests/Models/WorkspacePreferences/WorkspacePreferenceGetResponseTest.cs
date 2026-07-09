@@ -38,10 +38,12 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
             Creator = "creator",
+            Description = "description",
             Updated = "updated",
             Updater = "updater",
         };
@@ -71,10 +73,12 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                 },
                 Updated = "updated",
                 Creator = "creator",
+                Description = "description",
                 Updater = "updater",
             },
         ];
         string expectedCreator = "creator";
+        string expectedDescription = "description";
         string expectedUpdated = "updated";
         string expectedUpdater = "updater";
 
@@ -93,6 +97,7 @@ public class WorkspacePreferenceGetResponseTest : TestBase
             Assert.Equal(expectedTopics[i], model.Topics[i]);
         }
         Assert.Equal(expectedCreator, model.Creator);
+        Assert.Equal(expectedDescription, model.Description);
         Assert.Equal(expectedUpdated, model.Updated);
         Assert.Equal(expectedUpdater, model.Updater);
     }
@@ -127,10 +132,12 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
             Creator = "creator",
+            Description = "description",
             Updated = "updated",
             Updater = "updater",
         };
@@ -174,10 +181,12 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
             Creator = "creator",
+            Description = "description",
             Updated = "updated",
             Updater = "updater",
         };
@@ -214,10 +223,12 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                 },
                 Updated = "updated",
                 Creator = "creator",
+                Description = "description",
                 Updater = "updater",
             },
         ];
         string expectedCreator = "creator";
+        string expectedDescription = "description";
         string expectedUpdated = "updated";
         string expectedUpdater = "updater";
 
@@ -236,6 +247,7 @@ public class WorkspacePreferenceGetResponseTest : TestBase
             Assert.Equal(expectedTopics[i], deserialized.Topics[i]);
         }
         Assert.Equal(expectedCreator, deserialized.Creator);
+        Assert.Equal(expectedDescription, deserialized.Description);
         Assert.Equal(expectedUpdated, deserialized.Updated);
         Assert.Equal(expectedUpdater, deserialized.Updater);
     }
@@ -270,10 +282,12 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
             Creator = "creator",
+            Description = "description",
             Updated = "updated",
             Updater = "updater",
         };
@@ -311,6 +325,7 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
@@ -318,6 +333,8 @@ public class WorkspacePreferenceGetResponseTest : TestBase
 
         Assert.Null(model.Creator);
         Assert.False(model.RawData.ContainsKey("creator"));
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
         Assert.Null(model.Updated);
         Assert.False(model.RawData.ContainsKey("updated"));
         Assert.Null(model.Updater);
@@ -354,6 +371,7 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
@@ -392,17 +410,21 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
 
             Creator = null,
+            Description = null,
             Updated = null,
             Updater = null,
         };
 
         Assert.Null(model.Creator);
         Assert.True(model.RawData.ContainsKey("creator"));
+        Assert.Null(model.Description);
+        Assert.True(model.RawData.ContainsKey("description"));
         Assert.Null(model.Updated);
         Assert.True(model.RawData.ContainsKey("updated"));
         Assert.Null(model.Updater);
@@ -439,11 +461,13 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
 
             Creator = null,
+            Description = null,
             Updated = null,
             Updater = null,
         };
@@ -481,10 +505,12 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     },
                     Updated = "updated",
                     Creator = "creator",
+                    Description = "description",
                     Updater = "updater",
                 },
             ],
             Creator = "creator",
+            Description = "description",
             Updated = "updated",
             Updater = "updater",
         };

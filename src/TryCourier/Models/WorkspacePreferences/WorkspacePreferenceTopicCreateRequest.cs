@@ -70,6 +70,19 @@ public sealed record class WorkspacePreferenceTopicCreateRequest : JsonModel
     }
 
     /// <summary>
+    /// Optional description shown under the topic on the hosted preferences page.
+    /// </summary>
+    public string? Description
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("description");
+        }
+        init { this._rawData.Set("description", value); }
+    }
+
+    /// <summary>
     /// Whether to include a list-unsubscribe header on emails for this topic.
     /// </summary>
     public bool? IncludeUnsubscribeHeader
@@ -133,6 +146,7 @@ public sealed record class WorkspacePreferenceTopicCreateRequest : JsonModel
         {
             item.Validate();
         }
+        _ = this.Description;
         _ = this.IncludeUnsubscribeHeader;
         foreach (var item in this.RoutingOptions ?? [])
         {

@@ -33,6 +33,19 @@ public sealed record class WorkspacePreferenceCreateRequest : JsonModel
     }
 
     /// <summary>
+    /// Optional description shown under the section on the hosted preferences page.
+    /// </summary>
+    public string? Description
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("description");
+        }
+        init { this._rawData.Set("description", value); }
+    }
+
+    /// <summary>
     /// Whether the workspace preference defines custom routing for its topics.
     /// </summary>
     public bool? HasCustomRouting
@@ -70,6 +83,7 @@ public sealed record class WorkspacePreferenceCreateRequest : JsonModel
     public override void Validate()
     {
         _ = this.Name;
+        _ = this.Description;
         _ = this.HasCustomRouting;
         foreach (var item in this.RoutingOptions ?? [])
         {

@@ -42,6 +42,69 @@ public interface IPreferenceService
     );
 
     /// <summary>
+    /// Replace a user's complete set of preference overrides in a single request. The
+    /// topics in the request body become the recipient's entire set of overrides:
+    /// listed topics are created or updated, and every existing override that is not
+    /// included in the body is reset to its topic default. Submitting an empty `topics`
+    /// array is a valid clear-all that resets every existing override.
+    ///
+    /// <para>This operation is validation-atomic (all-or-nothing): structural
+    /// validation fails fast with a single `400`, and if any topic is semantically
+    /// invalid (an unknown topic, a `REQUIRED` topic that cannot be opted out, or a
+    /// custom routing request that is not available on the workspace's plan) the
+    /// request returns a single `400` aggregating every failure in `errors` and writes
+    /// nothing. On success it returns `200` with `items` (the complete resulting
+    /// override set) and `deleted` (the ids of the overrides that were reset to
+    /// default).</para>
+    ///
+    /// <para>Every `topic_id` in the response — in `items`, `deleted`, and any `errors`
+    /// — is returned in Courier's canonical topic id form, regardless of the form
+    /// supplied in the request.</para>
+    /// </summary>
+    Task<PreferenceBulkReplaceResponse> BulkReplace(
+        PreferenceBulkReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="BulkReplace(PreferenceBulkReplaceParams, CancellationToken)"/>
+    Task<PreferenceBulkReplaceResponse> BulkReplace(
+        string userID,
+        PreferenceBulkReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Additively create or update a user's preferences for one or more subscription
+    /// topics in a single request. Only the topics included in the request body are
+    /// created or updated; any existing overrides for topics not listed are left
+    /// untouched.
+    ///
+    /// <para>Structural validation of the request body fails fast with a single `400`.
+    /// Beyond that, each topic is processed independently (partial-success, not
+    /// all-or-nothing): valid topics are written and returned in `items`, while topics
+    /// that cannot be applied are collected in `errors` with a per-topic `reason` (for
+    /// example an unknown topic, a `REQUIRED` topic that cannot be opted out, a custom
+    /// routing request that is not available on the workspace's plan, or a write
+    /// failure). The request therefore returns `200` with both lists whenever the body
+    /// is structurally valid.</para>
+    ///
+    /// <para>Every `topic_id` in the response — in both `items` and `errors` — is
+    /// returned in Courier's canonical topic id form, regardless of the form supplied
+    /// in the request.</para>
+    /// </summary>
+    Task<PreferenceBulkUpdateResponse> BulkUpdate(
+        PreferenceBulkUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="BulkUpdate(PreferenceBulkUpdateParams, CancellationToken)"/>
+    Task<PreferenceBulkUpdateResponse> BulkUpdate(
+        string userID,
+        PreferenceBulkUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Remove a user's preferences for a specific subscription topic, resetting the
     /// topic to its effective default. This operation is idempotent: deleting a
     /// preference that does not exist succeeds with no error.
@@ -115,6 +178,38 @@ public interface IPreferenceServiceWithRawResponse
     Task<HttpResponse<PreferenceRetrieveResponse>> Retrieve(
         string userID,
         PreferenceRetrieveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>put /users/{user_id}/preferences</c>, but is otherwise the
+    /// same as <see cref="IPreferenceService.BulkReplace(PreferenceBulkReplaceParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<PreferenceBulkReplaceResponse>> BulkReplace(
+        PreferenceBulkReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="BulkReplace(PreferenceBulkReplaceParams, CancellationToken)"/>
+    Task<HttpResponse<PreferenceBulkReplaceResponse>> BulkReplace(
+        string userID,
+        PreferenceBulkReplaceParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>post /users/{user_id}/preferences</c>, but is otherwise the
+    /// same as <see cref="IPreferenceService.BulkUpdate(PreferenceBulkUpdateParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<PreferenceBulkUpdateResponse>> BulkUpdate(
+        PreferenceBulkUpdateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="BulkUpdate(PreferenceBulkUpdateParams, CancellationToken)"/>
+    Task<HttpResponse<PreferenceBulkUpdateResponse>> BulkUpdate(
+        string userID,
+        PreferenceBulkUpdateParams parameters,
         CancellationToken cancellationToken = default
     );
 

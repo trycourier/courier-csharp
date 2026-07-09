@@ -20,6 +20,7 @@ public class TopicReplaceParamsTest : TestBase
             DefaultStatus = TopicReplaceParamsDefaultStatus.OptedOut,
             Name = "name",
             AllowedPreferences = [TopicReplaceParamsAllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -37,6 +38,7 @@ public class TopicReplaceParamsTest : TestBase
         [
             TopicReplaceParamsAllowedPreference.Snooze,
         ];
+        string expectedDescription = "description";
         bool expectedIncludeUnsubscribeHeader = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -57,6 +59,7 @@ public class TopicReplaceParamsTest : TestBase
         {
             Assert.Equal(expectedAllowedPreferences[i], parameters.AllowedPreferences[i]);
         }
+        Assert.Equal(expectedDescription, parameters.Description);
         Assert.Equal(expectedIncludeUnsubscribeHeader, parameters.IncludeUnsubscribeHeader);
         Assert.NotNull(parameters.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, parameters.RoutingOptions.Count);
@@ -87,6 +90,8 @@ public class TopicReplaceParamsTest : TestBase
 
         Assert.Null(parameters.AllowedPreferences);
         Assert.False(parameters.RawBodyData.ContainsKey("allowed_preferences"));
+        Assert.Null(parameters.Description);
+        Assert.False(parameters.RawBodyData.ContainsKey("description"));
         Assert.Null(parameters.IncludeUnsubscribeHeader);
         Assert.False(parameters.RawBodyData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(parameters.RoutingOptions);
@@ -106,6 +111,7 @@ public class TopicReplaceParamsTest : TestBase
             Name = "name",
 
             AllowedPreferences = null,
+            Description = null,
             IncludeUnsubscribeHeader = null,
             RoutingOptions = null,
             TopicData = null,
@@ -113,6 +119,8 @@ public class TopicReplaceParamsTest : TestBase
 
         Assert.Null(parameters.AllowedPreferences);
         Assert.True(parameters.RawBodyData.ContainsKey("allowed_preferences"));
+        Assert.Null(parameters.Description);
+        Assert.True(parameters.RawBodyData.ContainsKey("description"));
         Assert.Null(parameters.IncludeUnsubscribeHeader);
         Assert.True(parameters.RawBodyData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(parameters.RoutingOptions);
@@ -152,6 +160,7 @@ public class TopicReplaceParamsTest : TestBase
             DefaultStatus = TopicReplaceParamsDefaultStatus.OptedOut,
             Name = "name",
             AllowedPreferences = [TopicReplaceParamsAllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()

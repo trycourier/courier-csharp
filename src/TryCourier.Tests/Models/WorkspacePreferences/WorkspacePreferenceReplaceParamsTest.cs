@@ -15,12 +15,14 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
         {
             SectionID = "section_id",
             Name = "name",
+            Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
         };
 
         string expectedSectionID = "section_id";
         string expectedName = "name";
+        string expectedDescription = "description";
         bool expectedHasCustomRouting = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -29,6 +31,7 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
 
         Assert.Equal(expectedSectionID, parameters.SectionID);
         Assert.Equal(expectedName, parameters.Name);
+        Assert.Equal(expectedDescription, parameters.Description);
         Assert.Equal(expectedHasCustomRouting, parameters.HasCustomRouting);
         Assert.NotNull(parameters.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, parameters.RoutingOptions.Count);
@@ -47,6 +50,8 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
             Name = "name",
         };
 
+        Assert.Null(parameters.Description);
+        Assert.False(parameters.RawBodyData.ContainsKey("description"));
         Assert.Null(parameters.HasCustomRouting);
         Assert.False(parameters.RawBodyData.ContainsKey("has_custom_routing"));
         Assert.Null(parameters.RoutingOptions);
@@ -61,10 +66,13 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
             SectionID = "section_id",
             Name = "name",
 
+            Description = null,
             HasCustomRouting = null,
             RoutingOptions = null,
         };
 
+        Assert.Null(parameters.Description);
+        Assert.True(parameters.RawBodyData.ContainsKey("description"));
         Assert.Null(parameters.HasCustomRouting);
         Assert.True(parameters.RawBodyData.ContainsKey("has_custom_routing"));
         Assert.Null(parameters.RoutingOptions);
@@ -97,6 +105,7 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
         {
             SectionID = "section_id",
             Name = "name",
+            Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
         };

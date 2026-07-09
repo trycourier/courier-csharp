@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.16.0 (2026-07-09)
+
+Full Changelog: [v5.15.2...v5.16.0](https://github.com/trycourier/courier-csharp/compare/v5.15.2...v5.16.0)
+
+### Features
+
+* Add bulk user preference upsert and replace endpoints ([8f1a11f](https://github.com/trycourier/courier-csharp/commit/8f1a11fb6c73bb6211474077057b06628d0baded))
+* Preferences v3 REST fields: section/topic description + publish body ([fbda4ca](https://github.com/trycourier/courier-csharp/commit/fbda4ca2ba3b57a0df2d0b701531db3d3231eead))
+
 ## 5.15.2 (2026-07-09)
 
 Full Changelog: [v5.15.1...v5.15.2](https://github.com/trycourier/courier-csharp/compare/v5.15.1...v5.15.2)

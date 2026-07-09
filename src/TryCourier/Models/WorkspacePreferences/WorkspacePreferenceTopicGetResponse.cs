@@ -183,6 +183,19 @@ public sealed record class WorkspacePreferenceTopicGetResponse : JsonModel
     }
 
     /// <summary>
+    /// Optional description shown under the topic on the hosted preferences page.
+    /// </summary>
+    public string? Description
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("description");
+        }
+        init { this._rawData.Set("description", value); }
+    }
+
+    /// <summary>
     /// Id of the last updater.
     /// </summary>
     public string? Updater
@@ -214,6 +227,7 @@ public sealed record class WorkspacePreferenceTopicGetResponse : JsonModel
         _ = this.TopicData;
         _ = this.Updated;
         _ = this.Creator;
+        _ = this.Description;
         _ = this.Updater;
     }
 
