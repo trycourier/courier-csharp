@@ -17,6 +17,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
             DefaultStatus = WorkspacePreferenceTopicReplaceRequestDefaultStatus.OptedOut,
             Name = "name",
             AllowedPreferences = [WorkspacePreferenceTopicReplaceRequestAllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -34,6 +35,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
         [
             WorkspacePreferenceTopicReplaceRequestAllowedPreference.Snooze,
         ];
+        string expectedDescription = "description";
         bool expectedIncludeUnsubscribeHeader = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -52,6 +54,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
         {
             Assert.Equal(expectedAllowedPreferences[i], model.AllowedPreferences[i]);
         }
+        Assert.Equal(expectedDescription, model.Description);
         Assert.Equal(expectedIncludeUnsubscribeHeader, model.IncludeUnsubscribeHeader);
         Assert.NotNull(model.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, model.RoutingOptions.Count);
@@ -77,6 +80,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
             DefaultStatus = WorkspacePreferenceTopicReplaceRequestDefaultStatus.OptedOut,
             Name = "name",
             AllowedPreferences = [WorkspacePreferenceTopicReplaceRequestAllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -102,6 +106,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
             DefaultStatus = WorkspacePreferenceTopicReplaceRequestDefaultStatus.OptedOut,
             Name = "name",
             AllowedPreferences = [WorkspacePreferenceTopicReplaceRequestAllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -126,6 +131,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
         [
             WorkspacePreferenceTopicReplaceRequestAllowedPreference.Snooze,
         ];
+        string expectedDescription = "description";
         bool expectedIncludeUnsubscribeHeader = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -144,6 +150,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
         {
             Assert.Equal(expectedAllowedPreferences[i], deserialized.AllowedPreferences[i]);
         }
+        Assert.Equal(expectedDescription, deserialized.Description);
         Assert.Equal(expectedIncludeUnsubscribeHeader, deserialized.IncludeUnsubscribeHeader);
         Assert.NotNull(deserialized.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, deserialized.RoutingOptions.Count);
@@ -169,6 +176,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
             DefaultStatus = WorkspacePreferenceTopicReplaceRequestDefaultStatus.OptedOut,
             Name = "name",
             AllowedPreferences = [WorkspacePreferenceTopicReplaceRequestAllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -191,6 +199,8 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
 
         Assert.Null(model.AllowedPreferences);
         Assert.False(model.RawData.ContainsKey("allowed_preferences"));
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
         Assert.Null(model.IncludeUnsubscribeHeader);
         Assert.False(model.RawData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(model.RoutingOptions);
@@ -220,6 +230,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
             Name = "name",
 
             AllowedPreferences = null,
+            Description = null,
             IncludeUnsubscribeHeader = null,
             RoutingOptions = null,
             TopicData = null,
@@ -227,6 +238,8 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
 
         Assert.Null(model.AllowedPreferences);
         Assert.True(model.RawData.ContainsKey("allowed_preferences"));
+        Assert.Null(model.Description);
+        Assert.True(model.RawData.ContainsKey("description"));
         Assert.Null(model.IncludeUnsubscribeHeader);
         Assert.True(model.RawData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(model.RoutingOptions);
@@ -244,6 +257,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
             Name = "name",
 
             AllowedPreferences = null,
+            Description = null,
             IncludeUnsubscribeHeader = null,
             RoutingOptions = null,
             TopicData = null,
@@ -260,6 +274,7 @@ public class WorkspacePreferenceTopicReplaceRequestTest : TestBase
             DefaultStatus = WorkspacePreferenceTopicReplaceRequestDefaultStatus.OptedOut,
             Name = "name",
             AllowedPreferences = [WorkspacePreferenceTopicReplaceRequestAllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()

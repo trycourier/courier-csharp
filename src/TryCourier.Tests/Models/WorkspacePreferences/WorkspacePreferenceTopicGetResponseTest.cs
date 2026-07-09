@@ -27,6 +27,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             },
             Updated = "updated",
             Creator = "creator",
+            Description = "description",
             Updater = "updater",
         };
 
@@ -52,6 +53,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         };
         string expectedUpdated = "updated";
         string expectedCreator = "creator";
+        string expectedDescription = "description";
         string expectedUpdater = "updater";
 
         Assert.Equal(expectedID, model.ID);
@@ -78,6 +80,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         }
         Assert.Equal(expectedUpdated, model.Updated);
         Assert.Equal(expectedCreator, model.Creator);
+        Assert.Equal(expectedDescription, model.Description);
         Assert.Equal(expectedUpdater, model.Updater);
     }
 
@@ -99,6 +102,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             },
             Updated = "updated",
             Creator = "creator",
+            Description = "description",
             Updater = "updater",
         };
 
@@ -129,6 +133,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             },
             Updated = "updated",
             Creator = "creator",
+            Description = "description",
             Updater = "updater",
         };
 
@@ -161,6 +166,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         };
         string expectedUpdated = "updated";
         string expectedCreator = "creator";
+        string expectedDescription = "description";
         string expectedUpdater = "updater";
 
         Assert.Equal(expectedID, deserialized.ID);
@@ -187,6 +193,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         }
         Assert.Equal(expectedUpdated, deserialized.Updated);
         Assert.Equal(expectedCreator, deserialized.Creator);
+        Assert.Equal(expectedDescription, deserialized.Description);
         Assert.Equal(expectedUpdater, deserialized.Updater);
     }
 
@@ -208,6 +215,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             },
             Updated = "updated",
             Creator = "creator",
+            Description = "description",
             Updater = "updater",
         };
 
@@ -235,6 +243,8 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
 
         Assert.Null(model.Creator);
         Assert.False(model.RawData.ContainsKey("creator"));
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
         Assert.Null(model.Updater);
         Assert.False(model.RawData.ContainsKey("updater"));
     }
@@ -280,11 +290,14 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             Updated = "updated",
 
             Creator = null,
+            Description = null,
             Updater = null,
         };
 
         Assert.Null(model.Creator);
         Assert.True(model.RawData.ContainsKey("creator"));
+        Assert.Null(model.Description);
+        Assert.True(model.RawData.ContainsKey("description"));
         Assert.Null(model.Updater);
         Assert.True(model.RawData.ContainsKey("updater"));
     }
@@ -308,6 +321,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             Updated = "updated",
 
             Creator = null,
+            Description = null,
             Updater = null,
         };
 
@@ -332,6 +346,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             },
             Updated = "updated",
             Creator = "creator",
+            Description = "description",
             Updater = "updater",
         };
 

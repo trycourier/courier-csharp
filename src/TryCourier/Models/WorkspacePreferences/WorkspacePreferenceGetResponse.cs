@@ -127,6 +127,19 @@ public sealed record class WorkspacePreferenceGetResponse : JsonModel
     }
 
     /// <summary>
+    /// Optional description shown under the section on the hosted preferences page.
+    /// </summary>
+    public string? Description
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("description");
+        }
+        init { this._rawData.Set("description", value); }
+    }
+
+    /// <summary>
     /// ISO-8601 timestamp of the last update.
     /// </summary>
     public string? Updated
@@ -168,6 +181,7 @@ public sealed record class WorkspacePreferenceGetResponse : JsonModel
             item.Validate();
         }
         _ = this.Creator;
+        _ = this.Description;
         _ = this.Updated;
         _ = this.Updater;
     }

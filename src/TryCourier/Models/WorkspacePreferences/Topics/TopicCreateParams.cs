@@ -81,6 +81,19 @@ public record class TopicCreateParams : ParamsBase
     }
 
     /// <summary>
+    /// Optional description shown under the topic on the hosted preferences page.
+    /// </summary>
+    public string? Description
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("description");
+        }
+        init { this._rawBodyData.Set("description", value); }
+    }
+
+    /// <summary>
     /// Whether to include a list-unsubscribe header on emails for this topic.
     /// </summary>
     public bool? IncludeUnsubscribeHeader

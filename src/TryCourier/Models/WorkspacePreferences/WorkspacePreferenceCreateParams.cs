@@ -40,6 +40,19 @@ public record class WorkspacePreferenceCreateParams : ParamsBase
     }
 
     /// <summary>
+    /// Optional description shown under the section on the hosted preferences page.
+    /// </summary>
+    public string? Description
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("description");
+        }
+        init { this._rawBodyData.Set("description", value); }
+    }
+
+    /// <summary>
     /// Whether the workspace preference defines custom routing for its topics.
     /// </summary>
     public bool? HasCustomRouting
