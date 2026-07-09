@@ -19,6 +19,7 @@ public class TopicCreateParamsTest : TestBase
             DefaultStatus = DefaultStatus.OptedOut,
             Name = "Marketing",
             AllowedPreferences = [AllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -34,6 +35,7 @@ public class TopicCreateParamsTest : TestBase
         [
             AllowedPreference.Snooze,
         ];
+        string expectedDescription = "description";
         bool expectedIncludeUnsubscribeHeader = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -53,6 +55,7 @@ public class TopicCreateParamsTest : TestBase
         {
             Assert.Equal(expectedAllowedPreferences[i], parameters.AllowedPreferences[i]);
         }
+        Assert.Equal(expectedDescription, parameters.Description);
         Assert.Equal(expectedIncludeUnsubscribeHeader, parameters.IncludeUnsubscribeHeader);
         Assert.NotNull(parameters.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, parameters.RoutingOptions.Count);
@@ -82,6 +85,8 @@ public class TopicCreateParamsTest : TestBase
 
         Assert.Null(parameters.AllowedPreferences);
         Assert.False(parameters.RawBodyData.ContainsKey("allowed_preferences"));
+        Assert.Null(parameters.Description);
+        Assert.False(parameters.RawBodyData.ContainsKey("description"));
         Assert.Null(parameters.IncludeUnsubscribeHeader);
         Assert.False(parameters.RawBodyData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(parameters.RoutingOptions);
@@ -100,6 +105,7 @@ public class TopicCreateParamsTest : TestBase
             Name = "Marketing",
 
             AllowedPreferences = null,
+            Description = null,
             IncludeUnsubscribeHeader = null,
             RoutingOptions = null,
             TopicData = null,
@@ -107,6 +113,8 @@ public class TopicCreateParamsTest : TestBase
 
         Assert.Null(parameters.AllowedPreferences);
         Assert.True(parameters.RawBodyData.ContainsKey("allowed_preferences"));
+        Assert.Null(parameters.Description);
+        Assert.True(parameters.RawBodyData.ContainsKey("description"));
         Assert.Null(parameters.IncludeUnsubscribeHeader);
         Assert.True(parameters.RawBodyData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(parameters.RoutingOptions);
@@ -144,6 +152,7 @@ public class TopicCreateParamsTest : TestBase
             DefaultStatus = DefaultStatus.OptedOut,
             Name = "Marketing",
             AllowedPreferences = [AllowedPreference.Snooze],
+            Description = "description",
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()

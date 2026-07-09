@@ -3,6 +3,7 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using TryCourier.Core;
 
@@ -19,6 +20,52 @@ namespace TryCourier.Models.WorkspacePreferences;
 /// </summary>
 public record class WorkspacePreferencePublishParams : ParamsBase
 {
+    readonly JsonDictionary _rawBodyData = new();
+    public IReadOnlyDictionary<string, JsonElement> RawBodyData
+    {
+        get { return this._rawBodyData.Freeze(); }
+    }
+
+    /// <summary>
+    /// Brand for the hosted page - "default" (workspace default brand), "none" (no
+    /// brand), or a specific brand id. Defaults to "default".
+    /// </summary>
+    public string? BrandID
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("brand_id");
+        }
+        init { this._rawBodyData.Set("brand_id", value); }
+    }
+
+    /// <summary>
+    /// Description shown under the heading on the hosted preferences page.
+    /// </summary>
+    public string? Description
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("description");
+        }
+        init { this._rawBodyData.Set("description", value); }
+    }
+
+    /// <summary>
+    /// Heading shown at the top of the hosted preferences page.
+    /// </summary>
+    public string? Heading
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("heading");
+        }
+        init { this._rawBodyData.Set("heading", value); }
+    }
+
     public WorkspacePreferencePublishParams() { }
 
 #pragma warning disable CS8618
@@ -26,39 +73,48 @@ public record class WorkspacePreferencePublishParams : ParamsBase
     public WorkspacePreferencePublishParams(
         WorkspacePreferencePublishParams workspacePreferencePublishParams
     )
-        : base(workspacePreferencePublishParams) { }
+        : base(workspacePreferencePublishParams)
+    {
+        this._rawBodyData = new(workspacePreferencePublishParams._rawBodyData);
+    }
 #pragma warning restore CS8618
 
     public WorkspacePreferencePublishParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
     WorkspacePreferencePublishParams(
         FrozenDictionary<string, JsonElement> rawHeaderData,
-        FrozenDictionary<string, JsonElement> rawQueryData
+        FrozenDictionary<string, JsonElement> rawQueryData,
+        FrozenDictionary<string, JsonElement> rawBodyData
     )
     {
         this._rawHeaderData = new(rawHeaderData);
         this._rawQueryData = new(rawQueryData);
+        this._rawBodyData = new(rawBodyData);
     }
 #pragma warning restore CS8618
 
     /// <inheritdoc cref="IFromRawJson{T}.FromRawUnchecked"/>
     public static WorkspacePreferencePublishParams FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
-        IReadOnlyDictionary<string, JsonElement> rawQueryData
+        IReadOnlyDictionary<string, JsonElement> rawQueryData,
+        IReadOnlyDictionary<string, JsonElement> rawBodyData
     )
     {
         return new(
             FrozenDictionary.ToFrozenDictionary(rawHeaderData),
-            FrozenDictionary.ToFrozenDictionary(rawQueryData)
+            FrozenDictionary.ToFrozenDictionary(rawQueryData),
+            FrozenDictionary.ToFrozenDictionary(rawBodyData)
         );
     }
 
@@ -73,6 +129,7 @@ public record class WorkspacePreferencePublishParams : ParamsBase
                     ["QueryData"] = FriendlyJsonPrinter.PrintValue(
                         JsonSerializer.SerializeToElement(this._rawQueryData.Freeze())
                     ),
+                    ["BodyData"] = FriendlyJsonPrinter.PrintValue(this._rawBodyData.Freeze()),
                 }
             ),
             ModelBase.ToStringSerializerOptions
@@ -85,7 +142,8 @@ public record class WorkspacePreferencePublishParams : ParamsBase
             return false;
         }
         return this._rawHeaderData.Equals(other._rawHeaderData)
-            && this._rawQueryData.Equals(other._rawQueryData);
+            && this._rawQueryData.Equals(other._rawQueryData)
+            && this._rawBodyData.Equals(other._rawBodyData);
     }
 
     public override Uri Url(ClientOptions options)
@@ -94,6 +152,15 @@ public record class WorkspacePreferencePublishParams : ParamsBase
         {
             Query = this.QueryString(options),
         }.Uri;
+    }
+
+    internal override HttpContent? BodyContent()
+    {
+        return new StringContent(
+            JsonSerializer.Serialize(this.RawBodyData, ModelBase.SerializerOptions),
+            Encoding.UTF8,
+            "application/json"
+        );
     }
 
     internal override void AddHeadersToRequest(HttpRequestMessage request, ClientOptions options)

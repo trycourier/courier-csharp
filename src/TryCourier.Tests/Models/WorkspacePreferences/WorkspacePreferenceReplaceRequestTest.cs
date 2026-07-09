@@ -14,11 +14,13 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         var model = new WorkspacePreferenceReplaceRequest
         {
             Name = "name",
+            Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
         };
 
         string expectedName = "name";
+        string expectedDescription = "description";
         bool expectedHasCustomRouting = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -26,6 +28,7 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         ];
 
         Assert.Equal(expectedName, model.Name);
+        Assert.Equal(expectedDescription, model.Description);
         Assert.Equal(expectedHasCustomRouting, model.HasCustomRouting);
         Assert.NotNull(model.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, model.RoutingOptions.Count);
@@ -41,6 +44,7 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         var model = new WorkspacePreferenceReplaceRequest
         {
             Name = "name",
+            Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
         };
@@ -60,6 +64,7 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         var model = new WorkspacePreferenceReplaceRequest
         {
             Name = "name",
+            Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
         };
@@ -72,6 +77,7 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedName = "name";
+        string expectedDescription = "description";
         bool expectedHasCustomRouting = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -79,6 +85,7 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         ];
 
         Assert.Equal(expectedName, deserialized.Name);
+        Assert.Equal(expectedDescription, deserialized.Description);
         Assert.Equal(expectedHasCustomRouting, deserialized.HasCustomRouting);
         Assert.NotNull(deserialized.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, deserialized.RoutingOptions.Count);
@@ -94,6 +101,7 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         var model = new WorkspacePreferenceReplaceRequest
         {
             Name = "name",
+            Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
         };
@@ -106,6 +114,8 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
     {
         var model = new WorkspacePreferenceReplaceRequest { Name = "name" };
 
+        Assert.Null(model.Description);
+        Assert.False(model.RawData.ContainsKey("description"));
         Assert.Null(model.HasCustomRouting);
         Assert.False(model.RawData.ContainsKey("has_custom_routing"));
         Assert.Null(model.RoutingOptions);
@@ -127,10 +137,13 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         {
             Name = "name",
 
+            Description = null,
             HasCustomRouting = null,
             RoutingOptions = null,
         };
 
+        Assert.Null(model.Description);
+        Assert.True(model.RawData.ContainsKey("description"));
         Assert.Null(model.HasCustomRouting);
         Assert.True(model.RawData.ContainsKey("has_custom_routing"));
         Assert.Null(model.RoutingOptions);
@@ -144,6 +157,7 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         {
             Name = "name",
 
+            Description = null,
             HasCustomRouting = null,
             RoutingOptions = null,
         };
@@ -157,6 +171,7 @@ public class WorkspacePreferenceReplaceRequestTest : TestBase
         var model = new WorkspacePreferenceReplaceRequest
         {
             Name = "name",
+            Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
         };
