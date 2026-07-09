@@ -21,6 +21,7 @@ using Tenants = TryCourier.Models.Tenants;
 using TenantsTemplates = TryCourier.Models.Tenants.Templates;
 using Tokens = TryCourier.Models.Users.Tokens;
 using Topics = TryCourier.Models.WorkspacePreferences.Topics;
+using UsersPreferences = TryCourier.Models.Users.Preferences;
 using UsersTenants = TryCourier.Models.Users.Tenants;
 
 namespace TryCourier.Core;
@@ -175,6 +176,9 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Tenants::TenantListUsersResponseType>(),
             new ApiEnumConverter<string, Items::Status>(),
             new ApiEnumConverter<string, TenantsTemplates::Type>(),
+            new ApiEnumConverter<string, UsersPreferences::BulkPreferenceTopicStatus>(),
+            new ApiEnumConverter<string, UsersPreferences::Status>(),
+            new ApiEnumConverter<string, UsersPreferences::PreferenceBulkUpdateParamsTopicStatus>(),
             new ApiEnumConverter<string, UsersTenants::Type>(),
             new ApiEnumConverter<string, Tokens::UserTokenProviderKey>(),
             new ApiEnumConverter<string, Tokens::Status>(),

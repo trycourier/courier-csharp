@@ -27,7 +27,7 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
 
         string expectedUserID = "user_id";
         string expectedTopicID = "topic_id";
-        Topic expectedTopic = new()
+        PreferenceUpdateOrCreateTopicParamsTopic expectedTopic = new()
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
@@ -131,12 +131,12 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
     }
 }
 
-public class TopicTest : TestBase
+public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Topic
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
@@ -163,7 +163,7 @@ public class TopicTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Topic
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
@@ -171,7 +171,10 @@ public class TopicTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Topic>(json, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<PreferenceUpdateOrCreateTopicParamsTopic>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -179,7 +182,7 @@ public class TopicTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Topic
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
@@ -187,7 +190,10 @@ public class TopicTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Topic>(element, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<PreferenceUpdateOrCreateTopicParamsTopic>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         ApiEnum<string, PreferenceStatus> expectedStatus = PreferenceStatus.OptedIn;
@@ -210,7 +216,7 @@ public class TopicTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Topic
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
@@ -223,7 +229,10 @@ public class TopicTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new Topic { Status = PreferenceStatus.OptedIn };
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
+        {
+            Status = PreferenceStatus.OptedIn,
+        };
 
         Assert.Null(model.CustomRouting);
         Assert.False(model.RawData.ContainsKey("custom_routing"));
@@ -234,7 +243,10 @@ public class TopicTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new Topic { Status = PreferenceStatus.OptedIn };
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
+        {
+            Status = PreferenceStatus.OptedIn,
+        };
 
         model.Validate();
     }
@@ -242,7 +254,7 @@ public class TopicTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new Topic
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
         {
             Status = PreferenceStatus.OptedIn,
 
@@ -259,7 +271,7 @@ public class TopicTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new Topic
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
         {
             Status = PreferenceStatus.OptedIn,
 
@@ -273,14 +285,14 @@ public class TopicTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Topic
+        var model = new PreferenceUpdateOrCreateTopicParamsTopic
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
             HasCustomRouting = true,
         };
 
-        Topic copied = new(model);
+        PreferenceUpdateOrCreateTopicParamsTopic copied = new(model);
 
         Assert.Equal(model, copied);
     }

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using TryCourier.Models;
+using TryCourier.Models.Users.Preferences;
 
 namespace TryCourier.Tests.Services.Users;
 
@@ -14,6 +15,59 @@ public class PreferenceServiceTest : TestBase
             TestContext.Current.CancellationToken
         );
         preference.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task BulkReplace_Works()
+    {
+        var response = await this.client.Users.Preferences.BulkReplace(
+            "user_id",
+            new()
+            {
+                Topics =
+                [
+                    new()
+                    {
+                        Status = Status.OptedIn,
+                        TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                        CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                        HasCustomRouting = true,
+                    },
+                ],
+            },
+            TestContext.Current.CancellationToken
+        );
+        response.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task BulkUpdate_Works()
+    {
+        var response = await this.client.Users.Preferences.BulkUpdate(
+            "user_id",
+            new()
+            {
+                Topics =
+                [
+                    new()
+                    {
+                        Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
+                        TopicID = "74Q4QGFBEX481DP6JRPMV751H4XT",
+                        CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                        HasCustomRouting = true,
+                    },
+                    new()
+                    {
+                        Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
+                        TopicID = "5Q4QGFBEX481DP6JRPMV751H4YU",
+                        CustomRouting = [ChannelClassification.DirectMessage],
+                        HasCustomRouting = true,
+                    },
+                ],
+            },
+            TestContext.Current.CancellationToken
+        );
+        response.Validate();
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
