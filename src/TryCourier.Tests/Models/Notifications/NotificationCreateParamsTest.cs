@@ -16,7 +16,7 @@ public class NotificationCreateParamsTest : TestBase
         {
             Notification = new()
             {
-                Brand = new("brand_abc"),
+                Brand = new("bnd_01kx4mrd0pfzw8wt7pn7p2fzag"),
                 Content = new()
                 {
                     Elements =
@@ -29,8 +29,8 @@ public class NotificationCreateParamsTest : TestBase
                     Version = "2022-01-01",
                 },
                 Name = "Welcome Email",
-                Routing = new("rs_123"),
-                Subscription = new("marketing"),
+                Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
+                Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
             },
             State = State.Draft,
@@ -38,7 +38,7 @@ public class NotificationCreateParamsTest : TestBase
 
         NotificationTemplatePayload expectedNotification = new()
         {
-            Brand = new("brand_abc"),
+            Brand = new("bnd_01kx4mrd0pfzw8wt7pn7p2fzag"),
             Content = new()
             {
                 Elements =
@@ -51,8 +51,8 @@ public class NotificationCreateParamsTest : TestBase
                 Version = "2022-01-01",
             },
             Name = "Welcome Email",
-            Routing = new("rs_123"),
-            Subscription = new("marketing"),
+            Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
+            Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
             Tags = ["onboarding", "welcome"],
         };
         ApiEnum<string, State> expectedState = State.Draft;
@@ -68,7 +68,7 @@ public class NotificationCreateParamsTest : TestBase
         {
             Notification = new()
             {
-                Brand = new("brand_abc"),
+                Brand = new("bnd_01kx4mrd0pfzw8wt7pn7p2fzag"),
                 Content = new()
                 {
                     Elements =
@@ -81,8 +81,8 @@ public class NotificationCreateParamsTest : TestBase
                     Version = "2022-01-01",
                 },
                 Name = "Welcome Email",
-                Routing = new("rs_123"),
-                Subscription = new("marketing"),
+                Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
+                Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
             },
         };
@@ -98,7 +98,7 @@ public class NotificationCreateParamsTest : TestBase
         {
             Notification = new()
             {
-                Brand = new("brand_abc"),
+                Brand = new("bnd_01kx4mrd0pfzw8wt7pn7p2fzag"),
                 Content = new()
                 {
                     Elements =
@@ -111,8 +111,8 @@ public class NotificationCreateParamsTest : TestBase
                     Version = "2022-01-01",
                 },
                 Name = "Welcome Email",
-                Routing = new("rs_123"),
-                Subscription = new("marketing"),
+                Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
+                Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
             },
 
@@ -131,7 +131,7 @@ public class NotificationCreateParamsTest : TestBase
         {
             Notification = new()
             {
-                Brand = new("brand_abc"),
+                Brand = new("bnd_01kx4mrd0pfzw8wt7pn7p2fzag"),
                 Content = new()
                 {
                     Elements =
@@ -144,8 +144,8 @@ public class NotificationCreateParamsTest : TestBase
                     Version = "2022-01-01",
                 },
                 Name = "Welcome Email",
-                Routing = new("rs_123"),
-                Subscription = new("marketing"),
+                Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
+                Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
             },
         };
@@ -162,7 +162,7 @@ public class NotificationCreateParamsTest : TestBase
         {
             Notification = new()
             {
-                Brand = new("brand_abc"),
+                Brand = new("bnd_01kx4mrd0pfzw8wt7pn7p2fzag"),
                 Content = new()
                 {
                     Elements =
@@ -175,8 +175,8 @@ public class NotificationCreateParamsTest : TestBase
                     Version = "2022-01-01",
                 },
                 Name = "Welcome Email",
-                Routing = new("rs_123"),
-                Subscription = new("marketing"),
+                Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
+                Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
             },
             State = State.Draft,

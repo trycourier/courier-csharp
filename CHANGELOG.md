@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.16.2 (2026-07-10)
+
+Full Changelog: [v5.16.1...v5.16.2](https://github.com/trycourier/courier-csharp/compare/v5.16.1...v5.16.2)
+
+### Documentation
+
+* **openapi:** canonical type-id prefixes across all examples ([#162](https://github.com/trycourier/courier-csharp/issues/162)) ([eabb922](https://github.com/trycourier/courier-csharp/commit/eabb92211988f73a6aafb8e40fb1ac4189cde966))
+* **openapi:** use canonical type-id prefixes in id examples ([#160](https://github.com/trycourier/courier-csharp/issues/160)) ([e637fd7](https://github.com/trycourier/courier-csharp/commit/e637fd7cce2cd1d92b8d9a614fd16dd894f86783))
+
 ## 5.16.1 (2026-07-09)
 
 Full Changelog: [v5.16.0...v5.16.1](https://github.com/trycourier/courier-csharp/compare/v5.16.0...v5.16.1)
