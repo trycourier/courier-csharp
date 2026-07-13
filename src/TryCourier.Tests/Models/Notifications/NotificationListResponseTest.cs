@@ -229,6 +229,7 @@ public class ResultTest : TestBase
             Name = "name",
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
+            SubscriptionTopicID = "subscription_topic_id",
             Updated = 0,
             Updater = "updater",
         };
@@ -267,6 +268,7 @@ public class ResultTest : TestBase
             Name = "name",
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
+            SubscriptionTopicID = "subscription_topic_id",
             Updated = 0,
             Updater = "updater",
         };

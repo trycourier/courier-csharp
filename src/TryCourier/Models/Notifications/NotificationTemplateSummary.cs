@@ -93,6 +93,28 @@ public sealed record class NotificationTemplateSummary : JsonModel
     }
 
     /// <summary>
+    /// The linked subscription (preference) topic of the published version. Omitted
+    /// when no topic is linked or the template has never been published.
+    /// </summary>
+    public string? SubscriptionTopicID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("subscription_topic_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("subscription_topic_id", value);
+        }
+    }
+
+    /// <summary>
     /// Epoch milliseconds of last update.
     /// </summary>
     public long? Updated
@@ -143,6 +165,7 @@ public sealed record class NotificationTemplateSummary : JsonModel
         _ = this.Name;
         this.State.Validate();
         _ = this.Tags;
+        _ = this.SubscriptionTopicID;
         _ = this.Updated;
         _ = this.Updater;
     }
