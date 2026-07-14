@@ -78,6 +78,26 @@ public interface INotificationService
     );
 
     /// <summary>
+    /// Duplicate a notification template. Creates a standalone copy within the same
+    /// workspace and environment, with " COPY" appended to the title. The copy clones
+    /// the source draft's tags, brand, subscription topic, routing strategy, channels,
+    /// and content, and is always created as a standalone template (it is not linked to
+    /// any journey or broadcast, even if the source was). Templates that are scoped to
+    /// a journey or a broadcast cannot be duplicated through this endpoint.
+    /// </summary>
+    Task<NotificationTemplateResponse> Duplicate(
+        NotificationDuplicateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Duplicate(NotificationDuplicateParams, CancellationToken)"/>
+    Task<NotificationTemplateResponse> Duplicate(
+        string id,
+        NotificationDuplicateParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// List versions of a notification template.
     /// </summary>
     Task<NotificationTemplateVersionListResponse> ListVersions(
@@ -254,6 +274,22 @@ public interface INotificationServiceWithRawResponse
     Task<HttpResponse> Archive(
         string id,
         NotificationArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>post /notifications/{id}/duplicate</c>, but is otherwise the
+    /// same as <see cref="INotificationService.Duplicate(NotificationDuplicateParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationTemplateResponse>> Duplicate(
+        NotificationDuplicateParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Duplicate(NotificationDuplicateParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationTemplateResponse>> Duplicate(
+        string id,
+        NotificationDuplicateParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 
