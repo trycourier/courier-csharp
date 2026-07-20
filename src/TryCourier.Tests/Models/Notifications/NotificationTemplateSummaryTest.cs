@@ -20,6 +20,7 @@ public class NotificationTemplateSummaryTest : TestBase
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
             SubscriptionTopicID = "subscription_topic_id",
+            TopicID = "topic_id",
             Updated = 0,
             Updater = "updater",
         };
@@ -32,6 +33,7 @@ public class NotificationTemplateSummaryTest : TestBase
             NotificationTemplateSummaryState.Draft;
         List<string> expectedTags = ["string"];
         string expectedSubscriptionTopicID = "subscription_topic_id";
+        string expectedTopicID = "topic_id";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -46,6 +48,7 @@ public class NotificationTemplateSummaryTest : TestBase
             Assert.Equal(expectedTags[i], model.Tags[i]);
         }
         Assert.Equal(expectedSubscriptionTopicID, model.SubscriptionTopicID);
+        Assert.Equal(expectedTopicID, model.TopicID);
         Assert.Equal(expectedUpdated, model.Updated);
         Assert.Equal(expectedUpdater, model.Updater);
     }
@@ -62,6 +65,7 @@ public class NotificationTemplateSummaryTest : TestBase
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
             SubscriptionTopicID = "subscription_topic_id",
+            TopicID = "topic_id",
             Updated = 0,
             Updater = "updater",
         };
@@ -87,6 +91,7 @@ public class NotificationTemplateSummaryTest : TestBase
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
             SubscriptionTopicID = "subscription_topic_id",
+            TopicID = "topic_id",
             Updated = 0,
             Updater = "updater",
         };
@@ -106,6 +111,7 @@ public class NotificationTemplateSummaryTest : TestBase
             NotificationTemplateSummaryState.Draft;
         List<string> expectedTags = ["string"];
         string expectedSubscriptionTopicID = "subscription_topic_id";
+        string expectedTopicID = "topic_id";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -120,6 +126,7 @@ public class NotificationTemplateSummaryTest : TestBase
             Assert.Equal(expectedTags[i], deserialized.Tags[i]);
         }
         Assert.Equal(expectedSubscriptionTopicID, deserialized.SubscriptionTopicID);
+        Assert.Equal(expectedTopicID, deserialized.TopicID);
         Assert.Equal(expectedUpdated, deserialized.Updated);
         Assert.Equal(expectedUpdater, deserialized.Updater);
     }
@@ -136,6 +143,7 @@ public class NotificationTemplateSummaryTest : TestBase
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
             SubscriptionTopicID = "subscription_topic_id",
+            TopicID = "topic_id",
             Updated = 0,
             Updater = "updater",
         };
@@ -158,6 +166,8 @@ public class NotificationTemplateSummaryTest : TestBase
 
         Assert.Null(model.SubscriptionTopicID);
         Assert.False(model.RawData.ContainsKey("subscription_topic_id"));
+        Assert.Null(model.TopicID);
+        Assert.False(model.RawData.ContainsKey("topic_id"));
         Assert.Null(model.Updated);
         Assert.False(model.RawData.ContainsKey("updated"));
         Assert.Null(model.Updater);
@@ -194,12 +204,15 @@ public class NotificationTemplateSummaryTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             SubscriptionTopicID = null,
+            TopicID = null,
             Updated = null,
             Updater = null,
         };
 
         Assert.Null(model.SubscriptionTopicID);
         Assert.False(model.RawData.ContainsKey("subscription_topic_id"));
+        Assert.Null(model.TopicID);
+        Assert.False(model.RawData.ContainsKey("topic_id"));
         Assert.Null(model.Updated);
         Assert.False(model.RawData.ContainsKey("updated"));
         Assert.Null(model.Updater);
@@ -220,6 +233,7 @@ public class NotificationTemplateSummaryTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             SubscriptionTopicID = null,
+            TopicID = null,
             Updated = null,
             Updater = null,
         };
@@ -239,6 +253,7 @@ public class NotificationTemplateSummaryTest : TestBase
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
             SubscriptionTopicID = "subscription_topic_id",
+            TopicID = "topic_id",
             Updated = 0,
             Updater = "updater",
         };
