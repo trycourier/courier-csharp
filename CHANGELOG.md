@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.17.0 (2026-07-20)
+
+Full Changelog: [v5.16.2...v5.17.0](https://github.com/trycourier/courier-csharp/compare/v5.16.2...v5.17.0)
+
+### Features
+
+* Document POST /notifications/{id}/duplicate [C-18607] ([#165](https://github.com/trycourier/courier-csharp/issues/165)) ([dcf37df](https://github.com/trycourier/courier-csharp/commit/dcf37dfb7e5b2b1cfb4ba928e4459f7051f7fe69))
+* Merge pull request [#149](https://github.com/trycourier/courier-csharp/issues/149) from trycourier/geraldosilva/c-19201-notification-template-subscription-topic-id ([c9acc97](https://github.com/trycourier/courier-csharp/commit/c9acc971c19b04d5d0f36ecfa9231eedd6d84fd7))
+* Merge pull request [#168](https://github.com/trycourier/courier-csharp/issues/168) from trycourier/geraldosilva/c-19419-topic-id-notification-template-summary ([97df31f](https://github.com/trycourier/courier-csharp/commit/97df31f54a14b978f1909a9532598cda638ffbd1))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([391664e](https://github.com/trycourier/courier-csharp/commit/391664e462cd435a5e41bf573dd57b18f8c5ee0f))
+
 ## 5.16.2 (2026-07-10)
 
 Full Changelog: [v5.16.1...v5.16.2](https://github.com/trycourier/courier-csharp/compare/v5.16.1...v5.16.2)
