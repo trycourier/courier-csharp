@@ -118,6 +118,17 @@ public record class Result : ModelBase
         get { return Match(notification: (x) => x.ID, notificationTemplateSummary: (x) => x.ID); }
     }
 
+    public string? TopicID
+    {
+        get
+        {
+            return Match<string?>(
+                notification: (x) => x.TopicID,
+                notificationTemplateSummary: (x) => x.TopicID
+            );
+        }
+    }
+
     public Result(Notification value, JsonElement? element = null)
     {
         this.Value = value;

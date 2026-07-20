@@ -114,6 +114,30 @@ public sealed class NotificationService : INotificationService
     }
 
     /// <inheritdoc/>
+    public async Task<NotificationTemplateResponse> Duplicate(
+        NotificationDuplicateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Duplicate(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<NotificationTemplateResponse> Duplicate(
+        string id,
+        NotificationDuplicateParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Duplicate(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<NotificationTemplateVersionListResponse> ListVersions(
         NotificationListVersionsParams parameters,
         CancellationToken cancellationToken = default
@@ -429,6 +453,51 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
         parameters ??= new();
 
         return this.Archive(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<NotificationTemplateResponse>> Duplicate(
+        NotificationDuplicateParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<NotificationDuplicateParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var notificationTemplateResponse = await response
+                    .Deserialize<NotificationTemplateResponse>(token)
+                    .ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    notificationTemplateResponse.Validate();
+                }
+                return notificationTemplateResponse;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<NotificationTemplateResponse>> Duplicate(
+        string id,
+        NotificationDuplicateParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Duplicate(parameters with { ID = id }, cancellationToken);
     }
 
     /// <inheritdoc/>
