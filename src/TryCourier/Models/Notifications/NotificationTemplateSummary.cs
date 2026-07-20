@@ -115,6 +115,28 @@ public sealed record class NotificationTemplateSummary : JsonModel
     }
 
     /// <summary>
+    /// Alias of subscription_topic_id, provided under the same name V1 list items
+    /// use for the linked topic. Always carries the same value as subscription_topic_id.
+    /// </summary>
+    public string? TopicID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("topic_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("topic_id", value);
+        }
+    }
+
+    /// <summary>
     /// Epoch milliseconds of last update.
     /// </summary>
     public long? Updated
@@ -166,6 +188,7 @@ public sealed record class NotificationTemplateSummary : JsonModel
         this.State.Validate();
         _ = this.Tags;
         _ = this.SubscriptionTopicID;
+        _ = this.TopicID;
         _ = this.Updated;
         _ = this.Updater;
     }

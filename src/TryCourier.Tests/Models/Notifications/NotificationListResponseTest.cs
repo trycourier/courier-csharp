@@ -230,6 +230,7 @@ public class ResultTest : TestBase
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
             SubscriptionTopicID = "subscription_topic_id",
+            TopicID = "topic_id",
             Updated = 0,
             Updater = "updater",
         };
@@ -269,6 +270,7 @@ public class ResultTest : TestBase
             State = NotificationTemplateSummaryState.Draft,
             Tags = ["string"],
             SubscriptionTopicID = "subscription_topic_id",
+            TopicID = "topic_id",
             Updated = 0,
             Updater = "updater",
         };
