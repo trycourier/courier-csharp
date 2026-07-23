@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.18.1 (2026-07-23)
+
+Full Changelog: [v5.18.0...v5.18.1](https://github.com/trycourier/courier-csharp/compare/v5.18.0...v5.18.1)
+
+### Documentation
+
+* **openapi:** describe user topic-preference fields explicitly ([#172](https://github.com/trycourier/courier-csharp/issues/172)) ([7a0f629](https://github.com/trycourier/courier-csharp/commit/7a0f629f65ccaad8b5ca3b1a85dbc57d459da31b))
+
 ## 5.18.0 (2026-07-23)
 
 Full Changelog: [v5.17.0...v5.18.0](https://github.com/trycourier/courier-csharp/compare/v5.17.0...v5.18.0)
