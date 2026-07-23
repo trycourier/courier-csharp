@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.18.0 (2026-07-23)
+
+Full Changelog: [v5.17.0...v5.18.0](https://github.com/trycourier/courier-csharp/compare/v5.17.0...v5.18.0)
+
+### Features
+
+* Remove /bulk endpoints from api-spec (C-19507) ([#171](https://github.com/trycourier/courier-csharp/issues/171)) ([7bd3478](https://github.com/trycourier/courier-csharp/commit/7bd347875defd21e3d0223089d3f0b5a06925740))
+
 ## 5.17.0 (2026-07-20)
 
 Full Changelog: [v5.16.2...v5.17.0](https://github.com/trycourier/courier-csharp/compare/v5.16.2...v5.17.0)
