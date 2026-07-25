@@ -739,21 +739,10 @@ sealed class StepConverter : JsonConverter<Step>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(element, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(
+                element,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -812,10 +801,7 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(
-                element,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -829,7 +815,21 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(element, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
