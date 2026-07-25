@@ -369,6 +369,23 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
+            var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
             var deserialized = JsonSerializer.Deserialize<SendToMsTeamsUserID>(element, options);
             if (deserialized != null)
             {
@@ -412,23 +429,6 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
         try
         {
             var deserialized = JsonSerializer.Deserialize<SendToMsTeamsConversationID>(
-                element,
-                options
-            );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(
                 element,
                 options
             );

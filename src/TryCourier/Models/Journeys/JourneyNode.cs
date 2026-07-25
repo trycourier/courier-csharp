@@ -838,72 +838,38 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<JourneyApiInvokeTriggerNode>(
+            var deserialized = JsonSerializer.Deserialize<JourneyBatchNode>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneyBranchNode>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneyThrottleDynamicNode>(
                 element,
                 options
             );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<JourneySegmentTriggerNode>(
-                element,
-                options
-            );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<JourneySendNode>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<JourneyDelayDurationNode>(
-                element,
-                options
-            );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<JourneyDelayUntilNode>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -951,20 +917,6 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<JourneyAINode>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
             var deserialized = JsonSerializer.Deserialize<JourneyThrottleStaticNode>(
                 element,
                 options
@@ -982,7 +934,7 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<JourneyThrottleDynamicNode>(
+            var deserialized = JsonSerializer.Deserialize<JourneySegmentTriggerNode>(
                 element,
                 options
             );
@@ -999,7 +951,69 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<JourneyBatchNode>(element, options);
+            var deserialized = JsonSerializer.Deserialize<JourneyDelayDurationNode>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneyDelayUntilNode>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneyApiInvokeTriggerNode>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneySendNode>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneyAINode>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -1028,20 +1042,6 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<JourneyExitNode>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<JourneyBranchNode>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
