@@ -30,7 +30,8 @@ public interface IAutomationService
     IInvokeService Invoke { get; }
 
     /// <summary>
-    /// Get the list of automations.
+    /// Lists the workspace's saved automation templates, each with its id and a cursor
+    /// for paging to the next page of results.
     /// </summary>
     Task<AutomationTemplateListResponse> List(
         AutomationListParams? parameters = null,

@@ -31,7 +31,8 @@ public interface ITemplateService
     IVersionService Versions { get; }
 
     /// <summary>
-    /// Get a Template in Tenant
+    /// Returns a tenant's notification template with its content, version, and created,
+    /// updated, and published timestamps.
     /// </summary>
     Task<BaseTemplateTenantAssociation> Retrieve(
         TemplateRetrieveParams parameters,
@@ -46,7 +47,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// List Templates in Tenant
+    /// Lists a tenant's notification templates, each carrying its version and published
+    /// timestamp. Paged.
     /// </summary>
     Task<TemplateListResponse> List(
         TemplateListParams parameters,
@@ -61,12 +63,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Deletes the tenant's notification template with the given `template_id`.
-    ///
-    /// <para>Returns **204 No Content** with an empty body on success.</para>
-    ///
-    /// <para>Returns **404** if there is no template with this ID for the tenant,
-    /// including a second `DELETE` after a successful removal. </para>
+    /// Deletes a tenant's notification template by id. Sends for that tenant then use
+    /// the workspace template registered under the same id.
     /// </summary>
     Task Delete(TemplateDeleteParams parameters, CancellationToken cancellationToken = default);
 
@@ -78,10 +76,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Publishes a specific version of a notification template for a tenant.
-    ///
-    /// <para>The template must already exist in the tenant's notification map. If no
-    /// version is specified, defaults to publishing the "latest" version. </para>
+    /// Publishes a version of a tenant's notification template, making it the content
+    /// that tenant's sends render from until you publish another.
     /// </summary>
     Task<PostTenantTemplatePublishResponse> Publish(
         TemplatePublishParams parameters,
@@ -96,13 +92,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Creates or updates a notification template for a tenant.
-    ///
-    /// <para>If the template already exists for the tenant, it will be updated (200).
-    /// Otherwise, a new template is created (201).</para>
-    ///
-    /// <para>Optionally publishes the template immediately if the `published` flag is
-    /// set to true. </para>
+    /// Creates or updates a notification template scoped to one tenant, letting a
+    /// tenant override the content the workspace template would send.
     /// </summary>
     Task<PutTenantTemplateResponse> Replace(
         TemplateReplaceParams parameters,

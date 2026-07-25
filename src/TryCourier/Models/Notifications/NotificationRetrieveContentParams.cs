@@ -9,9 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications;
 
 /// <summary>
-/// Retrieve the content of a notification template. The response shape depends on
-/// whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use
-/// the `version` query parameter to select draft, published, or a specific historical version.
+/// Returns a template's content and checksum. V2 templates return Elemental elements,
+/// while V1 templates return blocks and channels instead.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

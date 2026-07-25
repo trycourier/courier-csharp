@@ -10,10 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Tenants;
 
 /// <summary>
-/// This endpoint is used to add a single tenant.
-///
-/// <para>A custom profile can also be supplied with the tenant.  This profile will
-/// be merged with the user's main profile  when sending to the user with that tenant.</para>
+/// Adds a user to one tenant, optionally with a tenant-specific profile that overrides
+/// their workspace profile for sends in that tenant.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

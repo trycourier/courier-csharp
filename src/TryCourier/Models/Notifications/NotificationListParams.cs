@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications;
 
 /// <summary>
-/// List notification templates in your workspace.
+/// Lists the workspace's notification templates. Each carries a name, tags, brand,
+/// routing, and its draft or published state.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

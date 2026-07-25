@@ -13,9 +13,8 @@ using System = System;
 namespace TryCourier.Models.Automations.Invoke;
 
 /// <summary>
-/// Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a
-/// series of automation steps. For information about what steps are available, checkout
-/// the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
+/// Runs a series of automation steps supplied inline, without a saved template,
+/// and returns a runId.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

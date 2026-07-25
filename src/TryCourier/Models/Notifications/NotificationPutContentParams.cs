@@ -12,8 +12,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications;
 
 /// <summary>
-/// Replace the elemental content of a notification template. Overwrites all elements
-/// in the template with the provided content. Only supported for V2 (elemental) templates.
+/// Replaces all Elemental content in a template, overwriting every existing element.
+/// Supported for V2 templates only, not V1 blocks and channels.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

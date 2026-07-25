@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Profiles;
 
 /// <summary>
-/// Returns the specified user profile.
+/// Returns a user's stored profile and preferences, including the email address,
+/// phone number, and push tokens Courier can reach them on.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

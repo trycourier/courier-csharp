@@ -9,8 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.RoutingStrategies;
 
 /// <summary>
-/// List notification templates associated with a routing strategy. Includes template
-/// metadata only, not full content.
+/// Returns the notification templates using a routing strategy, with paging. Check
+/// this before changing a strategy that templates depend on.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.AuditEvents;
 
 /// <summary>
-/// Fetch a specific audit event by ID.
+/// Returns one audit event by id, including the actor who performed it, the target
+/// they changed, the source, the event type, and a timestamp.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

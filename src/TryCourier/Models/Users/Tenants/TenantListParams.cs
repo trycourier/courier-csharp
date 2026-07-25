@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Tenants;
 
 /// <summary>
-/// Returns a paginated list of user tenant associations.
+/// Returns the tenants a user belongs to, with cursor paging. A user can belong
+/// to many tenants, each with its own profile and preferences.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

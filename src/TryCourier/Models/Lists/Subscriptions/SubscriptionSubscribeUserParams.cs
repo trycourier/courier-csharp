@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Lists.Subscriptions;
 
 /// <summary>
-/// Subscribe a user to an existing list (note: if the List does not exist, it will
-/// be automatically created).
+/// Subscribes one user to a list, creating the list if it does not yet exist. Optional
+/// preferences apply to this subscription only.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

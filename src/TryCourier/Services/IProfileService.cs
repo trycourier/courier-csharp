@@ -30,8 +30,8 @@ public interface IProfileService
     Profiles::IListService Lists { get; }
 
     /// <summary>
-    /// Merge the supplied values with an existing profile or create a new profile if
-    /// one doesn't already exist.
+    /// Merges the supplied values into a user's profile, creating it if absent and
+    /// leaving any key you omit untouched. Prefer this for everyday writes.
     /// </summary>
     Task<ProfileCreateResponse> Create(
         ProfileCreateParams parameters,
@@ -46,7 +46,8 @@ public interface IProfileService
     );
 
     /// <summary>
-    /// Returns the specified user profile.
+    /// Returns a user's stored profile and preferences, including the email address,
+    /// phone number, and push tokens Courier can reach them on.
     /// </summary>
     Task<ProfileRetrieveResponse> Retrieve(
         ProfileRetrieveParams parameters,
@@ -61,7 +62,8 @@ public interface IProfileService
     );
 
     /// <summary>
-    /// Update a profile
+    /// Applies a JSON Patch to a user profile, adding, removing, or replacing
+    /// individual fields without sending the whole object.
     /// </summary>
     Task Update(ProfileUpdateParams parameters, CancellationToken cancellationToken = default);
 
@@ -73,7 +75,8 @@ public interface IProfileService
     );
 
     /// <summary>
-    /// Deletes the specified user profile.
+    /// Deletes a user's profile and stored contact details. List subscriptions and
+    /// preferences are separate resources, so remove those too if required.
     /// </summary>
     Task Delete(ProfileDeleteParams parameters, CancellationToken cancellationToken = default);
 
@@ -85,11 +88,8 @@ public interface IProfileService
     );
 
     /// <summary>
-    /// When using `PUT`, be sure to include all the key-value pairs required by the
-    /// recipient's profile.  Any key-value pairs that exist in the profile but fail to be
-    /// included in the `PUT` request will be  removed from the profile. Remember, a
-    /// `PUT` update is a full replacement of the data. For partial updates,  use the [Patch](https://www.courier.com/docs/reference/profiles/patch/)
-    /// request.
+    /// Overwrites a user profile in full, removing any key absent from the request
+    /// body. Use the patch endpoint when changing a single field.
     /// </summary>
     Task<ProfileReplaceResponse> Replace(
         ProfileReplaceParams parameters,

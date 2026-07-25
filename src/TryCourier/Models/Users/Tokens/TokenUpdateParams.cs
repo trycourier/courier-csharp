@@ -12,7 +12,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Tokens;
 
 /// <summary>
-/// Apply a JSON Patch (RFC 6902) to the specified token.
+/// Applies a JSON Patch to a device token, changing its status, expiry, or properties
+/// without re-registering it.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

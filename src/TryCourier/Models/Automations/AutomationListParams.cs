@@ -11,7 +11,8 @@ using System = System;
 namespace TryCourier.Models.Automations;
 
 /// <summary>
-/// Get the list of automations.
+/// Lists the workspace's saved automation templates, each with its id and a cursor
+/// for paging to the next page of results.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

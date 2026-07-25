@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications;
 
 /// <summary>
-/// Archive a notification template.
+/// Archives a notification template, preventing new sends from referencing it. The
+/// template stays retrievable for its version history.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

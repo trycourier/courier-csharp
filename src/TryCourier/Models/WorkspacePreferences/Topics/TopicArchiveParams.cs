@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.WorkspacePreferences.Topics;
 
 /// <summary>
-/// Archive a topic and remove it from its workspace preference. Same 404 rules as GET.
+/// Archives a subscription topic and removes it from its workspace preference, addressed
+/// by section id and topic id.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -9,11 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants.Templates.Versions;
 
 /// <summary>
-/// Fetches a specific version of a tenant template.
-///
-/// <para>Supports the following version formats: - `latest` - The most recent version
-/// of the template - `published` - The currently published version - `v{version}`
-/// - A specific version (e.g., "v1", "v2", "v1.0.0")</para>
+/// Returns one version of a tenant template, addressed by version number or by latest,
+/// with its content and publish timestamp.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

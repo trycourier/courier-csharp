@@ -11,11 +11,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Create a journey. Defaults to `DRAFT` state; pass `state: "PUBLISHED"` to publish
-/// on create. Send nodes are not allowed on `POST`. The standard flow is: create
-/// the journey shell here, add notification templates with `POST /journeys/{templateId}/templates`,
-/// then wire them into the journey with `PUT /journeys/{templateId}`. Call `POST
-/// /journeys/{templateId}/publish` to publish a draft after the fact.
+/// Creates a journey from a set of nodes, in draft state unless you pass a published
+/// state. Send nodes cannot be included until their templates exist.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

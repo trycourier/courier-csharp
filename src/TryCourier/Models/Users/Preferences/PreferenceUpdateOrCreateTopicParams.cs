@@ -12,7 +12,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Preferences;
 
 /// <summary>
-/// Update or Create user preferences for a specific subscription topic.
+/// Sets a user's opt-in status and channel choices for one subscription topic, overriding
+/// the tenant default for that topic only.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

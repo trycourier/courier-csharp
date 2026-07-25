@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants;
 
 /// <summary>
-/// Get a Tenant
+/// Returns one tenant with its name, parent tenant id, default preferences, properties,
+/// and the user profile applied to its members.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

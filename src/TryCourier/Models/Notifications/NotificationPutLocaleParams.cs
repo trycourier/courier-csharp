@@ -12,8 +12,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications;
 
 /// <summary>
-/// Set locale-specific content overrides for a notification template. Each element
-/// override must reference an existing element by ID. Only supported for V2 (elemental) templates.
+/// Sets locale-specific content overrides for a template. Each override must reference
+/// an element that already exists in the default content.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

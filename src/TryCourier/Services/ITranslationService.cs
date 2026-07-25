@@ -27,7 +27,8 @@ public interface ITranslationService
     ITranslationService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get translations by locale
+    /// Returns the translation strings stored for one domain and locale, for use in
+    /// localized notification content.
     /// </summary>
     Task<string> Retrieve(
         TranslationRetrieveParams parameters,
@@ -42,7 +43,8 @@ public interface ITranslationService
     );
 
     /// <summary>
-    /// Update a translation
+    /// Uploads the translation strings for one domain and locale. Courier uses them to
+    /// render localized content for recipients in that locale.
     /// </summary>
     Task Update(TranslationUpdateParams parameters, CancellationToken cancellationToken = default);
 

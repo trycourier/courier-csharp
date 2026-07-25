@@ -12,7 +12,8 @@ using System = System;
 namespace TryCourier.Models.Notifications;
 
 /// <summary>
-/// Replace a notification template. All fields are required.
+/// Replaces a notification template in full, so send every field rather than only
+/// the ones you want changed. Publish separately to make it live.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

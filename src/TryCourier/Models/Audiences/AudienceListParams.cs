@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Audiences;
 
 /// <summary>
-/// Get the audiences associated with the authorization token.
+/// Returns the audiences in the workspace with paging. Audiences are filter-based
+/// groups that recalculate as user profiles change.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -27,7 +27,8 @@ public interface IInboundService
     IInboundService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Courier Track Event
+    /// Records an inbound event that can trigger a journey. Requires an event name, a
+    /// messageId you generate, a type, and a properties object.
     /// </summary>
     Task<InboundTrackEventResponse> TrackEvent(
         InboundTrackEventParams parameters,

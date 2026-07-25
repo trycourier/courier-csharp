@@ -13,20 +13,8 @@ using System = System;
 namespace TryCourier.Models.Users.Preferences;
 
 /// <summary>
-/// Additively create or update a user's preferences for one or more subscription
-/// topics in a single request. Only the topics included in the request body are
-/// created or updated; any existing overrides for topics not listed are left untouched.
-///
-/// <para>Structural validation of the request body fails fast with a single `400`.
-/// Beyond that, each topic is processed independently (partial-success, not all-or-nothing):
-/// valid topics are written and returned in `items`, while topics that cannot be
-/// applied are collected in `errors` with a per-topic `reason` (for example an unknown
-/// topic, a `REQUIRED` topic that cannot be opted out, a custom routing request that
-/// is not available on the workspace's plan, or a write failure). The request therefore
-/// returns `200` with both lists whenever the body is structurally valid.</para>
-///
-/// <para>Every `topic_id` in the response — in both `items` and `errors` — is returned
-/// in Courier's canonical topic id form, regardless of the form supplied in the request.</para>
+/// Adds or updates a user's preferences for several subscription topics at once.
+/// Topics you leave out keep whatever they were set to before.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

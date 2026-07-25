@@ -13,7 +13,8 @@ using System = System;
 namespace TryCourier.Models.Tenants.Preferences.Items;
 
 /// <summary>
-/// Create or Replace Default Preferences For Topic
+/// Sets a tenant's default opt-in status for one subscription topic, which applies
+/// to every member unless a user sets their own override.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

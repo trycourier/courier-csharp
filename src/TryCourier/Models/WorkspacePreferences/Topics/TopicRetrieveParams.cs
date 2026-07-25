@@ -9,9 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.WorkspacePreferences.Topics;
 
 /// <summary>
-/// Retrieve a topic within a workspace preference. Returns 404 if the workspace
-/// preference does not exist, the topic does not exist, or the topic belongs to
-/// a different workspace preference.
+/// Returns one subscription topic with its default status, routing options, allowed
+/// preferences, and unsubscribe header setting.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

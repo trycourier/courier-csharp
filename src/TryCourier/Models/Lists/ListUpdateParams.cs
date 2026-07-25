@@ -10,7 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Lists;
 
 /// <summary>
-/// Create or replace an existing list with the supplied values.
+/// Creates or replaces a list from a name and preferences. Subscribers are managed
+/// through the separate subscriptions endpoints.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

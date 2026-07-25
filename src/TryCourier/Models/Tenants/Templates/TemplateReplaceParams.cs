@@ -10,13 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants.Templates;
 
 /// <summary>
-/// Creates or updates a notification template for a tenant.
-///
-/// <para>If the template already exists for the tenant, it will be updated (200).
-/// Otherwise, a new template is created (201).</para>
-///
-/// <para>Optionally publishes the template immediately if the `published` flag is
-/// set to true.</para>
+/// Creates or updates a notification template scoped to one tenant, letting a tenant
+/// override the content the workspace template would send.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

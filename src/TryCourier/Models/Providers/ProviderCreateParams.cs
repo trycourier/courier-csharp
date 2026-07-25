@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Providers;
 
 /// <summary>
-/// Create a new provider configuration. The `provider` field must be a known Courier
-/// provider key (see catalog).
+/// Configures a provider integration from a Courier provider key and its settings.
+/// Check the catalog endpoint for the schema each provider expects.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

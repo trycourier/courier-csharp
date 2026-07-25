@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Messages;
 
 /// <summary>
-/// Fetch the status of a message you've previously sent.
+/// Returns a sent message's status, recipient, event, and per-provider delivery
+/// detail, with timestamps for enqueued, sent, delivered, opened, and clicked.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

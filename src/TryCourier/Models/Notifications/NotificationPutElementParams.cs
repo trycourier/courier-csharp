@@ -11,8 +11,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications;
 
 /// <summary>
-/// Update a single element within a notification template. Only supported for V2
-/// (elemental) templates.
+/// Replaces one Elemental element in a template, addressed by its element id. Supported
+/// for V2 templates only, not V1 blocks and channels.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

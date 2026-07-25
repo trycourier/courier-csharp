@@ -13,8 +13,8 @@ using System = System;
 namespace TryCourier.Models.WorkspacePreferences.Topics;
 
 /// <summary>
-/// Create a subscription preference topic inside a workspace preference. Fails with
-/// 404 if the workspace preference does not exist. The topic id is generated and returned.
+/// Creates a subscription topic inside a workspace preference. The default status
+/// sets whether users start opted in, opted out, or required.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -27,7 +27,8 @@ public interface IRequestService
     IRequestService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Archive message
+    /// Archives a send request by its request id. Use it to remove test sends or
+    /// superseded requests from the message list without deleting them.
     /// </summary>
     Task Archive(RequestArchiveParams parameters, CancellationToken cancellationToken = default);
 

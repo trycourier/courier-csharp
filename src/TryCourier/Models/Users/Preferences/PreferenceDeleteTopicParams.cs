@@ -9,9 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Preferences;
 
 /// <summary>
-/// Remove a user's preferences for a specific subscription topic, resetting the topic
-/// to its effective default. This operation is idempotent: deleting a preference
-/// that does not exist succeeds with no error.
+/// Removes a user's override for one subscription topic, resetting it to the effective
+/// default from the tenant or workspace.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

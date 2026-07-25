@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Brands;
 
 /// <summary>
-/// Fetch a specific brand by brand ID.
+/// Returns one brand by id, including its colors, logo and styling settings, Handlebars
+/// snippets, and published version.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

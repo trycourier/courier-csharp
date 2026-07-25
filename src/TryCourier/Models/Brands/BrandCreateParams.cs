@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Brands;
 
 /// <summary>
-/// Create a new brand. Requires `name` and `settings` (with at least `colors.primary`
-/// and `colors.secondary`).
+/// Creates a brand from a name and settings, including primary and secondary colors.
+/// Brands supply the logo, colors, and styling that templates render with.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

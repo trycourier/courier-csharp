@@ -27,7 +27,8 @@ public interface IAuthService
     IAuthService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a new access token.
+    /// Returns a JWT for authenticating client-side SDKs such as the Inbox. You supply
+    /// the scope and an expires_in duration, both required.
     /// </summary>
     Task<AuthIssueTokenResponse> IssueToken(
         AuthIssueTokenParams parameters,
