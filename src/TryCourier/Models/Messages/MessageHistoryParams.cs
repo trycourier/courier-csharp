@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Messages;
 
 /// <summary>
-/// Fetch the array of events of a message you've previously sent.
+/// Returns the ordered event history for a sent message, one entry per status transition
+/// with its timestamp.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

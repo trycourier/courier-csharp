@@ -28,11 +28,8 @@ public interface IVersionService
     IVersionService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Fetches a specific version of a tenant template.
-    ///
-    /// <para>Supports the following version formats: - `latest` - The most recent
-    /// version of the template - `published` - The currently published version -
-    /// `v{version}` - A specific version (e.g., "v1", "v2", "v1.0.0") </para>
+    /// Returns one version of a tenant template, addressed by version number or by
+    /// latest, with its content and publish timestamp.
     /// </summary>
     Task<BaseTemplateTenantAssociation> Retrieve(
         VersionRetrieveParams parameters,

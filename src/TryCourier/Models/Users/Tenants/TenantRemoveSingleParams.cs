@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Tenants;
 
 /// <summary>
-/// Removes a user from the supplied tenant.
+/// Removes a user from one tenant. Their other tenant memberships and workspace
+/// profile are managed through separate endpoints.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

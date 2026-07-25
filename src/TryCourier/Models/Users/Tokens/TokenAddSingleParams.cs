@@ -12,7 +12,8 @@ using System = System;
 namespace TryCourier.Models.Users.Tokens;
 
 /// <summary>
-/// Adds a single token to a user and overwrites a matching existing token.
+/// Registers one device token for a user against a provider key, overwriting the
+/// token if it already exists. Push sends resolve tokens per user.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -12,7 +12,8 @@ using System = System;
 namespace TryCourier.Models.Audiences;
 
 /// <summary>
-/// Creates or updates audience.
+/// Creates or replaces an audience from a filter and an AND or OR operator. Membership
+/// recalculates automatically as profiles change.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

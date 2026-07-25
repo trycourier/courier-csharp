@@ -10,7 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Brands;
 
 /// <summary>
-/// Replace an existing brand with the supplied values.
+/// Replaces a brand with the values you supply, so send the complete settings and
+/// snippets rather than only the fields you want changed.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Lists.Subscriptions;
 
 /// <summary>
-/// Delete a subscription to a list by list ID and user ID.
+/// Removes one user's subscription to a list, addressed by list id and user id.
+/// The user's profile and other subscriptions are separate resources.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

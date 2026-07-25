@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Lists;
 
 /// <summary>
-/// Returns a list based on the list ID provided.
+/// Returns one list by id with its name and created and updated timestamps. Fetch
+/// its subscribers separately with the subscriptions endpoint.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

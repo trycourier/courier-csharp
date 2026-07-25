@@ -27,7 +27,8 @@ public interface IAudienceService
     IAudienceService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns the specified audience by id.
+    /// Returns one audience with its name, description, and the filter and AND or OR
+    /// operator that decide which users belong to it.
     /// </summary>
     Task<Audience> Retrieve(
         AudienceRetrieveParams parameters,
@@ -42,7 +43,8 @@ public interface IAudienceService
     );
 
     /// <summary>
-    /// Creates or updates audience.
+    /// Creates or replaces an audience from a filter and an AND or OR operator.
+    /// Membership recalculates automatically as profiles change.
     /// </summary>
     Task<AudienceUpdateResponse> Update(
         AudienceUpdateParams parameters,
@@ -57,7 +59,8 @@ public interface IAudienceService
     );
 
     /// <summary>
-    /// Get the audiences associated with the authorization token.
+    /// Returns the audiences in the workspace with paging. Audiences are filter-based
+    /// groups that recalculate as user profiles change.
     /// </summary>
     Task<AudienceListResponse> List(
         AudienceListParams? parameters = null,
@@ -65,7 +68,8 @@ public interface IAudienceService
     );
 
     /// <summary>
-    /// Deletes the specified audience.
+    /// Deletes an audience permanently, so update any caller sending to it by audience
+    /// id first. Those sends fail once the audience is gone.
     /// </summary>
     Task Delete(AudienceDeleteParams parameters, CancellationToken cancellationToken = default);
 
@@ -77,7 +81,8 @@ public interface IAudienceService
     );
 
     /// <summary>
-    /// Get list of members of an audience.
+    /// Returns the users currently matching an audience filter, with paging. Membership
+    /// is recalculated, so results shift as profiles change.
     /// </summary>
     Task<AudienceListMembersResponse> ListMembers(
         AudienceListMembersParams parameters,

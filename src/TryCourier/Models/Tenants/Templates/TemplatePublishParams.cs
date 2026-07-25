@@ -10,10 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants.Templates;
 
 /// <summary>
-/// Publishes a specific version of a notification template for a tenant.
-///
-/// <para>The template must already exist in the tenant's notification map. If no
-/// version is specified, defaults to publishing the "latest" version.</para>
+/// Publishes a version of a tenant's notification template, making it the content
+/// that tenant's sends render from until you publish another.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

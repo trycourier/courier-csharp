@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Messages;
 
 /// <summary>
-/// Get message content
+/// Returns the rendered content Courier delivered for a message, broken out per
+/// channel, to confirm what the recipient received.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

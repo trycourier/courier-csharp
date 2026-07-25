@@ -28,9 +28,8 @@ public interface ITopicService
     ITopicService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Create a subscription preference topic inside a workspace preference. Fails with
-    /// 404 if the workspace preference does not exist. The topic id is generated and
-    /// returned.
+    /// Creates a subscription topic inside a workspace preference. The default status
+    /// sets whether users start opted in, opted out, or required.
     /// </summary>
     Task<WorkspacePreferenceTopicGetResponse> Create(
         TopicCreateParams parameters,
@@ -45,9 +44,8 @@ public interface ITopicService
     );
 
     /// <summary>
-    /// Retrieve a topic within a workspace preference. Returns 404 if the workspace
-    /// preference does not exist, the topic does not exist, or the topic belongs to a
-    /// different workspace preference.
+    /// Returns one subscription topic with its default status, routing options, allowed
+    /// preferences, and unsubscribe header setting.
     /// </summary>
     Task<WorkspacePreferenceTopicGetResponse> Retrieve(
         TopicRetrieveParams parameters,
@@ -62,7 +60,8 @@ public interface ITopicService
     );
 
     /// <summary>
-    /// List the topics in a workspace preference.
+    /// Returns the subscription topics inside a workspace preference, each with its
+    /// default status and routing options.
     /// </summary>
     Task<WorkspacePreferenceTopicListResponse> List(
         TopicListParams parameters,
@@ -77,8 +76,8 @@ public interface ITopicService
     );
 
     /// <summary>
-    /// Archive a topic and remove it from its workspace preference. Same 404 rules as
-    /// GET.
+    /// Archives a subscription topic and removes it from its workspace preference,
+    /// addressed by section id and topic id.
     /// </summary>
     Task Archive(TopicArchiveParams parameters, CancellationToken cancellationToken = default);
 

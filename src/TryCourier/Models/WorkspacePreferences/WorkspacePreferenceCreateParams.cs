@@ -11,8 +11,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.WorkspacePreferences;
 
 /// <summary>
-/// Create a workspace preference. The workspace preference id is generated and returned.
-/// Topics are created inside a workspace preference via POST /preferences/sections/{section_id}/topics.
+/// Creates a workspace preference and returns its generated id. Add subscription
+/// topics to it afterwards with the topics endpoint.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

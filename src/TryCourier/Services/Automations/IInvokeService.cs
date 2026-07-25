@@ -28,10 +28,8 @@ public interface IInvokeService
     IInvokeService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a
-    /// series of automation steps. For information about what steps are available,
-    /// checkout the ad hoc automation guide
-    /// [here](https://www.courier.com/docs/automations/steps/).
+    /// Runs a series of automation steps supplied inline, without a saved template, and
+    /// returns a runId.
     /// </summary>
     Task<AutomationInvokeResponse> InvokeAdHoc(
         InvokeInvokeAdHocParams parameters,
@@ -39,7 +37,8 @@ public interface IInvokeService
     );
 
     /// <summary>
-    /// Invoke an automation run from an automation template.
+    /// Starts an automation run from a saved template for one recipient, with optional
+    /// data and profile, and returns a runId.
     /// </summary>
     Task<AutomationInvokeResponse> InvokeByTemplate(
         InvokeInvokeByTemplateParams parameters,

@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Requests;
 
 /// <summary>
-/// Archive message
+/// Archives a send request by its request id. Use it to remove test sends or superseded
+/// requests from the message list without deleting them.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

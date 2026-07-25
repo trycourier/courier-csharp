@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants.Templates;
 
 /// <summary>
-/// Get a Template in Tenant
+/// Returns a tenant's notification template with its content, version, and created,
+/// updated, and published timestamps.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

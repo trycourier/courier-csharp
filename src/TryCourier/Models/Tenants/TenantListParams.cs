@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants;
 
 /// <summary>
-/// Get a List of Tenants
+/// Lists the workspace's tenants, each carrying a name, parent tenant, properties,
+/// and default preferences. Paged.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

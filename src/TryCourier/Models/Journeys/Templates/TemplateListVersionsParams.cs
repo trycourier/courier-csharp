@@ -9,8 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys.Templates;
 
 /// <summary>
-/// List published versions of the journey-scoped notification template, ordered most
-/// recent first.
+/// Lists the published versions of a template that belongs to a journey, most recent
+/// first. Paged by cursor.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.WorkspacePreferences;
 
 /// <summary>
-/// Retrieve a workspace preference by id, including its topics.
+/// Returns one workspace preference by id, including its subscription topics, routing
+/// options, and custom routing flag.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

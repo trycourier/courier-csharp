@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants;
 
 /// <summary>
-/// Delete a Tenant
+/// Deletes a tenant. Its members' workspace-level profiles and preferences live
+/// outside the tenant and are managed separately.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

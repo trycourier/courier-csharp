@@ -9,8 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.RoutingStrategies;
 
 /// <summary>
-/// Retrieve a routing strategy by ID. Returns the full entity including routing
-/// content and metadata.
+/// Returns one routing strategy by id with its name, tags, channels, and the routing
+/// rules that decide provider order and fallback.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -10,9 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.WorkspacePreferences;
 
 /// <summary>
-/// Publish the workspace's preferences page. Takes a snapshot of every workspace
-/// preference with its topics under a new published version, making the current state
-/// visible on the hosted preferences page (non-draft).
+/// Publishes the workspace preference page, snapshotting every preference and topic,
+/// and returns the page id and a preview URL.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

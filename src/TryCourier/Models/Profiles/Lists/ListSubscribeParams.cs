@@ -11,8 +11,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Profiles.Lists;
 
 /// <summary>
-/// Subscribes the given user to one or more lists. If the list does not exist, it
-/// will be created.
+/// Subscribes a user to one or more lists, creating any list that does not yet exist.
+/// Optional preferences apply to each subscription.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

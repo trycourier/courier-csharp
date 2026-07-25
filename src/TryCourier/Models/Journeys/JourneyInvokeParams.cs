@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Invoke a journey by id or alias to start a new run. The response includes a `runId`
-/// identifying the run.
+/// Starts a journey run for one user and returns a runId. Runs execute asynchronously,
+/// so the response arrives before any message is sent.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

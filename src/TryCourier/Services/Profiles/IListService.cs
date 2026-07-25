@@ -27,7 +27,8 @@ public interface IListService
     IListService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns the subscribed lists for a specified user.
+    /// Returns the lists a user is subscribed to, with paging. Use it to check what a
+    /// recipient will receive before sending to a list.
     /// </summary>
     Task<ListRetrieveResponse> Retrieve(
         ListRetrieveParams parameters,
@@ -42,7 +43,8 @@ public interface IListService
     );
 
     /// <summary>
-    /// Removes all list subscriptions for given user.
+    /// Removes every list subscription for a user at once. Their profile and
+    /// preferences are untouched, so this only affects list-targeted sends.
     /// </summary>
     Task<ListDeleteResponse> Delete(
         ListDeleteParams parameters,
@@ -57,8 +59,8 @@ public interface IListService
     );
 
     /// <summary>
-    /// Subscribes the given user to one or more lists. If the list does not exist, it
-    /// will be created.
+    /// Subscribes a user to one or more lists, creating any list that does not yet
+    /// exist. Optional preferences apply to each subscription.
     /// </summary>
     Task<ListSubscribeResponse> Subscribe(
         ListSubscribeParams parameters,

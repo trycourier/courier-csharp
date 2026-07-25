@@ -13,7 +13,8 @@ using System = System;
 namespace TryCourier.Models.Send;
 
 /// <summary>
-/// Send a message to one or more recipients.
+/// Sends a message to one or more recipients and returns a requestId. Courier routes
+/// it to email, SMS, push, chat, or in-app based on your rules.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

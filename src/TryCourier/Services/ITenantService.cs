@@ -32,7 +32,8 @@ public interface ITenantService
     ITemplateService Templates { get; }
 
     /// <summary>
-    /// Get a Tenant
+    /// Returns one tenant with its name, parent tenant id, default preferences,
+    /// properties, and the user profile applied to its members.
     /// </summary>
     Task<Tenant> Retrieve(
         TenantRetrieveParams parameters,
@@ -47,7 +48,8 @@ public interface ITenantService
     );
 
     /// <summary>
-    /// Create or Replace a Tenant
+    /// Creates or replaces a tenant from a name, parent, brand, properties, and default
+    /// preferences supplied in the request body.
     /// </summary>
     Task<Tenant> Update(
         TenantUpdateParams parameters,
@@ -62,7 +64,8 @@ public interface ITenantService
     );
 
     /// <summary>
-    /// Get a List of Tenants
+    /// Lists the workspace's tenants, each carrying a name, parent tenant, properties,
+    /// and default preferences. Paged.
     /// </summary>
     Task<TenantListResponse> List(
         TenantListParams? parameters = null,
@@ -70,7 +73,8 @@ public interface ITenantService
     );
 
     /// <summary>
-    /// Delete a Tenant
+    /// Deletes a tenant. Its members' workspace-level profiles and preferences live
+    /// outside the tenant and are managed separately.
     /// </summary>
     Task Delete(TenantDeleteParams parameters, CancellationToken cancellationToken = default);
 
@@ -82,7 +86,8 @@ public interface ITenantService
     );
 
     /// <summary>
-    /// Get Users in Tenant
+    /// Returns the users belonging to a tenant with cursor paging. Use it to see who a
+    /// tenant-scoped send will reach.
     /// </summary>
     Task<TenantListUsersResponse> ListUsers(
         TenantListUsersParams parameters,

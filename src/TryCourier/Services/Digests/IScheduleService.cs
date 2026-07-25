@@ -28,9 +28,8 @@ public interface IScheduleService
     IScheduleService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// List the digest instances for a schedule. Each instance represents the events
-    /// accumulated for a single user against the schedule, and can be used to monitor
-    /// digest accumulation before the digest is released.
+    /// Returns the digest instances for a schedule, one per user, with cursor paging.
+    /// Use it to see what has accumulated before a digest releases.
     /// </summary>
     Task<DigestInstanceListResponse> ListInstances(
         ScheduleListInstancesParams parameters,

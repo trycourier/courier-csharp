@@ -9,12 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants.Templates;
 
 /// <summary>
-/// Deletes the tenant's notification template with the given `template_id`.
-///
-/// <para>Returns **204 No Content** with an empty body on success.</para>
-///
-/// <para>Returns **404** if there is no template with this ID for the tenant, including
-/// a second `DELETE` after a successful removal.</para>
+/// Deletes a tenant's notification template by id. Sends for that tenant then use
+/// the workspace template registered under the same id.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

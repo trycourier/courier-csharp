@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Translations;
 
 /// <summary>
-/// Get translations by locale
+/// Returns the translation strings stored for one domain and locale, for use in localized
+/// notification content.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

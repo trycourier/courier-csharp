@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Audiences;
 
 /// <summary>
-/// Returns the specified audience by id.
+/// Returns one audience with its name, description, and the filter and AND or OR
+/// operator that decide which users belong to it.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

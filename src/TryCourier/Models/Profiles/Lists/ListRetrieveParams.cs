@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Profiles.Lists;
 
 /// <summary>
-/// Returns the subscribed lists for a specified user.
+/// Returns the lists a user is subscribed to, with paging. Use it to check what a
+/// recipient will receive before sending to a list.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

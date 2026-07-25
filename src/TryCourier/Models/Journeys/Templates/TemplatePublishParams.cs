@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys.Templates;
 
 /// <summary>
-/// Publish the current draft of the journey-scoped notification template as a new
-/// version. Optionally roll back to a prior version by passing `{ "version": "vN" }`.
+/// Publishes a journey-scoped template's draft as a new version. Pass a version
+/// instead to roll back the template to an earlier publish.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
