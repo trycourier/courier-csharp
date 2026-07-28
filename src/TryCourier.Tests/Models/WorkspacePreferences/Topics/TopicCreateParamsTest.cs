@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Exceptions;
@@ -26,6 +27,8 @@ public class TopicCreateParamsTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         string expectedSectionID = "section_id";
@@ -45,6 +48,8 @@ public class TopicCreateParamsTest : TestBase
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedSectionID, parameters.SectionID);
         Assert.Equal(expectedDefaultStatus, parameters.DefaultStatus);
@@ -71,6 +76,60 @@ public class TopicCreateParamsTest : TestBase
 
             Assert.True(JsonElement.DeepEquals(value, parameters.TopicData[item.Key]));
         }
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new TopicCreateParams
+        {
+            SectionID = "section_id",
+            DefaultStatus = DefaultStatus.OptedOut,
+            Name = "Marketing",
+            AllowedPreferences = [AllowedPreference.Snooze],
+            Description = "description",
+            IncludeUnsubscribeHeader = true,
+            RoutingOptions = [ChannelClassification.DirectMessage],
+            TopicData = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new TopicCreateParams
+        {
+            SectionID = "section_id",
+            DefaultStatus = DefaultStatus.OptedOut,
+            Name = "Marketing",
+            AllowedPreferences = [AllowedPreference.Snooze],
+            Description = "description",
+            IncludeUnsubscribeHeader = true,
+            RoutingOptions = [ChannelClassification.DirectMessage],
+            TopicData = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+
+            // Null should be interpreted as omitted for these properties
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -81,6 +140,8 @@ public class TopicCreateParamsTest : TestBase
             SectionID = "section_id",
             DefaultStatus = DefaultStatus.OptedOut,
             Name = "Marketing",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         Assert.Null(parameters.AllowedPreferences);
@@ -103,6 +164,8 @@ public class TopicCreateParamsTest : TestBase
             SectionID = "section_id",
             DefaultStatus = DefaultStatus.OptedOut,
             Name = "Marketing",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
 
             AllowedPreferences = null,
             Description = null,
@@ -144,6 +207,28 @@ public class TopicCreateParamsTest : TestBase
     }
 
     [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        TopicCreateParams parameters = new()
+        {
+            SectionID = "section_id",
+            DefaultStatus = DefaultStatus.OptedOut,
+            Name = "Marketing",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
+    }
+
+    [Fact]
     public void CopyConstructor_Works()
     {
         var parameters = new TopicCreateParams
@@ -159,6 +244,8 @@ public class TopicCreateParamsTest : TestBase
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         TopicCreateParams copied = new(parameters);
