@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Models.Journeys;
 
@@ -23,6 +24,8 @@ public class JourneyInvokeParamsTest : TestBase
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             UserID = "user-123",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         string expectedTemplateID = "templateId";
@@ -36,6 +39,8 @@ public class JourneyInvokeParamsTest : TestBase
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
         string expectedUserID = "user-123";
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedTemplateID, parameters.TemplateID);
         Assert.NotNull(parameters.Data);
@@ -55,6 +60,8 @@ public class JourneyInvokeParamsTest : TestBase
             Assert.True(JsonElement.DeepEquals(value, parameters.Profile[item.Key]));
         }
         Assert.Equal(expectedUserID, parameters.UserID);
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
     }
 
     [Fact]
@@ -68,6 +75,10 @@ public class JourneyInvokeParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("profile"));
         Assert.Null(parameters.UserID);
         Assert.False(parameters.RawBodyData.ContainsKey("user_id"));
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -81,6 +92,8 @@ public class JourneyInvokeParamsTest : TestBase
             Data = null,
             Profile = null,
             UserID = null,
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
         };
 
         Assert.Null(parameters.Data);
@@ -89,6 +102,10 @@ public class JourneyInvokeParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("profile"));
         Assert.Null(parameters.UserID);
         Assert.False(parameters.RawBodyData.ContainsKey("user_id"));
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -101,6 +118,26 @@ public class JourneyInvokeParamsTest : TestBase
         Assert.True(
             TestBase.UrisEqual(new Uri("https://api.courier.com/journeys/templateId/invoke"), url)
         );
+    }
+
+    [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        JourneyInvokeParams parameters = new()
+        {
+            TemplateID = "templateId",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -119,6 +156,8 @@ public class JourneyInvokeParamsTest : TestBase
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             UserID = "user-123",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         JourneyInvokeParams copied = new(parameters);

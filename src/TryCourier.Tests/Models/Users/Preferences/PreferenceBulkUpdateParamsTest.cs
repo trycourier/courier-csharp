@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Exceptions;
@@ -34,6 +35,8 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                 },
             ],
             TenantID = "tenant_id",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         string expectedUserID = "user_id";
@@ -55,6 +58,8 @@ public class PreferenceBulkUpdateParamsTest : TestBase
             },
         ];
         string expectedTenantID = "tenant_id";
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedUserID, parameters.UserID);
         Assert.Equal(expectedTopics.Count, parameters.Topics.Count);
@@ -63,6 +68,76 @@ public class PreferenceBulkUpdateParamsTest : TestBase
             Assert.Equal(expectedTopics[i], parameters.Topics[i]);
         }
         Assert.Equal(expectedTenantID, parameters.TenantID);
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new PreferenceBulkUpdateParams
+        {
+            UserID = "user_id",
+            Topics =
+            [
+                new()
+                {
+                    Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
+                    CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                    HasCustomRouting = true,
+                },
+                new()
+                {
+                    Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
+                    TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
+                    CustomRouting = [ChannelClassification.DirectMessage],
+                    HasCustomRouting = true,
+                },
+            ],
+            TenantID = "tenant_id",
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new PreferenceBulkUpdateParams
+        {
+            UserID = "user_id",
+            Topics =
+            [
+                new()
+                {
+                    Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
+                    CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                    HasCustomRouting = true,
+                },
+                new()
+                {
+                    Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
+                    TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
+                    CustomRouting = [ChannelClassification.DirectMessage],
+                    HasCustomRouting = true,
+                },
+            ],
+            TenantID = "tenant_id",
+
+            // Null should be interpreted as omitted for these properties
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -88,6 +163,8 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                     HasCustomRouting = true,
                 },
             ],
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         Assert.Null(parameters.TenantID);
@@ -117,6 +194,8 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                     HasCustomRouting = true,
                 },
             ],
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
 
             TenantID = null,
         };
@@ -162,6 +241,43 @@ public class PreferenceBulkUpdateParamsTest : TestBase
     }
 
     [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        PreferenceBulkUpdateParams parameters = new()
+        {
+            UserID = "user_id",
+            Topics =
+            [
+                new()
+                {
+                    Status = PreferenceBulkUpdateParamsTopicStatus.OptedIn,
+                    TopicID = "pt_01kx4h2jdafq8bk996nn92357r",
+                    CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                    HasCustomRouting = true,
+                },
+                new()
+                {
+                    Status = PreferenceBulkUpdateParamsTopicStatus.OptedOut,
+                    TopicID = "pt_01kx4h2jdafq8bk99eyt3dx43x",
+                    CustomRouting = [ChannelClassification.DirectMessage],
+                    HasCustomRouting = true,
+                },
+            ],
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
+    }
+
+    [Fact]
     public void CopyConstructor_Works()
     {
         var parameters = new PreferenceBulkUpdateParams
@@ -185,6 +301,8 @@ public class PreferenceBulkUpdateParamsTest : TestBase
                 },
             ],
             TenantID = "tenant_id",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         PreferenceBulkUpdateParams copied = new(parameters);

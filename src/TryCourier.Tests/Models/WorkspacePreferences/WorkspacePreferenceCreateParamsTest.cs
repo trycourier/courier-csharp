@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using TryCourier.Core;
 using TryCourier.Models;
 using TryCourier.Models.WorkspacePreferences;
@@ -17,6 +18,8 @@ public class WorkspacePreferenceCreateParamsTest : TestBase
             Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         string expectedName = "Account Notifications";
@@ -26,6 +29,8 @@ public class WorkspacePreferenceCreateParamsTest : TestBase
         [
             ChannelClassification.DirectMessage,
         ];
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedName, parameters.Name);
         Assert.Equal(expectedDescription, parameters.Description);
@@ -36,12 +41,57 @@ public class WorkspacePreferenceCreateParamsTest : TestBase
         {
             Assert.Equal(expectedRoutingOptions[i], parameters.RoutingOptions[i]);
         }
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new WorkspacePreferenceCreateParams
+        {
+            Name = "Account Notifications",
+            Description = "description",
+            HasCustomRouting = true,
+            RoutingOptions = [ChannelClassification.DirectMessage],
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new WorkspacePreferenceCreateParams
+        {
+            Name = "Account Notifications",
+            Description = "description",
+            HasCustomRouting = true,
+            RoutingOptions = [ChannelClassification.DirectMessage],
+
+            // Null should be interpreted as omitted for these properties
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
     public void OptionalNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new WorkspacePreferenceCreateParams { Name = "Account Notifications" };
+        var parameters = new WorkspacePreferenceCreateParams
+        {
+            Name = "Account Notifications",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
 
         Assert.Null(parameters.Description);
         Assert.False(parameters.RawBodyData.ContainsKey("description"));
@@ -57,6 +107,8 @@ public class WorkspacePreferenceCreateParamsTest : TestBase
         var parameters = new WorkspacePreferenceCreateParams
         {
             Name = "Account Notifications",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
 
             Description = null,
             HasCustomRouting = null,
@@ -84,6 +136,26 @@ public class WorkspacePreferenceCreateParamsTest : TestBase
     }
 
     [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        WorkspacePreferenceCreateParams parameters = new()
+        {
+            Name = "Account Notifications",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
+    }
+
+    [Fact]
     public void CopyConstructor_Works()
     {
         var parameters = new WorkspacePreferenceCreateParams
@@ -92,6 +164,8 @@ public class WorkspacePreferenceCreateParamsTest : TestBase
             Description = "description",
             HasCustomRouting = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         WorkspacePreferenceCreateParams copied = new(parameters);

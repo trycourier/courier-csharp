@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Exceptions;
@@ -34,6 +35,8 @@ public class NotificationCreateParamsTest : TestBase
                 Tags = ["onboarding", "welcome"],
             },
             State = State.Draft,
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         NotificationTemplatePayload expectedNotification = new()
@@ -56,9 +59,13 @@ public class NotificationCreateParamsTest : TestBase
             Tags = ["onboarding", "welcome"],
         };
         ApiEnum<string, State> expectedState = State.Draft;
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedNotification, parameters.Notification);
         Assert.Equal(expectedState, parameters.State);
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
     }
 
     [Fact]
@@ -89,6 +96,10 @@ public class NotificationCreateParamsTest : TestBase
 
         Assert.Null(parameters.State);
         Assert.False(parameters.RawBodyData.ContainsKey("state"));
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -118,10 +129,16 @@ public class NotificationCreateParamsTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             State = null,
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
         };
 
         Assert.Null(parameters.State);
         Assert.False(parameters.RawBodyData.ContainsKey("state"));
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -156,6 +173,44 @@ public class NotificationCreateParamsTest : TestBase
     }
 
     [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        NotificationCreateParams parameters = new()
+        {
+            Notification = new()
+            {
+                Brand = new("bnd_01kx4mrd0pfzw8wt7pn7p2fzag"),
+                Content = new()
+                {
+                    Elements =
+                    [
+                        new ElementalChannelNodeWithType()
+                        {
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                        },
+                    ],
+                    Version = "2022-01-01",
+                },
+                Name = "Welcome Email",
+                Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
+                Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
+                Tags = ["onboarding", "welcome"],
+            },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
+    }
+
+    [Fact]
     public void CopyConstructor_Works()
     {
         var parameters = new NotificationCreateParams
@@ -180,6 +235,8 @@ public class NotificationCreateParamsTest : TestBase
                 Tags = ["onboarding", "welcome"],
             },
             State = State.Draft,
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         NotificationCreateParams copied = new(parameters);

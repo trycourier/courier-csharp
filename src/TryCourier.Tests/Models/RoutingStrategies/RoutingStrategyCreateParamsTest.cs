@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Models;
 using TryCourier.Models.RoutingStrategies;
@@ -69,6 +70,8 @@ public class RoutingStrategyCreateParamsTest : TestBase
                 },
             },
             Tags = ["production", "email"],
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         string expectedName = "Email via SendGrid";
@@ -127,6 +130,8 @@ public class RoutingStrategyCreateParamsTest : TestBase
             },
         };
         List<string> expectedTags = ["production", "email"];
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedName, parameters.Name);
         Assert.Equal(expectedRouting, parameters.Routing);
@@ -153,6 +158,150 @@ public class RoutingStrategyCreateParamsTest : TestBase
         {
             Assert.Equal(expectedTags[i], parameters.Tags[i]);
         }
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new RoutingStrategyCreateParams
+        {
+            Name = "Email via SendGrid",
+            Routing = new() { Channels = ["email"], Method = Method.Single },
+            Channels = new Dictionary<string, Channel>()
+            {
+                {
+                    "email",
+                    new()
+                    {
+                        BrandID = "brand_id",
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Providers = ["sendgrid", "ses"],
+                        RoutingMethod = RoutingMethod.All,
+                        Timeouts = new() { Channel = 0, Provider = 0 },
+                    }
+                },
+            },
+            Description = "Routes email through sendgrid with SES failover",
+            Providers = new Dictionary<string, MessageProvidersType>()
+            {
+                {
+                    "sendgrid",
+                    new()
+                    {
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>(),
+                        Timeouts = 0,
+                    }
+                },
+            },
+            Tags = ["production", "email"],
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new RoutingStrategyCreateParams
+        {
+            Name = "Email via SendGrid",
+            Routing = new() { Channels = ["email"], Method = Method.Single },
+            Channels = new Dictionary<string, Channel>()
+            {
+                {
+                    "email",
+                    new()
+                    {
+                        BrandID = "brand_id",
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Providers = ["sendgrid", "ses"],
+                        RoutingMethod = RoutingMethod.All,
+                        Timeouts = new() { Channel = 0, Provider = 0 },
+                    }
+                },
+            },
+            Description = "Routes email through sendgrid with SES failover",
+            Providers = new Dictionary<string, MessageProvidersType>()
+            {
+                {
+                    "sendgrid",
+                    new()
+                    {
+                        If = "if",
+                        Metadata = new()
+                        {
+                            Utm = new()
+                            {
+                                Campaign = "campaign",
+                                Content = "content",
+                                Medium = "medium",
+                                Source = "source",
+                                Term = "term",
+                            },
+                        },
+                        Override = new Dictionary<string, JsonElement>(),
+                        Timeouts = 0,
+                    }
+                },
+            },
+            Tags = ["production", "email"],
+
+            // Null should be interpreted as omitted for these properties
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -162,6 +311,8 @@ public class RoutingStrategyCreateParamsTest : TestBase
         {
             Name = "Email via SendGrid",
             Routing = new() { Channels = ["email"], Method = Method.Single },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         Assert.Null(parameters.Channels);
@@ -181,6 +332,8 @@ public class RoutingStrategyCreateParamsTest : TestBase
         {
             Name = "Email via SendGrid",
             Routing = new() { Channels = ["email"], Method = Method.Single },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
 
             Channels = null,
             Description = null,
@@ -210,6 +363,27 @@ public class RoutingStrategyCreateParamsTest : TestBase
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.True(TestBase.UrisEqual(new Uri("https://api.courier.com/routing-strategies"), url));
+    }
+
+    [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        RoutingStrategyCreateParams parameters = new()
+        {
+            Name = "Email via SendGrid",
+            Routing = new() { Channels = ["email"], Method = Method.Single },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -273,6 +447,8 @@ public class RoutingStrategyCreateParamsTest : TestBase
                 },
             },
             Tags = ["production", "email"],
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         RoutingStrategyCreateParams copied = new(parameters);
