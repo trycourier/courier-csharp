@@ -65,6 +65,8 @@ public interface ICourierClient : IDisposable
 
     IJourneyService Journeys { get; }
 
+    IBroadcastService Broadcasts { get; }
+
     IBrandService Brands { get; }
 
     IDigestService Digests { get; }
@@ -136,6 +138,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     IAutomationServiceWithRawResponse Automations { get; }
 
     IJourneyServiceWithRawResponse Journeys { get; }
+
+    IBroadcastServiceWithRawResponse Broadcasts { get; }
 
     IBrandServiceWithRawResponse Brands { get; }
 
