@@ -7,9 +7,11 @@ using TryCourier.Models.Users.Tokens;
 namespace TryCourier.Services.Users;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Register and manage the APNS and FCM device tokens Courier delivers push notifications to.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ITokenService
 {
