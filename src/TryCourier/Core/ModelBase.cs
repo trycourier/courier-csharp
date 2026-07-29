@@ -6,6 +6,7 @@ using TryCourier.Models.Brands;
 using TryCourier.Models.Messages;
 using TryCourier.Models.WorkspacePreferences;
 using Audiences = TryCourier.Models.Audiences;
+using Broadcasts = TryCourier.Models.Broadcasts;
 using Digests = TryCourier.Models.Digests;
 using Inbound = TryCourier.Models.Inbound;
 using Invoke = TryCourier.Models.Automations.Invoke;
@@ -134,6 +135,15 @@ public abstract record class ModelBase
                 string,
                 Templates::TemplateReplaceParamsNotificationContentScope
             >(),
+            new ApiEnumConverter<string, Broadcasts::BroadcastChannel>(),
+            new ApiEnumConverter<string, Broadcasts::Status>(),
+            new ApiEnumConverter<string, Broadcasts::BroadcastScheduleRecipientType>(),
+            new ApiEnumConverter<string, Broadcasts::CreateBroadcastRequestChannel>(),
+            new ApiEnumConverter<string, Broadcasts::ScheduleBroadcastRequestRecipientType>(),
+            new ApiEnumConverter<string, Broadcasts::SendBroadcastRequestRecipientType>(),
+            new ApiEnumConverter<string, Broadcasts::Channel>(),
+            new ApiEnumConverter<string, Broadcasts::RecipientType>(),
+            new ApiEnumConverter<string, Broadcasts::BroadcastSendParamsRecipientType>(),
             new ApiEnumConverter<string, Placement>(),
             new ApiEnumConverter<string, Digests::Retain>(),
             new ApiEnumConverter<string, Digests::Status>(),
