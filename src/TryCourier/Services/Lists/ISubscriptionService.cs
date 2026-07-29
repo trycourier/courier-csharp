@@ -7,9 +7,12 @@ using TryCourier.Models.Lists.Subscriptions;
 namespace TryCourier.Services.Lists;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Manage static groups of users that you subscribe explicitly, and send to them
+/// by list id or list pattern.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ISubscriptionService
 {

@@ -9,9 +9,12 @@ using TryCourier.Models.Notifications;
 namespace TryCourier.Services.Journeys;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Build, version, publish, invoke, and cancel multi-step notification workflows,
+/// along with the templates scoped to them.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ITemplateService
 {

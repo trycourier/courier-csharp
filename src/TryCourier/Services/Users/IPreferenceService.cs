@@ -7,9 +7,11 @@ using TryCourier.Models.Users.Preferences;
 namespace TryCourier.Services.Users;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Read and write a single user's notification preferences, per topic and per channel.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IPreferenceService
 {

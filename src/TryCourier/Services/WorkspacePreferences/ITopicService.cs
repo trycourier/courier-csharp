@@ -8,9 +8,12 @@ using TryCourier.Models.WorkspacePreferences.Topics;
 namespace TryCourier.Services.WorkspacePreferences;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Manage the workspace catalog of subscription topics, the sections that group them,
+/// and publishing the preference page.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ITopicService
 {

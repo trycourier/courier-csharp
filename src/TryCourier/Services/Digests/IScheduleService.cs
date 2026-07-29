@@ -8,9 +8,12 @@ using TryCourier.Models.Digests.Schedules;
 namespace TryCourier.Services.Digests;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Inspect what has accumulated in a digest schedule and release a digest ahead of
+/// its next scheduled delivery.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IScheduleService
 {
