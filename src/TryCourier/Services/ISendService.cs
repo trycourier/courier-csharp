@@ -7,9 +7,12 @@ using TryCourier.Models.Send;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Send a message to one or more recipients — users, lists, audiences, or tenants
+/// — across every channel you have configured.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ISendService
 {
@@ -27,7 +30,8 @@ public interface ISendService
     ISendService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Send a message to one or more recipients.
+    /// Sends a message to one or more recipients and returns a requestId. Courier
+    /// routes it to email, SMS, push, chat, or in-app based on your rules.
     /// </summary>
     Task<SendMessageResponse> Message(
         SendMessageParams parameters,

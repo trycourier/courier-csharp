@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Providers;
 
 /// <summary>
-/// List configured provider integrations for the current workspace. Supports cursor-based pagination.
+/// Lists the provider integrations configured in the workspace, one entry per channel
+/// and provider key with its alias and settings.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

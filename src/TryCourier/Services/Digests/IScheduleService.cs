@@ -8,9 +8,12 @@ using TryCourier.Models.Digests.Schedules;
 namespace TryCourier.Services.Digests;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Inspect what has accumulated in a digest schedule and release a digest ahead of
+/// its next scheduled delivery.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IScheduleService
 {
@@ -28,9 +31,8 @@ public interface IScheduleService
     IScheduleService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// List the digest instances for a schedule. Each instance represents the events
-    /// accumulated for a single user against the schedule, and can be used to monitor
-    /// digest accumulation before the digest is released.
+    /// Returns the digest instances for a schedule, one per user, with cursor paging.
+    /// Use it to see what has accumulated before a digest releases.
     /// </summary>
     Task<DigestInstanceListResponse> ListInstances(
         ScheduleListInstancesParams parameters,

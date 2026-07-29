@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Exceptions;
@@ -42,6 +43,8 @@ public class TemplateCreateParamsTest : TestBase
             },
             ProviderKey = "x",
             State = "state",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         string expectedTemplateID = "x";
@@ -71,12 +74,16 @@ public class TemplateCreateParamsTest : TestBase
         };
         string expectedProviderKey = "x";
         string expectedState = "state";
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedTemplateID, parameters.TemplateID);
         Assert.Equal(expectedChannel, parameters.Channel);
         Assert.Equal(expectedNotification, parameters.Notification);
         Assert.Equal(expectedProviderKey, parameters.ProviderKey);
         Assert.Equal(expectedState, parameters.State);
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
     }
 
     [Fact]
@@ -115,6 +122,10 @@ public class TemplateCreateParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("providerKey"));
         Assert.Null(parameters.State);
         Assert.False(parameters.RawBodyData.ContainsKey("state"));
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -151,12 +162,18 @@ public class TemplateCreateParamsTest : TestBase
             // Null should be interpreted as omitted for these properties
             ProviderKey = null,
             State = null,
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
         };
 
         Assert.Null(parameters.ProviderKey);
         Assert.False(parameters.RawBodyData.ContainsKey("providerKey"));
         Assert.Null(parameters.State);
         Assert.False(parameters.RawBodyData.ContainsKey("state"));
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -199,6 +216,50 @@ public class TemplateCreateParamsTest : TestBase
     }
 
     [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        Templates::TemplateCreateParams parameters = new()
+        {
+            TemplateID = "x",
+            Channel = "email",
+            Notification = new()
+            {
+                Brand = new("id"),
+                Content = new()
+                {
+                    Elements =
+                    [
+                        new ElementalTextNodeWithType()
+                        {
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                        },
+                    ],
+                    Version = Templates::Version.V2022_01_01,
+                    Scope = Templates::Scope.Default,
+                },
+                Name = "Welcome email",
+                Subscription = new("topic_id"),
+                Tags = ["string"],
+            },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
+    }
+
+    [Fact]
     public void CopyConstructor_Works()
     {
         var parameters = new Templates::TemplateCreateParams
@@ -230,6 +291,8 @@ public class TemplateCreateParamsTest : TestBase
             },
             ProviderKey = "x",
             State = "state",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         Templates::TemplateCreateParams copied = new(parameters);

@@ -1,5 +1,26 @@
 # Changelog
 
+## 5.19.0 (2026-07-29)
+
+Full Changelog: [v5.18.0...v5.19.0](https://github.com/trycourier/courier-csharp/compare/v5.18.0...v5.19.0)
+
+### Features
+
+* Document DELETE/PUT restore for inbox messages (C-19268) ([#175](https://github.com/trycourier/courier-csharp/issues/175)) ([7d31b31](https://github.com/trycourier/courier-csharp/commit/7d31b3131929453578a800daab025a4eb0798321))
+* spec: rename and reorder the API reference sections ([#179](https://github.com/trycourier/courier-csharp/issues/179)) ([69698e4](https://github.com/trycourier/courier-csharp/commit/69698e41674e230756baa15bb1ab07028d3a4213))
+
+
+### Bug Fixes
+
+* **client:** tolerate JSON null in required untyped fields and prefer more specific union variants ([a5395b3](https://github.com/trycourier/courier-csharp/commit/a5395b32bc046944b3cbac22367645beab24f779))
+
+
+### Documentation
+
+* **openapi:** describe user topic-preference fields explicitly ([#172](https://github.com/trycourier/courier-csharp/issues/172)) ([7a0f629](https://github.com/trycourier/courier-csharp/commit/7a0f629f65ccaad8b5ca3b1a85dbc57d459da31b))
+* **openapi:** document Idempotency-Key header on idempotent POST endpoints ([#176](https://github.com/trycourier/courier-csharp/issues/176)) ([e2612c2](https://github.com/trycourier/courier-csharp/commit/e2612c2134392d8971971fdea49f714b716138fb))
+* **openapi:** rewrite operation descriptions for agents and SEO ([#174](https://github.com/trycourier/courier-csharp/issues/174)) ([e22f43f](https://github.com/trycourier/courier-csharp/commit/e22f43f8050b6b71e58c5996e2e591cba57c15be))
+
 ## 5.18.0 (2026-07-23)
 
 Full Changelog: [v5.17.0...v5.18.0](https://github.com/trycourier/courier-csharp/compare/v5.17.0...v5.18.0)

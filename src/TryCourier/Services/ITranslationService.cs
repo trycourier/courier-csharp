@@ -7,9 +7,11 @@ using TryCourier.Models.Translations;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Store and retrieve the translation strings Courier uses to render localized template content.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ITranslationService
 {
@@ -27,7 +29,8 @@ public interface ITranslationService
     ITranslationService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get translations by locale
+    /// Returns the translation strings stored for one domain and locale, for use in
+    /// localized notification content.
     /// </summary>
     Task<string> Retrieve(
         TranslationRetrieveParams parameters,
@@ -42,7 +45,8 @@ public interface ITranslationService
     );
 
     /// <summary>
-    /// Update a translation
+    /// Uploads the translation strings for one domain and locale. Courier uses them to
+    /// render localized content for recipients in that locale.
     /// </summary>
     Task Update(TranslationUpdateParams parameters, CancellationToken cancellationToken = default);
 

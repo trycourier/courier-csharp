@@ -233,7 +233,7 @@ sealed class CancelJourneyResponseConverter : JsonConverter<CancelJourneyRespons
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<TokenBranch>(element, options);
+            var deserialized = JsonSerializer.Deserialize<RunIDBranch>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -247,7 +247,7 @@ sealed class CancelJourneyResponseConverter : JsonConverter<CancelJourneyRespons
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<RunIDBranch>(element, options);
+            var deserialized = JsonSerializer.Deserialize<TokenBranch>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();

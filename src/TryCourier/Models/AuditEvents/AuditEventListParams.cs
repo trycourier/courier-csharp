@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.AuditEvents;
 
 /// <summary>
-/// Fetch the list of audit events
+/// Returns the workspace's audit event log with cursor paging. Each event records
+/// the actor, target, source, type, and timestamp of a change.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

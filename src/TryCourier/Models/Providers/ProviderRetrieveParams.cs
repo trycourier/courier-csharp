@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Providers;
 
 /// <summary>
-/// Fetch a single provider configuration by ID.
+/// Returns one configured provider by id, including its channel, provider key, alias,
+/// title, and current settings.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

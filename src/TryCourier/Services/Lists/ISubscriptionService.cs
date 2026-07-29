@@ -7,9 +7,12 @@ using TryCourier.Models.Lists.Subscriptions;
 namespace TryCourier.Services.Lists;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Manage static groups of users that you subscribe explicitly, and send to them
+/// by list id or list pattern.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ISubscriptionService
 {
@@ -27,7 +30,8 @@ public interface ISubscriptionService
     ISubscriptionService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get the list's subscriptions.
+    /// Returns the users subscribed to a list with paging, each with the preferences
+    /// recorded for that subscription.
     /// </summary>
     Task<SubscriptionListResponse> List(
         SubscriptionListParams parameters,
@@ -71,8 +75,8 @@ public interface ISubscriptionService
     );
 
     /// <summary>
-    /// Subscribe a user to an existing list (note: if the List does not exist, it will
-    /// be automatically created).
+    /// Subscribes one user to a list, creating the list if it does not yet exist.
+    /// Optional preferences apply to this subscription only.
     /// </summary>
     Task SubscribeUser(
         SubscriptionSubscribeUserParams parameters,
@@ -87,7 +91,8 @@ public interface ISubscriptionService
     );
 
     /// <summary>
-    /// Delete a subscription to a list by list ID and user ID.
+    /// Removes one user's subscription to a list, addressed by list id and user id. The
+    /// user's profile and other subscriptions are separate resources.
     /// </summary>
     Task UnsubscribeUser(
         SubscriptionUnsubscribeUserParams parameters,

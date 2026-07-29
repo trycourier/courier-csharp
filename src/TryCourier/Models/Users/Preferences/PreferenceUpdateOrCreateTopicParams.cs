@@ -12,7 +12,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Preferences;
 
 /// <summary>
-/// Update or Create user preferences for a specific subscription topic.
+/// Sets a user's opt-in status and channel choices for one subscription topic, overriding
+/// the tenant default for that topic only.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -193,6 +194,10 @@ public record class PreferenceUpdateOrCreateTopicParams : ParamsBase
 )]
 public sealed record class PreferenceUpdateOrCreateTopicParamsTopic : JsonModel
 {
+    /// <summary>
+    /// The subscription status to set: OPTED_IN or OPTED_OUT. REQUIRED is a topic-level
+    /// default, not a user choice; the API rejects opting a user out of a REQUIRED topic.
+    /// </summary>
     public required ApiEnum<string, PreferenceStatus> Status
     {
         get
@@ -204,7 +209,8 @@ public sealed record class PreferenceUpdateOrCreateTopicParamsTopic : JsonModel
     }
 
     /// <summary>
-    /// The Channels a user has chosen to receive notifications through for this topic
+    /// The channels to deliver this topic on when has_custom_routing is true. One
+    /// or more of: direct_message, email, push, sms, webhook, inbox.
     /// </summary>
     public IReadOnlyList<ApiEnum<string, ChannelClassification>>? CustomRouting
     {
@@ -224,6 +230,10 @@ public sealed record class PreferenceUpdateOrCreateTopicParamsTopic : JsonModel
         }
     }
 
+    /// <summary>
+    /// Set to true to route this topic to the channels in custom_routing instead
+    /// of the topic's default routing.
+    /// </summary>
     public bool? HasCustomRouting
     {
         get

@@ -7,9 +7,12 @@ using TryCourier.Models.Requests;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Look up the messages Courier has accepted, inspect their delivery history and
+/// rendered output, and cancel, resend, or archive them.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IRequestService
 {
@@ -27,7 +30,8 @@ public interface IRequestService
     IRequestService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Archive message
+    /// Archives a send request by its request id. Use it to remove test sends or
+    /// superseded requests from the message list without deleting them.
     /// </summary>
     Task Archive(RequestArchiveParams parameters, CancellationToken cancellationToken = default);
 

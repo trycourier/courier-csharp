@@ -13,7 +13,8 @@ using System = System;
 namespace TryCourier.Models.Journeys.Templates;
 
 /// <summary>
-/// Replace the journey-scoped notification template draft.
+/// Replaces the draft content of one journey's notification template. Publish it
+/// before send nodes referencing it render the change.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

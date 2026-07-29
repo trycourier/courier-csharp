@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Providers;
 
 /// <summary>
-/// Create a new provider configuration. The `provider` field must be a known Courier
-/// provider key (see catalog).
+/// Configures a provider integration from a Courier provider key and its settings.
+/// Check the catalog endpoint for the schema each provider expects.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -106,6 +106,42 @@ public record class ProviderCreateParams : ParamsBase
             }
 
             this._rawBodyData.Set("title", value);
+        }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
         }
     }
 

@@ -8,9 +8,12 @@ using TryCourier.Services.WorkspacePreferences;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Manage the workspace catalog of subscription topics, the sections that group them,
+/// and publishing the preference page.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IWorkspacePreferenceService
 {
@@ -30,9 +33,8 @@ public interface IWorkspacePreferenceService
     ITopicService Topics { get; }
 
     /// <summary>
-    /// Create a workspace preference. The workspace preference id is generated and
-    /// returned. Topics are created inside a workspace preference via POST
-    /// /preferences/sections/{section_id}/topics.
+    /// Creates a workspace preference and returns its generated id. Add subscription
+    /// topics to it afterwards with the topics endpoint.
     /// </summary>
     Task<WorkspacePreferenceGetResponse> Create(
         WorkspacePreferenceCreateParams parameters,
@@ -40,7 +42,8 @@ public interface IWorkspacePreferenceService
     );
 
     /// <summary>
-    /// Retrieve a workspace preference by id, including its topics.
+    /// Returns one workspace preference by id, including its subscription topics,
+    /// routing options, and custom routing flag.
     /// </summary>
     Task<WorkspacePreferenceGetResponse> Retrieve(
         WorkspacePreferenceRetrieveParams parameters,
@@ -55,8 +58,8 @@ public interface IWorkspacePreferenceService
     );
 
     /// <summary>
-    /// List the workspace's preferences. Each workspace preference embeds its topics.
-    /// Scoped to the workspace of the API key.
+    /// Returns the workspace's preferences, each embedding its subscription topics,
+    /// routing options, and whether custom routing is allowed.
     /// </summary>
     Task<WorkspacePreferenceListResponse> List(
         WorkspacePreferenceListParams? parameters = null,
@@ -80,9 +83,8 @@ public interface IWorkspacePreferenceService
     );
 
     /// <summary>
-    /// Publish the workspace's preferences page. Takes a snapshot of every workspace
-    /// preference with its topics under a new published version, making the current
-    /// state visible on the hosted preferences page (non-draft).
+    /// Publishes the workspace preference page, snapshotting every preference and
+    /// topic, and returns the page id and a preview URL.
     /// </summary>
     Task<PublishPreferencesResponse> Publish(
         WorkspacePreferencePublishParams? parameters = null,

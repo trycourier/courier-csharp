@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Brands;
 
 /// <summary>
-/// Delete a brand by brand ID.
+/// Deletes a brand by id. Reassign any template or tenant that references it before
+/// deleting to keep their styling intact.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

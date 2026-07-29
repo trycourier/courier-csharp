@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Lists;
 
 /// <summary>
-/// Returns all of the lists, with the ability to filter based on a pattern.
+/// Returns the workspace's lists, filterable by a pattern to fetch a subset such
+/// as every regional list. Paged by cursor.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

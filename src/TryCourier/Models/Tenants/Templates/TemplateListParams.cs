@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants.Templates;
 
 /// <summary>
-/// List Templates in Tenant
+/// Lists a tenant's notification templates, each carrying its version and published
+/// timestamp. Paged.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

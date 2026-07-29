@@ -13,7 +13,8 @@ using System = System;
 namespace TryCourier.Models.Send;
 
 /// <summary>
-/// Send a message to one or more recipients.
+/// Sends a message to one or more recipients and returns a requestId. Courier routes
+/// it to email, SMS, push, chat, or in-app based on your rules.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -39,6 +40,42 @@ public record class SendMessageParams : ParamsBase
             return this._rawBodyData.GetNotNullClass<Message>("message");
         }
         init { this._rawBodyData.Set("message", value); }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
+        }
     }
 
     public SendMessageParams() { }
@@ -2012,7 +2049,7 @@ sealed class ToConverter : JsonConverter<To?>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UserRecipient>(element, options);
+            var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -2027,34 +2064,6 @@ sealed class ToConverter : JsonConverter<To?>
         try
         {
             var deserialized = JsonSerializer.Deserialize<AudienceRecipient>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<ListRecipient>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<ListPatternRecipient>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -2110,7 +2119,35 @@ sealed class ToConverter : JsonConverter<To?>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(element, options);
+            var deserialized = JsonSerializer.Deserialize<UserRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ListRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ListPatternRecipient>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -2625,7 +2662,7 @@ sealed class RecipientConverter : JsonConverter<Recipient>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<UserRecipient>(element, options);
+            var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -2640,34 +2677,6 @@ sealed class RecipientConverter : JsonConverter<Recipient>
         try
         {
             var deserialized = JsonSerializer.Deserialize<AudienceRecipient>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<ListRecipient>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<ListPatternRecipient>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -2723,7 +2732,35 @@ sealed class RecipientConverter : JsonConverter<Recipient>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<WebhookRecipient>(element, options);
+            var deserialized = JsonSerializer.Deserialize<UserRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ListRecipient>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ListPatternRecipient>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();

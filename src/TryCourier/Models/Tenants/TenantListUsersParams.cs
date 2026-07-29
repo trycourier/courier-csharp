@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Tenants;
 
 /// <summary>
-/// Get Users in Tenant
+/// Returns the users belonging to a tenant with cursor paging. Use it to see who
+/// a tenant-scoped send will reach.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Brands;
 
 /// <summary>
-/// Create a new brand. Requires `name` and `settings` (with at least `colors.primary`
-/// and `colors.secondary`).
+/// Creates a brand from a name and settings, including primary and secondary colors.
+/// Brands supply the logo, colors, and styling that templates render with.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -63,6 +63,42 @@ public record class BrandCreateParams : ParamsBase
             return this._rawBodyData.GetNullableClass<BrandSnippets>("snippets");
         }
         init { this._rawBodyData.Set("snippets", value); }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
+        }
     }
 
     public BrandCreateParams() { }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Models.Providers;
 
@@ -19,6 +20,8 @@ public class ProviderCreateParamsTest : TestBase
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Title = "title",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         string expectedProvider = "provider";
@@ -28,6 +31,8 @@ public class ProviderCreateParamsTest : TestBase
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
         string expectedTitle = "title";
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedProvider, parameters.Provider);
         Assert.Equal(expectedAlias, parameters.Alias);
@@ -40,6 +45,8 @@ public class ProviderCreateParamsTest : TestBase
             Assert.True(JsonElement.DeepEquals(value, parameters.Settings[item.Key]));
         }
         Assert.Equal(expectedTitle, parameters.Title);
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
     }
 
     [Fact]
@@ -53,6 +60,10 @@ public class ProviderCreateParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("settings"));
         Assert.Null(parameters.Title);
         Assert.False(parameters.RawBodyData.ContainsKey("title"));
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -66,6 +77,8 @@ public class ProviderCreateParamsTest : TestBase
             Alias = null,
             Settings = null,
             Title = null,
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
         };
 
         Assert.Null(parameters.Alias);
@@ -74,6 +87,10 @@ public class ProviderCreateParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("settings"));
         Assert.Null(parameters.Title);
         Assert.False(parameters.RawBodyData.ContainsKey("title"));
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -84,6 +101,26 @@ public class ProviderCreateParamsTest : TestBase
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
         Assert.True(TestBase.UrisEqual(new Uri("https://api.courier.com/providers"), url));
+    }
+
+    [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        ProviderCreateParams parameters = new()
+        {
+            Provider = "provider",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -98,6 +135,8 @@ public class ProviderCreateParamsTest : TestBase
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Title = "title",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         ProviderCreateParams copied = new(parameters);

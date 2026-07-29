@@ -11,7 +11,8 @@ using System = System;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Get the list of journeys.
+/// Lists the workspace's journeys, each carrying a name, state, and enabled flag.
+/// Paged by cursor.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

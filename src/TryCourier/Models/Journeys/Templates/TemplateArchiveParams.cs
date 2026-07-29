@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys.Templates;
 
 /// <summary>
-/// Archive the journey-scoped notification template. Archived templates cannot be sent.
+/// Archives one journey's notification template, preventing further sends. Detach
+/// any send node referencing it beforehand.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

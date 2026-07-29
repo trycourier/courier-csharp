@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.WorkspacePreferences.Topics;
 
 /// <summary>
-/// List the topics in a workspace preference.
+/// Returns the subscription topics inside a workspace preference, each with its default
+/// status and routing options.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

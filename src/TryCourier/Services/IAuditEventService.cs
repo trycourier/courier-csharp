@@ -7,9 +7,11 @@ using TryCourier.Models.AuditEvents;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Read the audit trail of configuration and access changes in your workspace.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IAuditEventService
 {
@@ -27,7 +29,8 @@ public interface IAuditEventService
     IAuditEventService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Fetch a specific audit event by ID.
+    /// Returns one audit event by id, including the actor who performed it, the target
+    /// they changed, the source, the event type, and a timestamp.
     /// </summary>
     Task<AuditEvent> Retrieve(
         AuditEventRetrieveParams parameters,
@@ -42,7 +45,8 @@ public interface IAuditEventService
     );
 
     /// <summary>
-    /// Fetch the list of audit events
+    /// Returns the workspace's audit event log with cursor paging. Each event records
+    /// the actor, target, source, type, and timestamp of a change.
     /// </summary>
     Task<AuditEventListResponse> List(
         AuditEventListParams? parameters = null,

@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications.Checks;
 
 /// <summary>
-/// Cancel a submission for a notification template.
+/// Cancels a pending template submission, withdrawing it from the approval workflow.
+/// The template stays in draft and can be resubmitted later.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

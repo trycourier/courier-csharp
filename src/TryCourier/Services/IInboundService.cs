@@ -7,9 +7,11 @@ using TryCourier.Models.Inbound;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Record an inbound event that triggers the journeys and automations mapped to it.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IInboundService
 {
@@ -27,7 +29,8 @@ public interface IInboundService
     IInboundService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Courier Track Event
+    /// Records an inbound event that can trigger a journey. Requires an event name, a
+    /// messageId you generate, a type, and a properties object.
     /// </summary>
     Task<InboundTrackEventResponse> TrackEvent(
         InboundTrackEventParams parameters,

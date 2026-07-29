@@ -9,9 +9,12 @@ using TryCourier.Models.Notifications;
 namespace TryCourier.Services.Journeys;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Build, version, publish, invoke, and cancel multi-step notification workflows,
+/// along with the templates scoped to them.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ITemplateService
 {
@@ -45,9 +48,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Fetch a journey-scoped notification template by id. Pass `?version=draft`
-    /// (default `published`) to retrieve the working draft, or `?version=vN` for a
-    /// historical version.
+    /// Returns a journey's own notification template with its name, brand, subscription
+    /// topic, and content. Defaults to the published version.
     /// </summary>
     Task<JourneyTemplateGetResponse> Retrieve(
         TemplateRetrieveParams parameters,
@@ -78,8 +80,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Archive the journey-scoped notification template. Archived templates cannot be
-    /// sent.
+    /// Archives one journey's notification template, preventing further sends. Detach
+    /// any send node referencing it beforehand.
     /// </summary>
     Task Archive(TemplateArchiveParams parameters, CancellationToken cancellationToken = default);
 
@@ -91,8 +93,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// List published versions of the journey-scoped notification template, ordered
-    /// most recent first.
+    /// Lists the published versions of a template that belongs to a journey, most
+    /// recent first. Paged by cursor.
     /// </summary>
     Task<NotificationTemplateVersionListResponse> ListVersions(
         TemplateListVersionsParams parameters,
@@ -107,9 +109,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Publish the current draft of the journey-scoped notification template as a new
-    /// version. Optionally roll back to a prior version by passing `{ "version": "vN"
-    /// }`.
+    /// Publishes a journey-scoped template's draft as a new version. Pass a version
+    /// instead to roll back the template to an earlier publish.
     /// </summary>
     Task Publish(TemplatePublishParams parameters, CancellationToken cancellationToken = default);
 
@@ -153,7 +154,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Replace the journey-scoped notification template draft.
+    /// Replaces the draft content of one journey's notification template. Publish it
+    /// before send nodes referencing it render the change.
     /// </summary>
     Task<JourneyTemplateGetResponse> Replace(
         TemplateReplaceParams parameters,
@@ -168,11 +170,8 @@ public interface ITemplateService
     );
 
     /// <summary>
-    /// Retrieve the elemental content of a journey-scoped notification template. The
-    /// response contains the versioned elements along with their content checksums,
-    /// which can be used to detect changes between versions. Pass `?version=draft`
-    /// (default `published`) to retrieve the working draft, or `?version=vN` for a
-    /// historical version.
+    /// Returns the Elemental elements and version of a journey-scoped template's
+    /// content. Compare versions to see what changed between publishes.
     /// </summary>
     Task<NotificationContentGetResponse> RetrieveContent(
         TemplateRetrieveContentParams parameters,

@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Brands;
 
 /// <summary>
-/// Get the list of brands.
+/// Lists the workspace's brands. Every entry carries its name, styling settings,
+/// snippets, and published version.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -9,10 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Messages;
 
 /// <summary>
-/// Resend a previously sent message. The original send request is loaded from storage
-/// and a brand-new send is enqueued for the same recipient and content, producing
-/// a **new** `messageId` — the original message is not modified. Throttled by a per-message
-/// rate limit; a repeat inside the limit window returns `429 Too Many Requests`.
+/// Resends a previously sent message to the same recipient and content, returning
+/// a new messageId. The original send request is not modified.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

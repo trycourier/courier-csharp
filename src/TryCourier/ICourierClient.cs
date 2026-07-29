@@ -73,6 +73,8 @@ public interface ICourierClient : IDisposable
 
     IListService Lists { get; }
 
+    IInboxService Inbox { get; }
+
     IMessageService Messages { get; }
 
     IRequestService Requests { get; }
@@ -142,6 +144,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     IInboundServiceWithRawResponse Inbound { get; }
 
     IListServiceWithRawResponse Lists { get; }
+
+    IInboxServiceWithRawResponse Inbox { get; }
 
     IMessageServiceWithRawResponse Messages { get; }
 

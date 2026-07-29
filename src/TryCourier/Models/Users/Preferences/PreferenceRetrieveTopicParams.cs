@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Preferences;
 
 /// <summary>
-/// Fetch user preferences for a specific subscription topic.
+/// Returns a user's opt-in status and channel choices for one subscription topic,
+/// or the effective default if they have set no override.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

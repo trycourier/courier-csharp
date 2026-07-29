@@ -9,8 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys.Templates;
 
 /// <summary>
-/// Fetch a journey-scoped notification template by id. Pass `?version=draft` (default
-/// `published`) to retrieve the working draft, or `?version=vN` for a historical version.
+/// Returns a journey's own notification template with its name, brand, subscription
+/// topic, and content. Defaults to the published version.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

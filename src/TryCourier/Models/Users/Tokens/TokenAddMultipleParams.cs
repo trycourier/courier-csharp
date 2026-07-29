@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Tokens;
 
 /// <summary>
-/// Adds multiple tokens to a user and overwrites matching existing tokens.
+/// Registers several device tokens for a user in one call, overwriting any stored
+/// token with a matching value.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

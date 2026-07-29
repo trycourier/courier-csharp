@@ -10,7 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Automations.Invoke;
 
 /// <summary>
-/// Invoke an automation run from an automation template.
+/// Starts an automation run from a saved template for one recipient, with optional
+/// data and profile, and returns a runId.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -90,6 +91,42 @@ public record class InvokeInvokeByTemplateParams : ParamsBase
             return this._rawBodyData.GetNullableClass<string>("template");
         }
         init { this._rawBodyData.Set("template", value); }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
+        }
     }
 
     public InvokeInvokeByTemplateParams() { }

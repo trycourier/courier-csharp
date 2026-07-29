@@ -7,9 +7,12 @@ using TryCourier.Models.RoutingStrategies;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Define reusable channel routing and failover strategies, and see which templates
+/// use them.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IRoutingStrategyService
 {
@@ -36,8 +39,8 @@ public interface IRoutingStrategyService
     );
 
     /// <summary>
-    /// Retrieve a routing strategy by ID. Returns the full entity including routing
-    /// content and metadata.
+    /// Returns one routing strategy by id with its name, tags, channels, and the
+    /// routing rules that decide provider order and fallback.
     /// </summary>
     Task<RoutingStrategyGetResponse> Retrieve(
         RoutingStrategyRetrieveParams parameters,
@@ -78,8 +81,8 @@ public interface IRoutingStrategyService
     );
 
     /// <summary>
-    /// List notification templates associated with a routing strategy. Includes
-    /// template metadata only, not full content.
+    /// Returns the notification templates using a routing strategy, with paging. Check
+    /// this before changing a strategy that templates depend on.
     /// </summary>
     Task<AssociatedNotificationListResponse> ListNotifications(
         RoutingStrategyListNotificationsParams parameters,

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Exceptions;
@@ -53,6 +54,8 @@ public class InvokeInvokeAdHocParamsTest : TestBase
             },
             Recipient = "user-yes",
             Template = "template",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         Invoke::Automation expectedAutomation = new()
@@ -94,6 +97,8 @@ public class InvokeInvokeAdHocParamsTest : TestBase
         };
         string expectedRecipient = "user-yes";
         string expectedTemplate = "template";
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedAutomation, parameters.Automation);
         Assert.Equal(expectedBrand, parameters.Brand);
@@ -115,6 +120,116 @@ public class InvokeInvokeAdHocParamsTest : TestBase
         }
         Assert.Equal(expectedRecipient, parameters.Recipient);
         Assert.Equal(expectedTemplate, parameters.Template);
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new Invoke::InvokeInvokeAdHocParams
+        {
+            Automation = new()
+            {
+                Steps =
+                [
+                    new Invoke::AutomationDelayStep()
+                    {
+                        Action = Invoke::Action.Delay,
+                        Duration = "duration",
+                        Until = "20240408T080910.123",
+                    },
+                    new Invoke::AutomationSendStep()
+                    {
+                        Action = Invoke::AutomationSendStepAction.Send,
+                        Brand = "brand",
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Profile = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Recipient = "recipient",
+                        Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                    },
+                ],
+                CancelationToken = "delay-send--user-yes--abc-123",
+            },
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "name", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "tenant_id", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "user-yes",
+            Template = "template",
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new Invoke::InvokeInvokeAdHocParams
+        {
+            Automation = new()
+            {
+                Steps =
+                [
+                    new Invoke::AutomationDelayStep()
+                    {
+                        Action = Invoke::Action.Delay,
+                        Duration = "duration",
+                        Until = "20240408T080910.123",
+                    },
+                    new Invoke::AutomationSendStep()
+                    {
+                        Action = Invoke::AutomationSendStepAction.Send,
+                        Brand = "brand",
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Profile = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Recipient = "recipient",
+                        Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                    },
+                ],
+                CancelationToken = "delay-send--user-yes--abc-123",
+            },
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "name", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "tenant_id", JsonSerializer.SerializeToElement("bar") },
+            },
+            Recipient = "user-yes",
+            Template = "template",
+
+            // Null should be interpreted as omitted for these properties
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -150,6 +265,8 @@ public class InvokeInvokeAdHocParamsTest : TestBase
                 ],
                 CancelationToken = "delay-send--user-yes--abc-123",
             },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         Assert.Null(parameters.Brand);
@@ -197,6 +314,8 @@ public class InvokeInvokeAdHocParamsTest : TestBase
                 ],
                 CancelationToken = "delay-send--user-yes--abc-123",
             },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
 
             Brand = null,
             Data = null,
@@ -258,6 +377,53 @@ public class InvokeInvokeAdHocParamsTest : TestBase
     }
 
     [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        Invoke::InvokeInvokeAdHocParams parameters = new()
+        {
+            Automation = new()
+            {
+                Steps =
+                [
+                    new Invoke::AutomationDelayStep()
+                    {
+                        Action = Invoke::Action.Delay,
+                        Duration = "duration",
+                        Until = "20240408T080910.123",
+                    },
+                    new Invoke::AutomationSendStep()
+                    {
+                        Action = Invoke::AutomationSendStepAction.Send,
+                        Brand = "brand",
+                        Data = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Profile = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Recipient = "recipient",
+                        Template = "64TP5HKPFTM8VTK1Y75SJDQX9JK0",
+                    },
+                ],
+                CancelationToken = "delay-send--user-yes--abc-123",
+            },
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
+    }
+
+    [Fact]
     public void CopyConstructor_Works()
     {
         var parameters = new Invoke::InvokeInvokeAdHocParams
@@ -301,6 +467,8 @@ public class InvokeInvokeAdHocParamsTest : TestBase
             },
             Recipient = "user-yes",
             Template = "template",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         Invoke::InvokeInvokeAdHocParams copied = new(parameters);

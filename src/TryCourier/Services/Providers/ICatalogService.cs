@@ -7,9 +7,12 @@ using TryCourier.Models.Providers.Catalog;
 namespace TryCourier.Services.Providers;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Configure the channel providers Courier delivers through, and browse the provider
+/// types it supports.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ICatalogService
 {
@@ -27,10 +30,8 @@ public interface ICatalogService
     ICatalogService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns the catalog of available provider types with their display names,
-    /// descriptions, and configuration schema fields (snake_case, with `type` and
-    /// `required`). Providers with no configurable schema return only `provider`,
-    /// `name`, and `description`.
+    /// Returns the provider types Courier supports, each with a display name,
+    /// description, and the configuration fields it requires.
     /// </summary>
     Task<CatalogListResponse> List(
         CatalogListParams? parameters = null,

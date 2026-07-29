@@ -7,9 +7,11 @@ using TryCourier.Models.Users.Tenants;
 namespace TryCourier.Services.Users;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Associate a user with one or more tenants, and read or remove those associations.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ITenantService
 {
@@ -27,7 +29,8 @@ public interface ITenantService
     ITenantService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a paginated list of user tenant associations.
+    /// Returns the tenants a user belongs to, with cursor paging. A user can belong to
+    /// many tenants, each with its own profile and preferences.
     /// </summary>
     Task<TenantListResponse> List(
         TenantListParams parameters,
@@ -42,9 +45,8 @@ public interface ITenantService
     );
 
     /// <summary>
-    /// This endpoint is used to add a user to multiple tenants in one call. A custom
-    /// profile can also be supplied for each tenant.  This profile will be merged with the
-    /// user's main  profile when sending to the user with that tenant.
+    /// Adds a user to several tenants in one call, each optionally with a per-tenant
+    /// profile that overrides their workspace profile.
     /// </summary>
     Task AddMultiple(
         TenantAddMultipleParams parameters,
@@ -59,10 +61,8 @@ public interface ITenantService
     );
 
     /// <summary>
-    /// This endpoint is used to add a single tenant.
-    ///
-    /// <para>A custom profile can also be supplied with the tenant.  This profile will be
-    /// merged with the user's main profile  when sending to the user with that tenant.</para>
+    /// Adds a user to one tenant, optionally with a tenant-specific profile that
+    /// overrides their workspace profile for sends in that tenant.
     /// </summary>
     Task AddSingle(TenantAddSingleParams parameters, CancellationToken cancellationToken = default);
 
@@ -74,7 +74,8 @@ public interface ITenantService
     );
 
     /// <summary>
-    /// Removes a user from any tenants they may have been associated with.
+    /// Removes a user from every tenant they belong to in one call. Their
+    /// workspace-level profile is a separate resource.
     /// </summary>
     Task RemoveAll(TenantRemoveAllParams parameters, CancellationToken cancellationToken = default);
 
@@ -86,7 +87,8 @@ public interface ITenantService
     );
 
     /// <summary>
-    /// Removes a user from the supplied tenant.
+    /// Removes a user from one tenant. Their other tenant memberships and workspace
+    /// profile are managed through separate endpoints.
     /// </summary>
     Task RemoveSingle(
         TenantRemoveSingleParams parameters,

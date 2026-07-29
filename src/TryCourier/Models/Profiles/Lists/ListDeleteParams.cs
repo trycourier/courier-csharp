@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Profiles.Lists;
 
 /// <summary>
-/// Removes all list subscriptions for given user.
+/// Removes every list subscription for a user at once. Their profile and preferences
+/// are untouched, so this only affects list-targeted sends.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

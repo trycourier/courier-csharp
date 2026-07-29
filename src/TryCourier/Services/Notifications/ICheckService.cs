@@ -7,9 +7,11 @@ using TryCourier.Models.Notifications.Checks;
 namespace TryCourier.Services.Notifications;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Create, update, version, publish, and localize notification templates and their content.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ICheckService
 {
@@ -27,7 +29,8 @@ public interface ICheckService
     ICheckService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Replace the submission checks for a notification template.
+    /// Replaces the approval checks on a template submission with the complete set
+    /// supplied in the request body.
     /// </summary>
     Task<CheckUpdateResponse> Update(
         CheckUpdateParams parameters,
@@ -42,7 +45,8 @@ public interface ICheckService
     );
 
     /// <summary>
-    /// Retrieve the submission checks for a notification template.
+    /// Returns the approval checks recorded for a template submission, each with its
+    /// pass or fail result.
     /// </summary>
     Task<CheckListResponse> List(
         CheckListParams parameters,
@@ -57,7 +61,8 @@ public interface ICheckService
     );
 
     /// <summary>
-    /// Cancel a submission for a notification template.
+    /// Cancels a pending template submission, withdrawing it from the approval
+    /// workflow. The template stays in draft and can be resubmitted later.
     /// </summary>
     Task Delete(CheckDeleteParams parameters, CancellationToken cancellationToken = default);
 

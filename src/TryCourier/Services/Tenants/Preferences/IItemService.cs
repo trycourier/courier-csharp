@@ -7,9 +7,12 @@ using TryCourier.Models.Tenants.Preferences.Items;
 namespace TryCourier.Services.Tenants.Preferences;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Manage tenants — the organizations, teams, or accounts your users belong to —
+/// along with their users and default preferences.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IItemService
 {
@@ -27,7 +30,8 @@ public interface IItemService
     IItemService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Create or Replace Default Preferences For Topic
+    /// Sets a tenant's default opt-in status for one subscription topic, which applies
+    /// to every member unless a user sets their own override.
     /// </summary>
     Task Update(ItemUpdateParams parameters, CancellationToken cancellationToken = default);
 
@@ -39,7 +43,8 @@ public interface IItemService
     );
 
     /// <summary>
-    /// Remove Default Preferences For Topic
+    /// Removes a tenant's default preference for one subscription topic, addressed by
+    /// tenant id and topic id.
     /// </summary>
     Task Delete(ItemDeleteParams parameters, CancellationToken cancellationToken = default);
 

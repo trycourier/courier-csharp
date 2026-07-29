@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Invoke a journey by id or alias to start a new run. The response includes a `runId`
-/// identifying the run.
+/// Starts a journey run for one user and returns a runId. Runs execute asynchronously,
+/// so the response arrives before any message is sent.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -104,6 +104,42 @@ public record class JourneyInvokeParams : ParamsBase
             }
 
             this._rawBodyData.Set("user_id", value);
+        }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
         }
     }
 

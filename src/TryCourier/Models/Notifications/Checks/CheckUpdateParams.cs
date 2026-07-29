@@ -11,7 +11,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications.Checks;
 
 /// <summary>
-/// Replace the submission checks for a notification template.
+/// Replaces the approval checks on a template submission with the complete set supplied
+/// in the request body.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

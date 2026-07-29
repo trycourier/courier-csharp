@@ -9,8 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.WorkspacePreferences;
 
 /// <summary>
-/// List the workspace's preferences. Each workspace preference embeds its topics.
-/// Scoped to the workspace of the API key.
+/// Returns the workspace's preferences, each embedding its subscription topics, routing
+/// options, and whether custom routing is allowed.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

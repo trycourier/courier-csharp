@@ -7,9 +7,13 @@ using TryCourier.Models.Auth;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Issue scoped, short-lived JWTs so client-side SDKs — Inbox, Preferences, and the
+/// embedded designer — can call Courier as a single user. Server-side requests authenticate
+/// with your workspace API key instead.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IAuthService
 {
@@ -27,7 +31,8 @@ public interface IAuthService
     IAuthService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Returns a new access token.
+    /// Returns a JWT for authenticating client-side SDKs such as the Inbox. You supply
+    /// the scope and an expires_in duration, both required.
     /// </summary>
     Task<AuthIssueTokenResponse> IssueToken(
         AuthIssueTokenParams parameters,

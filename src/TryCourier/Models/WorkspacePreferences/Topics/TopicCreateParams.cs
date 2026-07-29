@@ -13,8 +13,8 @@ using System = System;
 namespace TryCourier.Models.WorkspacePreferences.Topics;
 
 /// <summary>
-/// Create a subscription preference topic inside a workspace preference. Fails with
-/// 404 if the workspace preference does not exist. The topic id is generated and returned.
+/// Creates a subscription topic inside a workspace preference. The default status
+/// sets whether users start opted in, opted out, or required.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -145,6 +145,42 @@ public record class TopicCreateParams : ParamsBase
                 "topic_data",
                 value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
             );
+        }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
         }
     }
 

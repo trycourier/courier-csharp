@@ -9,8 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Archive a journey. Archived journeys cannot be invoked. Existing journey runs
-/// continue to completion.
+/// Archives a journey so it can no longer be invoked. Runs already in flight continue
+/// to completion, so archiving never strands a user mid-sequence.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

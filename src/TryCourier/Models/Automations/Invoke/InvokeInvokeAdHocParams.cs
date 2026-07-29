@@ -13,9 +13,8 @@ using System = System;
 namespace TryCourier.Models.Automations.Invoke;
 
 /// <summary>
-/// Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a
-/// series of automation steps. For information about what steps are available, checkout
-/// the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
+/// Runs a series of automation steps supplied inline, without a saved template,
+/// and returns a runId.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -103,6 +102,42 @@ public record class InvokeInvokeAdHocParams : ParamsBase
             return this._rawBodyData.GetNullableClass<string>("template");
         }
         init { this._rawBodyData.Set("template", value); }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
+        }
     }
 
     public InvokeInvokeAdHocParams() { }
@@ -740,21 +775,10 @@ sealed class StepConverter : JsonConverter<Step>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(element, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(
+                element,
+                options
+            );
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -813,10 +837,7 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationFetchDataStep>(
-                element,
-                options
-            );
+            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -830,7 +851,21 @@ sealed class StepConverter : JsonConverter<Step>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<AutomationInvokeStep>(element, options);
+            var deserialized = JsonSerializer.Deserialize<AutomationDelayStep>(element, options);
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<AutomationSendStep>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();

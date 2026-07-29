@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Users.Tokens;
 
 /// <summary>
-/// Gets all tokens available for a :user_id
+/// Returns every device token registered for a user, each with its provider key,
+/// status, and expiry date.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

@@ -12,7 +12,8 @@ using System = System;
 namespace TryCourier.Models.Inbound;
 
 /// <summary>
-/// Courier Track Event
+/// Records an inbound event that can trigger a journey. Requires an event name, a
+/// messageId you generate, a type, and a properties object.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

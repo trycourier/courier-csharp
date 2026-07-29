@@ -7,9 +7,11 @@ using TryCourier.Models.Users.Tokens;
 namespace TryCourier.Services.Users;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Register and manage the APNS and FCM device tokens Courier delivers push notifications to.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface ITokenService
 {
@@ -27,7 +29,8 @@ public interface ITokenService
     ITokenService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     /// <summary>
-    /// Get single token available for a `:token`
+    /// Returns one device token with its provider key, status and status reason, expiry
+    /// date, and any properties stored alongside it.
     /// </summary>
     Task<TokenRetrieveResponse> Retrieve(
         TokenRetrieveParams parameters,
@@ -42,7 +45,8 @@ public interface ITokenService
     );
 
     /// <summary>
-    /// Apply a JSON Patch (RFC 6902) to the specified token.
+    /// Applies a JSON Patch to a device token, changing its status, expiry, or
+    /// properties without re-registering it.
     /// </summary>
     Task Update(TokenUpdateParams parameters, CancellationToken cancellationToken = default);
 
@@ -54,7 +58,8 @@ public interface ITokenService
     );
 
     /// <summary>
-    /// Gets all tokens available for a :user_id
+    /// Returns every device token registered for a user, each with its provider key,
+    /// status, and expiry date.
     /// </summary>
     Task<TokenListResponse> List(
         TokenListParams parameters,
@@ -69,7 +74,8 @@ public interface ITokenService
     );
 
     /// <summary>
-    /// Delete User Token
+    /// Deletes one device token for a user, addressed by the token value, so push sends
+    /// no longer target that device.
     /// </summary>
     Task Delete(TokenDeleteParams parameters, CancellationToken cancellationToken = default);
 
@@ -81,7 +87,8 @@ public interface ITokenService
     );
 
     /// <summary>
-    /// Adds multiple tokens to a user and overwrites matching existing tokens.
+    /// Registers several device tokens for a user in one call, overwriting any stored
+    /// token with a matching value.
     /// </summary>
     Task AddMultiple(
         TokenAddMultipleParams parameters,
@@ -96,7 +103,8 @@ public interface ITokenService
     );
 
     /// <summary>
-    /// Adds a single token to a user and overwrites a matching existing token.
+    /// Registers one device token for a user against a provider key, overwriting the
+    /// token if it already exists. Push sends resolve tokens per user.
     /// </summary>
     Task AddSingle(TokenAddSingleParams parameters, CancellationToken cancellationToken = default);
 

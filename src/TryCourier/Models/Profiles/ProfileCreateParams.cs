@@ -10,8 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Profiles;
 
 /// <summary>
-/// Merge the supplied values with an existing profile or create a new profile if
-/// one doesn't already exist.
+/// Merges the supplied values into a user's profile, creating it if absent and leaving
+/// any key you omit untouched. Prefer this for everyday writes.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -42,6 +42,42 @@ public record class ProfileCreateParams : ParamsBase
                 "profile",
                 FrozenDictionary.ToFrozenDictionary(value)
             );
+        }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
         }
     }
 

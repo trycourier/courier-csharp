@@ -10,9 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.WorkspacePreferences;
 
 /// <summary>
-/// Publish the workspace's preferences page. Takes a snapshot of every workspace
-/// preference with its topics under a new published version, making the current state
-/// visible on the hosted preferences page (non-draft).
+/// Publishes the workspace preference page, snapshotting every preference and topic,
+/// and returns the page id and a preview URL.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -64,6 +63,42 @@ public record class WorkspacePreferencePublishParams : ParamsBase
             return this._rawBodyData.GetNullableClass<string>("heading");
         }
         init { this._rawBodyData.Set("heading", value); }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
+        }
     }
 
     public WorkspacePreferencePublishParams() { }

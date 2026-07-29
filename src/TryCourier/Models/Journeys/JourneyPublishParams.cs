@@ -10,9 +10,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Publish the current draft as a new version. Body is optional; pass `{ "version":
-/// "vN" }` to roll back to a prior version instead. Returns 404 if the journey has
-/// no draft to publish.
+/// Publishes a journey's current draft as a new version, making it live for new
+/// runs. Pass a version instead to roll back to an earlier one.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -43,6 +42,42 @@ public record class JourneyPublishParams : ParamsBase
             }
 
             this._rawBodyData.Set("version", value);
+        }
+    }
+
+    public string? IdempotencyKey
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("Idempotency-Key");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("Idempotency-Key", value);
+        }
+    }
+
+    public string? XIdempotencyExpiration
+    {
+        get
+        {
+            this._rawHeaderData.Freeze();
+            return this._rawHeaderData.GetNullableClass<string>("x-idempotency-expiration");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawHeaderData.Set("x-idempotency-expiration", value);
         }
     }
 

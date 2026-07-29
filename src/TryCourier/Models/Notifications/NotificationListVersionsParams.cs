@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Notifications;
 
 /// <summary>
-/// List versions of a notification template.
+/// Returns a notification template's published versions, most recent first, for
+/// comparison or rollback. Paged.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

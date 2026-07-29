@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Models.Automations.Invoke;
 
@@ -24,6 +25,8 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Template = "template",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         string expectedTemplateID = "templateId";
@@ -38,6 +41,8 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
         string expectedTemplate = "template";
+        string expectedIdempotencyKey = "order-ORD-456-user-123";
+        string expectedXIdempotencyExpiration = "1785312000";
 
         Assert.Equal(expectedTemplateID, parameters.TemplateID);
         Assert.Equal(expectedRecipient, parameters.Recipient);
@@ -59,6 +64,62 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
             Assert.True(JsonElement.DeepEquals(value, parameters.Profile[item.Key]));
         }
         Assert.Equal(expectedTemplate, parameters.Template);
+        Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
+        Assert.Equal(expectedXIdempotencyExpiration, parameters.XIdempotencyExpiration);
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsUnsetAreNotSet_Works()
+    {
+        var parameters = new InvokeInvokeByTemplateParams
+        {
+            TemplateID = "templateId",
+            Recipient = "recipient",
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Template = "template",
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
+    }
+
+    [Fact]
+    public void OptionalNonNullableParamsSetToNullAreNotSet_Works()
+    {
+        var parameters = new InvokeInvokeByTemplateParams
+        {
+            TemplateID = "templateId",
+            Recipient = "recipient",
+            Brand = "brand",
+            Data = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Profile = new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            },
+            Template = "template",
+
+            // Null should be interpreted as omitted for these properties
+            IdempotencyKey = null,
+            XIdempotencyExpiration = null,
+        };
+
+        Assert.Null(parameters.IdempotencyKey);
+        Assert.False(parameters.RawHeaderData.ContainsKey("Idempotency-Key"));
+        Assert.Null(parameters.XIdempotencyExpiration);
+        Assert.False(parameters.RawHeaderData.ContainsKey("x-idempotency-expiration"));
     }
 
     [Fact]
@@ -68,6 +129,8 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         {
             TemplateID = "templateId",
             Recipient = "recipient",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         Assert.Null(parameters.Brand);
@@ -87,6 +150,8 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         {
             TemplateID = "templateId",
             Recipient = "recipient",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
 
             Brand = null,
             Data = null,
@@ -124,6 +189,27 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
     }
 
     [Fact]
+    public void AddHeadersToRequest_Works()
+    {
+        HttpRequestMessage requestMessage = new();
+        InvokeInvokeByTemplateParams parameters = new()
+        {
+            TemplateID = "templateId",
+            Recipient = "recipient",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
+        };
+
+        parameters.AddHeadersToRequest(requestMessage, new() { ApiKey = "My API Key" });
+
+        Assert.Equal(
+            ["order-ORD-456-user-123"],
+            requestMessage.Headers.GetValues("Idempotency-Key")
+        );
+        Assert.Equal(["1785312000"], requestMessage.Headers.GetValues("x-idempotency-expiration"));
+    }
+
+    [Fact]
     public void CopyConstructor_Works()
     {
         var parameters = new InvokeInvokeByTemplateParams
@@ -140,6 +226,8 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
                 { "foo", JsonSerializer.SerializeToElement("bar") },
             },
             Template = "template",
+            IdempotencyKey = "order-ORD-456-user-123",
+            XIdempotencyExpiration = "1785312000",
         };
 
         InvokeInvokeByTemplateParams copied = new(parameters);
