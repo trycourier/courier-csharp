@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.20.0 (2026-07-29)
+
+Full Changelog: [v5.19.0...v5.20.0](https://github.com/trycourier/courier-csharp/compare/v5.19.0...v5.20.0)
+
+### Features
+
+* **broadcasts:** document Broadcasts CRUD REST API ([#170](https://github.com/trycourier/courier-csharp/issues/170)) ([748c994](https://github.com/trycourier/courier-csharp/commit/748c994f90277d87c144b61571dde86f62aeb2e0))
+
 ## 5.19.0 (2026-07-29)
 
 Full Changelog: [v5.18.0...v5.19.0](https://github.com/trycourier/courier-csharp/compare/v5.18.0...v5.19.0)
