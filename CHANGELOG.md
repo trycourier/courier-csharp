@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.21.0 (2026-08-03)
+
+Full Changelog: [v5.20.0...v5.21.0](https://github.com/trycourier/courier-csharp/compare/v5.20.0...v5.21.0)
+
+### Features
+
+* Merge pull request [#183](https://github.com/trycourier/courier-csharp/issues/183) from trycourier/dantran/c-19684-api-spec-document-messagecontexttenant_id-on-journey-send ([6dd8b87](https://github.com/trycourier/courier-csharp/commit/6dd8b8782b2ebb16f41bc2ccd7a635b7e3ff0333))
+* spec: remove inbox message delete/restore endpoints for now (C-19268) ([#182](https://github.com/trycourier/courier-csharp/issues/182)) ([b71e169](https://github.com/trycourier/courier-csharp/commit/b71e1696d6f1f3c4a51824d93f91a545d4469cfe))
+* spec: reorder API reference sections to match the Studio nav ([#180](https://github.com/trycourier/courier-csharp/issues/180)) ([e18d035](https://github.com/trycourier/courier-csharp/commit/e18d0353ed947725b76ec973dd54278e3e096f51))
+
 ## 5.20.0 (2026-07-29)
 
 Full Changelog: [v5.19.0...v5.20.0](https://github.com/trycourier/courier-csharp/compare/v5.19.0...v5.20.0)
