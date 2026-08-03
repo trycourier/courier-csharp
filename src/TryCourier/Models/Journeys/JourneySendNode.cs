@@ -13,7 +13,7 @@ namespace TryCourier.Models.Journeys;
 /// Send to the recipient. A send node sources its content from EXACTLY ONE of `message.template`
 /// (a single notification template) or `experiment` (an A/B split across weighted
 /// template variants) — supplying both, or neither, is rejected. Optionally override
-/// the recipient address, delay the send, or attach `data`.
+/// the recipient address, send as a tenant, delay the send, or attach `data`.
 /// </summary>
 [JsonConverter(typeof(JsonModelConverter<JourneySendNode, JourneySendNodeFromRaw>))]
 public sealed record class JourneySendNode : JsonModel
@@ -150,6 +150,28 @@ class JourneySendNodeFromRaw : IFromRawJson<JourneySendNode>
 [JsonConverter(typeof(JsonModelConverter<Message, MessageFromRaw>))]
 public sealed record class Message : JsonModel
 {
+    /// <summary>
+    /// Tenant context for this send. Set it to deliver on behalf of one of your customers,
+    /// so the message uses that tenant's brand and settings.
+    /// </summary>
+    public Context? Context
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Context>("context");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("context", value);
+        }
+    }
+
     public IReadOnlyDictionary<string, JsonElement>? Data
     {
         get
@@ -228,6 +250,7 @@ public sealed record class Message : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
+        this.Context?.Validate();
         _ = this.Data;
         this.Delay?.Validate();
         _ = this.Template;
@@ -267,6 +290,83 @@ class MessageFromRaw : IFromRawJson<Message>
     /// <inheritdoc/>
     public Message FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Message.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Tenant context for this send. Set it to deliver on behalf of one of your customers,
+/// so the message uses that tenant's brand and settings.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Context, ContextFromRaw>))]
+public sealed record class Context : JsonModel
+{
+    /// <summary>
+    /// The tenant to send as. Accepts either a literal tenant id (`acme-tenant`)
+    /// or a whole-string mustache reference to a value the run already holds — `{{data.tenant_id}}`
+    /// from the invocation payload, or `{{f1.body.tenant_id}}` from the response
+    /// of an earlier fetch node with id `f1`. A reference is resolved separately
+    /// on every run, so a single journey can deliver as many tenants. Two forms
+    /// are rejected with `400`: mid-string interpolation such as `tenant-{{data.region}}`,
+    /// and any value beginning with `refs.`, which is reserved for internal use.
+    /// A reference that resolves to nothing at run time does not stop the run —
+    /// the message is still sent, with no tenant context — so make sure the referenced
+    /// value is always present. `GET` returns the value in the same form it was supplied.
+    /// </summary>
+    public required string TenantID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("tenant_id");
+        }
+        init { this._rawData.Set("tenant_id", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.TenantID;
+    }
+
+    public Context() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Context(Context context)
+        : base(context) { }
+#pragma warning restore CS8618
+
+    public Context(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Context(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ContextFromRaw.FromRawUnchecked"/>
+    public static Context FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public Context(string tenantID)
+        : this()
+    {
+        this.TenantID = tenantID;
+    }
+}
+
+class ContextFromRaw : IFromRawJson<Context>
+{
+    /// <inheritdoc/>
+    public Context FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Context.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(typeof(JsonModelConverter<Delay, DelayFromRaw>))]

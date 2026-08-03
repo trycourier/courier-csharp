@@ -8,9 +8,12 @@ using TryCourier.Models.Notifications;
 namespace TryCourier.Services;
 
 /// <summary>
-/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
-/// changes in non-major versions. We may add new methods in the future that cause
-/// existing derived classes to break.
+/// Create a one-off send to a list or audience, author its content, then send it
+/// immediately or schedule it for later.
+///
+/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
+/// breaking changes in non-major versions. We may add new methods in the future that
+/// cause existing derived classes to break.</para>
 /// </summary>
 public interface IBroadcastService
 {

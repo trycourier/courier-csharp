@@ -47,6 +47,7 @@ public class JourneyNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -343,6 +344,7 @@ public class JourneyNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
