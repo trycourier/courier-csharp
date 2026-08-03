@@ -27,17 +27,52 @@ public class JourneyServiceTest : TestBase
                             { "foo", JsonSerializer.SerializeToElement("bar") },
                         },
                     },
-                    new JourneyApiInvokeTriggerNode()
+                    new JourneySendNode()
                     {
-                        TriggerType = TriggerType.ApiInvoke,
-                        Type = JourneyApiInvokeTriggerNodeType.Trigger,
+                        Message = new()
+                        {
+                            Context = new("x"),
+                            Data = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Delay = new() { Until = "x", Timezone = "x" },
+                            Template = "nt_01kx4h2jdafq8bk9aftxak4b40",
+                            To = new()
+                            {
+                                EmailOverride = "x",
+                                PhoneNumberOverride = "x",
+                                UserIDOverride = "x",
+                            },
+                        },
+                        Type = JourneySendNodeType.Send,
                         ID = "send-1",
                         Conditions = new(["string", "string"]),
-                        Schema = new Dictionary<string, JsonElement>()
+                        Experiment = new()
                         {
-                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                            BucketingKey = "x",
+                            Variants =
+                            [
+                                new()
+                                {
+                                    ID = "x",
+                                    TemplateID = "x",
+                                    Weight = 0,
+                                    Name = "name",
+                                },
+                                new()
+                                {
+                                    ID = "x",
+                                    TemplateID = "x",
+                                    Weight = 0,
+                                    Name = "name",
+                                },
+                            ],
+                            ID = "x",
+                            Name = "name",
                         },
                     },
+                    new JourneyExitNode() { Type = JourneyExitNodeType.Exit, ID = "exit-1" },
                 ],
             },
             TestContext.Current.CancellationToken
