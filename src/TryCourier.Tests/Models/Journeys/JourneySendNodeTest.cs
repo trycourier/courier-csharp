@@ -15,6 +15,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -58,6 +59,7 @@ public class JourneySendNodeTest : TestBase
 
         Message expectedMessage = new()
         {
+            Context = new("x"),
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -112,6 +114,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -169,6 +172,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -219,6 +223,7 @@ public class JourneySendNodeTest : TestBase
 
         Message expectedMessage = new()
         {
+            Context = new("x"),
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -273,6 +278,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -324,6 +330,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -355,6 +362,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -381,6 +389,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -417,6 +426,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -448,6 +458,7 @@ public class JourneySendNodeTest : TestBase
         {
             Message = new()
             {
+                Context = new("x"),
                 Data = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -502,6 +513,7 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
+            Context = new("x"),
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -516,6 +528,7 @@ public class MessageTest : TestBase
             },
         };
 
+        Context expectedContext = new("x");
         Dictionary<string, JsonElement> expectedData = new()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -529,6 +542,7 @@ public class MessageTest : TestBase
             UserIDOverride = "x",
         };
 
+        Assert.Equal(expectedContext, model.Context);
         Assert.NotNull(model.Data);
         Assert.Equal(expectedData.Count, model.Data.Count);
         foreach (var item in expectedData)
@@ -547,6 +561,7 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
+            Context = new("x"),
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -572,6 +587,7 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
+            Context = new("x"),
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -593,6 +609,7 @@ public class MessageTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        Context expectedContext = new("x");
         Dictionary<string, JsonElement> expectedData = new()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -606,6 +623,7 @@ public class MessageTest : TestBase
             UserIDOverride = "x",
         };
 
+        Assert.Equal(expectedContext, deserialized.Context);
         Assert.NotNull(deserialized.Data);
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         foreach (var item in expectedData)
@@ -624,6 +642,7 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
+            Context = new("x"),
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -646,6 +665,8 @@ public class MessageTest : TestBase
     {
         var model = new Message { };
 
+        Assert.Null(model.Context);
+        Assert.False(model.RawData.ContainsKey("context"));
         Assert.Null(model.Data);
         Assert.False(model.RawData.ContainsKey("data"));
         Assert.Null(model.Delay);
@@ -670,12 +691,15 @@ public class MessageTest : TestBase
         var model = new Message
         {
             // Null should be interpreted as omitted for these properties
+            Context = null,
             Data = null,
             Delay = null,
             Template = null,
             To = null,
         };
 
+        Assert.Null(model.Context);
+        Assert.False(model.RawData.ContainsKey("context"));
         Assert.Null(model.Data);
         Assert.False(model.RawData.ContainsKey("data"));
         Assert.Null(model.Delay);
@@ -692,6 +716,7 @@ public class MessageTest : TestBase
         var model = new Message
         {
             // Null should be interpreted as omitted for these properties
+            Context = null,
             Data = null,
             Delay = null,
             Template = null,
@@ -706,6 +731,7 @@ public class MessageTest : TestBase
     {
         var model = new Message
         {
+            Context = new("x"),
             Data = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -721,6 +747,65 @@ public class MessageTest : TestBase
         };
 
         Message copied = new(model);
+
+        Assert.Equal(model, copied);
+    }
+}
+
+public class ContextTest : TestBase
+{
+    [Fact]
+    public void FieldRoundtrip_Works()
+    {
+        var model = new Context { TenantID = "x" };
+
+        string expectedTenantID = "x";
+
+        Assert.Equal(expectedTenantID, model.TenantID);
+    }
+
+    [Fact]
+    public void SerializationRoundtrip_Works()
+    {
+        var model = new Context { TenantID = "x" };
+
+        string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Context>(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(model, deserialized);
+    }
+
+    [Fact]
+    public void FieldRoundtripThroughSerialization_Works()
+    {
+        var model = new Context { TenantID = "x" };
+
+        string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Context>(
+            element,
+            ModelBase.SerializerOptions
+        );
+        Assert.NotNull(deserialized);
+
+        string expectedTenantID = "x";
+
+        Assert.Equal(expectedTenantID, deserialized.TenantID);
+    }
+
+    [Fact]
+    public void Validation_Works()
+    {
+        var model = new Context { TenantID = "x" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void CopyConstructor_Works()
+    {
+        var model = new Context { TenantID = "x" };
+
+        Context copied = new(model);
 
         Assert.Equal(model, copied);
     }
