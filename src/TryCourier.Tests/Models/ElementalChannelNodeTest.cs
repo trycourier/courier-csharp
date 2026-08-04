@@ -17,6 +17,9 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -28,6 +31,9 @@ public class ElementalChannelNodeTest : TestBase
         string expectedLoop = "loop";
         string expectedRef = "ref";
         string expectedChannel = "email";
+        string expectedFontSize = "font_size";
+        string expectedLineHeight = "line_height";
+        string expectedPadding = "padding";
         Dictionary<string, JsonElement> expectedRaw = new()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -43,6 +49,9 @@ public class ElementalChannelNodeTest : TestBase
         Assert.Equal(expectedLoop, model.Loop);
         Assert.Equal(expectedRef, model.Ref);
         Assert.Equal(expectedChannel, model.Channel);
+        Assert.Equal(expectedFontSize, model.FontSize);
+        Assert.Equal(expectedLineHeight, model.LineHeight);
+        Assert.Equal(expectedPadding, model.Padding);
         Assert.NotNull(model.Raw);
         Assert.Equal(expectedRaw.Count, model.Raw.Count);
         foreach (var item in expectedRaw)
@@ -63,6 +72,9 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -88,6 +100,9 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -106,6 +121,9 @@ public class ElementalChannelNodeTest : TestBase
         string expectedLoop = "loop";
         string expectedRef = "ref";
         string expectedChannel = "email";
+        string expectedFontSize = "font_size";
+        string expectedLineHeight = "line_height";
+        string expectedPadding = "padding";
         Dictionary<string, JsonElement> expectedRaw = new()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -121,6 +139,9 @@ public class ElementalChannelNodeTest : TestBase
         Assert.Equal(expectedLoop, deserialized.Loop);
         Assert.Equal(expectedRef, deserialized.Ref);
         Assert.Equal(expectedChannel, deserialized.Channel);
+        Assert.Equal(expectedFontSize, deserialized.FontSize);
+        Assert.Equal(expectedLineHeight, deserialized.LineHeight);
+        Assert.Equal(expectedPadding, deserialized.Padding);
         Assert.NotNull(deserialized.Raw);
         Assert.Equal(expectedRaw.Count, deserialized.Raw.Count);
         foreach (var item in expectedRaw)
@@ -141,6 +162,9 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -159,6 +183,9 @@ public class ElementalChannelNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -178,6 +205,9 @@ public class ElementalChannelNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -196,6 +226,9 @@ public class ElementalChannelNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -218,6 +251,9 @@ public class ElementalChannelNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -243,6 +279,12 @@ public class ElementalChannelNodeTest : TestBase
         Assert.False(model.RawData.ContainsKey("loop"));
         Assert.Null(model.Ref);
         Assert.False(model.RawData.ContainsKey("ref"));
+        Assert.Null(model.FontSize);
+        Assert.False(model.RawData.ContainsKey("font_size"));
+        Assert.Null(model.LineHeight);
+        Assert.False(model.RawData.ContainsKey("line_height"));
+        Assert.Null(model.Padding);
+        Assert.False(model.RawData.ContainsKey("padding"));
         Assert.Null(model.Raw);
         Assert.False(model.RawData.ContainsKey("raw"));
     }
@@ -266,6 +308,9 @@ public class ElementalChannelNodeTest : TestBase
             If = null,
             Loop = null,
             Ref = null,
+            FontSize = null,
+            LineHeight = null,
+            Padding = null,
             Raw = null,
         };
 
@@ -277,6 +322,12 @@ public class ElementalChannelNodeTest : TestBase
         Assert.True(model.RawData.ContainsKey("loop"));
         Assert.Null(model.Ref);
         Assert.True(model.RawData.ContainsKey("ref"));
+        Assert.Null(model.FontSize);
+        Assert.True(model.RawData.ContainsKey("font_size"));
+        Assert.Null(model.LineHeight);
+        Assert.True(model.RawData.ContainsKey("line_height"));
+        Assert.Null(model.Padding);
+        Assert.True(model.RawData.ContainsKey("padding"));
         Assert.Null(model.Raw);
         Assert.True(model.RawData.ContainsKey("raw"));
     }
@@ -292,6 +343,9 @@ public class ElementalChannelNodeTest : TestBase
             If = null,
             Loop = null,
             Ref = null,
+            FontSize = null,
+            LineHeight = null,
+            Padding = null,
             Raw = null,
         };
 
@@ -308,6 +362,9 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -328,6 +385,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -335,12 +395,18 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         };
 
         string expectedChannel = "email";
+        string expectedFontSize = "font_size";
+        string expectedLineHeight = "line_height";
+        string expectedPadding = "padding";
         Dictionary<string, JsonElement> expectedRaw = new()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
 
         Assert.Equal(expectedChannel, model.Channel);
+        Assert.Equal(expectedFontSize, model.FontSize);
+        Assert.Equal(expectedLineHeight, model.LineHeight);
+        Assert.Equal(expectedPadding, model.Padding);
         Assert.NotNull(model.Raw);
         Assert.Equal(expectedRaw.Count, model.Raw.Count);
         foreach (var item in expectedRaw)
@@ -357,6 +423,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -378,6 +447,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -392,12 +464,18 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         Assert.NotNull(deserialized);
 
         string expectedChannel = "email";
+        string expectedFontSize = "font_size";
+        string expectedLineHeight = "line_height";
+        string expectedPadding = "padding";
         Dictionary<string, JsonElement> expectedRaw = new()
         {
             { "foo", JsonSerializer.SerializeToElement("bar") },
         };
 
         Assert.Equal(expectedChannel, deserialized.Channel);
+        Assert.Equal(expectedFontSize, deserialized.FontSize);
+        Assert.Equal(expectedLineHeight, deserialized.LineHeight);
+        Assert.Equal(expectedPadding, deserialized.Padding);
         Assert.NotNull(deserialized.Raw);
         Assert.Equal(expectedRaw.Count, deserialized.Raw.Count);
         foreach (var item in expectedRaw)
@@ -414,6 +492,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -428,6 +509,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1
         {
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -443,6 +527,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1
         {
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -457,6 +544,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1
         {
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -475,6 +565,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1
         {
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -492,6 +585,12 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1 { Channel = "email" };
 
+        Assert.Null(model.FontSize);
+        Assert.False(model.RawData.ContainsKey("font_size"));
+        Assert.Null(model.LineHeight);
+        Assert.False(model.RawData.ContainsKey("line_height"));
+        Assert.Null(model.Padding);
+        Assert.False(model.RawData.ContainsKey("padding"));
         Assert.Null(model.Raw);
         Assert.False(model.RawData.ContainsKey("raw"));
     }
@@ -511,9 +610,18 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         {
             Channel = "email",
 
+            FontSize = null,
+            LineHeight = null,
+            Padding = null,
             Raw = null,
         };
 
+        Assert.Null(model.FontSize);
+        Assert.True(model.RawData.ContainsKey("font_size"));
+        Assert.Null(model.LineHeight);
+        Assert.True(model.RawData.ContainsKey("line_height"));
+        Assert.Null(model.Padding);
+        Assert.True(model.RawData.ContainsKey("padding"));
         Assert.Null(model.Raw);
         Assert.True(model.RawData.ContainsKey("raw"));
     }
@@ -525,6 +633,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         {
             Channel = "email",
 
+            FontSize = null,
+            LineHeight = null,
+            Padding = null,
             Raw = null,
         };
 
@@ -537,6 +648,9 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Padding = "padding",
             Raw = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
