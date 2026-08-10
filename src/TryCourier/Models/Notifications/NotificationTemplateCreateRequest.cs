@@ -21,15 +21,14 @@ namespace TryCourier.Models.Notifications;
 public sealed record class NotificationTemplateCreateRequest : JsonModel
 {
     /// <summary>
-    /// Core template fields used in POST and PUT request bodies (nested under a `notification`
-    /// key) and returned at the top level in responses.
+    /// Template fields accepted in POST and PUT request bodies, nested under a `notification` key.
     /// </summary>
-    public required NotificationTemplatePayload Notification
+    public required NotificationTemplateWritePayload Notification
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<NotificationTemplatePayload>("notification");
+            return this._rawData.GetNotNullClass<NotificationTemplateWritePayload>("notification");
         }
         init { this._rawData.Set("notification", value); }
     }
@@ -97,7 +96,7 @@ public sealed record class NotificationTemplateCreateRequest : JsonModel
     }
 
     [SetsRequiredMembers]
-    public NotificationTemplateCreateRequest(NotificationTemplatePayload notification)
+    public NotificationTemplateCreateRequest(NotificationTemplateWritePayload notification)
         : this()
     {
         this.Notification = notification;

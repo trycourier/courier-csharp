@@ -33,12 +33,13 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Alias = "alias",
             },
             State = NotificationReplaceParamsState.Published,
         };
 
         string expectedID = "id";
-        NotificationTemplatePayload expectedNotification = new()
+        NotificationTemplateWritePayload expectedNotification = new()
         {
             Brand = new("id"),
             Content = new()
@@ -56,6 +57,7 @@ public class NotificationReplaceParamsTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["updated"],
+            Alias = "alias",
         };
         ApiEnum<string, NotificationReplaceParamsState> expectedState =
             NotificationReplaceParamsState.Published;
@@ -89,6 +91,7 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Alias = "alias",
             },
         };
 
@@ -120,6 +123,7 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Alias = "alias",
             },
 
             // Null should be interpreted as omitted for these properties
@@ -154,6 +158,7 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Alias = "alias",
             },
         };
 
@@ -186,6 +191,7 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Alias = "alias",
             },
             State = NotificationReplaceParamsState.Published,
         };

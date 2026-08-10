@@ -35,11 +35,12 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
         };
 
-        NotificationTemplatePayload expectedNotification = new()
+        NotificationTemplateWritePayload expectedNotification = new()
         {
             Brand = new("id"),
             Content = new()
@@ -61,6 +62,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Alias = "alias",
         };
         ApiEnum<string, NotificationTemplateUpdateRequestState> expectedState =
             NotificationTemplateUpdateRequestState.Draft;
@@ -96,6 +98,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
         };
@@ -136,6 +139,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
         };
@@ -147,7 +151,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        NotificationTemplatePayload expectedNotification = new()
+        NotificationTemplateWritePayload expectedNotification = new()
         {
             Brand = new("id"),
             Content = new()
@@ -169,6 +173,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Alias = "alias",
         };
         ApiEnum<string, NotificationTemplateUpdateRequestState> expectedState =
             NotificationTemplateUpdateRequestState.Draft;
@@ -204,6 +209,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
         };
@@ -238,6 +244,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
         };
 
@@ -272,6 +279,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
         };
 
@@ -305,6 +313,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
 
             // Null should be interpreted as omitted for these properties
@@ -342,6 +351,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
 
             // Null should be interpreted as omitted for these properties
@@ -378,6 +388,7 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
         };

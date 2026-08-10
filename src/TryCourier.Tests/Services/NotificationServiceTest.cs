@@ -29,6 +29,7 @@ public class NotificationServiceTest : TestBase
                     Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                     Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                     Tags = ["onboarding", "welcome"],
+                    Alias = "welcome",
                 },
             },
             TestContext.Current.CancellationToken
@@ -162,6 +163,7 @@ public class NotificationServiceTest : TestBase
                     Routing = new("strategy_id"),
                     Subscription = new("topic_id"),
                     Tags = ["updated"],
+                    Alias = "alias",
                 },
             },
             TestContext.Current.CancellationToken
