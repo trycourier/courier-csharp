@@ -91,6 +91,49 @@ public sealed record class ElementalChannelNode : JsonModel
     }
 
     /// <summary>
+    /// Email only. Document-level base font size (CSS px, e.g. `16px`) for body
+    /// content — text, quote, list and action button labels. Heading styles (`h1`/`h2`/`h3`)
+    /// and `subtext` keep their preset sizes.
+    /// </summary>
+    public string? FontSize
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("font_size");
+        }
+        init { this._rawData.Set("font_size", value); }
+    }
+
+    /// <summary>
+    /// Email only. Document-level line height (CSS px or unitless multiplier, e.g.
+    /// `24px` or `1.5`) applied to all body content unless overridden per block.
+    /// </summary>
+    public string? LineHeight
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("line_height");
+        }
+        init { this._rawData.Set("line_height", value); }
+    }
+
+    /// <summary>
+    /// Email only. Document-level body padding applied once around the email body,
+    /// as a CSS px shorthand (1–4 values), e.g. `48px 64px`.
+    /// </summary>
+    public string? Padding
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("padding");
+        }
+        init { this._rawData.Set("padding", value); }
+    }
+
+    /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is required.
     /// </summary>
@@ -127,6 +170,9 @@ public sealed record class ElementalChannelNode : JsonModel
         _ = this.Loop;
         _ = this.Ref;
         _ = this.Channel;
+        _ = this.FontSize;
+        _ = this.LineHeight;
+        _ = this.Padding;
         _ = this.Raw;
     }
 
@@ -199,6 +245,49 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : JsonModel
     }
 
     /// <summary>
+    /// Email only. Document-level base font size (CSS px, e.g. `16px`) for body
+    /// content — text, quote, list and action button labels. Heading styles (`h1`/`h2`/`h3`)
+    /// and `subtext` keep their preset sizes.
+    /// </summary>
+    public string? FontSize
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("font_size");
+        }
+        init { this._rawData.Set("font_size", value); }
+    }
+
+    /// <summary>
+    /// Email only. Document-level line height (CSS px or unitless multiplier, e.g.
+    /// `24px` or `1.5`) applied to all body content unless overridden per block.
+    /// </summary>
+    public string? LineHeight
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("line_height");
+        }
+        init { this._rawData.Set("line_height", value); }
+    }
+
+    /// <summary>
+    /// Email only. Document-level body padding applied once around the email body,
+    /// as a CSS px shorthand (1–4 values), e.g. `48px 64px`.
+    /// </summary>
+    public string? Padding
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("padding");
+        }
+        init { this._rawData.Set("padding", value); }
+    }
+
+    /// <summary>
     /// Raw data to apply to the channel. If `elements` has not been specified, `raw`
     /// is required.
     /// </summary>
@@ -222,6 +311,9 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : JsonModel
     public override void Validate()
     {
         _ = this.Channel;
+        _ = this.FontSize;
+        _ = this.LineHeight;
+        _ = this.Padding;
         _ = this.Raw;
     }
 

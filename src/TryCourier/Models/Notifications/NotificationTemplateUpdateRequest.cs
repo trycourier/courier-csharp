@@ -11,7 +11,8 @@ namespace TryCourier.Models.Notifications;
 
 /// <summary>
 /// Request body for replacing a notification template. Same shape as create. All
-/// fields required (PUT = full replacement).
+/// fields required (PUT = full replacement), except `alias`, whose omission means
+/// "leave the existing aliases alone".
 /// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<
@@ -22,15 +23,14 @@ namespace TryCourier.Models.Notifications;
 public sealed record class NotificationTemplateUpdateRequest : JsonModel
 {
     /// <summary>
-    /// Core template fields used in POST and PUT request bodies (nested under a `notification`
-    /// key) and returned at the top level in responses.
+    /// Template fields accepted in POST and PUT request bodies, nested under a `notification` key.
     /// </summary>
-    public required NotificationTemplatePayload Notification
+    public required NotificationTemplateWritePayload Notification
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<NotificationTemplatePayload>("notification");
+            return this._rawData.GetNotNullClass<NotificationTemplateWritePayload>("notification");
         }
         init { this._rawData.Set("notification", value); }
     }
@@ -98,7 +98,7 @@ public sealed record class NotificationTemplateUpdateRequest : JsonModel
     }
 
     [SetsRequiredMembers]
-    public NotificationTemplateUpdateRequest(NotificationTemplatePayload notification)
+    public NotificationTemplateUpdateRequest(NotificationTemplateWritePayload notification)
         : this()
     {
         this.Notification = notification;
