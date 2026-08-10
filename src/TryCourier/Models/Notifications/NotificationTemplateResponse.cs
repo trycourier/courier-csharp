@@ -142,13 +142,13 @@ public sealed record class NotificationTemplateResponse : JsonModel
     /// <summary>
     /// The template state. Always uppercase.
     /// </summary>
-    public required ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> State
+    public required ApiEnum<string, NotificationTemplateResponseFieldsState> State
     {
         get
         {
             this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
-                ApiEnum<string, NotificationTemplateResponseIntersectionMember1State>
+                ApiEnum<string, NotificationTemplateResponseFieldsState>
             >("state");
         }
         init { this._rawData.Set("state", value); }
@@ -292,11 +292,11 @@ class NotificationTemplateResponseFromRaw : IFromRawJson<NotificationTemplateRes
 
 [JsonConverter(
     typeof(JsonModelConverter<
-        NotificationTemplateResponseIntersectionMember1,
-        NotificationTemplateResponseIntersectionMember1FromRaw
+        NotificationTemplateResponseFields,
+        NotificationTemplateResponseFieldsFromRaw
     >)
 )]
-public sealed record class NotificationTemplateResponseIntersectionMember1 : JsonModel
+public sealed record class NotificationTemplateResponseFields : JsonModel
 {
     /// <summary>
     /// The template ID.
@@ -340,13 +340,13 @@ public sealed record class NotificationTemplateResponseIntersectionMember1 : Jso
     /// <summary>
     /// The template state. Always uppercase.
     /// </summary>
-    public required ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> State
+    public required ApiEnum<string, NotificationTemplateResponseFieldsState> State
     {
         get
         {
             this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
-                ApiEnum<string, NotificationTemplateResponseIntersectionMember1State>
+                ApiEnum<string, NotificationTemplateResponseFieldsState>
             >("state");
         }
         init { this._rawData.Set("state", value); }
@@ -431,33 +431,31 @@ public sealed record class NotificationTemplateResponseIntersectionMember1 : Jso
         _ = this.Updater;
     }
 
-    public NotificationTemplateResponseIntersectionMember1() { }
+    public NotificationTemplateResponseFields() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public NotificationTemplateResponseIntersectionMember1(
-        NotificationTemplateResponseIntersectionMember1 notificationTemplateResponseIntersectionMember1
+    public NotificationTemplateResponseFields(
+        NotificationTemplateResponseFields notificationTemplateResponseFields
     )
-        : base(notificationTemplateResponseIntersectionMember1) { }
+        : base(notificationTemplateResponseFields) { }
 #pragma warning restore CS8618
 
-    public NotificationTemplateResponseIntersectionMember1(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    public NotificationTemplateResponseFields(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    NotificationTemplateResponseIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
+    NotificationTemplateResponseFields(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="NotificationTemplateResponseIntersectionMember1FromRaw.FromRawUnchecked"/>
-    public static NotificationTemplateResponseIntersectionMember1 FromRawUnchecked(
+    /// <inheritdoc cref="NotificationTemplateResponseFieldsFromRaw.FromRawUnchecked"/>
+    public static NotificationTemplateResponseFields FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -465,29 +463,28 @@ public sealed record class NotificationTemplateResponseIntersectionMember1 : Jso
     }
 }
 
-class NotificationTemplateResponseIntersectionMember1FromRaw
-    : IFromRawJson<NotificationTemplateResponseIntersectionMember1>
+class NotificationTemplateResponseFieldsFromRaw : IFromRawJson<NotificationTemplateResponseFields>
 {
     /// <inheritdoc/>
-    public NotificationTemplateResponseIntersectionMember1 FromRawUnchecked(
+    public NotificationTemplateResponseFields FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => NotificationTemplateResponseIntersectionMember1.FromRawUnchecked(rawData);
+    ) => NotificationTemplateResponseFields.FromRawUnchecked(rawData);
 }
 
 /// <summary>
 /// The template state. Always uppercase.
 /// </summary>
-[JsonConverter(typeof(NotificationTemplateResponseIntersectionMember1StateConverter))]
-public enum NotificationTemplateResponseIntersectionMember1State
+[JsonConverter(typeof(NotificationTemplateResponseFieldsStateConverter))]
+public enum NotificationTemplateResponseFieldsState
 {
     Draft,
     Published,
 }
 
-sealed class NotificationTemplateResponseIntersectionMember1StateConverter
-    : JsonConverter<NotificationTemplateResponseIntersectionMember1State>
+sealed class NotificationTemplateResponseFieldsStateConverter
+    : JsonConverter<NotificationTemplateResponseFieldsState>
 {
-    public override NotificationTemplateResponseIntersectionMember1State Read(
+    public override NotificationTemplateResponseFieldsState Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -495,15 +492,15 @@ sealed class NotificationTemplateResponseIntersectionMember1StateConverter
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "DRAFT" => NotificationTemplateResponseIntersectionMember1State.Draft,
-            "PUBLISHED" => NotificationTemplateResponseIntersectionMember1State.Published,
-            _ => (NotificationTemplateResponseIntersectionMember1State)(-1),
+            "DRAFT" => NotificationTemplateResponseFieldsState.Draft,
+            "PUBLISHED" => NotificationTemplateResponseFieldsState.Published,
+            _ => (NotificationTemplateResponseFieldsState)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        NotificationTemplateResponseIntersectionMember1State value,
+        NotificationTemplateResponseFieldsState value,
         JsonSerializerOptions options
     )
     {
@@ -511,8 +508,8 @@ sealed class NotificationTemplateResponseIntersectionMember1StateConverter
             writer,
             value switch
             {
-                NotificationTemplateResponseIntersectionMember1State.Draft => "DRAFT",
-                NotificationTemplateResponseIntersectionMember1State.Published => "PUBLISHED",
+                NotificationTemplateResponseFieldsState.Draft => "DRAFT",
+                NotificationTemplateResponseFieldsState.Published => "PUBLISHED",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

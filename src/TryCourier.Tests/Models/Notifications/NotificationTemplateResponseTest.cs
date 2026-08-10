@@ -37,7 +37,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -66,8 +66,8 @@ public class NotificationTemplateResponseTest : TestBase
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
-        ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> expectedState =
-            NotificationTemplateResponseIntersectionMember1State.Draft;
+        ApiEnum<string, NotificationTemplateResponseFieldsState> expectedState =
+            NotificationTemplateResponseFieldsState.Draft;
         NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
@@ -119,7 +119,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -162,7 +162,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -198,8 +198,8 @@ public class NotificationTemplateResponseTest : TestBase
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
-        ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> expectedState =
-            NotificationTemplateResponseIntersectionMember1State.Draft;
+        ApiEnum<string, NotificationTemplateResponseFieldsState> expectedState =
+            NotificationTemplateResponseFieldsState.Draft;
         NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
@@ -251,7 +251,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -288,7 +288,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
         };
 
         Assert.Null(model.Alias);
@@ -327,7 +327,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
         };
 
         model.Validate();
@@ -361,7 +361,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -405,7 +405,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -444,7 +444,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -456,17 +456,17 @@ public class NotificationTemplateResponseTest : TestBase
     }
 }
 
-public class NotificationTemplateResponseIntersectionMember1Test : TestBase
+public class NotificationTemplateResponseFieldsTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -475,8 +475,8 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
-        ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> expectedState =
-            NotificationTemplateResponseIntersectionMember1State.Draft;
+        ApiEnum<string, NotificationTemplateResponseFieldsState> expectedState =
+            NotificationTemplateResponseFieldsState.Draft;
         NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
@@ -493,23 +493,22 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized =
-            JsonSerializer.Deserialize<NotificationTemplateResponseIntersectionMember1>(
-                json,
-                ModelBase.SerializerOptions
-            );
+        var deserialized = JsonSerializer.Deserialize<NotificationTemplateResponseFields>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -517,30 +516,29 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized =
-            JsonSerializer.Deserialize<NotificationTemplateResponseIntersectionMember1>(
-                element,
-                ModelBase.SerializerOptions
-            );
+        var deserialized = JsonSerializer.Deserialize<NotificationTemplateResponseFields>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
-        ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> expectedState =
-            NotificationTemplateResponseIntersectionMember1State.Draft;
+        ApiEnum<string, NotificationTemplateResponseFieldsState> expectedState =
+            NotificationTemplateResponseFieldsState.Draft;
         NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
@@ -557,12 +555,12 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -574,12 +572,12 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
         };
 
         Assert.Null(model.Alias);
@@ -593,12 +591,12 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
         };
 
         model.Validate();
@@ -607,12 +605,12 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -631,12 +629,12 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -650,32 +648,32 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new NotificationTemplateResponseIntersectionMember1
+        var model = new NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            State = NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
-        NotificationTemplateResponseIntersectionMember1 copied = new(model);
+        NotificationTemplateResponseFields copied = new(model);
 
         Assert.Equal(model, copied);
     }
 }
 
-public class NotificationTemplateResponseIntersectionMember1StateTest : TestBase
+public class NotificationTemplateResponseFieldsStateTest : TestBase
 {
     [Theory]
-    [InlineData(NotificationTemplateResponseIntersectionMember1State.Draft)]
-    [InlineData(NotificationTemplateResponseIntersectionMember1State.Published)]
-    public void Validation_Works(NotificationTemplateResponseIntersectionMember1State rawValue)
+    [InlineData(NotificationTemplateResponseFieldsState.Draft)]
+    [InlineData(NotificationTemplateResponseFieldsState.Published)]
+    public void Validation_Works(NotificationTemplateResponseFieldsState rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> value = rawValue;
+        ApiEnum<string, NotificationTemplateResponseFieldsState> value = rawValue;
         value.Validate();
     }
 
@@ -683,7 +681,7 @@ public class NotificationTemplateResponseIntersectionMember1StateTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateResponseIntersectionMember1State>
+            ApiEnum<string, NotificationTemplateResponseFieldsState>
         >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
@@ -691,18 +689,16 @@ public class NotificationTemplateResponseIntersectionMember1StateTest : TestBase
     }
 
     [Theory]
-    [InlineData(NotificationTemplateResponseIntersectionMember1State.Draft)]
-    [InlineData(NotificationTemplateResponseIntersectionMember1State.Published)]
-    public void SerializationRoundtrip_Works(
-        NotificationTemplateResponseIntersectionMember1State rawValue
-    )
+    [InlineData(NotificationTemplateResponseFieldsState.Draft)]
+    [InlineData(NotificationTemplateResponseFieldsState.Published)]
+    public void SerializationRoundtrip_Works(NotificationTemplateResponseFieldsState rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> value = rawValue;
+        ApiEnum<string, NotificationTemplateResponseFieldsState> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateResponseIntersectionMember1State>
+            ApiEnum<string, NotificationTemplateResponseFieldsState>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
@@ -712,11 +708,11 @@ public class NotificationTemplateResponseIntersectionMember1StateTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateResponseIntersectionMember1State>
+            ApiEnum<string, NotificationTemplateResponseFieldsState>
         >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateResponseIntersectionMember1State>
+            ApiEnum<string, NotificationTemplateResponseFieldsState>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
