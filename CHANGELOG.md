@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.22.0 (2026-08-10)
+
+Full Changelog: [v5.21.0...v5.22.0](https://github.com/trycourier/courier-csharp/compare/v5.21.0...v5.22.0)
+
+### Features
+
+* Merge pull request [#178](https://github.com/trycourier/courier-csharp/issues/178) from trycourier/geraldosilva/c-19484-elemental-formatting-controls ([1112c39](https://github.com/trycourier/courier-csharp/commit/1112c39dfa8566104f4848b9696acafa47178512))
+* Merge pull request [#185](https://github.com/trycourier/courier-csharp/issues/185) from trycourier/geraldosilva/c-19821-notifications-alias-v2 ([9d7a90d](https://github.com/trycourier/courier-csharp/commit/9d7a90d01366214a73d19787e3811128e2df6b4e))
+* Merge pull request [#187](https://github.com/trycourier/courier-csharp/issues/187) from trycourier/geraldosilva/name-notification-template-response-fields ([1cccae3](https://github.com/trycourier/courier-csharp/commit/1cccae364bc504bbb2182135868c4946816ef0a9))
+
 ## 5.21.0 (2026-08-03)
 
 Full Changelog: [v5.20.0...v5.21.0](https://github.com/trycourier/courier-csharp/compare/v5.20.0...v5.21.0)
