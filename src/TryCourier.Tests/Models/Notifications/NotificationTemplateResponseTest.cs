@@ -38,6 +38,7 @@ public class NotificationTemplateResponseTest : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -67,6 +68,7 @@ public class NotificationTemplateResponseTest : TestBase
         string expectedCreator = "creator";
         ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> expectedState =
             NotificationTemplateResponseIntersectionMember1State.Draft;
+        NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -84,6 +86,7 @@ public class NotificationTemplateResponseTest : TestBase
         Assert.Equal(expectedCreated, model.Created);
         Assert.Equal(expectedCreator, model.Creator);
         Assert.Equal(expectedState, model.State);
+        Assert.Equal(expectedAlias, model.Alias);
         Assert.Equal(expectedUpdated, model.Updated);
         Assert.Equal(expectedUpdater, model.Updater);
     }
@@ -117,6 +120,7 @@ public class NotificationTemplateResponseTest : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -159,6 +163,7 @@ public class NotificationTemplateResponseTest : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -195,6 +200,7 @@ public class NotificationTemplateResponseTest : TestBase
         string expectedCreator = "creator";
         ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> expectedState =
             NotificationTemplateResponseIntersectionMember1State.Draft;
+        NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -212,6 +218,7 @@ public class NotificationTemplateResponseTest : TestBase
         Assert.Equal(expectedCreated, deserialized.Created);
         Assert.Equal(expectedCreator, deserialized.Creator);
         Assert.Equal(expectedState, deserialized.State);
+        Assert.Equal(expectedAlias, deserialized.Alias);
         Assert.Equal(expectedUpdated, deserialized.Updated);
         Assert.Equal(expectedUpdater, deserialized.Updater);
     }
@@ -245,6 +252,7 @@ public class NotificationTemplateResponseTest : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -283,6 +291,8 @@ public class NotificationTemplateResponseTest : TestBase
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
         };
 
+        Assert.Null(model.Alias);
+        Assert.False(model.RawData.ContainsKey("alias"));
         Assert.Null(model.Updated);
         Assert.False(model.RawData.ContainsKey("updated"));
         Assert.Null(model.Updater);
@@ -354,10 +364,13 @@ public class NotificationTemplateResponseTest : TestBase
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
 
             // Null should be interpreted as omitted for these properties
+            Alias = null,
             Updated = null,
             Updater = null,
         };
 
+        Assert.Null(model.Alias);
+        Assert.False(model.RawData.ContainsKey("alias"));
         Assert.Null(model.Updated);
         Assert.False(model.RawData.ContainsKey("updated"));
         Assert.Null(model.Updater);
@@ -395,6 +408,7 @@ public class NotificationTemplateResponseTest : TestBase
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
 
             // Null should be interpreted as omitted for these properties
+            Alias = null,
             Updated = null,
             Updater = null,
         };
@@ -431,6 +445,7 @@ public class NotificationTemplateResponseTest : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -452,6 +467,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -461,6 +477,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
         string expectedCreator = "creator";
         ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> expectedState =
             NotificationTemplateResponseIntersectionMember1State.Draft;
+        NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -468,6 +485,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
         Assert.Equal(expectedCreated, model.Created);
         Assert.Equal(expectedCreator, model.Creator);
         Assert.Equal(expectedState, model.State);
+        Assert.Equal(expectedAlias, model.Alias);
         Assert.Equal(expectedUpdated, model.Updated);
         Assert.Equal(expectedUpdater, model.Updater);
     }
@@ -481,6 +499,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -504,6 +523,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -521,6 +541,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
         string expectedCreator = "creator";
         ApiEnum<string, NotificationTemplateResponseIntersectionMember1State> expectedState =
             NotificationTemplateResponseIntersectionMember1State.Draft;
+        NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -528,6 +549,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
         Assert.Equal(expectedCreated, deserialized.Created);
         Assert.Equal(expectedCreator, deserialized.Creator);
         Assert.Equal(expectedState, deserialized.State);
+        Assert.Equal(expectedAlias, deserialized.Alias);
         Assert.Equal(expectedUpdated, deserialized.Updated);
         Assert.Equal(expectedUpdater, deserialized.Updater);
     }
@@ -541,6 +563,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
@@ -559,6 +582,8 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
         };
 
+        Assert.Null(model.Alias);
+        Assert.False(model.RawData.ContainsKey("alias"));
         Assert.Null(model.Updated);
         Assert.False(model.RawData.ContainsKey("updated"));
         Assert.Null(model.Updater);
@@ -590,10 +615,13 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
 
             // Null should be interpreted as omitted for these properties
+            Alias = null,
             Updated = null,
             Updater = null,
         };
 
+        Assert.Null(model.Alias);
+        Assert.False(model.RawData.ContainsKey("alias"));
         Assert.Null(model.Updated);
         Assert.False(model.RawData.ContainsKey("updated"));
         Assert.Null(model.Updater);
@@ -611,6 +639,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
 
             // Null should be interpreted as omitted for these properties
+            Alias = null,
             Updated = null,
             Updater = null,
         };
@@ -627,6 +656,7 @@ public class NotificationTemplateResponseIntersectionMember1Test : TestBase
             Created = 0,
             Creator = "creator",
             State = NotificationTemplateResponseIntersectionMember1State.Draft,
+            Alias = "string",
             Updated = 0,
             Updater = "updater",
         };

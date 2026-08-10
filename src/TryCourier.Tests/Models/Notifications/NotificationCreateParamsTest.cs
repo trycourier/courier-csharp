@@ -33,13 +33,14 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Alias = "welcome",
             },
             State = State.Draft,
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
         };
 
-        NotificationTemplatePayload expectedNotification = new()
+        NotificationTemplateWritePayload expectedNotification = new()
         {
             Brand = new("bnd_01kx4mrd0pfzw8wt7pn7p2fzag"),
             Content = new()
@@ -57,6 +58,7 @@ public class NotificationCreateParamsTest : TestBase
             Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
             Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
             Tags = ["onboarding", "welcome"],
+            Alias = "welcome",
         };
         ApiEnum<string, State> expectedState = State.Draft;
         string expectedIdempotencyKey = "order-ORD-456-user-123";
@@ -91,6 +93,7 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Alias = "welcome",
             },
         };
 
@@ -125,6 +128,7 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Alias = "welcome",
             },
 
             // Null should be interpreted as omitted for these properties
@@ -164,6 +168,7 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Alias = "welcome",
             },
         };
 
@@ -196,6 +201,7 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Alias = "welcome",
             },
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
@@ -233,6 +239,7 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Alias = "welcome",
             },
             State = State.Draft,
             IdempotencyKey = "order-ORD-456-user-123",

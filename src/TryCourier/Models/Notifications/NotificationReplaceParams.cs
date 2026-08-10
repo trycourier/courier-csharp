@@ -30,15 +30,16 @@ public record class NotificationReplaceParams : ParamsBase
     public string? ID { get; init; }
 
     /// <summary>
-    /// Core template fields used in POST and PUT request bodies (nested under a `notification`
-    /// key) and returned at the top level in responses.
+    /// Template fields accepted in POST and PUT request bodies, nested under a `notification` key.
     /// </summary>
-    public required NotificationTemplatePayload Notification
+    public required NotificationTemplateWritePayload Notification
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNotNullClass<NotificationTemplatePayload>("notification");
+            return this._rawBodyData.GetNotNullClass<NotificationTemplateWritePayload>(
+                "notification"
+            );
         }
         init { this._rawBodyData.Set("notification", value); }
     }

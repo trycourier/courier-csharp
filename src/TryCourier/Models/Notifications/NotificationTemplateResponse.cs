@@ -155,6 +155,31 @@ public sealed record class NotificationTemplateResponse : JsonModel
     }
 
     /// <summary>
+    /// A template's send-time alias as returned by a read, omitted entirely when
+    /// it has none. Usually a single string; an array for a template that resolves
+    /// from several aliases, which writes through this API can no longer produce
+    /// — only templates predating that restriction, or aliases attached outside
+    /// this API, hold more than one.
+    /// </summary>
+    public NotificationTemplateAlias? Alias
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<NotificationTemplateAlias>("alias");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("alias", value);
+        }
+    }
+
+    /// <summary>
     /// Epoch milliseconds of last update.
     /// </summary>
     public long? Updated
@@ -222,6 +247,7 @@ public sealed record class NotificationTemplateResponse : JsonModel
         _ = this.Created;
         _ = this.Creator;
         this.State.Validate();
+        this.Alias?.Validate();
         _ = this.Updated;
         _ = this.Updater;
     }
@@ -327,6 +353,31 @@ public sealed record class NotificationTemplateResponseIntersectionMember1 : Jso
     }
 
     /// <summary>
+    /// A template's send-time alias as returned by a read, omitted entirely when
+    /// it has none. Usually a single string; an array for a template that resolves
+    /// from several aliases, which writes through this API can no longer produce
+    /// — only templates predating that restriction, or aliases attached outside
+    /// this API, hold more than one.
+    /// </summary>
+    public NotificationTemplateAlias? Alias
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<NotificationTemplateAlias>("alias");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("alias", value);
+        }
+    }
+
+    /// <summary>
     /// Epoch milliseconds of last update.
     /// </summary>
     public long? Updated
@@ -375,6 +426,7 @@ public sealed record class NotificationTemplateResponseIntersectionMember1 : Jso
         _ = this.Created;
         _ = this.Creator;
         this.State.Validate();
+        this.Alias?.Validate();
         _ = this.Updated;
         _ = this.Updater;
     }
