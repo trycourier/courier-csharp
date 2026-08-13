@@ -31,7 +31,7 @@ public class SubscriptionSubscribeUserParamsTest : TestBase
                 Notifications = new Dictionary<string, NotificationPreferenceDetails>()
                 {
                     {
-                        "foo",
+                        "nt_01kx4h2jdafq8bk9aftxak4b40",
                         new()
                         {
                             Status = PreferenceStatus.OptedIn,
@@ -62,7 +62,7 @@ public class SubscriptionSubscribeUserParamsTest : TestBase
             Notifications = new Dictionary<string, NotificationPreferenceDetails>()
             {
                 {
-                    "foo",
+                    "nt_01kx4h2jdafq8bk9aftxak4b40",
                     new()
                     {
                         Status = PreferenceStatus.OptedIn,
@@ -149,7 +149,7 @@ public class SubscriptionSubscribeUserParamsTest : TestBase
                 Notifications = new Dictionary<string, NotificationPreferenceDetails>()
                 {
                     {
-                        "foo",
+                        "nt_01kx4h2jdafq8bk9aftxak4b40",
                         new()
                         {
                             Status = PreferenceStatus.OptedIn,

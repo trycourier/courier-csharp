@@ -18,7 +18,7 @@ public class CheckUpdateParamsTest : TestBase
             [
                 new()
                 {
-                    ID = "id",
+                    ID = "abc-123",
                     Status = Notifications::Status.Resolved,
                     Type = Notifications::Type.Custom,
                 },
@@ -31,7 +31,7 @@ public class CheckUpdateParamsTest : TestBase
         [
             new()
             {
-                ID = "id",
+                ID = "abc-123",
                 Status = Notifications::Status.Resolved,
                 Type = Notifications::Type.Custom,
             },
@@ -57,7 +57,7 @@ public class CheckUpdateParamsTest : TestBase
             [
                 new()
                 {
-                    ID = "id",
+                    ID = "abc-123",
                     Status = Notifications::Status.Resolved,
                     Type = Notifications::Type.Custom,
                 },
@@ -85,7 +85,7 @@ public class CheckUpdateParamsTest : TestBase
             [
                 new()
                 {
-                    ID = "id",
+                    ID = "abc-123",
                     Status = Notifications::Status.Resolved,
                     Type = Notifications::Type.Custom,
                 },

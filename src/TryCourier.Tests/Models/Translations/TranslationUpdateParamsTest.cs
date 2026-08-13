@@ -12,12 +12,12 @@ public class TranslationUpdateParamsTest : TestBase
         {
             Domain = "domain",
             Locale = "locale",
-            Body = "body",
+            Body = "msgid \"Hello\"\nmsgstr \"Hola\"",
         };
 
         string expectedDomain = "domain";
         string expectedLocale = "locale";
-        string expectedBody = "body";
+        string expectedBody = "msgid \"Hello\"\nmsgstr \"Hola\"";
 
         Assert.Equal(expectedDomain, parameters.Domain);
         Assert.Equal(expectedLocale, parameters.Locale);
@@ -31,7 +31,7 @@ public class TranslationUpdateParamsTest : TestBase
         {
             Domain = "domain",
             Locale = "locale",
-            Body = "body",
+            Body = "msgid \"Hello\"\nmsgstr \"Hola\"",
         };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
@@ -48,7 +48,7 @@ public class TranslationUpdateParamsTest : TestBase
         {
             Domain = "domain",
             Locale = "locale",
-            Body = "body",
+            Body = "msgid \"Hello\"\nmsgstr \"Hola\"",
         };
 
         TranslationUpdateParams copied = new(parameters);

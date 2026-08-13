@@ -15,12 +15,12 @@ public class BulkCreateJobParamsTest : TestBase
         {
             Message = new()
             {
-                Event = "event",
-                Brand = "brand",
+                Event = "welcome-series",
+                Brand = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
                 Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    { "campaign", JsonSerializer.SerializeToElement("bar") },
                 },
                 Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
@@ -42,12 +42,12 @@ public class BulkCreateJobParamsTest : TestBase
 
         InboundBulkMessage expectedMessage = new()
         {
-            Event = "event",
-            Brand = "brand",
+            Event = "welcome-series",
+            Brand = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
             Content = new ElementalContentSugar() { Body = "body", Title = "title" },
             Data = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "campaign", JsonSerializer.SerializeToElement("bar") },
             },
             Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
             {
@@ -76,12 +76,12 @@ public class BulkCreateJobParamsTest : TestBase
         {
             Message = new()
             {
-                Event = "event",
-                Brand = "brand",
+                Event = "welcome-series",
+                Brand = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
                 Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    { "campaign", JsonSerializer.SerializeToElement("bar") },
                 },
                 Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {
@@ -113,12 +113,12 @@ public class BulkCreateJobParamsTest : TestBase
         {
             Message = new()
             {
-                Event = "event",
-                Brand = "brand",
+                Event = "welcome-series",
+                Brand = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
                 Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                 Data = new Dictionary<string, JsonElement>()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    { "campaign", JsonSerializer.SerializeToElement("bar") },
                 },
                 Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                 {

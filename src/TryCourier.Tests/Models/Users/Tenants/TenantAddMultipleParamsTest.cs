@@ -18,7 +18,17 @@ public class TenantAddMultipleParamsTest : TestBase
             [
                 new()
                 {
-                    TenantID = "tenant_id",
+                    TenantID = "tenant_abc",
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Type = Tenants::Type.User,
+                    UserID = "user_id",
+                },
+                new()
+                {
+                    TenantID = "tenant_def",
                     Profile = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -34,7 +44,17 @@ public class TenantAddMultipleParamsTest : TestBase
         [
             new()
             {
-                TenantID = "tenant_id",
+                TenantID = "tenant_abc",
+                Profile = new Dictionary<string, JsonElement>()
+                {
+                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                },
+                Type = Tenants::Type.User,
+                UserID = "user_id",
+            },
+            new()
+            {
+                TenantID = "tenant_def",
                 Profile = new Dictionary<string, JsonElement>()
                 {
                     { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -62,7 +82,17 @@ public class TenantAddMultipleParamsTest : TestBase
             [
                 new()
                 {
-                    TenantID = "tenant_id",
+                    TenantID = "tenant_abc",
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Type = Tenants::Type.User,
+                    UserID = "user_id",
+                },
+                new()
+                {
+                    TenantID = "tenant_def",
                     Profile = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -90,7 +120,17 @@ public class TenantAddMultipleParamsTest : TestBase
             [
                 new()
                 {
-                    TenantID = "tenant_id",
+                    TenantID = "tenant_abc",
+                    Profile = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
+                    Type = Tenants::Type.User,
+                    UserID = "user_id",
+                },
+                new()
+                {
+                    TenantID = "tenant_def",
                     Profile = new Dictionary<string, JsonElement>()
                     {
                         { "foo", JsonSerializer.SerializeToElement("bar") },

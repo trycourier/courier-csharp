@@ -19,7 +19,7 @@ public class TranslationServiceTest : TestBase
     {
         await this.client.Translations.Update(
             "locale",
-            new() { Domain = "domain", Body = "body" },
+            new() { Domain = "domain", Body = "msgid \"Hello\"\nmsgstr \"Hola\"" },
             TestContext.Current.CancellationToken
         );
     }

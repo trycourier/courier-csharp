@@ -20,7 +20,7 @@ public class ListServiceTest : TestBase
     {
         await this.client.Lists.Update(
             "list_id",
-            new() { Name = "name" },
+            new() { Name = "Product Updates" },
             TestContext.Current.CancellationToken
         );
     }

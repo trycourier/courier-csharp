@@ -8,7 +8,7 @@ public class ProviderServiceTest : TestBase
     public async Task Create_Works()
     {
         var provider = await this.client.Providers.Create(
-            new() { Provider = "provider" },
+            new() { Provider = "sendgrid" },
             TestContext.Current.CancellationToken
         );
         provider.Validate();
@@ -30,7 +30,7 @@ public class ProviderServiceTest : TestBase
     {
         var provider = await this.client.Providers.Update(
             "id",
-            new() { Provider = "provider" },
+            new() { Provider = "sendgrid" },
             TestContext.Current.CancellationToken
         );
         provider.Validate();

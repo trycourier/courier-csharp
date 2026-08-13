@@ -13,23 +13,23 @@ public class ProviderUpdateParamsTest : TestBase
         var parameters = new ProviderUpdateParams
         {
             ID = "id",
-            Provider = "provider",
+            Provider = "sendgrid",
             Alias = "alias",
             Settings = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "api_key", JsonSerializer.SerializeToElement("bar") },
             },
-            Title = "title",
+            Title = "Production SendGrid",
         };
 
         string expectedID = "id";
-        string expectedProvider = "provider";
+        string expectedProvider = "sendgrid";
         string expectedAlias = "alias";
         Dictionary<string, JsonElement> expectedSettings = new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
+            { "api_key", JsonSerializer.SerializeToElement("bar") },
         };
-        string expectedTitle = "title";
+        string expectedTitle = "Production SendGrid";
 
         Assert.Equal(expectedID, parameters.ID);
         Assert.Equal(expectedProvider, parameters.Provider);
@@ -48,7 +48,7 @@ public class ProviderUpdateParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new ProviderUpdateParams { ID = "id", Provider = "provider" };
+        var parameters = new ProviderUpdateParams { ID = "id", Provider = "sendgrid" };
 
         Assert.Null(parameters.Alias);
         Assert.False(parameters.RawBodyData.ContainsKey("alias"));
@@ -64,7 +64,7 @@ public class ProviderUpdateParamsTest : TestBase
         var parameters = new ProviderUpdateParams
         {
             ID = "id",
-            Provider = "provider",
+            Provider = "sendgrid",
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -83,7 +83,7 @@ public class ProviderUpdateParamsTest : TestBase
     [Fact]
     public void Url_Works()
     {
-        ProviderUpdateParams parameters = new() { ID = "id", Provider = "provider" };
+        ProviderUpdateParams parameters = new() { ID = "id", Provider = "sendgrid" };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
@@ -96,13 +96,13 @@ public class ProviderUpdateParamsTest : TestBase
         var parameters = new ProviderUpdateParams
         {
             ID = "id",
-            Provider = "provider",
+            Provider = "sendgrid",
             Alias = "alias",
             Settings = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "api_key", JsonSerializer.SerializeToElement("bar") },
             },
-            Title = "title",
+            Title = "Production SendGrid",
         };
 
         ProviderUpdateParams copied = new(parameters);

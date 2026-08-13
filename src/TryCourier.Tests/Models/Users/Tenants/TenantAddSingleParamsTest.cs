@@ -16,7 +16,7 @@ public class TenantAddSingleParamsTest : TestBase
             TenantID = "tenant_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "role", JsonSerializer.SerializeToElement("bar") },
             },
         };
 
@@ -24,7 +24,7 @@ public class TenantAddSingleParamsTest : TestBase
         string expectedTenantID = "tenant_id";
         Dictionary<string, JsonElement> expectedProfile = new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
+            { "role", JsonSerializer.SerializeToElement("bar") },
         };
 
         Assert.Equal(expectedUserID, parameters.UserID);
@@ -87,7 +87,7 @@ public class TenantAddSingleParamsTest : TestBase
             TenantID = "tenant_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "role", JsonSerializer.SerializeToElement("bar") },
             },
         };
 

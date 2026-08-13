@@ -60,8 +60,8 @@ public class TopicServiceTest : TestBase
                 new()
                 {
                     SectionID = "section_id",
-                    DefaultStatus = TopicReplaceParamsDefaultStatus.OptedOut,
-                    Name = "name",
+                    DefaultStatus = TopicReplaceParamsDefaultStatus.OptedIn,
+                    Name = "Product Updates",
                 },
                 TestContext.Current.CancellationToken
             );

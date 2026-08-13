@@ -60,7 +60,7 @@ public class WorkspacePreferenceServiceTest : TestBase
     {
         var workspacePreferenceGetResponse = await this.client.WorkspacePreferences.Replace(
             "section_id",
-            new() { Name = "name" },
+            new() { Name = "Account Notifications" },
             TestContext.Current.CancellationToken
         );
         workspacePreferenceGetResponse.Validate();

@@ -11,10 +11,10 @@ public class BrandUpdateParamsTest : TestBase
         var parameters = new BrandUpdateParams
         {
             BrandID = "brand_id",
-            Name = "name",
+            Name = "My Brand",
             Settings = new()
             {
-                Colors = new() { Primary = "primary", Secondary = "secondary" },
+                Colors = new() { Primary = "#9D3789", Secondary = "#FFFFFF" },
                 Email = new()
                 {
                     Footer = new() { Content = "content", InheritDefault = true },
@@ -63,10 +63,10 @@ public class BrandUpdateParamsTest : TestBase
         };
 
         string expectedBrandID = "brand_id";
-        string expectedName = "name";
+        string expectedName = "My Brand";
         BrandSettings expectedSettings = new()
         {
-            Colors = new() { Primary = "primary", Secondary = "secondary" },
+            Colors = new() { Primary = "#9D3789", Secondary = "#FFFFFF" },
             Email = new()
             {
                 Footer = new() { Content = "content", InheritDefault = true },
@@ -125,7 +125,7 @@ public class BrandUpdateParamsTest : TestBase
     [Fact]
     public void OptionalNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new BrandUpdateParams { BrandID = "brand_id", Name = "name" };
+        var parameters = new BrandUpdateParams { BrandID = "brand_id", Name = "My Brand" };
 
         Assert.Null(parameters.Settings);
         Assert.False(parameters.RawBodyData.ContainsKey("settings"));
@@ -139,7 +139,7 @@ public class BrandUpdateParamsTest : TestBase
         var parameters = new BrandUpdateParams
         {
             BrandID = "brand_id",
-            Name = "name",
+            Name = "My Brand",
 
             Settings = null,
             Snippets = null,
@@ -154,7 +154,7 @@ public class BrandUpdateParamsTest : TestBase
     [Fact]
     public void Url_Works()
     {
-        BrandUpdateParams parameters = new() { BrandID = "brand_id", Name = "name" };
+        BrandUpdateParams parameters = new() { BrandID = "brand_id", Name = "My Brand" };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
@@ -167,10 +167,10 @@ public class BrandUpdateParamsTest : TestBase
         var parameters = new BrandUpdateParams
         {
             BrandID = "brand_id",
-            Name = "name",
+            Name = "My Brand",
             Settings = new()
             {
-                Colors = new() { Primary = "primary", Secondary = "secondary" },
+                Colors = new() { Primary = "#9D3789", Secondary = "#FFFFFF" },
                 Email = new()
                 {
                     Footer = new() { Content = "content", InheritDefault = true },

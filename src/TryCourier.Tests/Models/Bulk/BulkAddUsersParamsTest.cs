@@ -18,7 +18,13 @@ public class BulkAddUsersParamsTest : TestBase
             [
                 new()
                 {
-                    Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Data = JsonSerializer.Deserialize<JsonElement>(
+                        """
+                        {
+                          "name": "Jane"
+                        }
+                        """
+                    ),
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -48,9 +54,9 @@ public class BulkAddUsersParamsTest : TestBase
                     },
                     Profile = new Dictionary<string, JsonElement>()
                     {
-                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                        { "email", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Recipient = "recipient",
+                    Recipient = "user_abc",
                     To = new()
                     {
                         AccountID = "account_id",
@@ -111,7 +117,13 @@ public class BulkAddUsersParamsTest : TestBase
         [
             new()
             {
-                Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                Data = JsonSerializer.Deserialize<JsonElement>(
+                    """
+                    {
+                      "name": "Jane"
+                    }
+                    """
+                ),
                 Preferences = new()
                 {
                     Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -141,9 +153,9 @@ public class BulkAddUsersParamsTest : TestBase
                 },
                 Profile = new Dictionary<string, JsonElement>()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    { "email", JsonSerializer.SerializeToElement("bar") },
                 },
-                Recipient = "recipient",
+                Recipient = "user_abc",
                 To = new()
                 {
                     AccountID = "account_id",
@@ -210,7 +222,13 @@ public class BulkAddUsersParamsTest : TestBase
             [
                 new()
                 {
-                    Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Data = JsonSerializer.Deserialize<JsonElement>(
+                        """
+                        {
+                          "name": "Jane"
+                        }
+                        """
+                    ),
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -240,9 +258,9 @@ public class BulkAddUsersParamsTest : TestBase
                     },
                     Profile = new Dictionary<string, JsonElement>()
                     {
-                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                        { "email", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Recipient = "recipient",
+                    Recipient = "user_abc",
                     To = new()
                     {
                         AccountID = "account_id",
@@ -313,7 +331,13 @@ public class BulkAddUsersParamsTest : TestBase
             [
                 new()
                 {
-                    Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                    Data = JsonSerializer.Deserialize<JsonElement>(
+                        """
+                        {
+                          "name": "Jane"
+                        }
+                        """
+                    ),
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -343,9 +367,9 @@ public class BulkAddUsersParamsTest : TestBase
                     },
                     Profile = new Dictionary<string, JsonElement>()
                     {
-                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                        { "email", JsonSerializer.SerializeToElement("bar") },
                     },
-                    Recipient = "recipient",
+                    Recipient = "user_abc",
                     To = new()
                     {
                         AccountID = "account_id",

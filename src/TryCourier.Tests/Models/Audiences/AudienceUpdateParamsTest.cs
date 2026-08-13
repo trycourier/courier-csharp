@@ -15,42 +15,42 @@ public class AudienceUpdateParamsTest : TestBase
         var parameters = new AudienceUpdateParams
         {
             AudienceID = "audience_id",
-            Description = "description",
+            Description = "Users located in the US",
             Filter = new()
             {
                 Filters =
                 [
                     new()
                     {
-                        Operator = "operator",
+                        Operator = "EQ",
                         Filters = [],
-                        Path = "path",
-                        Value = "value",
+                        Path = "profile.location",
+                        Value = "US",
                     },
                 ],
                 Operator = Models::AudienceFilterConfigOperator.And,
             },
-            Name = "name",
+            Name = "Engaged US Users",
             Operator = Operator.And,
         };
 
         string expectedAudienceID = "audience_id";
-        string expectedDescription = "description";
+        string expectedDescription = "Users located in the US";
         Models::AudienceFilterConfig expectedFilter = new()
         {
             Filters =
             [
                 new()
                 {
-                    Operator = "operator",
+                    Operator = "EQ",
                     Filters = [],
-                    Path = "path",
-                    Value = "value",
+                    Path = "profile.location",
+                    Value = "US",
                 },
             ],
             Operator = Models::AudienceFilterConfigOperator.And,
         };
-        string expectedName = "name";
+        string expectedName = "Engaged US Users";
         ApiEnum<string, Operator> expectedOperator = Operator.And;
 
         Assert.Equal(expectedAudienceID, parameters.AudienceID);
@@ -116,22 +116,22 @@ public class AudienceUpdateParamsTest : TestBase
         var parameters = new AudienceUpdateParams
         {
             AudienceID = "audience_id",
-            Description = "description",
+            Description = "Users located in the US",
             Filter = new()
             {
                 Filters =
                 [
                     new()
                     {
-                        Operator = "operator",
+                        Operator = "EQ",
                         Filters = [],
-                        Path = "path",
-                        Value = "value",
+                        Path = "profile.location",
+                        Value = "US",
                     },
                 ],
                 Operator = Models::AudienceFilterConfigOperator.And,
             },
-            Name = "name",
+            Name = "Engaged US Users",
             Operator = Operator.And,
         };
 

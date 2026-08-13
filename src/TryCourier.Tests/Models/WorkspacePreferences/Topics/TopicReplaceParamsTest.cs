@@ -17,12 +17,12 @@ public class TopicReplaceParamsTest : TestBase
         {
             SectionID = "section_id",
             TopicID = "topic_id",
-            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedOut,
-            Name = "name",
-            AllowedPreferences = [TopicReplaceParamsAllowedPreference.Snooze],
+            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedIn,
+            Name = "Product Updates",
+            AllowedPreferences = [TopicReplaceParamsAllowedPreference.ChannelPreferences],
             Description = "description",
             IncludeUnsubscribeHeader = true,
-            RoutingOptions = [ChannelClassification.DirectMessage],
+            RoutingOptions = [ChannelClassification.Email, ChannelClassification.Inbox],
             TopicData = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },
@@ -32,17 +32,18 @@ public class TopicReplaceParamsTest : TestBase
         string expectedSectionID = "section_id";
         string expectedTopicID = "topic_id";
         ApiEnum<string, TopicReplaceParamsDefaultStatus> expectedDefaultStatus =
-            TopicReplaceParamsDefaultStatus.OptedOut;
-        string expectedName = "name";
+            TopicReplaceParamsDefaultStatus.OptedIn;
+        string expectedName = "Product Updates";
         List<ApiEnum<string, TopicReplaceParamsAllowedPreference>> expectedAllowedPreferences =
         [
-            TopicReplaceParamsAllowedPreference.Snooze,
+            TopicReplaceParamsAllowedPreference.ChannelPreferences,
         ];
         string expectedDescription = "description";
         bool expectedIncludeUnsubscribeHeader = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
-            ChannelClassification.DirectMessage,
+            ChannelClassification.Email,
+            ChannelClassification.Inbox,
         ];
         Dictionary<string, JsonElement> expectedTopicData = new()
         {
@@ -84,8 +85,8 @@ public class TopicReplaceParamsTest : TestBase
         {
             SectionID = "section_id",
             TopicID = "topic_id",
-            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedOut,
-            Name = "name",
+            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedIn,
+            Name = "Product Updates",
         };
 
         Assert.Null(parameters.AllowedPreferences);
@@ -107,8 +108,8 @@ public class TopicReplaceParamsTest : TestBase
         {
             SectionID = "section_id",
             TopicID = "topic_id",
-            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedOut,
-            Name = "name",
+            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedIn,
+            Name = "Product Updates",
 
             AllowedPreferences = null,
             Description = null,
@@ -136,8 +137,8 @@ public class TopicReplaceParamsTest : TestBase
         {
             SectionID = "section_id",
             TopicID = "topic_id",
-            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedOut,
-            Name = "name",
+            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedIn,
+            Name = "Product Updates",
         };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
@@ -157,12 +158,12 @@ public class TopicReplaceParamsTest : TestBase
         {
             SectionID = "section_id",
             TopicID = "topic_id",
-            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedOut,
-            Name = "name",
-            AllowedPreferences = [TopicReplaceParamsAllowedPreference.Snooze],
+            DefaultStatus = TopicReplaceParamsDefaultStatus.OptedIn,
+            Name = "Product Updates",
+            AllowedPreferences = [TopicReplaceParamsAllowedPreference.ChannelPreferences],
             Description = "description",
             IncludeUnsubscribeHeader = true,
-            RoutingOptions = [ChannelClassification.DirectMessage],
+            RoutingOptions = [ChannelClassification.Email, ChannelClassification.Inbox],
             TopicData = new Dictionary<string, JsonElement>()
             {
                 { "foo", JsonSerializer.SerializeToElement("bar") },

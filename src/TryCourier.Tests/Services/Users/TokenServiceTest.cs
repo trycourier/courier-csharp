@@ -28,9 +28,9 @@ public class TokenServiceTest : TestBase
                 [
                     new()
                     {
-                        Op = "op",
-                        Path = "path",
-                        Value = "value",
+                        Op = "replace",
+                        Path = "/expiry_date",
+                        Value = "2024-12-31T00:00:00.000Z",
                     },
                 ],
             },

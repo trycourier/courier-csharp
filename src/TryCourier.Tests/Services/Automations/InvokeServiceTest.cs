@@ -52,7 +52,7 @@ public class InvokeServiceTest : TestBase
     {
         var automationInvokeResponse = await this.client.Automations.Invoke.InvokeByTemplate(
             "templateId",
-            new() { Recipient = "recipient" },
+            new() { Recipient = "user_abc" },
             TestContext.Current.CancellationToken
         );
         automationInvokeResponse.Validate();

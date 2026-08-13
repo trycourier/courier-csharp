@@ -15,7 +15,8 @@ public class ProfileServiceTest : TestBase
             {
                 Profile = new Dictionary<string, JsonElement>()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    { "email", JsonSerializer.SerializeToElement("bar") },
+                    { "phone_number", JsonSerializer.SerializeToElement("bar") },
                 },
             },
             TestContext.Current.CancellationToken
@@ -45,9 +46,9 @@ public class ProfileServiceTest : TestBase
                 [
                     new()
                     {
-                        Op = "op",
-                        Path = "path",
-                        Value = "value",
+                        Op = "replace",
+                        Path = "/email",
+                        Value = "jdoe@example.com",
                     },
                 ],
             },
@@ -70,7 +71,9 @@ public class ProfileServiceTest : TestBase
             {
                 Profile = new Dictionary<string, JsonElement>()
                 {
-                    { "foo", JsonSerializer.SerializeToElement("bar") },
+                    { "email", JsonSerializer.SerializeToElement("bar") },
+                    { "phone_number", JsonSerializer.SerializeToElement("bar") },
+                    { "locale", JsonSerializer.SerializeToElement("bar") },
                 },
             },
             TestContext.Current.CancellationToken

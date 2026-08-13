@@ -13,24 +13,24 @@ public class ProviderCreateParamsTest : TestBase
     {
         var parameters = new ProviderCreateParams
         {
-            Provider = "provider",
+            Provider = "sendgrid",
             Alias = "alias",
             Settings = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "api_key", JsonSerializer.SerializeToElement("bar") },
             },
-            Title = "title",
+            Title = "Production SendGrid",
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
         };
 
-        string expectedProvider = "provider";
+        string expectedProvider = "sendgrid";
         string expectedAlias = "alias";
         Dictionary<string, JsonElement> expectedSettings = new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
+            { "api_key", JsonSerializer.SerializeToElement("bar") },
         };
-        string expectedTitle = "title";
+        string expectedTitle = "Production SendGrid";
         string expectedIdempotencyKey = "order-ORD-456-user-123";
         string expectedXIdempotencyExpiration = "1785312000";
 
@@ -52,7 +52,7 @@ public class ProviderCreateParamsTest : TestBase
     [Fact]
     public void OptionalNonNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new ProviderCreateParams { Provider = "provider" };
+        var parameters = new ProviderCreateParams { Provider = "sendgrid" };
 
         Assert.Null(parameters.Alias);
         Assert.False(parameters.RawBodyData.ContainsKey("alias"));
@@ -71,7 +71,7 @@ public class ProviderCreateParamsTest : TestBase
     {
         var parameters = new ProviderCreateParams
         {
-            Provider = "provider",
+            Provider = "sendgrid",
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -96,7 +96,7 @@ public class ProviderCreateParamsTest : TestBase
     [Fact]
     public void Url_Works()
     {
-        ProviderCreateParams parameters = new() { Provider = "provider" };
+        ProviderCreateParams parameters = new() { Provider = "sendgrid" };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
@@ -109,7 +109,7 @@ public class ProviderCreateParamsTest : TestBase
         HttpRequestMessage requestMessage = new();
         ProviderCreateParams parameters = new()
         {
-            Provider = "provider",
+            Provider = "sendgrid",
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
         };
@@ -128,13 +128,13 @@ public class ProviderCreateParamsTest : TestBase
     {
         var parameters = new ProviderCreateParams
         {
-            Provider = "provider",
+            Provider = "sendgrid",
             Alias = "alias",
             Settings = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "api_key", JsonSerializer.SerializeToElement("bar") },
             },
-            Title = "title",
+            Title = "Production SendGrid",
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
         };

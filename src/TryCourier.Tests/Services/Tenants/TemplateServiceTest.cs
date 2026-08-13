@@ -73,7 +73,7 @@ public class TemplateServiceTest : TestBase
                                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                             },
                         ],
-                        Version = "version",
+                        Version = "2022-01-01",
                     },
                     Channels = new Dictionary<string, Channel>()
                     {
@@ -130,7 +130,7 @@ public class TemplateServiceTest : TestBase
                             }
                         },
                     },
-                    Routing = new() { Channels = ["string"], Method = Method.All },
+                    Routing = new() { Channels = ["email"], Method = Method.Single },
                 },
             },
             TestContext.Current.CancellationToken

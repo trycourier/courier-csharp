@@ -39,7 +39,7 @@ public class ListServiceTest : TestBase
                 [
                     new()
                     {
-                        ListID = "listId",
+                        ListID = "example.list.id",
                         Preferences = new()
                         {
                             Categories = new Dictionary<string, NotificationPreferenceDetails>()
