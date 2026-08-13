@@ -3,7 +3,7 @@ using TryCourier.Exceptions;
 using TryCourier.Models;
 using TryCourier.Models.Automations;
 using TryCourier.Models.Brands;
-using TryCourier.Models.Messages;
+using TryCourier.Models.Bulk;
 using TryCourier.Models.WorkspacePreferences;
 using Audiences = TryCourier.Models.Audiences;
 using Broadcasts = TryCourier.Models.Broadcasts;
@@ -13,6 +13,7 @@ using Invoke = TryCourier.Models.Automations.Invoke;
 using Items = TryCourier.Models.Tenants.Preferences.Items;
 using Journeys = TryCourier.Models.Journeys;
 using Lists = TryCourier.Models.Profiles.Lists;
+using Messages = TryCourier.Models.Messages;
 using Notifications = TryCourier.Models.Notifications;
 using Profiles = TryCourier.Models.Profiles;
 using Send = TryCourier.Models.Send;
@@ -144,13 +145,15 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Broadcasts::Channel>(),
             new ApiEnumConverter<string, Broadcasts::RecipientType>(),
             new ApiEnumConverter<string, Broadcasts::BroadcastSendParamsRecipientType>(),
+            new ApiEnumConverter<string, Status>(),
+            new ApiEnumConverter<string, JobStatus>(),
             new ApiEnumConverter<string, Placement>(),
             new ApiEnumConverter<string, Digests::Retain>(),
             new ApiEnumConverter<string, Digests::Status>(),
             new ApiEnumConverter<string, Digests::Type>(),
             new ApiEnumConverter<string, Inbound::Type>(),
-            new ApiEnumConverter<string, Status>(),
-            new ApiEnumConverter<string, Reason>(),
+            new ApiEnumConverter<string, Messages::Status>(),
+            new ApiEnumConverter<string, Messages::Reason>(),
             new ApiEnumConverter<string, Notifications::Status>(),
             new ApiEnumConverter<string, Notifications::Type>(),
             new ApiEnumConverter<string, Notifications::BlockType>(),
