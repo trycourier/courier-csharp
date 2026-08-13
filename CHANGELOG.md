@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.22.1](https://github.com/trycourier/courier-csharp/compare/v5.22.0...v5.22.1) (2026-08-13)
+
+
+### Chores
+
+* **api:** regenerate SDK ([#65](https://github.com/trycourier/courier-csharp/issues/65)) ([5048c99](https://github.com/trycourier/courier-csharp/commit/5048c99b53fb8f22fef601e28720f82a67be281d))
+
+
+### Documentation
+
+* sync README from api-spec ([#62](https://github.com/trycourier/courier-csharp/issues/62)) ([9d35ca6](https://github.com/trycourier/courier-csharp/commit/9d35ca6a32304bb2e2ddecbd4cc09b9d20b1cb1e))
+
 ## 5.22.0 (2026-08-10)
 
 Full Changelog: [v5.21.0...v5.22.0](https://github.com/trycourier/courier-csharp/compare/v5.21.0...v5.22.0)
