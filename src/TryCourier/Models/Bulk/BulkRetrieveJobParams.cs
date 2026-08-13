@@ -9,7 +9,9 @@ using TryCourier.Core;
 namespace TryCourier.Models.Bulk;
 
 /// <summary>
-/// Get a bulk job
+/// Returns a bulk job's message definition, its status — CREATED, PROCESSING, COMPLETED,
+/// or ERROR — and running counts of users received, messages enqueued, and failures.
+/// Poll it to follow a job through to completion.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that

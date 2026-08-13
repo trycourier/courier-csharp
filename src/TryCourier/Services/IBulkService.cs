@@ -57,7 +57,8 @@ public interface IBulkService
     );
 
     /// <summary>
-    /// Get Bulk Job Users
+    /// Returns the users ingested into a bulk job with paging, each carrying the status
+    /// Courier recorded for it and the id of the message it produced.
     /// </summary>
     Task<BulkListUsersResponse> ListUsers(
         BulkListUsersParams parameters,
@@ -72,7 +73,9 @@ public interface IBulkService
     );
 
     /// <summary>
-    /// Get a bulk job
+    /// Returns a bulk job's message definition, its status — CREATED, PROCESSING,
+    /// COMPLETED, or ERROR — and running counts of users received, messages enqueued,
+    /// and failures. Poll it to follow a job through to completion.
     /// </summary>
     Task<BulkRetrieveJobResponse> RetrieveJob(
         BulkRetrieveJobParams parameters,
@@ -87,7 +90,9 @@ public interface IBulkService
     );
 
     /// <summary>
-    /// Run a bulk job
+    /// Starts processing a bulk job, sending to every user ingested into it. Returns
+    /// 204 immediately; the job runs asynchronously, so poll the job to watch its
+    /// status and counts.
     /// </summary>
     Task RunJob(BulkRunJobParams parameters, CancellationToken cancellationToken = default);
 

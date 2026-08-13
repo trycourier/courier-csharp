@@ -9,7 +9,9 @@ using TryCourier.Core;
 namespace TryCourier.Models.Bulk;
 
 /// <summary>
-/// Run a bulk job
+/// Starts processing a bulk job, sending to every user ingested into it. Returns
+/// 204 immediately; the job runs asynchronously, so poll the job to watch its status
+/// and counts.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
