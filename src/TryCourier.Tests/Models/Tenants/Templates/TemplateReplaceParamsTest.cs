@@ -31,7 +31,7 @@ public class TemplateReplaceParamsTest : TestBase
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
-                    Version = "version",
+                    Version = "2022-01-01",
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -88,7 +88,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Routing = new() { Channels = ["string"], Method = Method.All },
+                Routing = new() { Channels = ["email"], Method = Method.Single },
             },
             Published = true,
         };
@@ -110,7 +110,7 @@ public class TemplateReplaceParamsTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
-                Version = "version",
+                Version = "2022-01-01",
             },
             Channels = new Dictionary<string, Channel>()
             {
@@ -167,7 +167,7 @@ public class TemplateReplaceParamsTest : TestBase
                     }
                 },
             },
-            Routing = new() { Channels = ["string"], Method = Method.All },
+            Routing = new() { Channels = ["email"], Method = Method.Single },
         };
         bool expectedPublished = true;
 
@@ -199,7 +199,7 @@ public class TemplateReplaceParamsTest : TestBase
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
-                    Version = "version",
+                    Version = "2022-01-01",
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -256,7 +256,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Routing = new() { Channels = ["string"], Method = Method.All },
+                Routing = new() { Channels = ["email"], Method = Method.Single },
             },
         };
 
@@ -286,7 +286,7 @@ public class TemplateReplaceParamsTest : TestBase
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
-                    Version = "version",
+                    Version = "2022-01-01",
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -343,7 +343,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Routing = new() { Channels = ["string"], Method = Method.All },
+                Routing = new() { Channels = ["email"], Method = Method.Single },
             },
 
             // Null should be interpreted as omitted for these properties
@@ -376,7 +376,7 @@ public class TemplateReplaceParamsTest : TestBase
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
-                    Version = "version",
+                    Version = "2022-01-01",
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -433,7 +433,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Routing = new() { Channels = ["string"], Method = Method.All },
+                Routing = new() { Channels = ["email"], Method = Method.Single },
             },
         };
 
@@ -469,7 +469,7 @@ public class TemplateReplaceParamsTest : TestBase
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
-                    Version = "version",
+                    Version = "2022-01-01",
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -526,7 +526,7 @@ public class TemplateReplaceParamsTest : TestBase
                         }
                     },
                 },
-                Routing = new() { Channels = ["string"], Method = Method.All },
+                Routing = new() { Channels = ["email"], Method = Method.Single },
             },
             Published = true,
         };

@@ -16,7 +16,8 @@ public class ProfileCreateParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
             },
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
@@ -25,7 +26,8 @@ public class ProfileCreateParamsTest : TestBase
         string expectedUserID = "user_id";
         Dictionary<string, JsonElement> expectedProfile = new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
+            { "email", JsonSerializer.SerializeToElement("bar") },
+            { "phone_number", JsonSerializer.SerializeToElement("bar") },
         };
         string expectedIdempotencyKey = "order-ORD-456-user-123";
         string expectedXIdempotencyExpiration = "1785312000";
@@ -50,7 +52,8 @@ public class ProfileCreateParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
             },
         };
 
@@ -68,7 +71,8 @@ public class ProfileCreateParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
             },
 
             // Null should be interpreted as omitted for these properties
@@ -90,7 +94,8 @@ public class ProfileCreateParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
             },
         };
 
@@ -108,7 +113,8 @@ public class ProfileCreateParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
             },
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
@@ -131,7 +137,8 @@ public class ProfileCreateParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
             },
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",

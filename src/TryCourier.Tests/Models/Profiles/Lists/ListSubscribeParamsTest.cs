@@ -19,7 +19,7 @@ public class ListSubscribeParamsTest : TestBase
             [
                 new()
                 {
-                    ListID = "listId",
+                    ListID = "example.list.id",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -58,7 +58,7 @@ public class ListSubscribeParamsTest : TestBase
         [
             new()
             {
-                ListID = "listId",
+                ListID = "example.list.id",
                 Preferences = new()
                 {
                     Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -111,7 +111,7 @@ public class ListSubscribeParamsTest : TestBase
             [
                 new()
                 {
-                    ListID = "listId",
+                    ListID = "example.list.id",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -159,7 +159,7 @@ public class ListSubscribeParamsTest : TestBase
             [
                 new()
                 {
-                    ListID = "listId",
+                    ListID = "example.list.id",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -211,7 +211,7 @@ public class ListSubscribeParamsTest : TestBase
             [
                 new()
                 {
-                    ListID = "listId",
+                    ListID = "example.list.id",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -261,7 +261,7 @@ public class ListSubscribeParamsTest : TestBase
             [
                 new()
                 {
-                    ListID = "listId",
+                    ListID = "example.list.id",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -314,7 +314,7 @@ public class ListSubscribeParamsTest : TestBase
             [
                 new()
                 {
-                    ListID = "listId",
+                    ListID = "example.list.id",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()

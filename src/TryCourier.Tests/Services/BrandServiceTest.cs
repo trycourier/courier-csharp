@@ -85,7 +85,7 @@ public class BrandServiceTest : TestBase
     {
         var brand = await this.client.Brands.Update(
             "brand_id",
-            new() { Name = "name" },
+            new() { Name = "My Brand" },
             TestContext.Current.CancellationToken
         );
         brand.Validate();

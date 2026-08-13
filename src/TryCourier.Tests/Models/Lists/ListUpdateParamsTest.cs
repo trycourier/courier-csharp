@@ -13,7 +13,7 @@ public class ListUpdateParamsTest : TestBase
         var parameters = new ListUpdateParams
         {
             ListID = "list_id",
-            Name = "name",
+            Name = "Product Updates",
             Preferences = new()
             {
                 Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -44,7 +44,7 @@ public class ListUpdateParamsTest : TestBase
         };
 
         string expectedListID = "list_id";
-        string expectedName = "name";
+        string expectedName = "Product Updates";
         RecipientPreferences expectedPreferences = new()
         {
             Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -81,7 +81,7 @@ public class ListUpdateParamsTest : TestBase
     [Fact]
     public void OptionalNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new ListUpdateParams { ListID = "list_id", Name = "name" };
+        var parameters = new ListUpdateParams { ListID = "list_id", Name = "Product Updates" };
 
         Assert.Null(parameters.Preferences);
         Assert.False(parameters.RawBodyData.ContainsKey("preferences"));
@@ -93,7 +93,7 @@ public class ListUpdateParamsTest : TestBase
         var parameters = new ListUpdateParams
         {
             ListID = "list_id",
-            Name = "name",
+            Name = "Product Updates",
 
             Preferences = null,
         };
@@ -105,7 +105,7 @@ public class ListUpdateParamsTest : TestBase
     [Fact]
     public void Url_Works()
     {
-        ListUpdateParams parameters = new() { ListID = "list_id", Name = "name" };
+        ListUpdateParams parameters = new() { ListID = "list_id", Name = "Product Updates" };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
@@ -118,7 +118,7 @@ public class ListUpdateParamsTest : TestBase
         var parameters = new ListUpdateParams
         {
             ListID = "list_id",
-            Name = "name",
+            Name = "Product Updates",
             Preferences = new()
             {
                 Categories = new Dictionary<string, NotificationPreferenceDetails>()

@@ -18,9 +18,9 @@ public class ProfileUpdateParamsTest : TestBase
             [
                 new()
                 {
-                    Op = "op",
-                    Path = "path",
-                    Value = "value",
+                    Op = "replace",
+                    Path = "/email",
+                    Value = "jdoe@example.com",
                 },
             ],
         };
@@ -30,9 +30,9 @@ public class ProfileUpdateParamsTest : TestBase
         [
             new()
             {
-                Op = "op",
-                Path = "path",
-                Value = "value",
+                Op = "replace",
+                Path = "/email",
+                Value = "jdoe@example.com",
             },
         ];
 
@@ -54,9 +54,9 @@ public class ProfileUpdateParamsTest : TestBase
             [
                 new()
                 {
-                    Op = "op",
-                    Path = "path",
-                    Value = "value",
+                    Op = "replace",
+                    Path = "/email",
+                    Value = "jdoe@example.com",
                 },
             ],
         };
@@ -76,9 +76,9 @@ public class ProfileUpdateParamsTest : TestBase
             [
                 new()
                 {
-                    Op = "op",
-                    Path = "path",
-                    Value = "value",
+                    Op = "replace",
+                    Path = "/email",
+                    Value = "jdoe@example.com",
                 },
             ],
         };

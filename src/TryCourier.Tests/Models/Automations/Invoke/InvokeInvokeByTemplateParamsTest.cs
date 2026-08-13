@@ -14,15 +14,15 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         var parameters = new InvokeInvokeByTemplateParams
         {
             TemplateID = "templateId",
-            Recipient = "recipient",
+            Recipient = "user_abc",
             Brand = "brand",
             Data = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "orderId", JsonSerializer.SerializeToElement("bar") },
             },
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
             },
             Template = "template",
             IdempotencyKey = "order-ORD-456-user-123",
@@ -30,15 +30,15 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         };
 
         string expectedTemplateID = "templateId";
-        string expectedRecipient = "recipient";
+        string expectedRecipient = "user_abc";
         string expectedBrand = "brand";
         Dictionary<string, JsonElement> expectedData = new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
+            { "orderId", JsonSerializer.SerializeToElement("bar") },
         };
         Dictionary<string, JsonElement> expectedProfile = new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
+            { "email", JsonSerializer.SerializeToElement("bar") },
         };
         string expectedTemplate = "template";
         string expectedIdempotencyKey = "order-ORD-456-user-123";
@@ -74,15 +74,15 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         var parameters = new InvokeInvokeByTemplateParams
         {
             TemplateID = "templateId",
-            Recipient = "recipient",
+            Recipient = "user_abc",
             Brand = "brand",
             Data = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "orderId", JsonSerializer.SerializeToElement("bar") },
             },
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
             },
             Template = "template",
         };
@@ -99,15 +99,15 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         var parameters = new InvokeInvokeByTemplateParams
         {
             TemplateID = "templateId",
-            Recipient = "recipient",
+            Recipient = "user_abc",
             Brand = "brand",
             Data = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "orderId", JsonSerializer.SerializeToElement("bar") },
             },
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
             },
             Template = "template",
 
@@ -128,7 +128,7 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         var parameters = new InvokeInvokeByTemplateParams
         {
             TemplateID = "templateId",
-            Recipient = "recipient",
+            Recipient = "user_abc",
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
         };
@@ -149,7 +149,7 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         var parameters = new InvokeInvokeByTemplateParams
         {
             TemplateID = "templateId",
-            Recipient = "recipient",
+            Recipient = "user_abc",
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
 
@@ -175,7 +175,7 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         InvokeInvokeByTemplateParams parameters = new()
         {
             TemplateID = "templateId",
-            Recipient = "recipient",
+            Recipient = "user_abc",
         };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
@@ -195,7 +195,7 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         InvokeInvokeByTemplateParams parameters = new()
         {
             TemplateID = "templateId",
-            Recipient = "recipient",
+            Recipient = "user_abc",
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
         };
@@ -215,15 +215,15 @@ public class InvokeInvokeByTemplateParamsTest : TestBase
         var parameters = new InvokeInvokeByTemplateParams
         {
             TemplateID = "templateId",
-            Recipient = "recipient",
+            Recipient = "user_abc",
             Brand = "brand",
             Data = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "orderId", JsonSerializer.SerializeToElement("bar") },
             },
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
             },
             Template = "template",
             IdempotencyKey = "order-ORD-456-user-123",

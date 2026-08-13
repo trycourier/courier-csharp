@@ -15,14 +15,18 @@ public class ProfileReplaceParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
+                { "locale", JsonSerializer.SerializeToElement("bar") },
             },
         };
 
         string expectedUserID = "user_id";
         Dictionary<string, JsonElement> expectedProfile = new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
+            { "email", JsonSerializer.SerializeToElement("bar") },
+            { "phone_number", JsonSerializer.SerializeToElement("bar") },
+            { "locale", JsonSerializer.SerializeToElement("bar") },
         };
 
         Assert.Equal(expectedUserID, parameters.UserID);
@@ -43,7 +47,9 @@ public class ProfileReplaceParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
+                { "locale", JsonSerializer.SerializeToElement("bar") },
             },
         };
 
@@ -60,7 +66,9 @@ public class ProfileReplaceParamsTest : TestBase
             UserID = "user_id",
             Profile = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "email", JsonSerializer.SerializeToElement("bar") },
+                { "phone_number", JsonSerializer.SerializeToElement("bar") },
+                { "locale", JsonSerializer.SerializeToElement("bar") },
             },
         };
 

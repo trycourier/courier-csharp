@@ -12,12 +12,12 @@ public class TemplatePublishParamsTest : TestBase
         {
             TenantID = "tenant_id",
             TemplateID = "template_id",
-            Version = "version",
+            Version = "latest",
         };
 
         string expectedTenantID = "tenant_id";
         string expectedTemplateID = "template_id";
-        string expectedVersion = "version";
+        string expectedVersion = "latest";
 
         Assert.Equal(expectedTenantID, parameters.TenantID);
         Assert.Equal(expectedTemplateID, parameters.TemplateID);
@@ -79,7 +79,7 @@ public class TemplatePublishParamsTest : TestBase
         {
             TenantID = "tenant_id",
             TemplateID = "template_id",
-            Version = "version",
+            Version = "latest",
         };
 
         TemplatePublishParams copied = new(parameters);

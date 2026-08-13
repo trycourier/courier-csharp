@@ -11,16 +11,16 @@ public class WorkspacePreferencePublishParamsTest : TestBase
     {
         var parameters = new WorkspacePreferencePublishParams
         {
-            BrandID = "brand_id",
-            Description = "description",
-            Heading = "heading",
+            BrandID = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
+            Description = "Choose what you hear from us about.",
+            Heading = "Notification Preferences",
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
         };
 
-        string expectedBrandID = "brand_id";
-        string expectedDescription = "description";
-        string expectedHeading = "heading";
+        string expectedBrandID = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag";
+        string expectedDescription = "Choose what you hear from us about.";
+        string expectedHeading = "Notification Preferences";
         string expectedIdempotencyKey = "order-ORD-456-user-123";
         string expectedXIdempotencyExpiration = "1785312000";
 
@@ -36,9 +36,9 @@ public class WorkspacePreferencePublishParamsTest : TestBase
     {
         var parameters = new WorkspacePreferencePublishParams
         {
-            BrandID = "brand_id",
-            Description = "description",
-            Heading = "heading",
+            BrandID = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
+            Description = "Choose what you hear from us about.",
+            Heading = "Notification Preferences",
         };
 
         Assert.Null(parameters.IdempotencyKey);
@@ -52,9 +52,9 @@ public class WorkspacePreferencePublishParamsTest : TestBase
     {
         var parameters = new WorkspacePreferencePublishParams
         {
-            BrandID = "brand_id",
-            Description = "description",
-            Heading = "heading",
+            BrandID = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
+            Description = "Choose what you hear from us about.",
+            Heading = "Notification Preferences",
 
             // Null should be interpreted as omitted for these properties
             IdempotencyKey = null,
@@ -141,9 +141,9 @@ public class WorkspacePreferencePublishParamsTest : TestBase
     {
         var parameters = new WorkspacePreferencePublishParams
         {
-            BrandID = "brand_id",
-            Description = "description",
-            Heading = "heading",
+            BrandID = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
+            Description = "Choose what you hear from us about.",
+            Heading = "Notification Preferences",
             IdempotencyKey = "order-ORD-456-user-123",
             XIdempotencyExpiration = "1785312000",
         };

@@ -14,19 +14,20 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
         var parameters = new WorkspacePreferenceReplaceParams
         {
             SectionID = "section_id",
-            Name = "name",
+            Name = "Account Notifications",
             Description = "description",
             HasCustomRouting = true,
-            RoutingOptions = [ChannelClassification.DirectMessage],
+            RoutingOptions = [ChannelClassification.Email, ChannelClassification.Push],
         };
 
         string expectedSectionID = "section_id";
-        string expectedName = "name";
+        string expectedName = "Account Notifications";
         string expectedDescription = "description";
         bool expectedHasCustomRouting = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
-            ChannelClassification.DirectMessage,
+            ChannelClassification.Email,
+            ChannelClassification.Push,
         ];
 
         Assert.Equal(expectedSectionID, parameters.SectionID);
@@ -47,7 +48,7 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
         var parameters = new WorkspacePreferenceReplaceParams
         {
             SectionID = "section_id",
-            Name = "name",
+            Name = "Account Notifications",
         };
 
         Assert.Null(parameters.Description);
@@ -64,7 +65,7 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
         var parameters = new WorkspacePreferenceReplaceParams
         {
             SectionID = "section_id",
-            Name = "name",
+            Name = "Account Notifications",
 
             Description = null,
             HasCustomRouting = null,
@@ -85,7 +86,7 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
         WorkspacePreferenceReplaceParams parameters = new()
         {
             SectionID = "section_id",
-            Name = "name",
+            Name = "Account Notifications",
         };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
@@ -104,10 +105,10 @@ public class WorkspacePreferenceReplaceParamsTest : TestBase
         var parameters = new WorkspacePreferenceReplaceParams
         {
             SectionID = "section_id",
-            Name = "name",
+            Name = "Account Notifications",
             Description = "description",
             HasCustomRouting = true,
-            RoutingOptions = [ChannelClassification.DirectMessage],
+            RoutingOptions = [ChannelClassification.Email, ChannelClassification.Push],
         };
 
         WorkspacePreferenceReplaceParams copied = new(parameters);

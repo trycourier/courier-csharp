@@ -14,8 +14,8 @@ public class TenantUpdateParamsTest : TestBase
         var parameters = new TenantUpdateParams
         {
             TenantID = "tenant_id",
-            Name = "name",
-            BrandID = "brand_id",
+            Name = "Acme Corp",
+            BrandID = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
             DefaultPreferences = new()
             {
                 Items =
@@ -32,7 +32,7 @@ public class TenantUpdateParamsTest : TestBase
             ParentTenantID = "parent_tenant_id",
             Properties = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "plan", JsonSerializer.SerializeToElement("bar") },
             },
             UserProfile = new Dictionary<string, JsonElement>()
             {
@@ -41,8 +41,8 @@ public class TenantUpdateParamsTest : TestBase
         };
 
         string expectedTenantID = "tenant_id";
-        string expectedName = "name";
-        string expectedBrandID = "brand_id";
+        string expectedName = "Acme Corp";
+        string expectedBrandID = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag";
         DefaultPreferences expectedDefaultPreferences = new()
         {
             Items =
@@ -59,7 +59,7 @@ public class TenantUpdateParamsTest : TestBase
         string expectedParentTenantID = "parent_tenant_id";
         Dictionary<string, JsonElement> expectedProperties = new()
         {
-            { "foo", JsonSerializer.SerializeToElement("bar") },
+            { "plan", JsonSerializer.SerializeToElement("bar") },
         };
         Dictionary<string, JsonElement> expectedUserProfile = new()
         {
@@ -92,7 +92,7 @@ public class TenantUpdateParamsTest : TestBase
     [Fact]
     public void OptionalNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new TenantUpdateParams { TenantID = "tenant_id", Name = "name" };
+        var parameters = new TenantUpdateParams { TenantID = "tenant_id", Name = "Acme Corp" };
 
         Assert.Null(parameters.BrandID);
         Assert.False(parameters.RawBodyData.ContainsKey("brand_id"));
@@ -112,7 +112,7 @@ public class TenantUpdateParamsTest : TestBase
         var parameters = new TenantUpdateParams
         {
             TenantID = "tenant_id",
-            Name = "name",
+            Name = "Acme Corp",
 
             BrandID = null,
             DefaultPreferences = null,
@@ -136,7 +136,7 @@ public class TenantUpdateParamsTest : TestBase
     [Fact]
     public void Url_Works()
     {
-        TenantUpdateParams parameters = new() { TenantID = "tenant_id", Name = "name" };
+        TenantUpdateParams parameters = new() { TenantID = "tenant_id", Name = "Acme Corp" };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
 
@@ -149,8 +149,8 @@ public class TenantUpdateParamsTest : TestBase
         var parameters = new TenantUpdateParams
         {
             TenantID = "tenant_id",
-            Name = "name",
-            BrandID = "brand_id",
+            Name = "Acme Corp",
+            BrandID = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
             DefaultPreferences = new()
             {
                 Items =
@@ -167,7 +167,7 @@ public class TenantUpdateParamsTest : TestBase
             ParentTenantID = "parent_tenant_id",
             Properties = new Dictionary<string, JsonElement>()
             {
-                { "foo", JsonSerializer.SerializeToElement("bar") },
+                { "plan", JsonSerializer.SerializeToElement("bar") },
             },
             UserProfile = new Dictionary<string, JsonElement>()
             {

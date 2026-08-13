@@ -17,7 +17,7 @@ public class CheckServiceTest : TestBase
                 [
                     new()
                     {
-                        ID = "id",
+                        ID = "abc-123",
                         Status = Status.Resolved,
                         Type = Type.Custom,
                     },

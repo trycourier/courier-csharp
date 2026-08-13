@@ -19,7 +19,7 @@ public class TokenAddSingleParamsTest : TestBase
             Device = new()
             {
                 AdID = "ad_id",
-                AppID = "app_id",
+                AppID = "com.example.app",
                 DeviceID = "device_id",
                 Manufacturer = "manufacturer",
                 Model = "model",
@@ -42,7 +42,7 @@ public class TokenAddSingleParamsTest : TestBase
         Device expectedDevice = new()
         {
             AdID = "ad_id",
-            AppID = "app_id",
+            AppID = "com.example.app",
             DeviceID = "device_id",
             Manufacturer = "manufacturer",
             Model = "model",
@@ -79,7 +79,7 @@ public class TokenAddSingleParamsTest : TestBase
             Device = new()
             {
                 AdID = "ad_id",
-                AppID = "app_id",
+                AppID = "com.example.app",
                 DeviceID = "device_id",
                 Manufacturer = "manufacturer",
                 Model = "model",
@@ -110,7 +110,7 @@ public class TokenAddSingleParamsTest : TestBase
             Device = new()
             {
                 AdID = "ad_id",
-                AppID = "app_id",
+                AppID = "com.example.app",
                 DeviceID = "device_id",
                 Manufacturer = "manufacturer",
                 Model = "model",
@@ -203,7 +203,7 @@ public class TokenAddSingleParamsTest : TestBase
             Device = new()
             {
                 AdID = "ad_id",
-                AppID = "app_id",
+                AppID = "com.example.app",
                 DeviceID = "device_id",
                 Manufacturer = "manufacturer",
                 Model = "model",

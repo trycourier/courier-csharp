@@ -18,7 +18,13 @@ public class BulkServiceTest : TestBase
                 [
                     new()
                     {
-                        Data = JsonSerializer.Deserialize<JsonElement>("{}"),
+                        Data = JsonSerializer.Deserialize<JsonElement>(
+                            """
+                            {
+                              "name": "Jane"
+                            }
+                            """
+                        ),
                         Preferences = new()
                         {
                             Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -54,9 +60,9 @@ public class BulkServiceTest : TestBase
                         },
                         Profile = new Dictionary<string, JsonElement>()
                         {
-                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                            { "email", JsonSerializer.SerializeToElement("bar") },
                         },
-                        Recipient = "recipient",
+                        Recipient = "user_abc",
                         To = new()
                         {
                             AccountID = "account_id",
@@ -123,12 +129,12 @@ public class BulkServiceTest : TestBase
             {
                 Message = new()
                 {
-                    Event = "event",
-                    Brand = "brand",
+                    Event = "welcome-series",
+                    Brand = "bnd_01kx4mrd0pfzw8wt7pn7p2fzag",
                     Content = new ElementalContentSugar() { Body = "body", Title = "title" },
                     Data = new Dictionary<string, JsonElement>()
                     {
-                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                        { "campaign", JsonSerializer.SerializeToElement("bar") },
                     },
                     Locale = new Dictionary<string, IReadOnlyDictionary<string, JsonElement>>()
                     {

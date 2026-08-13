@@ -19,7 +19,38 @@ public class SubscriptionAddParamsTest : TestBase
             [
                 new()
                 {
-                    RecipientID = "recipientId",
+                    RecipientID = "user_abc",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    RecipientID = "user_def",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -58,7 +89,38 @@ public class SubscriptionAddParamsTest : TestBase
         [
             new()
             {
-                RecipientID = "recipientId",
+                RecipientID = "user_abc",
+                Preferences = new()
+                {
+                    Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = PreferenceStatus.OptedIn,
+                                ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                            }
+                        },
+                    },
+                    Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                    {
+                        {
+                            "foo",
+                            new()
+                            {
+                                Status = PreferenceStatus.OptedIn,
+                                ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                Rules = [new() { Until = "until", Start = "start" }],
+                            }
+                        },
+                    },
+                },
+            },
+            new()
+            {
+                RecipientID = "user_def",
                 Preferences = new()
                 {
                     Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -111,7 +173,38 @@ public class SubscriptionAddParamsTest : TestBase
             [
                 new()
                 {
-                    RecipientID = "recipientId",
+                    RecipientID = "user_abc",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    RecipientID = "user_def",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -159,7 +252,38 @@ public class SubscriptionAddParamsTest : TestBase
             [
                 new()
                 {
-                    RecipientID = "recipientId",
+                    RecipientID = "user_abc",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    RecipientID = "user_def",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -211,7 +335,38 @@ public class SubscriptionAddParamsTest : TestBase
             [
                 new()
                 {
-                    RecipientID = "recipientId",
+                    RecipientID = "user_abc",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    RecipientID = "user_def",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -261,7 +416,38 @@ public class SubscriptionAddParamsTest : TestBase
             [
                 new()
                 {
-                    RecipientID = "recipientId",
+                    RecipientID = "user_abc",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    RecipientID = "user_def",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()
@@ -314,7 +500,38 @@ public class SubscriptionAddParamsTest : TestBase
             [
                 new()
                 {
-                    RecipientID = "recipientId",
+                    RecipientID = "user_abc",
+                    Preferences = new()
+                    {
+                        Categories = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                        Notifications = new Dictionary<string, NotificationPreferenceDetails>()
+                        {
+                            {
+                                "foo",
+                                new()
+                                {
+                                    Status = PreferenceStatus.OptedIn,
+                                    ChannelPreferences = [new(ChannelClassification.DirectMessage)],
+                                    Rules = [new() { Until = "until", Start = "start" }],
+                                }
+                            },
+                        },
+                    },
+                },
+                new()
+                {
+                    RecipientID = "user_def",
                     Preferences = new()
                     {
                         Categories = new Dictionary<string, NotificationPreferenceDetails>()

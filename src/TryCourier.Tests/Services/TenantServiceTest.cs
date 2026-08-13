@@ -20,7 +20,7 @@ public class TenantServiceTest : TestBase
     {
         var tenant = await this.client.Tenants.Update(
             "tenant_id",
-            new() { Name = "name" },
+            new() { Name = "Acme Corp" },
             TestContext.Current.CancellationToken
         );
         tenant.Validate();
