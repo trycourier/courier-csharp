@@ -9,7 +9,8 @@ using TryCourier.Core;
 namespace TryCourier.Models.Bulk;
 
 /// <summary>
-/// Get Bulk Job Users
+/// Returns the users ingested into a bulk job with paging, each carrying the status
+/// Courier recorded for it and the id of the message it produced.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
