@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.22.2](https://github.com/trycourier/courier-csharp/compare/v5.22.1...v5.22.2) (2026-08-13)
+
+
+### Documentation
+
+* **api:** describe every broadcast id path parameter ([#71](https://github.com/trycourier/courier-csharp/issues/71)) ([1178c77](https://github.com/trycourier/courier-csharp/commit/1178c7700e6f7653a5057762f06f55b13e31955e))
+* **api:** say what the bulk job endpoints return ([#73](https://github.com/trycourier/courier-csharp/issues/73)) ([45da359](https://github.com/trycourier/courier-csharp/commit/45da359b849f001bab8e83ca8ab569a5d06fd1c8))
+
 ## [5.22.1](https://github.com/trycourier/courier-csharp/compare/v5.22.0...v5.22.1) (2026-08-13)
 
 
