@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.0.0](https://github.com/trycourier/courier-csharp/compare/v5.22.2...v6.0.0) (2026-08-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** nest the AWS SNS target_arn under aws_sns on the user profile ([#74](https://github.com/trycourier/courier-csharp/issues/74))
+
+### Features
+
+* **api:** nest the AWS SNS target_arn under aws_sns on the user profile ([#74](https://github.com/trycourier/courier-csharp/issues/74)) ([70e1e12](https://github.com/trycourier/courier-csharp/commit/70e1e12340a2aaa1b971dac612d2ea922da99d12))
+
 ## [5.22.2](https://github.com/trycourier/courier-csharp/compare/v5.22.1...v5.22.2) (2026-08-13)
 
 
