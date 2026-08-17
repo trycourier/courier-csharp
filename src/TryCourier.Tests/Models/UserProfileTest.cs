@@ -23,6 +23,7 @@ public class UserProfileTest : TestBase
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
             Apn = "apn",
+            AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
             {
@@ -55,7 +56,6 @@ public class UserProfileTest : TestBase
             Profile = "profile",
             Slack = new SendToSlackChannel() { AccessToken = "access_token", Channel = "channel" },
             Sub = "sub",
-            TargetArn = "target_arn",
             UpdatedAt = "updated_at",
             Website = "website",
             Zoneinfo = "zoneinfo",
@@ -76,6 +76,7 @@ public class UserProfileTest : TestBase
             DeviceTypes = ["string"],
         };
         string expectedApn = "apn";
+        AwsSns expectedAwsSns = new("target_arn");
         string expectedBirthdate = "birthdate";
         Dictionary<string, JsonElement> expectedCustom = new()
         {
@@ -112,7 +113,6 @@ public class UserProfileTest : TestBase
             Channel = "channel",
         };
         string expectedSub = "sub";
-        string expectedTargetArn = "target_arn";
         string expectedUpdatedAt = "updated_at";
         string expectedWebsite = "website";
         string expectedZoneinfo = "zoneinfo";
@@ -120,6 +120,7 @@ public class UserProfileTest : TestBase
         Assert.Equal(expectedAddress, model.Address);
         Assert.Equal(expectedAirship, model.Airship);
         Assert.Equal(expectedApn, model.Apn);
+        Assert.Equal(expectedAwsSns, model.AwsSns);
         Assert.Equal(expectedBirthdate, model.Birthdate);
         Assert.NotNull(model.Custom);
         Assert.Equal(expectedCustom.Count, model.Custom.Count);
@@ -151,7 +152,6 @@ public class UserProfileTest : TestBase
         Assert.Equal(expectedProfile, model.Profile);
         Assert.Equal(expectedSlack, model.Slack);
         Assert.Equal(expectedSub, model.Sub);
-        Assert.Equal(expectedTargetArn, model.TargetArn);
         Assert.Equal(expectedUpdatedAt, model.UpdatedAt);
         Assert.Equal(expectedWebsite, model.Website);
         Assert.Equal(expectedZoneinfo, model.Zoneinfo);
@@ -173,6 +173,7 @@ public class UserProfileTest : TestBase
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
             Apn = "apn",
+            AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
             {
@@ -205,7 +206,6 @@ public class UserProfileTest : TestBase
             Profile = "profile",
             Slack = new SendToSlackChannel() { AccessToken = "access_token", Channel = "channel" },
             Sub = "sub",
-            TargetArn = "target_arn",
             UpdatedAt = "updated_at",
             Website = "website",
             Zoneinfo = "zoneinfo",
@@ -236,6 +236,7 @@ public class UserProfileTest : TestBase
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
             Apn = "apn",
+            AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
             {
@@ -268,7 +269,6 @@ public class UserProfileTest : TestBase
             Profile = "profile",
             Slack = new SendToSlackChannel() { AccessToken = "access_token", Channel = "channel" },
             Sub = "sub",
-            TargetArn = "target_arn",
             UpdatedAt = "updated_at",
             Website = "website",
             Zoneinfo = "zoneinfo",
@@ -296,6 +296,7 @@ public class UserProfileTest : TestBase
             DeviceTypes = ["string"],
         };
         string expectedApn = "apn";
+        AwsSns expectedAwsSns = new("target_arn");
         string expectedBirthdate = "birthdate";
         Dictionary<string, JsonElement> expectedCustom = new()
         {
@@ -332,7 +333,6 @@ public class UserProfileTest : TestBase
             Channel = "channel",
         };
         string expectedSub = "sub";
-        string expectedTargetArn = "target_arn";
         string expectedUpdatedAt = "updated_at";
         string expectedWebsite = "website";
         string expectedZoneinfo = "zoneinfo";
@@ -340,6 +340,7 @@ public class UserProfileTest : TestBase
         Assert.Equal(expectedAddress, deserialized.Address);
         Assert.Equal(expectedAirship, deserialized.Airship);
         Assert.Equal(expectedApn, deserialized.Apn);
+        Assert.Equal(expectedAwsSns, deserialized.AwsSns);
         Assert.Equal(expectedBirthdate, deserialized.Birthdate);
         Assert.NotNull(deserialized.Custom);
         Assert.Equal(expectedCustom.Count, deserialized.Custom.Count);
@@ -371,7 +372,6 @@ public class UserProfileTest : TestBase
         Assert.Equal(expectedProfile, deserialized.Profile);
         Assert.Equal(expectedSlack, deserialized.Slack);
         Assert.Equal(expectedSub, deserialized.Sub);
-        Assert.Equal(expectedTargetArn, deserialized.TargetArn);
         Assert.Equal(expectedUpdatedAt, deserialized.UpdatedAt);
         Assert.Equal(expectedWebsite, deserialized.Website);
         Assert.Equal(expectedZoneinfo, deserialized.Zoneinfo);
@@ -393,6 +393,7 @@ public class UserProfileTest : TestBase
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
             Apn = "apn",
+            AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
             {
@@ -425,7 +426,6 @@ public class UserProfileTest : TestBase
             Profile = "profile",
             Slack = new SendToSlackChannel() { AccessToken = "access_token", Channel = "channel" },
             Sub = "sub",
-            TargetArn = "target_arn",
             UpdatedAt = "updated_at",
             Website = "website",
             Zoneinfo = "zoneinfo",
@@ -445,6 +445,8 @@ public class UserProfileTest : TestBase
         Assert.False(model.RawData.ContainsKey("airship"));
         Assert.Null(model.Apn);
         Assert.False(model.RawData.ContainsKey("apn"));
+        Assert.Null(model.AwsSns);
+        Assert.False(model.RawData.ContainsKey("aws_sns"));
         Assert.Null(model.Birthdate);
         Assert.False(model.RawData.ContainsKey("birthdate"));
         Assert.Null(model.Custom);
@@ -493,8 +495,6 @@ public class UserProfileTest : TestBase
         Assert.False(model.RawData.ContainsKey("slack"));
         Assert.Null(model.Sub);
         Assert.False(model.RawData.ContainsKey("sub"));
-        Assert.Null(model.TargetArn);
-        Assert.False(model.RawData.ContainsKey("target_arn"));
         Assert.Null(model.UpdatedAt);
         Assert.False(model.RawData.ContainsKey("updated_at"));
         Assert.Null(model.Website);
@@ -519,6 +519,7 @@ public class UserProfileTest : TestBase
             Address = null,
             Airship = null,
             Apn = null,
+            AwsSns = null,
             Birthdate = null,
             Custom = null,
             Discord = null,
@@ -543,7 +544,6 @@ public class UserProfileTest : TestBase
             Profile = null,
             Slack = null,
             Sub = null,
-            TargetArn = null,
             UpdatedAt = null,
             Website = null,
             Zoneinfo = null,
@@ -555,6 +555,8 @@ public class UserProfileTest : TestBase
         Assert.True(model.RawData.ContainsKey("airship"));
         Assert.Null(model.Apn);
         Assert.True(model.RawData.ContainsKey("apn"));
+        Assert.Null(model.AwsSns);
+        Assert.True(model.RawData.ContainsKey("aws_sns"));
         Assert.Null(model.Birthdate);
         Assert.True(model.RawData.ContainsKey("birthdate"));
         Assert.Null(model.Custom);
@@ -603,8 +605,6 @@ public class UserProfileTest : TestBase
         Assert.True(model.RawData.ContainsKey("slack"));
         Assert.Null(model.Sub);
         Assert.True(model.RawData.ContainsKey("sub"));
-        Assert.Null(model.TargetArn);
-        Assert.True(model.RawData.ContainsKey("target_arn"));
         Assert.Null(model.UpdatedAt);
         Assert.True(model.RawData.ContainsKey("updated_at"));
         Assert.Null(model.Website);
@@ -621,6 +621,7 @@ public class UserProfileTest : TestBase
             Address = null,
             Airship = null,
             Apn = null,
+            AwsSns = null,
             Birthdate = null,
             Custom = null,
             Discord = null,
@@ -645,7 +646,6 @@ public class UserProfileTest : TestBase
             Profile = null,
             Slack = null,
             Sub = null,
-            TargetArn = null,
             UpdatedAt = null,
             Website = null,
             Zoneinfo = null,
@@ -670,6 +670,7 @@ public class UserProfileTest : TestBase
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
             Apn = "apn",
+            AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
             {
@@ -702,7 +703,6 @@ public class UserProfileTest : TestBase
             Profile = "profile",
             Slack = new SendToSlackChannel() { AccessToken = "access_token", Channel = "channel" },
             Sub = "sub",
-            TargetArn = "target_arn",
             UpdatedAt = "updated_at",
             Website = "website",
             Zoneinfo = "zoneinfo",
