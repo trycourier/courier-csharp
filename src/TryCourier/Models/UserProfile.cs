@@ -40,6 +40,21 @@ public sealed record class UserProfile : JsonModel
         init { this._rawData.Set("apn", value); }
     }
 
+    /// <summary>
+    /// Routes a push notification through the AWS SNS provider. The target ARN must
+    /// be nested under `aws_sns` — a top-level `target_arn` on the profile is ignored
+    /// by the provider.
+    /// </summary>
+    public AwsSns? AwsSns
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<AwsSns>("aws_sns");
+        }
+        init { this._rawData.Set("aws_sns", value); }
+    }
+
     public string? Birthdate
     {
         get
@@ -290,16 +305,6 @@ public sealed record class UserProfile : JsonModel
         init { this._rawData.Set("sub", value); }
     }
 
-    public string? TargetArn
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("target_arn");
-        }
-        init { this._rawData.Set("target_arn", value); }
-    }
-
     public string? UpdatedAt
     {
         get
@@ -336,6 +341,7 @@ public sealed record class UserProfile : JsonModel
         this.Address?.Validate();
         this.Airship?.Validate();
         _ = this.Apn;
+        this.AwsSns?.Validate();
         _ = this.Birthdate;
         _ = this.Custom;
         this.Discord?.Validate();
@@ -360,7 +366,6 @@ public sealed record class UserProfile : JsonModel
         _ = this.Profile;
         this.Slack?.Validate();
         _ = this.Sub;
-        _ = this.TargetArn;
         _ = this.UpdatedAt;
         _ = this.Website;
         _ = this.Zoneinfo;
