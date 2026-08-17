@@ -20,10 +20,10 @@ using Send = TryCourier.Models.Send;
 using Templates = TryCourier.Models.Journeys.Templates;
 using Tenants = TryCourier.Models.Tenants;
 using TenantsTemplates = TryCourier.Models.Tenants.Templates;
-using Tokens = TryCourier.Models.Users.Tokens;
 using Topics = TryCourier.Models.WorkspacePreferences.Topics;
 using UsersPreferences = TryCourier.Models.Users.Preferences;
 using UsersTenants = TryCourier.Models.Users.Tenants;
+using UsersTokens = TryCourier.Models.Users.Tokens;
 
 namespace TryCourier.Core;
 
@@ -187,9 +187,9 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, UsersPreferences::Status>(),
             new ApiEnumConverter<string, UsersPreferences::PreferenceBulkUpdateParamsTopicStatus>(),
             new ApiEnumConverter<string, UsersTenants::Type>(),
-            new ApiEnumConverter<string, Tokens::UserTokenProviderKey>(),
-            new ApiEnumConverter<string, Tokens::Status>(),
-            new ApiEnumConverter<string, Tokens::ProviderKey>(),
+            new ApiEnumConverter<string, UsersTokens::UserTokenProviderKey>(),
+            new ApiEnumConverter<string, UsersTokens::Status>(),
+            new ApiEnumConverter<string, UsersTokens::ProviderKey>(),
         },
     };
 

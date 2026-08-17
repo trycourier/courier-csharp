@@ -1,6 +1,3 @@
-using System.Collections.Frozen;
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -10,77 +7,13 @@ using System = System;
 
 namespace TryCourier.Models;
 
-[JsonConverter(typeof(JsonModelConverter<MultipleTokens, MultipleTokensFromRaw>))]
-public sealed record class MultipleTokens : JsonModel
-{
-    /// <summary>
-    /// One device token, or an array of them. The values are the token strings themselves
-    /// — not objects.
-    /// </summary>
-    public required Tokens Tokens
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<Tokens>("tokens");
-        }
-        init { this._rawData.Set("tokens", value); }
-    }
-
-    /// <inheritdoc/>
-    public override void Validate()
-    {
-        this.Tokens.Validate();
-    }
-
-    public MultipleTokens() { }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    public MultipleTokens(MultipleTokens multipleTokens)
-        : base(multipleTokens) { }
-#pragma warning restore CS8618
-
-    public MultipleTokens(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = new(rawData);
-    }
-
-#pragma warning disable CS8618
-    [SetsRequiredMembers]
-    MultipleTokens(FrozenDictionary<string, JsonElement> rawData)
-    {
-        this._rawData = new(rawData);
-    }
-#pragma warning restore CS8618
-
-    /// <inheritdoc cref="MultipleTokensFromRaw.FromRawUnchecked"/>
-    public static MultipleTokens FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
-    {
-        return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public MultipleTokens(Tokens tokens)
-        : this()
-    {
-        this.Tokens = tokens;
-    }
-}
-
-class MultipleTokensFromRaw : IFromRawJson<MultipleTokens>
-{
-    /// <inheritdoc/>
-    public MultipleTokens FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        MultipleTokens.FromRawUnchecked(rawData);
-}
-
 /// <summary>
-/// One device token, or an array of them. The values are the token strings themselves
-/// — not objects.
+/// Apple Push Notification device tokens. Supply either a single `token` or a `tokens`
+/// value. A bare string is rejected by the provider — the token must be wrapped
+/// in this object.
 /// </summary>
-[JsonConverter(typeof(TokensConverter))]
-public record class Tokens : ModelBase
+[JsonConverter(typeof(ApnConverter))]
+public record class Apn : ModelBase
 {
     public object? Value { get; } = null;
 
@@ -97,62 +30,62 @@ public record class Tokens : ModelBase
         }
     }
 
-    public Tokens(string value, JsonElement? element = null)
+    public Apn(Token value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
     }
 
-    public Tokens(IReadOnlyList<string> value, JsonElement? element = null)
+    public Apn(MultipleTokens value, JsonElement? element = null)
     {
-        this.Value = ImmutableArray.ToImmutableArray(value);
+        this.Value = value;
         this._element = element;
     }
 
-    public Tokens(JsonElement element)
+    public Apn(JsonElement element)
     {
         this._element = element;
     }
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="string"/>.
+    /// type <see cref="Token"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickString(out var value)) {
-    ///     // `value` is of type `string`
+    /// if (instance.TryPickToken(out var value)) {
+    ///     // `value` is of type `Token`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickString([NotNullWhen(true)] out string? value)
+    public bool TryPickToken([NotNullWhen(true)] out Token? value)
     {
-        value = this.Value as string;
+        value = this.Value as Token;
         return value != null;
     }
 
     /// <summary>
     /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
-    /// type <see cref="List{T}"/> where <c>T</c> is a <c>string</c>.
+    /// type <see cref="MultipleTokens"/>.
     ///
     /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
     ///
     /// <example>
     /// <code>
-    /// if (instance.TryPickStrings(out var value)) {
-    ///     // `value` is of type `IReadOnlyList&lt;string&gt;`
+    /// if (instance.TryPickMultipleTokens(out var value)) {
+    ///     // `value` is of type `MultipleTokens`
     ///     Console.WriteLine(value);
     /// }
     /// </code>
     /// </example>
     /// </summary>
-    public bool TryPickStrings([NotNullWhen(true)] out IReadOnlyList<string>? value)
+    public bool TryPickMultipleTokens([NotNullWhen(true)] out MultipleTokens? value)
     {
-        value = this.Value as IReadOnlyList<string>;
+        value = this.Value as MultipleTokens;
         return value != null;
     }
 
@@ -170,27 +103,24 @@ public record class Tokens : ModelBase
     /// <example>
     /// <code>
     /// instance.Switch(
-    ///     (string value) =&gt; {...},
-    ///     (IReadOnlyList&lt;string&gt; value) =&gt; {...}
+    ///     (Token value) =&gt; {...},
+    ///     (MultipleTokens value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public void Switch(
-        System::Action<string> @string,
-        System::Action<IReadOnlyList<string>> strings
-    )
+    public void Switch(System::Action<Token> token, System::Action<MultipleTokens> multipleTokens)
     {
         switch (this.Value)
         {
-            case string value:
-                @string(value);
+            case Token value:
+                token(value);
                 break;
-            case IReadOnlyList<string> value:
-                strings(value);
+            case MultipleTokens value:
+                multipleTokens(value);
                 break;
             default:
-                throw new CourierInvalidDataException("Data did not match any variant of Tokens");
+                throw new CourierInvalidDataException("Data did not match any variant of Apn");
         }
     }
 
@@ -209,28 +139,25 @@ public record class Tokens : ModelBase
     /// <example>
     /// <code>
     /// var result = instance.Match(
-    ///     (string value) =&gt; {...},
-    ///     (IReadOnlyList&lt;string&gt; value) =&gt; {...}
+    ///     (Token value) =&gt; {...},
+    ///     (MultipleTokens value) =&gt; {...}
     /// );
     /// </code>
     /// </example>
     /// </summary>
-    public T Match<T>(
-        System::Func<string, T> @string,
-        System::Func<IReadOnlyList<string>, T> strings
-    )
+    public T Match<T>(System::Func<Token, T> token, System::Func<MultipleTokens, T> multipleTokens)
     {
         return this.Value switch
         {
-            string value => @string(value),
-            IReadOnlyList<string> value => strings(value),
-            _ => throw new CourierInvalidDataException("Data did not match any variant of Tokens"),
+            Token value => token(value),
+            MultipleTokens value => multipleTokens(value),
+            _ => throw new CourierInvalidDataException("Data did not match any variant of Apn"),
         };
     }
 
-    public static implicit operator Tokens(string value) => new(value);
+    public static implicit operator Apn(Token value) => new(value);
 
-    public static implicit operator Tokens(List<string> value) => new((IReadOnlyList<string>)value);
+    public static implicit operator Apn(MultipleTokens value) => new(value);
 
     /// <summary>
     /// Validates that the instance was constructed with a known variant and that this variant is valid
@@ -246,11 +173,12 @@ public record class Tokens : ModelBase
     {
         if (this.Value == null)
         {
-            throw new CourierInvalidDataException("Data did not match any variant of Tokens");
+            throw new CourierInvalidDataException("Data did not match any variant of Apn");
         }
+        this.Switch((token) => token.Validate(), (multipleTokens) => multipleTokens.Validate());
     }
 
-    public virtual bool Equals(Tokens? other) =>
+    public virtual bool Equals(Apn? other) =>
         other != null
         && this.VariantIndex() == other.VariantIndex()
         && JsonElement.DeepEquals(this.Json, other.Json);
@@ -270,16 +198,16 @@ public record class Tokens : ModelBase
     {
         return this.Value switch
         {
-            string _ => 0,
-            IReadOnlyList<string> _ => 1,
+            Token _ => 0,
+            MultipleTokens _ => 1,
             _ => -1,
         };
     }
 }
 
-sealed class TokensConverter : JsonConverter<Tokens>
+sealed class ApnConverter : JsonConverter<Apn>
 {
-    public override Tokens? Read(
+    public override Apn? Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -288,9 +216,10 @@ sealed class TokensConverter : JsonConverter<Tokens>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<string>(element, options);
+            var deserialized = JsonSerializer.Deserialize<Token>(element, options);
             if (deserialized != null)
             {
+                deserialized.Validate();
                 return new(deserialized, element);
             }
         }
@@ -301,9 +230,10 @@ sealed class TokensConverter : JsonConverter<Tokens>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<List<string>>(element, options);
+            var deserialized = JsonSerializer.Deserialize<MultipleTokens>(element, options);
             if (deserialized != null)
             {
+                deserialized.Validate();
                 return new(deserialized, element);
             }
         }
@@ -315,7 +245,7 @@ sealed class TokensConverter : JsonConverter<Tokens>
         return new(element);
     }
 
-    public override void Write(Utf8JsonWriter writer, Tokens value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, Apn value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(writer, value.Json, options);
     }

@@ -22,7 +22,7 @@ public class UserProfileTest : TestBase
                 StreetAddress = "street_address",
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
-            Apn = "apn",
+            Apn = new Token("token"),
             AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
@@ -75,7 +75,7 @@ public class UserProfileTest : TestBase
             Audience = new("named_user"),
             DeviceTypes = ["string"],
         };
-        string expectedApn = "apn";
+        Apn expectedApn = new Token("token");
         AwsSns expectedAwsSns = new("target_arn");
         string expectedBirthdate = "birthdate";
         Dictionary<string, JsonElement> expectedCustom = new()
@@ -172,7 +172,7 @@ public class UserProfileTest : TestBase
                 StreetAddress = "street_address",
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
-            Apn = "apn",
+            Apn = new Token("token"),
             AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
@@ -235,7 +235,7 @@ public class UserProfileTest : TestBase
                 StreetAddress = "street_address",
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
-            Apn = "apn",
+            Apn = new Token("token"),
             AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
@@ -295,7 +295,7 @@ public class UserProfileTest : TestBase
             Audience = new("named_user"),
             DeviceTypes = ["string"],
         };
-        string expectedApn = "apn";
+        Apn expectedApn = new Token("token");
         AwsSns expectedAwsSns = new("target_arn");
         string expectedBirthdate = "birthdate";
         Dictionary<string, JsonElement> expectedCustom = new()
@@ -392,7 +392,7 @@ public class UserProfileTest : TestBase
                 StreetAddress = "street_address",
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
-            Apn = "apn",
+            Apn = new Token("token"),
             AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()
@@ -669,7 +669,7 @@ public class UserProfileTest : TestBase
                 StreetAddress = "street_address",
             },
             Airship = new() { Audience = new("named_user"), DeviceTypes = ["string"] },
-            Apn = "apn",
+            Apn = new Token("token"),
             AwsSns = new("target_arn"),
             Birthdate = "birthdate",
             Custom = new Dictionary<string, JsonElement>()

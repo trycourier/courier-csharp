@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Models;
@@ -10,21 +9,17 @@ public class MultipleTokensTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new MultipleTokens { Tokens = [new("token")] };
+        var model = new MultipleTokens { Tokens = "string" };
 
-        List<Token> expectedTokens = [new("token")];
+        Tokens expectedTokens = "string";
 
-        Assert.Equal(expectedTokens.Count, model.Tokens.Count);
-        for (int i = 0; i < expectedTokens.Count; i++)
-        {
-            Assert.Equal(expectedTokens[i], model.Tokens[i]);
-        }
+        Assert.Equal(expectedTokens, model.Tokens);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new MultipleTokens { Tokens = [new("token")] };
+        var model = new MultipleTokens { Tokens = "string" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<MultipleTokens>(
@@ -38,7 +33,7 @@ public class MultipleTokensTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new MultipleTokens { Tokens = [new("token")] };
+        var model = new MultipleTokens { Tokens = "string" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<MultipleTokens>(
@@ -47,19 +42,15 @@ public class MultipleTokensTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        List<Token> expectedTokens = [new("token")];
+        Tokens expectedTokens = "string";
 
-        Assert.Equal(expectedTokens.Count, deserialized.Tokens.Count);
-        for (int i = 0; i < expectedTokens.Count; i++)
-        {
-            Assert.Equal(expectedTokens[i], deserialized.Tokens[i]);
-        }
+        Assert.Equal(expectedTokens, deserialized.Tokens);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new MultipleTokens { Tokens = [new("token")] };
+        var model = new MultipleTokens { Tokens = "string" };
 
         model.Validate();
     }
@@ -67,10 +58,47 @@ public class MultipleTokensTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new MultipleTokens { Tokens = [new("token")] };
+        var model = new MultipleTokens { Tokens = "string" };
 
         MultipleTokens copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class TokensTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        Tokens value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringsValidationWorks()
+    {
+        Tokens value = new(["string"]);
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        Tokens value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Tokens>(element, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void StringsSerializationRoundtripWorks()
+    {
+        Tokens value = new(["string"]);
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Tokens>(element, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }

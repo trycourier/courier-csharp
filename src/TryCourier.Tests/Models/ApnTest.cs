@@ -4,28 +4,28 @@ using TryCourier.Models;
 
 namespace TryCourier.Tests.Models;
 
-public class ExpoTest : TestBase
+public class ApnTest : TestBase
 {
     [Fact]
     public void TokenValidationWorks()
     {
-        Expo value = new Token("token");
+        Apn value = new Token("token");
         value.Validate();
     }
 
     [Fact]
     public void MultipleTokensValidationWorks()
     {
-        Expo value = new MultipleTokens(new Tokens("string"));
+        Apn value = new MultipleTokens(new Tokens("string"));
         value.Validate();
     }
 
     [Fact]
     public void TokenSerializationRoundtripWorks()
     {
-        Expo value = new Token("token");
+        Apn value = new Token("token");
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Expo>(element, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Apn>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }
@@ -33,9 +33,9 @@ public class ExpoTest : TestBase
     [Fact]
     public void MultipleTokensSerializationRoundtripWorks()
     {
-        Expo value = new MultipleTokens(new Tokens("string"));
+        Apn value = new MultipleTokens(new Tokens("string"));
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Expo>(element, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<Apn>(element, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
     }

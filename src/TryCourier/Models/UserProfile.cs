@@ -30,12 +30,17 @@ public sealed record class UserProfile : JsonModel
         init { this._rawData.Set("airship", value); }
     }
 
-    public string? Apn
+    /// <summary>
+    /// Apple Push Notification device tokens. Supply either a single `token` or a
+    /// `tokens` value. A bare string is rejected by the provider — the token must
+    /// be wrapped in this object.
+    /// </summary>
+    public Apn? Apn
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("apn");
+            return this._rawData.GetNullableClass<Apn>("apn");
         }
         init { this._rawData.Set("apn", value); }
     }
@@ -115,6 +120,9 @@ public sealed record class UserProfile : JsonModel
         init { this._rawData.Set("email_verified", value); }
     }
 
+    /// <summary>
+    /// Expo push tokens. Supply either a single `token` or a `tokens` value.
+    /// </summary>
     public Expo? Expo
     {
         get
@@ -340,7 +348,7 @@ public sealed record class UserProfile : JsonModel
     {
         this.Address?.Validate();
         this.Airship?.Validate();
-        _ = this.Apn;
+        this.Apn?.Validate();
         this.AwsSns?.Validate();
         _ = this.Birthdate;
         _ = this.Custom;
