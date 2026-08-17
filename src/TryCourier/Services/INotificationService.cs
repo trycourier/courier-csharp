@@ -82,23 +82,6 @@ public interface INotificationService
     );
 
     /// <summary>
-    /// Copies a notification template within the same workspace and environment,
-    /// appending " COPY" to the title. The copy is standalone and independently
-    /// editable.
-    /// </summary>
-    Task<NotificationTemplateResponse> Duplicate(
-        NotificationDuplicateParams parameters,
-        CancellationToken cancellationToken = default
-    );
-
-    /// <inheritdoc cref="Duplicate(NotificationDuplicateParams, CancellationToken)"/>
-    Task<NotificationTemplateResponse> Duplicate(
-        string id,
-        NotificationDuplicateParams? parameters = null,
-        CancellationToken cancellationToken = default
-    );
-
-    /// <summary>
     /// Returns a notification template's published versions, most recent first, for
     /// comparison or rollback. Paged.
     /// </summary>
@@ -273,22 +256,6 @@ public interface INotificationServiceWithRawResponse
     Task<HttpResponse> Archive(
         string id,
         NotificationArchiveParams? parameters = null,
-        CancellationToken cancellationToken = default
-    );
-
-    /// <summary>
-    /// Returns a raw HTTP response for <c>post /notifications/{id}/duplicate</c>, but is otherwise the
-    /// same as <see cref="INotificationService.Duplicate(NotificationDuplicateParams, CancellationToken)"/>.
-    /// </summary>
-    Task<HttpResponse<NotificationTemplateResponse>> Duplicate(
-        NotificationDuplicateParams parameters,
-        CancellationToken cancellationToken = default
-    );
-
-    /// <inheritdoc cref="Duplicate(NotificationDuplicateParams, CancellationToken)"/>
-    Task<HttpResponse<NotificationTemplateResponse>> Duplicate(
-        string id,
-        NotificationDuplicateParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 

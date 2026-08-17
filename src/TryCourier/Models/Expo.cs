@@ -7,6 +7,9 @@ using System = System;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// Expo push tokens. Supply either a single `token` or a `tokens` value.
+/// </summary>
 [JsonConverter(typeof(ExpoConverter))]
 public record class Expo : ModelBase
 {
@@ -211,7 +214,7 @@ sealed class ExpoConverter : JsonConverter<Expo>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
-            var deserialized = JsonSerializer.Deserialize<MultipleTokens>(element, options);
+            var deserialized = JsonSerializer.Deserialize<Token>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
@@ -225,7 +228,7 @@ sealed class ExpoConverter : JsonConverter<Expo>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<Token>(element, options);
+            var deserialized = JsonSerializer.Deserialize<MultipleTokens>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
