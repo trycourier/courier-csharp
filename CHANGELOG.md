@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.0.0](https://github.com/trycourier/courier-csharp/compare/v6.0.0...v7.0.0) (2026-08-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** match the spec to the backend — apn/expo token types and the phantom notifications.duplicate ([#76](https://github.com/trycourier/courier-csharp/issues/76))
+
+### Features
+
+* **api:** match the spec to the backend — apn/expo token types and the phantom notifications.duplicate ([#76](https://github.com/trycourier/courier-csharp/issues/76)) ([1a56980](https://github.com/trycourier/courier-csharp/commit/1a56980af13cd3164fef8ad467c8caf8abbc8703))
+
 ## [6.0.0](https://github.com/trycourier/courier-csharp/compare/v5.22.2...v6.0.0) (2026-08-17)
 
 
