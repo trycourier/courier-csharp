@@ -19,6 +19,8 @@ public class TopicPreferenceTest : TestBase
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
             HasCustomRouting = true,
+            SectionID = "section_id",
+            SectionName = "section_name",
         };
 
         ApiEnum<string, PreferenceStatus> expectedDefaultStatus = PreferenceStatus.OptedIn;
@@ -30,6 +32,8 @@ public class TopicPreferenceTest : TestBase
             ChannelClassification.DirectMessage,
         ];
         bool expectedHasCustomRouting = true;
+        string expectedSectionID = "section_id";
+        string expectedSectionName = "section_name";
 
         Assert.Equal(expectedDefaultStatus, model.DefaultStatus);
         Assert.Equal(expectedStatus, model.Status);
@@ -42,6 +46,8 @@ public class TopicPreferenceTest : TestBase
             Assert.Equal(expectedCustomRouting[i], model.CustomRouting[i]);
         }
         Assert.Equal(expectedHasCustomRouting, model.HasCustomRouting);
+        Assert.Equal(expectedSectionID, model.SectionID);
+        Assert.Equal(expectedSectionName, model.SectionName);
     }
 
     [Fact]
@@ -55,6 +61,8 @@ public class TopicPreferenceTest : TestBase
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
             HasCustomRouting = true,
+            SectionID = "section_id",
+            SectionName = "section_name",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -77,6 +85,8 @@ public class TopicPreferenceTest : TestBase
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
             HasCustomRouting = true,
+            SectionID = "section_id",
+            SectionName = "section_name",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -95,6 +105,8 @@ public class TopicPreferenceTest : TestBase
             ChannelClassification.DirectMessage,
         ];
         bool expectedHasCustomRouting = true;
+        string expectedSectionID = "section_id";
+        string expectedSectionName = "section_name";
 
         Assert.Equal(expectedDefaultStatus, deserialized.DefaultStatus);
         Assert.Equal(expectedStatus, deserialized.Status);
@@ -107,10 +119,49 @@ public class TopicPreferenceTest : TestBase
             Assert.Equal(expectedCustomRouting[i], deserialized.CustomRouting[i]);
         }
         Assert.Equal(expectedHasCustomRouting, deserialized.HasCustomRouting);
+        Assert.Equal(expectedSectionID, deserialized.SectionID);
+        Assert.Equal(expectedSectionName, deserialized.SectionName);
     }
 
     [Fact]
     public void Validation_Works()
+    {
+        var model = new TopicPreference
+        {
+            DefaultStatus = PreferenceStatus.OptedIn,
+            Status = PreferenceStatus.OptedIn,
+            TopicID = "topic_id",
+            TopicName = "topic_name",
+            CustomRouting = [ChannelClassification.DirectMessage],
+            HasCustomRouting = true,
+            SectionID = "section_id",
+            SectionName = "section_name",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new TopicPreference
+        {
+            DefaultStatus = PreferenceStatus.OptedIn,
+            Status = PreferenceStatus.OptedIn,
+            TopicID = "topic_id",
+            TopicName = "topic_name",
+            CustomRouting = [ChannelClassification.DirectMessage],
+            HasCustomRouting = true,
+        };
+
+        Assert.Null(model.SectionID);
+        Assert.False(model.RawData.ContainsKey("section_id"));
+        Assert.Null(model.SectionName);
+        Assert.False(model.RawData.ContainsKey("section_name"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
         var model = new TopicPreference
         {
@@ -126,6 +177,49 @@ public class TopicPreferenceTest : TestBase
     }
 
     [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new TopicPreference
+        {
+            DefaultStatus = PreferenceStatus.OptedIn,
+            Status = PreferenceStatus.OptedIn,
+            TopicID = "topic_id",
+            TopicName = "topic_name",
+            CustomRouting = [ChannelClassification.DirectMessage],
+            HasCustomRouting = true,
+
+            // Null should be interpreted as omitted for these properties
+            SectionID = null,
+            SectionName = null,
+        };
+
+        Assert.Null(model.SectionID);
+        Assert.False(model.RawData.ContainsKey("section_id"));
+        Assert.Null(model.SectionName);
+        Assert.False(model.RawData.ContainsKey("section_name"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new TopicPreference
+        {
+            DefaultStatus = PreferenceStatus.OptedIn,
+            Status = PreferenceStatus.OptedIn,
+            TopicID = "topic_id",
+            TopicName = "topic_name",
+            CustomRouting = [ChannelClassification.DirectMessage],
+            HasCustomRouting = true,
+
+            // Null should be interpreted as omitted for these properties
+            SectionID = null,
+            SectionName = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
         var model = new TopicPreference
@@ -134,6 +228,8 @@ public class TopicPreferenceTest : TestBase
             Status = PreferenceStatus.OptedIn,
             TopicID = "topic_id",
             TopicName = "topic_name",
+            SectionID = "section_id",
+            SectionName = "section_name",
         };
 
         Assert.Null(model.CustomRouting);
@@ -151,6 +247,8 @@ public class TopicPreferenceTest : TestBase
             Status = PreferenceStatus.OptedIn,
             TopicID = "topic_id",
             TopicName = "topic_name",
+            SectionID = "section_id",
+            SectionName = "section_name",
         };
 
         model.Validate();
@@ -165,6 +263,8 @@ public class TopicPreferenceTest : TestBase
             Status = PreferenceStatus.OptedIn,
             TopicID = "topic_id",
             TopicName = "topic_name",
+            SectionID = "section_id",
+            SectionName = "section_name",
 
             CustomRouting = null,
             HasCustomRouting = null,
@@ -185,6 +285,8 @@ public class TopicPreferenceTest : TestBase
             Status = PreferenceStatus.OptedIn,
             TopicID = "topic_id",
             TopicName = "topic_name",
+            SectionID = "section_id",
+            SectionName = "section_name",
 
             CustomRouting = null,
             HasCustomRouting = null,
@@ -204,6 +306,8 @@ public class TopicPreferenceTest : TestBase
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
             HasCustomRouting = true,
+            SectionID = "section_id",
+            SectionName = "section_name",
         };
 
         TopicPreference copied = new(model);

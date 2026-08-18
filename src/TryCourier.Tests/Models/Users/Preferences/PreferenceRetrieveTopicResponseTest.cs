@@ -20,6 +20,8 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
                 TopicName = "topic_name",
                 CustomRouting = [ChannelClassification.DirectMessage],
                 HasCustomRouting = true,
+                SectionID = "section_id",
+                SectionName = "section_name",
             },
         };
 
@@ -31,6 +33,8 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
             HasCustomRouting = true,
+            SectionID = "section_id",
+            SectionName = "section_name",
         };
 
         Assert.Equal(expectedTopic, model.Topic);
@@ -49,6 +53,8 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
                 TopicName = "topic_name",
                 CustomRouting = [ChannelClassification.DirectMessage],
                 HasCustomRouting = true,
+                SectionID = "section_id",
+                SectionName = "section_name",
             },
         };
 
@@ -74,6 +80,8 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
                 TopicName = "topic_name",
                 CustomRouting = [ChannelClassification.DirectMessage],
                 HasCustomRouting = true,
+                SectionID = "section_id",
+                SectionName = "section_name",
             },
         };
 
@@ -92,6 +100,8 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
             HasCustomRouting = true,
+            SectionID = "section_id",
+            SectionName = "section_name",
         };
 
         Assert.Equal(expectedTopic, deserialized.Topic);
@@ -110,6 +120,8 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
                 TopicName = "topic_name",
                 CustomRouting = [ChannelClassification.DirectMessage],
                 HasCustomRouting = true,
+                SectionID = "section_id",
+                SectionName = "section_name",
             },
         };
 
@@ -129,6 +141,8 @@ public class PreferenceRetrieveTopicResponseTest : TestBase
                 TopicName = "topic_name",
                 CustomRouting = [ChannelClassification.DirectMessage],
                 HasCustomRouting = true,
+                SectionID = "section_id",
+                SectionName = "section_name",
             },
         };
 
