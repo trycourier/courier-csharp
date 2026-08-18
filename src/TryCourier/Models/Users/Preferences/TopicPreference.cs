@@ -105,6 +105,52 @@ public sealed record class TopicPreference : JsonModel
         init { this._rawData.Set("has_custom_routing", value); }
     }
 
+    /// <summary>
+    /// The unique identifier of the section this topic belongs to. Always present
+    /// when listing a user's preferences; omitted by the single-topic read when the
+    /// topic has no resolvable section.
+    /// </summary>
+    public string? SectionID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("section_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("section_id", value);
+        }
+    }
+
+    /// <summary>
+    /// The display name of the section this topic belongs to. Always present when
+    /// listing a user's preferences; omitted by the single-topic read when the topic
+    /// has no resolvable section.
+    /// </summary>
+    public string? SectionName
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("section_name");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("section_name", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
@@ -117,6 +163,8 @@ public sealed record class TopicPreference : JsonModel
             item.Validate();
         }
         _ = this.HasCustomRouting;
+        _ = this.SectionID;
+        _ = this.SectionName;
     }
 
     public TopicPreference() { }
