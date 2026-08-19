@@ -209,6 +209,7 @@ public class RequestTypeTest : TestBase
     [InlineData(RequestType.Identify)]
     [InlineData(RequestType.Group)]
     [InlineData(RequestType.Track)]
+    [InlineData(RequestType.Page)]
     public void Validation_Works(RequestType rawValue)
     {
         // force implicit conversion because Theory can't do that for us
@@ -232,6 +233,7 @@ public class RequestTypeTest : TestBase
     [InlineData(RequestType.Identify)]
     [InlineData(RequestType.Group)]
     [InlineData(RequestType.Track)]
+    [InlineData(RequestType.Page)]
     public void SerializationRoundtrip_Works(RequestType rawValue)
     {
         // force implicit conversion because Theory can't do that for us

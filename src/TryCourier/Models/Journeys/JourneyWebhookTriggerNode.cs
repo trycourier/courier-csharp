@@ -10,43 +10,47 @@ using System = System;
 namespace TryCourier.Models.Journeys;
 
 /// <summary>
-/// Trigger fired by a segment event (`identify`, `group`, `track`, or `page`). A
-/// trigger with no `event_id` fires on any event of its type — the only shape `identify`
-/// and `group` can take, and the one that catches a stock `analytics.page()` call.
+/// Trigger fired when an external system POSTs to the webhook URL minted for `event_source`.
+/// Narrow it to one event with `event_id`, or omit `event_id` to accept every event
+/// delivered to the URL.
 /// </summary>
 [JsonConverter(
-    typeof(JsonModelConverter<JourneySegmentTriggerNode, JourneySegmentTriggerNodeFromRaw>)
+    typeof(JsonModelConverter<JourneyWebhookTriggerNode, JourneyWebhookTriggerNodeFromRaw>)
 )]
-public sealed record class JourneySegmentTriggerNode : JsonModel
+public sealed record class JourneyWebhookTriggerNode : JsonModel
 {
-    public required ApiEnum<string, RequestType> RequestType
+    /// <summary>
+    /// The provider key the webhook URL is minted for. Required, and must not contain
+    /// a forward slash.
+    /// </summary>
+    public required string EventSource
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, RequestType>>("request_type");
+            return this._rawData.GetNotNullClass<string>("event_source");
         }
-        init { this._rawData.Set("request_type", value); }
+        init { this._rawData.Set("event_source", value); }
     }
 
-    public required ApiEnum<string, JourneySegmentTriggerNodeTriggerType> TriggerType
+    public required ApiEnum<string, JourneyWebhookTriggerNodeTriggerType> TriggerType
     {
         get
         {
             this._rawData.Freeze();
             return this._rawData.GetNotNullClass<
-                ApiEnum<string, JourneySegmentTriggerNodeTriggerType>
+                ApiEnum<string, JourneyWebhookTriggerNodeTriggerType>
             >("trigger_type");
         }
         init { this._rawData.Set("trigger_type", value); }
     }
 
-    public required ApiEnum<string, JourneySegmentTriggerNodeType> Type
+    public required ApiEnum<string, JourneyWebhookTriggerNodeType> Type
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ApiEnum<string, JourneySegmentTriggerNodeType>>(
+            return this._rawData.GetNotNullClass<ApiEnum<string, JourneyWebhookTriggerNodeType>>(
                 "type"
             );
         }
@@ -94,6 +98,11 @@ public sealed record class JourneySegmentTriggerNode : JsonModel
         }
     }
 
+    /// <summary>
+    /// An optional event filter, matched against the payload's `event` field. A sender
+    /// that supplies no `event` matches the literal `custom`. Must not contain a
+    /// forward slash. Omit to accept every event delivered to the URL.
+    /// </summary>
     public string? EventID
     {
         get
@@ -115,7 +124,7 @@ public sealed record class JourneySegmentTriggerNode : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        this.RequestType.Validate();
+        _ = this.EventSource;
         this.TriggerType.Validate();
         this.Type.Validate();
         _ = this.ID;
@@ -123,29 +132,29 @@ public sealed record class JourneySegmentTriggerNode : JsonModel
         _ = this.EventID;
     }
 
-    public JourneySegmentTriggerNode() { }
+    public JourneyWebhookTriggerNode() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public JourneySegmentTriggerNode(JourneySegmentTriggerNode journeySegmentTriggerNode)
-        : base(journeySegmentTriggerNode) { }
+    public JourneyWebhookTriggerNode(JourneyWebhookTriggerNode journeyWebhookTriggerNode)
+        : base(journeyWebhookTriggerNode) { }
 #pragma warning restore CS8618
 
-    public JourneySegmentTriggerNode(IReadOnlyDictionary<string, JsonElement> rawData)
+    public JourneyWebhookTriggerNode(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    JourneySegmentTriggerNode(FrozenDictionary<string, JsonElement> rawData)
+    JourneyWebhookTriggerNode(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="JourneySegmentTriggerNodeFromRaw.FromRawUnchecked"/>
-    public static JourneySegmentTriggerNode FromRawUnchecked(
+    /// <inheritdoc cref="JourneyWebhookTriggerNodeFromRaw.FromRawUnchecked"/>
+    public static JourneyWebhookTriggerNode FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -153,26 +162,24 @@ public sealed record class JourneySegmentTriggerNode : JsonModel
     }
 }
 
-class JourneySegmentTriggerNodeFromRaw : IFromRawJson<JourneySegmentTriggerNode>
+class JourneyWebhookTriggerNodeFromRaw : IFromRawJson<JourneyWebhookTriggerNode>
 {
     /// <inheritdoc/>
-    public JourneySegmentTriggerNode FromRawUnchecked(
+    public JourneyWebhookTriggerNode FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => JourneySegmentTriggerNode.FromRawUnchecked(rawData);
+    ) => JourneyWebhookTriggerNode.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(RequestTypeConverter))]
-public enum RequestType
+[JsonConverter(typeof(JourneyWebhookTriggerNodeTriggerTypeConverter))]
+public enum JourneyWebhookTriggerNodeTriggerType
 {
-    Identify,
-    Group,
-    Track,
-    Page,
+    Webhook,
 }
 
-sealed class RequestTypeConverter : JsonConverter<RequestType>
+sealed class JourneyWebhookTriggerNodeTriggerTypeConverter
+    : JsonConverter<JourneyWebhookTriggerNodeTriggerType>
 {
-    public override RequestType Read(
+    public override JourneyWebhookTriggerNodeTriggerType Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -180,17 +187,14 @@ sealed class RequestTypeConverter : JsonConverter<RequestType>
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "identify" => RequestType.Identify,
-            "group" => RequestType.Group,
-            "track" => RequestType.Track,
-            "page" => RequestType.Page,
-            _ => (RequestType)(-1),
+            "webhook" => JourneyWebhookTriggerNodeTriggerType.Webhook,
+            _ => (JourneyWebhookTriggerNodeTriggerType)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        RequestType value,
+        JourneyWebhookTriggerNodeTriggerType value,
         JsonSerializerOptions options
     )
     {
@@ -198,10 +202,7 @@ sealed class RequestTypeConverter : JsonConverter<RequestType>
             writer,
             value switch
             {
-                RequestType.Identify => "identify",
-                RequestType.Group => "group",
-                RequestType.Track => "track",
-                RequestType.Page => "page",
+                JourneyWebhookTriggerNodeTriggerType.Webhook => "webhook",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
@@ -211,57 +212,15 @@ sealed class RequestTypeConverter : JsonConverter<RequestType>
     }
 }
 
-[JsonConverter(typeof(JourneySegmentTriggerNodeTriggerTypeConverter))]
-public enum JourneySegmentTriggerNodeTriggerType
-{
-    Segment,
-}
-
-sealed class JourneySegmentTriggerNodeTriggerTypeConverter
-    : JsonConverter<JourneySegmentTriggerNodeTriggerType>
-{
-    public override JourneySegmentTriggerNodeTriggerType Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "segment" => JourneySegmentTriggerNodeTriggerType.Segment,
-            _ => (JourneySegmentTriggerNodeTriggerType)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        JourneySegmentTriggerNodeTriggerType value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                JourneySegmentTriggerNodeTriggerType.Segment => "segment",
-                _ => throw new CourierInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(JourneySegmentTriggerNodeTypeConverter))]
-public enum JourneySegmentTriggerNodeType
+[JsonConverter(typeof(JourneyWebhookTriggerNodeTypeConverter))]
+public enum JourneyWebhookTriggerNodeType
 {
     Trigger,
 }
 
-sealed class JourneySegmentTriggerNodeTypeConverter : JsonConverter<JourneySegmentTriggerNodeType>
+sealed class JourneyWebhookTriggerNodeTypeConverter : JsonConverter<JourneyWebhookTriggerNodeType>
 {
-    public override JourneySegmentTriggerNodeType Read(
+    public override JourneyWebhookTriggerNodeType Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -269,14 +228,14 @@ sealed class JourneySegmentTriggerNodeTypeConverter : JsonConverter<JourneySegme
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "trigger" => JourneySegmentTriggerNodeType.Trigger,
-            _ => (JourneySegmentTriggerNodeType)(-1),
+            "trigger" => JourneyWebhookTriggerNodeType.Trigger,
+            _ => (JourneyWebhookTriggerNodeType)(-1),
         };
     }
 
     public override void Write(
         Utf8JsonWriter writer,
-        JourneySegmentTriggerNodeType value,
+        JourneyWebhookTriggerNodeType value,
         JsonSerializerOptions options
     )
     {
@@ -284,7 +243,7 @@ sealed class JourneySegmentTriggerNodeTypeConverter : JsonConverter<JourneySegme
             writer,
             value switch
             {
-                JourneySegmentTriggerNodeType.Trigger => "trigger",
+                JourneyWebhookTriggerNodeType.Trigger => "trigger",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
