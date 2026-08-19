@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.1.0](https://github.com/trycourier/courier-csharp/compare/v7.0.0...v7.1.0) (2026-08-19)
+
+
+### Features
+
+* **api:** add automation and journey run log endpoints ([#81](https://github.com/trycourier/courier-csharp/issues/81)) ([843dfd7](https://github.com/trycourier/courier-csharp/commit/843dfd7db9adede3a07192b8d32571719c889164))
+* **api:** document section_id and section_name on a user's topic preference ([#80](https://github.com/trycourier/courier-csharp/issues/80)) ([28e566a](https://github.com/trycourier/courier-csharp/commit/28e566ace7eca350f33fc511b87f3abc4fbeb41b))
+
+
+### Chores
+
+* **api:** regenerate SDK ([#78](https://github.com/trycourier/courier-csharp/issues/78)) ([0b2632d](https://github.com/trycourier/courier-csharp/commit/0b2632df98b211e126c59d4d51a22dd156f41bb6))
+
 ## [7.0.0](https://github.com/trycourier/courier-csharp/compare/v6.0.0...v7.0.0) (2026-08-17)
 
 
