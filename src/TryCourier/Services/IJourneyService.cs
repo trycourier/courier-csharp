@@ -32,6 +32,8 @@ public interface IJourneyService
 
     ITemplateService Templates { get; }
 
+    IRunService Runs { get; }
+
     /// <summary>
     /// Creates a journey from a set of nodes, in draft state unless you pass a
     /// published state. Send nodes cannot be included until their templates exist.
@@ -167,6 +169,8 @@ public interface IJourneyServiceWithRawResponse
     IJourneyServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     ITemplateServiceWithRawResponse Templates { get; }
+
+    IRunServiceWithRawResponse Runs { get; }
 
     /// <summary>
     /// Returns a raw HTTP response for <c>post /journeys</c>, but is otherwise the

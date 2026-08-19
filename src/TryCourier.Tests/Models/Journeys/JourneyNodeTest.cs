@@ -41,6 +41,35 @@ public class JourneyNodeTest : TestBase
     }
 
     [Fact]
+    public void AudienceTriggerValidationWorks()
+    {
+        JourneyNode value = new JourneyAudienceTriggerNode()
+        {
+            AudienceID = "x",
+            TriggerType = JourneyAudienceTriggerNodeTriggerType.Audience,
+            Type = JourneyAudienceTriggerNodeType.Trigger,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+        };
+        value.Validate();
+    }
+
+    [Fact]
+    public void WebhookTriggerValidationWorks()
+    {
+        JourneyNode value = new JourneyWebhookTriggerNode()
+        {
+            EventSource = "event_source",
+            TriggerType = JourneyWebhookTriggerNodeTriggerType.Webhook,
+            Type = JourneyWebhookTriggerNodeType.Trigger,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+            EventID = "event_id",
+        };
+        value.Validate();
+    }
+
+    [Fact]
     public void SendValidationWorks()
     {
         JourneyNode value = new JourneySendNode()
@@ -327,6 +356,47 @@ public class JourneyNodeTest : TestBase
             ID = "x",
             Conditions = new(["string", "string"]),
             EventID = "x",
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<JourneyNode>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void AudienceTriggerSerializationRoundtripWorks()
+    {
+        JourneyNode value = new JourneyAudienceTriggerNode()
+        {
+            AudienceID = "x",
+            TriggerType = JourneyAudienceTriggerNodeTriggerType.Audience,
+            Type = JourneyAudienceTriggerNodeType.Trigger,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+        };
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<JourneyNode>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void WebhookTriggerSerializationRoundtripWorks()
+    {
+        JourneyNode value = new JourneyWebhookTriggerNode()
+        {
+            EventSource = "event_source",
+            TriggerType = JourneyWebhookTriggerNodeTriggerType.Webhook,
+            Type = JourneyWebhookTriggerNodeType.Trigger,
+            ID = "x",
+            Conditions = new(["string", "string"]),
+            EventID = "event_id",
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<JourneyNode>(

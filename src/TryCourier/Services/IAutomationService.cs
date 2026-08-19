@@ -31,6 +31,8 @@ public interface IAutomationService
 
     IInvokeService Invoke { get; }
 
+    IRunService Runs { get; }
+
     /// <summary>
     /// Lists the workspace's saved automation templates, each with its id and a cursor
     /// for paging to the next page of results.
@@ -55,6 +57,8 @@ public interface IAutomationServiceWithRawResponse
     IAutomationServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
     IInvokeServiceWithRawResponse Invoke { get; }
+
+    IRunServiceWithRawResponse Runs { get; }
 
     /// <summary>
     /// Returns a raw HTTP response for <c>get /automations</c>, but is otherwise the

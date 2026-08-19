@@ -34,12 +34,19 @@ public sealed class JourneyService : IJourneyService
 
         _withRawResponse = new(() => new JourneyServiceWithRawResponse(client.WithRawResponse));
         _templates = new(() => new TemplateService(client));
+        _runs = new(() => new RunService(client));
     }
 
     readonly Lazy<ITemplateService> _templates;
     public ITemplateService Templates
     {
         get { return _templates.Value; }
+    }
+
+    readonly Lazy<IRunService> _runs;
+    public IRunService Runs
+    {
+        get { return _runs.Value; }
     }
 
     /// <inheritdoc/>
@@ -235,12 +242,19 @@ public sealed class JourneyServiceWithRawResponse : IJourneyServiceWithRawRespon
         _client = client;
 
         _templates = new(() => new TemplateServiceWithRawResponse(client));
+        _runs = new(() => new RunServiceWithRawResponse(client));
     }
 
     readonly Lazy<ITemplateServiceWithRawResponse> _templates;
     public ITemplateServiceWithRawResponse Templates
     {
         get { return _templates.Value; }
+    }
+
+    readonly Lazy<IRunServiceWithRawResponse> _runs;
+    public IRunServiceWithRawResponse Runs
+    {
+        get { return _runs.Value; }
     }
 
     /// <inheritdoc/>

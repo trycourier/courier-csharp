@@ -40,6 +40,8 @@ public record class JourneyNode : ModelBase
             return Match<string?>(
                 apiInvokeTrigger: (x) => x.ID,
                 segmentTrigger: (x) => x.ID,
+                audienceTrigger: (x) => x.ID,
+                webhookTrigger: (x) => x.ID,
                 send: (x) => x.ID,
                 delayDuration: (x) => x.ID,
                 delayUntil: (x) => x.ID,
@@ -63,6 +65,8 @@ public record class JourneyNode : ModelBase
             return Match<JourneyConditionsField?>(
                 apiInvokeTrigger: (x) => x.Conditions,
                 segmentTrigger: (x) => x.Conditions,
+                audienceTrigger: (x) => x.Conditions,
+                webhookTrigger: (x) => x.Conditions,
                 send: (x) => x.Conditions,
                 delayDuration: (x) => x.Conditions,
                 delayUntil: (x) => x.Conditions,
@@ -79,6 +83,31 @@ public record class JourneyNode : ModelBase
         }
     }
 
+    public string? EventID
+    {
+        get
+        {
+            return Match<string?>(
+                apiInvokeTrigger: (_) => null,
+                segmentTrigger: (x) => x.EventID,
+                audienceTrigger: (_) => null,
+                webhookTrigger: (x) => x.EventID,
+                send: (_) => null,
+                delayDuration: (_) => null,
+                delayUntil: (_) => null,
+                fetchGetDelete: (_) => null,
+                fetchPostPut: (_) => null,
+                ai: (_) => null,
+                throttleStatic: (_) => null,
+                throttleDynamic: (_) => null,
+                batch: (_) => null,
+                addToDigest: (_) => null,
+                exit: (_) => null,
+                branch: (_) => null
+            );
+        }
+    }
+
     public ApiEnum<string, JourneyMergeStrategy>? MergeStrategy
     {
         get
@@ -86,6 +115,8 @@ public record class JourneyNode : ModelBase
             return Match<ApiEnum<string, JourneyMergeStrategy>?>(
                 apiInvokeTrigger: (_) => null,
                 segmentTrigger: (_) => null,
+                audienceTrigger: (_) => null,
+                webhookTrigger: (_) => null,
                 send: (_) => null,
                 delayDuration: (_) => null,
                 delayUntil: (_) => null,
@@ -109,6 +140,8 @@ public record class JourneyNode : ModelBase
             return Match<string?>(
                 apiInvokeTrigger: (_) => null,
                 segmentTrigger: (_) => null,
+                audienceTrigger: (_) => null,
+                webhookTrigger: (_) => null,
                 send: (_) => null,
                 delayDuration: (_) => null,
                 delayUntil: (_) => null,
@@ -132,6 +165,8 @@ public record class JourneyNode : ModelBase
             return Match<long?>(
                 apiInvokeTrigger: (_) => null,
                 segmentTrigger: (_) => null,
+                audienceTrigger: (_) => null,
+                webhookTrigger: (_) => null,
                 send: (_) => null,
                 delayDuration: (_) => null,
                 delayUntil: (_) => null,
@@ -155,6 +190,8 @@ public record class JourneyNode : ModelBase
             return Match<string?>(
                 apiInvokeTrigger: (_) => null,
                 segmentTrigger: (_) => null,
+                audienceTrigger: (_) => null,
+                webhookTrigger: (_) => null,
                 send: (_) => null,
                 delayDuration: (_) => null,
                 delayUntil: (_) => null,
@@ -178,6 +215,18 @@ public record class JourneyNode : ModelBase
     }
 
     public JourneyNode(JourneySegmentTriggerNode value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public JourneyNode(JourneyAudienceTriggerNode value, JsonElement? element = null)
+    {
+        this.Value = value;
+        this._element = element;
+    }
+
+    public JourneyNode(JourneyWebhookTriggerNode value, JsonElement? element = null)
     {
         this.Value = value;
         this._element = element;
@@ -299,6 +348,48 @@ public record class JourneyNode : ModelBase
     public bool TryPickSegmentTrigger([NotNullWhen(true)] out JourneySegmentTriggerNode? value)
     {
         value = this.Value as JourneySegmentTriggerNode;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="JourneyAudienceTriggerNode"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickAudienceTrigger(out var value)) {
+    ///     // `value` is of type `JourneyAudienceTriggerNode`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickAudienceTrigger([NotNullWhen(true)] out JourneyAudienceTriggerNode? value)
+    {
+        value = this.Value as JourneyAudienceTriggerNode;
+        return value != null;
+    }
+
+    /// <summary>
+    /// Returns true and sets the <c>out</c> parameter if the instance was constructed with a variant of
+    /// type <see cref="JourneyWebhookTriggerNode"/>.
+    ///
+    /// <para>Consider using <see cref="Switch"/> or <see cref="Match"/> if you need to handle every variant.</para>
+    ///
+    /// <example>
+    /// <code>
+    /// if (instance.TryPickWebhookTrigger(out var value)) {
+    ///     // `value` is of type `JourneyWebhookTriggerNode`
+    ///     Console.WriteLine(value);
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    public bool TryPickWebhookTrigger([NotNullWhen(true)] out JourneyWebhookTriggerNode? value)
+    {
+        value = this.Value as JourneyWebhookTriggerNode;
         return value != null;
     }
 
@@ -570,6 +661,8 @@ public record class JourneyNode : ModelBase
     /// instance.Switch(
     ///     (JourneyApiInvokeTriggerNode value) =&gt; {...},
     ///     (JourneySegmentTriggerNode value) =&gt; {...},
+    ///     (JourneyAudienceTriggerNode value) =&gt; {...},
+    ///     (JourneyWebhookTriggerNode value) =&gt; {...},
     ///     (JourneySendNode value) =&gt; {...},
     ///     (JourneyDelayDurationNode value) =&gt; {...},
     ///     (JourneyDelayUntilNode value) =&gt; {...},
@@ -589,6 +682,8 @@ public record class JourneyNode : ModelBase
     public void Switch(
         System::Action<JourneyApiInvokeTriggerNode> apiInvokeTrigger,
         System::Action<JourneySegmentTriggerNode> segmentTrigger,
+        System::Action<JourneyAudienceTriggerNode> audienceTrigger,
+        System::Action<JourneyWebhookTriggerNode> webhookTrigger,
         System::Action<JourneySendNode> send,
         System::Action<JourneyDelayDurationNode> delayDuration,
         System::Action<JourneyDelayUntilNode> delayUntil,
@@ -610,6 +705,12 @@ public record class JourneyNode : ModelBase
                 break;
             case JourneySegmentTriggerNode value:
                 segmentTrigger(value);
+                break;
+            case JourneyAudienceTriggerNode value:
+                audienceTrigger(value);
+                break;
+            case JourneyWebhookTriggerNode value:
+                webhookTrigger(value);
                 break;
             case JourneySendNode value:
                 send(value);
@@ -671,6 +772,8 @@ public record class JourneyNode : ModelBase
     /// var result = instance.Match(
     ///     (JourneyApiInvokeTriggerNode value) =&gt; {...},
     ///     (JourneySegmentTriggerNode value) =&gt; {...},
+    ///     (JourneyAudienceTriggerNode value) =&gt; {...},
+    ///     (JourneyWebhookTriggerNode value) =&gt; {...},
     ///     (JourneySendNode value) =&gt; {...},
     ///     (JourneyDelayDurationNode value) =&gt; {...},
     ///     (JourneyDelayUntilNode value) =&gt; {...},
@@ -690,6 +793,8 @@ public record class JourneyNode : ModelBase
     public T Match<T>(
         System::Func<JourneyApiInvokeTriggerNode, T> apiInvokeTrigger,
         System::Func<JourneySegmentTriggerNode, T> segmentTrigger,
+        System::Func<JourneyAudienceTriggerNode, T> audienceTrigger,
+        System::Func<JourneyWebhookTriggerNode, T> webhookTrigger,
         System::Func<JourneySendNode, T> send,
         System::Func<JourneyDelayDurationNode, T> delayDuration,
         System::Func<JourneyDelayUntilNode, T> delayUntil,
@@ -708,6 +813,8 @@ public record class JourneyNode : ModelBase
         {
             JourneyApiInvokeTriggerNode value => apiInvokeTrigger(value),
             JourneySegmentTriggerNode value => segmentTrigger(value),
+            JourneyAudienceTriggerNode value => audienceTrigger(value),
+            JourneyWebhookTriggerNode value => webhookTrigger(value),
             JourneySendNode value => send(value),
             JourneyDelayDurationNode value => delayDuration(value),
             JourneyDelayUntilNode value => delayUntil(value),
@@ -729,6 +836,10 @@ public record class JourneyNode : ModelBase
     public static implicit operator JourneyNode(JourneyApiInvokeTriggerNode value) => new(value);
 
     public static implicit operator JourneyNode(JourneySegmentTriggerNode value) => new(value);
+
+    public static implicit operator JourneyNode(JourneyAudienceTriggerNode value) => new(value);
+
+    public static implicit operator JourneyNode(JourneyWebhookTriggerNode value) => new(value);
 
     public static implicit operator JourneyNode(JourneySendNode value) => new(value);
 
@@ -773,6 +884,8 @@ public record class JourneyNode : ModelBase
         this.Switch(
             (apiInvokeTrigger) => apiInvokeTrigger.Validate(),
             (segmentTrigger) => segmentTrigger.Validate(),
+            (audienceTrigger) => audienceTrigger.Validate(),
+            (webhookTrigger) => webhookTrigger.Validate(),
             (send) => send.Validate(),
             (delayDuration) => delayDuration.Validate(),
             (delayUntil) => delayUntil.Validate(),
@@ -810,18 +923,20 @@ public record class JourneyNode : ModelBase
         {
             JourneyApiInvokeTriggerNode _ => 0,
             JourneySegmentTriggerNode _ => 1,
-            JourneySendNode _ => 2,
-            JourneyDelayDurationNode _ => 3,
-            JourneyDelayUntilNode _ => 4,
-            JourneyFetchGetDeleteNode _ => 5,
-            JourneyFetchPostPutNode _ => 6,
-            JourneyAINode _ => 7,
-            JourneyThrottleStaticNode _ => 8,
-            JourneyThrottleDynamicNode _ => 9,
-            JourneyBatchNode _ => 10,
-            JourneyAddToDigestNode _ => 11,
-            JourneyExitNode _ => 12,
-            JourneyBranchNode _ => 13,
+            JourneyAudienceTriggerNode _ => 2,
+            JourneyWebhookTriggerNode _ => 3,
+            JourneySendNode _ => 4,
+            JourneyDelayDurationNode _ => 5,
+            JourneyDelayUntilNode _ => 6,
+            JourneyFetchGetDeleteNode _ => 7,
+            JourneyFetchPostPutNode _ => 8,
+            JourneyAINode _ => 9,
+            JourneyThrottleStaticNode _ => 10,
+            JourneyThrottleDynamicNode _ => 11,
+            JourneyBatchNode _ => 12,
+            JourneyAddToDigestNode _ => 13,
+            JourneyExitNode _ => 14,
+            JourneyBranchNode _ => 15,
             _ => -1,
         };
     }
@@ -935,6 +1050,40 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<JourneySegmentTriggerNode>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneyAudienceTriggerNode>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<JourneyWebhookTriggerNode>(
                 element,
                 options
             );

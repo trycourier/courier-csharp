@@ -33,12 +33,19 @@ public sealed class AutomationService : IAutomationService
 
         _withRawResponse = new(() => new AutomationServiceWithRawResponse(client.WithRawResponse));
         _invoke = new(() => new InvokeService(client));
+        _runs = new(() => new RunService(client));
     }
 
     readonly Lazy<IInvokeService> _invoke;
     public IInvokeService Invoke
     {
         get { return _invoke.Value; }
+    }
+
+    readonly Lazy<IRunService> _runs;
+    public IRunService Runs
+    {
+        get { return _runs.Value; }
     }
 
     /// <inheritdoc/>
@@ -72,12 +79,19 @@ public sealed class AutomationServiceWithRawResponse : IAutomationServiceWithRaw
         _client = client;
 
         _invoke = new(() => new InvokeServiceWithRawResponse(client));
+        _runs = new(() => new RunServiceWithRawResponse(client));
     }
 
     readonly Lazy<IInvokeServiceWithRawResponse> _invoke;
     public IInvokeServiceWithRawResponse Invoke
     {
         get { return _invoke.Value; }
+    }
+
+    readonly Lazy<IRunServiceWithRawResponse> _runs;
+    public IRunServiceWithRawResponse Runs
+    {
+        get { return _runs.Value; }
     }
 
     /// <inheritdoc/>
