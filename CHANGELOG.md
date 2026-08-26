@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.2.0](https://github.com/trycourier/courier-csharp/compare/v7.1.0...v7.2.0) (2026-08-26)
+
+
+### Features
+
+* **api:** document the template send metrics endpoint ([#82](https://github.com/trycourier/courier-csharp/issues/82)) ([88436f3](https://github.com/trycourier/courier-csharp/commit/88436f3f898e5fcebba3fb8fbb3e92e8d0cd0e4a))
+
 ## [7.1.0](https://github.com/trycourier/courier-csharp/compare/v7.0.0...v7.1.0) (2026-08-19)
 
 
