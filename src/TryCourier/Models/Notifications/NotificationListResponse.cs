@@ -526,16 +526,19 @@ class NotificationFromRaw : IFromRawJson<Notification>
 [JsonConverter(typeof(JsonModelConverter<Tags, TagsFromRaw>))]
 public sealed record class Tags : JsonModel
 {
-    public required IReadOnlyList<Data> Data
+    public required IReadOnlyList<TagsData> Data
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<ImmutableArray<Data>>("data");
+            return this._rawData.GetNotNullStruct<ImmutableArray<TagsData>>("data");
         }
         init
         {
-            this._rawData.Set<ImmutableArray<Data>>("data", ImmutableArray.ToImmutableArray(value));
+            this._rawData.Set<ImmutableArray<TagsData>>(
+                "data",
+                ImmutableArray.ToImmutableArray(value)
+            );
         }
     }
 
@@ -576,7 +579,7 @@ public sealed record class Tags : JsonModel
     }
 
     [SetsRequiredMembers]
-    public Tags(IReadOnlyList<Data> data)
+    public Tags(IReadOnlyList<TagsData> data)
         : this()
     {
         this.Data = data;
@@ -590,8 +593,8 @@ class TagsFromRaw : IFromRawJson<Tags>
         Tags.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(JsonModelConverter<Data, DataFromRaw>))]
-public sealed record class Data : JsonModel
+[JsonConverter(typeof(JsonModelConverter<TagsData, TagsDataFromRaw>))]
+public sealed record class TagsData : JsonModel
 {
     public required string ID
     {
@@ -620,37 +623,37 @@ public sealed record class Data : JsonModel
         _ = this.Name;
     }
 
-    public Data() { }
+    public TagsData() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public Data(Data data)
-        : base(data) { }
+    public TagsData(TagsData tagsData)
+        : base(tagsData) { }
 #pragma warning restore CS8618
 
-    public Data(IReadOnlyDictionary<string, JsonElement> rawData)
+    public TagsData(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    Data(FrozenDictionary<string, JsonElement> rawData)
+    TagsData(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="DataFromRaw.FromRawUnchecked"/>
-    public static Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    /// <inheritdoc cref="TagsDataFromRaw.FromRawUnchecked"/>
+    public static TagsData FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
 }
 
-class DataFromRaw : IFromRawJson<Data>
+class TagsDataFromRaw : IFromRawJson<TagsData>
 {
     /// <inheritdoc/>
-    public Data FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
-        Data.FromRawUnchecked(rawData);
+    public TagsData FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        TagsData.FromRawUnchecked(rawData);
 }

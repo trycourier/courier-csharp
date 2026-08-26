@@ -82,6 +82,40 @@ public interface INotificationService
     );
 
     /// <summary>
+    /// Fetch the delivery funnel for one Notification Template as a time series — sent,
+    /// delivered, opened, clicked, errors, and undeliverable — broken out per provider
+    /// and channel inside each bucket. Sum the entries in a bucket for its totals;
+    /// there is no bucket-level total.
+    ///
+    /// <para>Choose the window absolutely with `start` and `end`, or relatively with
+    /// `lookback` (an ISO 8601 duration). `start` and `end` take precedence when both
+    /// are supplied, and a request carrying neither defaults to `lookback=P30D`. The
+    /// window is snapped outwards onto the `granularity` grid so every bucket it
+    /// overlaps is returned whole, and the snapped boundaries come back as `start` and
+    /// `end` — align a chart on those rather than on what was requested. Every boundary
+    /// is UTC; there is no timezone support.</para>
+    ///
+    /// <para>Every bucket in the window is returned, including the quiet ones, whose
+    /// `data` array is empty, so a series is directly plottable with no gap filling
+    /// client-side. An unknown template id returns `200` with an all-empty series
+    /// rather than `404`, and messages sent without a Notification Template never
+    /// appear here.</para>
+    ///
+    /// <para>Available in the US region only.</para>
+    /// </summary>
+    Task<NotificationMetricsResponse> GetMetrics(
+        NotificationGetMetricsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="GetMetrics(NotificationGetMetricsParams, CancellationToken)"/>
+    Task<NotificationMetricsResponse> GetMetrics(
+        string id,
+        NotificationGetMetricsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Returns a notification template's published versions, most recent first, for
     /// comparison or rollback. Paged.
     /// </summary>
@@ -256,6 +290,22 @@ public interface INotificationServiceWithRawResponse
     Task<HttpResponse> Archive(
         string id,
         NotificationArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>get /notifications/{id}/metrics</c>, but is otherwise the
+    /// same as <see cref="INotificationService.GetMetrics(NotificationGetMetricsParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<NotificationMetricsResponse>> GetMetrics(
+        NotificationGetMetricsParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="GetMetrics(NotificationGetMetricsParams, CancellationToken)"/>
+    Task<HttpResponse<NotificationMetricsResponse>> GetMetrics(
+        string id,
+        NotificationGetMetricsParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 

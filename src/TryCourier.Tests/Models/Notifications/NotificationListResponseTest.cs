@@ -605,7 +605,7 @@ public class TagsTest : TestBase
     {
         var model = new Tags { Data = [new() { ID = "id", Name = "name" }] };
 
-        List<Data> expectedData = [new() { ID = "id", Name = "name" }];
+        List<TagsData> expectedData = [new() { ID = "id", Name = "name" }];
 
         Assert.Equal(expectedData.Count, model.Data.Count);
         for (int i = 0; i < expectedData.Count; i++)
@@ -634,7 +634,7 @@ public class TagsTest : TestBase
         var deserialized = JsonSerializer.Deserialize<Tags>(element, ModelBase.SerializerOptions);
         Assert.NotNull(deserialized);
 
-        List<Data> expectedData = [new() { ID = "id", Name = "name" }];
+        List<TagsData> expectedData = [new() { ID = "id", Name = "name" }];
 
         Assert.Equal(expectedData.Count, deserialized.Data.Count);
         for (int i = 0; i < expectedData.Count; i++)
@@ -662,12 +662,12 @@ public class TagsTest : TestBase
     }
 }
 
-public class DataTest : TestBase
+public class TagsDataTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new Data { ID = "id", Name = "name" };
+        var model = new TagsData { ID = "id", Name = "name" };
 
         string expectedID = "id";
         string expectedName = "name";
@@ -679,10 +679,10 @@ public class DataTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new Data { ID = "id", Name = "name" };
+        var model = new TagsData { ID = "id", Name = "name" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Data>(json, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<TagsData>(json, ModelBase.SerializerOptions);
 
         Assert.Equal(model, deserialized);
     }
@@ -690,10 +690,13 @@ public class DataTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new Data { ID = "id", Name = "name" };
+        var model = new TagsData { ID = "id", Name = "name" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<Data>(element, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<TagsData>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
@@ -706,7 +709,7 @@ public class DataTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new Data { ID = "id", Name = "name" };
+        var model = new TagsData { ID = "id", Name = "name" };
 
         model.Validate();
     }
@@ -714,9 +717,9 @@ public class DataTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new Data { ID = "id", Name = "name" };
+        var model = new TagsData { ID = "id", Name = "name" };
 
-        Data copied = new(model);
+        TagsData copied = new(model);
 
         Assert.Equal(model, copied);
     }
