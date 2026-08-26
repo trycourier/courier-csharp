@@ -65,6 +65,17 @@ public class NotificationServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task GetMetrics_Works()
+    {
+        var notificationMetricsResponse = await this.client.Notifications.GetMetrics(
+            "x",
+            new(),
+            TestContext.Current.CancellationToken
+        );
+        notificationMetricsResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task ListVersions_Works()
     {
         var notificationTemplateVersionListResponse = await this.client.Notifications.ListVersions(
