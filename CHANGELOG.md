@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.3.0](https://github.com/trycourier/courier-csharp/compare/v7.2.0...v7.3.0) (2026-08-27)
+
+
+### Features
+
+* **api:** document Slack and MS Teams on journey send nodes, and fix over-strict MsTeams tenant requirements [C-20302] ([#84](https://github.com/trycourier/courier-csharp/issues/84)) ([603d668](https://github.com/trycourier/courier-csharp/commit/603d6685a7206250fc5dade1adb13f9f76fccb51))
+
 ## [7.2.0](https://github.com/trycourier/courier-csharp/compare/v7.1.0...v7.2.0) (2026-08-26)
 
 
