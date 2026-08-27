@@ -7,27 +7,48 @@ using TryCourier.Core;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// Tenant context shared by every MS Teams send variant. Provide at least one of
+/// `tenant_id` or `service_url`. If you provide both, they must agree — a `service_url`
+/// pointing at a different Microsoft tenant than `tenant_id` is rejected.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<MsTeamsBaseProperties, MsTeamsBasePropertiesFromRaw>))]
 public sealed record class MsTeamsBaseProperties : JsonModel
 {
-    public required string ServiceUrl
+    public string? ServiceUrl
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("service_url");
+            return this._rawData.GetNullableClass<string>("service_url");
         }
-        init { this._rawData.Set("service_url", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("service_url", value);
+        }
     }
 
-    public required string TenantID
+    public string? TenantID
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("tenant_id");
+            return this._rawData.GetNullableClass<string>("tenant_id");
         }
-        init { this._rawData.Set("tenant_id", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("tenant_id", value);
+        }
     }
 
     /// <inheritdoc/>

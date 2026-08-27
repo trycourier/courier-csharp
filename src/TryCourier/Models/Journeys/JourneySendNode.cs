@@ -229,6 +229,11 @@ public sealed record class Message : JsonModel
         }
     }
 
+    /// <summary>
+    /// Recipient override for this send. Provide exactly one of `email_override`,
+    /// `phone_number_override`, `user_id_override`, `slack`, or `ms_teams` — not
+    /// a combination.
+    /// </summary>
     public To? To
     {
         get
@@ -449,6 +454,10 @@ class DelayFromRaw : IFromRawJson<Delay>
         Delay.FromRawUnchecked(rawData);
 }
 
+/// <summary>
+/// Recipient override for this send. Provide exactly one of `email_override`, `phone_number_override`,
+/// `user_id_override`, `slack`, or `ms_teams` — not a combination.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<To, ToFromRaw>))]
 public sealed record class To : JsonModel
 {
@@ -470,6 +479,34 @@ public sealed record class To : JsonModel
         }
     }
 
+    /// <summary>
+    /// Send to a Microsoft Teams address directly, bypassing the recipient's stored
+    /// profile. Requires exactly one target: `channel_id`, `channel_name` (with `team_id`),
+    /// `user_id`, or `email`. `channel_name`, `user_id`, and `email` also need at
+    /// least one of `service_url` or `tenant_id` — if you provide both, they must
+    /// agree. `channel_id` doesn't require tenant context to publish, but provide
+    /// `service_url` or `tenant_id` anyway: sends without either have failed at delivery
+    /// in testing. `conversation_id` and `reply_to_activity_id`, available on the
+    /// send API's `MsTeams` profile, aren't supported here yet.
+    /// </summary>
+    public JourneySendNodeToMsTeams? MsTeams
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<JourneySendNodeToMsTeams>("ms_teams");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("ms_teams", value);
+        }
+    }
+
     public string? PhoneNumberOverride
     {
         get
@@ -485,6 +522,28 @@ public sealed record class To : JsonModel
             }
 
             this._rawData.Set("phone_number_override", value);
+        }
+    }
+
+    /// <summary>
+    /// Send to a Slack address directly, bypassing the recipient's stored profile.
+    /// Requires exactly one of `channel`, `user_id`, or `email`.
+    /// </summary>
+    public JourneySendNodeToSlack? Slack
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<JourneySendNodeToSlack>("slack");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("slack", value);
         }
     }
 
@@ -510,7 +569,9 @@ public sealed record class To : JsonModel
     public override void Validate()
     {
         _ = this.EmailOverride;
+        this.MsTeams?.Validate();
         _ = this.PhoneNumberOverride;
+        this.Slack?.Validate();
         _ = this.UserIDOverride;
     }
 

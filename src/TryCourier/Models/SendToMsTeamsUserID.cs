@@ -7,29 +7,13 @@ using TryCourier.Core;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// Provide at least one of `tenant_id` or `service_url`. If you provide both, they
+/// must agree.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<SendToMsTeamsUserID, SendToMsTeamsUserIDFromRaw>))]
 public sealed record class SendToMsTeamsUserID : JsonModel
 {
-    public required string ServiceUrl
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("service_url");
-        }
-        init { this._rawData.Set("service_url", value); }
-    }
-
-    public required string TenantID
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("tenant_id");
-        }
-        init { this._rawData.Set("tenant_id", value); }
-    }
-
     public required string UserID
     {
         get
@@ -40,12 +24,48 @@ public sealed record class SendToMsTeamsUserID : JsonModel
         init { this._rawData.Set("user_id", value); }
     }
 
+    public string? ServiceUrl
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("service_url");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("service_url", value);
+        }
+    }
+
+    public string? TenantID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("tenant_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("tenant_id", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
+        _ = this.UserID;
         _ = this.ServiceUrl;
         _ = this.TenantID;
-        _ = this.UserID;
     }
 
     public SendToMsTeamsUserID() { }
@@ -75,6 +95,13 @@ public sealed record class SendToMsTeamsUserID : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SendToMsTeamsUserID(string userID)
+        : this()
+    {
+        this.UserID = userID;
     }
 }
 

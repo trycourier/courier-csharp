@@ -13,6 +13,10 @@ namespace TryCourier.Models;
 [JsonConverter(typeof(JsonModelConverter<MsTeamsRecipient, MsTeamsRecipientFromRaw>))]
 public sealed record class MsTeamsRecipient : JsonModel
 {
+    /// <summary>
+    /// Provide at least one of `tenant_id` or `service_url`. If you provide both,
+    /// they must agree.
+    /// </summary>
     public required MsTeams MsTeams
     {
         get

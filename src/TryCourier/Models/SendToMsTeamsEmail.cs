@@ -7,6 +7,10 @@ using TryCourier.Core;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// Provide at least one of `tenant_id` or `service_url`. If you provide both, they
+/// must agree.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<SendToMsTeamsEmail, SendToMsTeamsEmailFromRaw>))]
 public sealed record class SendToMsTeamsEmail : JsonModel
 {
@@ -20,24 +24,40 @@ public sealed record class SendToMsTeamsEmail : JsonModel
         init { this._rawData.Set("email", value); }
     }
 
-    public required string ServiceUrl
+    public string? ServiceUrl
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("service_url");
+            return this._rawData.GetNullableClass<string>("service_url");
         }
-        init { this._rawData.Set("service_url", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("service_url", value);
+        }
     }
 
-    public required string TenantID
+    public string? TenantID
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("tenant_id");
+            return this._rawData.GetNullableClass<string>("tenant_id");
         }
-        init { this._rawData.Set("tenant_id", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("tenant_id", value);
+        }
     }
 
     /// <inheritdoc/>
@@ -75,6 +95,13 @@ public sealed record class SendToMsTeamsEmail : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SendToMsTeamsEmail(string email)
+        : this()
+    {
+        this.Email = email;
     }
 }
 

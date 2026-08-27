@@ -11,18 +11,18 @@ public class SendToMsTeamsUserIDTest : TestBase
     {
         var model = new SendToMsTeamsUserID
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
 
+        string expectedUserID = "user_id";
         string expectedServiceUrl = "service_url";
         string expectedTenantID = "tenant_id";
-        string expectedUserID = "user_id";
 
+        Assert.Equal(expectedUserID, model.UserID);
         Assert.Equal(expectedServiceUrl, model.ServiceUrl);
         Assert.Equal(expectedTenantID, model.TenantID);
-        Assert.Equal(expectedUserID, model.UserID);
     }
 
     [Fact]
@@ -30,9 +30,9 @@ public class SendToMsTeamsUserIDTest : TestBase
     {
         var model = new SendToMsTeamsUserID
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -49,9 +49,9 @@ public class SendToMsTeamsUserIDTest : TestBase
     {
         var model = new SendToMsTeamsUserID
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -61,13 +61,13 @@ public class SendToMsTeamsUserIDTest : TestBase
         );
         Assert.NotNull(deserialized);
 
+        string expectedUserID = "user_id";
         string expectedServiceUrl = "service_url";
         string expectedTenantID = "tenant_id";
-        string expectedUserID = "user_id";
 
+        Assert.Equal(expectedUserID, deserialized.UserID);
         Assert.Equal(expectedServiceUrl, deserialized.ServiceUrl);
         Assert.Equal(expectedTenantID, deserialized.TenantID);
-        Assert.Equal(expectedUserID, deserialized.UserID);
     }
 
     [Fact]
@@ -75,9 +75,61 @@ public class SendToMsTeamsUserIDTest : TestBase
     {
         var model = new SendToMsTeamsUserID
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new SendToMsTeamsUserID { UserID = "user_id" };
+
+        Assert.Null(model.ServiceUrl);
+        Assert.False(model.RawData.ContainsKey("service_url"));
+        Assert.Null(model.TenantID);
+        Assert.False(model.RawData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new SendToMsTeamsUserID { UserID = "user_id" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new SendToMsTeamsUserID
+        {
             UserID = "user_id",
+
+            // Null should be interpreted as omitted for these properties
+            ServiceUrl = null,
+            TenantID = null,
+        };
+
+        Assert.Null(model.ServiceUrl);
+        Assert.False(model.RawData.ContainsKey("service_url"));
+        Assert.Null(model.TenantID);
+        Assert.False(model.RawData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new SendToMsTeamsUserID
+        {
+            UserID = "user_id",
+
+            // Null should be interpreted as omitted for these properties
+            ServiceUrl = null,
+            TenantID = null,
         };
 
         model.Validate();
@@ -88,9 +140,9 @@ public class SendToMsTeamsUserIDTest : TestBase
     {
         var model = new SendToMsTeamsUserID
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
 
         SendToMsTeamsUserID copied = new(model);

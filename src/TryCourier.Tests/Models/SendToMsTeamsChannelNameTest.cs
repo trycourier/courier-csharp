@@ -12,19 +12,19 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceUrl = "service_url",
             TeamID = "team_id",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
         string expectedChannelName = "channel_name";
-        string expectedServiceUrl = "service_url";
         string expectedTeamID = "team_id";
+        string expectedServiceUrl = "service_url";
         string expectedTenantID = "tenant_id";
 
         Assert.Equal(expectedChannelName, model.ChannelName);
-        Assert.Equal(expectedServiceUrl, model.ServiceUrl);
         Assert.Equal(expectedTeamID, model.TeamID);
+        Assert.Equal(expectedServiceUrl, model.ServiceUrl);
         Assert.Equal(expectedTenantID, model.TenantID);
     }
 
@@ -34,8 +34,8 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceUrl = "service_url",
             TeamID = "team_id",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
@@ -54,8 +54,8 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceUrl = "service_url",
             TeamID = "team_id",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 
@@ -67,13 +67,13 @@ public class SendToMsTeamsChannelNameTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedChannelName = "channel_name";
-        string expectedServiceUrl = "service_url";
         string expectedTeamID = "team_id";
+        string expectedServiceUrl = "service_url";
         string expectedTenantID = "tenant_id";
 
         Assert.Equal(expectedChannelName, deserialized.ChannelName);
-        Assert.Equal(expectedServiceUrl, deserialized.ServiceUrl);
         Assert.Equal(expectedTeamID, deserialized.TeamID);
+        Assert.Equal(expectedServiceUrl, deserialized.ServiceUrl);
         Assert.Equal(expectedTenantID, deserialized.TenantID);
     }
 
@@ -83,9 +83,71 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceUrl = "service_url",
             TeamID = "team_id",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            TeamID = "team_id",
+        };
+
+        Assert.Null(model.ServiceUrl);
+        Assert.False(model.RawData.ContainsKey("service_url"));
+        Assert.Null(model.TenantID);
+        Assert.False(model.RawData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            TeamID = "team_id",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            TeamID = "team_id",
+
+            // Null should be interpreted as omitted for these properties
+            ServiceUrl = null,
+            TenantID = null,
+        };
+
+        Assert.Null(model.ServiceUrl);
+        Assert.False(model.RawData.ContainsKey("service_url"));
+        Assert.Null(model.TenantID);
+        Assert.False(model.RawData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new SendToMsTeamsChannelName
+        {
+            ChannelName = "channel_name",
+            TeamID = "team_id",
+
+            // Null should be interpreted as omitted for these properties
+            ServiceUrl = null,
+            TenantID = null,
         };
 
         model.Validate();
@@ -97,8 +159,8 @@ public class SendToMsTeamsChannelNameTest : TestBase
         var model = new SendToMsTeamsChannelName
         {
             ChannelName = "channel_name",
-            ServiceUrl = "service_url",
             TeamID = "team_id",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
 

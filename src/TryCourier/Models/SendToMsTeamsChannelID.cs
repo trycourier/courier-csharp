@@ -7,6 +7,11 @@ using TryCourier.Core;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// Sends directly to a Microsoft Teams channel by its Bot Framework ID. Still provide
+/// at least one of `tenant_id` or `service_url` — sends without either have failed
+/// Bot Framework authentication in testing.
+/// </summary>
 [JsonConverter(typeof(JsonModelConverter<SendToMsTeamsChannelID, SendToMsTeamsChannelIDFromRaw>))]
 public sealed record class SendToMsTeamsChannelID : JsonModel
 {
@@ -20,24 +25,40 @@ public sealed record class SendToMsTeamsChannelID : JsonModel
         init { this._rawData.Set("channel_id", value); }
     }
 
-    public required string ServiceUrl
+    public string? ServiceUrl
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("service_url");
+            return this._rawData.GetNullableClass<string>("service_url");
         }
-        init { this._rawData.Set("service_url", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("service_url", value);
+        }
     }
 
-    public required string TenantID
+    public string? TenantID
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("tenant_id");
+            return this._rawData.GetNullableClass<string>("tenant_id");
         }
-        init { this._rawData.Set("tenant_id", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("tenant_id", value);
+        }
     }
 
     /// <inheritdoc/>
@@ -75,6 +96,13 @@ public sealed record class SendToMsTeamsChannelID : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public SendToMsTeamsChannelID(string channelID)
+        : this()
+    {
+        this.ChannelID = channelID;
     }
 }
 

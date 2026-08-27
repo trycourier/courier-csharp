@@ -84,6 +84,58 @@ public class SendToMsTeamsChannelIDTest : TestBase
     }
 
     [Fact]
+    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new SendToMsTeamsChannelID { ChannelID = "channel_id" };
+
+        Assert.Null(model.ServiceUrl);
+        Assert.False(model.RawData.ContainsKey("service_url"));
+        Assert.Null(model.TenantID);
+        Assert.False(model.RawData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new SendToMsTeamsChannelID { ChannelID = "channel_id" };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    {
+        var model = new SendToMsTeamsChannelID
+        {
+            ChannelID = "channel_id",
+
+            // Null should be interpreted as omitted for these properties
+            ServiceUrl = null,
+            TenantID = null,
+        };
+
+        Assert.Null(model.ServiceUrl);
+        Assert.False(model.RawData.ContainsKey("service_url"));
+        Assert.Null(model.TenantID);
+        Assert.False(model.RawData.ContainsKey("tenant_id"));
+    }
+
+    [Fact]
+    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new SendToMsTeamsChannelID
+        {
+            ChannelID = "channel_id",
+
+            // Null should be interpreted as omitted for these properties
+            ServiceUrl = null,
+            TenantID = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
     public void CopyConstructor_Works()
     {
         var model = new SendToMsTeamsChannelID

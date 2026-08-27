@@ -7,6 +7,10 @@ using System = System;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// Provide at least one of `tenant_id` or `service_url`. If you provide both, they
+/// must agree.
+/// </summary>
 [JsonConverter(typeof(MsTeamsConverter))]
 public record class MsTeams : ModelBase
 {
@@ -25,11 +29,11 @@ public record class MsTeams : ModelBase
         }
     }
 
-    public string ServiceUrl
+    public string? ServiceUrl
     {
         get
         {
-            return Match(
+            return Match<string?>(
                 sendToMsTeamsUserID: (x) => x.ServiceUrl,
                 sendToMsTeamsEmail: (x) => x.ServiceUrl,
                 sendToMsTeamsChannelID: (x) => x.ServiceUrl,
@@ -39,11 +43,11 @@ public record class MsTeams : ModelBase
         }
     }
 
-    public string TenantID
+    public string? TenantID
     {
         get
         {
-            return Match(
+            return Match<string?>(
                 sendToMsTeamsUserID: (x) => x.TenantID,
                 sendToMsTeamsEmail: (x) => x.TenantID,
                 sendToMsTeamsChannelID: (x) => x.TenantID,
@@ -369,6 +373,23 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
+            var deserialized = JsonSerializer.Deserialize<SendToMsTeamsConversationID>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
             var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelName>(
                 element,
                 options
@@ -415,23 +436,6 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
         try
         {
             var deserialized = JsonSerializer.Deserialize<SendToMsTeamsChannelID>(element, options);
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<SendToMsTeamsConversationID>(
-                element,
-                options
-            );
             if (deserialized != null)
             {
                 deserialized.Validate();
