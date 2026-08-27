@@ -13,17 +13,17 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
         };
 
         MsTeams expectedMsTeams = new SendToMsTeamsUserID()
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
 
         Assert.Equal(expectedMsTeams, model.MsTeams);
@@ -36,9 +36,9 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
         };
 
@@ -58,9 +58,9 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
         };
 
@@ -73,9 +73,9 @@ public class MsTeamsRecipientTest : TestBase
 
         MsTeams expectedMsTeams = new SendToMsTeamsUserID()
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
 
         Assert.Equal(expectedMsTeams, deserialized.MsTeams);
@@ -88,9 +88,9 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
         };
 
@@ -104,9 +104,9 @@ public class MsTeamsRecipientTest : TestBase
         {
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
         };
 

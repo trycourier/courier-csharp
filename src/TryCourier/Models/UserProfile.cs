@@ -213,6 +213,10 @@ public sealed record class UserProfile : JsonModel
         init { this._rawData.Set("middle_name", value); }
     }
 
+    /// <summary>
+    /// Provide at least one of `tenant_id` or `service_url`. If you provide both,
+    /// they must agree.
+    /// </summary>
     public MsTeams? MsTeams
     {
         get

@@ -11,9 +11,9 @@ public class MsTeamsTest : TestBase
     {
         MsTeams value = new SendToMsTeamsUserID()
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
         value.Validate();
     }
@@ -60,8 +60,8 @@ public class MsTeamsTest : TestBase
         MsTeams value = new SendToMsTeamsChannelName()
         {
             ChannelName = "channel_name",
-            ServiceUrl = "service_url",
             TeamID = "team_id",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
         value.Validate();
@@ -72,9 +72,9 @@ public class MsTeamsTest : TestBase
     {
         MsTeams value = new SendToMsTeamsUserID()
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<MsTeams>(
@@ -145,8 +145,8 @@ public class MsTeamsTest : TestBase
         MsTeams value = new SendToMsTeamsChannelName()
         {
             ChannelName = "channel_name",
-            ServiceUrl = "service_url",
             TeamID = "team_id",
+            ServiceUrl = "service_url",
             TenantID = "tenant_id",
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

@@ -86,7 +86,22 @@ public class JourneyNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -424,7 +439,22 @@ public class JourneyNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },

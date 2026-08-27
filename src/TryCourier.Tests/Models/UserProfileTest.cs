@@ -43,9 +43,9 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
             Name = "name",
             Nickname = "nickname",
@@ -96,9 +96,9 @@ public class UserProfileTest : TestBase
         string expectedMiddleName = "middle_name";
         MsTeams expectedMsTeams = new SendToMsTeamsUserID()
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
         string expectedName = "name";
         string expectedNickname = "nickname";
@@ -193,9 +193,9 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
             Name = "name",
             Nickname = "nickname",
@@ -256,9 +256,9 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
             Name = "name",
             Nickname = "nickname",
@@ -316,9 +316,9 @@ public class UserProfileTest : TestBase
         string expectedMiddleName = "middle_name";
         MsTeams expectedMsTeams = new SendToMsTeamsUserID()
         {
+            UserID = "user_id",
             ServiceUrl = "service_url",
             TenantID = "tenant_id",
-            UserID = "user_id",
         };
         string expectedName = "name";
         string expectedNickname = "nickname";
@@ -413,9 +413,9 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
             Name = "name",
             Nickname = "nickname",
@@ -690,9 +690,9 @@ public class UserProfileTest : TestBase
             MiddleName = "middle_name",
             MsTeams = new SendToMsTeamsUserID()
             {
+                UserID = "user_id",
                 ServiceUrl = "service_url",
                 TenantID = "tenant_id",
-                UserID = "user_id",
             },
             Name = "name",
             Nickname = "nickname",

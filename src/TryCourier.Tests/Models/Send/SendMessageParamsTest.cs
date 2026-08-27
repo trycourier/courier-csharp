@@ -4199,9 +4199,9 @@ public class ToTest : TestBase
             new Models::MsTeams(
                 new Models::SendToMsTeamsUserID()
                 {
+                    UserID = "user_id",
                     ServiceUrl = "service_url",
                     TenantID = "tenant_id",
-                    UserID = "user_id",
                 }
             )
         );
@@ -4456,9 +4456,9 @@ public class ToTest : TestBase
             new Models::MsTeams(
                 new Models::SendToMsTeamsUserID()
                 {
+                    UserID = "user_id",
                     ServiceUrl = "service_url",
                     TenantID = "tenant_id",
-                    UserID = "user_id",
                 }
             )
         );
@@ -4713,9 +4713,9 @@ public class RecipientTest : TestBase
             new Models::MsTeams(
                 new Models::SendToMsTeamsUserID()
                 {
+                    UserID = "user_id",
                     ServiceUrl = "service_url",
                     TenantID = "tenant_id",
-                    UserID = "user_id",
                 }
             )
         );
@@ -4922,9 +4922,9 @@ public class RecipientTest : TestBase
             new Models::MsTeams(
                 new Models::SendToMsTeamsUserID()
                 {
+                    UserID = "user_id",
                     ServiceUrl = "service_url",
                     TenantID = "tenant_id",
-                    UserID = "user_id",
                 }
             )
         );

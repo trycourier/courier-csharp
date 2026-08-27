@@ -25,7 +25,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -69,7 +84,18 @@ public class JourneySendNodeTest : TestBase
             To = new()
             {
                 EmailOverride = "x",
+                MsTeams = new()
+                {
+                    ChannelID = "x",
+                    ChannelName = "x",
+                    Email = "x",
+                    ServiceUrl = "x",
+                    TeamID = "x",
+                    TenantID = "x",
+                    UserID = "x",
+                },
                 PhoneNumberOverride = "x",
+                Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
                 UserIDOverride = "x",
             },
         };
@@ -124,7 +150,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -182,7 +223,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -233,7 +289,18 @@ public class JourneySendNodeTest : TestBase
             To = new()
             {
                 EmailOverride = "x",
+                MsTeams = new()
+                {
+                    ChannelID = "x",
+                    ChannelName = "x",
+                    Email = "x",
+                    ServiceUrl = "x",
+                    TeamID = "x",
+                    TenantID = "x",
+                    UserID = "x",
+                },
                 PhoneNumberOverride = "x",
+                Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
                 UserIDOverride = "x",
             },
         };
@@ -288,7 +355,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -340,7 +422,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -372,7 +469,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -399,7 +511,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -436,7 +563,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -468,7 +610,22 @@ public class JourneySendNodeTest : TestBase
                 To = new()
                 {
                     EmailOverride = "x",
+                    MsTeams = new()
+                    {
+                        ChannelID = "x",
+                        ChannelName = "x",
+                        Email = "x",
+                        ServiceUrl = "x",
+                        TeamID = "x",
+                        TenantID = "x",
+                        UserID = "x",
+                    },
                     PhoneNumberOverride = "x",
+                    Slack = new JourneySendNodeToSlackChannel()
+                    {
+                        Channel = "x",
+                        AccessToken = "x",
+                    },
                     UserIDOverride = "x",
                 },
             },
@@ -523,7 +680,18 @@ public class MessageTest : TestBase
             To = new()
             {
                 EmailOverride = "x",
+                MsTeams = new()
+                {
+                    ChannelID = "x",
+                    ChannelName = "x",
+                    Email = "x",
+                    ServiceUrl = "x",
+                    TeamID = "x",
+                    TenantID = "x",
+                    UserID = "x",
+                },
                 PhoneNumberOverride = "x",
+                Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
                 UserIDOverride = "x",
             },
         };
@@ -538,7 +706,18 @@ public class MessageTest : TestBase
         To expectedTo = new()
         {
             EmailOverride = "x",
+            MsTeams = new()
+            {
+                ChannelID = "x",
+                ChannelName = "x",
+                Email = "x",
+                ServiceUrl = "x",
+                TeamID = "x",
+                TenantID = "x",
+                UserID = "x",
+            },
             PhoneNumberOverride = "x",
+            Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
             UserIDOverride = "x",
         };
 
@@ -571,7 +750,18 @@ public class MessageTest : TestBase
             To = new()
             {
                 EmailOverride = "x",
+                MsTeams = new()
+                {
+                    ChannelID = "x",
+                    ChannelName = "x",
+                    Email = "x",
+                    ServiceUrl = "x",
+                    TeamID = "x",
+                    TenantID = "x",
+                    UserID = "x",
+                },
                 PhoneNumberOverride = "x",
+                Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
                 UserIDOverride = "x",
             },
         };
@@ -597,7 +787,18 @@ public class MessageTest : TestBase
             To = new()
             {
                 EmailOverride = "x",
+                MsTeams = new()
+                {
+                    ChannelID = "x",
+                    ChannelName = "x",
+                    Email = "x",
+                    ServiceUrl = "x",
+                    TeamID = "x",
+                    TenantID = "x",
+                    UserID = "x",
+                },
                 PhoneNumberOverride = "x",
+                Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
                 UserIDOverride = "x",
             },
         };
@@ -619,7 +820,18 @@ public class MessageTest : TestBase
         To expectedTo = new()
         {
             EmailOverride = "x",
+            MsTeams = new()
+            {
+                ChannelID = "x",
+                ChannelName = "x",
+                Email = "x",
+                ServiceUrl = "x",
+                TeamID = "x",
+                TenantID = "x",
+                UserID = "x",
+            },
             PhoneNumberOverride = "x",
+            Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
             UserIDOverride = "x",
         };
 
@@ -652,7 +864,18 @@ public class MessageTest : TestBase
             To = new()
             {
                 EmailOverride = "x",
+                MsTeams = new()
+                {
+                    ChannelID = "x",
+                    ChannelName = "x",
+                    Email = "x",
+                    ServiceUrl = "x",
+                    TeamID = "x",
+                    TenantID = "x",
+                    UserID = "x",
+                },
                 PhoneNumberOverride = "x",
+                Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
                 UserIDOverride = "x",
             },
         };
@@ -741,7 +964,18 @@ public class MessageTest : TestBase
             To = new()
             {
                 EmailOverride = "x",
+                MsTeams = new()
+                {
+                    ChannelID = "x",
+                    ChannelName = "x",
+                    Email = "x",
+                    ServiceUrl = "x",
+                    TeamID = "x",
+                    TenantID = "x",
+                    UserID = "x",
+                },
                 PhoneNumberOverride = "x",
+                Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
                 UserIDOverride = "x",
             },
         };
@@ -925,16 +1159,44 @@ public class ToTest : TestBase
         var model = new To
         {
             EmailOverride = "x",
+            MsTeams = new()
+            {
+                ChannelID = "x",
+                ChannelName = "x",
+                Email = "x",
+                ServiceUrl = "x",
+                TeamID = "x",
+                TenantID = "x",
+                UserID = "x",
+            },
             PhoneNumberOverride = "x",
+            Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
             UserIDOverride = "x",
         };
 
         string expectedEmailOverride = "x";
+        JourneySendNodeToMsTeams expectedMsTeams = new()
+        {
+            ChannelID = "x",
+            ChannelName = "x",
+            Email = "x",
+            ServiceUrl = "x",
+            TeamID = "x",
+            TenantID = "x",
+            UserID = "x",
+        };
         string expectedPhoneNumberOverride = "x";
+        JourneySendNodeToSlack expectedSlack = new JourneySendNodeToSlackChannel()
+        {
+            Channel = "x",
+            AccessToken = "x",
+        };
         string expectedUserIDOverride = "x";
 
         Assert.Equal(expectedEmailOverride, model.EmailOverride);
+        Assert.Equal(expectedMsTeams, model.MsTeams);
         Assert.Equal(expectedPhoneNumberOverride, model.PhoneNumberOverride);
+        Assert.Equal(expectedSlack, model.Slack);
         Assert.Equal(expectedUserIDOverride, model.UserIDOverride);
     }
 
@@ -944,7 +1206,18 @@ public class ToTest : TestBase
         var model = new To
         {
             EmailOverride = "x",
+            MsTeams = new()
+            {
+                ChannelID = "x",
+                ChannelName = "x",
+                Email = "x",
+                ServiceUrl = "x",
+                TeamID = "x",
+                TenantID = "x",
+                UserID = "x",
+            },
             PhoneNumberOverride = "x",
+            Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
             UserIDOverride = "x",
         };
 
@@ -960,7 +1233,18 @@ public class ToTest : TestBase
         var model = new To
         {
             EmailOverride = "x",
+            MsTeams = new()
+            {
+                ChannelID = "x",
+                ChannelName = "x",
+                Email = "x",
+                ServiceUrl = "x",
+                TeamID = "x",
+                TenantID = "x",
+                UserID = "x",
+            },
             PhoneNumberOverride = "x",
+            Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
             UserIDOverride = "x",
         };
 
@@ -969,11 +1253,28 @@ public class ToTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedEmailOverride = "x";
+        JourneySendNodeToMsTeams expectedMsTeams = new()
+        {
+            ChannelID = "x",
+            ChannelName = "x",
+            Email = "x",
+            ServiceUrl = "x",
+            TeamID = "x",
+            TenantID = "x",
+            UserID = "x",
+        };
         string expectedPhoneNumberOverride = "x";
+        JourneySendNodeToSlack expectedSlack = new JourneySendNodeToSlackChannel()
+        {
+            Channel = "x",
+            AccessToken = "x",
+        };
         string expectedUserIDOverride = "x";
 
         Assert.Equal(expectedEmailOverride, deserialized.EmailOverride);
+        Assert.Equal(expectedMsTeams, deserialized.MsTeams);
         Assert.Equal(expectedPhoneNumberOverride, deserialized.PhoneNumberOverride);
+        Assert.Equal(expectedSlack, deserialized.Slack);
         Assert.Equal(expectedUserIDOverride, deserialized.UserIDOverride);
     }
 
@@ -983,7 +1284,18 @@ public class ToTest : TestBase
         var model = new To
         {
             EmailOverride = "x",
+            MsTeams = new()
+            {
+                ChannelID = "x",
+                ChannelName = "x",
+                Email = "x",
+                ServiceUrl = "x",
+                TeamID = "x",
+                TenantID = "x",
+                UserID = "x",
+            },
             PhoneNumberOverride = "x",
+            Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
             UserIDOverride = "x",
         };
 
@@ -997,8 +1309,12 @@ public class ToTest : TestBase
 
         Assert.Null(model.EmailOverride);
         Assert.False(model.RawData.ContainsKey("email_override"));
+        Assert.Null(model.MsTeams);
+        Assert.False(model.RawData.ContainsKey("ms_teams"));
         Assert.Null(model.PhoneNumberOverride);
         Assert.False(model.RawData.ContainsKey("phone_number_override"));
+        Assert.Null(model.Slack);
+        Assert.False(model.RawData.ContainsKey("slack"));
         Assert.Null(model.UserIDOverride);
         Assert.False(model.RawData.ContainsKey("user_id_override"));
     }
@@ -1018,14 +1334,20 @@ public class ToTest : TestBase
         {
             // Null should be interpreted as omitted for these properties
             EmailOverride = null,
+            MsTeams = null,
             PhoneNumberOverride = null,
+            Slack = null,
             UserIDOverride = null,
         };
 
         Assert.Null(model.EmailOverride);
         Assert.False(model.RawData.ContainsKey("email_override"));
+        Assert.Null(model.MsTeams);
+        Assert.False(model.RawData.ContainsKey("ms_teams"));
         Assert.Null(model.PhoneNumberOverride);
         Assert.False(model.RawData.ContainsKey("phone_number_override"));
+        Assert.Null(model.Slack);
+        Assert.False(model.RawData.ContainsKey("slack"));
         Assert.Null(model.UserIDOverride);
         Assert.False(model.RawData.ContainsKey("user_id_override"));
     }
@@ -1037,7 +1359,9 @@ public class ToTest : TestBase
         {
             // Null should be interpreted as omitted for these properties
             EmailOverride = null,
+            MsTeams = null,
             PhoneNumberOverride = null,
+            Slack = null,
             UserIDOverride = null,
         };
 
@@ -1050,7 +1374,18 @@ public class ToTest : TestBase
         var model = new To
         {
             EmailOverride = "x",
+            MsTeams = new()
+            {
+                ChannelID = "x",
+                ChannelName = "x",
+                Email = "x",
+                ServiceUrl = "x",
+                TeamID = "x",
+                TenantID = "x",
+                UserID = "x",
+            },
             PhoneNumberOverride = "x",
+            Slack = new JourneySendNodeToSlackChannel() { Channel = "x", AccessToken = "x" },
             UserIDOverride = "x",
         };
 

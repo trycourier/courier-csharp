@@ -7,6 +7,10 @@ using TryCourier.Core;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// `team_id` is required alongside `channel_name`. Also provide at least one of `tenant_id`
+/// or `service_url`; if you provide both, they must agree.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<SendToMsTeamsChannelName, SendToMsTeamsChannelNameFromRaw>)
 )]
@@ -22,16 +26,6 @@ public sealed record class SendToMsTeamsChannelName : JsonModel
         init { this._rawData.Set("channel_name", value); }
     }
 
-    public required string ServiceUrl
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("service_url");
-        }
-        init { this._rawData.Set("service_url", value); }
-    }
-
     public required string TeamID
     {
         get
@@ -42,22 +36,48 @@ public sealed record class SendToMsTeamsChannelName : JsonModel
         init { this._rawData.Set("team_id", value); }
     }
 
-    public required string TenantID
+    public string? ServiceUrl
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("tenant_id");
+            return this._rawData.GetNullableClass<string>("service_url");
         }
-        init { this._rawData.Set("tenant_id", value); }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("service_url", value);
+        }
+    }
+
+    public string? TenantID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("tenant_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("tenant_id", value);
+        }
     }
 
     /// <inheritdoc/>
     public override void Validate()
     {
         _ = this.ChannelName;
-        _ = this.ServiceUrl;
         _ = this.TeamID;
+        _ = this.ServiceUrl;
         _ = this.TenantID;
     }
 
