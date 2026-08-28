@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.1](https://github.com/trycourier/courier-csharp/compare/v7.4.0...v7.4.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* **api:** give Elemental nodes their properties in every SDK ([#88](https://github.com/trycourier/courier-csharp/issues/88)) ([6a1fb20](https://github.com/trycourier/courier-csharp/commit/6a1fb20ef0ca30b1e38f9715351b91fb9880e831))
+
 ## [7.4.0](https://github.com/trycourier/courier-csharp/compare/v7.3.0...v7.4.0) (2026-08-28)
 
 
