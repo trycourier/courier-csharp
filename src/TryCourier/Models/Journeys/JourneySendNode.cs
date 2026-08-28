@@ -57,6 +57,30 @@ public sealed record class JourneySendNode : JsonModel
     }
 
     /// <summary>
+    /// The channel this node sends through. Optional — when omitted, the field is
+    /// absent from the node, including on `GET`; nodes created before this field
+    /// existed have it unset. Setting it makes the node's channel explicit to any
+    /// client reading the journey.
+    /// </summary>
+    public ApiEnum<string, Channel>? Channel
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Channel>>("channel");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("channel", value);
+        }
+    }
+
+    /// <summary>
     /// Condition spec for a journey node. Accepts a single condition atom, an AND/OR
     /// group, or an AND/OR nested group. Omit the `conditions` property entirely
     /// to express "no conditions".
@@ -108,6 +132,7 @@ public sealed record class JourneySendNode : JsonModel
         this.Message.Validate();
         this.Type.Validate();
         _ = this.ID;
+        this.Channel?.Validate();
         this.Conditions?.Validate();
         this.Experiment?.Validate();
     }
@@ -642,6 +667,64 @@ sealed class JourneySendNodeTypeConverter : JsonConverter<JourneySendNodeType>
             value switch
             {
                 JourneySendNodeType.Send => "send",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+/// <summary>
+/// The channel this node sends through. Optional — when omitted, the field is absent
+/// from the node, including on `GET`; nodes created before this field existed have
+/// it unset. Setting it makes the node's channel explicit to any client reading
+/// the journey.
+/// </summary>
+[JsonConverter(typeof(ChannelConverter))]
+public enum Channel
+{
+    Email,
+    Sms,
+    Push,
+    Inbox,
+    Slack,
+    Msteams,
+}
+
+sealed class ChannelConverter : JsonConverter<Channel>
+{
+    public override Channel Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "email" => Channel.Email,
+            "sms" => Channel.Sms,
+            "push" => Channel.Push,
+            "inbox" => Channel.Inbox,
+            "slack" => Channel.Slack,
+            "msteams" => Channel.Msteams,
+            _ => (Channel)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Channel value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Channel.Email => "email",
+                Channel.Sms => "sms",
+                Channel.Push => "push",
+                Channel.Inbox => "inbox",
+                Channel.Slack => "slack",
+                Channel.Msteams => "msteams",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
