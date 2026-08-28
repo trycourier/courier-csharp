@@ -46,6 +46,7 @@ public class JourneySendNodeTest : TestBase
             },
             Type = JourneySendNodeType.Send,
             ID = "x",
+            Channel = Channel.Email,
             Conditions = new(["string", "string"]),
             Experiment = new()
             {
@@ -101,6 +102,7 @@ public class JourneySendNodeTest : TestBase
         };
         ApiEnum<string, JourneySendNodeType> expectedType = JourneySendNodeType.Send;
         string expectedID = "x";
+        ApiEnum<string, Channel> expectedChannel = Channel.Email;
         JourneyConditionsField expectedConditions = new(["string", "string"]);
         JourneyExperiment expectedExperiment = new()
         {
@@ -129,6 +131,7 @@ public class JourneySendNodeTest : TestBase
         Assert.Equal(expectedMessage, model.Message);
         Assert.Equal(expectedType, model.Type);
         Assert.Equal(expectedID, model.ID);
+        Assert.Equal(expectedChannel, model.Channel);
         Assert.Equal(expectedConditions, model.Conditions);
         Assert.Equal(expectedExperiment, model.Experiment);
     }
@@ -171,6 +174,7 @@ public class JourneySendNodeTest : TestBase
             },
             Type = JourneySendNodeType.Send,
             ID = "x",
+            Channel = Channel.Email,
             Conditions = new(["string", "string"]),
             Experiment = new()
             {
@@ -244,6 +248,7 @@ public class JourneySendNodeTest : TestBase
             },
             Type = JourneySendNodeType.Send,
             ID = "x",
+            Channel = Channel.Email,
             Conditions = new(["string", "string"]),
             Experiment = new()
             {
@@ -306,6 +311,7 @@ public class JourneySendNodeTest : TestBase
         };
         ApiEnum<string, JourneySendNodeType> expectedType = JourneySendNodeType.Send;
         string expectedID = "x";
+        ApiEnum<string, Channel> expectedChannel = Channel.Email;
         JourneyConditionsField expectedConditions = new(["string", "string"]);
         JourneyExperiment expectedExperiment = new()
         {
@@ -334,6 +340,7 @@ public class JourneySendNodeTest : TestBase
         Assert.Equal(expectedMessage, deserialized.Message);
         Assert.Equal(expectedType, deserialized.Type);
         Assert.Equal(expectedID, deserialized.ID);
+        Assert.Equal(expectedChannel, deserialized.Channel);
         Assert.Equal(expectedConditions, deserialized.Conditions);
         Assert.Equal(expectedExperiment, deserialized.Experiment);
     }
@@ -376,6 +383,7 @@ public class JourneySendNodeTest : TestBase
             },
             Type = JourneySendNodeType.Send,
             ID = "x",
+            Channel = Channel.Email,
             Conditions = new(["string", "string"]),
             Experiment = new()
             {
@@ -446,6 +454,8 @@ public class JourneySendNodeTest : TestBase
 
         Assert.Null(model.ID);
         Assert.False(model.RawData.ContainsKey("id"));
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
         Assert.Null(model.Conditions);
         Assert.False(model.RawData.ContainsKey("conditions"));
         Assert.Null(model.Experiment);
@@ -534,12 +544,15 @@ public class JourneySendNodeTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             ID = null,
+            Channel = null,
             Conditions = null,
             Experiment = null,
         };
 
         Assert.Null(model.ID);
         Assert.False(model.RawData.ContainsKey("id"));
+        Assert.Null(model.Channel);
+        Assert.False(model.RawData.ContainsKey("channel"));
         Assert.Null(model.Conditions);
         Assert.False(model.RawData.ContainsKey("conditions"));
         Assert.Null(model.Experiment);
@@ -586,6 +599,7 @@ public class JourneySendNodeTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             ID = null,
+            Channel = null,
             Conditions = null,
             Experiment = null,
         };
@@ -631,6 +645,7 @@ public class JourneySendNodeTest : TestBase
             },
             Type = JourneySendNodeType.Send,
             ID = "x",
+            Channel = Channel.Email,
             Conditions = new(["string", "string"]),
             Experiment = new()
             {
@@ -1443,6 +1458,72 @@ public class JourneySendNodeTypeTest : TestBase
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ApiEnum<string, JourneySendNodeType>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+}
+
+public class ChannelTest : TestBase
+{
+    [Theory]
+    [InlineData(Channel.Email)]
+    [InlineData(Channel.Sms)]
+    [InlineData(Channel.Push)]
+    [InlineData(Channel.Inbox)]
+    [InlineData(Channel.Slack)]
+    [InlineData(Channel.Msteams)]
+    public void Validation_Works(Channel rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Channel> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Channel>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Channel.Email)]
+    [InlineData(Channel.Sms)]
+    [InlineData(Channel.Push)]
+    [InlineData(Channel.Inbox)]
+    [InlineData(Channel.Slack)]
+    [InlineData(Channel.Msteams)]
+    public void SerializationRoundtrip_Works(Channel rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Channel> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Channel>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Channel>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Channel>>(
             json,
             ModelBase.SerializerOptions
         );

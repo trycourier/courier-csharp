@@ -107,6 +107,7 @@ public class JourneyNodeTest : TestBase
             },
             Type = JourneySendNodeType.Send,
             ID = "x",
+            Channel = Channel.Email,
             Conditions = new(["string", "string"]),
             Experiment = new()
             {
@@ -460,6 +461,7 @@ public class JourneyNodeTest : TestBase
             },
             Type = JourneySendNodeType.Send,
             ID = "x",
+            Channel = Channel.Email,
             Conditions = new(["string", "string"]),
             Experiment = new()
             {

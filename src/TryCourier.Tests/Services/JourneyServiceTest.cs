@@ -62,6 +62,7 @@ public class JourneyServiceTest : TestBase
                         },
                         Type = JourneySendNodeType.Send,
                         ID = "send-1",
+                        Channel = Channel.Email,
                         Conditions = new(["string", "string"]),
                         Experiment = new()
                         {
