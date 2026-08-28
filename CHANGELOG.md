@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.0](https://github.com/trycourier/courier-csharp/compare/v7.3.0...v7.4.0) (2026-08-28)
+
+
+### Features
+
+* **api:** document channel on journey send nodes [C-20309] ([#86](https://github.com/trycourier/courier-csharp/issues/86)) ([6a0ae01](https://github.com/trycourier/courier-csharp/commit/6a0ae018dc0de554f3fff3ca06a7a3714f39ab25))
+
 ## [7.3.0](https://github.com/trycourier/courier-csharp/compare/v7.2.0...v7.3.0) (2026-08-27)
 
 
