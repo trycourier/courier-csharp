@@ -19,10 +19,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -37,10 +33,6 @@ public class NotificationContentPutRequestTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -63,10 +55,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -95,10 +83,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -120,10 +104,6 @@ public class NotificationContentPutRequestTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -146,10 +126,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -172,10 +148,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -198,10 +170,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -223,10 +191,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -252,10 +216,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -280,10 +240,6 @@ public class NotificationContentPutRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -309,10 +265,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -323,10 +275,6 @@ public class NotificationContentPutRequestContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
-                Channels = ["string"],
-                If = "if",
-                Loop = "loop",
-                Ref = "ref",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -349,10 +297,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -377,10 +321,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -398,10 +338,6 @@ public class NotificationContentPutRequestContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
-                Channels = ["string"],
-                If = "if",
-                Loop = "loop",
-                Ref = "ref",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -424,10 +360,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -446,10 +378,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -468,10 +396,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -489,10 +413,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -514,10 +434,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -538,10 +454,6 @@ public class NotificationContentPutRequestContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],

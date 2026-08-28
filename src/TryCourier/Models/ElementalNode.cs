@@ -9,15 +9,7 @@ using System = System;
 namespace TryCourier.Models;
 
 /// <summary>
-/// The channel element allows a notification to be customized based on which channel
-/// it is sent through.  For example, you may want to display a detailed message when
-/// the notification is sent through email,  and a more concise message in a push
-/// notification. Channel elements are only valid as top-level  elements; you cannot
-/// nest channel elements. If there is a channel element specified at the top-level
-///  of the document, all sibling elements must be channel elements. Note: As an alternative,
-/// most elements support a `channel` property. Which allows you to selectively  display
-/// an individual element on a per channel basis. See the  [control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/)
-/// for more details.
+/// Represents a body of text to be rendered inside of the notification.
 /// </summary>
 [JsonConverter(typeof(ElementalNodeConverter))]
 public record class ElementalNode : ModelBase
@@ -101,6 +93,159 @@ public record class ElementalNode : ModelBase
                 dividerNodeWithType: (x) => x.Ref,
                 quoteNodeWithType: (x) => x.Ref,
                 htmlNodeWithType: (x) => x.Ref
+            );
+        }
+    }
+
+    public string? Content
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (x) => x.Content,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (_) => null,
+                imageNodeWithType: (_) => null,
+                actionNodeWithType: (x) => x.Content,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (x) => x.Content,
+                htmlNodeWithType: (x) => x.Content
+            );
+        }
+    }
+
+    public string? Color
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (x) => x.Color,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (_) => null,
+                imageNodeWithType: (_) => null,
+                actionNodeWithType: (_) => null,
+                dividerNodeWithType: (x) => x.Color,
+                quoteNodeWithType: (_) => null,
+                htmlNodeWithType: (_) => null
+            );
+        }
+    }
+
+    public string? FontSize
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (x) => x.FontSize,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (x) => x.FontSize,
+                imageNodeWithType: (_) => null,
+                actionNodeWithType: (x) => x.FontSize,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (x) => x.FontSize,
+                htmlNodeWithType: (_) => null
+            );
+        }
+    }
+
+    public string? LineHeight
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (x) => x.LineHeight,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (x) => x.LineHeight,
+                imageNodeWithType: (_) => null,
+                actionNodeWithType: (_) => null,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (x) => x.LineHeight,
+                htmlNodeWithType: (_) => null
+            );
+        }
+    }
+
+    public IReadOnlyDictionary<string, LocalesItem>? Locales
+    {
+        get
+        {
+            return Match<IReadOnlyDictionary<string, LocalesItem>?>(
+                textNodeWithType: (x) => x.Locales,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (_) => null,
+                imageNodeWithType: (_) => null,
+                actionNodeWithType: (x) => x.Locales,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (x) => x.Locales,
+                htmlNodeWithType: (x) => x.Locales
+            );
+        }
+    }
+
+    public ApiEnum<string, TextStyle>? TextStyle
+    {
+        get
+        {
+            return Match<ApiEnum<string, TextStyle>?>(
+                textNodeWithType: (x) => x.TextStyle,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (_) => null,
+                imageNodeWithType: (_) => null,
+                actionNodeWithType: (_) => null,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (x) => x.TextStyle,
+                htmlNodeWithType: (_) => null
+            );
+        }
+    }
+
+    public string? Padding
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (_) => null,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (x) => x.Padding,
+                imageNodeWithType: (x) => x.Padding,
+                actionNodeWithType: (x) => x.Padding,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (_) => null,
+                htmlNodeWithType: (_) => null
+            );
+        }
+    }
+
+    public string? BorderSize
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (_) => null,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (_) => null,
+                imageNodeWithType: (x) => x.BorderSize,
+                actionNodeWithType: (x) => x.BorderSize,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (_) => null,
+                htmlNodeWithType: (_) => null
+            );
+        }
+    }
+
+    public string? Href
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (_) => null,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (_) => null,
+                imageNodeWithType: (x) => x.Href,
+                actionNodeWithType: (x) => x.Href,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (_) => null,
+                htmlNodeWithType: (_) => null
             );
         }
     }
@@ -546,7 +691,75 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
         try
         {
+            var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
             var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ElementalHtmlNodeWithType>(
                 element,
                 options
             );
@@ -597,75 +810,7 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
-                element,
-                options
-            );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(
-                element,
-                options
-            );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
             var deserialized = JsonSerializer.Deserialize<ElementalDividerNodeWithType>(
-                element,
-                options
-            );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<ElementalQuoteNodeWithType>(
-                element,
-                options
-            );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
-            var deserialized = JsonSerializer.Deserialize<ElementalHtmlNodeWithType>(
                 element,
                 options
             );

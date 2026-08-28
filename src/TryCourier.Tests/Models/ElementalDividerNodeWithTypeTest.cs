@@ -17,6 +17,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
@@ -24,6 +25,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
         string expectedIf = "if";
         string expectedLoop = "loop";
         string expectedRef = "ref";
+        string expectedColor = "color";
         ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalDividerNodeWithTypeIntersectionMember1Type.Divider;
 
@@ -36,6 +38,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
         Assert.Equal(expectedIf, model.If);
         Assert.Equal(expectedLoop, model.Loop);
         Assert.Equal(expectedRef, model.Ref);
+        Assert.Equal(expectedColor, model.Color);
         Assert.Equal(expectedType, model.Type);
     }
 
@@ -48,6 +51,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
@@ -69,6 +73,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
@@ -83,6 +88,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
         string expectedIf = "if";
         string expectedLoop = "loop";
         string expectedRef = "ref";
+        string expectedColor = "color";
         ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalDividerNodeWithTypeIntersectionMember1Type.Divider;
 
@@ -95,6 +101,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
         Assert.Equal(expectedIf, deserialized.If);
         Assert.Equal(expectedLoop, deserialized.Loop);
         Assert.Equal(expectedRef, deserialized.Ref);
+        Assert.Equal(expectedColor, deserialized.Color);
         Assert.Equal(expectedType, deserialized.Type);
     }
 
@@ -107,6 +114,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 
@@ -122,6 +130,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
         };
 
         Assert.Null(model.Type);
@@ -137,6 +146,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
         };
 
         model.Validate();
@@ -151,6 +161,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
 
             // Null should be interpreted as omitted for these properties
             Type = null,
@@ -169,6 +180,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
 
             // Null should be interpreted as omitted for these properties
             Type = null,
@@ -193,6 +205,8 @@ public class ElementalDividerNodeWithTypeTest : TestBase
         Assert.False(model.RawData.ContainsKey("loop"));
         Assert.Null(model.Ref);
         Assert.False(model.RawData.ContainsKey("ref"));
+        Assert.Null(model.Color);
+        Assert.False(model.RawData.ContainsKey("color"));
     }
 
     [Fact]
@@ -217,6 +231,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = null,
             Loop = null,
             Ref = null,
+            Color = null,
         };
 
         Assert.Null(model.Channels);
@@ -227,6 +242,8 @@ public class ElementalDividerNodeWithTypeTest : TestBase
         Assert.True(model.RawData.ContainsKey("loop"));
         Assert.Null(model.Ref);
         Assert.True(model.RawData.ContainsKey("ref"));
+        Assert.Null(model.Color);
+        Assert.True(model.RawData.ContainsKey("color"));
     }
 
     [Fact]
@@ -240,6 +257,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = null,
             Loop = null,
             Ref = null,
+            Color = null,
         };
 
         model.Validate();
@@ -254,6 +272,7 @@ public class ElementalDividerNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Color = "color",
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
 

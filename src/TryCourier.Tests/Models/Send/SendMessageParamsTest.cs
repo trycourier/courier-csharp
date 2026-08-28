@@ -3050,10 +3050,6 @@ public class ContentTest : TestBase
             [
                 new Models::ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -3084,10 +3080,6 @@ public class ContentTest : TestBase
             [
                 new Models::ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],

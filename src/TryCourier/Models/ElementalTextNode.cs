@@ -13,10 +13,8 @@ namespace TryCourier.Models;
 /// <summary>
 /// Represents a body of text to be rendered inside of the notification.
 /// </summary>
-[JsonConverter(
-    typeof(JsonModelConverter<ElementalTextNodeWithType, ElementalTextNodeWithTypeFromRaw>)
-)]
-public sealed record class ElementalTextNodeWithType : JsonModel
+[JsonConverter(typeof(JsonModelConverter<ElementalTextNode, ElementalTextNodeFromRaw>))]
+public sealed record class ElementalTextNode : JsonModel
 {
     public IReadOnlyList<string>? Channels
     {
@@ -240,47 +238,13 @@ public sealed record class ElementalTextNodeWithType : JsonModel
         init { this._rawData.Set("underline", value); }
     }
 
-    public ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>? Type
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<
-                ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
-            >("type");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("type", value);
-        }
-    }
-
-    public static implicit operator ElementalTextNode(
-        ElementalTextNodeWithType elementalTextNodeWithType
-    ) =>
+    public static implicit operator ElementalBaseNode(ElementalTextNode elementalTextNode) =>
         new()
         {
-            Channels = elementalTextNodeWithType.Channels,
-            If = elementalTextNodeWithType.If,
-            Loop = elementalTextNodeWithType.Loop,
-            Ref = elementalTextNodeWithType.Ref,
-            Content = elementalTextNodeWithType.Content,
-            Align = elementalTextNodeWithType.Align,
-            Bold = elementalTextNodeWithType.Bold,
-            Color = elementalTextNodeWithType.Color,
-            FontSize = elementalTextNodeWithType.FontSize,
-            Format = elementalTextNodeWithType.Format,
-            Italic = elementalTextNodeWithType.Italic,
-            LineHeight = elementalTextNodeWithType.LineHeight,
-            Locales = elementalTextNodeWithType.Locales,
-            Strikethrough = elementalTextNodeWithType.Strikethrough,
-            TextStyle = elementalTextNodeWithType.TextStyle,
-            Underline = elementalTextNodeWithType.Underline,
+            Channels = elementalTextNode.Channels,
+            If = elementalTextNode.If,
+            Loop = elementalTextNode.Loop,
+            Ref = elementalTextNode.Ref,
         };
 
     /// <inheritdoc/>
@@ -308,32 +272,31 @@ public sealed record class ElementalTextNodeWithType : JsonModel
         _ = this.Strikethrough;
         this.TextStyle?.Validate();
         _ = this.Underline;
-        this.Type?.Validate();
     }
 
-    public ElementalTextNodeWithType() { }
+    public ElementalTextNode() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public ElementalTextNodeWithType(ElementalTextNodeWithType elementalTextNodeWithType)
-        : base(elementalTextNodeWithType) { }
+    public ElementalTextNode(ElementalTextNode elementalTextNode)
+        : base(elementalTextNode) { }
 #pragma warning restore CS8618
 
-    public ElementalTextNodeWithType(IReadOnlyDictionary<string, JsonElement> rawData)
+    public ElementalTextNode(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalTextNodeWithType(FrozenDictionary<string, JsonElement> rawData)
+    ElementalTextNode(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="ElementalTextNodeWithTypeFromRaw.FromRawUnchecked"/>
-    public static ElementalTextNodeWithType FromRawUnchecked(
+    /// <inheritdoc cref="ElementalTextNodeFromRaw.FromRawUnchecked"/>
+    public static ElementalTextNode FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
@@ -341,37 +304,51 @@ public sealed record class ElementalTextNodeWithType : JsonModel
     }
 
     [SetsRequiredMembers]
-    public ElementalTextNodeWithType(string content)
+    public ElementalTextNode(string content)
         : this()
     {
         this.Content = content;
     }
 }
 
-class ElementalTextNodeWithTypeFromRaw : IFromRawJson<ElementalTextNodeWithType>
+class ElementalTextNodeFromRaw : IFromRawJson<ElementalTextNode>
 {
     /// <inheritdoc/>
-    public ElementalTextNodeWithType FromRawUnchecked(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    ) => ElementalTextNodeWithType.FromRawUnchecked(rawData);
+    public ElementalTextNode FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        ElementalTextNode.FromRawUnchecked(rawData);
 }
 
 [JsonConverter(
     typeof(JsonModelConverter<
-        ElementalTextNodeWithTypeIntersectionMember1,
-        ElementalTextNodeWithTypeIntersectionMember1FromRaw
+        ElementalTextNodeIntersectionMember1,
+        ElementalTextNodeIntersectionMember1FromRaw
     >)
 )]
-public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : JsonModel
+public sealed record class ElementalTextNodeIntersectionMember1 : JsonModel
 {
-    public ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>? Type
+    /// <summary>
+    /// The text content displayed in the notification. Either this field must be
+    /// specified, or the elements field
+    /// </summary>
+    public required string Content
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<
-                ApiEnum<string, ElementalTextNodeWithTypeIntersectionMember1Type>
-            >("type");
+            return this._rawData.GetNotNullClass<string>("content");
+        }
+        init { this._rawData.Set("content", value); }
+    }
+
+    /// <summary>
+    /// Text alignment.
+    /// </summary>
+    public ApiEnum<string, Align>? Align
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Align>>("align");
         }
         init
         {
@@ -380,69 +357,231 @@ public sealed record class ElementalTextNodeWithTypeIntersectionMember1 : JsonMo
                 return;
             }
 
-            this._rawData.Set("type", value);
+            this._rawData.Set("align", value);
         }
+    }
+
+    /// <summary>
+    /// Apply bold to the text
+    /// </summary>
+    public string? Bold
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("bold");
+        }
+        init { this._rawData.Set("bold", value); }
+    }
+
+    /// <summary>
+    /// Specifies the color of text. Can be any valid css color value
+    /// </summary>
+    public string? Color
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("color");
+        }
+        init { this._rawData.Set("color", value); }
+    }
+
+    /// <summary>
+    /// CSS px font size for this text block, e.g. `16px`. Overrides the size of
+    /// the `text_style` preset. Email only.
+    /// </summary>
+    public string? FontSize
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("font_size");
+        }
+        init { this._rawData.Set("font_size", value); }
+    }
+
+    public ApiEnum<string, Format>? Format
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Format>>("format");
+        }
+        init { this._rawData.Set("format", value); }
+    }
+
+    /// <summary>
+    /// Apply italics to the text
+    /// </summary>
+    public string? Italic
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("italic");
+        }
+        init { this._rawData.Set("italic", value); }
+    }
+
+    /// <summary>
+    /// CSS line height for this text block, as a px value or a unitless multiplier,
+    /// e.g. `24px` or `1.5`. Email only.
+    /// </summary>
+    public string? LineHeight
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("line_height");
+        }
+        init { this._rawData.Set("line_height", value); }
+    }
+
+    /// <summary>
+    /// Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+    /// for more details.
+    /// </summary>
+    public IReadOnlyDictionary<string, LocalesItem>? Locales
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, LocalesItem>>("locales");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, LocalesItem>?>(
+                "locales",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Apply a strike through the text
+    /// </summary>
+    public string? Strikethrough
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("strikethrough");
+        }
+        init { this._rawData.Set("strikethrough", value); }
+    }
+
+    /// <summary>
+    /// Allows the text to be rendered as a heading level.
+    /// </summary>
+    public ApiEnum<string, TextStyle>? TextStyle
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, TextStyle>>("text_style");
+        }
+        init { this._rawData.Set("text_style", value); }
+    }
+
+    /// <summary>
+    /// Apply an underline to the text
+    /// </summary>
+    public string? Underline
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("underline");
+        }
+        init { this._rawData.Set("underline", value); }
     }
 
     /// <inheritdoc/>
     public override void Validate()
     {
-        this.Type?.Validate();
+        _ = this.Content;
+        this.Align?.Validate();
+        _ = this.Bold;
+        _ = this.Color;
+        _ = this.FontSize;
+        this.Format?.Validate();
+        _ = this.Italic;
+        _ = this.LineHeight;
+        if (this.Locales != null)
+        {
+            foreach (var item in this.Locales.Values)
+            {
+                item.Validate();
+            }
+        }
+        _ = this.Strikethrough;
+        this.TextStyle?.Validate();
+        _ = this.Underline;
     }
 
-    public ElementalTextNodeWithTypeIntersectionMember1() { }
+    public ElementalTextNodeIntersectionMember1() { }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    public ElementalTextNodeWithTypeIntersectionMember1(
-        ElementalTextNodeWithTypeIntersectionMember1 elementalTextNodeWithTypeIntersectionMember1
+    public ElementalTextNodeIntersectionMember1(
+        ElementalTextNodeIntersectionMember1 elementalTextNodeIntersectionMember1
     )
-        : base(elementalTextNodeWithTypeIntersectionMember1) { }
+        : base(elementalTextNodeIntersectionMember1) { }
 #pragma warning restore CS8618
 
-    public ElementalTextNodeWithTypeIntersectionMember1(
-        IReadOnlyDictionary<string, JsonElement> rawData
-    )
+    public ElementalTextNodeIntersectionMember1(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 
 #pragma warning disable CS8618
     [SetsRequiredMembers]
-    ElementalTextNodeWithTypeIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
+    ElementalTextNodeIntersectionMember1(FrozenDictionary<string, JsonElement> rawData)
     {
         this._rawData = new(rawData);
     }
 #pragma warning restore CS8618
 
-    /// <inheritdoc cref="ElementalTextNodeWithTypeIntersectionMember1FromRaw.FromRawUnchecked"/>
-    public static ElementalTextNodeWithTypeIntersectionMember1 FromRawUnchecked(
+    /// <inheritdoc cref="ElementalTextNodeIntersectionMember1FromRaw.FromRawUnchecked"/>
+    public static ElementalTextNodeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
+
+    [SetsRequiredMembers]
+    public ElementalTextNodeIntersectionMember1(string content)
+        : this()
+    {
+        this.Content = content;
+    }
 }
 
-class ElementalTextNodeWithTypeIntersectionMember1FromRaw
-    : IFromRawJson<ElementalTextNodeWithTypeIntersectionMember1>
+class ElementalTextNodeIntersectionMember1FromRaw
+    : IFromRawJson<ElementalTextNodeIntersectionMember1>
 {
     /// <inheritdoc/>
-    public ElementalTextNodeWithTypeIntersectionMember1 FromRawUnchecked(
+    public ElementalTextNodeIntersectionMember1 FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
-    ) => ElementalTextNodeWithTypeIntersectionMember1.FromRawUnchecked(rawData);
+    ) => ElementalTextNodeIntersectionMember1.FromRawUnchecked(rawData);
 }
 
-[JsonConverter(typeof(ElementalTextNodeWithTypeIntersectionMember1TypeConverter))]
-public enum ElementalTextNodeWithTypeIntersectionMember1Type
+/// <summary>
+/// Text alignment.
+/// </summary>
+[JsonConverter(typeof(AlignConverter))]
+public enum Align
 {
-    Text,
+    Left,
+    Center,
+    Right,
 }
 
-sealed class ElementalTextNodeWithTypeIntersectionMember1TypeConverter
-    : JsonConverter<ElementalTextNodeWithTypeIntersectionMember1Type>
+sealed class AlignConverter : JsonConverter<Align>
 {
-    public override ElementalTextNodeWithTypeIntersectionMember1Type Read(
+    public override Align Read(
         ref Utf8JsonReader reader,
         System::Type typeToConvert,
         JsonSerializerOptions options
@@ -450,22 +589,59 @@ sealed class ElementalTextNodeWithTypeIntersectionMember1TypeConverter
     {
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "text" => ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-            _ => (ElementalTextNodeWithTypeIntersectionMember1Type)(-1),
+            "left" => Align.Left,
+            "center" => Align.Center,
+            "right" => Align.Right,
+            _ => (Align)(-1),
         };
     }
 
-    public override void Write(
-        Utf8JsonWriter writer,
-        ElementalTextNodeWithTypeIntersectionMember1Type value,
-        JsonSerializerOptions options
-    )
+    public override void Write(Utf8JsonWriter writer, Align value, JsonSerializerOptions options)
     {
         JsonSerializer.Serialize(
             writer,
             value switch
             {
-                ElementalTextNodeWithTypeIntersectionMember1Type.Text => "text",
+                Align.Left => "left",
+                Align.Center => "center",
+                Align.Right => "right",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
+}
+
+[JsonConverter(typeof(FormatConverter))]
+public enum Format
+{
+    Markdown,
+}
+
+sealed class FormatConverter : JsonConverter<Format>
+{
+    public override Format Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "markdown" => Format.Markdown,
+            _ => (Format)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Format value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Format.Markdown => "markdown",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

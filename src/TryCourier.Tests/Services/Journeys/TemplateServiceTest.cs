@@ -23,10 +23,6 @@ public class TemplateServiceTest : TestBase
                         [
                             new ElementalTextNodeWithType()
                             {
-                                Channels = ["string"],
-                                If = "if",
-                                Loop = "loop",
-                                Ref = "ref",
                                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                             },
                         ],
@@ -155,10 +151,6 @@ public class TemplateServiceTest : TestBase
                         [
                             new ElementalTextNodeWithType()
                             {
-                                Channels = ["string"],
-                                If = "if",
-                                Loop = "loop",
-                                Ref = "ref",
                                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                             },
                         ],

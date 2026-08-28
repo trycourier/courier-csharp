@@ -10,6 +10,9 @@ using System = System;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// Renders a dividing line between elements.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<ElementalDividerNodeWithType, ElementalDividerNodeWithTypeFromRaw>)
 )]
@@ -61,6 +64,19 @@ public sealed record class ElementalDividerNodeWithType : JsonModel
         init { this._rawData.Set("ref", value); }
     }
 
+    /// <summary>
+    /// The CSS color to render the line with. For example, `#fff`
+    /// </summary>
+    public string? Color
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("color");
+        }
+        init { this._rawData.Set("color", value); }
+    }
+
     public ApiEnum<string, ElementalDividerNodeWithTypeIntersectionMember1Type>? Type
     {
         get
@@ -81,7 +97,7 @@ public sealed record class ElementalDividerNodeWithType : JsonModel
         }
     }
 
-    public static implicit operator ElementalBaseNode(
+    public static implicit operator ElementalDividerNode(
         ElementalDividerNodeWithType elementalDividerNodeWithType
     ) =>
         new()
@@ -90,6 +106,7 @@ public sealed record class ElementalDividerNodeWithType : JsonModel
             If = elementalDividerNodeWithType.If,
             Loop = elementalDividerNodeWithType.Loop,
             Ref = elementalDividerNodeWithType.Ref,
+            Color = elementalDividerNodeWithType.Color,
         };
 
     /// <inheritdoc/>
@@ -99,6 +116,7 @@ public sealed record class ElementalDividerNodeWithType : JsonModel
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
+        _ = this.Color;
         this.Type?.Validate();
     }
 
