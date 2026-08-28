@@ -23,10 +23,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -49,10 +45,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -83,10 +75,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -123,10 +111,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -156,10 +140,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -190,10 +170,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -224,10 +200,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -258,10 +230,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -291,10 +259,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -328,10 +292,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -364,10 +324,6 @@ public class JourneyTemplateReplaceRequestTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -401,10 +357,6 @@ public class JourneyTemplateReplaceRequestNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -423,10 +375,6 @@ public class JourneyTemplateReplaceRequestNotificationTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -462,10 +410,6 @@ public class JourneyTemplateReplaceRequestNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -498,10 +442,6 @@ public class JourneyTemplateReplaceRequestNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -527,10 +467,6 @@ public class JourneyTemplateReplaceRequestNotificationTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -566,10 +502,6 @@ public class JourneyTemplateReplaceRequestNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -596,10 +528,6 @@ public class JourneyTemplateReplaceRequestNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -692,10 +620,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -707,10 +631,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
-                Channels = ["string"],
-                If = "if",
-                Loop = "loop",
-                Ref = "ref",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -737,10 +657,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -767,10 +683,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -790,10 +702,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
-                Channels = ["string"],
-                If = "if",
-                Loop = "loop",
-                Ref = "ref",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -820,10 +728,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -843,10 +747,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -866,10 +766,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -888,10 +784,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -914,10 +806,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -939,10 +827,6 @@ public class JourneyTemplateReplaceRequestNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],

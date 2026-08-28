@@ -11,10 +11,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalTextNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
         };
         value.Validate();
@@ -25,10 +21,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalMetaNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
         value.Validate();
@@ -49,10 +41,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalImageNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
         value.Validate();
@@ -61,14 +49,7 @@ public class ElementalNodeTest : TestBase
     [Fact]
     public void ActionNodeWithTypeValidationWorks()
     {
-        ElementalNode value = new ElementalActionNodeWithType()
-        {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
-            Type = Type.Action,
-        };
+        ElementalNode value = new ElementalActionNodeWithType() { Type = Type.Action };
         value.Validate();
     }
 
@@ -77,10 +58,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalDividerNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
         value.Validate();
@@ -91,10 +68,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalQuoteNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
         };
         value.Validate();
@@ -105,10 +78,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalHtmlNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
         value.Validate();
@@ -119,10 +88,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalTextNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -139,10 +104,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalMetaNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -175,10 +136,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalImageNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -193,14 +150,7 @@ public class ElementalNodeTest : TestBase
     [Fact]
     public void ActionNodeWithTypeSerializationRoundtripWorks()
     {
-        ElementalNode value = new ElementalActionNodeWithType()
-        {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
-            Type = Type.Action,
-        };
+        ElementalNode value = new ElementalActionNodeWithType() { Type = Type.Action };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ElementalNode>(
             element,
@@ -215,10 +165,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalDividerNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalDividerNodeWithTypeIntersectionMember1Type.Divider,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -235,10 +181,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalQuoteNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalQuoteNodeWithTypeIntersectionMember1Type.Quote,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -255,10 +197,6 @@ public class ElementalNodeTest : TestBase
     {
         ElementalNode value = new ElementalHtmlNodeWithType()
         {
-            Channels = ["string"],
-            If = "if",
-            Loop = "loop",
-            Ref = "ref",
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

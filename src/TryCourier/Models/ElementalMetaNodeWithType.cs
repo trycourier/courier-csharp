@@ -10,6 +10,11 @@ using System = System;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// The meta element contains information describing the notification that may  be
+/// used by a particular channel or provider. One important field is the title  field
+/// which will be used as the title for channels that support it.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<ElementalMetaNodeWithType, ElementalMetaNodeWithTypeFromRaw>)
 )]
@@ -61,6 +66,19 @@ public sealed record class ElementalMetaNodeWithType : JsonModel
         init { this._rawData.Set("ref", value); }
     }
 
+    /// <summary>
+    /// The title to be displayed by supported channels. For example, the email subject.
+    /// </summary>
+    public string? Title
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("title");
+        }
+        init { this._rawData.Set("title", value); }
+    }
+
     public ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type>? Type
     {
         get
@@ -81,7 +99,7 @@ public sealed record class ElementalMetaNodeWithType : JsonModel
         }
     }
 
-    public static implicit operator ElementalBaseNode(
+    public static implicit operator ElementalMetaNode(
         ElementalMetaNodeWithType elementalMetaNodeWithType
     ) =>
         new()
@@ -90,6 +108,7 @@ public sealed record class ElementalMetaNodeWithType : JsonModel
             If = elementalMetaNodeWithType.If,
             Loop = elementalMetaNodeWithType.Loop,
             Ref = elementalMetaNodeWithType.Ref,
+            Title = elementalMetaNodeWithType.Title,
         };
 
     /// <inheritdoc/>
@@ -99,6 +118,7 @@ public sealed record class ElementalMetaNodeWithType : JsonModel
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
+        _ = this.Title;
         this.Type?.Validate();
     }
 

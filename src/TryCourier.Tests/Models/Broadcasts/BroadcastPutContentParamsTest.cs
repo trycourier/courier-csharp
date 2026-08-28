@@ -22,18 +22,10 @@ public class BroadcastPutContentParamsTest : TestBase
                 [
                     new ElementalMetaNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -49,18 +41,10 @@ public class BroadcastPutContentParamsTest : TestBase
             [
                 new ElementalMetaNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                 },
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -86,18 +70,10 @@ public class BroadcastPutContentParamsTest : TestBase
                 [
                     new ElementalMetaNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -121,18 +97,10 @@ public class BroadcastPutContentParamsTest : TestBase
                 [
                     new ElementalMetaNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -159,18 +127,10 @@ public class BroadcastPutContentParamsTest : TestBase
                 [
                     new ElementalMetaNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -200,18 +160,10 @@ public class BroadcastPutContentParamsTest : TestBase
                 [
                     new ElementalMetaNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -237,10 +189,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -251,10 +199,6 @@ public class ContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
-                Channels = ["string"],
-                If = "if",
-                Loop = "loop",
-                Ref = "ref",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -277,10 +221,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -302,10 +242,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -323,10 +259,6 @@ public class ContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
-                Channels = ["string"],
-                If = "if",
-                Loop = "loop",
-                Ref = "ref",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -349,10 +281,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -371,10 +299,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -393,10 +317,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -414,10 +334,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -439,10 +355,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -463,10 +375,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],

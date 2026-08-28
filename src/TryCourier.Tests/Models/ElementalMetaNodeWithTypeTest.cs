@@ -17,6 +17,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 
@@ -24,6 +25,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
         string expectedIf = "if";
         string expectedLoop = "loop";
         string expectedRef = "ref";
+        string expectedTitle = "title";
         ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalMetaNodeWithTypeIntersectionMember1Type.Meta;
 
@@ -36,6 +38,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
         Assert.Equal(expectedIf, model.If);
         Assert.Equal(expectedLoop, model.Loop);
         Assert.Equal(expectedRef, model.Ref);
+        Assert.Equal(expectedTitle, model.Title);
         Assert.Equal(expectedType, model.Type);
     }
 
@@ -48,6 +51,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 
@@ -69,6 +73,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 
@@ -83,6 +88,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
         string expectedIf = "if";
         string expectedLoop = "loop";
         string expectedRef = "ref";
+        string expectedTitle = "title";
         ApiEnum<string, ElementalMetaNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalMetaNodeWithTypeIntersectionMember1Type.Meta;
 
@@ -95,6 +101,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
         Assert.Equal(expectedIf, deserialized.If);
         Assert.Equal(expectedLoop, deserialized.Loop);
         Assert.Equal(expectedRef, deserialized.Ref);
+        Assert.Equal(expectedTitle, deserialized.Title);
         Assert.Equal(expectedType, deserialized.Type);
     }
 
@@ -107,6 +114,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 
@@ -122,6 +130,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
         };
 
         Assert.Null(model.Type);
@@ -137,6 +146,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
         };
 
         model.Validate();
@@ -151,6 +161,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
 
             // Null should be interpreted as omitted for these properties
             Type = null,
@@ -169,6 +180,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
 
             // Null should be interpreted as omitted for these properties
             Type = null,
@@ -193,6 +205,8 @@ public class ElementalMetaNodeWithTypeTest : TestBase
         Assert.False(model.RawData.ContainsKey("loop"));
         Assert.Null(model.Ref);
         Assert.False(model.RawData.ContainsKey("ref"));
+        Assert.Null(model.Title);
+        Assert.False(model.RawData.ContainsKey("title"));
     }
 
     [Fact]
@@ -217,6 +231,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = null,
             Loop = null,
             Ref = null,
+            Title = null,
         };
 
         Assert.Null(model.Channels);
@@ -227,6 +242,8 @@ public class ElementalMetaNodeWithTypeTest : TestBase
         Assert.True(model.RawData.ContainsKey("loop"));
         Assert.Null(model.Ref);
         Assert.True(model.RawData.ContainsKey("ref"));
+        Assert.Null(model.Title);
+        Assert.True(model.RawData.ContainsKey("title"));
     }
 
     [Fact]
@@ -240,6 +257,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = null,
             Loop = null,
             Ref = null,
+            Title = null,
         };
 
         model.Validate();
@@ -254,6 +272,7 @@ public class ElementalMetaNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Title = "title",
             Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
         };
 

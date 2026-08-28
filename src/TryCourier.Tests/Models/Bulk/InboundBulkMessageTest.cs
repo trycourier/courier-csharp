@@ -390,10 +390,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -424,10 +420,6 @@ public class ContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],

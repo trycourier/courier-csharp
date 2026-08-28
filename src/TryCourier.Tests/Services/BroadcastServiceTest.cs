@@ -94,18 +94,10 @@ public class BroadcastServiceTest : TestBase
                     [
                         new Models::ElementalMetaNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = Models::ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                         },
                         new Models::ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],

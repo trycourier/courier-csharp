@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using TryCourier.Core;
-using TryCourier.Exceptions;
 using TryCourier.Models;
 
 namespace TryCourier.Tests.Models;
 
-public class ElementalImageNodeWithTypeTest : TestBase
+public class ElementalImageNodeTest : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -25,7 +24,6 @@ public class ElementalImageNodeWithTypeTest : TestBase
             Href = "href",
             Padding = "padding",
             Width = "width",
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
         List<string> expectedChannels = ["string"];
@@ -40,8 +38,6 @@ public class ElementalImageNodeWithTypeTest : TestBase
         string expectedHref = "href";
         string expectedPadding = "padding";
         string expectedWidth = "width";
-        ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> expectedType =
-            ElementalImageNodeWithTypeIntersectionMember1Type.Image;
 
         Assert.NotNull(model.Channels);
         Assert.Equal(expectedChannels.Count, model.Channels.Count);
@@ -60,13 +56,12 @@ public class ElementalImageNodeWithTypeTest : TestBase
         Assert.Equal(expectedHref, model.Href);
         Assert.Equal(expectedPadding, model.Padding);
         Assert.Equal(expectedWidth, model.Width);
-        Assert.Equal(expectedType, model.Type);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -80,11 +75,10 @@ public class ElementalImageNodeWithTypeTest : TestBase
             Href = "href",
             Padding = "padding",
             Width = "width",
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
+        var deserialized = JsonSerializer.Deserialize<ElementalImageNode>(
             json,
             ModelBase.SerializerOptions
         );
@@ -95,7 +89,7 @@ public class ElementalImageNodeWithTypeTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -109,11 +103,10 @@ public class ElementalImageNodeWithTypeTest : TestBase
             Href = "href",
             Padding = "padding",
             Width = "width",
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
+        var deserialized = JsonSerializer.Deserialize<ElementalImageNode>(
             element,
             ModelBase.SerializerOptions
         );
@@ -131,8 +124,6 @@ public class ElementalImageNodeWithTypeTest : TestBase
         string expectedHref = "href";
         string expectedPadding = "padding";
         string expectedWidth = "width";
-        ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> expectedType =
-            ElementalImageNodeWithTypeIntersectionMember1Type.Image;
 
         Assert.NotNull(deserialized.Channels);
         Assert.Equal(expectedChannels.Count, deserialized.Channels.Count);
@@ -151,13 +142,12 @@ public class ElementalImageNodeWithTypeTest : TestBase
         Assert.Equal(expectedHref, deserialized.Href);
         Assert.Equal(expectedPadding, deserialized.Padding);
         Assert.Equal(expectedWidth, deserialized.Width);
-        Assert.Equal(expectedType, deserialized.Type);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -171,7 +161,6 @@ public class ElementalImageNodeWithTypeTest : TestBase
             Href = "href",
             Padding = "padding",
             Width = "width",
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
         model.Validate();
@@ -180,7 +169,7 @@ public class ElementalImageNodeWithTypeTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -197,14 +186,12 @@ public class ElementalImageNodeWithTypeTest : TestBase
 
         Assert.Null(model.Align);
         Assert.False(model.RawData.ContainsKey("align"));
-        Assert.Null(model.Type);
-        Assert.False(model.RawData.ContainsKey("type"));
     }
 
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -225,7 +212,7 @@ public class ElementalImageNodeWithTypeTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -241,19 +228,16 @@ public class ElementalImageNodeWithTypeTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Align = null,
-            Type = null,
         };
 
         Assert.Null(model.Align);
         Assert.False(model.RawData.ContainsKey("align"));
-        Assert.Null(model.Type);
-        Assert.False(model.RawData.ContainsKey("type"));
     }
 
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -269,7 +253,6 @@ public class ElementalImageNodeWithTypeTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Align = null,
-            Type = null,
         };
 
         model.Validate();
@@ -278,12 +261,7 @@ public class ElementalImageNodeWithTypeTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ElementalImageNodeWithType
-        {
-            Src = "src",
-            Align = Alignment.Center,
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
-        };
+        var model = new ElementalImageNode { Src = "src", Align = Alignment.Center };
 
         Assert.Null(model.Channels);
         Assert.False(model.RawData.ContainsKey("channels"));
@@ -310,12 +288,7 @@ public class ElementalImageNodeWithTypeTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ElementalImageNodeWithType
-        {
-            Src = "src",
-            Align = Alignment.Center,
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
-        };
+        var model = new ElementalImageNode { Src = "src", Align = Alignment.Center };
 
         model.Validate();
     }
@@ -323,11 +296,10 @@ public class ElementalImageNodeWithTypeTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Src = "src",
             Align = Alignment.Center,
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
 
             Channels = null,
             If = null,
@@ -366,11 +338,10 @@ public class ElementalImageNodeWithTypeTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Src = "src",
             Align = Alignment.Center,
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
 
             Channels = null,
             If = null,
@@ -390,7 +361,7 @@ public class ElementalImageNodeWithTypeTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new ElementalImageNodeWithType
+        var model = new ElementalImageNode
         {
             Channels = ["string"],
             If = "if",
@@ -404,45 +375,70 @@ public class ElementalImageNodeWithTypeTest : TestBase
             Href = "href",
             Padding = "padding",
             Width = "width",
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
         };
 
-        ElementalImageNodeWithType copied = new(model);
+        ElementalImageNode copied = new(model);
 
         Assert.Equal(model, copied);
     }
 }
 
-public class ElementalImageNodeWithTypeIntersectionMember1Test : TestBase
+public class ElementalImageNodeIntersectionMember1Test : TestBase
 {
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1
+        var model = new ElementalImageNodeIntersectionMember1
         {
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
+            Src = "src",
+            Align = Alignment.Center,
+            AltText = "altText",
+            BorderColor = "border_color",
+            BorderSize = "border_size",
+            Href = "href",
+            Padding = "padding",
+            Width = "width",
         };
 
-        ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> expectedType =
-            ElementalImageNodeWithTypeIntersectionMember1Type.Image;
+        string expectedSrc = "src";
+        ApiEnum<string, Alignment> expectedAlign = Alignment.Center;
+        string expectedAltText = "altText";
+        string expectedBorderColor = "border_color";
+        string expectedBorderSize = "border_size";
+        string expectedHref = "href";
+        string expectedPadding = "padding";
+        string expectedWidth = "width";
 
-        Assert.Equal(expectedType, model.Type);
+        Assert.Equal(expectedSrc, model.Src);
+        Assert.Equal(expectedAlign, model.Align);
+        Assert.Equal(expectedAltText, model.AltText);
+        Assert.Equal(expectedBorderColor, model.BorderColor);
+        Assert.Equal(expectedBorderSize, model.BorderSize);
+        Assert.Equal(expectedHref, model.Href);
+        Assert.Equal(expectedPadding, model.Padding);
+        Assert.Equal(expectedWidth, model.Width);
     }
 
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1
+        var model = new ElementalImageNodeIntersectionMember1
         {
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
+            Src = "src",
+            Align = Alignment.Center,
+            AltText = "altText",
+            BorderColor = "border_color",
+            BorderSize = "border_size",
+            Href = "href",
+            Padding = "padding",
+            Width = "width",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized =
-            JsonSerializer.Deserialize<ElementalImageNodeWithTypeIntersectionMember1>(
-                json,
-                ModelBase.SerializerOptions
-            );
+        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeIntersectionMember1>(
+            json,
+            ModelBase.SerializerOptions
+        );
 
         Assert.Equal(model, deserialized);
     }
@@ -450,73 +446,137 @@ public class ElementalImageNodeWithTypeIntersectionMember1Test : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1
+        var model = new ElementalImageNodeIntersectionMember1
         {
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
+            Src = "src",
+            Align = Alignment.Center,
+            AltText = "altText",
+            BorderColor = "border_color",
+            BorderSize = "border_size",
+            Href = "href",
+            Padding = "padding",
+            Width = "width",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized =
-            JsonSerializer.Deserialize<ElementalImageNodeWithTypeIntersectionMember1>(
-                element,
-                ModelBase.SerializerOptions
-            );
+        var deserialized = JsonSerializer.Deserialize<ElementalImageNodeIntersectionMember1>(
+            element,
+            ModelBase.SerializerOptions
+        );
         Assert.NotNull(deserialized);
 
-        ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> expectedType =
-            ElementalImageNodeWithTypeIntersectionMember1Type.Image;
+        string expectedSrc = "src";
+        ApiEnum<string, Alignment> expectedAlign = Alignment.Center;
+        string expectedAltText = "altText";
+        string expectedBorderColor = "border_color";
+        string expectedBorderSize = "border_size";
+        string expectedHref = "href";
+        string expectedPadding = "padding";
+        string expectedWidth = "width";
 
-        Assert.Equal(expectedType, deserialized.Type);
+        Assert.Equal(expectedSrc, deserialized.Src);
+        Assert.Equal(expectedAlign, deserialized.Align);
+        Assert.Equal(expectedAltText, deserialized.AltText);
+        Assert.Equal(expectedBorderColor, deserialized.BorderColor);
+        Assert.Equal(expectedBorderSize, deserialized.BorderSize);
+        Assert.Equal(expectedHref, deserialized.Href);
+        Assert.Equal(expectedPadding, deserialized.Padding);
+        Assert.Equal(expectedWidth, deserialized.Width);
     }
 
     [Fact]
     public void Validation_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1
+        var model = new ElementalImageNodeIntersectionMember1
         {
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
+            Src = "src",
+            Align = Alignment.Center,
+            AltText = "altText",
+            BorderColor = "border_color",
+            BorderSize = "border_size",
+            Href = "href",
+            Padding = "padding",
+            Width = "width",
         };
 
         model.Validate();
     }
 
     [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1 { };
+        var model = new ElementalImageNodeIntersectionMember1 { Src = "src" };
 
-        Assert.Null(model.Type);
-        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.Align);
+        Assert.False(model.RawData.ContainsKey("align"));
+        Assert.Null(model.AltText);
+        Assert.False(model.RawData.ContainsKey("altText"));
+        Assert.Null(model.BorderColor);
+        Assert.False(model.RawData.ContainsKey("border_color"));
+        Assert.Null(model.BorderSize);
+        Assert.False(model.RawData.ContainsKey("border_size"));
+        Assert.Null(model.Href);
+        Assert.False(model.RawData.ContainsKey("href"));
+        Assert.Null(model.Padding);
+        Assert.False(model.RawData.ContainsKey("padding"));
+        Assert.Null(model.Width);
+        Assert.False(model.RawData.ContainsKey("width"));
     }
 
     [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
+    public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1 { };
+        var model = new ElementalImageNodeIntersectionMember1 { Src = "src" };
 
         model.Validate();
     }
 
     [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1
+        var model = new ElementalImageNodeIntersectionMember1
         {
-            // Null should be interpreted as omitted for these properties
-            Type = null,
+            Src = "src",
+
+            Align = null,
+            AltText = null,
+            BorderColor = null,
+            BorderSize = null,
+            Href = null,
+            Padding = null,
+            Width = null,
         };
 
-        Assert.Null(model.Type);
-        Assert.False(model.RawData.ContainsKey("type"));
+        Assert.Null(model.Align);
+        Assert.True(model.RawData.ContainsKey("align"));
+        Assert.Null(model.AltText);
+        Assert.True(model.RawData.ContainsKey("altText"));
+        Assert.Null(model.BorderColor);
+        Assert.True(model.RawData.ContainsKey("border_color"));
+        Assert.Null(model.BorderSize);
+        Assert.True(model.RawData.ContainsKey("border_size"));
+        Assert.Null(model.Href);
+        Assert.True(model.RawData.ContainsKey("href"));
+        Assert.Null(model.Padding);
+        Assert.True(model.RawData.ContainsKey("padding"));
+        Assert.Null(model.Width);
+        Assert.True(model.RawData.ContainsKey("width"));
     }
 
     [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1
+        var model = new ElementalImageNodeIntersectionMember1
         {
-            // Null should be interpreted as omitted for these properties
-            Type = null,
+            Src = "src",
+
+            Align = null,
+            AltText = null,
+            BorderColor = null,
+            BorderSize = null,
+            Href = null,
+            Padding = null,
+            Width = null,
         };
 
         model.Validate();
@@ -525,67 +585,20 @@ public class ElementalImageNodeWithTypeIntersectionMember1Test : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new ElementalImageNodeWithTypeIntersectionMember1
+        var model = new ElementalImageNodeIntersectionMember1
         {
-            Type = ElementalImageNodeWithTypeIntersectionMember1Type.Image,
+            Src = "src",
+            Align = Alignment.Center,
+            AltText = "altText",
+            BorderColor = "border_color",
+            BorderSize = "border_size",
+            Href = "href",
+            Padding = "padding",
+            Width = "width",
         };
 
-        ElementalImageNodeWithTypeIntersectionMember1 copied = new(model);
+        ElementalImageNodeIntersectionMember1 copied = new(model);
 
         Assert.Equal(model, copied);
-    }
-}
-
-public class ElementalImageNodeWithTypeIntersectionMember1TypeTest : TestBase
-{
-    [Theory]
-    [InlineData(ElementalImageNodeWithTypeIntersectionMember1Type.Image)]
-    public void Validation_Works(ElementalImageNodeWithTypeIntersectionMember1Type rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>
-        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
-
-        Assert.NotNull(value);
-        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(ElementalImageNodeWithTypeIntersectionMember1Type.Image)]
-    public void SerializationRoundtrip_Works(
-        ElementalImageNodeWithTypeIntersectionMember1Type rawValue
-    )
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<
-            ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>
-        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, ElementalImageNodeWithTypeIntersectionMember1Type>
-        >(json, ModelBase.SerializerOptions);
-
-        Assert.Equal(value, deserialized);
     }
 }

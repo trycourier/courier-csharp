@@ -10,6 +10,11 @@ using System = System;
 
 namespace TryCourier.Models;
 
+/// <summary>
+/// Raw HTML string inside an Elemental document. When rendering a message, this
+/// node is turned into output only for the email channel; for other channels it
+/// produces no blocks.
+/// </summary>
 [JsonConverter(
     typeof(JsonModelConverter<ElementalHtmlNodeWithType, ElementalHtmlNodeWithTypeFromRaw>)
 )]
@@ -61,6 +66,39 @@ public sealed record class ElementalHtmlNodeWithType : JsonModel
         init { this._rawData.Set("ref", value); }
     }
 
+    /// <summary>
+    /// Raw HTML string to render inside the notification.
+    /// </summary>
+    public required string Content
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("content");
+        }
+        init { this._rawData.Set("content", value); }
+    }
+
+    /// <summary>
+    /// Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/)
+    /// for more details.
+    /// </summary>
+    public IReadOnlyDictionary<string, LocalesItem>? Locales
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<FrozenDictionary<string, LocalesItem>>("locales");
+        }
+        init
+        {
+            this._rawData.Set<FrozenDictionary<string, LocalesItem>?>(
+                "locales",
+                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
+            );
+        }
+    }
+
     public ApiEnum<string, ElementalHtmlNodeWithTypeIntersectionMember1Type>? Type
     {
         get
@@ -81,7 +119,7 @@ public sealed record class ElementalHtmlNodeWithType : JsonModel
         }
     }
 
-    public static implicit operator ElementalBaseNode(
+    public static implicit operator ElementalHtmlNode(
         ElementalHtmlNodeWithType elementalHtmlNodeWithType
     ) =>
         new()
@@ -90,6 +128,8 @@ public sealed record class ElementalHtmlNodeWithType : JsonModel
             If = elementalHtmlNodeWithType.If,
             Loop = elementalHtmlNodeWithType.Loop,
             Ref = elementalHtmlNodeWithType.Ref,
+            Content = elementalHtmlNodeWithType.Content,
+            Locales = elementalHtmlNodeWithType.Locales,
         };
 
     /// <inheritdoc/>
@@ -99,6 +139,14 @@ public sealed record class ElementalHtmlNodeWithType : JsonModel
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
+        _ = this.Content;
+        if (this.Locales != null)
+        {
+            foreach (var item in this.Locales.Values)
+            {
+                item.Validate();
+            }
+        }
         this.Type?.Validate();
     }
 
@@ -129,6 +177,13 @@ public sealed record class ElementalHtmlNodeWithType : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public ElementalHtmlNodeWithType(string content)
+        : this()
+    {
+        this.Content = content;
     }
 }
 

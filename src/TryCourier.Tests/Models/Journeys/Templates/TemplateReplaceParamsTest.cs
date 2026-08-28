@@ -26,10 +26,6 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -54,10 +50,6 @@ public class TemplateReplaceParamsTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -92,10 +84,6 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -128,10 +116,6 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -167,10 +151,6 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -206,10 +186,6 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
-                            Channels = ["string"],
-                            If = "if",
-                            Loop = "loop",
-                            Ref = "ref",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -243,10 +219,6 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -265,10 +237,6 @@ public class TemplateReplaceParamsNotificationTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -302,10 +270,6 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -338,10 +302,6 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -367,10 +327,6 @@ public class TemplateReplaceParamsNotificationTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -404,10 +360,6 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -434,10 +386,6 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
-                        Channels = ["string"],
-                        If = "if",
-                        Loop = "loop",
-                        Ref = "ref",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -528,10 +476,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -543,10 +487,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
-                Channels = ["string"],
-                If = "if",
-                Loop = "loop",
-                Ref = "ref",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -573,10 +513,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -602,10 +538,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -624,10 +556,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
-                Channels = ["string"],
-                If = "if",
-                Loop = "loop",
-                Ref = "ref",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -654,10 +582,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -677,10 +601,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -700,10 +620,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -722,10 +638,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -748,10 +660,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -773,10 +681,6 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],

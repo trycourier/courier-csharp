@@ -17,6 +17,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
 
@@ -24,6 +26,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
         string expectedIf = "if";
         string expectedLoop = "loop";
         string expectedRef = "ref";
+        string expectedContent = "content";
+        Dictionary<string, LocalesItem> expectedLocales = new() { { "foo", new("content") } };
         ApiEnum<string, ElementalHtmlNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalHtmlNodeWithTypeIntersectionMember1Type.Html;
 
@@ -36,6 +40,15 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
         Assert.Equal(expectedIf, model.If);
         Assert.Equal(expectedLoop, model.Loop);
         Assert.Equal(expectedRef, model.Ref);
+        Assert.Equal(expectedContent, model.Content);
+        Assert.NotNull(model.Locales);
+        Assert.Equal(expectedLocales.Count, model.Locales.Count);
+        foreach (var item in expectedLocales)
+        {
+            Assert.True(model.Locales.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, model.Locales[item.Key]);
+        }
         Assert.Equal(expectedType, model.Type);
     }
 
@@ -48,6 +61,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
 
@@ -69,6 +84,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
 
@@ -83,6 +100,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
         string expectedIf = "if";
         string expectedLoop = "loop";
         string expectedRef = "ref";
+        string expectedContent = "content";
+        Dictionary<string, LocalesItem> expectedLocales = new() { { "foo", new("content") } };
         ApiEnum<string, ElementalHtmlNodeWithTypeIntersectionMember1Type> expectedType =
             ElementalHtmlNodeWithTypeIntersectionMember1Type.Html;
 
@@ -95,6 +114,15 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
         Assert.Equal(expectedIf, deserialized.If);
         Assert.Equal(expectedLoop, deserialized.Loop);
         Assert.Equal(expectedRef, deserialized.Ref);
+        Assert.Equal(expectedContent, deserialized.Content);
+        Assert.NotNull(deserialized.Locales);
+        Assert.Equal(expectedLocales.Count, deserialized.Locales.Count);
+        foreach (var item in expectedLocales)
+        {
+            Assert.True(deserialized.Locales.TryGetValue(item.Key, out var value));
+
+            Assert.Equal(value, deserialized.Locales[item.Key]);
+        }
         Assert.Equal(expectedType, deserialized.Type);
     }
 
@@ -107,6 +135,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
 
@@ -122,6 +152,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
         };
 
         Assert.Null(model.Type);
@@ -137,6 +169,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
         };
 
         model.Validate();
@@ -151,6 +185,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
 
             // Null should be interpreted as omitted for these properties
             Type = null,
@@ -169,6 +205,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
 
             // Null should be interpreted as omitted for these properties
             Type = null,
@@ -182,6 +220,7 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
     {
         var model = new ElementalHtmlNodeWithType
         {
+            Content = "content",
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
 
@@ -193,6 +232,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
         Assert.False(model.RawData.ContainsKey("loop"));
         Assert.Null(model.Ref);
         Assert.False(model.RawData.ContainsKey("ref"));
+        Assert.Null(model.Locales);
+        Assert.False(model.RawData.ContainsKey("locales"));
     }
 
     [Fact]
@@ -200,6 +241,7 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
     {
         var model = new ElementalHtmlNodeWithType
         {
+            Content = "content",
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
 
@@ -211,12 +253,14 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
     {
         var model = new ElementalHtmlNodeWithType
         {
+            Content = "content",
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
 
             Channels = null,
             If = null,
             Loop = null,
             Ref = null,
+            Locales = null,
         };
 
         Assert.Null(model.Channels);
@@ -227,6 +271,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
         Assert.True(model.RawData.ContainsKey("loop"));
         Assert.Null(model.Ref);
         Assert.True(model.RawData.ContainsKey("ref"));
+        Assert.Null(model.Locales);
+        Assert.True(model.RawData.ContainsKey("locales"));
     }
 
     [Fact]
@@ -234,12 +280,14 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
     {
         var model = new ElementalHtmlNodeWithType
         {
+            Content = "content",
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
 
             Channels = null,
             If = null,
             Loop = null,
             Ref = null,
+            Locales = null,
         };
 
         model.Validate();
@@ -254,6 +302,8 @@ public class ElementalHtmlNodeWithTypeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
             Type = ElementalHtmlNodeWithTypeIntersectionMember1Type.Html,
         };
 
