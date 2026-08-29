@@ -65,20 +65,6 @@ public sealed record class ElementalTextNodeWithType : JsonModel
     }
 
     /// <summary>
-    /// The text content displayed in the notification. Either this field must be
-    /// specified, or the elements field
-    /// </summary>
-    public required string Content
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("content");
-        }
-        init { this._rawData.Set("content", value); }
-    }
-
-    /// <summary>
     /// Text alignment.
     /// </summary>
     public ApiEnum<string, Align>? Align
@@ -123,6 +109,28 @@ public sealed record class ElementalTextNodeWithType : JsonModel
             return this._rawData.GetNullableClass<string>("color");
         }
         init { this._rawData.Set("color", value); }
+    }
+
+    /// <summary>
+    /// The text content displayed in the notification. Either this field must be
+    /// specified, or the elements field
+    /// </summary>
+    public string? Content
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("content");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("content", value);
+        }
     }
 
     /// <summary>
@@ -269,10 +277,10 @@ public sealed record class ElementalTextNodeWithType : JsonModel
             If = elementalTextNodeWithType.If,
             Loop = elementalTextNodeWithType.Loop,
             Ref = elementalTextNodeWithType.Ref,
-            Content = elementalTextNodeWithType.Content,
             Align = elementalTextNodeWithType.Align,
             Bold = elementalTextNodeWithType.Bold,
             Color = elementalTextNodeWithType.Color,
+            Content = elementalTextNodeWithType.Content,
             FontSize = elementalTextNodeWithType.FontSize,
             Format = elementalTextNodeWithType.Format,
             Italic = elementalTextNodeWithType.Italic,
@@ -290,10 +298,10 @@ public sealed record class ElementalTextNodeWithType : JsonModel
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
-        _ = this.Content;
         this.Align?.Validate();
         _ = this.Bold;
         _ = this.Color;
+        _ = this.Content;
         _ = this.FontSize;
         this.Format?.Validate();
         _ = this.Italic;
@@ -338,13 +346,6 @@ public sealed record class ElementalTextNodeWithType : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public ElementalTextNodeWithType(string content)
-        : this()
-    {
-        this.Content = content;
     }
 }
 

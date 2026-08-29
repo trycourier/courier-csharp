@@ -97,23 +97,6 @@ public record class ElementalNode : ModelBase
         }
     }
 
-    public string? Content
-    {
-        get
-        {
-            return Match<string?>(
-                textNodeWithType: (x) => x.Content,
-                metaNodeWithType: (_) => null,
-                channelNodeWithType: (_) => null,
-                imageNodeWithType: (_) => null,
-                actionNodeWithType: (x) => x.Content,
-                dividerNodeWithType: (_) => null,
-                quoteNodeWithType: (x) => x.Content,
-                htmlNodeWithType: (x) => x.Content
-            );
-        }
-    }
-
     public string? Color
     {
         get
@@ -127,6 +110,23 @@ public record class ElementalNode : ModelBase
                 dividerNodeWithType: (x) => x.Color,
                 quoteNodeWithType: (_) => null,
                 htmlNodeWithType: (_) => null
+            );
+        }
+    }
+
+    public string? Content
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (x) => x.Content,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (_) => null,
+                imageNodeWithType: (_) => null,
+                actionNodeWithType: (x) => x.Content,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (x) => x.Content,
+                htmlNodeWithType: (x) => x.Content
             );
         }
     }
@@ -725,23 +725,6 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(
-                element,
-                options
-            );
-            if (deserialized != null)
-            {
-                deserialized.Validate();
-                return new(deserialized, element);
-            }
-        }
-        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
-        {
-            // ignore
-        }
-
-        try
-        {
             var deserialized = JsonSerializer.Deserialize<ElementalImageNodeWithType>(
                 element,
                 options
@@ -777,6 +760,23 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalHtmlNodeWithType>(
+                element,
+                options
+            );
+            if (deserialized != null)
+            {
+                deserialized.Validate();
+                return new(deserialized, element);
+            }
+        }
+        catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
+        {
+            // ignore
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<ElementalTextNodeWithType>(
                 element,
                 options
             );

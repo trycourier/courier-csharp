@@ -17,10 +17,10 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -35,10 +35,10 @@ public class ElementalTextNodeTest : TestBase
         string expectedIf = "if";
         string expectedLoop = "loop";
         string expectedRef = "ref";
-        string expectedContent = "content";
         ApiEnum<string, Align> expectedAlign = Align.Left;
         string expectedBold = "bold";
         string expectedColor = "color";
+        string expectedContent = "content";
         string expectedFontSize = "font_size";
         ApiEnum<string, Format> expectedFormat = Format.Markdown;
         string expectedItalic = "italic";
@@ -57,10 +57,10 @@ public class ElementalTextNodeTest : TestBase
         Assert.Equal(expectedIf, model.If);
         Assert.Equal(expectedLoop, model.Loop);
         Assert.Equal(expectedRef, model.Ref);
-        Assert.Equal(expectedContent, model.Content);
         Assert.Equal(expectedAlign, model.Align);
         Assert.Equal(expectedBold, model.Bold);
         Assert.Equal(expectedColor, model.Color);
+        Assert.Equal(expectedContent, model.Content);
         Assert.Equal(expectedFontSize, model.FontSize);
         Assert.Equal(expectedFormat, model.Format);
         Assert.Equal(expectedItalic, model.Italic);
@@ -87,10 +87,10 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -119,10 +119,10 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -144,10 +144,10 @@ public class ElementalTextNodeTest : TestBase
         string expectedIf = "if";
         string expectedLoop = "loop";
         string expectedRef = "ref";
-        string expectedContent = "content";
         ApiEnum<string, Align> expectedAlign = Align.Left;
         string expectedBold = "bold";
         string expectedColor = "color";
+        string expectedContent = "content";
         string expectedFontSize = "font_size";
         ApiEnum<string, Format> expectedFormat = Format.Markdown;
         string expectedItalic = "italic";
@@ -166,10 +166,10 @@ public class ElementalTextNodeTest : TestBase
         Assert.Equal(expectedIf, deserialized.If);
         Assert.Equal(expectedLoop, deserialized.Loop);
         Assert.Equal(expectedRef, deserialized.Ref);
-        Assert.Equal(expectedContent, deserialized.Content);
         Assert.Equal(expectedAlign, deserialized.Align);
         Assert.Equal(expectedBold, deserialized.Bold);
         Assert.Equal(expectedColor, deserialized.Color);
+        Assert.Equal(expectedContent, deserialized.Content);
         Assert.Equal(expectedFontSize, deserialized.FontSize);
         Assert.Equal(expectedFormat, deserialized.Format);
         Assert.Equal(expectedItalic, deserialized.Italic);
@@ -196,10 +196,10 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -222,7 +222,6 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Bold = "bold",
             Color = "color",
             FontSize = "font_size",
@@ -236,6 +235,8 @@ public class ElementalTextNodeTest : TestBase
 
         Assert.Null(model.Align);
         Assert.False(model.RawData.ContainsKey("align"));
+        Assert.Null(model.Content);
+        Assert.False(model.RawData.ContainsKey("content"));
         Assert.Null(model.TextStyle);
         Assert.False(model.RawData.ContainsKey("text_style"));
     }
@@ -249,7 +250,6 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Bold = "bold",
             Color = "color",
             FontSize = "font_size",
@@ -273,7 +273,6 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Bold = "bold",
             Color = "color",
             FontSize = "font_size",
@@ -286,11 +285,14 @@ public class ElementalTextNodeTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Align = null,
+            Content = null,
             TextStyle = null,
         };
 
         Assert.Null(model.Align);
         Assert.False(model.RawData.ContainsKey("align"));
+        Assert.Null(model.Content);
+        Assert.False(model.RawData.ContainsKey("content"));
         Assert.Null(model.TextStyle);
         Assert.False(model.RawData.ContainsKey("text_style"));
     }
@@ -304,7 +306,6 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Bold = "bold",
             Color = "color",
             FontSize = "font_size",
@@ -317,6 +318,7 @@ public class ElementalTextNodeTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             Align = null,
+            Content = null,
             TextStyle = null,
         };
 
@@ -328,8 +330,8 @@ public class ElementalTextNodeTest : TestBase
     {
         var model = new ElementalTextNode
         {
-            Content = "content",
             Align = Align.Left,
+            Content = "content",
             TextStyle = TextStyle.Text,
         };
 
@@ -366,8 +368,8 @@ public class ElementalTextNodeTest : TestBase
     {
         var model = new ElementalTextNode
         {
-            Content = "content",
             Align = Align.Left,
+            Content = "content",
             TextStyle = TextStyle.Text,
         };
 
@@ -379,8 +381,8 @@ public class ElementalTextNodeTest : TestBase
     {
         var model = new ElementalTextNode
         {
-            Content = "content",
             Align = Align.Left,
+            Content = "content",
             TextStyle = TextStyle.Text,
 
             Channels = null,
@@ -431,8 +433,8 @@ public class ElementalTextNodeTest : TestBase
     {
         var model = new ElementalTextNode
         {
-            Content = "content",
             Align = Align.Left,
+            Content = "content",
             TextStyle = TextStyle.Text,
 
             Channels = null,
@@ -462,10 +464,10 @@ public class ElementalTextNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -489,10 +491,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -503,10 +505,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
             Underline = "underline",
         };
 
-        string expectedContent = "content";
         ApiEnum<string, Align> expectedAlign = Align.Left;
         string expectedBold = "bold";
         string expectedColor = "color";
+        string expectedContent = "content";
         string expectedFontSize = "font_size";
         ApiEnum<string, Format> expectedFormat = Format.Markdown;
         string expectedItalic = "italic";
@@ -516,10 +518,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
         ApiEnum<string, TextStyle> expectedTextStyle = TextStyle.Text;
         string expectedUnderline = "underline";
 
-        Assert.Equal(expectedContent, model.Content);
         Assert.Equal(expectedAlign, model.Align);
         Assert.Equal(expectedBold, model.Bold);
         Assert.Equal(expectedColor, model.Color);
+        Assert.Equal(expectedContent, model.Content);
         Assert.Equal(expectedFontSize, model.FontSize);
         Assert.Equal(expectedFormat, model.Format);
         Assert.Equal(expectedItalic, model.Italic);
@@ -542,10 +544,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -570,10 +572,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -591,10 +593,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
         );
         Assert.NotNull(deserialized);
 
-        string expectedContent = "content";
         ApiEnum<string, Align> expectedAlign = Align.Left;
         string expectedBold = "bold";
         string expectedColor = "color";
+        string expectedContent = "content";
         string expectedFontSize = "font_size";
         ApiEnum<string, Format> expectedFormat = Format.Markdown;
         string expectedItalic = "italic";
@@ -604,10 +606,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
         ApiEnum<string, TextStyle> expectedTextStyle = TextStyle.Text;
         string expectedUnderline = "underline";
 
-        Assert.Equal(expectedContent, deserialized.Content);
         Assert.Equal(expectedAlign, deserialized.Align);
         Assert.Equal(expectedBold, deserialized.Bold);
         Assert.Equal(expectedColor, deserialized.Color);
+        Assert.Equal(expectedContent, deserialized.Content);
         Assert.Equal(expectedFontSize, deserialized.FontSize);
         Assert.Equal(expectedFormat, deserialized.Format);
         Assert.Equal(expectedItalic, deserialized.Italic);
@@ -630,10 +632,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",
@@ -652,7 +654,6 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Bold = "bold",
             Color = "color",
             FontSize = "font_size",
@@ -667,6 +668,8 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
 
         Assert.Null(model.Align);
         Assert.False(model.RawData.ContainsKey("align"));
+        Assert.Null(model.Content);
+        Assert.False(model.RawData.ContainsKey("content"));
     }
 
     [Fact]
@@ -674,7 +677,6 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Bold = "bold",
             Color = "color",
             FontSize = "font_size",
@@ -695,7 +697,6 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Bold = "bold",
             Color = "color",
             FontSize = "font_size",
@@ -709,10 +710,13 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
 
             // Null should be interpreted as omitted for these properties
             Align = null,
+            Content = null,
         };
 
         Assert.Null(model.Align);
         Assert.False(model.RawData.ContainsKey("align"));
+        Assert.Null(model.Content);
+        Assert.False(model.RawData.ContainsKey("content"));
     }
 
     [Fact]
@@ -720,7 +724,6 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Bold = "bold",
             Color = "color",
             FontSize = "font_size",
@@ -734,6 +737,7 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
 
             // Null should be interpreted as omitted for these properties
             Align = null,
+            Content = null,
         };
 
         model.Validate();
@@ -744,8 +748,8 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
+            Content = "content",
         };
 
         Assert.Null(model.Bold);
@@ -775,8 +779,8 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
+            Content = "content",
         };
 
         model.Validate();
@@ -787,8 +791,8 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
+            Content = "content",
 
             Bold = null,
             Color = null,
@@ -829,8 +833,8 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
+            Content = "content",
 
             Bold = null,
             Color = null,
@@ -852,10 +856,10 @@ public class ElementalTextNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalTextNodeIntersectionMember1
         {
-            Content = "content",
             Align = Align.Left,
             Bold = "bold",
             Color = "color",
+            Content = "content",
             FontSize = "font_size",
             Format = Format.Markdown,
             Italic = "italic",

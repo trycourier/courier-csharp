@@ -63,20 +63,6 @@ public sealed record class ElementalTextNode : JsonModel
     }
 
     /// <summary>
-    /// The text content displayed in the notification. Either this field must be
-    /// specified, or the elements field
-    /// </summary>
-    public required string Content
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("content");
-        }
-        init { this._rawData.Set("content", value); }
-    }
-
-    /// <summary>
     /// Text alignment.
     /// </summary>
     public ApiEnum<string, Align>? Align
@@ -121,6 +107,28 @@ public sealed record class ElementalTextNode : JsonModel
             return this._rawData.GetNullableClass<string>("color");
         }
         init { this._rawData.Set("color", value); }
+    }
+
+    /// <summary>
+    /// The text content displayed in the notification. Either this field must be
+    /// specified, or the elements field
+    /// </summary>
+    public string? Content
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("content");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("content", value);
+        }
     }
 
     /// <summary>
@@ -254,10 +262,10 @@ public sealed record class ElementalTextNode : JsonModel
         _ = this.If;
         _ = this.Loop;
         _ = this.Ref;
-        _ = this.Content;
         this.Align?.Validate();
         _ = this.Bold;
         _ = this.Color;
+        _ = this.Content;
         _ = this.FontSize;
         this.Format?.Validate();
         _ = this.Italic;
@@ -302,13 +310,6 @@ public sealed record class ElementalTextNode : JsonModel
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
     }
-
-    [SetsRequiredMembers]
-    public ElementalTextNode(string content)
-        : this()
-    {
-        this.Content = content;
-    }
 }
 
 class ElementalTextNodeFromRaw : IFromRawJson<ElementalTextNode>
@@ -326,20 +327,6 @@ class ElementalTextNodeFromRaw : IFromRawJson<ElementalTextNode>
 )]
 public sealed record class ElementalTextNodeIntersectionMember1 : JsonModel
 {
-    /// <summary>
-    /// The text content displayed in the notification. Either this field must be
-    /// specified, or the elements field
-    /// </summary>
-    public required string Content
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<string>("content");
-        }
-        init { this._rawData.Set("content", value); }
-    }
-
     /// <summary>
     /// Text alignment.
     /// </summary>
@@ -385,6 +372,28 @@ public sealed record class ElementalTextNodeIntersectionMember1 : JsonModel
             return this._rawData.GetNullableClass<string>("color");
         }
         init { this._rawData.Set("color", value); }
+    }
+
+    /// <summary>
+    /// The text content displayed in the notification. Either this field must be
+    /// specified, or the elements field
+    /// </summary>
+    public string? Content
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("content");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("content", value);
+        }
     }
 
     /// <summary>
@@ -500,10 +509,10 @@ public sealed record class ElementalTextNodeIntersectionMember1 : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        _ = this.Content;
         this.Align?.Validate();
         _ = this.Bold;
         _ = this.Color;
+        _ = this.Content;
         _ = this.FontSize;
         this.Format?.Validate();
         _ = this.Italic;
@@ -549,13 +558,6 @@ public sealed record class ElementalTextNodeIntersectionMember1 : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
-    }
-
-    [SetsRequiredMembers]
-    public ElementalTextNodeIntersectionMember1(string content)
-        : this()
-    {
-        this.Content = content;
     }
 }
 
