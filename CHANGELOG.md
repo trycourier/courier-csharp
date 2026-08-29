@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.2](https://github.com/trycourier/courier-csharp/compare/v7.4.1...v7.4.2) (2026-08-29)
+
+
+### Bug Fixes
+
+* **api:** correct two Elemental field names the REST API rejects ([#90](https://github.com/trycourier/courier-csharp/issues/90)) ([423dbcf](https://github.com/trycourier/courier-csharp/commit/423dbcf9bff39302c8b0ba5d2a17193c903ad7ba))
+
 ## [7.4.1](https://github.com/trycourier/courier-csharp/compare/v7.4.0...v7.4.1) (2026-08-28)
 
 
