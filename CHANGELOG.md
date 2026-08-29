@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.3](https://github.com/trycourier/courier-csharp/compare/v7.4.2...v7.4.3) (2026-08-29)
+
+
+### Bug Fixes
+
+* **api:** text content is not required ([#92](https://github.com/trycourier/courier-csharp/issues/92)) ([44d5107](https://github.com/trycourier/courier-csharp/commit/44d51078628edb9fd855505323e3fbed2bb47679))
+
 ## [7.4.2](https://github.com/trycourier/courier-csharp/compare/v7.4.1...v7.4.2) (2026-08-29)
 
 
