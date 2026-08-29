@@ -216,6 +216,23 @@ public record class ElementalNode : ModelBase
         }
     }
 
+    public string? BorderColor
+    {
+        get
+        {
+            return Match<string?>(
+                textNodeWithType: (_) => null,
+                metaNodeWithType: (_) => null,
+                channelNodeWithType: (_) => null,
+                imageNodeWithType: (x) => x.BorderColor,
+                actionNodeWithType: (_) => null,
+                dividerNodeWithType: (_) => null,
+                quoteNodeWithType: (x) => x.BorderColor,
+                htmlNodeWithType: (_) => null
+            );
+        }
+    }
+
     public string? BorderSize
     {
         get
