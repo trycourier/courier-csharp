@@ -18,7 +18,7 @@ public class ElementalImageNodeTest : TestBase
             Ref = "ref",
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -32,7 +32,7 @@ public class ElementalImageNodeTest : TestBase
         string expectedRef = "ref";
         string expectedSrc = "src";
         ApiEnum<string, Alignment> expectedAlign = Alignment.Center;
-        string expectedAltText = "altText";
+        string expectedAltText = "alt_text";
         string expectedBorderColor = "border_color";
         string expectedBorderSize = "border_size";
         string expectedHref = "href";
@@ -69,7 +69,7 @@ public class ElementalImageNodeTest : TestBase
             Ref = "ref",
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -97,7 +97,7 @@ public class ElementalImageNodeTest : TestBase
             Ref = "ref",
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -118,7 +118,7 @@ public class ElementalImageNodeTest : TestBase
         string expectedRef = "ref";
         string expectedSrc = "src";
         ApiEnum<string, Alignment> expectedAlign = Alignment.Center;
-        string expectedAltText = "altText";
+        string expectedAltText = "alt_text";
         string expectedBorderColor = "border_color";
         string expectedBorderSize = "border_size";
         string expectedHref = "href";
@@ -155,7 +155,7 @@ public class ElementalImageNodeTest : TestBase
             Ref = "ref",
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -176,7 +176,7 @@ public class ElementalImageNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Src = "src",
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -198,7 +198,7 @@ public class ElementalImageNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Src = "src",
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -219,7 +219,7 @@ public class ElementalImageNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Src = "src",
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -244,7 +244,7 @@ public class ElementalImageNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Src = "src",
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -272,7 +272,7 @@ public class ElementalImageNodeTest : TestBase
         Assert.Null(model.Ref);
         Assert.False(model.RawData.ContainsKey("ref"));
         Assert.Null(model.AltText);
-        Assert.False(model.RawData.ContainsKey("altText"));
+        Assert.False(model.RawData.ContainsKey("alt_text"));
         Assert.Null(model.BorderColor);
         Assert.False(model.RawData.ContainsKey("border_color"));
         Assert.Null(model.BorderSize);
@@ -322,7 +322,7 @@ public class ElementalImageNodeTest : TestBase
         Assert.Null(model.Ref);
         Assert.True(model.RawData.ContainsKey("ref"));
         Assert.Null(model.AltText);
-        Assert.True(model.RawData.ContainsKey("altText"));
+        Assert.True(model.RawData.ContainsKey("alt_text"));
         Assert.Null(model.BorderColor);
         Assert.True(model.RawData.ContainsKey("border_color"));
         Assert.Null(model.BorderSize);
@@ -369,7 +369,7 @@ public class ElementalImageNodeTest : TestBase
             Ref = "ref",
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -392,7 +392,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
         {
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -402,7 +402,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
 
         string expectedSrc = "src";
         ApiEnum<string, Alignment> expectedAlign = Alignment.Center;
-        string expectedAltText = "altText";
+        string expectedAltText = "alt_text";
         string expectedBorderColor = "border_color";
         string expectedBorderSize = "border_size";
         string expectedHref = "href";
@@ -426,7 +426,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
         {
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -450,7 +450,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
         {
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -467,7 +467,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
 
         string expectedSrc = "src";
         ApiEnum<string, Alignment> expectedAlign = Alignment.Center;
-        string expectedAltText = "altText";
+        string expectedAltText = "alt_text";
         string expectedBorderColor = "border_color";
         string expectedBorderSize = "border_size";
         string expectedHref = "href";
@@ -491,7 +491,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
         {
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",
@@ -510,7 +510,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
         Assert.Null(model.Align);
         Assert.False(model.RawData.ContainsKey("align"));
         Assert.Null(model.AltText);
-        Assert.False(model.RawData.ContainsKey("altText"));
+        Assert.False(model.RawData.ContainsKey("alt_text"));
         Assert.Null(model.BorderColor);
         Assert.False(model.RawData.ContainsKey("border_color"));
         Assert.Null(model.BorderSize);
@@ -550,7 +550,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
         Assert.Null(model.Align);
         Assert.True(model.RawData.ContainsKey("align"));
         Assert.Null(model.AltText);
-        Assert.True(model.RawData.ContainsKey("altText"));
+        Assert.True(model.RawData.ContainsKey("alt_text"));
         Assert.Null(model.BorderColor);
         Assert.True(model.RawData.ContainsKey("border_color"));
         Assert.Null(model.BorderSize);
@@ -589,7 +589,7 @@ public class ElementalImageNodeIntersectionMember1Test : TestBase
         {
             Src = "src",
             Align = Alignment.Center,
-            AltText = "altText",
+            AltText = "alt_text",
             BorderColor = "border_color",
             BorderSize = "border_size",
             Href = "href",

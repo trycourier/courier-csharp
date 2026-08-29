@@ -19,7 +19,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Ref = "ref",
             Content = "content",
             Align = Alignment.Center,
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
@@ -33,7 +33,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
         string expectedRef = "ref";
         string expectedContent = "content";
         ApiEnum<string, Alignment> expectedAlign = Alignment.Center;
-        string expectedBorderColor = "borderColor";
+        string expectedBorderColor = "border_color";
         string expectedFontSize = "font_size";
         string expectedLineHeight = "line_height";
         Dictionary<string, LocalesItem> expectedLocales = new() { { "foo", new("content") } };
@@ -78,7 +78,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Ref = "ref",
             Content = "content",
             Align = Alignment.Center,
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
@@ -106,7 +106,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Ref = "ref",
             Content = "content",
             Align = Alignment.Center,
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
@@ -127,7 +127,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
         string expectedRef = "ref";
         string expectedContent = "content";
         ApiEnum<string, Alignment> expectedAlign = Alignment.Center;
-        string expectedBorderColor = "borderColor";
+        string expectedBorderColor = "border_color";
         string expectedFontSize = "font_size";
         string expectedLineHeight = "line_height";
         Dictionary<string, LocalesItem> expectedLocales = new() { { "foo", new("content") } };
@@ -172,7 +172,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Ref = "ref",
             Content = "content",
             Align = Alignment.Center,
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
@@ -193,7 +193,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Content = "content",
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
@@ -217,7 +217,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Content = "content",
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
@@ -236,7 +236,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Content = "content",
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
@@ -265,7 +265,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Content = "content",
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
@@ -299,7 +299,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
         Assert.Null(model.Ref);
         Assert.False(model.RawData.ContainsKey("ref"));
         Assert.Null(model.BorderColor);
-        Assert.False(model.RawData.ContainsKey("borderColor"));
+        Assert.False(model.RawData.ContainsKey("border_color"));
         Assert.Null(model.FontSize);
         Assert.False(model.RawData.ContainsKey("font_size"));
         Assert.Null(model.LineHeight);
@@ -351,7 +351,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
         Assert.Null(model.Ref);
         Assert.True(model.RawData.ContainsKey("ref"));
         Assert.Null(model.BorderColor);
-        Assert.True(model.RawData.ContainsKey("borderColor"));
+        Assert.True(model.RawData.ContainsKey("border_color"));
         Assert.Null(model.FontSize);
         Assert.True(model.RawData.ContainsKey("font_size"));
         Assert.Null(model.LineHeight);
@@ -394,7 +394,7 @@ public class ElementalQuoteNodeWithTypeTest : TestBase
             Ref = "ref",
             Content = "content",
             Align = Alignment.Center,
-            BorderColor = "borderColor",
+            BorderColor = "border_color",
             FontSize = "font_size",
             LineHeight = "line_height",
             Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },

@@ -103,9 +103,9 @@ public sealed record class ElementalImageNodeWithType : JsonModel
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("altText");
+            return this._rawData.GetNullableClass<string>("alt_text");
         }
-        init { this._rawData.Set("altText", value); }
+        init { this._rawData.Set("alt_text", value); }
     }
 
     /// <summary>

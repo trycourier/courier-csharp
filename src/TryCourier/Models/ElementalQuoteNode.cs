@@ -99,9 +99,9 @@ public sealed record class ElementalQuoteNode : JsonModel
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("borderColor");
+            return this._rawData.GetNullableClass<string>("border_color");
         }
-        init { this._rawData.Set("borderColor", value); }
+        init { this._rawData.Set("border_color", value); }
     }
 
     /// <summary>
@@ -287,9 +287,9 @@ public sealed record class ElementalQuoteNodeIntersectionMember1 : JsonModel
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("borderColor");
+            return this._rawData.GetNullableClass<string>("border_color");
         }
-        init { this._rawData.Set("borderColor", value); }
+        init { this._rawData.Set("border_color", value); }
     }
 
     /// <summary>

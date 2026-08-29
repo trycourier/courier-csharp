@@ -103,9 +103,9 @@ public sealed record class ElementalQuoteNodeWithType : JsonModel
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<string>("borderColor");
+            return this._rawData.GetNullableClass<string>("border_color");
         }
-        init { this._rawData.Set("borderColor", value); }
+        init { this._rawData.Set("border_color", value); }
     }
 
     /// <summary>
