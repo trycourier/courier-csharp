@@ -25,9 +25,9 @@ public class TemplateCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalTextNodeWithType()
+                        new ElementalChannelNodeWithType()
                         {
-                            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
@@ -52,9 +52,9 @@ public class TemplateCreateParamsTest : TestBase
             {
                 Elements =
                 [
-                    new ElementalTextNodeWithType()
+                    new ElementalChannelNodeWithType()
                     {
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                        Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
                 Version = Templates::Version.V2022_01_01,
@@ -92,9 +92,9 @@ public class TemplateCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalTextNodeWithType()
+                        new ElementalChannelNodeWithType()
                         {
-                            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
@@ -130,9 +130,9 @@ public class TemplateCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalTextNodeWithType()
+                        new ElementalChannelNodeWithType()
                         {
-                            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
@@ -174,9 +174,9 @@ public class TemplateCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalTextNodeWithType()
+                        new ElementalChannelNodeWithType()
                         {
-                            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
@@ -210,9 +210,9 @@ public class TemplateCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalTextNodeWithType()
+                        new ElementalChannelNodeWithType()
                         {
-                            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
@@ -249,9 +249,9 @@ public class TemplateCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalTextNodeWithType()
+                        new ElementalChannelNodeWithType()
                         {
-                            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
