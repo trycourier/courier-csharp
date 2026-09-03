@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.4](https://github.com/trycourier/courier-csharp/compare/v7.4.3...v7.4.4) (2026-09-03)
+
+
+### Documentation
+
+* **api:** document the channel-block requirement on template creation ([#94](https://github.com/trycourier/courier-csharp/issues/94)) ([0153bf6](https://github.com/trycourier/courier-csharp/commit/0153bf6b37cad2b11a332cd528538b91d0c8ef25))
+
 ## [7.4.3](https://github.com/trycourier/courier-csharp/compare/v7.4.2...v7.4.3) (2026-08-29)
 
 
