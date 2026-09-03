@@ -15,6 +15,15 @@ namespace TryCourier.Models.Notifications;
 /// Create a notification template. Requires all fields in the notification object.
 /// Templates are created in draft state by default.
 ///
+/// <para>Content must place its elements inside a channel block — `{ "type": "channel",
+/// "channel": "email", "elements": [...] }` — or the request returns `400`. The template
+/// designer renders only the channel block matching the tab it draws, so content
+/// stored without one cannot be opened. An empty `elements` array is accepted, and
+/// the requirement applies to creation only: `PUT /notifications/{id}` still accepts
+/// unwrapped content. Note this endpoint takes versioned content only — the `{ title,
+/// body }` shorthand accepted by `/send` is rejected here with an `invalid_request_error`
+/// on `notification.content.version`.</para>
+///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
 /// cause existing derived classes to break.</para>

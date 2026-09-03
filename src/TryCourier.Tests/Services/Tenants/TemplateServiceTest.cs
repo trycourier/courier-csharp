@@ -64,9 +64,9 @@ public class TemplateServiceTest : TestBase
                     {
                         Elements =
                         [
-                            new ElementalTextNodeWithType()
+                            new ElementalChannelNodeWithType()
                             {
-                                Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                                Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                             },
                         ],
                         Version = "2022-01-01",

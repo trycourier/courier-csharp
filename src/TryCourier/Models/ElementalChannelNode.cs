@@ -91,6 +91,29 @@ public sealed record class ElementalChannelNode : JsonModel
     }
 
     /// <summary>
+    /// An array of elements to apply to the channel. If `raw` has not been specified,
+    /// `elements` is `required`. Channel elements cannot nest, so these are any
+    /// node except another channel block.
+    /// </summary>
+    public IReadOnlyList<ElementalNodeNonChannel>? Elements
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<ElementalNodeNonChannel>>(
+                "elements"
+            );
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ElementalNodeNonChannel>?>(
+                "elements",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
     /// Email only. Document-level base font size (CSS px, e.g. `16px`) for body
     /// content — text, quote, list and action button labels. Heading styles (`h1`/`h2`/`h3`)
     /// and `subtext` keep their preset sizes.
@@ -170,6 +193,10 @@ public sealed record class ElementalChannelNode : JsonModel
         _ = this.Loop;
         _ = this.Ref;
         _ = this.Channel;
+        foreach (var item in this.Elements ?? [])
+        {
+            item.Validate();
+        }
         _ = this.FontSize;
         _ = this.LineHeight;
         _ = this.Padding;
@@ -245,6 +272,29 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : JsonModel
     }
 
     /// <summary>
+    /// An array of elements to apply to the channel. If `raw` has not been specified,
+    /// `elements` is `required`. Channel elements cannot nest, so these are any
+    /// node except another channel block.
+    /// </summary>
+    public IReadOnlyList<ElementalNodeNonChannel>? Elements
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<ElementalNodeNonChannel>>(
+                "elements"
+            );
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<ElementalNodeNonChannel>?>(
+                "elements",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
     /// Email only. Document-level base font size (CSS px, e.g. `16px`) for body
     /// content — text, quote, list and action button labels. Heading styles (`h1`/`h2`/`h3`)
     /// and `subtext` keep their preset sizes.
@@ -311,6 +361,10 @@ public sealed record class ElementalChannelNodeIntersectionMember1 : JsonModel
     public override void Validate()
     {
         _ = this.Channel;
+        foreach (var item in this.Elements ?? [])
+        {
+            item.Validate();
+        }
         _ = this.FontSize;
         _ = this.LineHeight;
         _ = this.Padding;
