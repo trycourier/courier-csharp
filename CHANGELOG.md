@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.5.0](https://github.com/trycourier/courier-csharp/compare/v7.4.4...v7.5.0) (2026-09-04)
+
+
+### Features
+
+* **api:** document the expiry_date contract and allow boolean patch values ([#97](https://github.com/trycourier/courier-csharp/issues/97)) ([23ea6c6](https://github.com/trycourier/courier-csharp/commit/23ea6c6121200d9d5609d764f5954d68636fa6d3))
+
 ## [7.4.4](https://github.com/trycourier/courier-csharp/compare/v7.4.3...v7.4.4) (2026-09-03)
 
 
