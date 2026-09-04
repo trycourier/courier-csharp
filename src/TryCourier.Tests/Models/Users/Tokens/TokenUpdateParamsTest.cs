@@ -105,12 +105,12 @@ public class PatchTest : TestBase
         {
             Op = "op",
             Path = "path",
-            Value = "value",
+            Value = "string",
         };
 
         string expectedOp = "op";
         string expectedPath = "path";
-        string expectedValue = "value";
+        PatchValue expectedValue = "string";
 
         Assert.Equal(expectedOp, model.Op);
         Assert.Equal(expectedPath, model.Path);
@@ -124,7 +124,7 @@ public class PatchTest : TestBase
         {
             Op = "op",
             Path = "path",
-            Value = "value",
+            Value = "string",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -140,7 +140,7 @@ public class PatchTest : TestBase
         {
             Op = "op",
             Path = "path",
-            Value = "value",
+            Value = "string",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -149,7 +149,7 @@ public class PatchTest : TestBase
 
         string expectedOp = "op";
         string expectedPath = "path";
-        string expectedValue = "value";
+        PatchValue expectedValue = "string";
 
         Assert.Equal(expectedOp, deserialized.Op);
         Assert.Equal(expectedPath, deserialized.Path);
@@ -163,7 +163,7 @@ public class PatchTest : TestBase
         {
             Op = "op",
             Path = "path",
-            Value = "value",
+            Value = "string",
         };
 
         model.Validate();
@@ -222,11 +222,84 @@ public class PatchTest : TestBase
         {
             Op = "op",
             Path = "path",
-            Value = "value",
+            Value = "string",
         };
 
         Patch copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class PatchValueTest : TestBase
+{
+    [Fact]
+    public void StringValidationWorks()
+    {
+        PatchValue value = "string";
+        value.Validate();
+    }
+
+    [Fact]
+    public void BoolValidationWorks()
+    {
+        PatchValue value = true;
+        value.Validate();
+    }
+
+    [Fact]
+    public void JsonElementsValidationWorks()
+    {
+        PatchValue value = new(
+            new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            }
+        );
+        value.Validate();
+    }
+
+    [Fact]
+    public void StringSerializationRoundtripWorks()
+    {
+        PatchValue value = "string";
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<PatchValue>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void BoolSerializationRoundtripWorks()
+    {
+        PatchValue value = true;
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<PatchValue>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void JsonElementsSerializationRoundtripWorks()
+    {
+        PatchValue value = new(
+            new Dictionary<string, JsonElement>()
+            {
+                { "foo", JsonSerializer.SerializeToElement("bar") },
+            }
+        );
+        string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<PatchValue>(
+            element,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }
