@@ -28,7 +28,19 @@ public class BrandListResponseTest : TestBase
                         Colors = new() { Primary = "primary", Secondary = "secondary" },
                         Email = new()
                         {
-                            Footer = new() { Content = "content", InheritDefault = true },
+                            Footer = new()
+                            {
+                                InheritDefault = true,
+                                Markdown = "markdown",
+                                Social = new()
+                                {
+                                    Facebook = new() { Url = "url" },
+                                    Instagram = new() { Url = "url" },
+                                    Linkedin = new() { Url = "url" },
+                                    Medium = new() { Url = "url" },
+                                    Twitter = new() { Url = "url" },
+                                },
+                            },
                             Head = new() { InheritDefault = true, Content = "content" },
                             Header = new()
                             {
@@ -95,7 +107,19 @@ public class BrandListResponseTest : TestBase
                     Colors = new() { Primary = "primary", Secondary = "secondary" },
                     Email = new()
                     {
-                        Footer = new() { Content = "content", InheritDefault = true },
+                        Footer = new()
+                        {
+                            InheritDefault = true,
+                            Markdown = "markdown",
+                            Social = new()
+                            {
+                                Facebook = new() { Url = "url" },
+                                Instagram = new() { Url = "url" },
+                                Linkedin = new() { Url = "url" },
+                                Medium = new() { Url = "url" },
+                                Twitter = new() { Url = "url" },
+                            },
+                        },
                         Head = new() { InheritDefault = true, Content = "content" },
                         Header = new()
                         {
@@ -174,7 +198,19 @@ public class BrandListResponseTest : TestBase
                         Colors = new() { Primary = "primary", Secondary = "secondary" },
                         Email = new()
                         {
-                            Footer = new() { Content = "content", InheritDefault = true },
+                            Footer = new()
+                            {
+                                InheritDefault = true,
+                                Markdown = "markdown",
+                                Social = new()
+                                {
+                                    Facebook = new() { Url = "url" },
+                                    Instagram = new() { Url = "url" },
+                                    Linkedin = new() { Url = "url" },
+                                    Medium = new() { Url = "url" },
+                                    Twitter = new() { Url = "url" },
+                                },
+                            },
                             Head = new() { InheritDefault = true, Content = "content" },
                             Header = new()
                             {
@@ -255,7 +291,19 @@ public class BrandListResponseTest : TestBase
                         Colors = new() { Primary = "primary", Secondary = "secondary" },
                         Email = new()
                         {
-                            Footer = new() { Content = "content", InheritDefault = true },
+                            Footer = new()
+                            {
+                                InheritDefault = true,
+                                Markdown = "markdown",
+                                Social = new()
+                                {
+                                    Facebook = new() { Url = "url" },
+                                    Instagram = new() { Url = "url" },
+                                    Linkedin = new() { Url = "url" },
+                                    Medium = new() { Url = "url" },
+                                    Twitter = new() { Url = "url" },
+                                },
+                            },
                             Head = new() { InheritDefault = true, Content = "content" },
                             Header = new()
                             {
@@ -329,7 +377,19 @@ public class BrandListResponseTest : TestBase
                     Colors = new() { Primary = "primary", Secondary = "secondary" },
                     Email = new()
                     {
-                        Footer = new() { Content = "content", InheritDefault = true },
+                        Footer = new()
+                        {
+                            InheritDefault = true,
+                            Markdown = "markdown",
+                            Social = new()
+                            {
+                                Facebook = new() { Url = "url" },
+                                Instagram = new() { Url = "url" },
+                                Linkedin = new() { Url = "url" },
+                                Medium = new() { Url = "url" },
+                                Twitter = new() { Url = "url" },
+                            },
+                        },
                         Head = new() { InheritDefault = true, Content = "content" },
                         Header = new()
                         {
@@ -408,7 +468,19 @@ public class BrandListResponseTest : TestBase
                         Colors = new() { Primary = "primary", Secondary = "secondary" },
                         Email = new()
                         {
-                            Footer = new() { Content = "content", InheritDefault = true },
+                            Footer = new()
+                            {
+                                InheritDefault = true,
+                                Markdown = "markdown",
+                                Social = new()
+                                {
+                                    Facebook = new() { Url = "url" },
+                                    Instagram = new() { Url = "url" },
+                                    Linkedin = new() { Url = "url" },
+                                    Medium = new() { Url = "url" },
+                                    Twitter = new() { Url = "url" },
+                                },
+                            },
                             Head = new() { InheritDefault = true, Content = "content" },
                             Header = new()
                             {
@@ -483,7 +555,19 @@ public class BrandListResponseTest : TestBase
                         Colors = new() { Primary = "primary", Secondary = "secondary" },
                         Email = new()
                         {
-                            Footer = new() { Content = "content", InheritDefault = true },
+                            Footer = new()
+                            {
+                                InheritDefault = true,
+                                Markdown = "markdown",
+                                Social = new()
+                                {
+                                    Facebook = new() { Url = "url" },
+                                    Instagram = new() { Url = "url" },
+                                    Linkedin = new() { Url = "url" },
+                                    Medium = new() { Url = "url" },
+                                    Twitter = new() { Url = "url" },
+                                },
+                            },
                             Head = new() { InheritDefault = true, Content = "content" },
                             Header = new()
                             {
