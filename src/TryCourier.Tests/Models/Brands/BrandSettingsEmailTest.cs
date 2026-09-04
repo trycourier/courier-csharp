@@ -11,7 +11,19 @@ public class BrandSettingsEmailTest : TestBase
     {
         var model = new BrandSettingsEmail
         {
-            Footer = new() { Content = "content", InheritDefault = true },
+            Footer = new()
+            {
+                InheritDefault = true,
+                Markdown = "markdown",
+                Social = new()
+                {
+                    Facebook = new() { Url = "url" },
+                    Instagram = new() { Url = "url" },
+                    Linkedin = new() { Url = "url" },
+                    Medium = new() { Url = "url" },
+                    Twitter = new() { Url = "url" },
+                },
+            },
             Head = new() { InheritDefault = true, Content = "content" },
             Header = new()
             {
@@ -43,7 +55,19 @@ public class BrandSettingsEmailTest : TestBase
             },
         };
 
-        EmailFooter expectedFooter = new() { Content = "content", InheritDefault = true };
+        EmailFooter expectedFooter = new()
+        {
+            InheritDefault = true,
+            Markdown = "markdown",
+            Social = new()
+            {
+                Facebook = new() { Url = "url" },
+                Instagram = new() { Url = "url" },
+                Linkedin = new() { Url = "url" },
+                Medium = new() { Url = "url" },
+                Twitter = new() { Url = "url" },
+            },
+        };
         EmailHead expectedHead = new() { InheritDefault = true, Content = "content" };
         EmailHeader expectedHeader = new()
         {
@@ -85,7 +109,19 @@ public class BrandSettingsEmailTest : TestBase
     {
         var model = new BrandSettingsEmail
         {
-            Footer = new() { Content = "content", InheritDefault = true },
+            Footer = new()
+            {
+                InheritDefault = true,
+                Markdown = "markdown",
+                Social = new()
+                {
+                    Facebook = new() { Url = "url" },
+                    Instagram = new() { Url = "url" },
+                    Linkedin = new() { Url = "url" },
+                    Medium = new() { Url = "url" },
+                    Twitter = new() { Url = "url" },
+                },
+            },
             Head = new() { InheritDefault = true, Content = "content" },
             Header = new()
             {
@@ -131,7 +167,19 @@ public class BrandSettingsEmailTest : TestBase
     {
         var model = new BrandSettingsEmail
         {
-            Footer = new() { Content = "content", InheritDefault = true },
+            Footer = new()
+            {
+                InheritDefault = true,
+                Markdown = "markdown",
+                Social = new()
+                {
+                    Facebook = new() { Url = "url" },
+                    Instagram = new() { Url = "url" },
+                    Linkedin = new() { Url = "url" },
+                    Medium = new() { Url = "url" },
+                    Twitter = new() { Url = "url" },
+                },
+            },
             Head = new() { InheritDefault = true, Content = "content" },
             Header = new()
             {
@@ -170,7 +218,19 @@ public class BrandSettingsEmailTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        EmailFooter expectedFooter = new() { Content = "content", InheritDefault = true };
+        EmailFooter expectedFooter = new()
+        {
+            InheritDefault = true,
+            Markdown = "markdown",
+            Social = new()
+            {
+                Facebook = new() { Url = "url" },
+                Instagram = new() { Url = "url" },
+                Linkedin = new() { Url = "url" },
+                Medium = new() { Url = "url" },
+                Twitter = new() { Url = "url" },
+            },
+        };
         EmailHead expectedHead = new() { InheritDefault = true, Content = "content" };
         EmailHeader expectedHeader = new()
         {
@@ -212,7 +272,19 @@ public class BrandSettingsEmailTest : TestBase
     {
         var model = new BrandSettingsEmail
         {
-            Footer = new() { Content = "content", InheritDefault = true },
+            Footer = new()
+            {
+                InheritDefault = true,
+                Markdown = "markdown",
+                Social = new()
+                {
+                    Facebook = new() { Url = "url" },
+                    Instagram = new() { Url = "url" },
+                    Linkedin = new() { Url = "url" },
+                    Medium = new() { Url = "url" },
+                    Twitter = new() { Url = "url" },
+                },
+            },
             Head = new() { InheritDefault = true, Content = "content" },
             Header = new()
             {
@@ -310,7 +382,19 @@ public class BrandSettingsEmailTest : TestBase
     {
         var model = new BrandSettingsEmail
         {
-            Footer = new() { Content = "content", InheritDefault = true },
+            Footer = new()
+            {
+                InheritDefault = true,
+                Markdown = "markdown",
+                Social = new()
+                {
+                    Facebook = new() { Url = "url" },
+                    Instagram = new() { Url = "url" },
+                    Linkedin = new() { Url = "url" },
+                    Medium = new() { Url = "url" },
+                    Twitter = new() { Url = "url" },
+                },
+            },
             Head = new() { InheritDefault = true, Content = "content" },
             Header = new()
             {
