@@ -1645,7 +1645,8 @@ sealed class JourneyBatchNodeTypeConverter : JsonConverter<JourneyBatchNodeType>
 /// <summary>
 /// Add the current event to a digest keyed by the given subscription topic. The
 /// digest accumulates events and releases them on the schedule configured for the
-/// topic, using the notification template configured on that topic.
+/// topic, using the notification template configured on that topic. This node's `type`
+/// value is `add-to-digest`.
 ///
 /// <para>**The topic must have a template configured.** If the topic has no template
 /// when the first event reaches this node, the journey run fails immediately: the
