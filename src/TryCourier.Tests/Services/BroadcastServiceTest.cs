@@ -127,7 +127,7 @@ public class BroadcastServiceTest : TestBase
             "broadcastId",
             new()
             {
-                RecipientID = "aud_01kx4h2jdafq8bk9amzvy6hbv0",
+                RecipientID = "active-business-users",
                 RecipientType = RecipientType.Audience,
                 ScheduledTo = "2026-08-01T15:00:00",
             },
