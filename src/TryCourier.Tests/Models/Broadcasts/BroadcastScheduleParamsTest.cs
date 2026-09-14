@@ -14,14 +14,14 @@ public class BroadcastScheduleParamsTest : TestBase
         var parameters = new BroadcastScheduleParams
         {
             BroadcastID = "broadcastId",
-            RecipientID = "aud_01kx4h2jdafq8bk9amzvy6hbv0",
+            RecipientID = "active-business-users",
             RecipientType = RecipientType.Audience,
             ScheduledTo = "2026-08-01T15:00:00",
             Timezone = "America/New_York",
         };
 
         string expectedBroadcastID = "broadcastId";
-        string expectedRecipientID = "aud_01kx4h2jdafq8bk9amzvy6hbv0";
+        string expectedRecipientID = "active-business-users";
         ApiEnum<string, RecipientType> expectedRecipientType = RecipientType.Audience;
         string expectedScheduledTo = "2026-08-01T15:00:00";
         string expectedTimezone = "America/New_York";
@@ -39,7 +39,7 @@ public class BroadcastScheduleParamsTest : TestBase
         var parameters = new BroadcastScheduleParams
         {
             BroadcastID = "broadcastId",
-            RecipientID = "aud_01kx4h2jdafq8bk9amzvy6hbv0",
+            RecipientID = "active-business-users",
             RecipientType = RecipientType.Audience,
             ScheduledTo = "2026-08-01T15:00:00",
         };
@@ -54,7 +54,7 @@ public class BroadcastScheduleParamsTest : TestBase
         var parameters = new BroadcastScheduleParams
         {
             BroadcastID = "broadcastId",
-            RecipientID = "aud_01kx4h2jdafq8bk9amzvy6hbv0",
+            RecipientID = "active-business-users",
             RecipientType = RecipientType.Audience,
             ScheduledTo = "2026-08-01T15:00:00",
 
@@ -72,7 +72,7 @@ public class BroadcastScheduleParamsTest : TestBase
         BroadcastScheduleParams parameters = new()
         {
             BroadcastID = "broadcastId",
-            RecipientID = "aud_01kx4h2jdafq8bk9amzvy6hbv0",
+            RecipientID = "active-business-users",
             RecipientType = RecipientType.Audience,
             ScheduledTo = "2026-08-01T15:00:00",
         };
@@ -93,7 +93,7 @@ public class BroadcastScheduleParamsTest : TestBase
         var parameters = new BroadcastScheduleParams
         {
             BroadcastID = "broadcastId",
-            RecipientID = "aud_01kx4h2jdafq8bk9amzvy6hbv0",
+            RecipientID = "active-business-users",
             RecipientType = RecipientType.Audience,
             ScheduledTo = "2026-08-01T15:00:00",
             Timezone = "America/New_York",
