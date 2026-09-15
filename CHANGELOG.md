@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.6.0](https://github.com/trycourier/courier-csharp/compare/v7.5.0...v7.6.0) (2026-09-15)
+
+
+### Features
+
+* **api:** digest configuration, per-recipient schedules, and release ([#103](https://github.com/trycourier/courier-csharp/issues/103)) ([770add6](https://github.com/trycourier/courier-csharp/commit/770add6d106f34c4a6a38772276baf2cb4a6240c))
+
+
+### Documentation
+
+* **api:** group the topic digest endpoints under Digests, and match the docs voice ([#104](https://github.com/trycourier/courier-csharp/issues/104)) ([3b94b79](https://github.com/trycourier/courier-csharp/commit/3b94b79f051bc549529d0ee0f16753bf0cda9fd4))
+* **api:** stop teaching an aud_ prefix that Courier does not issue ([#101](https://github.com/trycourier/courier-csharp/issues/101)) ([2029cec](https://github.com/trycourier/courier-csharp/commit/2029cecfefa1627649a87526e47bd7a396aa77aa))
+
 ## [7.5.0](https://github.com/trycourier/courier-csharp/compare/v7.4.4...v7.5.0) (2026-09-04)
 
 
