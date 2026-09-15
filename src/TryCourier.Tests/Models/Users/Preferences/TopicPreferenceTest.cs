@@ -18,6 +18,7 @@ public class TopicPreferenceTest : TestBase
             TopicID = "topic_id",
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "digest_schedule_id",
             HasCustomRouting = true,
             SectionID = "section_id",
             SectionName = "section_name",
@@ -31,6 +32,7 @@ public class TopicPreferenceTest : TestBase
         [
             ChannelClassification.DirectMessage,
         ];
+        string expectedDigestScheduleID = "digest_schedule_id";
         bool expectedHasCustomRouting = true;
         string expectedSectionID = "section_id";
         string expectedSectionName = "section_name";
@@ -45,6 +47,7 @@ public class TopicPreferenceTest : TestBase
         {
             Assert.Equal(expectedCustomRouting[i], model.CustomRouting[i]);
         }
+        Assert.Equal(expectedDigestScheduleID, model.DigestScheduleID);
         Assert.Equal(expectedHasCustomRouting, model.HasCustomRouting);
         Assert.Equal(expectedSectionID, model.SectionID);
         Assert.Equal(expectedSectionName, model.SectionName);
@@ -60,6 +63,7 @@ public class TopicPreferenceTest : TestBase
             TopicID = "topic_id",
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "digest_schedule_id",
             HasCustomRouting = true,
             SectionID = "section_id",
             SectionName = "section_name",
@@ -84,6 +88,7 @@ public class TopicPreferenceTest : TestBase
             TopicID = "topic_id",
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "digest_schedule_id",
             HasCustomRouting = true,
             SectionID = "section_id",
             SectionName = "section_name",
@@ -104,6 +109,7 @@ public class TopicPreferenceTest : TestBase
         [
             ChannelClassification.DirectMessage,
         ];
+        string expectedDigestScheduleID = "digest_schedule_id";
         bool expectedHasCustomRouting = true;
         string expectedSectionID = "section_id";
         string expectedSectionName = "section_name";
@@ -118,6 +124,7 @@ public class TopicPreferenceTest : TestBase
         {
             Assert.Equal(expectedCustomRouting[i], deserialized.CustomRouting[i]);
         }
+        Assert.Equal(expectedDigestScheduleID, deserialized.DigestScheduleID);
         Assert.Equal(expectedHasCustomRouting, deserialized.HasCustomRouting);
         Assert.Equal(expectedSectionID, deserialized.SectionID);
         Assert.Equal(expectedSectionName, deserialized.SectionName);
@@ -133,6 +140,7 @@ public class TopicPreferenceTest : TestBase
             TopicID = "topic_id",
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "digest_schedule_id",
             HasCustomRouting = true,
             SectionID = "section_id",
             SectionName = "section_name",
@@ -154,6 +162,8 @@ public class TopicPreferenceTest : TestBase
             HasCustomRouting = true,
         };
 
+        Assert.Null(model.DigestScheduleID);
+        Assert.False(model.RawData.ContainsKey("digest_schedule_id"));
         Assert.Null(model.SectionID);
         Assert.False(model.RawData.ContainsKey("section_id"));
         Assert.Null(model.SectionName);
@@ -189,10 +199,13 @@ public class TopicPreferenceTest : TestBase
             HasCustomRouting = true,
 
             // Null should be interpreted as omitted for these properties
+            DigestScheduleID = null,
             SectionID = null,
             SectionName = null,
         };
 
+        Assert.Null(model.DigestScheduleID);
+        Assert.False(model.RawData.ContainsKey("digest_schedule_id"));
         Assert.Null(model.SectionID);
         Assert.False(model.RawData.ContainsKey("section_id"));
         Assert.Null(model.SectionName);
@@ -212,6 +225,7 @@ public class TopicPreferenceTest : TestBase
             HasCustomRouting = true,
 
             // Null should be interpreted as omitted for these properties
+            DigestScheduleID = null,
             SectionID = null,
             SectionName = null,
         };
@@ -228,6 +242,7 @@ public class TopicPreferenceTest : TestBase
             Status = PreferenceStatus.OptedIn,
             TopicID = "topic_id",
             TopicName = "topic_name",
+            DigestScheduleID = "digest_schedule_id",
             SectionID = "section_id",
             SectionName = "section_name",
         };
@@ -247,6 +262,7 @@ public class TopicPreferenceTest : TestBase
             Status = PreferenceStatus.OptedIn,
             TopicID = "topic_id",
             TopicName = "topic_name",
+            DigestScheduleID = "digest_schedule_id",
             SectionID = "section_id",
             SectionName = "section_name",
         };
@@ -263,6 +279,7 @@ public class TopicPreferenceTest : TestBase
             Status = PreferenceStatus.OptedIn,
             TopicID = "topic_id",
             TopicName = "topic_name",
+            DigestScheduleID = "digest_schedule_id",
             SectionID = "section_id",
             SectionName = "section_name",
 
@@ -285,6 +302,7 @@ public class TopicPreferenceTest : TestBase
             Status = PreferenceStatus.OptedIn,
             TopicID = "topic_id",
             TopicName = "topic_name",
+            DigestScheduleID = "digest_schedule_id",
             SectionID = "section_id",
             SectionName = "section_name",
 
@@ -305,6 +323,7 @@ public class TopicPreferenceTest : TestBase
             TopicID = "topic_id",
             TopicName = "topic_name",
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "digest_schedule_id",
             HasCustomRouting = true,
             SectionID = "section_id",
             SectionName = "section_name",

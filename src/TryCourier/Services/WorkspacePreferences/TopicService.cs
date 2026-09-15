@@ -124,6 +124,46 @@ public sealed class TopicService : ITopicService
     }
 
     /// <inheritdoc/>
+    public Task DeleteDigest(
+        TopicDeleteDigestParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.WithRawResponse.DeleteDigest(parameters, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task DeleteDigest(
+        string topicID,
+        TopicDeleteDigestParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.DeleteDigest(parameters with { TopicID = topicID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task ReleaseDigest(
+        TopicReleaseDigestParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.WithRawResponse.ReleaseDigest(parameters, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task ReleaseDigest(
+        string topicID,
+        TopicReleaseDigestParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await this.ReleaseDigest(parameters with { TopicID = topicID }, cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
     public async Task<WorkspacePreferenceTopicGetResponse> Replace(
         TopicReplaceParams parameters,
         CancellationToken cancellationToken = default
@@ -320,6 +360,64 @@ public sealed class TopicServiceWithRawResponse : ITopicServiceWithRawResponse
     )
     {
         return this.Archive(parameters with { TopicID = topicID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> DeleteDigest(
+        TopicDeleteDigestParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.TopicID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TopicID' cannot be null");
+        }
+
+        HttpRequest<TopicDeleteDigestParams> request = new()
+        {
+            Method = HttpMethod.Delete,
+            Params = parameters,
+        };
+        return this._client.Execute(request, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> DeleteDigest(
+        string topicID,
+        TopicDeleteDigestParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.DeleteDigest(parameters with { TopicID = topicID }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> ReleaseDigest(
+        TopicReleaseDigestParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.TopicID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.TopicID' cannot be null");
+        }
+
+        HttpRequest<TopicReleaseDigestParams> request = new()
+        {
+            Method = HttpMethod.Post,
+            Params = parameters,
+        };
+        return this._client.Execute(request, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse> ReleaseDigest(
+        string topicID,
+        TopicReleaseDigestParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return this.ReleaseDigest(parameters with { TopicID = topicID }, cancellationToken);
     }
 
     /// <inheritdoc/>

@@ -20,6 +20,7 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
             {
                 Status = PreferenceStatus.OptedIn,
                 CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                DigestScheduleID = "x",
                 HasCustomRouting = true,
             },
             TenantID = "tenant_id",
@@ -31,6 +32,7 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+            DigestScheduleID = "x",
             HasCustomRouting = true,
         };
         string expectedTenantID = "tenant_id";
@@ -52,6 +54,7 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
             {
                 Status = PreferenceStatus.OptedIn,
                 CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                DigestScheduleID = "x",
                 HasCustomRouting = true,
             },
         };
@@ -71,6 +74,7 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
             {
                 Status = PreferenceStatus.OptedIn,
                 CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                DigestScheduleID = "x",
                 HasCustomRouting = true,
             },
 
@@ -92,6 +96,7 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
             {
                 Status = PreferenceStatus.OptedIn,
                 CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                DigestScheduleID = "x",
                 HasCustomRouting = true,
             },
             TenantID = "tenant_id",
@@ -120,6 +125,7 @@ public class PreferenceUpdateOrCreateTopicParamsTest : TestBase
             {
                 Status = PreferenceStatus.OptedIn,
                 CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                DigestScheduleID = "x",
                 HasCustomRouting = true,
             },
             TenantID = "tenant_id",
@@ -140,6 +146,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "x",
             HasCustomRouting = true,
         };
 
@@ -148,6 +155,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         [
             ChannelClassification.DirectMessage,
         ];
+        string expectedDigestScheduleID = "x";
         bool expectedHasCustomRouting = true;
 
         Assert.Equal(expectedStatus, model.Status);
@@ -157,6 +165,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         {
             Assert.Equal(expectedCustomRouting[i], model.CustomRouting[i]);
         }
+        Assert.Equal(expectedDigestScheduleID, model.DigestScheduleID);
         Assert.Equal(expectedHasCustomRouting, model.HasCustomRouting);
     }
 
@@ -167,6 +176,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "x",
             HasCustomRouting = true,
         };
 
@@ -186,6 +196,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "x",
             HasCustomRouting = true,
         };
 
@@ -201,6 +212,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         [
             ChannelClassification.DirectMessage,
         ];
+        string expectedDigestScheduleID = "x";
         bool expectedHasCustomRouting = true;
 
         Assert.Equal(expectedStatus, deserialized.Status);
@@ -210,6 +222,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         {
             Assert.Equal(expectedCustomRouting[i], deserialized.CustomRouting[i]);
         }
+        Assert.Equal(expectedDigestScheduleID, deserialized.DigestScheduleID);
         Assert.Equal(expectedHasCustomRouting, deserialized.HasCustomRouting);
     }
 
@@ -220,6 +233,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "x",
             HasCustomRouting = true,
         };
 
@@ -236,6 +250,8 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
 
         Assert.Null(model.CustomRouting);
         Assert.False(model.RawData.ContainsKey("custom_routing"));
+        Assert.Null(model.DigestScheduleID);
+        Assert.False(model.RawData.ContainsKey("digest_schedule_id"));
         Assert.Null(model.HasCustomRouting);
         Assert.False(model.RawData.ContainsKey("has_custom_routing"));
     }
@@ -259,11 +275,14 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
             Status = PreferenceStatus.OptedIn,
 
             CustomRouting = null,
+            DigestScheduleID = null,
             HasCustomRouting = null,
         };
 
         Assert.Null(model.CustomRouting);
         Assert.True(model.RawData.ContainsKey("custom_routing"));
+        Assert.Null(model.DigestScheduleID);
+        Assert.True(model.RawData.ContainsKey("digest_schedule_id"));
         Assert.Null(model.HasCustomRouting);
         Assert.True(model.RawData.ContainsKey("has_custom_routing"));
     }
@@ -276,6 +295,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
             Status = PreferenceStatus.OptedIn,
 
             CustomRouting = null,
+            DigestScheduleID = null,
             HasCustomRouting = null,
         };
 
@@ -289,6 +309,7 @@ public class PreferenceUpdateOrCreateTopicParamsTopicTest : TestBase
         {
             Status = PreferenceStatus.OptedIn,
             CustomRouting = [ChannelClassification.DirectMessage],
+            DigestScheduleID = "x",
             HasCustomRouting = true,
         };
 

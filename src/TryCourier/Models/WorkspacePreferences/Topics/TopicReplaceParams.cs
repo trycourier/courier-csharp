@@ -98,6 +98,24 @@ public record class TopicReplaceParams : ParamsBase
     }
 
     /// <summary>
+    /// A topic's digest configuration: the template that renders it, the cadences
+    /// it delivers on, and how collected events are retained.
+    ///
+    /// <para>Send `null` for the whole object to turn a digest off, which unlinks
+    /// the template and removes its schedules. There is no `enabled` flag, and `schedules:
+    /// []` is rejected -- both states are un-deliverable rather than merely off.</para>
+    /// </summary>
+    public TopicDigestRequest? Digest
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<TopicDigestRequest>("digest");
+        }
+        init { this._rawBodyData.Set("digest", value); }
+    }
+
+    /// <summary>
     /// Whether to include a list-unsubscribe header on emails for this topic.
     /// </summary>
     public bool? IncludeUnsubscribeHeader

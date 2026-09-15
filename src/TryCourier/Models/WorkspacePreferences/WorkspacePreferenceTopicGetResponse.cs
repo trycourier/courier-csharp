@@ -196,6 +196,19 @@ public sealed record class WorkspacePreferenceTopicGetResponse : JsonModel
     }
 
     /// <summary>
+    /// A topic's digest configuration.
+    /// </summary>
+    public TopicDigestResponse? Digest
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<TopicDigestResponse>("digest");
+        }
+        init { this._rawData.Set("digest", value); }
+    }
+
+    /// <summary>
     /// Id of the last updater.
     /// </summary>
     public string? Updater
@@ -228,6 +241,7 @@ public sealed record class WorkspacePreferenceTopicGetResponse : JsonModel
         _ = this.Updated;
         _ = this.Creator;
         _ = this.Description;
+        this.Digest?.Validate();
         _ = this.Updater;
     }
 

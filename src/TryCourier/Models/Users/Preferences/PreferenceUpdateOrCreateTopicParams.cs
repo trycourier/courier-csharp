@@ -231,6 +231,23 @@ public sealed record class PreferenceUpdateOrCreateTopicParamsTopic : JsonModel
     }
 
     /// <summary>
+    /// Put this recipient on one of the topic's digest schedules. Send `null` to
+    /// clear the choice and return them to the topic's default. Omit to leave an
+    /// existing choice alone -- unlike the routing fields, which this endpoint replaces.
+    /// An id that is not an active schedule on the topic is rejected with a `400`
+    /// before anything is written.
+    /// </summary>
+    public string? DigestScheduleID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("digest_schedule_id");
+        }
+        init { this._rawData.Set("digest_schedule_id", value); }
+    }
+
+    /// <summary>
     /// Set to true to route this topic to the channels in custom_routing instead
     /// of the topic's default routing.
     /// </summary>
@@ -252,6 +269,7 @@ public sealed record class PreferenceUpdateOrCreateTopicParamsTopic : JsonModel
         {
             item.Validate();
         }
+        _ = this.DigestScheduleID;
         _ = this.HasCustomRouting;
     }
 

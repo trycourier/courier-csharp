@@ -8,12 +8,9 @@ using TryCourier.Models.WorkspacePreferences.Topics;
 namespace TryCourier.Services.WorkspacePreferences;
 
 /// <summary>
-/// Manage the workspace catalog of subscription topics, the sections that group them,
-/// and publishing the preference page.
-///
-/// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
-/// breaking changes in non-major versions. We may add new methods in the future that
-/// cause existing derived classes to break.</para>
+/// NOTE: Do not inherit from this type outside the SDK unless you're okay with breaking
+/// changes in non-major versions. We may add new methods in the future that cause
+/// existing derived classes to break.
 /// </summary>
 public interface ITopicService
 {
@@ -88,6 +85,44 @@ public interface ITopicService
     Task Archive(
         string topicID,
         TopicArchiveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Turn off a topic's digest, leaving the topic itself in place. The template is
+    /// unlinked and the digest's schedules are removed along with their delivery rules.
+    /// Equivalent to sending `digest: null` on a topic replace.
+    /// </summary>
+    Task DeleteDigest(
+        TopicDeleteDigestParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="DeleteDigest(TopicDeleteDigestParams, CancellationToken)"/>
+    Task DeleteDigest(
+        string topicID,
+        TopicDeleteDigestParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Send one recipient's held digest now, instead of waiting for its schedule. Use
+    /// it to preview what a digest will look like, or to let someone flush their own.
+    ///
+    /// <para>Keyed on the topic because that is how a held digest is stored: one per
+    /// recipient per topic, with the schedule recorded on it rather than part of its
+    /// identity. To flush every recipient on a schedule instead, use `POST
+    /// /digests/schedules/{schedule_id}/trigger`.</para>
+    /// </summary>
+    Task ReleaseDigest(
+        TopicReleaseDigestParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ReleaseDigest(TopicReleaseDigestParams, CancellationToken)"/>
+    Task ReleaseDigest(
+        string topicID,
+        TopicReleaseDigestParams parameters,
         CancellationToken cancellationToken = default
     );
 
@@ -182,6 +217,38 @@ public interface ITopicServiceWithRawResponse
     Task<HttpResponse> Archive(
         string topicID,
         TopicArchiveParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>delete /preferences/sections/{section_id}/topics/{topic_id}/digest</c>, but is otherwise the
+    /// same as <see cref="ITopicService.DeleteDigest(TopicDeleteDigestParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> DeleteDigest(
+        TopicDeleteDigestParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="DeleteDigest(TopicDeleteDigestParams, CancellationToken)"/>
+    Task<HttpResponse> DeleteDigest(
+        string topicID,
+        TopicDeleteDigestParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>post /preferences/sections/{section_id}/topics/{topic_id}/digest/release</c>, but is otherwise the
+    /// same as <see cref="ITopicService.ReleaseDigest(TopicReleaseDigestParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse> ReleaseDigest(
+        TopicReleaseDigestParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="ReleaseDigest(TopicReleaseDigestParams, CancellationToken)"/>
+    Task<HttpResponse> ReleaseDigest(
+        string topicID,
+        TopicReleaseDigestParams parameters,
         CancellationToken cancellationToken = default
     );
 

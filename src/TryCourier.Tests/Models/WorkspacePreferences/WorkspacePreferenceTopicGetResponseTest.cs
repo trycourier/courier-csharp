@@ -4,6 +4,7 @@ using TryCourier.Core;
 using TryCourier.Exceptions;
 using TryCourier.Models;
 using TryCourier.Models.WorkspacePreferences;
+using Digests = TryCourier.Models.Digests;
 
 namespace TryCourier.Tests.Models.WorkspacePreferences;
 
@@ -28,6 +29,41 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             Updated = "updated",
             Creator = "creator",
             Description = "description",
+            Digest = new()
+            {
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                Schedules =
+                [
+                    new()
+                    {
+                        ScheduleID = "schedule_id",
+                        Created = "created",
+                        DayOfMonth = 0,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        Frequency = Digests::DigestFrequency.Instant,
+                        IsDefault = true,
+                        Time = "time",
+                        Timezone = "timezone",
+                        Updated = "updated",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Created = "created",
+                TriggerEmpty = true,
+                Updated = "updated",
+            },
             Updater = "updater",
         };
 
@@ -54,6 +90,41 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         string expectedUpdated = "updated";
         string expectedCreator = "creator";
         string expectedDescription = "description";
+        TopicDigestResponse expectedDigest = new()
+        {
+            Categories =
+            [
+                new()
+                {
+                    CategoryKey = "category_key",
+                    Limit = 1,
+                    Retain = Retain.First,
+                    SortKey = "sort_key",
+                },
+            ],
+            Schedules =
+            [
+                new()
+                {
+                    ScheduleID = "schedule_id",
+                    Created = "created",
+                    DayOfMonth = 0,
+                    DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                    DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                    Disabled = true,
+                    Frequency = Digests::DigestFrequency.Instant,
+                    IsDefault = true,
+                    Time = "time",
+                    Timezone = "timezone",
+                    Updated = "updated",
+                },
+            ],
+            TemplateID = "template_id",
+            AudienceID = "audience_id",
+            Created = "created",
+            TriggerEmpty = true,
+            Updated = "updated",
+        };
         string expectedUpdater = "updater";
 
         Assert.Equal(expectedID, model.ID);
@@ -81,6 +152,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         Assert.Equal(expectedUpdated, model.Updated);
         Assert.Equal(expectedCreator, model.Creator);
         Assert.Equal(expectedDescription, model.Description);
+        Assert.Equal(expectedDigest, model.Digest);
         Assert.Equal(expectedUpdater, model.Updater);
     }
 
@@ -103,6 +175,41 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             Updated = "updated",
             Creator = "creator",
             Description = "description",
+            Digest = new()
+            {
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                Schedules =
+                [
+                    new()
+                    {
+                        ScheduleID = "schedule_id",
+                        Created = "created",
+                        DayOfMonth = 0,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        Frequency = Digests::DigestFrequency.Instant,
+                        IsDefault = true,
+                        Time = "time",
+                        Timezone = "timezone",
+                        Updated = "updated",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Created = "created",
+                TriggerEmpty = true,
+                Updated = "updated",
+            },
             Updater = "updater",
         };
 
@@ -134,6 +241,41 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             Updated = "updated",
             Creator = "creator",
             Description = "description",
+            Digest = new()
+            {
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                Schedules =
+                [
+                    new()
+                    {
+                        ScheduleID = "schedule_id",
+                        Created = "created",
+                        DayOfMonth = 0,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        Frequency = Digests::DigestFrequency.Instant,
+                        IsDefault = true,
+                        Time = "time",
+                        Timezone = "timezone",
+                        Updated = "updated",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Created = "created",
+                TriggerEmpty = true,
+                Updated = "updated",
+            },
             Updater = "updater",
         };
 
@@ -167,6 +309,41 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         string expectedUpdated = "updated";
         string expectedCreator = "creator";
         string expectedDescription = "description";
+        TopicDigestResponse expectedDigest = new()
+        {
+            Categories =
+            [
+                new()
+                {
+                    CategoryKey = "category_key",
+                    Limit = 1,
+                    Retain = Retain.First,
+                    SortKey = "sort_key",
+                },
+            ],
+            Schedules =
+            [
+                new()
+                {
+                    ScheduleID = "schedule_id",
+                    Created = "created",
+                    DayOfMonth = 0,
+                    DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                    DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                    Disabled = true,
+                    Frequency = Digests::DigestFrequency.Instant,
+                    IsDefault = true,
+                    Time = "time",
+                    Timezone = "timezone",
+                    Updated = "updated",
+                },
+            ],
+            TemplateID = "template_id",
+            AudienceID = "audience_id",
+            Created = "created",
+            TriggerEmpty = true,
+            Updated = "updated",
+        };
         string expectedUpdater = "updater";
 
         Assert.Equal(expectedID, deserialized.ID);
@@ -194,6 +371,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         Assert.Equal(expectedUpdated, deserialized.Updated);
         Assert.Equal(expectedCreator, deserialized.Creator);
         Assert.Equal(expectedDescription, deserialized.Description);
+        Assert.Equal(expectedDigest, deserialized.Digest);
         Assert.Equal(expectedUpdater, deserialized.Updater);
     }
 
@@ -216,6 +394,41 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             Updated = "updated",
             Creator = "creator",
             Description = "description",
+            Digest = new()
+            {
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                Schedules =
+                [
+                    new()
+                    {
+                        ScheduleID = "schedule_id",
+                        Created = "created",
+                        DayOfMonth = 0,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        Frequency = Digests::DigestFrequency.Instant,
+                        IsDefault = true,
+                        Time = "time",
+                        Timezone = "timezone",
+                        Updated = "updated",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Created = "created",
+                TriggerEmpty = true,
+                Updated = "updated",
+            },
             Updater = "updater",
         };
 
@@ -245,6 +458,8 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         Assert.False(model.RawData.ContainsKey("creator"));
         Assert.Null(model.Description);
         Assert.False(model.RawData.ContainsKey("description"));
+        Assert.Null(model.Digest);
+        Assert.False(model.RawData.ContainsKey("digest"));
         Assert.Null(model.Updater);
         Assert.False(model.RawData.ContainsKey("updater"));
     }
@@ -291,6 +506,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
 
             Creator = null,
             Description = null,
+            Digest = null,
             Updater = null,
         };
 
@@ -298,6 +514,8 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
         Assert.True(model.RawData.ContainsKey("creator"));
         Assert.Null(model.Description);
         Assert.True(model.RawData.ContainsKey("description"));
+        Assert.Null(model.Digest);
+        Assert.True(model.RawData.ContainsKey("digest"));
         Assert.Null(model.Updater);
         Assert.True(model.RawData.ContainsKey("updater"));
     }
@@ -322,6 +540,7 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
 
             Creator = null,
             Description = null,
+            Digest = null,
             Updater = null,
         };
 
@@ -347,6 +566,41 @@ public class WorkspacePreferenceTopicGetResponseTest : TestBase
             Updated = "updated",
             Creator = "creator",
             Description = "description",
+            Digest = new()
+            {
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                Schedules =
+                [
+                    new()
+                    {
+                        ScheduleID = "schedule_id",
+                        Created = "created",
+                        DayOfMonth = 0,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        Frequency = Digests::DigestFrequency.Instant,
+                        IsDefault = true,
+                        Time = "time",
+                        Timezone = "timezone",
+                        Updated = "updated",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Created = "created",
+                TriggerEmpty = true,
+                Updated = "updated",
+            },
             Updater = "updater",
         };
 
