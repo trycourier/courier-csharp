@@ -5,7 +5,9 @@ using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Exceptions;
 using TryCourier.Models;
+using TryCourier.Models.Digests;
 using TryCourier.Models.WorkspacePreferences.Topics;
+using WorkspacePreferences = TryCourier.Models.WorkspacePreferences;
 
 namespace TryCourier.Tests.Models.WorkspacePreferences.Topics;
 
@@ -21,6 +23,37 @@ public class TopicCreateParamsTest : TestBase
             Name = "Marketing",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = WorkspacePreferences::Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -39,6 +72,37 @@ public class TopicCreateParamsTest : TestBase
             AllowedPreference.Snooze,
         ];
         string expectedDescription = "description";
+        WorkspacePreferences::TopicDigestRequest expectedDigest = new()
+        {
+            Schedules =
+            [
+                new()
+                {
+                    Frequency = DigestFrequency.Instant,
+                    DayOfMonth = 1,
+                    DayOfWeek = DigestDayOfWeek.Sunday,
+                    DaysOfWeek = [DigestDayOfWeek.Sunday],
+                    Disabled = true,
+                    IsDefault = true,
+                    ScheduleID = "schedule_id",
+                    Time = "time",
+                    Timezone = "timezone",
+                },
+            ],
+            TemplateID = "template_id",
+            AudienceID = "audience_id",
+            Categories =
+            [
+                new()
+                {
+                    CategoryKey = "category_key",
+                    Limit = 1,
+                    Retain = WorkspacePreferences::Retain.First,
+                    SortKey = "sort_key",
+                },
+            ],
+            TriggerEmpty = true,
+        };
         bool expectedIncludeUnsubscribeHeader = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -61,6 +125,7 @@ public class TopicCreateParamsTest : TestBase
             Assert.Equal(expectedAllowedPreferences[i], parameters.AllowedPreferences[i]);
         }
         Assert.Equal(expectedDescription, parameters.Description);
+        Assert.Equal(expectedDigest, parameters.Digest);
         Assert.Equal(expectedIncludeUnsubscribeHeader, parameters.IncludeUnsubscribeHeader);
         Assert.NotNull(parameters.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, parameters.RoutingOptions.Count);
@@ -90,6 +155,37 @@ public class TopicCreateParamsTest : TestBase
             Name = "Marketing",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = WorkspacePreferences::Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -114,6 +210,37 @@ public class TopicCreateParamsTest : TestBase
             Name = "Marketing",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = WorkspacePreferences::Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -148,6 +275,8 @@ public class TopicCreateParamsTest : TestBase
         Assert.False(parameters.RawBodyData.ContainsKey("allowed_preferences"));
         Assert.Null(parameters.Description);
         Assert.False(parameters.RawBodyData.ContainsKey("description"));
+        Assert.Null(parameters.Digest);
+        Assert.False(parameters.RawBodyData.ContainsKey("digest"));
         Assert.Null(parameters.IncludeUnsubscribeHeader);
         Assert.False(parameters.RawBodyData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(parameters.RoutingOptions);
@@ -169,6 +298,7 @@ public class TopicCreateParamsTest : TestBase
 
             AllowedPreferences = null,
             Description = null,
+            Digest = null,
             IncludeUnsubscribeHeader = null,
             RoutingOptions = null,
             TopicData = null,
@@ -178,6 +308,8 @@ public class TopicCreateParamsTest : TestBase
         Assert.True(parameters.RawBodyData.ContainsKey("allowed_preferences"));
         Assert.Null(parameters.Description);
         Assert.True(parameters.RawBodyData.ContainsKey("description"));
+        Assert.Null(parameters.Digest);
+        Assert.True(parameters.RawBodyData.ContainsKey("digest"));
         Assert.Null(parameters.IncludeUnsubscribeHeader);
         Assert.True(parameters.RawBodyData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(parameters.RoutingOptions);
@@ -238,6 +370,37 @@ public class TopicCreateParamsTest : TestBase
             Name = "Marketing",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = WorkspacePreferences::Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()

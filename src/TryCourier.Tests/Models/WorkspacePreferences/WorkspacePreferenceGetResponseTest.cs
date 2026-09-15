@@ -3,6 +3,7 @@ using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Models;
 using TryCourier.Models.WorkspacePreferences;
+using Digests = TryCourier.Models.Digests;
 
 namespace TryCourier.Tests.Models.WorkspacePreferences;
 
@@ -39,6 +40,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],
@@ -74,6 +110,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                 Updated = "updated",
                 Creator = "creator",
                 Description = "description",
+                Digest = new()
+                {
+                    Categories =
+                    [
+                        new()
+                        {
+                            CategoryKey = "category_key",
+                            Limit = 1,
+                            Retain = Retain.First,
+                            SortKey = "sort_key",
+                        },
+                    ],
+                    Schedules =
+                    [
+                        new()
+                        {
+                            ScheduleID = "schedule_id",
+                            Created = "created",
+                            DayOfMonth = 0,
+                            DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                            DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                            Disabled = true,
+                            Frequency = Digests::DigestFrequency.Instant,
+                            IsDefault = true,
+                            Time = "time",
+                            Timezone = "timezone",
+                            Updated = "updated",
+                        },
+                    ],
+                    TemplateID = "template_id",
+                    AudienceID = "audience_id",
+                    Created = "created",
+                    TriggerEmpty = true,
+                    Updated = "updated",
+                },
                 Updater = "updater",
             },
         ];
@@ -133,6 +204,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],
@@ -182,6 +288,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],
@@ -224,6 +365,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                 Updated = "updated",
                 Creator = "creator",
                 Description = "description",
+                Digest = new()
+                {
+                    Categories =
+                    [
+                        new()
+                        {
+                            CategoryKey = "category_key",
+                            Limit = 1,
+                            Retain = Retain.First,
+                            SortKey = "sort_key",
+                        },
+                    ],
+                    Schedules =
+                    [
+                        new()
+                        {
+                            ScheduleID = "schedule_id",
+                            Created = "created",
+                            DayOfMonth = 0,
+                            DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                            DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                            Disabled = true,
+                            Frequency = Digests::DigestFrequency.Instant,
+                            IsDefault = true,
+                            Time = "time",
+                            Timezone = "timezone",
+                            Updated = "updated",
+                        },
+                    ],
+                    TemplateID = "template_id",
+                    AudienceID = "audience_id",
+                    Created = "created",
+                    TriggerEmpty = true,
+                    Updated = "updated",
+                },
                 Updater = "updater",
             },
         ];
@@ -283,6 +459,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],
@@ -326,6 +537,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],
@@ -372,6 +618,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],
@@ -411,6 +692,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],
@@ -462,6 +778,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],
@@ -506,6 +857,41 @@ public class WorkspacePreferenceGetResponseTest : TestBase
                     Updated = "updated",
                     Creator = "creator",
                     Description = "description",
+                    Digest = new()
+                    {
+                        Categories =
+                        [
+                            new()
+                            {
+                                CategoryKey = "category_key",
+                                Limit = 1,
+                                Retain = Retain.First,
+                                SortKey = "sort_key",
+                            },
+                        ],
+                        Schedules =
+                        [
+                            new()
+                            {
+                                ScheduleID = "schedule_id",
+                                Created = "created",
+                                DayOfMonth = 0,
+                                DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                                DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                                Disabled = true,
+                                Frequency = Digests::DigestFrequency.Instant,
+                                IsDefault = true,
+                                Time = "time",
+                                Timezone = "timezone",
+                                Updated = "updated",
+                            },
+                        ],
+                        TemplateID = "template_id",
+                        AudienceID = "audience_id",
+                        Created = "created",
+                        TriggerEmpty = true,
+                        Updated = "updated",
+                    },
                     Updater = "updater",
                 },
             ],

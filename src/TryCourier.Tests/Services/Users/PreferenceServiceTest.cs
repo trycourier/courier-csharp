@@ -103,6 +103,7 @@ public class PreferenceServiceTest : TestBase
                 {
                     Status = PreferenceStatus.OptedIn,
                     CustomRouting = [ChannelClassification.Inbox, ChannelClassification.Email],
+                    DigestScheduleID = "x",
                     HasCustomRouting = true,
                 },
             },

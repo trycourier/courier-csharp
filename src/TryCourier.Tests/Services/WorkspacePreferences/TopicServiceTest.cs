@@ -52,6 +52,26 @@ public class TopicServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task DeleteDigest_Works()
+    {
+        await this.client.WorkspacePreferences.Topics.DeleteDigest(
+            "topic_id",
+            new() { SectionID = "section_id" },
+            TestContext.Current.CancellationToken
+        );
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task ReleaseDigest_Works()
+    {
+        await this.client.WorkspacePreferences.Topics.ReleaseDigest(
+            "topic_id",
+            new() { SectionID = "section_id", UserID = "user_01h1p2c3d4e5f6g7h8" },
+            TestContext.Current.CancellationToken
+        );
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Replace_Works()
     {
         var workspacePreferenceTopicGetResponse =

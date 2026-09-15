@@ -4,6 +4,7 @@ using TryCourier.Core;
 using TryCourier.Exceptions;
 using TryCourier.Models;
 using TryCourier.Models.WorkspacePreferences;
+using Digests = TryCourier.Models.Digests;
 
 namespace TryCourier.Tests.Models.WorkspacePreferences;
 
@@ -18,6 +19,37 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             Name = "name",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = Digests::DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -33,6 +65,37 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             AllowedPreference.Snooze,
         ];
         string expectedDescription = "description";
+        TopicDigestRequest expectedDigest = new()
+        {
+            Schedules =
+            [
+                new()
+                {
+                    Frequency = Digests::DigestFrequency.Instant,
+                    DayOfMonth = 1,
+                    DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                    DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                    Disabled = true,
+                    IsDefault = true,
+                    ScheduleID = "schedule_id",
+                    Time = "time",
+                    Timezone = "timezone",
+                },
+            ],
+            TemplateID = "template_id",
+            AudienceID = "audience_id",
+            Categories =
+            [
+                new()
+                {
+                    CategoryKey = "category_key",
+                    Limit = 1,
+                    Retain = Retain.First,
+                    SortKey = "sort_key",
+                },
+            ],
+            TriggerEmpty = true,
+        };
         bool expectedIncludeUnsubscribeHeader = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -52,6 +115,7 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             Assert.Equal(expectedAllowedPreferences[i], model.AllowedPreferences[i]);
         }
         Assert.Equal(expectedDescription, model.Description);
+        Assert.Equal(expectedDigest, model.Digest);
         Assert.Equal(expectedIncludeUnsubscribeHeader, model.IncludeUnsubscribeHeader);
         Assert.NotNull(model.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, model.RoutingOptions.Count);
@@ -78,6 +142,37 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             Name = "name",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = Digests::DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -104,6 +199,37 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             Name = "name",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = Digests::DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -126,6 +252,37 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             AllowedPreference.Snooze,
         ];
         string expectedDescription = "description";
+        TopicDigestRequest expectedDigest = new()
+        {
+            Schedules =
+            [
+                new()
+                {
+                    Frequency = Digests::DigestFrequency.Instant,
+                    DayOfMonth = 1,
+                    DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                    DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                    Disabled = true,
+                    IsDefault = true,
+                    ScheduleID = "schedule_id",
+                    Time = "time",
+                    Timezone = "timezone",
+                },
+            ],
+            TemplateID = "template_id",
+            AudienceID = "audience_id",
+            Categories =
+            [
+                new()
+                {
+                    CategoryKey = "category_key",
+                    Limit = 1,
+                    Retain = Retain.First,
+                    SortKey = "sort_key",
+                },
+            ],
+            TriggerEmpty = true,
+        };
         bool expectedIncludeUnsubscribeHeader = true;
         List<ApiEnum<string, ChannelClassification>> expectedRoutingOptions =
         [
@@ -145,6 +302,7 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             Assert.Equal(expectedAllowedPreferences[i], deserialized.AllowedPreferences[i]);
         }
         Assert.Equal(expectedDescription, deserialized.Description);
+        Assert.Equal(expectedDigest, deserialized.Digest);
         Assert.Equal(expectedIncludeUnsubscribeHeader, deserialized.IncludeUnsubscribeHeader);
         Assert.NotNull(deserialized.RoutingOptions);
         Assert.Equal(expectedRoutingOptions.Count, deserialized.RoutingOptions.Count);
@@ -171,6 +329,37 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             Name = "name",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = Digests::DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()
@@ -195,6 +384,8 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
         Assert.False(model.RawData.ContainsKey("allowed_preferences"));
         Assert.Null(model.Description);
         Assert.False(model.RawData.ContainsKey("description"));
+        Assert.Null(model.Digest);
+        Assert.False(model.RawData.ContainsKey("digest"));
         Assert.Null(model.IncludeUnsubscribeHeader);
         Assert.False(model.RawData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(model.RoutingOptions);
@@ -225,6 +416,7 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
 
             AllowedPreferences = null,
             Description = null,
+            Digest = null,
             IncludeUnsubscribeHeader = null,
             RoutingOptions = null,
             TopicData = null,
@@ -234,6 +426,8 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
         Assert.True(model.RawData.ContainsKey("allowed_preferences"));
         Assert.Null(model.Description);
         Assert.True(model.RawData.ContainsKey("description"));
+        Assert.Null(model.Digest);
+        Assert.True(model.RawData.ContainsKey("digest"));
         Assert.Null(model.IncludeUnsubscribeHeader);
         Assert.True(model.RawData.ContainsKey("include_unsubscribe_header"));
         Assert.Null(model.RoutingOptions);
@@ -252,6 +446,7 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
 
             AllowedPreferences = null,
             Description = null,
+            Digest = null,
             IncludeUnsubscribeHeader = null,
             RoutingOptions = null,
             TopicData = null,
@@ -269,6 +464,37 @@ public class WorkspacePreferenceTopicCreateRequestTest : TestBase
             Name = "name",
             AllowedPreferences = [AllowedPreference.Snooze],
             Description = "description",
+            Digest = new()
+            {
+                Schedules =
+                [
+                    new()
+                    {
+                        Frequency = Digests::DigestFrequency.Instant,
+                        DayOfMonth = 1,
+                        DayOfWeek = Digests::DigestDayOfWeek.Sunday,
+                        DaysOfWeek = [Digests::DigestDayOfWeek.Sunday],
+                        Disabled = true,
+                        IsDefault = true,
+                        ScheduleID = "schedule_id",
+                        Time = "time",
+                        Timezone = "timezone",
+                    },
+                ],
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
+                TriggerEmpty = true,
+            },
             IncludeUnsubscribeHeader = true,
             RoutingOptions = [ChannelClassification.DirectMessage],
             TopicData = new Dictionary<string, JsonElement>()

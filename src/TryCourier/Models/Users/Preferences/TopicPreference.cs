@@ -92,6 +92,29 @@ public sealed record class TopicPreference : JsonModel
     }
 
     /// <summary>
+    /// The digest schedule this recipient is on for the topic. Omitted -- not null
+    /// -- when they have not chosen one, in which case the topic's default schedule
+    /// applies. Ids come from the topic's digest configuration or from `GET /digests/schedules`.
+    /// </summary>
+    public string? DigestScheduleID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("digest_schedule_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("digest_schedule_id", value);
+        }
+    }
+
+    /// <summary>
     /// Whether the user has chosen specific delivery channels for this topic (listed
     /// in custom_routing) rather than the topic's default routing.
     /// </summary>
@@ -162,6 +185,7 @@ public sealed record class TopicPreference : JsonModel
         {
             item.Validate();
         }
+        _ = this.DigestScheduleID;
         _ = this.HasCustomRouting;
         _ = this.SectionID;
         _ = this.SectionName;
