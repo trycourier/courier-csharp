@@ -92,8 +92,8 @@ public sealed record class TopicPreference : JsonModel
     }
 
     /// <summary>
-    /// The digest schedule this recipient is on for the topic. Omitted -- not null
-    /// -- when they have not chosen one, in which case the topic's default schedule
+    /// The digest schedule this recipient is on for the topic. Omitted rather than
+    /// null when they have not chosen one, in which case the topic's default schedule
     /// applies. Ids come from the topic's digest configuration or from `GET /digests/schedules`.
     /// </summary>
     public string? DigestScheduleID
