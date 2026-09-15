@@ -88,7 +88,7 @@ public sealed record class WorkspacePreferenceTopicCreateRequest : JsonModel
     ///
     /// <para>Send `null` for the whole object to turn a digest off, which unlinks
     /// the template and removes its schedules. There is no `enabled` flag, and `schedules:
-    /// []` is rejected -- both states are un-deliverable rather than merely off.</para>
+    /// []` is rejected, because both states are un-deliverable rather than merely off.</para>
     /// </summary>
     public TopicDigestRequest? Digest
     {
