@@ -25,6 +25,18 @@ public class TopicReplaceParamsTest : TestBase
             Description = "description",
             Digest = new()
             {
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
                 Schedules =
                 [
                     new()
@@ -38,18 +50,6 @@ public class TopicReplaceParamsTest : TestBase
                         ScheduleID = "schedule_id",
                         Time = "time",
                         Timezone = "timezone",
-                    },
-                ],
-                TemplateID = "template_id",
-                AudienceID = "audience_id",
-                Categories =
-                [
-                    new()
-                    {
-                        CategoryKey = "category_key",
-                        Limit = 1,
-                        Retain = Retain.First,
-                        SortKey = "sort_key",
                     },
                 ],
                 TriggerEmpty = true,
@@ -74,6 +74,18 @@ public class TopicReplaceParamsTest : TestBase
         string expectedDescription = "description";
         TopicDigestRequest expectedDigest = new()
         {
+            TemplateID = "template_id",
+            AudienceID = "audience_id",
+            Categories =
+            [
+                new()
+                {
+                    CategoryKey = "category_key",
+                    Limit = 1,
+                    Retain = Retain.First,
+                    SortKey = "sort_key",
+                },
+            ],
             Schedules =
             [
                 new()
@@ -87,18 +99,6 @@ public class TopicReplaceParamsTest : TestBase
                     ScheduleID = "schedule_id",
                     Time = "time",
                     Timezone = "timezone",
-                },
-            ],
-            TemplateID = "template_id",
-            AudienceID = "audience_id",
-            Categories =
-            [
-                new()
-                {
-                    CategoryKey = "category_key",
-                    Limit = 1,
-                    Retain = Retain.First,
-                    SortKey = "sort_key",
                 },
             ],
             TriggerEmpty = true,
@@ -234,6 +234,18 @@ public class TopicReplaceParamsTest : TestBase
             Description = "description",
             Digest = new()
             {
+                TemplateID = "template_id",
+                AudienceID = "audience_id",
+                Categories =
+                [
+                    new()
+                    {
+                        CategoryKey = "category_key",
+                        Limit = 1,
+                        Retain = Retain.First,
+                        SortKey = "sort_key",
+                    },
+                ],
                 Schedules =
                 [
                     new()
@@ -247,18 +259,6 @@ public class TopicReplaceParamsTest : TestBase
                         ScheduleID = "schedule_id",
                         Time = "time",
                         Timezone = "timezone",
-                    },
-                ],
-                TemplateID = "template_id",
-                AudienceID = "audience_id",
-                Categories =
-                [
-                    new()
-                    {
-                        CategoryKey = "category_key",
-                        Limit = 1,
-                        Retain = Retain.First,
-                        SortKey = "sort_key",
                     },
                 ],
                 TriggerEmpty = true,
