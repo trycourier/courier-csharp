@@ -83,19 +83,23 @@ public sealed record class WorkspacePreferenceTopicCreateRequest : JsonModel
     }
 
     /// <summary>
-    /// A topic's digest configuration: the template that renders it, the cadences
-    /// it delivers on, and how collected events are retained.
+    /// A topic's digest, as supplied when the topic itself is created: the template
+    /// that renders it, the cadences it delivers on, and how collected events are retained.
+    ///
+    /// <para>Identical to `TopicDigestRequest`, which a replace uses, except that
+    /// `schedules` is required — a topic being created has no stored schedules for
+    /// an absent key to leave alone.</para>
     ///
     /// <para>Send `null` for the whole object to turn a digest off, which unlinks
     /// the template and removes its schedules. There is no `enabled` flag, and `schedules:
     /// []` is rejected, because both states are un-deliverable rather than merely off.</para>
     /// </summary>
-    public TopicDigestRequest? Digest
+    public Digest? Digest
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNullableClass<TopicDigestRequest>("digest");
+            return this._rawData.GetNullableClass<Digest>("digest");
         }
         init { this._rawData.Set("digest", value); }
     }
@@ -310,4 +314,186 @@ sealed class AllowedPreferenceConverter : JsonConverter<AllowedPreference>
             options
         );
     }
+}
+
+/// <summary>
+/// A topic's digest, as supplied when the topic itself is created: the template that
+/// renders it, the cadences it delivers on, and how collected events are retained.
+///
+/// <para>Identical to `TopicDigestRequest`, which a replace uses, except that `schedules`
+/// is required — a topic being created has no stored schedules for an absent key
+/// to leave alone.</para>
+///
+/// <para>Send `null` for the whole object to turn a digest off, which unlinks the
+/// template and removes its schedules. There is no `enabled` flag, and `schedules:
+/// []` is rejected, because both states are un-deliverable rather than merely off.</para>
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Digest, DigestFromRaw>))]
+public sealed record class Digest : JsonModel
+{
+    /// <summary>
+    /// The cadences this digest delivers on.
+    ///
+    /// <para>The array replaces the stored schedules wholesale, so a schedule you
+    /// leave out of it is deleted along with its delivery rule. Omit the key entirely
+    /// to leave the stored schedules untouched — useful for changing `template_id`
+    /// or `categories` without restating every schedule.</para>
+    ///
+    /// <para>A digest must end up with at least one schedule, because one with none
+    /// collects events into an instance that can never fire. So sending `[]` is always
+    /// a `400`, and so is omitting the key on a topic that has no schedules stored yet.</para>
+    ///
+    /// <para>On **create** the key is required outright: a topic being created has
+    /// nothing stored to leave alone, and the topic row is written before its digest,
+    /// so rejecting it any later would leave the topic behind and let a retry duplicate it.</para>
+    /// </summary>
+    public required IReadOnlyList<TopicDigestScheduleRequest> Schedules
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullStruct<ImmutableArray<TopicDigestScheduleRequest>>(
+                "schedules"
+            );
+        }
+        init
+        {
+            this._rawData.Set<ImmutableArray<TopicDigestScheduleRequest>>(
+                "schedules",
+                ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// The notification template that renders the digest. A digest with no template
+    /// collects nothing, so this is required.
+    /// </summary>
+    public required string TemplateID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("template_id");
+        }
+        init { this._rawData.Set("template_id", value); }
+    }
+
+    /// <summary>
+    /// Optional audience the digest is scoped to.
+    /// </summary>
+    public string? AudienceID
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("audience_id");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("audience_id", value);
+        }
+    }
+
+    /// <summary>
+    /// Retention rules per category key. Defaults to a single `digest` category retaining `FIRST`.
+    /// </summary>
+    public IReadOnlyList<TopicDigestCategory>? Categories
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<TopicDigestCategory>>(
+                "categories"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<ImmutableArray<TopicDigestCategory>?>(
+                "categories",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
+    /// Whether to deliver the digest even when nothing was collected.
+    /// </summary>
+    public bool? TriggerEmpty
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<bool>("trigger_empty");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("trigger_empty", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        foreach (var item in this.Schedules)
+        {
+            item.Validate();
+        }
+        _ = this.TemplateID;
+        _ = this.AudienceID;
+        foreach (var item in this.Categories ?? [])
+        {
+            item.Validate();
+        }
+        _ = this.TriggerEmpty;
+    }
+
+    public Digest() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Digest(Digest digest)
+        : base(digest) { }
+#pragma warning restore CS8618
+
+    public Digest(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Digest(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="DigestFromRaw.FromRawUnchecked"/>
+    public static Digest FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class DigestFromRaw : IFromRawJson<Digest>
+{
+    /// <inheritdoc/>
+    public Digest FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Digest.FromRawUnchecked(rawData);
 }

@@ -20,29 +20,6 @@ namespace TryCourier.Models.WorkspacePreferences;
 public sealed record class TopicDigestRequest : JsonModel
 {
     /// <summary>
-    /// The cadences this digest delivers on. At least one is required: a digest with
-    /// no schedule collects events into an instance that can never fire. Omitting
-    /// the key on a replace leaves stored schedules untouched; sending `[]` is a `400`.
-    /// </summary>
-    public required IReadOnlyList<TopicDigestScheduleRequest> Schedules
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNotNullStruct<ImmutableArray<TopicDigestScheduleRequest>>(
-                "schedules"
-            );
-        }
-        init
-        {
-            this._rawData.Set<ImmutableArray<TopicDigestScheduleRequest>>(
-                "schedules",
-                ImmutableArray.ToImmutableArray(value)
-            );
-        }
-    }
-
-    /// <summary>
     /// The notification template that renders the digest. A digest with no template
     /// collects nothing, so this is required.
     /// </summary>
@@ -104,6 +81,45 @@ public sealed record class TopicDigestRequest : JsonModel
     }
 
     /// <summary>
+    /// The cadences this digest delivers on.
+    ///
+    /// <para>The array replaces the stored schedules wholesale, so a schedule you
+    /// leave out of it is deleted along with its delivery rule. Omit the key entirely
+    /// to leave the stored schedules untouched — useful for changing `template_id`
+    /// or `categories` without restating every schedule.</para>
+    ///
+    /// <para>A digest must end up with at least one schedule, because one with none
+    /// collects events into an instance that can never fire. So sending `[]` is always
+    /// a `400`, and so is omitting the key on a topic that has no schedules stored yet.</para>
+    ///
+    /// <para>On **create** the key is required outright: a topic being created has
+    /// nothing stored to leave alone, and the topic row is written before its digest,
+    /// so rejecting it any later would leave the topic behind and let a retry duplicate it.</para>
+    /// </summary>
+    public IReadOnlyList<TopicDigestScheduleRequest>? Schedules
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<ImmutableArray<TopicDigestScheduleRequest>>(
+                "schedules"
+            );
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set<ImmutableArray<TopicDigestScheduleRequest>?>(
+                "schedules",
+                value == null ? null : ImmutableArray.ToImmutableArray(value)
+            );
+        }
+    }
+
+    /// <summary>
     /// Whether to deliver the digest even when nothing was collected.
     /// </summary>
     public bool? TriggerEmpty
@@ -127,13 +143,13 @@ public sealed record class TopicDigestRequest : JsonModel
     /// <inheritdoc/>
     public override void Validate()
     {
-        foreach (var item in this.Schedules)
-        {
-            item.Validate();
-        }
         _ = this.TemplateID;
         _ = this.AudienceID;
         foreach (var item in this.Categories ?? [])
+        {
+            item.Validate();
+        }
+        foreach (var item in this.Schedules ?? [])
         {
             item.Validate();
         }
@@ -167,6 +183,13 @@ public sealed record class TopicDigestRequest : JsonModel
     )
     {
         return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public TopicDigestRequest(string templateID)
+        : this()
+    {
+        this.TemplateID = templateID;
     }
 }
 
