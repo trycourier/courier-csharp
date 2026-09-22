@@ -24,6 +24,21 @@ public sealed record class JourneyResponse : JsonModel
         init { this._rawData.Set("id", value); }
     }
 
+    /// <summary>
+    /// The journey cancelation token, or null when none is set. A token authored
+    /// in the dashboard is returned in its raw templated form, such as `order-{{data.order_id}}`,
+    /// so it can be read back and asserted.
+    /// </summary>
+    public required string? CancelationToken
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("cancelation_token");
+        }
+        init { this._rawData.Set("cancelation_token", value); }
+    }
+
     public required long? Created
     {
         get
@@ -127,6 +142,7 @@ public sealed record class JourneyResponse : JsonModel
     public override void Validate()
     {
         _ = this.ID;
+        _ = this.CancelationToken;
         _ = this.Created;
         _ = this.Creator;
         _ = this.Enabled;

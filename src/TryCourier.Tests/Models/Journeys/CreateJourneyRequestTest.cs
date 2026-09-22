@@ -27,6 +27,7 @@ public class CreateJourneyRequestTest : TestBase
                     },
                 },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
         };
@@ -46,6 +47,7 @@ public class CreateJourneyRequestTest : TestBase
                 },
             },
         ];
+        string expectedCancelationToken = "order-{{data.order_id}}";
         bool expectedEnabled = true;
         ApiEnum<string, JourneyState> expectedState = JourneyState.Draft;
 
@@ -55,6 +57,7 @@ public class CreateJourneyRequestTest : TestBase
         {
             Assert.Equal(expectedNodes[i], model.Nodes[i]);
         }
+        Assert.Equal(expectedCancelationToken, model.CancelationToken);
         Assert.Equal(expectedEnabled, model.Enabled);
         Assert.Equal(expectedState, model.State);
     }
@@ -79,6 +82,7 @@ public class CreateJourneyRequestTest : TestBase
                     },
                 },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
         };
@@ -112,6 +116,7 @@ public class CreateJourneyRequestTest : TestBase
                     },
                 },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
         };
@@ -138,6 +143,7 @@ public class CreateJourneyRequestTest : TestBase
                 },
             },
         ];
+        string expectedCancelationToken = "order-{{data.order_id}}";
         bool expectedEnabled = true;
         ApiEnum<string, JourneyState> expectedState = JourneyState.Draft;
 
@@ -147,6 +153,7 @@ public class CreateJourneyRequestTest : TestBase
         {
             Assert.Equal(expectedNodes[i], deserialized.Nodes[i]);
         }
+        Assert.Equal(expectedCancelationToken, deserialized.CancelationToken);
         Assert.Equal(expectedEnabled, deserialized.Enabled);
         Assert.Equal(expectedState, deserialized.State);
     }
@@ -171,6 +178,7 @@ public class CreateJourneyRequestTest : TestBase
                     },
                 },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
         };
@@ -200,6 +208,8 @@ public class CreateJourneyRequestTest : TestBase
             ],
         };
 
+        Assert.Null(model.CancelationToken);
+        Assert.False(model.RawData.ContainsKey("cancelation_token"));
         Assert.Null(model.Enabled);
         Assert.False(model.RawData.ContainsKey("enabled"));
         Assert.Null(model.State);
@@ -253,10 +263,13 @@ public class CreateJourneyRequestTest : TestBase
             ],
 
             // Null should be interpreted as omitted for these properties
+            CancelationToken = null,
             Enabled = null,
             State = null,
         };
 
+        Assert.Null(model.CancelationToken);
+        Assert.False(model.RawData.ContainsKey("cancelation_token"));
         Assert.Null(model.Enabled);
         Assert.False(model.RawData.ContainsKey("enabled"));
         Assert.Null(model.State);
@@ -285,6 +298,7 @@ public class CreateJourneyRequestTest : TestBase
             ],
 
             // Null should be interpreted as omitted for these properties
+            CancelationToken = null,
             Enabled = null,
             State = null,
         };
@@ -312,6 +326,7 @@ public class CreateJourneyRequestTest : TestBase
                     },
                 },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
         };
