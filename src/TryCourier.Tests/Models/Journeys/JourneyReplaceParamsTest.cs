@@ -29,6 +29,7 @@ public class JourneyReplaceParamsTest : TestBase
                     },
                 },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
         };
@@ -49,6 +50,7 @@ public class JourneyReplaceParamsTest : TestBase
                 },
             },
         ];
+        string expectedCancelationToken = "order-{{data.order_id}}";
         bool expectedEnabled = true;
         ApiEnum<string, JourneyState> expectedState = JourneyState.Draft;
 
@@ -59,6 +61,7 @@ public class JourneyReplaceParamsTest : TestBase
         {
             Assert.Equal(expectedNodes[i], parameters.Nodes[i]);
         }
+        Assert.Equal(expectedCancelationToken, parameters.CancelationToken);
         Assert.Equal(expectedEnabled, parameters.Enabled);
         Assert.Equal(expectedState, parameters.State);
     }
@@ -86,6 +89,8 @@ public class JourneyReplaceParamsTest : TestBase
             ],
         };
 
+        Assert.Null(parameters.CancelationToken);
+        Assert.False(parameters.RawBodyData.ContainsKey("cancelation_token"));
         Assert.Null(parameters.Enabled);
         Assert.False(parameters.RawBodyData.ContainsKey("enabled"));
         Assert.Null(parameters.State);
@@ -115,10 +120,13 @@ public class JourneyReplaceParamsTest : TestBase
             ],
 
             // Null should be interpreted as omitted for these properties
+            CancelationToken = null,
             Enabled = null,
             State = null,
         };
 
+        Assert.Null(parameters.CancelationToken);
+        Assert.False(parameters.RawBodyData.ContainsKey("cancelation_token"));
         Assert.Null(parameters.Enabled);
         Assert.False(parameters.RawBodyData.ContainsKey("enabled"));
         Assert.Null(parameters.State);
@@ -174,6 +182,7 @@ public class JourneyReplaceParamsTest : TestBase
                     },
                 },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
         };

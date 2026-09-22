@@ -91,6 +91,7 @@ public class JourneyCreateParamsTest : TestBase
                 },
                 new JourneyExitNode() { Type = JourneyExitNodeType.Exit, ID = "exit-1" },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
             IdempotencyKey = "order-ORD-456-user-123",
@@ -174,6 +175,7 @@ public class JourneyCreateParamsTest : TestBase
             },
             new JourneyExitNode() { Type = JourneyExitNodeType.Exit, ID = "exit-1" },
         ];
+        string expectedCancelationToken = "order-{{data.order_id}}";
         bool expectedEnabled = true;
         ApiEnum<string, JourneyState> expectedState = JourneyState.Draft;
         string expectedIdempotencyKey = "order-ORD-456-user-123";
@@ -185,6 +187,7 @@ public class JourneyCreateParamsTest : TestBase
         {
             Assert.Equal(expectedNodes[i], parameters.Nodes[i]);
         }
+        Assert.Equal(expectedCancelationToken, parameters.CancelationToken);
         Assert.Equal(expectedEnabled, parameters.Enabled);
         Assert.Equal(expectedState, parameters.State);
         Assert.Equal(expectedIdempotencyKey, parameters.IdempotencyKey);
@@ -275,6 +278,8 @@ public class JourneyCreateParamsTest : TestBase
             ],
         };
 
+        Assert.Null(parameters.CancelationToken);
+        Assert.False(parameters.RawBodyData.ContainsKey("cancelation_token"));
         Assert.Null(parameters.Enabled);
         Assert.False(parameters.RawBodyData.ContainsKey("enabled"));
         Assert.Null(parameters.State);
@@ -369,12 +374,15 @@ public class JourneyCreateParamsTest : TestBase
             ],
 
             // Null should be interpreted as omitted for these properties
+            CancelationToken = null,
             Enabled = null,
             State = null,
             IdempotencyKey = null,
             XIdempotencyExpiration = null,
         };
 
+        Assert.Null(parameters.CancelationToken);
+        Assert.False(parameters.RawBodyData.ContainsKey("cancelation_token"));
         Assert.Null(parameters.Enabled);
         Assert.False(parameters.RawBodyData.ContainsKey("enabled"));
         Assert.Null(parameters.State);
@@ -652,6 +660,7 @@ public class JourneyCreateParamsTest : TestBase
                 },
                 new JourneyExitNode() { Type = JourneyExitNodeType.Exit, ID = "exit-1" },
             ],
+            CancelationToken = "order-{{data.order_id}}",
             Enabled = true,
             State = JourneyState.Draft,
             IdempotencyKey = "order-ORD-456-user-123",

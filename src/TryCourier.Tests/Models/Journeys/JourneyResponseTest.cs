@@ -13,6 +13,7 @@ public class JourneyResponseTest : TestBase
         var model = new JourneyResponse
         {
             ID = "id",
+            CancelationToken = "order-{{data.order_id}}",
             Created = 0,
             Creator = "creator",
             Enabled = true,
@@ -38,6 +39,7 @@ public class JourneyResponseTest : TestBase
         };
 
         string expectedID = "id";
+        string expectedCancelationToken = "order-{{data.order_id}}";
         long expectedCreated = 0;
         string expectedCreator = "creator";
         bool expectedEnabled = true;
@@ -62,6 +64,7 @@ public class JourneyResponseTest : TestBase
         string expectedUpdater = "updater";
 
         Assert.Equal(expectedID, model.ID);
+        Assert.Equal(expectedCancelationToken, model.CancelationToken);
         Assert.Equal(expectedCreated, model.Created);
         Assert.Equal(expectedCreator, model.Creator);
         Assert.Equal(expectedEnabled, model.Enabled);
@@ -83,6 +86,7 @@ public class JourneyResponseTest : TestBase
         var model = new JourneyResponse
         {
             ID = "id",
+            CancelationToken = "order-{{data.order_id}}",
             Created = 0,
             Creator = "creator",
             Enabled = true,
@@ -122,6 +126,7 @@ public class JourneyResponseTest : TestBase
         var model = new JourneyResponse
         {
             ID = "id",
+            CancelationToken = "order-{{data.order_id}}",
             Created = 0,
             Creator = "creator",
             Enabled = true,
@@ -154,6 +159,7 @@ public class JourneyResponseTest : TestBase
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
+        string expectedCancelationToken = "order-{{data.order_id}}";
         long expectedCreated = 0;
         string expectedCreator = "creator";
         bool expectedEnabled = true;
@@ -178,6 +184,7 @@ public class JourneyResponseTest : TestBase
         string expectedUpdater = "updater";
 
         Assert.Equal(expectedID, deserialized.ID);
+        Assert.Equal(expectedCancelationToken, deserialized.CancelationToken);
         Assert.Equal(expectedCreated, deserialized.Created);
         Assert.Equal(expectedCreator, deserialized.Creator);
         Assert.Equal(expectedEnabled, deserialized.Enabled);
@@ -199,6 +206,7 @@ public class JourneyResponseTest : TestBase
         var model = new JourneyResponse
         {
             ID = "id",
+            CancelationToken = "order-{{data.order_id}}",
             Created = 0,
             Creator = "creator",
             Enabled = true,
@@ -232,6 +240,7 @@ public class JourneyResponseTest : TestBase
         var model = new JourneyResponse
         {
             ID = "id",
+            CancelationToken = "order-{{data.order_id}}",
             Created = 0,
             Creator = "creator",
             Enabled = true,
