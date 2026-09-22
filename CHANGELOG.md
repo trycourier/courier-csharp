@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.7.0](https://github.com/trycourier/courier-csharp/compare/v7.6.0...v7.7.0) (2026-09-22)
+
+
+### Features
+
+* **api:** add cancelation_token to journey create, replace, and get ([#107](https://github.com/trycourier/courier-csharp/issues/107)) ([f646e88](https://github.com/trycourier/courier-csharp/commit/f646e88c261637fa70451b39eafe3380158f707f))
+
+
+### Documentation
+
+* **api:** correct the digest schedule contract, and make `schedules` optional ([#105](https://github.com/trycourier/courier-csharp/issues/105)) ([25a3274](https://github.com/trycourier/courier-csharp/commit/25a3274b5f61a340e5e99099381ae0349d31674b))
+
 ## [7.6.0](https://github.com/trycourier/courier-csharp/compare/v7.5.0...v7.6.0) (2026-09-15)
 
 
