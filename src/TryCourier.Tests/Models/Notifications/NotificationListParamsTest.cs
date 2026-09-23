@@ -13,15 +13,18 @@ public class NotificationListParamsTest : TestBase
             Cursor = "cursor",
             EventID = "event_id",
             Notes = true,
+            Tags = "tags",
         };
 
         string expectedCursor = "cursor";
         string expectedEventID = "event_id";
         bool expectedNotes = true;
+        string expectedTags = "tags";
 
         Assert.Equal(expectedCursor, parameters.Cursor);
         Assert.Equal(expectedEventID, parameters.EventID);
         Assert.Equal(expectedNotes, parameters.Notes);
+        Assert.Equal(expectedTags, parameters.Tags);
     }
 
     [Fact]
@@ -31,6 +34,8 @@ public class NotificationListParamsTest : TestBase
 
         Assert.Null(parameters.EventID);
         Assert.False(parameters.RawQueryData.ContainsKey("event_id"));
+        Assert.Null(parameters.Tags);
+        Assert.False(parameters.RawQueryData.ContainsKey("tags"));
     }
 
     [Fact]
@@ -43,16 +48,19 @@ public class NotificationListParamsTest : TestBase
 
             // Null should be interpreted as omitted for these properties
             EventID = null,
+            Tags = null,
         };
 
         Assert.Null(parameters.EventID);
         Assert.False(parameters.RawQueryData.ContainsKey("event_id"));
+        Assert.Null(parameters.Tags);
+        Assert.False(parameters.RawQueryData.ContainsKey("tags"));
     }
 
     [Fact]
     public void OptionalNullableParamsUnsetAreNotSet_Works()
     {
-        var parameters = new NotificationListParams { EventID = "event_id" };
+        var parameters = new NotificationListParams { EventID = "event_id", Tags = "tags" };
 
         Assert.Null(parameters.Cursor);
         Assert.False(parameters.RawQueryData.ContainsKey("cursor"));
@@ -66,6 +74,7 @@ public class NotificationListParamsTest : TestBase
         var parameters = new NotificationListParams
         {
             EventID = "event_id",
+            Tags = "tags",
 
             Cursor = null,
             Notes = null,
@@ -85,6 +94,7 @@ public class NotificationListParamsTest : TestBase
             Cursor = "cursor",
             EventID = "event_id",
             Notes = true,
+            Tags = "tags",
         };
 
         var url = parameters.Url(new() { ApiKey = "My API Key" });
@@ -92,7 +102,7 @@ public class NotificationListParamsTest : TestBase
         Assert.True(
             TestBase.UrisEqual(
                 new Uri(
-                    "https://api.courier.com/notifications?cursor=cursor&event_id=event_id&notes=true"
+                    "https://api.courier.com/notifications?cursor=cursor&event_id=event_id&notes=true&tags=tags"
                 ),
                 url
             )
@@ -107,6 +117,7 @@ public class NotificationListParamsTest : TestBase
             Cursor = "cursor",
             EventID = "event_id",
             Notes = true,
+            Tags = "tags",
         };
 
         NotificationListParams copied = new(parameters);

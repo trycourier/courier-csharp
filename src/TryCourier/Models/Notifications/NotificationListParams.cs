@@ -65,6 +65,28 @@ public record class NotificationListParams : ParamsBase
         init { this._rawQueryData.Set("notes", value); }
     }
 
+    /// <summary>
+    /// Comma-delimited list of tag names. Only templates carrying all of the listed
+    /// tags are returned. Matching is case-insensitive. Filtering is applied before pagination.
+    /// </summary>
+    public string? Tags
+    {
+        get
+        {
+            this._rawQueryData.Freeze();
+            return this._rawQueryData.GetNullableClass<string>("tags");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawQueryData.Set("tags", value);
+        }
+    }
+
     public NotificationListParams() { }
 
 #pragma warning disable CS8618
