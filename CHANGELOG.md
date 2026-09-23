@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.9.0](https://github.com/trycourier/courier-csharp/compare/v7.8.0...v7.9.0) (2026-09-23)
+
+
+### Features
+
+* **api:** filter notification templates by tag [C-21172] ([#110](https://github.com/trycourier/courier-csharp/issues/110)) ([4d455ce](https://github.com/trycourier/courier-csharp/commit/4d455ce003160996166d1e4569236ba4010a02a5))
+
 ## [7.8.0](https://github.com/trycourier/courier-csharp/compare/v7.7.0...v7.8.0) (2026-09-23)
 
 
