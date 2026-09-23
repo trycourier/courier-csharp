@@ -774,6 +774,8 @@ public class StyleTest : TestBase
 {
     [Theory]
     [InlineData(Style.Button)]
+    [InlineData(Style.Secondary)]
+    [InlineData(Style.Tertiary)]
     [InlineData(Style.Link)]
     public void Validation_Works(Style rawValue)
     {
@@ -796,6 +798,8 @@ public class StyleTest : TestBase
 
     [Theory]
     [InlineData(Style.Button)]
+    [InlineData(Style.Secondary)]
+    [InlineData(Style.Tertiary)]
     [InlineData(Style.Link)]
     public void SerializationRoundtrip_Works(Style rawValue)
     {

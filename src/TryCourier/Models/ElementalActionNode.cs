@@ -219,7 +219,20 @@ public sealed record class ElementalActionNode : JsonModel
     }
 
     /// <summary>
-    /// Defaults to `button`.
+    /// How prominent the action should be. `button` is the default, `secondary` and
+    /// `tertiary` are the other two button styles, and `link` renders as inline
+    /// text rather than a button.
+    ///
+    /// <para>Each channel draws these as closely as its medium allows. Email fills
+    /// `button`, outlines `secondary`, and underlines `tertiary`. The in-app Inbox
+    /// fills `button`, outlines `secondary`, and draws `tertiary` as a solid button.
+    /// Slack renders all three as Block Kit buttons, with `secondary` in Slack's
+    /// `primary` style and `tertiary` in its `danger` style.</para>
+    ///
+    /// <para>`background_color` is the fill for `button`, and the border and label
+    /// color for `secondary`. For `tertiary` it colors the underline and label in
+    /// email and the fill in the Inbox. It does not apply to `link`. An Inbox theme
+    /// that sets its own action colors takes precedence over the template.</para>
     /// </summary>
     public ApiEnum<string, Style>? Style
     {
@@ -459,7 +472,20 @@ public sealed record class IntersectionMember1 : JsonModel
     }
 
     /// <summary>
-    /// Defaults to `button`.
+    /// How prominent the action should be. `button` is the default, `secondary` and
+    /// `tertiary` are the other two button styles, and `link` renders as inline
+    /// text rather than a button.
+    ///
+    /// <para>Each channel draws these as closely as its medium allows. Email fills
+    /// `button`, outlines `secondary`, and underlines `tertiary`. The in-app Inbox
+    /// fills `button`, outlines `secondary`, and draws `tertiary` as a solid button.
+    /// Slack renders all three as Block Kit buttons, with `secondary` in Slack's
+    /// `primary` style and `tertiary` in its `danger` style.</para>
+    ///
+    /// <para>`background_color` is the fill for `button`, and the border and label
+    /// color for `secondary`. For `tertiary` it colors the underline and label in
+    /// email and the fill in the Inbox. It does not apply to `link`. An Inbox theme
+    /// that sets its own action colors takes precedence over the template.</para>
     /// </summary>
     public ApiEnum<string, Style>? Style
     {
@@ -532,12 +558,27 @@ class IntersectionMember1FromRaw : IFromRawJson<IntersectionMember1>
 }
 
 /// <summary>
-/// Defaults to `button`.
+/// How prominent the action should be. `button` is the default, `secondary` and
+/// `tertiary` are the other two button styles, and `link` renders as inline text
+/// rather than a button.
+///
+/// <para>Each channel draws these as closely as its medium allows. Email fills `button`,
+/// outlines `secondary`, and underlines `tertiary`. The in-app Inbox fills `button`,
+/// outlines `secondary`, and draws `tertiary` as a solid button. Slack renders all
+/// three as Block Kit buttons, with `secondary` in Slack's `primary` style and `tertiary`
+/// in its `danger` style.</para>
+///
+/// <para>`background_color` is the fill for `button`, and the border and label color
+/// for `secondary`. For `tertiary` it colors the underline and label in email and
+/// the fill in the Inbox. It does not apply to `link`. An Inbox theme that sets its
+/// own action colors takes precedence over the template.</para>
 /// </summary>
 [JsonConverter(typeof(StyleConverter))]
 public enum Style
 {
     Button,
+    Secondary,
+    Tertiary,
     Link,
 }
 
@@ -552,6 +593,8 @@ sealed class StyleConverter : JsonConverter<Style>
         return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
             "button" => Style.Button,
+            "secondary" => Style.Secondary,
+            "tertiary" => Style.Tertiary,
             "link" => Style.Link,
             _ => (Style)(-1),
         };
@@ -564,6 +607,8 @@ sealed class StyleConverter : JsonConverter<Style>
             value switch
             {
                 Style.Button => "button",
+                Style.Secondary => "secondary",
+                Style.Tertiary => "tertiary",
                 Style.Link => "link",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
