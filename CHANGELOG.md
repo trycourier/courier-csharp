@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.8.0](https://github.com/trycourier/courier-csharp/compare/v7.7.0...v7.8.0) (2026-09-23)
+
+
+### Features
+
+* **api:** publish the secondary and tertiary action styles [C-19961] ([#108](https://github.com/trycourier/courier-csharp/issues/108)) ([c9483c5](https://github.com/trycourier/courier-csharp/commit/c9483c5a0973a1c385f8239ba68c481851797300))
+
 ## [7.7.0](https://github.com/trycourier/courier-csharp/compare/v7.6.0...v7.7.0) (2026-09-22)
 
 
