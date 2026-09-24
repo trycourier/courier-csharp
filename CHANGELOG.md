@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.11.1](https://github.com/trycourier/courier-csharp/compare/v7.11.0...v7.11.1) (2026-09-24)
+
+
+### Documentation
+
+* **api:** use OpenAPI 3.0 example on the preview schemas ([#116](https://github.com/trycourier/courier-csharp/issues/116)) ([48ae022](https://github.com/trycourier/courier-csharp/commit/48ae0227520da471777967e13659d15bc34d1db7))
+
 ## [7.11.0](https://github.com/trycourier/courier-csharp/compare/v7.10.0...v7.11.0) (2026-09-24)
 
 
