@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.10.0](https://github.com/trycourier/courier-csharp/compare/v7.9.0...v7.10.0) (2026-09-24)
+
+
+### Features
+
+* **api:** add GET /preferences/logs [C-21018] ([931e58c](https://github.com/trycourier/courier-csharp/commit/931e58c66d053deb7dd59bb5a20e8ce71c508a88))
+
 ## [7.9.0](https://github.com/trycourier/courier-csharp/compare/v7.8.0...v7.9.0) (2026-09-23)
 
 
