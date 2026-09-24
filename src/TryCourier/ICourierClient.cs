@@ -67,6 +67,8 @@ public interface ICourierClient : IDisposable
 
     IBroadcastService Broadcasts { get; }
 
+    IPreviewService Previews { get; }
+
     IBulkService Bulk { get; }
 
     IBrandService Brands { get; }
@@ -140,6 +142,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     IJourneyServiceWithRawResponse Journeys { get; }
 
     IBroadcastServiceWithRawResponse Broadcasts { get; }
+
+    IPreviewServiceWithRawResponse Previews { get; }
 
     IBulkServiceWithRawResponse Bulk { get; }
 

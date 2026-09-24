@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TryCourier.Core;
 using TryCourier.Models.Notifications;
-using TryCourier.Services.Notifications;
+using Notifications = TryCourier.Services.Notifications;
 
 namespace TryCourier.Services;
 
@@ -29,7 +29,9 @@ public interface INotificationService
     /// </summary>
     INotificationService WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
-    ICheckService Checks { get; }
+    Notifications::ICheckService Checks { get; }
+
+    Notifications::IPreviewService Previews { get; }
 
     /// <summary>
     /// Create a notification template. Requires all fields in the notification object.
@@ -250,7 +252,9 @@ public interface INotificationServiceWithRawResponse
     /// </summary>
     INotificationServiceWithRawResponse WithOptions(Func<ClientOptions, ClientOptions> modifier);
 
-    ICheckServiceWithRawResponse Checks { get; }
+    Notifications::ICheckServiceWithRawResponse Checks { get; }
+
+    Notifications::IPreviewServiceWithRawResponse Previews { get; }
 
     /// <summary>
     /// Returns a raw HTTP response for <c>post /notifications</c>, but is otherwise the

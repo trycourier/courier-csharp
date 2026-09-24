@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using TryCourier.Core;
 using TryCourier.Exceptions;
 using TryCourier.Models.Notifications;
-using TryCourier.Services.Notifications;
+using Notifications = TryCourier.Services.Notifications;
 
 namespace TryCourier.Services;
 
@@ -35,13 +35,20 @@ public sealed class NotificationService : INotificationService
         _withRawResponse = new(() =>
             new NotificationServiceWithRawResponse(client.WithRawResponse)
         );
-        _checks = new(() => new CheckService(client));
+        _checks = new(() => new Notifications::CheckService(client));
+        _previews = new(() => new Notifications::PreviewService(client));
     }
 
-    readonly Lazy<ICheckService> _checks;
-    public ICheckService Checks
+    readonly Lazy<Notifications::ICheckService> _checks;
+    public Notifications::ICheckService Checks
     {
         get { return _checks.Value; }
+    }
+
+    readonly Lazy<Notifications::IPreviewService> _previews;
+    public Notifications::IPreviewService Previews
+    {
+        get { return _previews.Value; }
     }
 
     /// <inheritdoc/>
@@ -312,13 +319,20 @@ public sealed class NotificationServiceWithRawResponse : INotificationServiceWit
     {
         _client = client;
 
-        _checks = new(() => new CheckServiceWithRawResponse(client));
+        _checks = new(() => new Notifications::CheckServiceWithRawResponse(client));
+        _previews = new(() => new Notifications::PreviewServiceWithRawResponse(client));
     }
 
-    readonly Lazy<ICheckServiceWithRawResponse> _checks;
-    public ICheckServiceWithRawResponse Checks
+    readonly Lazy<Notifications::ICheckServiceWithRawResponse> _checks;
+    public Notifications::ICheckServiceWithRawResponse Checks
     {
         get { return _checks.Value; }
+    }
+
+    readonly Lazy<Notifications::IPreviewServiceWithRawResponse> _previews;
+    public Notifications::IPreviewServiceWithRawResponse Previews
+    {
+        get { return _previews.Value; }
     }
 
     /// <inheritdoc/>

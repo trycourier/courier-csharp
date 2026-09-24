@@ -4,6 +4,8 @@ using TryCourier.Models;
 using TryCourier.Models.Automations;
 using TryCourier.Models.Brands;
 using TryCourier.Models.Bulk;
+using TryCourier.Models.Notifications.Previews.Runs;
+using TryCourier.Models.Previews;
 using TryCourier.Models.WorkspacePreferences;
 using Audiences = TryCourier.Models.Audiences;
 using Broadcasts = TryCourier.Models.Broadcasts;
@@ -160,6 +162,8 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Broadcasts::Channel>(),
             new ApiEnumConverter<string, Broadcasts::RecipientType>(),
             new ApiEnumConverter<string, Broadcasts::BroadcastSendParamsRecipientType>(),
+            new ApiEnumConverter<string, Category>(),
+            new ApiEnumConverter<string, Theme>(),
             new ApiEnumConverter<string, Status>(),
             new ApiEnumConverter<string, JobStatus>(),
             new ApiEnumConverter<string, Placement>(),
@@ -182,6 +186,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Notifications::State>(),
             new ApiEnumConverter<string, Notifications::Granularity>(),
             new ApiEnumConverter<string, Notifications::NotificationReplaceParamsState>(),
+            new ApiEnumConverter<string, PreviewResultFailureReason>(),
+            new ApiEnumConverter<string, PreviewResultStatus>(),
+            new ApiEnumConverter<string, PreviewRunFailureReason>(),
+            new ApiEnumConverter<string, PreviewRunStatus>(),
             new ApiEnumConverter<string, Retain>(),
             new ApiEnumConverter<string, DefaultStatus>(),
             new ApiEnumConverter<string, AllowedPreference>(),
