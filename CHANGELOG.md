@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.11.0](https://github.com/trycourier/courier-csharp/compare/v7.10.0...v7.11.0) (2026-09-24)
+
+
+### Features
+
+* **api:** cross-client previews endpoints ([#114](https://github.com/trycourier/courier-csharp/issues/114)) ([b1b733e](https://github.com/trycourier/courier-csharp/commit/b1b733e5cdf1c6b535f4a58f677b4ce3a14de9a6))
+
 ## [7.10.0](https://github.com/trycourier/courier-csharp/compare/v7.9.0...v7.10.0) (2026-09-24)
 
 
