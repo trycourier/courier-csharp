@@ -83,6 +83,17 @@ public interface IWorkspacePreferenceService
     );
 
     /// <summary>
+    /// Returns the history of preference changes in this environment, newest first.
+    /// Each entry records one change a user made to one subscription topic, and carries
+    /// the value before it where there was one. Supply user_id to read a single user's
+    /// history instead of the whole environment.
+    /// </summary>
+    Task<PreferenceLogsListResponse> ListLogs(
+        WorkspacePreferenceListLogsParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Publishes the workspace preference page, snapshotting every preference and
     /// topic, and returns the page id and a preview URL.
     /// </summary>
@@ -172,6 +183,15 @@ public interface IWorkspacePreferenceServiceWithRawResponse
     Task<HttpResponse> Archive(
         string sectionID,
         WorkspacePreferenceArchiveParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>get /preferences/logs</c>, but is otherwise the
+    /// same as <see cref="IWorkspacePreferenceService.ListLogs(WorkspacePreferenceListLogsParams?, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<PreferenceLogsListResponse>> ListLogs(
+        WorkspacePreferenceListLogsParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 

@@ -46,6 +46,16 @@ public class WorkspacePreferenceServiceTest : TestBase
     }
 
     [Fact(Skip = "Mock server tests are disabled")]
+    public async Task ListLogs_Works()
+    {
+        var preferenceLogsListResponse = await this.client.WorkspacePreferences.ListLogs(
+            new(),
+            TestContext.Current.CancellationToken
+        );
+        preferenceLogsListResponse.Validate();
+    }
+
+    [Fact(Skip = "Mock server tests are disabled")]
     public async Task Publish_Works()
     {
         var publishPreferencesResponse = await this.client.WorkspacePreferences.Publish(
