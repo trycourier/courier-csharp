@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.11.3](https://github.com/trycourier/courier-csharp/compare/v7.11.2...v7.11.3) (2026-09-30)
+
+
+### Documentation
+
+* **api:** remove the plan gate from the bulk preferences replace errors [C-21256] ([#120](https://github.com/trycourier/courier-csharp/issues/120)) ([01ecf01](https://github.com/trycourier/courier-csharp/commit/01ecf0103d735c9fdd4056899326b4373dd18950))
+
 ## [7.11.2](https://github.com/trycourier/courier-csharp/compare/v7.11.1...v7.11.2) (2026-09-24)
 
 
