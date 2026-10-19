@@ -53,7 +53,9 @@ public sealed record class Provider : JsonModel
     }
 
     /// <summary>
-    /// Provider-specific settings (snake_case keys on the wire).
+    /// Provider-specific settings (snake_case keys on the wire). `rate_limit` is
+    /// this configuration's send rate limit, `{ "rate": number, "period": "second"
+    /// | "minute" | "hour" }`, or null for no limit.
     /// </summary>
     public required IReadOnlyDictionary<string, JsonElement> Settings
     {
