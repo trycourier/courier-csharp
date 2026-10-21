@@ -17,7 +17,29 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -34,7 +56,26 @@ public class ElementalChannelNodeTest : TestBase
         string expectedChannel = "email";
         List<ElementalNodeNonChannel> expectedElements =
         [
-            new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text },
+            new UnionMember0()
+            {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
+                Type = UnionMember0IntersectionMember1Type.Text,
+            },
         ];
         string expectedFontSize = "font_size";
         string expectedLineHeight = "line_height";
@@ -83,7 +124,29 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -112,7 +175,29 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -136,7 +221,26 @@ public class ElementalChannelNodeTest : TestBase
         string expectedChannel = "email";
         List<ElementalNodeNonChannel> expectedElements =
         [
-            new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text },
+            new UnionMember0()
+            {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
+                Type = UnionMember0IntersectionMember1Type.Text,
+            },
         ];
         string expectedFontSize = "font_size";
         string expectedLineHeight = "line_height";
@@ -185,7 +289,29 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -207,7 +333,29 @@ public class ElementalChannelNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -230,7 +378,29 @@ public class ElementalChannelNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -252,7 +422,29 @@ public class ElementalChannelNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -278,7 +470,29 @@ public class ElementalChannelNodeTest : TestBase
             If = "if",
             Loop = "loop",
             Ref = "ref",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -396,7 +610,29 @@ public class ElementalChannelNodeTest : TestBase
             Loop = "loop",
             Ref = "ref",
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -420,7 +656,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -433,7 +691,26 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         string expectedChannel = "email";
         List<ElementalNodeNonChannel> expectedElements =
         [
-            new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text },
+            new UnionMember0()
+            {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
+                Type = UnionMember0IntersectionMember1Type.Text,
+            },
         ];
         string expectedFontSize = "font_size";
         string expectedLineHeight = "line_height";
@@ -469,7 +746,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -494,7 +793,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -514,7 +835,26 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         string expectedChannel = "email";
         List<ElementalNodeNonChannel> expectedElements =
         [
-            new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text },
+            new UnionMember0()
+            {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
+                Type = UnionMember0IntersectionMember1Type.Text,
+            },
         ];
         string expectedFontSize = "font_size";
         string expectedLineHeight = "line_height";
@@ -550,7 +890,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -568,7 +930,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1
         {
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -587,7 +971,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1
         {
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -605,7 +1011,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1
         {
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -627,7 +1055,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
     {
         var model = new ElementalChannelNodeIntersectionMember1
         {
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",
@@ -717,7 +1167,29 @@ public class ElementalChannelNodeIntersectionMember1Test : TestBase
         var model = new ElementalChannelNodeIntersectionMember1
         {
             Channel = "email",
-            Elements = [new UnionMember0() { Type = UnionMember0IntersectionMember1Type.Text }],
+            Elements =
+            [
+                new UnionMember0()
+                {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
+                    Type = UnionMember0IntersectionMember1Type.Text,
+                },
+            ],
             FontSize = "font_size",
             LineHeight = "line_height",
             Padding = "padding",

@@ -3,7 +3,7 @@ using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Exceptions;
 using TryCourier.Models;
-using TryCourier.Models.Notifications;
+using Notifications = TryCourier.Models.Notifications;
 
 namespace TryCourier.Tests.Models.Notifications;
 
@@ -12,7 +12,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -21,6 +21,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -40,29 +59,45 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
-        Brand expectedBrand = new("id");
+        Notifications::Brand expectedBrand = new("id");
         ElementalContent expectedContent = new()
         {
             Elements =
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
             Version = "version",
         };
         string expectedName = "name";
-        Routing expectedRouting = new("strategy_id");
-        Subscription expectedSubscription = new("topic_id");
+        Notifications::Routing expectedRouting = new("strategy_id");
+        Notifications::Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
-        NotificationTemplateEmail expectedEmail = new()
+        Notifications::NotificationTemplateEmail expectedEmail = new()
         {
             Bcc = ["string"],
             Cc = ["string"],
@@ -72,9 +107,9 @@ public class NotificationTemplateResponseTest : TestBase
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
-        ApiEnum<string, NotificationTemplateResponseFieldsState> expectedState =
-            NotificationTemplateResponseFieldsState.Draft;
-        NotificationTemplateAlias expectedAlias = "string";
+        ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState> expectedState =
+            Notifications::NotificationTemplateResponseFieldsState.Draft;
+        Notifications::NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -101,7 +136,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -110,6 +145,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -129,14 +183,14 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateResponse>(
+        var deserialized = JsonSerializer.Deserialize<Notifications::NotificationTemplateResponse>(
             json,
             ModelBase.SerializerOptions
         );
@@ -147,7 +201,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -156,6 +210,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -175,36 +248,52 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateResponse>(
+        var deserialized = JsonSerializer.Deserialize<Notifications::NotificationTemplateResponse>(
             element,
             ModelBase.SerializerOptions
         );
         Assert.NotNull(deserialized);
 
-        Brand expectedBrand = new("id");
+        Notifications::Brand expectedBrand = new("id");
         ElementalContent expectedContent = new()
         {
             Elements =
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
             Version = "version",
         };
         string expectedName = "name";
-        Routing expectedRouting = new("strategy_id");
-        Subscription expectedSubscription = new("topic_id");
+        Notifications::Routing expectedRouting = new("strategy_id");
+        Notifications::Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
-        NotificationTemplateEmail expectedEmail = new()
+        Notifications::NotificationTemplateEmail expectedEmail = new()
         {
             Bcc = ["string"],
             Cc = ["string"],
@@ -214,9 +303,9 @@ public class NotificationTemplateResponseTest : TestBase
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
-        ApiEnum<string, NotificationTemplateResponseFieldsState> expectedState =
-            NotificationTemplateResponseFieldsState.Draft;
-        NotificationTemplateAlias expectedAlias = "string";
+        ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState> expectedState =
+            Notifications::NotificationTemplateResponseFieldsState.Draft;
+        Notifications::NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -243,7 +332,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -252,6 +341,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -271,7 +379,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -283,7 +391,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -292,6 +400,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -311,7 +438,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
         };
 
         Assert.Null(model.Alias);
@@ -325,7 +452,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -334,6 +461,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -353,7 +499,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
         };
 
         model.Validate();
@@ -362,7 +508,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -371,6 +517,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -390,7 +555,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -409,7 +574,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -418,6 +583,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -437,7 +621,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -451,7 +635,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -460,6 +644,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -472,7 +675,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -485,7 +688,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -494,6 +697,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -506,7 +728,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -518,7 +740,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -527,6 +749,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -539,7 +780,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -554,7 +795,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -563,6 +804,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -575,7 +835,7 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -589,7 +849,7 @@ public class NotificationTemplateResponseTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new NotificationTemplateResponse
+        var model = new Notifications::NotificationTemplateResponse
         {
             Brand = new("id"),
             Content = new()
@@ -598,6 +858,25 @@ public class NotificationTemplateResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -617,13 +896,13 @@ public class NotificationTemplateResponseTest : TestBase
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
-        NotificationTemplateResponse copied = new(model);
+        Notifications::NotificationTemplateResponse copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -634,12 +913,12 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -648,9 +927,9 @@ public class NotificationTemplateResponseFieldsTest : TestBase
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
-        ApiEnum<string, NotificationTemplateResponseFieldsState> expectedState =
-            NotificationTemplateResponseFieldsState.Draft;
-        NotificationTemplateAlias expectedAlias = "string";
+        ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState> expectedState =
+            Notifications::NotificationTemplateResponseFieldsState.Draft;
+        Notifications::NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -666,22 +945,23 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateResponseFields>(
-            json,
-            ModelBase.SerializerOptions
-        );
+        var deserialized =
+            JsonSerializer.Deserialize<Notifications::NotificationTemplateResponseFields>(
+                json,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(model, deserialized);
     }
@@ -689,30 +969,31 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateResponseFields>(
-            element,
-            ModelBase.SerializerOptions
-        );
+        var deserialized =
+            JsonSerializer.Deserialize<Notifications::NotificationTemplateResponseFields>(
+                element,
+                ModelBase.SerializerOptions
+            );
         Assert.NotNull(deserialized);
 
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
-        ApiEnum<string, NotificationTemplateResponseFieldsState> expectedState =
-            NotificationTemplateResponseFieldsState.Draft;
-        NotificationTemplateAlias expectedAlias = "string";
+        ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState> expectedState =
+            Notifications::NotificationTemplateResponseFieldsState.Draft;
+        Notifications::NotificationTemplateAlias expectedAlias = "string";
         long expectedUpdated = 0;
         string expectedUpdater = "updater";
 
@@ -728,12 +1009,12 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
@@ -745,12 +1026,12 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
         };
 
         Assert.Null(model.Alias);
@@ -764,12 +1045,12 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesUnsetValidation_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
         };
 
         model.Validate();
@@ -778,12 +1059,12 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -802,12 +1083,12 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void OptionalNonNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
 
             // Null should be interpreted as omitted for these properties
             Alias = null,
@@ -821,18 +1102,18 @@ public class NotificationTemplateResponseFieldsTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new NotificationTemplateResponseFields
+        var model = new Notifications::NotificationTemplateResponseFields
         {
             ID = "id",
             Created = 0,
             Creator = "creator",
-            State = NotificationTemplateResponseFieldsState.Draft,
+            State = Notifications::NotificationTemplateResponseFieldsState.Draft,
             Alias = "string",
             Updated = 0,
             Updater = "updater",
         };
 
-        NotificationTemplateResponseFields copied = new(model);
+        Notifications::NotificationTemplateResponseFields copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -841,12 +1122,12 @@ public class NotificationTemplateResponseFieldsTest : TestBase
 public class NotificationTemplateResponseFieldsStateTest : TestBase
 {
     [Theory]
-    [InlineData(NotificationTemplateResponseFieldsState.Draft)]
-    [InlineData(NotificationTemplateResponseFieldsState.Published)]
-    public void Validation_Works(NotificationTemplateResponseFieldsState rawValue)
+    [InlineData(Notifications::NotificationTemplateResponseFieldsState.Draft)]
+    [InlineData(Notifications::NotificationTemplateResponseFieldsState.Published)]
+    public void Validation_Works(Notifications::NotificationTemplateResponseFieldsState rawValue)
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, NotificationTemplateResponseFieldsState> value = rawValue;
+        ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState> value = rawValue;
         value.Validate();
     }
 
@@ -854,7 +1135,7 @@ public class NotificationTemplateResponseFieldsStateTest : TestBase
     public void InvalidEnumValidationThrows_Works()
     {
         var value = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateResponseFieldsState>
+            ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState>
         >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
 
         Assert.NotNull(value);
@@ -862,16 +1143,18 @@ public class NotificationTemplateResponseFieldsStateTest : TestBase
     }
 
     [Theory]
-    [InlineData(NotificationTemplateResponseFieldsState.Draft)]
-    [InlineData(NotificationTemplateResponseFieldsState.Published)]
-    public void SerializationRoundtrip_Works(NotificationTemplateResponseFieldsState rawValue)
+    [InlineData(Notifications::NotificationTemplateResponseFieldsState.Draft)]
+    [InlineData(Notifications::NotificationTemplateResponseFieldsState.Published)]
+    public void SerializationRoundtrip_Works(
+        Notifications::NotificationTemplateResponseFieldsState rawValue
+    )
     {
         // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, NotificationTemplateResponseFieldsState> value = rawValue;
+        ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState> value = rawValue;
 
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateResponseFieldsState>
+            ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);
@@ -881,11 +1164,11 @@ public class NotificationTemplateResponseFieldsStateTest : TestBase
     public void InvalidEnumSerializationRoundtrip_Works()
     {
         var value = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateResponseFieldsState>
+            ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState>
         >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<
-            ApiEnum<string, NotificationTemplateResponseFieldsState>
+            ApiEnum<string, Notifications::NotificationTemplateResponseFieldsState>
         >(json, ModelBase.SerializerOptions);
 
         Assert.Equal(value, deserialized);

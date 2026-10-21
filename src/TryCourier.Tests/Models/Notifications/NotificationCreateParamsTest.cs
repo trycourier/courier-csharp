@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Exceptions;
-using TryCourier.Models;
 using TryCourier.Models.Notifications;
+using Models = TryCourier.Models;
 
 namespace TryCourier.Tests.Models.Notifications;
 
@@ -22,9 +23,57 @@ public class NotificationCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalChannelNodeWithType()
+                        new Models::ElementalChannelNodeWithType()
                         {
-                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Channel = "email",
+                            Elements =
+                            [
+                                new Models::UnionMember1()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Title = "Welcome!",
+                                    Type = Models::UnionMember1IntersectionMember1Type.Meta,
+                                },
+                                new Models::UnionMember0()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Align = Models::Align.Left,
+                                    Bold = "bold",
+                                    Color = "color",
+                                    Content = "Hello {{data.name}}.",
+                                    FontSize = "font_size",
+                                    Format = Models::Format.Markdown,
+                                    Italic = "italic",
+                                    LineHeight = "line_height",
+                                    Locales = new Dictionary<string, Models::LocalesItem>()
+                                    {
+                                        { "foo", new("content") },
+                                    },
+                                    Strikethrough = "strikethrough",
+                                    TextStyle = Models::TextStyle.Text,
+                                    Underline = "underline",
+                                    Type = Models::UnionMember0IntersectionMember1Type.Text,
+                                },
+                            ],
+                            FontSize = "font_size",
+                            LineHeight = "line_height",
+                            Padding = "padding",
+                            Raw = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Type =
+                                Models::ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = "2022-01-01",
@@ -54,9 +103,56 @@ public class NotificationCreateParamsTest : TestBase
             {
                 Elements =
                 [
-                    new ElementalChannelNodeWithType()
+                    new Models::ElementalChannelNodeWithType()
                     {
-                        Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Channel = "email",
+                        Elements =
+                        [
+                            new Models::UnionMember1()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Title = "Welcome!",
+                                Type = Models::UnionMember1IntersectionMember1Type.Meta,
+                            },
+                            new Models::UnionMember0()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Align = Models::Align.Left,
+                                Bold = "bold",
+                                Color = "color",
+                                Content = "Hello {{data.name}}.",
+                                FontSize = "font_size",
+                                Format = Models::Format.Markdown,
+                                Italic = "italic",
+                                LineHeight = "line_height",
+                                Locales = new Dictionary<string, Models::LocalesItem>()
+                                {
+                                    { "foo", new("content") },
+                                },
+                                Strikethrough = "strikethrough",
+                                TextStyle = Models::TextStyle.Text,
+                                Underline = "underline",
+                                Type = Models::UnionMember0IntersectionMember1Type.Text,
+                            },
+                        ],
+                        FontSize = "font_size",
+                        LineHeight = "line_height",
+                        Padding = "padding",
+                        Raw = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
+                        Type = Models::ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
                 Version = "2022-01-01",
@@ -96,9 +192,57 @@ public class NotificationCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalChannelNodeWithType()
+                        new Models::ElementalChannelNodeWithType()
                         {
-                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Channel = "email",
+                            Elements =
+                            [
+                                new Models::UnionMember1()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Title = "Welcome!",
+                                    Type = Models::UnionMember1IntersectionMember1Type.Meta,
+                                },
+                                new Models::UnionMember0()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Align = Models::Align.Left,
+                                    Bold = "bold",
+                                    Color = "color",
+                                    Content = "Hello {{data.name}}.",
+                                    FontSize = "font_size",
+                                    Format = Models::Format.Markdown,
+                                    Italic = "italic",
+                                    LineHeight = "line_height",
+                                    Locales = new Dictionary<string, Models::LocalesItem>()
+                                    {
+                                        { "foo", new("content") },
+                                    },
+                                    Strikethrough = "strikethrough",
+                                    TextStyle = Models::TextStyle.Text,
+                                    Underline = "underline",
+                                    Type = Models::UnionMember0IntersectionMember1Type.Text,
+                                },
+                            ],
+                            FontSize = "font_size",
+                            LineHeight = "line_height",
+                            Padding = "padding",
+                            Raw = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Type =
+                                Models::ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = "2022-01-01",
@@ -138,9 +282,57 @@ public class NotificationCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalChannelNodeWithType()
+                        new Models::ElementalChannelNodeWithType()
                         {
-                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Channel = "email",
+                            Elements =
+                            [
+                                new Models::UnionMember1()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Title = "Welcome!",
+                                    Type = Models::UnionMember1IntersectionMember1Type.Meta,
+                                },
+                                new Models::UnionMember0()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Align = Models::Align.Left,
+                                    Bold = "bold",
+                                    Color = "color",
+                                    Content = "Hello {{data.name}}.",
+                                    FontSize = "font_size",
+                                    Format = Models::Format.Markdown,
+                                    Italic = "italic",
+                                    LineHeight = "line_height",
+                                    Locales = new Dictionary<string, Models::LocalesItem>()
+                                    {
+                                        { "foo", new("content") },
+                                    },
+                                    Strikethrough = "strikethrough",
+                                    TextStyle = Models::TextStyle.Text,
+                                    Underline = "underline",
+                                    Type = Models::UnionMember0IntersectionMember1Type.Text,
+                                },
+                            ],
+                            FontSize = "font_size",
+                            LineHeight = "line_height",
+                            Padding = "padding",
+                            Raw = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Type =
+                                Models::ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = "2022-01-01",
@@ -185,9 +377,57 @@ public class NotificationCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalChannelNodeWithType()
+                        new Models::ElementalChannelNodeWithType()
                         {
-                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Channel = "email",
+                            Elements =
+                            [
+                                new Models::UnionMember1()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Title = "Welcome!",
+                                    Type = Models::UnionMember1IntersectionMember1Type.Meta,
+                                },
+                                new Models::UnionMember0()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Align = Models::Align.Left,
+                                    Bold = "bold",
+                                    Color = "color",
+                                    Content = "Hello {{data.name}}.",
+                                    FontSize = "font_size",
+                                    Format = Models::Format.Markdown,
+                                    Italic = "italic",
+                                    LineHeight = "line_height",
+                                    Locales = new Dictionary<string, Models::LocalesItem>()
+                                    {
+                                        { "foo", new("content") },
+                                    },
+                                    Strikethrough = "strikethrough",
+                                    TextStyle = Models::TextStyle.Text,
+                                    Underline = "underline",
+                                    Type = Models::UnionMember0IntersectionMember1Type.Text,
+                                },
+                            ],
+                            FontSize = "font_size",
+                            LineHeight = "line_height",
+                            Padding = "padding",
+                            Raw = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Type =
+                                Models::ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = "2022-01-01",
@@ -225,9 +465,57 @@ public class NotificationCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalChannelNodeWithType()
+                        new Models::ElementalChannelNodeWithType()
                         {
-                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Channel = "email",
+                            Elements =
+                            [
+                                new Models::UnionMember1()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Title = "Welcome!",
+                                    Type = Models::UnionMember1IntersectionMember1Type.Meta,
+                                },
+                                new Models::UnionMember0()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Align = Models::Align.Left,
+                                    Bold = "bold",
+                                    Color = "color",
+                                    Content = "Hello {{data.name}}.",
+                                    FontSize = "font_size",
+                                    Format = Models::Format.Markdown,
+                                    Italic = "italic",
+                                    LineHeight = "line_height",
+                                    Locales = new Dictionary<string, Models::LocalesItem>()
+                                    {
+                                        { "foo", new("content") },
+                                    },
+                                    Strikethrough = "strikethrough",
+                                    TextStyle = Models::TextStyle.Text,
+                                    Underline = "underline",
+                                    Type = Models::UnionMember0IntersectionMember1Type.Text,
+                                },
+                            ],
+                            FontSize = "font_size",
+                            LineHeight = "line_height",
+                            Padding = "padding",
+                            Raw = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Type =
+                                Models::ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = "2022-01-01",
@@ -270,9 +558,57 @@ public class NotificationCreateParamsTest : TestBase
                 {
                     Elements =
                     [
-                        new ElementalChannelNodeWithType()
+                        new Models::ElementalChannelNodeWithType()
                         {
-                            Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Channel = "email",
+                            Elements =
+                            [
+                                new Models::UnionMember1()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Title = "Welcome!",
+                                    Type = Models::UnionMember1IntersectionMember1Type.Meta,
+                                },
+                                new Models::UnionMember0()
+                                {
+                                    Channels = ["string"],
+                                    If = "if",
+                                    Loop = "loop",
+                                    Ref = "ref",
+                                    Align = Models::Align.Left,
+                                    Bold = "bold",
+                                    Color = "color",
+                                    Content = "Hello {{data.name}}.",
+                                    FontSize = "font_size",
+                                    Format = Models::Format.Markdown,
+                                    Italic = "italic",
+                                    LineHeight = "line_height",
+                                    Locales = new Dictionary<string, Models::LocalesItem>()
+                                    {
+                                        { "foo", new("content") },
+                                    },
+                                    Strikethrough = "strikethrough",
+                                    TextStyle = Models::TextStyle.Text,
+                                    Underline = "underline",
+                                    Type = Models::UnionMember0IntersectionMember1Type.Text,
+                                },
+                            ],
+                            FontSize = "font_size",
+                            LineHeight = "line_height",
+                            Padding = "padding",
+                            Raw = new Dictionary<string, JsonElement>()
+                            {
+                                { "foo", JsonSerializer.SerializeToElement("bar") },
+                            },
+                            Type =
+                                Models::ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
                     Version = "2022-01-01",

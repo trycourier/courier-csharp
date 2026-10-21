@@ -3050,6 +3050,25 @@ public class ContentTest : TestBase
             [
                 new Models::ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Models::Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Models::Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
+                    Strikethrough = "strikethrough",
+                    TextStyle = Models::TextStyle.Text,
+                    Underline = "underline",
                     Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -3080,6 +3099,25 @@ public class ContentTest : TestBase
             [
                 new Models::ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Models::Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Models::Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
+                    Strikethrough = "strikethrough",
+                    TextStyle = Models::TextStyle.Text,
+                    Underline = "underline",
                     Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],

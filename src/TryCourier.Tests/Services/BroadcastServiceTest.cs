@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using TryCourier.Models.Broadcasts;
-using Models = TryCourier.Models;
+using TryCourier.Models;
+using Broadcasts = TryCourier.Models.Broadcasts;
 
 namespace TryCourier.Tests.Services;
 
@@ -10,7 +11,7 @@ public class BroadcastServiceTest : TestBase
     public async Task Create_Works()
     {
         var broadcast = await this.client.Broadcasts.Create(
-            new() { Channel = Channel.Email, Name = "Spring Sale Announcement" },
+            new() { Channel = Broadcasts::Channel.Email, Name = "Spring Sale Announcement" },
             TestContext.Current.CancellationToken
         );
         broadcast.Validate();
@@ -92,13 +93,37 @@ public class BroadcastServiceTest : TestBase
                 {
                     Elements =
                     [
-                        new Models::ElementalMetaNodeWithType()
+                        new ElementalMetaNodeWithType()
                         {
-                            Type = Models::ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Title = "Spring Sale is here",
+                            Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                         },
-                        new Models::ElementalTextNodeWithType()
+                        new ElementalTextNodeWithType()
                         {
-                            Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Align = Align.Left,
+                            Bold = "bold",
+                            Color = "color",
+                            Content = "Hello! Check out our spring sale.",
+                            FontSize = "font_size",
+                            Format = Format.Markdown,
+                            Italic = "italic",
+                            LineHeight = "line_height",
+                            Locales = new Dictionary<string, LocalesItem>()
+                            {
+                                { "foo", new("content") },
+                            },
+                            Strikethrough = "strikethrough",
+                            TextStyle = TextStyle.Text,
+                            Underline = "underline",
+                            Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
                     Version = "2022-01-01",
@@ -128,7 +153,7 @@ public class BroadcastServiceTest : TestBase
             new()
             {
                 RecipientID = "active-business-users",
-                RecipientType = RecipientType.Audience,
+                RecipientType = Broadcasts::RecipientType.Audience,
                 ScheduledTo = "2026-08-01T15:00:00",
             },
             TestContext.Current.CancellationToken
@@ -144,7 +169,7 @@ public class BroadcastServiceTest : TestBase
             new()
             {
                 RecipientID = "cool-customers",
-                RecipientType = BroadcastSendParamsRecipientType.List,
+                RecipientType = Broadcasts::BroadcastSendParamsRecipientType.List,
             },
             TestContext.Current.CancellationToken
         );

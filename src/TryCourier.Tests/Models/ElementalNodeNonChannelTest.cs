@@ -13,6 +13,22 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember0()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Align = Align.Left,
+            Bold = "bold",
+            Color = "color",
+            Content = "content",
+            FontSize = "font_size",
+            Format = Format.Markdown,
+            Italic = "italic",
+            LineHeight = "line_height",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+            Strikethrough = "strikethrough",
+            TextStyle = TextStyle.Text,
+            Underline = "underline",
             Type = UnionMember0IntersectionMember1Type.Text,
         };
         value.Validate();
@@ -23,6 +39,11 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember1()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Title = "title",
             Type = UnionMember1IntersectionMember1Type.Meta,
         };
         value.Validate();
@@ -33,6 +54,18 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember2()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Src = "src",
+            Align = Alignment.Center,
+            AltText = "alt_text",
+            BorderColor = "border_color",
+            BorderSize = "border_size",
+            Href = "href",
+            Padding = "padding",
+            Width = "width",
             Type = UnionMember2IntersectionMember1Type.Image,
         };
         value.Validate();
@@ -43,6 +76,22 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember3()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Content = "content",
+            Href = "href",
+            ActionID = "action_id",
+            Align = Alignment.Center,
+            BackgroundColor = "background_color",
+            BorderRadius = "border_radius",
+            BorderSize = "border_size",
+            DisableTracking = true,
+            FontSize = "font_size",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+            Padding = "padding",
+            Style = Style.Button,
             Type = UnionMember3IntersectionMember1Type.Action,
         };
         value.Validate();
@@ -53,6 +102,11 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember4()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Color = "color",
             Type = UnionMember4IntersectionMember1Type.Divider,
         };
         value.Validate();
@@ -63,6 +117,17 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember5()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Content = "content",
+            Align = Alignment.Center,
+            BorderColor = "border_color",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+            TextStyle = TextStyle.Text,
             Type = UnionMember5IntersectionMember1Type.Quote,
         };
         value.Validate();
@@ -73,6 +138,12 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember6()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
             Type = UnionMember6IntersectionMember1Type.Html,
         };
         value.Validate();
@@ -83,6 +154,22 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember0()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Align = Align.Left,
+            Bold = "bold",
+            Color = "color",
+            Content = "content",
+            FontSize = "font_size",
+            Format = Format.Markdown,
+            Italic = "italic",
+            LineHeight = "line_height",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+            Strikethrough = "strikethrough",
+            TextStyle = TextStyle.Text,
+            Underline = "underline",
             Type = UnionMember0IntersectionMember1Type.Text,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -99,6 +186,11 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember1()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Title = "title",
             Type = UnionMember1IntersectionMember1Type.Meta,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -115,6 +207,18 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember2()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Src = "src",
+            Align = Alignment.Center,
+            AltText = "alt_text",
+            BorderColor = "border_color",
+            BorderSize = "border_size",
+            Href = "href",
+            Padding = "padding",
+            Width = "width",
             Type = UnionMember2IntersectionMember1Type.Image,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -131,6 +235,22 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember3()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Content = "content",
+            Href = "href",
+            ActionID = "action_id",
+            Align = Alignment.Center,
+            BackgroundColor = "background_color",
+            BorderRadius = "border_radius",
+            BorderSize = "border_size",
+            DisableTracking = true,
+            FontSize = "font_size",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+            Padding = "padding",
+            Style = Style.Button,
             Type = UnionMember3IntersectionMember1Type.Action,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -147,6 +267,11 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember4()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Color = "color",
             Type = UnionMember4IntersectionMember1Type.Divider,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -163,6 +288,17 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember5()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Content = "content",
+            Align = Alignment.Center,
+            BorderColor = "border_color",
+            FontSize = "font_size",
+            LineHeight = "line_height",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+            TextStyle = TextStyle.Text,
             Type = UnionMember5IntersectionMember1Type.Quote,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
@@ -179,6 +315,12 @@ public class ElementalNodeNonChannelTest : TestBase
     {
         ElementalNodeNonChannel value = new UnionMember6()
         {
+            Channels = ["string"],
+            If = "if",
+            Loop = "loop",
+            Ref = "ref",
+            Content = "content",
+            Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
             Type = UnionMember6IntersectionMember1Type.Html,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);

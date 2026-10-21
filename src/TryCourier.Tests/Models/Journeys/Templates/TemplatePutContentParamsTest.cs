@@ -4,7 +4,7 @@ using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Models;
 using TryCourier.Models.Journeys.Templates;
-using TryCourier.Models.Notifications;
+using Notifications = TryCourier.Models.Notifications;
 
 namespace TryCourier.Tests.Models.Journeys.Templates;
 
@@ -23,12 +23,59 @@ public class TemplatePutContentParamsTest : TestBase
                 [
                     new ElementalChannelNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Channel = "email",
+                        Elements =
+                        [
+                            new UnionMember1()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Title = "Welcome!",
+                                Type = UnionMember1IntersectionMember1Type.Meta,
+                            },
+                            new UnionMember0()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Align = Align.Left,
+                                Bold = "bold",
+                                Color = "color",
+                                Content = "Hello {{data.name}}.",
+                                FontSize = "font_size",
+                                Format = Format.Markdown,
+                                Italic = "italic",
+                                LineHeight = "line_height",
+                                Locales = new Dictionary<string, LocalesItem>()
+                                {
+                                    { "foo", new("content") },
+                                },
+                                Strikethrough = "strikethrough",
+                                TextStyle = TextStyle.Text,
+                                Underline = "underline",
+                                Type = UnionMember0IntersectionMember1Type.Text,
+                            },
+                        ],
+                        FontSize = "font_size",
+                        LineHeight = "line_height",
+                        Padding = "padding",
+                        Raw = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
                 Version = "2022-01-01",
             },
-            State = NotificationTemplateState.Draft,
+            State = Notifications::NotificationTemplateState.Draft,
         };
 
         string expectedTemplateID = "x";
@@ -39,12 +86,60 @@ public class TemplatePutContentParamsTest : TestBase
             [
                 new ElementalChannelNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Channel = "email",
+                    Elements =
+                    [
+                        new UnionMember1()
+                        {
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Title = "Welcome!",
+                            Type = UnionMember1IntersectionMember1Type.Meta,
+                        },
+                        new UnionMember0()
+                        {
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Align = Align.Left,
+                            Bold = "bold",
+                            Color = "color",
+                            Content = "Hello {{data.name}}.",
+                            FontSize = "font_size",
+                            Format = Format.Markdown,
+                            Italic = "italic",
+                            LineHeight = "line_height",
+                            Locales = new Dictionary<string, LocalesItem>()
+                            {
+                                { "foo", new("content") },
+                            },
+                            Strikethrough = "strikethrough",
+                            TextStyle = TextStyle.Text,
+                            Underline = "underline",
+                            Type = UnionMember0IntersectionMember1Type.Text,
+                        },
+                    ],
+                    FontSize = "font_size",
+                    LineHeight = "line_height",
+                    Padding = "padding",
+                    Raw = new Dictionary<string, JsonElement>()
+                    {
+                        { "foo", JsonSerializer.SerializeToElement("bar") },
+                    },
                     Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                 },
             ],
             Version = "2022-01-01",
         };
-        ApiEnum<string, NotificationTemplateState> expectedState = NotificationTemplateState.Draft;
+        ApiEnum<string, Notifications::NotificationTemplateState> expectedState =
+            Notifications::NotificationTemplateState.Draft;
 
         Assert.Equal(expectedTemplateID, parameters.TemplateID);
         Assert.Equal(expectedNotificationID, parameters.NotificationID);
@@ -65,6 +160,53 @@ public class TemplatePutContentParamsTest : TestBase
                 [
                     new ElementalChannelNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Channel = "email",
+                        Elements =
+                        [
+                            new UnionMember1()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Title = "Welcome!",
+                                Type = UnionMember1IntersectionMember1Type.Meta,
+                            },
+                            new UnionMember0()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Align = Align.Left,
+                                Bold = "bold",
+                                Color = "color",
+                                Content = "Hello {{data.name}}.",
+                                FontSize = "font_size",
+                                Format = Format.Markdown,
+                                Italic = "italic",
+                                LineHeight = "line_height",
+                                Locales = new Dictionary<string, LocalesItem>()
+                                {
+                                    { "foo", new("content") },
+                                },
+                                Strikethrough = "strikethrough",
+                                TextStyle = TextStyle.Text,
+                                Underline = "underline",
+                                Type = UnionMember0IntersectionMember1Type.Text,
+                            },
+                        ],
+                        FontSize = "font_size",
+                        LineHeight = "line_height",
+                        Padding = "padding",
+                        Raw = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
@@ -89,6 +231,53 @@ public class TemplatePutContentParamsTest : TestBase
                 [
                     new ElementalChannelNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Channel = "email",
+                        Elements =
+                        [
+                            new UnionMember1()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Title = "Welcome!",
+                                Type = UnionMember1IntersectionMember1Type.Meta,
+                            },
+                            new UnionMember0()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Align = Align.Left,
+                                Bold = "bold",
+                                Color = "color",
+                                Content = "Hello {{data.name}}.",
+                                FontSize = "font_size",
+                                Format = Format.Markdown,
+                                Italic = "italic",
+                                LineHeight = "line_height",
+                                Locales = new Dictionary<string, LocalesItem>()
+                                {
+                                    { "foo", new("content") },
+                                },
+                                Strikethrough = "strikethrough",
+                                TextStyle = TextStyle.Text,
+                                Underline = "underline",
+                                Type = UnionMember0IntersectionMember1Type.Text,
+                            },
+                        ],
+                        FontSize = "font_size",
+                        LineHeight = "line_height",
+                        Padding = "padding",
+                        Raw = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
@@ -116,6 +305,53 @@ public class TemplatePutContentParamsTest : TestBase
                 [
                     new ElementalChannelNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Channel = "email",
+                        Elements =
+                        [
+                            new UnionMember1()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Title = "Welcome!",
+                                Type = UnionMember1IntersectionMember1Type.Meta,
+                            },
+                            new UnionMember0()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Align = Align.Left,
+                                Bold = "bold",
+                                Color = "color",
+                                Content = "Hello {{data.name}}.",
+                                FontSize = "font_size",
+                                Format = Format.Markdown,
+                                Italic = "italic",
+                                LineHeight = "line_height",
+                                Locales = new Dictionary<string, LocalesItem>()
+                                {
+                                    { "foo", new("content") },
+                                },
+                                Strikethrough = "strikethrough",
+                                TextStyle = TextStyle.Text,
+                                Underline = "underline",
+                                Type = UnionMember0IntersectionMember1Type.Text,
+                            },
+                        ],
+                        FontSize = "font_size",
+                        LineHeight = "line_height",
+                        Padding = "padding",
+                        Raw = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
@@ -146,12 +382,59 @@ public class TemplatePutContentParamsTest : TestBase
                 [
                     new ElementalChannelNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Channel = "email",
+                        Elements =
+                        [
+                            new UnionMember1()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Title = "Welcome!",
+                                Type = UnionMember1IntersectionMember1Type.Meta,
+                            },
+                            new UnionMember0()
+                            {
+                                Channels = ["string"],
+                                If = "if",
+                                Loop = "loop",
+                                Ref = "ref",
+                                Align = Align.Left,
+                                Bold = "bold",
+                                Color = "color",
+                                Content = "Hello {{data.name}}.",
+                                FontSize = "font_size",
+                                Format = Format.Markdown,
+                                Italic = "italic",
+                                LineHeight = "line_height",
+                                Locales = new Dictionary<string, LocalesItem>()
+                                {
+                                    { "foo", new("content") },
+                                },
+                                Strikethrough = "strikethrough",
+                                TextStyle = TextStyle.Text,
+                                Underline = "underline",
+                                Type = UnionMember0IntersectionMember1Type.Text,
+                            },
+                        ],
+                        FontSize = "font_size",
+                        LineHeight = "line_height",
+                        Padding = "padding",
+                        Raw = new Dictionary<string, JsonElement>()
+                        {
+                            { "foo", JsonSerializer.SerializeToElement("bar") },
+                        },
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
                 Version = "2022-01-01",
             },
-            State = NotificationTemplateState.Draft,
+            State = Notifications::NotificationTemplateState.Draft,
         };
 
         TemplatePutContentParams copied = new(parameters);
@@ -171,6 +454,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -181,6 +480,22 @@ public class TemplatePutContentParamsContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -203,6 +518,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -227,6 +558,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -244,6 +591,22 @@ public class TemplatePutContentParamsContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -266,6 +629,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -284,6 +663,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -302,6 +697,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -319,6 +730,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -340,6 +767,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -360,6 +803,22 @@ public class TemplatePutContentParamsContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
