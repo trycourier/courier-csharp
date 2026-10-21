@@ -951,13 +951,35 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
     )
     {
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        JourneyNode? bestMatch = null;
+        int bestScore = -1;
         try
         {
             var deserialized = JsonSerializer.Deserialize<JourneyBatchNode>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "max_wait_period"
+                                || property.Name == "retain"
+                                || property.Name == "scope"
+                                || property.Name == "type"
+                                || property.Name == "wait_period"
+                                || property.Name == "id"
+                                || property.Name == "category_key"
+                                || property.Name == "conditions"
+                                || property.Name == "max_items"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -971,7 +993,22 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "default"
+                                || property.Name == "paths"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -988,7 +1025,25 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "max_allowed"
+                                || property.Name == "period"
+                                || property.Name == "scope"
+                                || property.Name == "throttle_key"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1005,7 +1060,27 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "merge_strategy"
+                                || property.Name == "method"
+                                || property.Name == "type"
+                                || property.Name == "url"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                                || property.Name == "headers"
+                                || property.Name == "query_params"
+                                || property.Name == "response_schema"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1022,7 +1097,28 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "merge_strategy"
+                                || property.Name == "method"
+                                || property.Name == "type"
+                                || property.Name == "url"
+                                || property.Name == "id"
+                                || property.Name == "body"
+                                || property.Name == "conditions"
+                                || property.Name == "headers"
+                                || property.Name == "query_params"
+                                || property.Name == "response_schema"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1039,7 +1135,24 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "max_allowed"
+                                || property.Name == "period"
+                                || property.Name == "scope"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1056,7 +1169,24 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "request_type"
+                                || property.Name == "trigger_type"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                                || property.Name == "event_id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1073,7 +1203,23 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "audience_id"
+                                || property.Name == "trigger_type"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1090,7 +1236,24 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "event_source"
+                                || property.Name == "trigger_type"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                                || property.Name == "event_id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1107,7 +1270,23 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "duration"
+                                || property.Name == "mode"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1121,7 +1300,23 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "mode"
+                                || property.Name == "type"
+                                || property.Name == "until"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1138,7 +1333,23 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "trigger_type"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                                || property.Name == "schema"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1152,7 +1363,24 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "message"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "channel"
+                                || property.Name == "conditions"
+                                || property.Name == "experiment"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1166,7 +1394,25 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "output_schema"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                                || property.Name == "model"
+                                || property.Name == "user_prompt"
+                                || property.Name == "web_search"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1180,7 +1426,22 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "subscription_topic_id"
+                                || property.Name == "type"
+                                || property.Name == "id"
+                                || property.Name == "conditions"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1194,7 +1455,18 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property => property.Name == "type" || property.Name == "id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -1202,6 +1474,10 @@ sealed class JourneyNodeConverter : JsonConverter<JourneyNode>
             // ignore
         }
 
+        if (bestMatch != null)
+        {
+            return bestMatch;
+        }
         return new(element);
     }
 
