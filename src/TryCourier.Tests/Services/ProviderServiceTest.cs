@@ -51,4 +51,15 @@ public class ProviderServiceTest : TestBase
     {
         await this.client.Providers.Delete("id", new(), TestContext.Current.CancellationToken);
     }
+
+    [Fact(Skip = "Mock server tests are disabled")]
+    public async Task Patch_Works()
+    {
+        var provider = await this.client.Providers.Patch(
+            "id",
+            new(),
+            TestContext.Current.CancellationToken
+        );
+        provider.Validate();
+    }
 }
