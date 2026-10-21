@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using TryCourier.Core;
 using TryCourier.Models;
-using TryCourier.Models.Notifications;
+using Notifications = TryCourier.Models.Notifications;
 
 namespace TryCourier.Tests.Models.Notifications;
 
@@ -11,7 +11,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -20,6 +20,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -39,23 +58,39 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Alias = "alias",
         };
 
-        Brand expectedBrand = new("id");
+        Notifications::Brand expectedBrand = new("id");
         ElementalContent expectedContent = new()
         {
             Elements =
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
             Version = "version",
         };
         string expectedName = "name";
-        Routing expectedRouting = new("strategy_id");
-        Subscription expectedSubscription = new("topic_id");
+        Notifications::Routing expectedRouting = new("strategy_id");
+        Notifications::Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
-        NotificationTemplateEmail expectedEmail = new()
+        Notifications::NotificationTemplateEmail expectedEmail = new()
         {
             Bcc = ["string"],
             Cc = ["string"],
@@ -81,7 +116,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -90,6 +125,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -110,10 +164,11 @@ public class NotificationTemplateWritePayloadTest : TestBase
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateWritePayload>(
-            json,
-            ModelBase.SerializerOptions
-        );
+        var deserialized =
+            JsonSerializer.Deserialize<Notifications::NotificationTemplateWritePayload>(
+                json,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(model, deserialized);
     }
@@ -121,7 +176,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -130,6 +185,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -150,29 +224,46 @@ public class NotificationTemplateWritePayloadTest : TestBase
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateWritePayload>(
-            element,
-            ModelBase.SerializerOptions
-        );
+        var deserialized =
+            JsonSerializer.Deserialize<Notifications::NotificationTemplateWritePayload>(
+                element,
+                ModelBase.SerializerOptions
+            );
         Assert.NotNull(deserialized);
 
-        Brand expectedBrand = new("id");
+        Notifications::Brand expectedBrand = new("id");
         ElementalContent expectedContent = new()
         {
             Elements =
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
             Version = "version",
         };
         string expectedName = "name";
-        Routing expectedRouting = new("strategy_id");
-        Subscription expectedSubscription = new("topic_id");
+        Notifications::Routing expectedRouting = new("strategy_id");
+        Notifications::Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
-        NotificationTemplateEmail expectedEmail = new()
+        Notifications::NotificationTemplateEmail expectedEmail = new()
         {
             Bcc = ["string"],
             Cc = ["string"],
@@ -198,7 +289,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -207,6 +298,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -232,7 +342,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -241,6 +351,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -261,7 +390,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -270,6 +399,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -287,7 +435,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -296,6 +444,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -319,7 +486,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -328,6 +495,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -348,7 +534,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new NotificationTemplateWritePayload
+        var model = new Notifications::NotificationTemplateWritePayload
         {
             Brand = new("id"),
             Content = new()
@@ -357,6 +543,25 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -376,7 +581,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Alias = "alias",
         };
 
-        NotificationTemplateWritePayload copied = new(model);
+        Notifications::NotificationTemplateWritePayload copied = new(model);
 
         Assert.Equal(model, copied);
     }
@@ -387,7 +592,7 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void FieldRoundtrip_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { Alias = "alias" };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { Alias = "alias" };
 
         string expectedAlias = "alias";
 
@@ -397,13 +602,14 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void SerializationRoundtrip_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { Alias = "alias" };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { Alias = "alias" };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateAliasWriteFields>(
-            json,
-            ModelBase.SerializerOptions
-        );
+        var deserialized =
+            JsonSerializer.Deserialize<Notifications::NotificationTemplateAliasWriteFields>(
+                json,
+                ModelBase.SerializerOptions
+            );
 
         Assert.Equal(model, deserialized);
     }
@@ -411,13 +617,14 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void FieldRoundtripThroughSerialization_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { Alias = "alias" };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { Alias = "alias" };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<NotificationTemplateAliasWriteFields>(
-            element,
-            ModelBase.SerializerOptions
-        );
+        var deserialized =
+            JsonSerializer.Deserialize<Notifications::NotificationTemplateAliasWriteFields>(
+                element,
+                ModelBase.SerializerOptions
+            );
         Assert.NotNull(deserialized);
 
         string expectedAlias = "alias";
@@ -428,7 +635,7 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void Validation_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { Alias = "alias" };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { Alias = "alias" };
 
         model.Validate();
     }
@@ -436,7 +643,7 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetAreNotSet_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { };
 
         Assert.Null(model.Alias);
         Assert.False(model.RawData.ContainsKey("alias"));
@@ -445,7 +652,7 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesUnsetValidation_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { };
 
         model.Validate();
     }
@@ -453,7 +660,7 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { Alias = null };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { Alias = null };
 
         Assert.Null(model.Alias);
         Assert.True(model.RawData.ContainsKey("alias"));
@@ -462,7 +669,7 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void OptionalNullablePropertiesSetToNullValidation_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { Alias = null };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { Alias = null };
 
         model.Validate();
     }
@@ -470,9 +677,9 @@ public class NotificationTemplateAliasWriteFieldsTest : TestBase
     [Fact]
     public void CopyConstructor_Works()
     {
-        var model = new NotificationTemplateAliasWriteFields { Alias = "alias" };
+        var model = new Notifications::NotificationTemplateAliasWriteFields { Alias = "alias" };
 
-        NotificationTemplateAliasWriteFields copied = new(model);
+        Notifications::NotificationTemplateAliasWriteFields copied = new(model);
 
         Assert.Equal(model, copied);
     }

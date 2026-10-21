@@ -22,6 +22,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -46,6 +65,22 @@ public class JourneyTemplateGetResponseTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -91,6 +126,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -129,6 +183,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -160,6 +233,22 @@ public class JourneyTemplateGetResponseTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -205,6 +294,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -237,6 +345,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -270,6 +397,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -300,6 +446,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -337,6 +502,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -371,6 +555,25 @@ public class JourneyTemplateGetResponseTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -466,6 +669,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -477,6 +696,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -503,6 +738,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -528,6 +779,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -546,6 +813,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -572,6 +855,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -591,6 +890,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -610,6 +925,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -628,6 +959,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -650,6 +997,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -671,6 +1034,22 @@ public class JourneyTemplateGetResponseContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],

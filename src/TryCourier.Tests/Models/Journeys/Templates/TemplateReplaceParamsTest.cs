@@ -26,6 +26,25 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Align = Align.Left,
+                            Bold = "bold",
+                            Color = "color",
+                            Content = "content",
+                            FontSize = "font_size",
+                            Format = Format.Markdown,
+                            Italic = "italic",
+                            LineHeight = "line_height",
+                            Locales = new Dictionary<string, LocalesItem>()
+                            {
+                                { "foo", new("content") },
+                            },
+                            Strikethrough = "strikethrough",
+                            TextStyle = TextStyle.Text,
+                            Underline = "underline",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -50,6 +69,25 @@ public class TemplateReplaceParamsTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -84,6 +122,25 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Align = Align.Left,
+                            Bold = "bold",
+                            Color = "color",
+                            Content = "content",
+                            FontSize = "font_size",
+                            Format = Format.Markdown,
+                            Italic = "italic",
+                            LineHeight = "line_height",
+                            Locales = new Dictionary<string, LocalesItem>()
+                            {
+                                { "foo", new("content") },
+                            },
+                            Strikethrough = "strikethrough",
+                            TextStyle = TextStyle.Text,
+                            Underline = "underline",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -116,6 +173,25 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Align = Align.Left,
+                            Bold = "bold",
+                            Color = "color",
+                            Content = "content",
+                            FontSize = "font_size",
+                            Format = Format.Markdown,
+                            Italic = "italic",
+                            LineHeight = "line_height",
+                            Locales = new Dictionary<string, LocalesItem>()
+                            {
+                                { "foo", new("content") },
+                            },
+                            Strikethrough = "strikethrough",
+                            TextStyle = TextStyle.Text,
+                            Underline = "underline",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -151,6 +227,25 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Align = Align.Left,
+                            Bold = "bold",
+                            Color = "color",
+                            Content = "content",
+                            FontSize = "font_size",
+                            Format = Format.Markdown,
+                            Italic = "italic",
+                            LineHeight = "line_height",
+                            Locales = new Dictionary<string, LocalesItem>()
+                            {
+                                { "foo", new("content") },
+                            },
+                            Strikethrough = "strikethrough",
+                            TextStyle = TextStyle.Text,
+                            Underline = "underline",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -186,6 +281,25 @@ public class TemplateReplaceParamsTest : TestBase
                     [
                         new ElementalTextNodeWithType()
                         {
+                            Channels = ["string"],
+                            If = "if",
+                            Loop = "loop",
+                            Ref = "ref",
+                            Align = Align.Left,
+                            Bold = "bold",
+                            Color = "color",
+                            Content = "content",
+                            FontSize = "font_size",
+                            Format = Format.Markdown,
+                            Italic = "italic",
+                            LineHeight = "line_height",
+                            Locales = new Dictionary<string, LocalesItem>()
+                            {
+                                { "foo", new("content") },
+                            },
+                            Strikethrough = "strikethrough",
+                            TextStyle = TextStyle.Text,
+                            Underline = "underline",
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
@@ -219,6 +333,25 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -237,6 +370,22 @@ public class TemplateReplaceParamsNotificationTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -270,6 +419,25 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -302,6 +470,25 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -327,6 +514,22 @@ public class TemplateReplaceParamsNotificationTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -360,6 +563,25 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -386,6 +608,25 @@ public class TemplateReplaceParamsNotificationTest : TestBase
                 [
                     new ElementalTextNodeWithType()
                     {
+                        Channels = ["string"],
+                        If = "if",
+                        Loop = "loop",
+                        Ref = "ref",
+                        Align = Align.Left,
+                        Bold = "bold",
+                        Color = "color",
+                        Content = "content",
+                        FontSize = "font_size",
+                        Format = Format.Markdown,
+                        Italic = "italic",
+                        LineHeight = "line_height",
+                        Locales = new Dictionary<string, LocalesItem>()
+                        {
+                            { "foo", new("content") },
+                        },
+                        Strikethrough = "strikethrough",
+                        TextStyle = TextStyle.Text,
+                        Underline = "underline",
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
@@ -476,6 +717,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -487,6 +744,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -513,6 +786,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -538,6 +827,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -556,6 +861,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
         [
             new ElementalTextNodeWithType()
             {
+                Channels = ["string"],
+                If = "if",
+                Loop = "loop",
+                Ref = "ref",
+                Align = Align.Left,
+                Bold = "bold",
+                Color = "color",
+                Content = "content",
+                FontSize = "font_size",
+                Format = Format.Markdown,
+                Italic = "italic",
+                LineHeight = "line_height",
+                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Strikethrough = "strikethrough",
+                TextStyle = TextStyle.Text,
+                Underline = "underline",
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
@@ -582,6 +903,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -601,6 +938,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -620,6 +973,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -638,6 +1007,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -660,6 +1045,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
@@ -681,6 +1082,22 @@ public class TemplateReplaceParamsNotificationContentTest : TestBase
             [
                 new ElementalTextNodeWithType()
                 {
+                    Channels = ["string"],
+                    If = "if",
+                    Loop = "loop",
+                    Ref = "ref",
+                    Align = Align.Left,
+                    Bold = "bold",
+                    Color = "color",
+                    Content = "content",
+                    FontSize = "font_size",
+                    Format = Format.Markdown,
+                    Italic = "italic",
+                    LineHeight = "line_height",
+                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Strikethrough = "strikethrough",
+                    TextStyle = TextStyle.Text,
+                    Underline = "underline",
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
