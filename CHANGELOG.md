@@ -1,5 +1,29 @@
 # Changelog
 
+## [7.12.0](https://github.com/trycourier/courier-csharp/compare/v7.11.3...v7.12.0) (2026-10-21)
+
+
+### Features
+
+* **api:** add PATCH /providers/{id} for partial provider updates [C-21790] ([#128](https://github.com/trycourier/courier-csharp/issues/128)) ([841fae0](https://github.com/trycourier/courier-csharp/commit/841fae0d5f1283fe22ee6a25f686c8dd65a0f0ad))
+* **api:** expose email From, Reply-to, CC and BCC on notification templates [C-21709] ([#125](https://github.com/trycourier/courier-csharp/issues/125)) ([65932d8](https://github.com/trycourier/courier-csharp/commit/65932d80758c21d4bb83028722f20a89c8a7a6ae))
+
+
+### Bug Fixes
+
+* **client:** deserialize list and list-pattern recipients as their own types, not UserRecipient ([1e53c81](https://github.com/trycourier/courier-csharp/commit/1e53c81520be82dfe44fcff8591756c317e791d4))
+
+
+### Chores
+
+* **api:** regenerate SDK ([#126](https://github.com/trycourier/courier-csharp/issues/126)) ([29aa792](https://github.com/trycourier/courier-csharp/commit/29aa792148888fb282a7aa3fed9b2c72baaab638))
+
+
+### Documentation
+
+* **api:** describe the AI node model constraint [C-21614] ([#122](https://github.com/trycourier/courier-csharp/issues/122)) ([c167c2b](https://github.com/trycourier/courier-csharp/commit/c167c2b1bbb294bad8cee292842e1b12ffaacdff))
+* **api:** document provider settings.rate_limit [C-21732] ([#124](https://github.com/trycourier/courier-csharp/issues/124)) ([db1c3b5](https://github.com/trycourier/courier-csharp/commit/db1c3b5cebc59744931da13205c3ddc23982ab50))
+
 ## [7.11.3](https://github.com/trycourier/courier-csharp/compare/v7.11.2...v7.11.3) (2026-09-30)
 
 
