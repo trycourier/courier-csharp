@@ -94,6 +94,23 @@ public interface IProviderService
         ProviderDeleteParams? parameters = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Updates part of a provider's configuration and keeps every field you omit.
+    /// Settings merge into the stored settings key by key, and a setting sent as null
+    /// is removed.
+    /// </summary>
+    Task<Provider> Patch(
+        ProviderPatchParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Patch(ProviderPatchParams, CancellationToken)"/>
+    Task<Provider> Patch(
+        string id,
+        ProviderPatchParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
 }
 
 /// <summary>
@@ -174,6 +191,22 @@ public interface IProviderServiceWithRawResponse
     Task<HttpResponse> Delete(
         string id,
         ProviderDeleteParams? parameters = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Returns a raw HTTP response for <c>patch /providers/{id}</c>, but is otherwise the
+    /// same as <see cref="IProviderService.Patch(ProviderPatchParams, CancellationToken)"/>.
+    /// </summary>
+    Task<HttpResponse<Provider>> Patch(
+        ProviderPatchParams parameters,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <inheritdoc cref="Patch(ProviderPatchParams, CancellationToken)"/>
+    Task<HttpResponse<Provider>> Patch(
+        string id,
+        ProviderPatchParams? parameters = null,
         CancellationToken cancellationToken = default
     );
 }

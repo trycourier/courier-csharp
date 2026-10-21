@@ -132,6 +132,30 @@ public sealed class ProviderService : IProviderService
 
         await this.Delete(parameters with { ID = id }, cancellationToken).ConfigureAwait(false);
     }
+
+    /// <inheritdoc/>
+    public async Task<Provider> Patch(
+        ProviderPatchParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        using var response = await this
+            .WithRawResponse.Patch(parameters, cancellationToken)
+            .ConfigureAwait(false);
+        return await response.Deserialize(cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc/>
+    public Task<Provider> Patch(
+        string id,
+        ProviderPatchParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Patch(parameters with { ID = id }, cancellationToken);
+    }
 }
 
 /// <inheritdoc/>
@@ -327,5 +351,48 @@ public sealed class ProviderServiceWithRawResponse : IProviderServiceWithRawResp
         parameters ??= new();
 
         return this.Delete(parameters with { ID = id }, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<HttpResponse<Provider>> Patch(
+        ProviderPatchParams parameters,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (parameters.ID == null)
+        {
+            throw new CourierInvalidDataException("'parameters.ID' cannot be null");
+        }
+
+        HttpRequest<ProviderPatchParams> request = new()
+        {
+            Method = CourierClientWithRawResponse.PatchMethod,
+            Params = parameters,
+        };
+        var response = await this._client.Execute(request, cancellationToken).ConfigureAwait(false);
+        return new(
+            response,
+            async (token) =>
+            {
+                var provider = await response.Deserialize<Provider>(token).ConfigureAwait(false);
+                if (this._client.ResponseValidation)
+                {
+                    provider.Validate();
+                }
+                return provider;
+            }
+        );
+    }
+
+    /// <inheritdoc/>
+    public Task<HttpResponse<Provider>> Patch(
+        string id,
+        ProviderPatchParams? parameters = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        parameters ??= new();
+
+        return this.Patch(parameters with { ID = id }, cancellationToken);
     }
 }
