@@ -29,6 +29,13 @@ public class NotificationTemplatePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
         };
 
         Brand expectedBrand = new("id");
@@ -47,6 +54,13 @@ public class NotificationTemplatePayloadTest : TestBase
         Routing expectedRouting = new("strategy_id");
         Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
+        NotificationTemplateEmail expectedEmail = new()
+        {
+            Bcc = ["string"],
+            Cc = ["string"],
+            From = "from",
+            ReplyTo = "reply_to",
+        };
 
         Assert.Equal(expectedBrand, model.Brand);
         Assert.Equal(expectedContent, model.Content);
@@ -58,6 +72,7 @@ public class NotificationTemplatePayloadTest : TestBase
         {
             Assert.Equal(expectedTags[i], model.Tags[i]);
         }
+        Assert.Equal(expectedEmail, model.Email);
     }
 
     [Fact]
@@ -81,6 +96,13 @@ public class NotificationTemplatePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -113,6 +135,13 @@ public class NotificationTemplatePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -138,6 +167,13 @@ public class NotificationTemplatePayloadTest : TestBase
         Routing expectedRouting = new("strategy_id");
         Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
+        NotificationTemplateEmail expectedEmail = new()
+        {
+            Bcc = ["string"],
+            Cc = ["string"],
+            From = "from",
+            ReplyTo = "reply_to",
+        };
 
         Assert.Equal(expectedBrand, deserialized.Brand);
         Assert.Equal(expectedContent, deserialized.Content);
@@ -149,6 +185,7 @@ public class NotificationTemplatePayloadTest : TestBase
         {
             Assert.Equal(expectedTags[i], deserialized.Tags[i]);
         }
+        Assert.Equal(expectedEmail, deserialized.Email);
     }
 
     [Fact]
@@ -172,6 +209,123 @@ public class NotificationTemplatePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new NotificationTemplatePayload
+        {
+            Brand = new("id"),
+            Content = new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+            },
+            Name = "name",
+            Routing = new("strategy_id"),
+            Subscription = new("topic_id"),
+            Tags = ["string"],
+        };
+
+        Assert.Null(model.Email);
+        Assert.False(model.RawData.ContainsKey("email"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new NotificationTemplatePayload
+        {
+            Brand = new("id"),
+            Content = new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+            },
+            Name = "name",
+            Routing = new("strategy_id"),
+            Subscription = new("topic_id"),
+            Tags = ["string"],
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new NotificationTemplatePayload
+        {
+            Brand = new("id"),
+            Content = new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+            },
+            Name = "name",
+            Routing = new("strategy_id"),
+            Subscription = new("topic_id"),
+            Tags = ["string"],
+
+            Email = null,
+        };
+
+        Assert.Null(model.Email);
+        Assert.True(model.RawData.ContainsKey("email"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new NotificationTemplatePayload
+        {
+            Brand = new("id"),
+            Content = new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+            },
+            Name = "name",
+            Routing = new("strategy_id"),
+            Subscription = new("topic_id"),
+            Tags = ["string"],
+
+            Email = null,
         };
 
         model.Validate();
@@ -198,6 +352,13 @@ public class NotificationTemplatePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
         };
 
         NotificationTemplatePayload copied = new(model);

@@ -33,6 +33,13 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
             State = NotificationReplaceParamsState.Published,
@@ -57,6 +64,13 @@ public class NotificationReplaceParamsTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["updated"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "alias",
         };
         ApiEnum<string, NotificationReplaceParamsState> expectedState =
@@ -91,6 +105,13 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
         };
@@ -123,6 +144,13 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
 
@@ -158,6 +186,13 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
         };
@@ -191,6 +226,13 @@ public class NotificationReplaceParamsTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["updated"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
             State = NotificationReplaceParamsState.Published,

@@ -33,6 +33,13 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "welcome",
             },
             State = State.Draft,
@@ -58,6 +65,13 @@ public class NotificationCreateParamsTest : TestBase
             Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
             Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
             Tags = ["onboarding", "welcome"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "welcome",
         };
         ApiEnum<string, State> expectedState = State.Draft;
@@ -93,6 +107,13 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "welcome",
             },
         };
@@ -128,6 +149,13 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "welcome",
             },
 
@@ -168,6 +196,13 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "welcome",
             },
         };
@@ -201,6 +236,13 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "welcome",
             },
             IdempotencyKey = "order-ORD-456-user-123",
@@ -239,6 +281,13 @@ public class NotificationCreateParamsTest : TestBase
                 Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                 Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                 Tags = ["onboarding", "welcome"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "welcome",
             },
             State = State.Draft,

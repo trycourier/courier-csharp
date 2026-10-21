@@ -31,6 +31,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
@@ -54,6 +61,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "alias",
         };
         ApiEnum<string, NotificationTemplateUpdateRequestState> expectedState =
@@ -86,6 +100,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
@@ -123,6 +144,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
@@ -153,6 +181,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "alias",
         };
         ApiEnum<string, NotificationTemplateUpdateRequestState> expectedState =
@@ -185,6 +220,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
@@ -216,6 +258,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
         };
@@ -247,6 +296,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
         };
@@ -277,6 +333,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
 
@@ -311,6 +374,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
 
@@ -344,6 +414,13 @@ public class NotificationTemplateUpdateRequestTest : TestBase
                 Routing = new("strategy_id"),
                 Subscription = new("topic_id"),
                 Tags = ["string"],
+                Email = new()
+                {
+                    Bcc = ["string"],
+                    Cc = ["string"],
+                    From = "from",
+                    ReplyTo = "reply_to",
+                },
                 Alias = "alias",
             },
             State = NotificationTemplateUpdateRequestState.Draft,
