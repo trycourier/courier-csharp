@@ -706,6 +706,8 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
     )
     {
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        ElementalNode? bestMatch = null;
+        int bestScore = -1;
         try
         {
             var deserialized = JsonSerializer.Deserialize<ElementalActionNodeWithType>(
@@ -715,7 +717,35 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channels"
+                                || property.Name == "if"
+                                || property.Name == "loop"
+                                || property.Name == "ref"
+                                || property.Name == "content"
+                                || property.Name == "href"
+                                || property.Name == "action_id"
+                                || property.Name == "align"
+                                || property.Name == "background_color"
+                                || property.Name == "border_radius"
+                                || property.Name == "border_size"
+                                || property.Name == "disable_tracking"
+                                || property.Name == "font_size"
+                                || property.Name == "locales"
+                                || property.Name == "padding"
+                                || property.Name == "style"
+                                || property.Name == "type"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -732,7 +762,31 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channels"
+                                || property.Name == "if"
+                                || property.Name == "loop"
+                                || property.Name == "ref"
+                                || property.Name == "src"
+                                || property.Name == "align"
+                                || property.Name == "alt_text"
+                                || property.Name == "border_color"
+                                || property.Name == "border_size"
+                                || property.Name == "href"
+                                || property.Name == "padding"
+                                || property.Name == "width"
+                                || property.Name == "type"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -749,7 +803,30 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channels"
+                                || property.Name == "if"
+                                || property.Name == "loop"
+                                || property.Name == "ref"
+                                || property.Name == "content"
+                                || property.Name == "align"
+                                || property.Name == "border_color"
+                                || property.Name == "font_size"
+                                || property.Name == "line_height"
+                                || property.Name == "locales"
+                                || property.Name == "text_style"
+                                || property.Name == "type"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -766,7 +843,25 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channels"
+                                || property.Name == "if"
+                                || property.Name == "loop"
+                                || property.Name == "ref"
+                                || property.Name == "content"
+                                || property.Name == "locales"
+                                || property.Name == "type"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -783,7 +878,35 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channels"
+                                || property.Name == "if"
+                                || property.Name == "loop"
+                                || property.Name == "ref"
+                                || property.Name == "align"
+                                || property.Name == "bold"
+                                || property.Name == "color"
+                                || property.Name == "content"
+                                || property.Name == "font_size"
+                                || property.Name == "format"
+                                || property.Name == "italic"
+                                || property.Name == "line_height"
+                                || property.Name == "locales"
+                                || property.Name == "strikethrough"
+                                || property.Name == "text_style"
+                                || property.Name == "underline"
+                                || property.Name == "type"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -800,7 +923,24 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channels"
+                                || property.Name == "if"
+                                || property.Name == "loop"
+                                || property.Name == "ref"
+                                || property.Name == "title"
+                                || property.Name == "type"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -817,7 +957,29 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channels"
+                                || property.Name == "if"
+                                || property.Name == "loop"
+                                || property.Name == "ref"
+                                || property.Name == "channel"
+                                || property.Name == "elements"
+                                || property.Name == "font_size"
+                                || property.Name == "line_height"
+                                || property.Name == "padding"
+                                || property.Name == "raw"
+                                || property.Name == "type"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -834,7 +996,24 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channels"
+                                || property.Name == "if"
+                                || property.Name == "loop"
+                                || property.Name == "ref"
+                                || property.Name == "color"
+                                || property.Name == "type"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -842,6 +1021,10 @@ sealed class ElementalNodeConverter : JsonConverter<ElementalNode>
             // ignore
         }
 
+        if (bestMatch != null)
+        {
+            return bestMatch;
+        }
         return new(element);
     }
 

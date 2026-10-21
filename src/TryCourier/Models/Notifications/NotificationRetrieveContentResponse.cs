@@ -236,6 +236,8 @@ sealed class NotificationRetrieveContentResponseConverter
     )
     {
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        NotificationRetrieveContentResponse? bestMatch = null;
+        int bestScore = -1;
         try
         {
             var deserialized = JsonSerializer.Deserialize<NotificationContentGetResponse>(
@@ -245,7 +247,18 @@ sealed class NotificationRetrieveContentResponseConverter
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property => property.Name == "elements" || property.Name == "version"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -259,7 +272,21 @@ sealed class NotificationRetrieveContentResponseConverter
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "blocks"
+                                || property.Name == "channels"
+                                || property.Name == "checksum"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -267,6 +294,10 @@ sealed class NotificationRetrieveContentResponseConverter
             // ignore
         }
 
+        if (bestMatch != null)
+        {
+            return bestMatch;
+        }
         return new(element);
     }
 

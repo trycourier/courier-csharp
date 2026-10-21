@@ -282,6 +282,8 @@ sealed class JourneySendNodeToSlackConverter : JsonConverter<JourneySendNodeToSl
     )
     {
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        JourneySendNodeToSlack? bestMatch = null;
+        int bestScore = -1;
         try
         {
             var deserialized = JsonSerializer.Deserialize<JourneySendNodeToSlackChannel>(
@@ -291,7 +293,19 @@ sealed class JourneySendNodeToSlackConverter : JsonConverter<JourneySendNodeToSl
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channel" || property.Name == "access_token"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -308,7 +322,19 @@ sealed class JourneySendNodeToSlackConverter : JsonConverter<JourneySendNodeToSl
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "user_id" || property.Name == "access_token"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -325,7 +351,18 @@ sealed class JourneySendNodeToSlackConverter : JsonConverter<JourneySendNodeToSl
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property => property.Name == "email" || property.Name == "access_token"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -333,6 +370,10 @@ sealed class JourneySendNodeToSlackConverter : JsonConverter<JourneySendNodeToSl
             // ignore
         }
 
+        if (bestMatch != null)
+        {
+            return bestMatch;
+        }
         return new(element);
     }
 

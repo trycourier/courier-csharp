@@ -371,6 +371,8 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
     )
     {
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        MsTeams? bestMatch = null;
+        int bestScore = -1;
         try
         {
             var deserialized = JsonSerializer.Deserialize<SendToMsTeamsConversationID>(
@@ -380,7 +382,21 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "conversation_id"
+                                || property.Name == "service_url"
+                                || property.Name == "tenant_id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -397,7 +413,22 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channel_name"
+                                || property.Name == "team_id"
+                                || property.Name == "service_url"
+                                || property.Name == "tenant_id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -411,7 +442,21 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "user_id"
+                                || property.Name == "service_url"
+                                || property.Name == "tenant_id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -425,7 +470,21 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "email"
+                                || property.Name == "service_url"
+                                || property.Name == "tenant_id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -439,7 +498,21 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "channel_id"
+                                || property.Name == "service_url"
+                                || property.Name == "tenant_id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -447,6 +520,10 @@ sealed class MsTeamsConverter : JsonConverter<MsTeams>
             // ignore
         }
 
+        if (bestMatch != null)
+        {
+            return bestMatch;
+        }
         return new(element);
     }
 

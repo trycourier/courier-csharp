@@ -269,13 +269,27 @@ sealed class SlackConverter : JsonConverter<Slack>
     )
     {
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        Slack? bestMatch = null;
+        int bestScore = -1;
         try
         {
             var deserialized = JsonSerializer.Deserialize<SendToSlackChannel>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "access_token" || property.Name == "channel"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -289,7 +303,18 @@ sealed class SlackConverter : JsonConverter<Slack>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property => property.Name == "access_token" || property.Name == "email"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -303,7 +328,19 @@ sealed class SlackConverter : JsonConverter<Slack>
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property =>
+                                property.Name == "access_token" || property.Name == "user_id"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -311,6 +348,10 @@ sealed class SlackConverter : JsonConverter<Slack>
             // ignore
         }
 
+        if (bestMatch != null)
+        {
+            return bestMatch;
+        }
         return new(element);
     }
 

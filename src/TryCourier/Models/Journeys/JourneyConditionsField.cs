@@ -275,13 +275,26 @@ sealed class JourneyConditionsFieldConverter : JsonConverter<JourneyConditionsFi
     )
     {
         var element = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
+        JourneyConditionsField? bestMatch = null;
+        int bestScore = -1;
         try
         {
             var deserialized = JsonSerializer.Deserialize<JourneyConditionGroup>(element, options);
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property => property.Name == "AND" || property.Name == "OR"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -298,7 +311,18 @@ sealed class JourneyConditionsFieldConverter : JsonConverter<JourneyConditionsFi
             if (deserialized != null)
             {
                 deserialized.Validate();
-                return new(deserialized, element);
+                var score =
+                    element.ValueKind == global::System.Text.Json.JsonValueKind.Object
+                        ? global::System.Linq.Enumerable.Count(
+                            element.EnumerateObject(),
+                            property => property.Name == "AND" || property.Name == "OR"
+                        )
+                        : 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -311,7 +335,12 @@ sealed class JourneyConditionsFieldConverter : JsonConverter<JourneyConditionsFi
             var deserialized = JsonSerializer.Deserialize<List<string>>(element, options);
             if (deserialized != null)
             {
-                return new(deserialized, element);
+                var score = 0;
+                if (score > bestScore)
+                {
+                    bestMatch = new(deserialized, element);
+                    bestScore = score;
+                }
             }
         }
         catch (System::Exception e) when (e is JsonException || e is CourierInvalidDataException)
@@ -319,6 +348,10 @@ sealed class JourneyConditionsFieldConverter : JsonConverter<JourneyConditionsFi
             // ignore
         }
 
+        if (bestMatch != null)
+        {
+            return bestMatch;
+        }
         return new(element);
     }
 
