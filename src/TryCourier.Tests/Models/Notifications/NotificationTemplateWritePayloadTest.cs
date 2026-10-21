@@ -29,6 +29,13 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "alias",
         };
 
@@ -48,6 +55,13 @@ public class NotificationTemplateWritePayloadTest : TestBase
         Routing expectedRouting = new("strategy_id");
         Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
+        NotificationTemplateEmail expectedEmail = new()
+        {
+            Bcc = ["string"],
+            Cc = ["string"],
+            From = "from",
+            ReplyTo = "reply_to",
+        };
         string expectedAlias = "alias";
 
         Assert.Equal(expectedBrand, model.Brand);
@@ -60,6 +74,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
         {
             Assert.Equal(expectedTags[i], model.Tags[i]);
         }
+        Assert.Equal(expectedEmail, model.Email);
         Assert.Equal(expectedAlias, model.Alias);
     }
 
@@ -84,6 +99,13 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "alias",
         };
 
@@ -117,6 +139,13 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "alias",
         };
 
@@ -143,6 +172,13 @@ public class NotificationTemplateWritePayloadTest : TestBase
         Routing expectedRouting = new("strategy_id");
         Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
+        NotificationTemplateEmail expectedEmail = new()
+        {
+            Bcc = ["string"],
+            Cc = ["string"],
+            From = "from",
+            ReplyTo = "reply_to",
+        };
         string expectedAlias = "alias";
 
         Assert.Equal(expectedBrand, deserialized.Brand);
@@ -155,6 +191,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
         {
             Assert.Equal(expectedTags[i], deserialized.Tags[i]);
         }
+        Assert.Equal(expectedEmail, deserialized.Email);
         Assert.Equal(expectedAlias, deserialized.Alias);
     }
 
@@ -179,6 +216,13 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "alias",
         };
 
@@ -208,6 +252,8 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Tags = ["string"],
         };
 
+        Assert.Null(model.Email);
+        Assert.False(model.RawData.ContainsKey("email"));
         Assert.Null(model.Alias);
         Assert.False(model.RawData.ContainsKey("alias"));
     }
@@ -260,9 +306,12 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Subscription = new("topic_id"),
             Tags = ["string"],
 
+            Email = null,
             Alias = null,
         };
 
+        Assert.Null(model.Email);
+        Assert.True(model.RawData.ContainsKey("email"));
         Assert.Null(model.Alias);
         Assert.True(model.RawData.ContainsKey("alias"));
     }
@@ -289,6 +338,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Subscription = new("topic_id"),
             Tags = ["string"],
 
+            Email = null,
             Alias = null,
         };
 
@@ -316,6 +366,13 @@ public class NotificationTemplateWritePayloadTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             Alias = "alias",
         };
 

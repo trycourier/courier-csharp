@@ -30,6 +30,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",
@@ -55,6 +62,13 @@ public class NotificationTemplateResponseTest : TestBase
         Routing expectedRouting = new("strategy_id");
         Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
+        NotificationTemplateEmail expectedEmail = new()
+        {
+            Bcc = ["string"],
+            Cc = ["string"],
+            From = "from",
+            ReplyTo = "reply_to",
+        };
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
@@ -74,6 +88,7 @@ public class NotificationTemplateResponseTest : TestBase
         {
             Assert.Equal(expectedTags[i], model.Tags[i]);
         }
+        Assert.Equal(expectedEmail, model.Email);
         Assert.Equal(expectedID, model.ID);
         Assert.Equal(expectedCreated, model.Created);
         Assert.Equal(expectedCreator, model.Creator);
@@ -104,6 +119,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",
@@ -143,6 +165,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",
@@ -175,6 +204,13 @@ public class NotificationTemplateResponseTest : TestBase
         Routing expectedRouting = new("strategy_id");
         Subscription expectedSubscription = new("topic_id");
         List<string> expectedTags = ["string"];
+        NotificationTemplateEmail expectedEmail = new()
+        {
+            Bcc = ["string"],
+            Cc = ["string"],
+            From = "from",
+            ReplyTo = "reply_to",
+        };
         string expectedID = "id";
         long expectedCreated = 0;
         string expectedCreator = "creator";
@@ -194,6 +230,7 @@ public class NotificationTemplateResponseTest : TestBase
         {
             Assert.Equal(expectedTags[i], deserialized.Tags[i]);
         }
+        Assert.Equal(expectedEmail, deserialized.Email);
         Assert.Equal(expectedID, deserialized.ID);
         Assert.Equal(expectedCreated, deserialized.Created);
         Assert.Equal(expectedCreator, deserialized.Creator);
@@ -224,6 +261,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",
@@ -257,6 +301,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",
@@ -292,6 +343,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",
@@ -322,6 +380,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",
@@ -362,6 +427,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",
@@ -371,6 +443,144 @@ public class NotificationTemplateResponseTest : TestBase
             Alias = null,
             Updated = null,
             Updater = null,
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetAreNotSet_Works()
+    {
+        var model = new NotificationTemplateResponse
+        {
+            Brand = new("id"),
+            Content = new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+            },
+            Name = "name",
+            Routing = new("strategy_id"),
+            Subscription = new("topic_id"),
+            Tags = ["string"],
+            ID = "id",
+            Created = 0,
+            Creator = "creator",
+            State = NotificationTemplateResponseFieldsState.Draft,
+            Alias = "string",
+            Updated = 0,
+            Updater = "updater",
+        };
+
+        Assert.Null(model.Email);
+        Assert.False(model.RawData.ContainsKey("email"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesUnsetValidation_Works()
+    {
+        var model = new NotificationTemplateResponse
+        {
+            Brand = new("id"),
+            Content = new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+            },
+            Name = "name",
+            Routing = new("strategy_id"),
+            Subscription = new("topic_id"),
+            Tags = ["string"],
+            ID = "id",
+            Created = 0,
+            Creator = "creator",
+            State = NotificationTemplateResponseFieldsState.Draft,
+            Alias = "string",
+            Updated = 0,
+            Updater = "updater",
+        };
+
+        model.Validate();
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullAreSetToNull_Works()
+    {
+        var model = new NotificationTemplateResponse
+        {
+            Brand = new("id"),
+            Content = new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+            },
+            Name = "name",
+            Routing = new("strategy_id"),
+            Subscription = new("topic_id"),
+            Tags = ["string"],
+            ID = "id",
+            Created = 0,
+            Creator = "creator",
+            State = NotificationTemplateResponseFieldsState.Draft,
+            Alias = "string",
+            Updated = 0,
+            Updater = "updater",
+
+            Email = null,
+        };
+
+        Assert.Null(model.Email);
+        Assert.True(model.RawData.ContainsKey("email"));
+    }
+
+    [Fact]
+    public void OptionalNullablePropertiesSetToNullValidation_Works()
+    {
+        var model = new NotificationTemplateResponse
+        {
+            Brand = new("id"),
+            Content = new()
+            {
+                Elements =
+                [
+                    new ElementalTextNodeWithType()
+                    {
+                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    },
+                ],
+                Version = "version",
+            },
+            Name = "name",
+            Routing = new("strategy_id"),
+            Subscription = new("topic_id"),
+            Tags = ["string"],
+            ID = "id",
+            Created = 0,
+            Creator = "creator",
+            State = NotificationTemplateResponseFieldsState.Draft,
+            Alias = "string",
+            Updated = 0,
+            Updater = "updater",
+
+            Email = null,
         };
 
         model.Validate();
@@ -397,6 +607,13 @@ public class NotificationTemplateResponseTest : TestBase
             Routing = new("strategy_id"),
             Subscription = new("topic_id"),
             Tags = ["string"],
+            Email = new()
+            {
+                Bcc = ["string"],
+                Cc = ["string"],
+                From = "from",
+                ReplyTo = "reply_to",
+            },
             ID = "id",
             Created = 0,
             Creator = "creator",

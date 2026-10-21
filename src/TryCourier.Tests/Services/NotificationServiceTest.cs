@@ -29,6 +29,13 @@ public class NotificationServiceTest : TestBase
                     Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
                     Subscription = new("pt_01kx4h2jdafq8bk9a26x0kvd1t"),
                     Tags = ["onboarding", "welcome"],
+                    Email = new()
+                    {
+                        Bcc = ["string"],
+                        Cc = ["string"],
+                        From = "from",
+                        ReplyTo = "reply_to",
+                    },
                     Alias = "welcome",
                 },
             },
@@ -163,6 +170,13 @@ public class NotificationServiceTest : TestBase
                     Routing = new("strategy_id"),
                     Subscription = new("topic_id"),
                     Tags = ["updated"],
+                    Email = new()
+                    {
+                        Bcc = ["string"],
+                        Cc = ["string"],
+                        From = "from",
+                        ReplyTo = "reply_to",
+                    },
                     Alias = "alias",
                 },
             },
