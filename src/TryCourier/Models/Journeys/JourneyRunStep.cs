@@ -28,6 +28,33 @@ public sealed record class JourneyRunStep : JsonModel
     }
 
     /// <summary>
+    /// Why the step failed. Set when `status` is `ERROR`, `null` otherwise.
+    /// </summary>
+    public required Error? Error
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<Error>("error");
+        }
+        init { this._rawData.Set("error", value); }
+    }
+
+    /// <summary>
+    /// Why the step was skipped, e.g. `Node conditions not met`. Set when `status`
+    /// is `SKIPPED`, `null` otherwise.
+    /// </summary>
+    public required string? SkipReason
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("skip_reason");
+        }
+        init { this._rawData.Set("skip_reason", value); }
+    }
+
+    /// <summary>
     /// The state of the step: the seven run statuses, plus `SKIPPED` and `COMPUTING`.
     /// Not an enum — new values have been added before.
     /// </summary>
@@ -131,6 +158,8 @@ public sealed record class JourneyRunStep : JsonModel
     public override void Validate()
     {
         _ = this.Action;
+        this.Error?.Validate();
+        _ = this.SkipReason;
         _ = this.Status;
         _ = this.CreatedAt;
         _ = this.MessageID;
@@ -171,4 +200,72 @@ class JourneyRunStepFromRaw : IFromRawJson<JourneyRunStep>
     /// <inheritdoc/>
     public JourneyRunStep FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         JourneyRunStep.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// Why the step failed. Set when `status` is `ERROR`, `null` otherwise.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Error, ErrorFromRaw>))]
+public sealed record class Error : JsonModel
+{
+    /// <summary>
+    /// The reason, e.g. `Fetch failed: GET api.example.com returned 404` or `AI step
+    /// timed out after 15 minutes`.
+    /// </summary>
+    public required string Message
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("message");
+        }
+        init { this._rawData.Set("message", value); }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        _ = this.Message;
+    }
+
+    public Error() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Error(Error error)
+        : base(error) { }
+#pragma warning restore CS8618
+
+    public Error(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Error(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="ErrorFromRaw.FromRawUnchecked"/>
+    public static Error FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+
+    [SetsRequiredMembers]
+    public Error(string message)
+        : this()
+    {
+        this.Message = message;
+    }
+}
+
+class ErrorFromRaw : IFromRawJson<Error>
+{
+    /// <inheritdoc/>
+    public Error FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Error.FromRawUnchecked(rawData);
 }

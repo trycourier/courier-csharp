@@ -17,6 +17,8 @@ public class JourneyRunStepsResponseTest : TestBase
                 new()
                 {
                     Action = "action",
+                    Error = new("message"),
+                    SkipReason = "skip_reason",
                     Status = "status",
                     CreatedAt = "created_at",
                     MessageID = "message_id",
@@ -31,6 +33,8 @@ public class JourneyRunStepsResponseTest : TestBase
             new()
             {
                 Action = "action",
+                Error = new("message"),
+                SkipReason = "skip_reason",
                 Status = "status",
                 CreatedAt = "created_at",
                 MessageID = "message_id",
@@ -56,6 +60,8 @@ public class JourneyRunStepsResponseTest : TestBase
                 new()
                 {
                     Action = "action",
+                    Error = new("message"),
+                    SkipReason = "skip_reason",
                     Status = "status",
                     CreatedAt = "created_at",
                     MessageID = "message_id",
@@ -84,6 +90,8 @@ public class JourneyRunStepsResponseTest : TestBase
                 new()
                 {
                     Action = "action",
+                    Error = new("message"),
+                    SkipReason = "skip_reason",
                     Status = "status",
                     CreatedAt = "created_at",
                     MessageID = "message_id",
@@ -105,6 +113,8 @@ public class JourneyRunStepsResponseTest : TestBase
             new()
             {
                 Action = "action",
+                Error = new("message"),
+                SkipReason = "skip_reason",
                 Status = "status",
                 CreatedAt = "created_at",
                 MessageID = "message_id",
@@ -130,6 +140,8 @@ public class JourneyRunStepsResponseTest : TestBase
                 new()
                 {
                     Action = "action",
+                    Error = new("message"),
+                    SkipReason = "skip_reason",
                     Status = "status",
                     CreatedAt = "created_at",
                     MessageID = "message_id",
@@ -152,6 +164,8 @@ public class JourneyRunStepsResponseTest : TestBase
                 new()
                 {
                     Action = "action",
+                    Error = new("message"),
+                    SkipReason = "skip_reason",
                     Status = "status",
                     CreatedAt = "created_at",
                     MessageID = "message_id",
