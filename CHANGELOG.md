@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.13.0](https://github.com/trycourier/courier-csharp/compare/v7.12.0...v7.13.0) (2026-10-23)
+
+
+### Features
+
+* **api:** journey run steps return error and skip_reason ([#129](https://github.com/trycourier/courier-csharp/issues/129)) ([cee994f](https://github.com/trycourier/courier-csharp/commit/cee994f63b60ea977b7860e2bf1ea1c6228747e7))
+
+
+### Chores
+
+* **api:** regenerate SDK ([#131](https://github.com/trycourier/courier-csharp/issues/131)) ([d2bf36f](https://github.com/trycourier/courier-csharp/commit/d2bf36f10a5cbcdee43e16b85b6829041ecf7ea1))
+
 ## [7.12.0](https://github.com/trycourier/courier-csharp/compare/v7.11.3...v7.12.0) (2026-10-21)
 
 
