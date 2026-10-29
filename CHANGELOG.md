@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.0.1](https://github.com/trycourier/courier-csharp/compare/v8.0.0...v8.0.1) (2026-10-29)
+
+
+### Documentation
+
+* **api:** add gpt-6.1-terra to AI node model ids [C-22053] ([#134](https://github.com/trycourier/courier-csharp/issues/134)) ([8af7fc8](https://github.com/trycourier/courier-csharp/commit/8af7fc8bcabd9066dbc225f945908b5ccccdb16e))
+
 ## [8.0.0](https://github.com/trycourier/courier-csharp/compare/v7.13.0...v8.0.0) (2026-10-29)
 
 
