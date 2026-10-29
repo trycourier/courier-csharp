@@ -6,6 +6,7 @@ using TryCourier.Models.Brands;
 using TryCourier.Models.Bulk;
 using TryCourier.Models.Notifications.Previews.Runs;
 using TryCourier.Models.Previews;
+using TryCourier.Models.Providers;
 using TryCourier.Models.WorkspacePreferences;
 using Audiences = TryCourier.Models.Audiences;
 using Broadcasts = TryCourier.Models.Broadcasts;
@@ -83,6 +84,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Send::Criteria>(),
             new ApiEnumConverter<string, Audiences::AudienceOperator>(),
             new ApiEnumConverter<string, Audiences::Operator>(),
+            new ApiEnumConverter<string, Op>(),
             new ApiEnumConverter<string, AutomationTemplateVersion>(),
             new ApiEnumConverter<string, Version>(),
             new ApiEnumConverter<string, Invoke::Action>(),

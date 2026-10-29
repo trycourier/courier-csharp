@@ -96,9 +96,10 @@ public interface IProviderService
     );
 
     /// <summary>
-    /// Updates part of a provider's configuration and keeps every field you omit.
-    /// Settings merge into the stored settings key by key, and a setting sent as null
-    /// is removed.
+    /// Applies JSON Patch (RFC 6902) operations to a provider configuration and keeps
+    /// every field the operations don't touch. Paths address the provider as it is
+    /// returned: /title, /alias and /settings/&lt;key&gt;. The operations apply in
+    /// order, and if one fails, nothing is saved.
     /// </summary>
     Task<Provider> Patch(
         ProviderPatchParams parameters,
@@ -108,7 +109,7 @@ public interface IProviderService
     /// <inheritdoc cref="Patch(ProviderPatchParams, CancellationToken)"/>
     Task<Provider> Patch(
         string id,
-        ProviderPatchParams? parameters = null,
+        ProviderPatchParams parameters,
         CancellationToken cancellationToken = default
     );
 }
@@ -206,7 +207,7 @@ public interface IProviderServiceWithRawResponse
     /// <inheritdoc cref="Patch(ProviderPatchParams, CancellationToken)"/>
     Task<HttpResponse<Provider>> Patch(
         string id,
-        ProviderPatchParams? parameters = null,
+        ProviderPatchParams parameters,
         CancellationToken cancellationToken = default
     );
 }

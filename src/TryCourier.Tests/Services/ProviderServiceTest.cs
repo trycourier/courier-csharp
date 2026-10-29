@@ -1,4 +1,6 @@
+using System.Text.Json;
 using System.Threading.Tasks;
+using TryCourier.Models.Providers;
 
 namespace TryCourier.Tests.Services;
 
@@ -57,7 +59,26 @@ public class ProviderServiceTest : TestBase
     {
         var provider = await this.client.Providers.Patch(
             "id",
-            new(),
+            new()
+            {
+                Patch =
+                [
+                    new()
+                    {
+                        Op = Op.Replace,
+                        Path = "/title",
+                        From = "from",
+                        Value = JsonSerializer.SerializeToElement("Production SendGrid"),
+                    },
+                    new()
+                    {
+                        Op = Op.Replace,
+                        Path = "/settings/api_key",
+                        From = "from",
+                        Value = JsonSerializer.SerializeToElement("SG.xxxxxxxx"),
+                    },
+                ],
+            },
             TestContext.Current.CancellationToken
         );
         provider.Validate();
