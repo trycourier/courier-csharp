@@ -1,5 +1,16 @@
 # Changelog
 
+## [8.0.0](https://github.com/trycourier/courier-csharp/compare/v7.13.0...v8.0.0) (2026-10-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api:** PATCH /providers/{id} takes JSON Patch operations [C-22022] ([#132](https://github.com/trycourier/courier-csharp/issues/132))
+
+### Features
+
+* **api:** PATCH /providers/{id} takes JSON Patch operations [C-22022] ([#132](https://github.com/trycourier/courier-csharp/issues/132)) ([d932a66](https://github.com/trycourier/courier-csharp/commit/d932a66b9aad15841e27f40bfe8188d08a2da16d))
+
 ## [7.13.0](https://github.com/trycourier/courier-csharp/compare/v7.12.0...v7.13.0) (2026-10-23)
 
 
