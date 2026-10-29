@@ -148,12 +148,10 @@ public sealed class ProviderService : IProviderService
     /// <inheritdoc/>
     public Task<Provider> Patch(
         string id,
-        ProviderPatchParams? parameters = null,
+        ProviderPatchParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        parameters ??= new();
-
         return this.Patch(parameters with { ID = id }, cancellationToken);
     }
 }
@@ -387,12 +385,10 @@ public sealed class ProviderServiceWithRawResponse : IProviderServiceWithRawResp
     /// <inheritdoc/>
     public Task<HttpResponse<Provider>> Patch(
         string id,
-        ProviderPatchParams? parameters = null,
+        ProviderPatchParams parameters,
         CancellationToken cancellationToken = default
     )
     {
-        parameters ??= new();
-
         return this.Patch(parameters with { ID = id }, cancellationToken);
     }
 }

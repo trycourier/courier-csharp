@@ -1,17 +1,22 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using TryCourier.Core;
+using TryCourier.Exceptions;
+using System = System;
 
 namespace TryCourier.Models.Providers;
 
 /// <summary>
-/// Updates part of a provider's configuration and keeps every field you omit. Settings
-/// merge into the stored settings key by key, and a setting sent as null is removed.
+/// Applies JSON Patch (RFC 6902) operations to a provider configuration and keeps
+/// every field the operations don't touch. Paths address the provider as it is returned:
+/// /title, /alias and /settings/&lt;key&gt;. The operations apply in order, and
+/// if one fails, nothing is saved.
 ///
 /// <para>NOTE: Do not inherit from this type outside the SDK unless you're okay with
 /// breaking changes in non-major versions. We may add new methods in the future that
@@ -28,88 +33,26 @@ public record class ProviderPatchParams : ParamsBase
     public string? ID { get; init; }
 
     /// <summary>
-    /// Updated alias. Set to null to clear it.
+    /// Operations to apply, in order. Paths address the provider as it is returned:
+    /// `/title`, `/alias`, `/provider`, and `/settings/&lt;key&gt;` with the snake_case
+    /// setting keys, including nested paths such as `/settings/rate_limit/rate`.
+    /// If any operation fails, for example a `test`, nothing is saved and the request
+    /// returns a 400. The result can't change `provider`, remove `title`, or add
+    /// other top-level fields. Removing `/alias` clears it.
     /// </summary>
-    public string? Alias
+    public required IReadOnlyList<Patch> Patch
     {
         get
         {
             this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("alias");
-        }
-        init { this._rawBodyData.Set("alias", value); }
-    }
-
-    /// <summary>
-    /// The provider key identifying the type. Optional. When sent, it must match
-    /// the stored provider, otherwise the request returns a 400.
-    /// </summary>
-    public string? Provider
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("provider");
+            return this._rawBodyData.GetNotNullStruct<ImmutableArray<Patch>>("patch");
         }
         init
         {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("provider", value);
-        }
-    }
-
-    /// <summary>
-    /// Provider-specific settings (snake_case keys) to merge into the stored settings,
-    /// using JSON Merge Patch (RFC 7396). Each key you send replaces the stored value,
-    /// a key set to null is removed, nested objects merge recursively, and arrays
-    /// replace the stored value. Keys you omit keep their stored values. Set `rate_limit`
-    /// to null to remove this configuration's send rate limit.
-    /// </summary>
-    public IReadOnlyDictionary<string, JsonElement>? Settings
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<FrozenDictionary<string, JsonElement>>(
-                "settings"
+            this._rawBodyData.Set<ImmutableArray<Patch>>(
+                "patch",
+                ImmutableArray.ToImmutableArray(value)
             );
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set<FrozenDictionary<string, JsonElement>?>(
-                "settings",
-                value == null ? null : FrozenDictionary.ToFrozenDictionary(value)
-            );
-        }
-    }
-
-    /// <summary>
-    /// Updated display title.
-    /// </summary>
-    public string? Title
-    {
-        get
-        {
-            this._rawBodyData.Freeze();
-            return this._rawBodyData.GetNullableClass<string>("title");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawBodyData.Set("title", value);
         }
     }
 
@@ -199,9 +142,9 @@ public record class ProviderPatchParams : ParamsBase
             && this._rawBodyData.Equals(other._rawBodyData);
     }
 
-    public override Uri Url(ClientOptions options)
+    public override System::Uri Url(ClientOptions options)
     {
-        return new UriBuilder(
+        return new System::UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/') + string.Format("/providers/{0}", this.ID)
         )
         {
@@ -230,5 +173,178 @@ public record class ProviderPatchParams : ParamsBase
     public override int GetHashCode()
     {
         return 0;
+    }
+}
+
+/// <summary>
+/// One JSON Patch (RFC 6902) operation.
+/// </summary>
+[JsonConverter(typeof(JsonModelConverter<Patch, PatchFromRaw>))]
+public sealed record class Patch : JsonModel
+{
+    /// <summary>
+    /// The operation to perform.
+    /// </summary>
+    public required ApiEnum<string, Op> Op
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<ApiEnum<string, Op>>("op");
+        }
+        init { this._rawData.Set("op", value); }
+    }
+
+    /// <summary>
+    /// JSON Pointer to the field to operate on, such as `/settings/api_key`.
+    /// </summary>
+    public required string Path
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNotNullClass<string>("path");
+        }
+        init { this._rawData.Set("path", value); }
+    }
+
+    /// <summary>
+    /// JSON Pointer to the source field for `move` and `copy`.
+    /// </summary>
+    public string? From
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("from");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("from", value);
+        }
+    }
+
+    /// <summary>
+    /// The value for `add`, `replace` and `test`. Any JSON value.
+    /// </summary>
+    public JsonElement? Value
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableStruct<JsonElement>("value");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("value", value);
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void Validate()
+    {
+        this.Op.Validate();
+        _ = this.Path;
+        _ = this.From;
+        _ = this.Value;
+    }
+
+    public Patch() { }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    public Patch(Patch patch)
+        : base(patch) { }
+#pragma warning restore CS8618
+
+    public Patch(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+
+#pragma warning disable CS8618
+    [SetsRequiredMembers]
+    Patch(FrozenDictionary<string, JsonElement> rawData)
+    {
+        this._rawData = new(rawData);
+    }
+#pragma warning restore CS8618
+
+    /// <inheritdoc cref="PatchFromRaw.FromRawUnchecked"/>
+    public static Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData)
+    {
+        return new(FrozenDictionary.ToFrozenDictionary(rawData));
+    }
+}
+
+class PatchFromRaw : IFromRawJson<Patch>
+{
+    /// <inheritdoc/>
+    public Patch FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
+        Patch.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// The operation to perform.
+/// </summary>
+[JsonConverter(typeof(OpConverter))]
+public enum Op
+{
+    Add,
+    Remove,
+    Replace,
+    Move,
+    Copy,
+    Test,
+}
+
+sealed class OpConverter : JsonConverter<Op>
+{
+    public override Op Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "add" => Op.Add,
+            "remove" => Op.Remove,
+            "replace" => Op.Replace,
+            "move" => Op.Move,
+            "copy" => Op.Copy,
+            "test" => Op.Test,
+            _ => (Op)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Op value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Op.Add => "add",
+                Op.Remove => "remove",
+                Op.Replace => "replace",
+                Op.Move => "move",
+                Op.Copy => "copy",
+                Op.Test => "test",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
     }
 }
