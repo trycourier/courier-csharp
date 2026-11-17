@@ -10,6 +10,14 @@ jobs:
   publish:
     name: publish
     runs-on: ubuntu-latest
+    # Trusted Publishing: nuget.org's "Publish to Nuget" policy (owner
+    # courier-inc) trusts this repo, this workflow file and this environment,
+    # and swaps the job's GitHub OIDC token for a short-lived NuGet key. No
+    # long-lived API key to expire (NUGET_API_KEY expired 2026-11).
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -24,10 +32,17 @@ jobs:
           --configuration Release
           --output "${{github.workspace}}/artifacts/packages"
 
+      - name: Log in to nuget.org
+        id: nuget_login
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+        with:
+          # The nuget.org account that owns the Trusted Publishing policy.
+          user: mikecourier
+
       - name: Publish package to nuget.org
         run: dotnet nuget push
           $(find ${{ github.workspace }}/artifacts/packages/*.nupkg ! -name "*.symbols.nupkg")
           --source https://api.nuget.org/v3/index.json
           --api-key $NUGET_API_KEY
         env:
-          NUGET_API_KEY: ${{ secrets.COURIER_NUGET_API_KEY || secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
