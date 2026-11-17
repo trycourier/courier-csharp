@@ -1,5 +1,18 @@
 # Changelog
 
+## [8.0.1](https://github.com/trycourier/courier-csharp/compare/v8.0.0...v8.0.1) (2026-11-17)
+
+
+### Chores
+
+* **api:** regenerate SDK ([#136](https://github.com/trycourier/courier-csharp/issues/136)) ([31276bf](https://github.com/trycourier/courier-csharp/commit/31276bfe912ddf9e7b0158278f56bd9bbd3f6664))
+
+
+### Documentation
+
+* **api:** add gpt-6.1-terra to AI node model ids [C-22053] ([#134](https://github.com/trycourier/courier-csharp/issues/134)) ([8af7fc8](https://github.com/trycourier/courier-csharp/commit/8af7fc8bcabd9066dbc225f945908b5ccccdb16e))
+* **api:** list Claude Fable 5.2 as a JourneyAINode model [C-22567] ([#137](https://github.com/trycourier/courier-csharp/issues/137)) ([44d4e0e](https://github.com/trycourier/courier-csharp/commit/44d4e0eb034ca419700154c20d387ac57d9b236a))
+
 ## [8.0.0](https://github.com/trycourier/courier-csharp/compare/v7.13.0...v8.0.0) (2026-10-29)
 
 
