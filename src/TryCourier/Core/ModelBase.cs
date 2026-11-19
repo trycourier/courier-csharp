@@ -11,6 +11,7 @@ using TryCourier.Models.WorkspacePreferences;
 using Audiences = TryCourier.Models.Audiences;
 using Broadcasts = TryCourier.Models.Broadcasts;
 using Digests = TryCourier.Models.Digests;
+using Feedback = TryCourier.Models.Feedback;
 using Inbound = TryCourier.Models.Inbound;
 using Invoke = TryCourier.Models.Automations.Invoke;
 using Items = TryCourier.Models.Tenants.Preferences.Items;
@@ -174,6 +175,8 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Digests::DigestFrequency>(),
             new ApiEnumConverter<string, Digests::Status>(),
             new ApiEnumConverter<string, Digests::Type>(),
+            new ApiEnumConverter<string, Feedback::Category>(),
+            new ApiEnumConverter<string, Feedback::Surface>(),
             new ApiEnumConverter<string, Inbound::Type>(),
             new ApiEnumConverter<string, Messages::Status>(),
             new ApiEnumConverter<string, Messages::Reason>(),
