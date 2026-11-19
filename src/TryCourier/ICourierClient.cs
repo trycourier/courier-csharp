@@ -75,6 +75,8 @@ public interface ICourierClient : IDisposable
 
     IDigestService Digests { get; }
 
+    IFeedbackService Feedback { get; }
+
     IInboundService Inbound { get; }
 
     IListService Lists { get; }
@@ -150,6 +152,8 @@ public interface ICourierClientWithRawResponse : IDisposable
     IBrandServiceWithRawResponse Brands { get; }
 
     IDigestServiceWithRawResponse Digests { get; }
+
+    IFeedbackServiceWithRawResponse Feedback { get; }
 
     IInboundServiceWithRawResponse Inbound { get; }
 
