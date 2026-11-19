@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.1.0](https://github.com/trycourier/courier-csharp/compare/v8.0.1...v8.1.0) (2026-11-19)
+
+
+### Features
+
+* **api:** add POST /feedback for agent and tool feedback [C-22903] ([#141](https://github.com/trycourier/courier-csharp/issues/141)) ([552e6dd](https://github.com/trycourier/courier-csharp/commit/552e6dd8409bafba11ae87b6fe2ee010c4ed8825))
+
+
+### Documentation
+
+* **api:** list GPT-6.2 Astra and Sol as JourneyAINode models [C-22881] ([#139](https://github.com/trycourier/courier-csharp/issues/139)) ([cc80022](https://github.com/trycourier/courier-csharp/commit/cc800226807f9b446b484d1b4cc46e04d484a4c5))
+
 ## [8.0.1](https://github.com/trycourier/courier-csharp/compare/v8.0.0...v8.0.1) (2026-11-17)
 
 
