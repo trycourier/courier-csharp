@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.1.1](https://github.com/trycourier/courier-csharp/compare/v8.1.0...v8.1.1) (2026-11-20)
+
+
+### Chores
+
+* add context7.json to claim the Context7 library ([#142](https://github.com/trycourier/courier-csharp/issues/142)) ([ac5ae76](https://github.com/trycourier/courier-csharp/commit/ac5ae762ef00b21f73b60504cc3254857f6522e2))
+
 ## [8.1.0](https://github.com/trycourier/courier-csharp/compare/v8.0.1...v8.1.0) (2026-11-19)
 
 
