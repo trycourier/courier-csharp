@@ -43,6 +43,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -85,6 +86,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 },
             ],
             Version = "version",
+            Scope = Scope.Default,
         };
         string expectedName = "name";
         Notifications::Routing expectedRouting = new("strategy_id");
@@ -148,6 +150,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -208,6 +211,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -258,6 +262,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                 },
             ],
             Version = "version",
+            Scope = Scope.Default,
         };
         string expectedName = "name";
         Notifications::Routing expectedRouting = new("strategy_id");
@@ -321,6 +326,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -374,6 +380,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -422,6 +429,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -467,6 +475,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -518,6 +527,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -566,6 +576,7 @@ public class NotificationTemplateWritePayloadTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),

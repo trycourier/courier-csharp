@@ -44,6 +44,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -136,6 +137,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Channels = new Dictionary<string, Channel>()
             {
@@ -236,6 +238,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -342,6 +345,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -441,6 +445,7 @@ public class PutTenantTemplateRequestTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Channels = new Dictionary<string, Channel>()
             {
@@ -541,6 +546,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -641,6 +647,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -741,6 +748,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -840,6 +848,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -943,6 +952,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {
@@ -1045,6 +1055,7 @@ public class PutTenantTemplateRequestTest : TestBase
                         },
                     ],
                     Version = "version",
+                    Scope = Scope.Default,
                 },
                 Channels = new Dictionary<string, Channel>()
                 {

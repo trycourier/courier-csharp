@@ -694,7 +694,10 @@ sealed class ContentConverter : JsonConverter<Content>
                     element.ValueKind == global::System.Text.Json.JsonValueKind.Object
                         ? global::System.Linq.Enumerable.Count(
                             element.EnumerateObject(),
-                            property => property.Name == "elements" || property.Name == "version"
+                            property =>
+                                property.Name == "elements"
+                                || property.Name == "version"
+                                || property.Name == "scope"
                         )
                         : 0;
                 if (score > bestScore)

@@ -3073,6 +3073,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = "version",
+            Scope = Models::Scope.Default,
         };
         value.Validate();
     }
@@ -3122,6 +3123,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = "version",
+            Scope = Models::Scope.Default,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Content>(

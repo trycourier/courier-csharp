@@ -42,6 +42,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Channels = new Dictionary<string, Channel>()
             {
@@ -127,6 +128,7 @@ public class TenantTemplateInputTest : TestBase
                 },
             ],
             Version = "version",
+            Scope = Scope.Default,
         };
         Dictionary<string, Channel> expectedChannels = new()
         {
@@ -239,6 +241,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Channels = new Dictionary<string, Channel>()
             {
@@ -341,6 +344,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Channels = new Dictionary<string, Channel>()
             {
@@ -433,6 +437,7 @@ public class TenantTemplateInputTest : TestBase
                 },
             ],
             Version = "version",
+            Scope = Scope.Default,
         };
         Dictionary<string, Channel> expectedChannels = new()
         {
@@ -545,6 +550,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Channels = new Dictionary<string, Channel>()
             {
@@ -641,6 +647,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
         };
 
@@ -686,6 +693,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
         };
 
@@ -726,6 +734,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
 
             // Null should be interpreted as omitted for these properties
@@ -776,6 +785,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
 
             // Null should be interpreted as omitted for these properties
@@ -821,6 +831,7 @@ public class TenantTemplateInputTest : TestBase
                     },
                 ],
                 Version = "version",
+                Scope = Scope.Default,
             },
             Channels = new Dictionary<string, Channel>()
             {

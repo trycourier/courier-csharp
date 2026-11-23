@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using TryCourier.Core;
-using TryCourier.Models;
+using TryCourier.Exceptions;
 using TryCourier.Models.Broadcasts;
+using Models = TryCourier.Models;
 using Notifications = TryCourier.Models.Notifications;
 
 namespace TryCourier.Tests.Models.Broadcasts;
@@ -20,39 +21,40 @@ public class BroadcastPutContentParamsTest : TestBase
             {
                 Elements =
                 [
-                    new ElementalMetaNodeWithType()
+                    new Models::ElementalMetaNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
                         Title = "Spring Sale is here",
-                        Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+                        Type = Models::ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
-                    new ElementalTextNodeWithType()
+                    new Models::ElementalTextNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
-                        Align = Align.Left,
+                        Align = Models::Align.Left,
                         Bold = "bold",
                         Color = "color",
                         Content = "Hello! Check out our spring sale.",
                         FontSize = "font_size",
-                        Format = Format.Markdown,
+                        Format = Models::Format.Markdown,
                         Italic = "italic",
                         LineHeight = "line_height",
-                        Locales = new Dictionary<string, LocalesItem>()
+                        Locales = new Dictionary<string, Models::LocalesItem>()
                         {
                             { "foo", new("content") },
                         },
                         Strikethrough = "strikethrough",
-                        TextStyle = TextStyle.Text,
+                        TextStyle = Models::TextStyle.Text,
                         Underline = "underline",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Scope.Default,
                 Version = "2022-01-01",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -63,36 +65,40 @@ public class BroadcastPutContentParamsTest : TestBase
         {
             Elements =
             [
-                new ElementalMetaNodeWithType()
+                new Models::ElementalMetaNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
                     Title = "Spring Sale is here",
-                    Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+                    Type = Models::ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                 },
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "Hello! Check out our spring sale.",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Scope.Default,
             Version = "2022-01-01",
         };
         ApiEnum<string, Notifications::NotificationTemplateState> expectedState =
@@ -113,39 +119,40 @@ public class BroadcastPutContentParamsTest : TestBase
             {
                 Elements =
                 [
-                    new ElementalMetaNodeWithType()
+                    new Models::ElementalMetaNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
                         Title = "Spring Sale is here",
-                        Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+                        Type = Models::ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
-                    new ElementalTextNodeWithType()
+                    new Models::ElementalTextNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
-                        Align = Align.Left,
+                        Align = Models::Align.Left,
                         Bold = "bold",
                         Color = "color",
                         Content = "Hello! Check out our spring sale.",
                         FontSize = "font_size",
-                        Format = Format.Markdown,
+                        Format = Models::Format.Markdown,
                         Italic = "italic",
                         LineHeight = "line_height",
-                        Locales = new Dictionary<string, LocalesItem>()
+                        Locales = new Dictionary<string, Models::LocalesItem>()
                         {
                             { "foo", new("content") },
                         },
                         Strikethrough = "strikethrough",
-                        TextStyle = TextStyle.Text,
+                        TextStyle = Models::TextStyle.Text,
                         Underline = "underline",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Scope.Default,
                 Version = "2022-01-01",
             },
         };
@@ -164,39 +171,40 @@ public class BroadcastPutContentParamsTest : TestBase
             {
                 Elements =
                 [
-                    new ElementalMetaNodeWithType()
+                    new Models::ElementalMetaNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
                         Title = "Spring Sale is here",
-                        Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+                        Type = Models::ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
-                    new ElementalTextNodeWithType()
+                    new Models::ElementalTextNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
-                        Align = Align.Left,
+                        Align = Models::Align.Left,
                         Bold = "bold",
                         Color = "color",
                         Content = "Hello! Check out our spring sale.",
                         FontSize = "font_size",
-                        Format = Format.Markdown,
+                        Format = Models::Format.Markdown,
                         Italic = "italic",
                         LineHeight = "line_height",
-                        Locales = new Dictionary<string, LocalesItem>()
+                        Locales = new Dictionary<string, Models::LocalesItem>()
                         {
                             { "foo", new("content") },
                         },
                         Strikethrough = "strikethrough",
-                        TextStyle = TextStyle.Text,
+                        TextStyle = Models::TextStyle.Text,
                         Underline = "underline",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Scope.Default,
                 Version = "2022-01-01",
             },
 
@@ -218,39 +226,40 @@ public class BroadcastPutContentParamsTest : TestBase
             {
                 Elements =
                 [
-                    new ElementalMetaNodeWithType()
+                    new Models::ElementalMetaNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
                         Title = "Spring Sale is here",
-                        Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+                        Type = Models::ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
-                    new ElementalTextNodeWithType()
+                    new Models::ElementalTextNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
-                        Align = Align.Left,
+                        Align = Models::Align.Left,
                         Bold = "bold",
                         Color = "color",
                         Content = "Hello! Check out our spring sale.",
                         FontSize = "font_size",
-                        Format = Format.Markdown,
+                        Format = Models::Format.Markdown,
                         Italic = "italic",
                         LineHeight = "line_height",
-                        Locales = new Dictionary<string, LocalesItem>()
+                        Locales = new Dictionary<string, Models::LocalesItem>()
                         {
                             { "foo", new("content") },
                         },
                         Strikethrough = "strikethrough",
-                        TextStyle = TextStyle.Text,
+                        TextStyle = Models::TextStyle.Text,
                         Underline = "underline",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Scope.Default,
                 Version = "2022-01-01",
             },
         };
@@ -275,39 +284,40 @@ public class BroadcastPutContentParamsTest : TestBase
             {
                 Elements =
                 [
-                    new ElementalMetaNodeWithType()
+                    new Models::ElementalMetaNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
                         Title = "Spring Sale is here",
-                        Type = ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
+                        Type = Models::ElementalMetaNodeWithTypeIntersectionMember1Type.Meta,
                     },
-                    new ElementalTextNodeWithType()
+                    new Models::ElementalTextNodeWithType()
                     {
                         Channels = ["string"],
                         If = "if",
                         Loop = "loop",
                         Ref = "ref",
-                        Align = Align.Left,
+                        Align = Models::Align.Left,
                         Bold = "bold",
                         Color = "color",
                         Content = "Hello! Check out our spring sale.",
                         FontSize = "font_size",
-                        Format = Format.Markdown,
+                        Format = Models::Format.Markdown,
                         Italic = "italic",
                         LineHeight = "line_height",
-                        Locales = new Dictionary<string, LocalesItem>()
+                        Locales = new Dictionary<string, Models::LocalesItem>()
                         {
                             { "foo", new("content") },
                         },
                         Strikethrough = "strikethrough",
-                        TextStyle = TextStyle.Text,
+                        TextStyle = Models::TextStyle.Text,
                         Underline = "underline",
-                        Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                        Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Scope.Default,
                 Version = "2022-01-01",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -328,53 +338,61 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Scope.Default,
             Version = "version",
         };
 
-        List<ElementalNode> expectedElements =
+        List<Models::ElementalNode> expectedElements =
         [
-            new ElementalTextNodeWithType()
+            new Models::ElementalTextNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
                 Loop = "loop",
                 Ref = "ref",
-                Align = Align.Left,
+                Align = Models::Align.Left,
                 Bold = "bold",
                 Color = "color",
                 Content = "content",
                 FontSize = "font_size",
-                Format = Format.Markdown,
+                Format = Models::Format.Markdown,
                 Italic = "italic",
                 LineHeight = "line_height",
-                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Locales = new Dictionary<string, Models::LocalesItem>()
+                {
+                    { "foo", new("content") },
+                },
                 Strikethrough = "strikethrough",
-                TextStyle = TextStyle.Text,
+                TextStyle = Models::TextStyle.Text,
                 Underline = "underline",
-                Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
+        ApiEnum<string, Scope> expectedScope = Scope.Default;
         string expectedVersion = "version";
 
         Assert.Equal(expectedElements.Count, model.Elements.Count);
@@ -382,6 +400,7 @@ public class ContentTest : TestBase
         {
             Assert.Equal(expectedElements[i], model.Elements[i]);
         }
+        Assert.Equal(expectedScope, model.Scope);
         Assert.Equal(expectedVersion, model.Version);
     }
 
@@ -392,27 +411,31 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Scope.Default,
             Version = "version",
         };
 
@@ -429,27 +452,31 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Scope.Default,
             Version = "version",
         };
 
@@ -460,29 +487,33 @@ public class ContentTest : TestBase
         );
         Assert.NotNull(deserialized);
 
-        List<ElementalNode> expectedElements =
+        List<Models::ElementalNode> expectedElements =
         [
-            new ElementalTextNodeWithType()
+            new Models::ElementalTextNodeWithType()
             {
                 Channels = ["string"],
                 If = "if",
                 Loop = "loop",
                 Ref = "ref",
-                Align = Align.Left,
+                Align = Models::Align.Left,
                 Bold = "bold",
                 Color = "color",
                 Content = "content",
                 FontSize = "font_size",
-                Format = Format.Markdown,
+                Format = Models::Format.Markdown,
                 Italic = "italic",
                 LineHeight = "line_height",
-                Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                Locales = new Dictionary<string, Models::LocalesItem>()
+                {
+                    { "foo", new("content") },
+                },
                 Strikethrough = "strikethrough",
-                TextStyle = TextStyle.Text,
+                TextStyle = Models::TextStyle.Text,
                 Underline = "underline",
-                Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
+        ApiEnum<string, Scope> expectedScope = Scope.Default;
         string expectedVersion = "version";
 
         Assert.Equal(expectedElements.Count, deserialized.Elements.Count);
@@ -490,6 +521,7 @@ public class ContentTest : TestBase
         {
             Assert.Equal(expectedElements[i], deserialized.Elements[i]);
         }
+        Assert.Equal(expectedScope, deserialized.Scope);
         Assert.Equal(expectedVersion, deserialized.Version);
     }
 
@@ -500,27 +532,31 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Scope.Default,
             Version = "version",
         };
 
@@ -534,29 +570,34 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
         };
 
+        Assert.Null(model.Scope);
+        Assert.False(model.RawData.ContainsKey("scope"));
         Assert.Null(model.Version);
         Assert.False(model.RawData.ContainsKey("version"));
     }
@@ -568,25 +609,28 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
         };
@@ -601,32 +645,38 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
 
             // Null should be interpreted as omitted for these properties
+            Scope = null,
             Version = null,
         };
 
+        Assert.Null(model.Scope);
+        Assert.False(model.RawData.ContainsKey("scope"));
         Assert.Null(model.Version);
         Assert.False(model.RawData.ContainsKey("version"));
     }
@@ -638,29 +688,33 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
 
             // Null should be interpreted as omitted for these properties
+            Scope = null,
             Version = null,
         };
 
@@ -674,32 +728,94 @@ public class ContentTest : TestBase
         {
             Elements =
             [
-                new ElementalTextNodeWithType()
+                new Models::ElementalTextNodeWithType()
                 {
                     Channels = ["string"],
                     If = "if",
                     Loop = "loop",
                     Ref = "ref",
-                    Align = Align.Left,
+                    Align = Models::Align.Left,
                     Bold = "bold",
                     Color = "color",
                     Content = "content",
                     FontSize = "font_size",
-                    Format = Format.Markdown,
+                    Format = Models::Format.Markdown,
                     Italic = "italic",
                     LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
+                    Locales = new Dictionary<string, Models::LocalesItem>()
+                    {
+                        { "foo", new("content") },
+                    },
                     Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
+                    TextStyle = Models::TextStyle.Text,
                     Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
+                    Type = Models::ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Scope.Default,
             Version = "version",
         };
 
         Content copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class ScopeTest : TestBase
+{
+    [Theory]
+    [InlineData(Scope.Default)]
+    [InlineData(Scope.Strict)]
+    public void Validation_Works(Scope rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Scope> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+
+        Assert.NotNull(value);
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Scope.Default)]
+    [InlineData(Scope.Strict)]
+    public void SerializationRoundtrip_Works(Scope rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Scope> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+            JsonSerializer.SerializeToElement("invalid value"),
+            ModelBase.SerializerOptions
+        );
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Scope>>(
+            json,
+            ModelBase.SerializerOptions
+        );
+
+        Assert.Equal(value, deserialized);
     }
 }

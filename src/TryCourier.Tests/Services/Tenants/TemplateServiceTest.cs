@@ -108,6 +108,7 @@ public class TemplateServiceTest : TestBase
                             },
                         ],
                         Version = "2022-01-01",
+                        Scope = Scope.Default,
                     },
                     Channels = new Dictionary<string, Channel>()
                     {
