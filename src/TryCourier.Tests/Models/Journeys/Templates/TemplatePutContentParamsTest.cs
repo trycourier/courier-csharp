@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using TryCourier.Core;
+using TryCourier.Exceptions;
 using TryCourier.Models;
 using TryCourier.Models.Journeys.Templates;
 using Notifications = TryCourier.Models.Notifications;
@@ -73,6 +74,7 @@ public class TemplatePutContentParamsTest : TestBase
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
+                Scope = TemplatePutContentParamsContentScope.Default,
                 Version = "2022-01-01",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -136,6 +138,7 @@ public class TemplatePutContentParamsTest : TestBase
                     Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                 },
             ],
+            Scope = TemplatePutContentParamsContentScope.Default,
             Version = "2022-01-01",
         };
         ApiEnum<string, Notifications::NotificationTemplateState> expectedState =
@@ -210,6 +213,7 @@ public class TemplatePutContentParamsTest : TestBase
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
+                Scope = TemplatePutContentParamsContentScope.Default,
                 Version = "2022-01-01",
             },
         };
@@ -281,6 +285,7 @@ public class TemplatePutContentParamsTest : TestBase
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
+                Scope = TemplatePutContentParamsContentScope.Default,
                 Version = "2022-01-01",
             },
 
@@ -355,6 +360,7 @@ public class TemplatePutContentParamsTest : TestBase
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
+                Scope = TemplatePutContentParamsContentScope.Default,
                 Version = "2022-01-01",
             },
         };
@@ -432,6 +438,7 @@ public class TemplatePutContentParamsTest : TestBase
                         Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                     },
                 ],
+                Scope = TemplatePutContentParamsContentScope.Default,
                 Version = "2022-01-01",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -473,6 +480,7 @@ public class TemplatePutContentParamsContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = TemplatePutContentParamsContentScope.Default,
             Version = "version",
         };
 
@@ -499,6 +507,8 @@ public class TemplatePutContentParamsContentTest : TestBase
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
+        ApiEnum<string, TemplatePutContentParamsContentScope> expectedScope =
+            TemplatePutContentParamsContentScope.Default;
         string expectedVersion = "version";
 
         Assert.Equal(expectedElements.Count, model.Elements.Count);
@@ -506,6 +516,7 @@ public class TemplatePutContentParamsContentTest : TestBase
         {
             Assert.Equal(expectedElements[i], model.Elements[i]);
         }
+        Assert.Equal(expectedScope, model.Scope);
         Assert.Equal(expectedVersion, model.Version);
     }
 
@@ -537,6 +548,7 @@ public class TemplatePutContentParamsContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = TemplatePutContentParamsContentScope.Default,
             Version = "version",
         };
 
@@ -577,6 +589,7 @@ public class TemplatePutContentParamsContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = TemplatePutContentParamsContentScope.Default,
             Version = "version",
         };
 
@@ -610,6 +623,8 @@ public class TemplatePutContentParamsContentTest : TestBase
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
+        ApiEnum<string, TemplatePutContentParamsContentScope> expectedScope =
+            TemplatePutContentParamsContentScope.Default;
         string expectedVersion = "version";
 
         Assert.Equal(expectedElements.Count, deserialized.Elements.Count);
@@ -617,6 +632,7 @@ public class TemplatePutContentParamsContentTest : TestBase
         {
             Assert.Equal(expectedElements[i], deserialized.Elements[i]);
         }
+        Assert.Equal(expectedScope, deserialized.Scope);
         Assert.Equal(expectedVersion, deserialized.Version);
     }
 
@@ -648,6 +664,7 @@ public class TemplatePutContentParamsContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = TemplatePutContentParamsContentScope.Default,
             Version = "version",
         };
 
@@ -684,6 +701,8 @@ public class TemplatePutContentParamsContentTest : TestBase
             ],
         };
 
+        Assert.Null(model.Scope);
+        Assert.False(model.RawData.ContainsKey("scope"));
         Assert.Null(model.Version);
         Assert.False(model.RawData.ContainsKey("version"));
     }
@@ -751,9 +770,12 @@ public class TemplatePutContentParamsContentTest : TestBase
             ],
 
             // Null should be interpreted as omitted for these properties
+            Scope = null,
             Version = null,
         };
 
+        Assert.Null(model.Scope);
+        Assert.False(model.RawData.ContainsKey("scope"));
         Assert.Null(model.Version);
         Assert.False(model.RawData.ContainsKey("version"));
     }
@@ -788,6 +810,7 @@ public class TemplatePutContentParamsContentTest : TestBase
             ],
 
             // Null should be interpreted as omitted for these properties
+            Scope = null,
             Version = null,
         };
 
@@ -822,11 +845,66 @@ public class TemplatePutContentParamsContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = TemplatePutContentParamsContentScope.Default,
             Version = "version",
         };
 
         TemplatePutContentParamsContent copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class TemplatePutContentParamsContentScopeTest : TestBase
+{
+    [Theory]
+    [InlineData(TemplatePutContentParamsContentScope.Default)]
+    [InlineData(TemplatePutContentParamsContentScope.Strict)]
+    public void Validation_Works(TemplatePutContentParamsContentScope rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, TemplatePutContentParamsContentScope> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, TemplatePutContentParamsContentScope>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(TemplatePutContentParamsContentScope.Default)]
+    [InlineData(TemplatePutContentParamsContentScope.Strict)]
+    public void SerializationRoundtrip_Works(TemplatePutContentParamsContentScope rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, TemplatePutContentParamsContentScope> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, TemplatePutContentParamsContentScope>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, TemplatePutContentParamsContentScope>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, TemplatePutContentParamsContentScope>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }

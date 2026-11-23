@@ -410,6 +410,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = "version",
+            Scope = Scope.Default,
         };
         value.Validate();
     }
@@ -456,6 +457,7 @@ public class ContentTest : TestBase
                 },
             ],
             Version = "version",
+            Scope = Scope.Default,
         };
         string element = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<Content>(

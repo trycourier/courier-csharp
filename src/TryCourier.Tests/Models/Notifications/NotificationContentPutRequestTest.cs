@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using TryCourier.Core;
+using TryCourier.Exceptions;
 using TryCourier.Models;
 using Notifications = TryCourier.Models.Notifications;
 
@@ -41,6 +42,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -71,6 +73,7 @@ public class NotificationContentPutRequestTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Notifications::NotificationContentPutRequestContentScope.Default,
             Version = "version",
         };
         ApiEnum<string, Notifications::NotificationTemplateState> expectedState =
@@ -113,6 +116,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -160,6 +164,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -197,6 +202,7 @@ public class NotificationContentPutRequestTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Notifications::NotificationContentPutRequestContentScope.Default,
             Version = "version",
         };
         ApiEnum<string, Notifications::NotificationTemplateState> expectedState =
@@ -239,6 +245,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -280,6 +287,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
         };
@@ -321,6 +329,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
         };
@@ -361,6 +370,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
 
@@ -405,6 +415,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
 
@@ -448,6 +459,7 @@ public class NotificationContentPutRequestTest : TestBase
                         Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                     },
                 ],
+                Scope = Notifications::NotificationContentPutRequestContentScope.Default,
                 Version = "version",
             },
             State = Notifications::NotificationTemplateState.Draft,
@@ -489,6 +501,7 @@ public class NotificationContentPutRequestContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Notifications::NotificationContentPutRequestContentScope.Default,
             Version = "version",
         };
 
@@ -515,6 +528,8 @@ public class NotificationContentPutRequestContentTest : TestBase
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
+        ApiEnum<string, Notifications::NotificationContentPutRequestContentScope> expectedScope =
+            Notifications::NotificationContentPutRequestContentScope.Default;
         string expectedVersion = "version";
 
         Assert.Equal(expectedElements.Count, model.Elements.Count);
@@ -522,6 +537,7 @@ public class NotificationContentPutRequestContentTest : TestBase
         {
             Assert.Equal(expectedElements[i], model.Elements[i]);
         }
+        Assert.Equal(expectedScope, model.Scope);
         Assert.Equal(expectedVersion, model.Version);
     }
 
@@ -553,6 +569,7 @@ public class NotificationContentPutRequestContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Notifications::NotificationContentPutRequestContentScope.Default,
             Version = "version",
         };
 
@@ -594,6 +611,7 @@ public class NotificationContentPutRequestContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Notifications::NotificationContentPutRequestContentScope.Default,
             Version = "version",
         };
 
@@ -628,6 +646,8 @@ public class NotificationContentPutRequestContentTest : TestBase
                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
             },
         ];
+        ApiEnum<string, Notifications::NotificationContentPutRequestContentScope> expectedScope =
+            Notifications::NotificationContentPutRequestContentScope.Default;
         string expectedVersion = "version";
 
         Assert.Equal(expectedElements.Count, deserialized.Elements.Count);
@@ -635,6 +655,7 @@ public class NotificationContentPutRequestContentTest : TestBase
         {
             Assert.Equal(expectedElements[i], deserialized.Elements[i]);
         }
+        Assert.Equal(expectedScope, deserialized.Scope);
         Assert.Equal(expectedVersion, deserialized.Version);
     }
 
@@ -666,6 +687,7 @@ public class NotificationContentPutRequestContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Notifications::NotificationContentPutRequestContentScope.Default,
             Version = "version",
         };
 
@@ -702,6 +724,8 @@ public class NotificationContentPutRequestContentTest : TestBase
             ],
         };
 
+        Assert.Null(model.Scope);
+        Assert.False(model.RawData.ContainsKey("scope"));
         Assert.Null(model.Version);
         Assert.False(model.RawData.ContainsKey("version"));
     }
@@ -769,9 +793,12 @@ public class NotificationContentPutRequestContentTest : TestBase
             ],
 
             // Null should be interpreted as omitted for these properties
+            Scope = null,
             Version = null,
         };
 
+        Assert.Null(model.Scope);
+        Assert.False(model.RawData.ContainsKey("scope"));
         Assert.Null(model.Version);
         Assert.False(model.RawData.ContainsKey("version"));
     }
@@ -806,6 +833,7 @@ public class NotificationContentPutRequestContentTest : TestBase
             ],
 
             // Null should be interpreted as omitted for these properties
+            Scope = null,
             Version = null,
         };
 
@@ -840,11 +868,68 @@ public class NotificationContentPutRequestContentTest : TestBase
                     Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                 },
             ],
+            Scope = Notifications::NotificationContentPutRequestContentScope.Default,
             Version = "version",
         };
 
         Notifications::NotificationContentPutRequestContent copied = new(model);
 
         Assert.Equal(model, copied);
+    }
+}
+
+public class NotificationContentPutRequestContentScopeTest : TestBase
+{
+    [Theory]
+    [InlineData(Notifications::NotificationContentPutRequestContentScope.Default)]
+    [InlineData(Notifications::NotificationContentPutRequestContentScope.Strict)]
+    public void Validation_Works(Notifications::NotificationContentPutRequestContentScope rawValue)
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Notifications::NotificationContentPutRequestContentScope> value = rawValue;
+        value.Validate();
+    }
+
+    [Fact]
+    public void InvalidEnumValidationThrows_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, Notifications::NotificationContentPutRequestContentScope>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+
+        Assert.NotNull(value);
+        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
+    }
+
+    [Theory]
+    [InlineData(Notifications::NotificationContentPutRequestContentScope.Default)]
+    [InlineData(Notifications::NotificationContentPutRequestContentScope.Strict)]
+    public void SerializationRoundtrip_Works(
+        Notifications::NotificationContentPutRequestContentScope rawValue
+    )
+    {
+        // force implicit conversion because Theory can't do that for us
+        ApiEnum<string, Notifications::NotificationContentPutRequestContentScope> value = rawValue;
+
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, Notifications::NotificationContentPutRequestContentScope>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
+    }
+
+    [Fact]
+    public void InvalidEnumSerializationRoundtrip_Works()
+    {
+        var value = JsonSerializer.Deserialize<
+            ApiEnum<string, Notifications::NotificationContentPutRequestContentScope>
+        >(JsonSerializer.SerializeToElement("invalid value"), ModelBase.SerializerOptions);
+        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
+        var deserialized = JsonSerializer.Deserialize<
+            ApiEnum<string, Notifications::NotificationContentPutRequestContentScope>
+        >(json, ModelBase.SerializerOptions);
+
+        Assert.Equal(value, deserialized);
     }
 }

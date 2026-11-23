@@ -5,6 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TryCourier.Core;
+using TryCourier.Exceptions;
+using System = System;
 
 namespace TryCourier.Models;
 
@@ -40,6 +42,32 @@ public sealed record class ElementalContent : JsonModel
         init { this._rawData.Set("version", value); }
     }
 
+    /// <summary>
+    /// How template variables read the data sent with the message. Under `strict`,
+    /// data fields are read only through the `data.` prefix, as in `{{data.name}}`.
+    /// Under `default`, `data` is spread onto the root, so `{{name}}` resolves and
+    /// `{{data.name}}` renders as an empty string. Templates saved in Design Studio
+    /// are `strict`. When omitted, the content is `default`. A write that replaces
+    /// a template's content resets it to `default` unless the request sends `scope` again.
+    /// </summary>
+    public ApiEnum<string, Scope>? Scope
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<ApiEnum<string, Scope>>("scope");
+        }
+        init
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            this._rawData.Set("scope", value);
+        }
+    }
+
     /// <inheritdoc/>
     public override void Validate()
     {
@@ -48,6 +76,7 @@ public sealed record class ElementalContent : JsonModel
             item.Validate();
         }
         _ = this.Version;
+        this.Scope?.Validate();
     }
 
     public ElementalContent() { }
@@ -85,4 +114,52 @@ class ElementalContentFromRaw : IFromRawJson<ElementalContent>
     /// <inheritdoc/>
     public ElementalContent FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         ElementalContent.FromRawUnchecked(rawData);
+}
+
+/// <summary>
+/// How template variables read the data sent with the message. Under `strict`, data
+/// fields are read only through the `data.` prefix, as in `{{data.name}}`. Under
+/// `default`, `data` is spread onto the root, so `{{name}}` resolves and `{{data.name}}`
+/// renders as an empty string. Templates saved in Design Studio are `strict`. When
+/// omitted, the content is `default`. A write that replaces a template's content
+/// resets it to `default` unless the request sends `scope` again.
+/// </summary>
+[JsonConverter(typeof(ScopeConverter))]
+public enum Scope
+{
+    Default,
+    Strict,
+}
+
+sealed class ScopeConverter : JsonConverter<Scope>
+{
+    public override Scope Read(
+        ref Utf8JsonReader reader,
+        System::Type typeToConvert,
+        JsonSerializerOptions options
+    )
+    {
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
+        {
+            "default" => Scope.Default,
+            "strict" => Scope.Strict,
+            _ => (Scope)(-1),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, Scope value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Scope.Default => "default",
+                Scope.Strict => "strict",
+                _ => throw new CourierInvalidDataException(
+                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
+                ),
+            },
+            options
+        );
+    }
 }

@@ -57,6 +57,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Style>(),
             new ApiEnumConverter<string, Type>(),
             new ApiEnumConverter<string, ElementalChannelNodeWithTypeIntersectionMember1Type>(),
+            new ApiEnumConverter<string, Scope>(),
             new ApiEnumConverter<string, ElementalDividerNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalHtmlNodeWithTypeIntersectionMember1Type>(),
             new ApiEnumConverter<string, ElementalImageNodeWithTypeIntersectionMember1Type>(),
@@ -147,6 +148,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Journeys::Version>(),
             new ApiEnumConverter<string, Templates::Version>(),
             new ApiEnumConverter<string, Templates::Scope>(),
+            new ApiEnumConverter<string, Templates::TemplatePutContentParamsContentScope>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateState>(),
             new ApiEnumConverter<
                 string,
@@ -163,6 +165,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Broadcasts::ScheduleBroadcastRequestRecipientType>(),
             new ApiEnumConverter<string, Broadcasts::SendBroadcastRequestRecipientType>(),
             new ApiEnumConverter<string, Broadcasts::Channel>(),
+            new ApiEnumConverter<string, Broadcasts::Scope>(),
             new ApiEnumConverter<string, Broadcasts::RecipientType>(),
             new ApiEnumConverter<string, Broadcasts::BroadcastSendParamsRecipientType>(),
             new ApiEnumConverter<string, Category>(),
@@ -182,6 +185,10 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Messages::Reason>(),
             new ApiEnumConverter<string, Notifications::Status>(),
             new ApiEnumConverter<string, Notifications::Type>(),
+            new ApiEnumConverter<
+                string,
+                Notifications::NotificationContentPutRequestContentScope
+            >(),
             new ApiEnumConverter<string, Notifications::BlockType>(),
             new ApiEnumConverter<string, Notifications::NotificationMetricsResponseGranularity>(),
             new ApiEnumConverter<string, Notifications::NotificationTemplateCreateRequestState>(),
@@ -190,6 +197,7 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, Notifications::NotificationTemplateUpdateRequestState>(),
             new ApiEnumConverter<string, Notifications::State>(),
             new ApiEnumConverter<string, Notifications::Granularity>(),
+            new ApiEnumConverter<string, Notifications::Scope>(),
             new ApiEnumConverter<string, Notifications::NotificationReplaceParamsState>(),
             new ApiEnumConverter<string, PreviewResultFailureReason>(),
             new ApiEnumConverter<string, PreviewResultStatus>(),
