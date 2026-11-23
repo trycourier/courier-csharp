@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.2.0](https://github.com/trycourier/courier-csharp/compare/v8.1.0...v8.2.0) (2026-11-23)
+
+
+### Features
+
+* **api:** document `scope` on Elemental content [C-23066] ([#144](https://github.com/trycourier/courier-csharp/issues/144)) ([0c0930e](https://github.com/trycourier/courier-csharp/commit/0c0930e9629e5b6a3c43e543d280469d6ed7ecfe))
+
+
+### Chores
+
+* add context7.json to claim the Context7 library ([#142](https://github.com/trycourier/courier-csharp/issues/142)) ([ac5ae76](https://github.com/trycourier/courier-csharp/commit/ac5ae762ef00b21f73b60504cc3254857f6522e2))
+
 ## [8.1.0](https://github.com/trycourier/courier-csharp/compare/v8.0.1...v8.1.0) (2026-11-19)
 
 
