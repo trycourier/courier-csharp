@@ -44,7 +44,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -67,7 +66,7 @@ public class NotificationTemplateResponseTest : TestBase
         };
 
         Notifications::Brand expectedBrand = new("id");
-        ElementalContent expectedContent = new()
+        Notifications::NotificationTemplateContent expectedContent = new()
         {
             Elements =
             [
@@ -93,7 +92,6 @@ public class NotificationTemplateResponseTest : TestBase
                 },
             ],
             Version = "version",
-            Scope = Scope.Default,
         };
         string expectedName = "name";
         Notifications::Routing expectedRouting = new("strategy_id");
@@ -170,7 +168,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -236,7 +233,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -266,7 +262,7 @@ public class NotificationTemplateResponseTest : TestBase
         Assert.NotNull(deserialized);
 
         Notifications::Brand expectedBrand = new("id");
-        ElementalContent expectedContent = new()
+        Notifications::NotificationTemplateContent expectedContent = new()
         {
             Elements =
             [
@@ -292,7 +288,6 @@ public class NotificationTemplateResponseTest : TestBase
                 },
             ],
             Version = "version",
-            Scope = Scope.Default,
         };
         string expectedName = "name";
         Notifications::Routing expectedRouting = new("strategy_id");
@@ -369,7 +364,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -429,7 +423,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -491,7 +484,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -548,7 +540,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -615,7 +606,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -677,7 +667,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -731,7 +720,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -784,7 +772,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -840,7 +827,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),
@@ -895,7 +881,6 @@ public class NotificationTemplateResponseTest : TestBase
                     },
                 ],
                 Version = "version",
-                Scope = Scope.Default,
             },
             Name = "name",
             Routing = new("strategy_id"),

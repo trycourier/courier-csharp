@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using TryCourier.Models;
-using Templates = TryCourier.Models.Journeys.Templates;
+using TryCourier.Models.Journeys.Templates;
 
 namespace TryCourier.Tests.Services.Journeys;
 
@@ -66,8 +66,7 @@ public class TemplateServiceTest : TestBase
                                 Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                             },
                         ],
-                        Version = Templates::Version.V2022_01_01,
-                        Scope = Templates::Scope.Default,
+                        Version = Version.V2022_01_01,
                     },
                     Name = "Welcome email",
                     Subscription = new("topic_id"),
@@ -197,7 +196,6 @@ public class TemplateServiceTest : TestBase
                             Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
-                    Scope = Templates::TemplatePutContentParamsContentScope.Default,
                     Version = "2022-01-01",
                 },
             },
@@ -261,9 +259,7 @@ public class TemplateServiceTest : TestBase
                                 Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                             },
                         ],
-                        Version =
-                            Templates::TemplateReplaceParamsNotificationContentVersion.V2022_01_01,
-                        Scope = Templates::TemplateReplaceParamsNotificationContentScope.Default,
+                        Version = TemplateReplaceParamsNotificationContentVersion.V2022_01_01,
                     },
                     Name = "name",
                     Subscription = new("topic_id"),

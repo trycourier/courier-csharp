@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using TryCourier.Models;
-using Notifications = TryCourier.Models.Notifications;
 
 namespace TryCourier.Tests.Services;
 
@@ -74,7 +73,6 @@ public class NotificationServiceTest : TestBase
                             },
                         ],
                         Version = "2022-01-01",
-                        Scope = Scope.Default,
                     },
                     Name = "Welcome Email",
                     Routing = new("rs_01kx4h2jdafq8bk9amzvy6hbv0"),
@@ -213,7 +211,6 @@ public class NotificationServiceTest : TestBase
                             Type = ElementalChannelNodeWithTypeIntersectionMember1Type.Channel,
                         },
                     ],
-                    Scope = Notifications::Scope.Default,
                     Version = "2022-01-01",
                 },
             },
@@ -311,7 +308,6 @@ public class NotificationServiceTest : TestBase
                             },
                         ],
                         Version = "2022-01-01",
-                        Scope = Scope.Default,
                     },
                     Name = "Updated Name",
                     Routing = new("strategy_id"),

@@ -33,12 +33,12 @@ public sealed record class NotificationTemplatePayload : JsonModel
     /// <summary>
     /// Elemental content definition.
     /// </summary>
-    public required ElementalContent Content
+    public required NotificationTemplateContent Content
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ElementalContent>("content");
+            return this._rawData.GetNotNullClass<NotificationTemplateContent>("content");
         }
         init { this._rawData.Set("content", value); }
     }

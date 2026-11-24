@@ -69,7 +69,6 @@ public class TemplateCreateParamsTest : TestBase
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
-                    Scope = Templates::Scope.Default,
                 },
                 Name = "Welcome email",
                 Subscription = new("topic_id"),
@@ -134,7 +133,6 @@ public class TemplateCreateParamsTest : TestBase
                     },
                 ],
                 Version = Templates::Version.V2022_01_01,
-                Scope = Templates::Scope.Default,
             },
             Name = "Welcome email",
             Subscription = new("topic_id"),
@@ -212,7 +210,6 @@ public class TemplateCreateParamsTest : TestBase
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
-                    Scope = Templates::Scope.Default,
                 },
                 Name = "Welcome email",
                 Subscription = new("topic_id"),
@@ -288,7 +285,6 @@ public class TemplateCreateParamsTest : TestBase
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
-                    Scope = Templates::Scope.Default,
                 },
                 Name = "Welcome email",
                 Subscription = new("topic_id"),
@@ -370,7 +366,6 @@ public class TemplateCreateParamsTest : TestBase
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
-                    Scope = Templates::Scope.Default,
                 },
                 Name = "Welcome email",
                 Subscription = new("topic_id"),
@@ -444,7 +439,6 @@ public class TemplateCreateParamsTest : TestBase
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
-                    Scope = Templates::Scope.Default,
                 },
                 Name = "Welcome email",
                 Subscription = new("topic_id"),
@@ -521,7 +515,6 @@ public class TemplateCreateParamsTest : TestBase
                         },
                     ],
                     Version = Templates::Version.V2022_01_01,
-                    Scope = Templates::Scope.Default,
                 },
                 Name = "Welcome email",
                 Subscription = new("topic_id"),
@@ -576,7 +569,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = Templates::Version.V2022_01_01,
-                Scope = Templates::Scope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -610,7 +602,6 @@ public class NotificationTest : TestBase
                 },
             ],
             Version = Templates::Version.V2022_01_01,
-            Scope = Templates::Scope.Default,
         };
         string expectedName = "name";
         Templates::Subscription expectedSubscription = new("topic_id");
@@ -662,7 +653,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = Templates::Version.V2022_01_01,
-                Scope = Templates::Scope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -713,7 +703,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = Templates::Version.V2022_01_01,
-                Scope = Templates::Scope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -754,7 +743,6 @@ public class NotificationTest : TestBase
                 },
             ],
             Version = Templates::Version.V2022_01_01,
-            Scope = Templates::Scope.Default,
         };
         string expectedName = "name";
         Templates::Subscription expectedSubscription = new("topic_id");
@@ -806,7 +794,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = Templates::Version.V2022_01_01,
-                Scope = Templates::Scope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -851,7 +838,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = Templates::Version.V2022_01_01,
-                Scope = Templates::Scope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -957,7 +943,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = Templates::Version.V2022_01_01,
-            Scope = Templates::Scope.Default,
         };
 
         List<ElementalNode> expectedElements =
@@ -984,7 +969,6 @@ public class ContentTest : TestBase
             },
         ];
         ApiEnum<string, Templates::Version> expectedVersion = Templates::Version.V2022_01_01;
-        ApiEnum<string, Templates::Scope> expectedScope = Templates::Scope.Default;
 
         Assert.Equal(expectedElements.Count, model.Elements.Count);
         for (int i = 0; i < expectedElements.Count; i++)
@@ -992,7 +976,6 @@ public class ContentTest : TestBase
             Assert.Equal(expectedElements[i], model.Elements[i]);
         }
         Assert.Equal(expectedVersion, model.Version);
-        Assert.Equal(expectedScope, model.Scope);
     }
 
     [Fact]
@@ -1024,7 +1007,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = Templates::Version.V2022_01_01,
-            Scope = Templates::Scope.Default,
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -1065,7 +1047,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = Templates::Version.V2022_01_01,
-            Scope = Templates::Scope.Default,
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -1099,7 +1080,6 @@ public class ContentTest : TestBase
             },
         ];
         ApiEnum<string, Templates::Version> expectedVersion = Templates::Version.V2022_01_01;
-        ApiEnum<string, Templates::Scope> expectedScope = Templates::Scope.Default;
 
         Assert.Equal(expectedElements.Count, deserialized.Elements.Count);
         for (int i = 0; i < expectedElements.Count; i++)
@@ -1107,7 +1087,6 @@ public class ContentTest : TestBase
             Assert.Equal(expectedElements[i], deserialized.Elements[i]);
         }
         Assert.Equal(expectedVersion, deserialized.Version);
-        Assert.Equal(expectedScope, deserialized.Scope);
     }
 
     [Fact]
@@ -1139,151 +1118,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = Templates::Version.V2022_01_01,
-            Scope = Templates::Scope.Default,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new Templates::Content
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Align = Align.Left,
-                    Bold = "bold",
-                    Color = "color",
-                    Content = "content",
-                    FontSize = "font_size",
-                    Format = Format.Markdown,
-                    Italic = "italic",
-                    LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
-                    Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
-                    Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = Templates::Version.V2022_01_01,
-        };
-
-        Assert.Null(model.Scope);
-        Assert.False(model.RawData.ContainsKey("scope"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new Templates::Content
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Align = Align.Left,
-                    Bold = "bold",
-                    Color = "color",
-                    Content = "content",
-                    FontSize = "font_size",
-                    Format = Format.Markdown,
-                    Italic = "italic",
-                    LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
-                    Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
-                    Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = Templates::Version.V2022_01_01,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
-    {
-        var model = new Templates::Content
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Align = Align.Left,
-                    Bold = "bold",
-                    Color = "color",
-                    Content = "content",
-                    FontSize = "font_size",
-                    Format = Format.Markdown,
-                    Italic = "italic",
-                    LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
-                    Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
-                    Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = Templates::Version.V2022_01_01,
-
-            // Null should be interpreted as omitted for these properties
-            Scope = null,
-        };
-
-        Assert.Null(model.Scope);
-        Assert.False(model.RawData.ContainsKey("scope"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new Templates::Content
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Align = Align.Left,
-                    Bold = "bold",
-                    Color = "color",
-                    Content = "content",
-                    FontSize = "font_size",
-                    Format = Format.Markdown,
-                    Italic = "italic",
-                    LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
-                    Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
-                    Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = Templates::Version.V2022_01_01,
-
-            // Null should be interpreted as omitted for these properties
-            Scope = null,
         };
 
         model.Validate();
@@ -1318,7 +1152,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = Templates::Version.V2022_01_01,
-            Scope = Templates::Scope.Default,
         };
 
         Templates::Content copied = new(model);
@@ -1375,64 +1208,6 @@ public class VersionTest : TestBase
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Templates::Version>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class ScopeTest : TestBase
-{
-    [Theory]
-    [InlineData(Templates::Scope.Default)]
-    [InlineData(Templates::Scope.Strict)]
-    public void Validation_Works(Templates::Scope rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Templates::Scope> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Templates::Scope>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(Templates::Scope.Default)]
-    [InlineData(Templates::Scope.Strict)]
-    public void SerializationRoundtrip_Works(Templates::Scope rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, Templates::Scope> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Templates::Scope>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, Templates::Scope>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, Templates::Scope>>(
             json,
             ModelBase.SerializerOptions
         );
