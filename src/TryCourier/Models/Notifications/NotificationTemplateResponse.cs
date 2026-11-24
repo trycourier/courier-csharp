@@ -32,12 +32,17 @@ public sealed record class NotificationTemplateResponse : JsonModel
         init { this._rawData.Set("brand", value); }
     }
 
-    public required ElementalContent Content
+    /// <summary>
+    /// Elemental content of a notification template. Template variables read the
+    /// data sent with the message through the `data.` prefix, as in `{{data.name}}`,
+    /// and the recipient's profile through `profile.`.
+    /// </summary>
+    public required NotificationTemplateContent Content
     {
         get
         {
             this._rawData.Freeze();
-            return this._rawData.GetNotNullClass<ElementalContent>("content");
+            return this._rawData.GetNotNullClass<NotificationTemplateContent>("content");
         }
         init { this._rawData.Set("content", value); }
     }

@@ -126,7 +126,6 @@ public class BroadcastServiceTest : TestBase
                             Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
                         },
                     ],
-                    Scope = Broadcasts::Scope.Default,
                     Version = "2022-01-01",
                 },
             },

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -7,9 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TryCourier.Core;
-using TryCourier.Exceptions;
 using TryCourier.Models.Notifications;
-using System = System;
 
 namespace TryCourier.Models.Journeys.Templates;
 
@@ -162,9 +161,9 @@ public record class TemplatePutContentParams : ParamsBase
             && this._rawBodyData.Equals(other._rawBodyData);
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override Uri Url(ClientOptions options)
     {
-        return new System::UriBuilder(
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format(
                     "/journeys/{0}/templates/{1}/content",
@@ -229,33 +228,6 @@ public sealed record class TemplatePutContentParamsContent : JsonModel
     }
 
     /// <summary>
-    /// How template variables read the data sent with the message. Under `strict`,
-    /// data fields are read only through the `data.` prefix, as in `{{data.name}}`.
-    /// Under `default`, `data` is spread onto the root, so `{{name}}` resolves and
-    /// `{{data.name}}` renders as an empty string. This request replaces the stored
-    /// content, so omitting `scope` resets it to `default`.
-    /// </summary>
-    public ApiEnum<string, TemplatePutContentParamsContentScope>? Scope
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<
-                ApiEnum<string, TemplatePutContentParamsContentScope>
-            >("scope");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("scope", value);
-        }
-    }
-
-    /// <summary>
     /// Content version identifier (e.g., `2022-01-01`). Optional; server defaults
     /// when omitted.
     /// </summary>
@@ -284,7 +256,6 @@ public sealed record class TemplatePutContentParamsContent : JsonModel
         {
             item.Validate();
         }
-        this.Scope?.Validate();
         _ = this.Version;
     }
 
@@ -333,56 +304,4 @@ class TemplatePutContentParamsContentFromRaw : IFromRawJson<TemplatePutContentPa
     public TemplatePutContentParamsContent FromRawUnchecked(
         IReadOnlyDictionary<string, JsonElement> rawData
     ) => TemplatePutContentParamsContent.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// How template variables read the data sent with the message. Under `strict`, data
-/// fields are read only through the `data.` prefix, as in `{{data.name}}`. Under
-/// `default`, `data` is spread onto the root, so `{{name}}` resolves and `{{data.name}}`
-/// renders as an empty string. This request replaces the stored content, so omitting
-/// `scope` resets it to `default`.
-/// </summary>
-[JsonConverter(typeof(TemplatePutContentParamsContentScopeConverter))]
-public enum TemplatePutContentParamsContentScope
-{
-    Default,
-    Strict,
-}
-
-sealed class TemplatePutContentParamsContentScopeConverter
-    : JsonConverter<TemplatePutContentParamsContentScope>
-{
-    public override TemplatePutContentParamsContentScope Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "default" => TemplatePutContentParamsContentScope.Default,
-            "strict" => TemplatePutContentParamsContentScope.Strict,
-            _ => (TemplatePutContentParamsContentScope)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        TemplatePutContentParamsContentScope value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                TemplatePutContentParamsContentScope.Default => "default",
-                TemplatePutContentParamsContentScope.Strict => "strict",
-                _ => throw new CourierInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

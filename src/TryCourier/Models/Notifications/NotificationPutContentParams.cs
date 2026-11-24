@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -7,8 +8,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TryCourier.Core;
-using TryCourier.Exceptions;
-using System = System;
 
 namespace TryCourier.Models.Notifications;
 
@@ -152,9 +151,9 @@ public record class NotificationPutContentParams : ParamsBase
             && this._rawBodyData.Equals(other._rawBodyData);
     }
 
-    public override System::Uri Url(ClientOptions options)
+    public override Uri Url(ClientOptions options)
     {
-        return new System::UriBuilder(
+        return new UriBuilder(
             options.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/notifications/{0}/content", this.ID)
         )
@@ -210,31 +209,6 @@ public sealed record class Content : JsonModel
     }
 
     /// <summary>
-    /// How template variables read the data sent with the message. Under `strict`,
-    /// data fields are read only through the `data.` prefix, as in `{{data.name}}`.
-    /// Under `default`, `data` is spread onto the root, so `{{name}}` resolves and
-    /// `{{data.name}}` renders as an empty string. This request replaces the stored
-    /// content, so omitting `scope` resets it to `default`.
-    /// </summary>
-    public ApiEnum<string, Scope>? Scope
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<ApiEnum<string, Scope>>("scope");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("scope", value);
-        }
-    }
-
-    /// <summary>
     /// Content version identifier (e.g., `2022-01-01`). Optional; server defaults
     /// when omitted.
     /// </summary>
@@ -263,7 +237,6 @@ public sealed record class Content : JsonModel
         {
             item.Validate();
         }
-        this.Scope?.Validate();
         _ = this.Version;
     }
 
@@ -307,51 +280,4 @@ class ContentFromRaw : IFromRawJson<Content>
     /// <inheritdoc/>
     public Content FromRawUnchecked(IReadOnlyDictionary<string, JsonElement> rawData) =>
         Content.FromRawUnchecked(rawData);
-}
-
-/// <summary>
-/// How template variables read the data sent with the message. Under `strict`, data
-/// fields are read only through the `data.` prefix, as in `{{data.name}}`. Under
-/// `default`, `data` is spread onto the root, so `{{name}}` resolves and `{{data.name}}`
-/// renders as an empty string. This request replaces the stored content, so omitting
-/// `scope` resets it to `default`.
-/// </summary>
-[JsonConverter(typeof(ScopeConverter))]
-public enum Scope
-{
-    Default,
-    Strict,
-}
-
-sealed class ScopeConverter : JsonConverter<Scope>
-{
-    public override Scope Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "default" => Scope.Default,
-            "strict" => Scope.Strict,
-            _ => (Scope)(-1),
-        };
-    }
-
-    public override void Write(Utf8JsonWriter writer, Scope value, JsonSerializerOptions options)
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                Scope.Default => "default",
-                Scope.Strict => "strict",
-                _ => throw new CourierInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
 }

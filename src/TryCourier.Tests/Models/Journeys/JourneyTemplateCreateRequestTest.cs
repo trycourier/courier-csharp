@@ -47,7 +47,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -90,7 +89,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -143,7 +141,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -200,7 +197,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -250,7 +246,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -303,7 +298,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -354,7 +348,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -406,7 +399,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -455,7 +447,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -511,7 +502,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -564,7 +554,6 @@ public class JourneyTemplateCreateRequestTest : TestBase
                         },
                     ],
                     Version = ContentVersion.V2022_01_01,
-                    Scope = ContentScope.Default,
                 },
                 Name = "name",
                 Subscription = new("topic_id"),
@@ -617,7 +606,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -651,7 +639,6 @@ public class NotificationTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = ContentScope.Default,
         };
         string expectedName = "name";
         Subscription expectedSubscription = new("topic_id");
@@ -703,7 +690,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -754,7 +740,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -795,7 +780,6 @@ public class NotificationTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = ContentScope.Default,
         };
         string expectedName = "name";
         Subscription expectedSubscription = new("topic_id");
@@ -847,7 +831,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -892,7 +875,6 @@ public class NotificationTest : TestBase
                     },
                 ],
                 Version = ContentVersion.V2022_01_01,
-                Scope = ContentScope.Default,
             },
             Name = "name",
             Subscription = new("topic_id"),
@@ -992,7 +974,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = ContentScope.Default,
         };
 
         List<ElementalNode> expectedElements =
@@ -1019,7 +1000,6 @@ public class ContentTest : TestBase
             },
         ];
         ApiEnum<string, ContentVersion> expectedVersion = ContentVersion.V2022_01_01;
-        ApiEnum<string, ContentScope> expectedScope = ContentScope.Default;
 
         Assert.Equal(expectedElements.Count, model.Elements.Count);
         for (int i = 0; i < expectedElements.Count; i++)
@@ -1027,7 +1007,6 @@ public class ContentTest : TestBase
             Assert.Equal(expectedElements[i], model.Elements[i]);
         }
         Assert.Equal(expectedVersion, model.Version);
-        Assert.Equal(expectedScope, model.Scope);
     }
 
     [Fact]
@@ -1059,7 +1038,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = ContentScope.Default,
         };
 
         string json = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -1097,7 +1075,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = ContentScope.Default,
         };
 
         string element = JsonSerializer.Serialize(model, ModelBase.SerializerOptions);
@@ -1131,7 +1108,6 @@ public class ContentTest : TestBase
             },
         ];
         ApiEnum<string, ContentVersion> expectedVersion = ContentVersion.V2022_01_01;
-        ApiEnum<string, ContentScope> expectedScope = ContentScope.Default;
 
         Assert.Equal(expectedElements.Count, deserialized.Elements.Count);
         for (int i = 0; i < expectedElements.Count; i++)
@@ -1139,7 +1115,6 @@ public class ContentTest : TestBase
             Assert.Equal(expectedElements[i], deserialized.Elements[i]);
         }
         Assert.Equal(expectedVersion, deserialized.Version);
-        Assert.Equal(expectedScope, deserialized.Scope);
     }
 
     [Fact]
@@ -1171,151 +1146,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = ContentScope.Default,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetAreNotSet_Works()
-    {
-        var model = new Content
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Align = Align.Left,
-                    Bold = "bold",
-                    Color = "color",
-                    Content = "content",
-                    FontSize = "font_size",
-                    Format = Format.Markdown,
-                    Italic = "italic",
-                    LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
-                    Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
-                    Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = ContentVersion.V2022_01_01,
-        };
-
-        Assert.Null(model.Scope);
-        Assert.False(model.RawData.ContainsKey("scope"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesUnsetValidation_Works()
-    {
-        var model = new Content
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Align = Align.Left,
-                    Bold = "bold",
-                    Color = "color",
-                    Content = "content",
-                    FontSize = "font_size",
-                    Format = Format.Markdown,
-                    Italic = "italic",
-                    LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
-                    Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
-                    Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = ContentVersion.V2022_01_01,
-        };
-
-        model.Validate();
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullAreNotSet_Works()
-    {
-        var model = new Content
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Align = Align.Left,
-                    Bold = "bold",
-                    Color = "color",
-                    Content = "content",
-                    FontSize = "font_size",
-                    Format = Format.Markdown,
-                    Italic = "italic",
-                    LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
-                    Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
-                    Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = ContentVersion.V2022_01_01,
-
-            // Null should be interpreted as omitted for these properties
-            Scope = null,
-        };
-
-        Assert.Null(model.Scope);
-        Assert.False(model.RawData.ContainsKey("scope"));
-    }
-
-    [Fact]
-    public void OptionalNonNullablePropertiesSetToNullValidation_Works()
-    {
-        var model = new Content
-        {
-            Elements =
-            [
-                new ElementalTextNodeWithType()
-                {
-                    Channels = ["string"],
-                    If = "if",
-                    Loop = "loop",
-                    Ref = "ref",
-                    Align = Align.Left,
-                    Bold = "bold",
-                    Color = "color",
-                    Content = "content",
-                    FontSize = "font_size",
-                    Format = Format.Markdown,
-                    Italic = "italic",
-                    LineHeight = "line_height",
-                    Locales = new Dictionary<string, LocalesItem>() { { "foo", new("content") } },
-                    Strikethrough = "strikethrough",
-                    TextStyle = TextStyle.Text,
-                    Underline = "underline",
-                    Type = ElementalTextNodeWithTypeIntersectionMember1Type.Text,
-                },
-            ],
-            Version = ContentVersion.V2022_01_01,
-
-            // Null should be interpreted as omitted for these properties
-            Scope = null,
         };
 
         model.Validate();
@@ -1350,7 +1180,6 @@ public class ContentTest : TestBase
                 },
             ],
             Version = ContentVersion.V2022_01_01,
-            Scope = ContentScope.Default,
         };
 
         Content copied = new(model);
@@ -1407,64 +1236,6 @@ public class ContentVersionTest : TestBase
         );
         string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
         var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ContentVersion>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-}
-
-public class ContentScopeTest : TestBase
-{
-    [Theory]
-    [InlineData(ContentScope.Default)]
-    [InlineData(ContentScope.Strict)]
-    public void Validation_Works(ContentScope rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, ContentScope> value = rawValue;
-        value.Validate();
-    }
-
-    [Fact]
-    public void InvalidEnumValidationThrows_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, ContentScope>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-
-        Assert.NotNull(value);
-        Assert.Throws<CourierInvalidDataException>(() => value.Validate());
-    }
-
-    [Theory]
-    [InlineData(ContentScope.Default)]
-    [InlineData(ContentScope.Strict)]
-    public void SerializationRoundtrip_Works(ContentScope rawValue)
-    {
-        // force implicit conversion because Theory can't do that for us
-        ApiEnum<string, ContentScope> value = rawValue;
-
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ContentScope>>(
-            json,
-            ModelBase.SerializerOptions
-        );
-
-        Assert.Equal(value, deserialized);
-    }
-
-    [Fact]
-    public void InvalidEnumSerializationRoundtrip_Works()
-    {
-        var value = JsonSerializer.Deserialize<ApiEnum<string, ContentScope>>(
-            JsonSerializer.SerializeToElement("invalid value"),
-            ModelBase.SerializerOptions
-        );
-        string json = JsonSerializer.Serialize(value, ModelBase.SerializerOptions);
-        var deserialized = JsonSerializer.Deserialize<ApiEnum<string, ContentScope>>(
             json,
             ModelBase.SerializerOptions
         );

@@ -335,26 +335,6 @@ public sealed record class JourneyTemplateReplaceRequestNotificationContent : Js
         init { this._rawData.Set("version", value); }
     }
 
-    public ApiEnum<string, JourneyTemplateReplaceRequestNotificationContentScope>? Scope
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<
-                ApiEnum<string, JourneyTemplateReplaceRequestNotificationContentScope>
-            >("scope");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("scope", value);
-        }
-    }
-
     /// <inheritdoc/>
     public override void Validate()
     {
@@ -363,7 +343,6 @@ public sealed record class JourneyTemplateReplaceRequestNotificationContent : Js
             item.Validate();
         }
         this.Version.Validate();
-        this.Scope?.Validate();
     }
 
     public JourneyTemplateReplaceRequestNotificationContent() { }
@@ -442,51 +421,6 @@ sealed class JourneyTemplateReplaceRequestNotificationContentVersionConverter
             value switch
             {
                 JourneyTemplateReplaceRequestNotificationContentVersion.V2022_01_01 => "2022-01-01",
-                _ => throw new CourierInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(JourneyTemplateReplaceRequestNotificationContentScopeConverter))]
-public enum JourneyTemplateReplaceRequestNotificationContentScope
-{
-    Default,
-    Strict,
-}
-
-sealed class JourneyTemplateReplaceRequestNotificationContentScopeConverter
-    : JsonConverter<JourneyTemplateReplaceRequestNotificationContentScope>
-{
-    public override JourneyTemplateReplaceRequestNotificationContentScope Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "default" => JourneyTemplateReplaceRequestNotificationContentScope.Default,
-            "strict" => JourneyTemplateReplaceRequestNotificationContentScope.Strict,
-            _ => (JourneyTemplateReplaceRequestNotificationContentScope)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        JourneyTemplateReplaceRequestNotificationContentScope value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                JourneyTemplateReplaceRequestNotificationContentScope.Default => "default",
-                JourneyTemplateReplaceRequestNotificationContentScope.Strict => "strict",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),

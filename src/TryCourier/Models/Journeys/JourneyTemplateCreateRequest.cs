@@ -315,24 +315,6 @@ public sealed record class Content : JsonModel
         init { this._rawData.Set("version", value); }
     }
 
-    public ApiEnum<string, ContentScope>? Scope
-    {
-        get
-        {
-            this._rawData.Freeze();
-            return this._rawData.GetNullableClass<ApiEnum<string, ContentScope>>("scope");
-        }
-        init
-        {
-            if (value == null)
-            {
-                return;
-            }
-
-            this._rawData.Set("scope", value);
-        }
-    }
-
     /// <inheritdoc/>
     public override void Validate()
     {
@@ -341,7 +323,6 @@ public sealed record class Content : JsonModel
             item.Validate();
         }
         this.Version.Validate();
-        this.Scope?.Validate();
     }
 
     public Content() { }
@@ -411,50 +392,6 @@ sealed class ContentVersionConverter : JsonConverter<ContentVersion>
             value switch
             {
                 ContentVersion.V2022_01_01 => "2022-01-01",
-                _ => throw new CourierInvalidDataException(
-                    string.Format("Invalid value '{0}' in {1}", value, nameof(value))
-                ),
-            },
-            options
-        );
-    }
-}
-
-[JsonConverter(typeof(ContentScopeConverter))]
-public enum ContentScope
-{
-    Default,
-    Strict,
-}
-
-sealed class ContentScopeConverter : JsonConverter<ContentScope>
-{
-    public override ContentScope Read(
-        ref Utf8JsonReader reader,
-        System::Type typeToConvert,
-        JsonSerializerOptions options
-    )
-    {
-        return JsonSerializer.Deserialize<string>(ref reader, options) switch
-        {
-            "default" => ContentScope.Default,
-            "strict" => ContentScope.Strict,
-            _ => (ContentScope)(-1),
-        };
-    }
-
-    public override void Write(
-        Utf8JsonWriter writer,
-        ContentScope value,
-        JsonSerializerOptions options
-    )
-    {
-        JsonSerializer.Serialize(
-            writer,
-            value switch
-            {
-                ContentScope.Default => "default",
-                ContentScope.Strict => "strict",
                 _ => throw new CourierInvalidDataException(
                     string.Format("Invalid value '{0}' in {1}", value, nameof(value))
                 ),
