@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.3.0](https://github.com/trycourier/courier-csharp/compare/v8.2.0...v8.3.0) (2026-11-24)
+
+
+### Features
+
+* **api:** remove `scope` from v2 notification, journey and broadcast template content ([#145](https://github.com/trycourier/courier-csharp/issues/145)) ([1637344](https://github.com/trycourier/courier-csharp/commit/163734425203ce5eafcf16b73ba16bc67fb51e9f))
+
 ## [8.2.0](https://github.com/trycourier/courier-csharp/compare/v8.1.0...v8.2.0) (2026-11-23)
 
 
