@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.3.1](https://github.com/trycourier/courier-csharp/compare/v8.3.0...v8.3.1) (2026-11-25)
+
+
+### Chores
+
+* **api:** regenerate SDK ([#147](https://github.com/trycourier/courier-csharp/issues/147)) ([b7edcfa](https://github.com/trycourier/courier-csharp/commit/b7edcfa9fdc4add5d25ab961fa3b2f429fb6a600))
+
 ## [8.3.0](https://github.com/trycourier/courier-csharp/compare/v8.2.0...v8.3.0) (2026-11-24)
 
 
